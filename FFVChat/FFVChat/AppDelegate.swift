@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
@@ -55,7 +56,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             application.registerForRemoteNotificationTypes(types)
         }
         
-        return true
+        //Facebook
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    //Facebook
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
+    {
+            return FBSDKApplicationDelegate.sharedInstance().application( application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     func applicationWillResignActive(application: UIApplication) {

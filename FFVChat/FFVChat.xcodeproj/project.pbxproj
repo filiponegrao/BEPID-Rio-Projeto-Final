@@ -26,6 +26,8 @@
 		801D928F1BA4985000D05CE7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D928E1BA4985000D05CE7 /* SystemConfiguration.framework */; };
 		801D92911BA4985900D05CE7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92901BA4985900D05CE7 /* libz.dylib */; };
 		801D92931BA4986400D05CE7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92921BA4986400D05CE7 /* libsqlite3.dylib */; };
+		801D92961BA4A21A00D05CE7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */; };
+		801D92981BA4A7E900D05CE7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		801D928E1BA4985000D05CE7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		801D92901BA4985900D05CE7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		801D92921BA4986400D05CE7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,10 +77,12 @@
 				801D92911BA4985900D05CE7 /* libz.dylib in Frameworks */,
 				801D928F1BA4985000D05CE7 /* SystemConfiguration.framework in Frameworks */,
 				801D928D1BA4984800D05CE7 /* StoreKit.framework in Frameworks */,
+				801D92981BA4A7E900D05CE7 /* FBSDKLoginKit.framework in Frameworks */,
 				801D928B1BA4984300D05CE7 /* Security.framework in Frameworks */,
 				801D92891BA4983C00D05CE7 /* QuartzCore.framework in Frameworks */,
 				801D92871BA4983400D05CE7 /* CoreLocation.framework in Frameworks */,
 				801D92851BA4982E00D05CE7 /* CoreGraphics.framework in Frameworks */,
+				801D92961BA4A21A00D05CE7 /* FBSDKCoreKit.framework in Frameworks */,
 				801D92831BA4982800D05CE7 /* CFNetwork.framework in Frameworks */,
 				801D92811BA4981F00D05CE7 /* AudioToolbox.framework in Frameworks */,
 				801D927F1BA4936500D05CE7 /* Parse.framework in Frameworks */,
@@ -179,6 +185,8 @@
 		801D92941BA4986D00D05CE7 /* FrameWorks */ = {
 			isa = PBXGroup;
 			children = (
+				801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */,
+				801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */,
 				801D92921BA4986400D05CE7 /* libsqlite3.dylib */,
 				801D92901BA4985900D05CE7 /* libz.dylib */,
 				801D928E1BA4985000D05CE7 /* SystemConfiguration.framework */,
