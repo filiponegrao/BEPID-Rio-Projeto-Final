@@ -28,6 +28,12 @@
 		801D92931BA4986400D05CE7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92921BA4986400D05CE7 /* libsqlite3.dylib */; };
 		801D92961BA4A21A00D05CE7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */; };
 		801D92981BA4A7E900D05CE7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */; };
+		801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */; };
+		801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */; };
+		801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D929D1BA5177400D05CE7 /* DAOUser.swift */; };
+		801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801D929F1BA51E5900D05CE7 /* UserInfo.plist */; };
+		801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */; };
+		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +72,12 @@
 		801D92921BA4986400D05CE7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRegister_ViewController.swift; sourceTree = "<group>"; };
+		801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookRegister_ViewController.xib; sourceTree = "<group>"; };
+		801D929D1BA5177400D05CE7 /* DAOUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOUser.swift; sourceTree = "<group>"; };
+		801D929F1BA51E5900D05CE7 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
+		801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat_ViewController.swift; sourceTree = "<group>"; };
+		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				801D92521BA4928800D05CE7 /* Info.plist */,
+				801D929F1BA51E5900D05CE7 /* UserInfo.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -162,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				801D92771BA492D700D05CE7 /* User.swift */,
+				801D929D1BA5177400D05CE7 /* DAOUser.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -170,6 +184,8 @@
 			isa = PBXGroup;
 			children = (
 				801D92741BA492C200D05CE7 /* Login_ViewController.xib */,
+				801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */,
+				801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -178,6 +194,8 @@
 			isa = PBXGroup;
 			children = (
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
+				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
+				801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -284,7 +302,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				801D92761BA492C200D05CE7 /* Login_ViewController.xib in Resources */,
+				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
+				801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */,
+				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,9 +324,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
+				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
 				801D92781BA492D700D05CE7 /* User.swift in Sources */,
+				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
