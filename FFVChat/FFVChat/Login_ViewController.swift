@@ -8,11 +8,11 @@
 
 import UIKit
 import FBSDKLoginKit
+import Parse
 
 class Login_ViewController: UIViewController, FBSDKLoginButtonDelegate
 {
 
-    @IBOutlet var button: UIButton!
     
     override func viewDidLoad()
     {
@@ -61,7 +61,7 @@ class Login_ViewController: UIViewController, FBSDKLoginButtonDelegate
     
     func returnUserData()
     {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
             if ((error) != nil)
@@ -86,8 +86,4 @@ class Login_ViewController: UIViewController, FBSDKLoginButtonDelegate
         
     }
 
-    @IBAction func loginFaceBook(sender: UIButton)
-    {
-        
-    }
 }

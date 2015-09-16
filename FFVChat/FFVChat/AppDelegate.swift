@@ -21,7 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-        self.window?.rootViewController = login
+        let fRegister = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
+        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        
+        if(DAOUser.isLoged())
+        {
+            self.window?.rootViewController = chat
+        }
+        else
+        {
+            self.window?.rootViewController = login
+        }
+        
         self.window?.makeKeyAndVisible()
         
         Parse.setApplicationId("nxY5lzIPinULd8EmSTxb09vxmVx08tyC1Y2Rt2HK",
