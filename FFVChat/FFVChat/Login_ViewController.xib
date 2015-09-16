@@ -30,8 +30,11 @@
                         <action selector="loginFaceBook:" destination="-1" eventType="touchUpInside" id="Ncs-6P-x9k"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GaN-xj-gNz">
+                    <rect key="frame" x="175" y="93" width="240" height="128"/>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="TEs-uP-EJQ" secondAttribute="centerX" constant="4.5" id="JxA-jI-Zal"/>
                 <constraint firstAttribute="bottom" secondItem="TEs-uP-EJQ" secondAttribute="bottom" constant="55" id="uZ5-eY-f5F"/>

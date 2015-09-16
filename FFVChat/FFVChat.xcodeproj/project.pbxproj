@@ -252,7 +252,6 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = M7KY4TXQRJ;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -510,6 +509,7 @@
 				801D926F1BA4928800D05CE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		801D92701BA4928800D05CE7 /* Build configuration list for PBXNativeTarget "FFVChatTests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +518,7 @@
 				801D92721BA4928800D05CE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
