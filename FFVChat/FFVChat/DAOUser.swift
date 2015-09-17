@@ -7,9 +7,55 @@
 //
 
 import Foundation
+import Parse
 
 class DAOUser
 {
+    
+    class func logIn(username: String, password: String)
+    {
+        PFUser.logInWithUsernameInBackground(username, password:password)
+            {
+            (user: PFUser?, error: NSError?) -> Void in
+            if user != nil {
+                NSNotificationCenter.defaultCenter().postNotificationName("userLogged", object: nil)
+            } else {
+                NSNotificationCenter.defaultCenter().postNotificationName("userNotFound", object: nil)
+            }
+        }
+    }
+    
+    class func registerUser(username: String, email: String, password: String)
+    {
+        var user = PFUser()
+        user.username = username
+        user.password = password
+        user.email = email
+        // other fields can be set just like with PFObject
+        user["trustLevel"] = 100
+        
+        user.signUpInBackgroundWithBlock {
+            (succeeded: Bool, error: NSError?) -> Void in
+            if let error = error {
+                let errorString = error.userInfo?["error"] as? NSString
+                // Show the errorString somewhere and let the user try again.
+            } else {
+                NSNotificationCenter.defaultCenter().postNotificationName("userRegistered", object: nil)
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
     * Funcao que pega a plist existente no main bundle, e copia a mesma
