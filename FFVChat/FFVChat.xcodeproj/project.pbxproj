@@ -34,6 +34,40 @@
 		801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801D929F1BA51E5900D05CE7 /* UserInfo.plist */; };
 		801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */; };
 		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
+		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
+		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
+		F66B29BF1BAB69B300BC43EE /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BE1BAB69B300BC43EE /* Tutorial_PageViewController.swift */; };
+		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
+		F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */; };
+		F66B29C61BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C41BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift */; };
+		F66B29C71BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */; };
+		F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */; };
+		F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */; };
+		F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */; };
+		F66B29CF1BAB6B4E00BC43EE /* Import_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */; };
+		F66B29D21BAB6B8300BC43EE /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */; };
+		F66B29D31BAB6B8300BC43EE /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */; };
+		F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */; };
+		F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */; };
+		F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */; };
+		F66B29DB1BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29D91BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib */; };
+		F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29DC1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift */; };
+		F66B29DF1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29DD1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib */; };
+		F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */; };
+		F66B29E31BAB6D6600BC43EE /* SelectedMidia_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */; };
+		F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29E41BAB6DB800BC43EE /* TakePhoto_ViewController.swift */; };
+		F66B29E81BAB6DED00BC43EE /* ValidateUser_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29E61BAB6DED00BC43EE /* ValidateUser_ViewController.swift */; };
+		F66B29E91BAB6DED00BC43EE /* ValidateUser_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */; };
+		F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */; };
+		F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */; };
+		F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */; };
+		F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29F01BAB6FF800BC43EE /* Notification_View.swift */; };
+		F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29F21BAB702200BC43EE /* ContactManager_View.swift */; };
+		F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29F41BAB703200BC43EE /* MidiaViewer_View.swift */; };
+		F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29F61BAB704D00BC43EE /* Password_View.swift */; };
+		F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */; };
+		F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FA1BAB708800BC43EE /* Search_View.swift */; };
+		F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +112,40 @@
 		801D929F1BA51E5900D05CE7 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
 		801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat_ViewController.swift; sourceTree = "<group>"; };
 		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
+		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
+		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
+		F66B29BE1BAB69B300BC43EE /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
+		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
+		F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoFirst_ViewController.xib; sourceTree = "<group>"; };
+		F66B29C41BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift"; sourceTree = "<group>"; };
+		F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib"; sourceTree = "<group>"; };
+		F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Privacy_ViewController.swift; sourceTree = "<group>"; };
+		F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Privacy_ViewController.xib; sourceTree = "<group>"; };
+		F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import_ViewController.swift; sourceTree = "<group>"; };
+		F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Import_ViewController.xib; sourceTree = "<group>"; };
+		F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
+		F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
+		F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings_ViewController.swift; sourceTree = "<group>"; };
+		F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings_ViewController.xib; sourceTree = "<group>"; };
+		F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverProfile_ViewController.swift; sourceTree = "<group>"; };
+		F66B29D91BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiverProfile_ViewController.xib; sourceTree = "<group>"; };
+		F66B29DC1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMidiaGallery_ViewController.swift; sourceTree = "<group>"; };
+		F66B29DD1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SentMidiaGallery_ViewController.xib; sourceTree = "<group>"; };
+		F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedMidia_ViewController.swift; sourceTree = "<group>"; };
+		F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedMidia_ViewController.xib; sourceTree = "<group>"; };
+		F66B29E41BAB6DB800BC43EE /* TakePhoto_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePhoto_ViewController.swift; sourceTree = "<group>"; };
+		F66B29E61BAB6DED00BC43EE /* ValidateUser_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateUser_ViewController.swift; sourceTree = "<group>"; };
+		F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValidateUser_ViewController.xib; sourceTree = "<group>"; };
+		F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationChat_View.swift; sourceTree = "<group>"; };
+		F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationContact_View.swift; sourceTree = "<group>"; };
+		F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationMidia_View.swift; sourceTree = "<group>"; };
+		F66B29F01BAB6FF800BC43EE /* Notification_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification_View.swift; sourceTree = "<group>"; };
+		F66B29F21BAB702200BC43EE /* ContactManager_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactManager_View.swift; sourceTree = "<group>"; };
+		F66B29F41BAB703200BC43EE /* MidiaViewer_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MidiaViewer_View.swift; sourceTree = "<group>"; };
+		F66B29F61BAB704D00BC43EE /* Password_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Password_View.swift; sourceTree = "<group>"; };
+		F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoom_View.swift; sourceTree = "<group>"; };
+		F66B29FA1BAB708800BC43EE /* Search_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search_View.swift; sourceTree = "<group>"; };
+		F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScreen_View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,8 +252,29 @@
 			isa = PBXGroup;
 			children = (
 				801D92741BA492C200D05CE7 /* Login_ViewController.xib */,
+				F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */,
+				F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */,
 				801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */,
+				F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */,
+				F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */,
+				F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */,
+				F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */,
+				F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */,
+				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
 				801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */,
+				F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */,
+				F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */,
+				F66B29D91BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib */,
+				F66B29F61BAB704D00BC43EE /* Password_View.swift */,
+				F66B29DD1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib */,
+				F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */,
+				F66B29F41BAB703200BC43EE /* MidiaViewer_View.swift */,
+				F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */,
+				F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */,
+				F66B29F01BAB6FF800BC43EE /* Notification_View.swift */,
+				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
+				F66B29FA1BAB708800BC43EE /* Search_View.swift */,
+				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -194,8 +283,21 @@
 			isa = PBXGroup;
 			children = (
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
+				F66B29E61BAB6DED00BC43EE /* ValidateUser_ViewController.swift */,
+				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
+				F66B29BE1BAB69B300BC43EE /* Tutorial_PageViewController.swift */,
+				F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */,
+				F66B29C41BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift */,
+				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
+				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
+				F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */,
 				801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */,
+				F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */,
+				F66B29DC1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift */,
+				F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */,
+				F66B29E41BAB6DB800BC43EE /* TakePhoto_ViewController.swift */,
+				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -302,11 +404,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				801D92761BA492C200D05CE7 /* Login_ViewController.xib in Resources */,
+				F66B29D31BAB6B8300BC43EE /* Contacts_ViewController.xib in Resources */,
 				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
+				F66B29DF1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib in Resources */,
+				F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */,
 				801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */,
+				F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */,
+				F66B29E31BAB6D6600BC43EE /* SelectedMidia_ViewController.xib in Resources */,
+				F66B29DB1BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib in Resources */,
+				F66B29CF1BAB6B4E00BC43EE /* Import_ViewController.xib in Resources */,
+				F66B29E91BAB6DED00BC43EE /* ValidateUser_ViewController.xib in Resources */,
+				F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */,
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
+				F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */,
+				F66B29C71BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,11 +437,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
+				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
+				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
+				F66B29E81BAB6DED00BC43EE /* ValidateUser_ViewController.swift in Sources */,
+				F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */,
+				F66B29C61BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift in Sources */,
+				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */,
+				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
+				F66B29BF1BAB69B300BC43EE /* Tutorial_PageViewController.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
+				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
+				F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */,
+				F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */,
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
+				F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */,
+				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
+				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
+				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
+				F66B29D21BAB6B8300BC43EE /* Contacts_ViewController.swift in Sources */,
+				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
+				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
+				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
+				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				801D92781BA492D700D05CE7 /* User.swift in Sources */,
+				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
+				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
