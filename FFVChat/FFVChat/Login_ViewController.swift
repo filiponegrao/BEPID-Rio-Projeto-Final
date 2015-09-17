@@ -10,75 +10,33 @@ import UIKit
 import FBSDKLoginKit
 import Parse
 
-class Login_ViewController: UIViewController, FBSDKLoginButtonDelegate
+class Login_ViewController: UIViewController, UITextFieldDelegate
 {
 
+    @IBOutlet var loginButton: UIButton!
+    
+    @IBOutlet var emailField: UITextField!
+    
+    @IBOutlet var passwordField: UITextField!
+    
+    @IBOutlet var registerButton: UIButton!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        if (FBSDKAccessToken.currentAccessToken() != nil)
-        {
-            // User is already logged in, do work such as go to next view controller.
-        }
-        else
-        {
-            let loginView : FBSDKLoginButton = FBSDKLoginButton()
-            self.view.addSubview(loginView)
-            loginView.center = self.view.center
-            loginView.readPermissions = ["public_profile", "email", "user_friends"]
-            loginView.delegate = self
-        }
-
-    }
-    
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!)
-    {
-        println("User Logged In")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: "userLogged", object: nil)
         
-        if ((error) != nil)
-        {
-            // Process error
-        }
-        else if result.isCancelled {
-            // Handle cancellations
-        }
-        else {
-            // If you ask for multiple permissions at once, you
-            // should check if specific permissions missing
-            if result.grantedPermissions.contains("email")
-            {
-                // Do work
-            }
-        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: "userNotFound", object: nil)
+
+        
     }
     
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
     {
-        println("User Logged Out")
+        self.view.endEditing(true)
     }
     
-    func returnUserData()
-    {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
-        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
-            
-            if ((error) != nil)
-            {
-                // Process error
-                println("Error: \(error)")
-            }
-            else
-            {
-                println("fetched user: \(result)")
-                let userName : NSString = result.valueForKey("name") as! NSString
-                println("User Name is: \(userName)")
-                let userEmail : NSString = result.valueForKey("email") as! NSString
-                println("User Email is: \(userEmail)")
-            }
-        })
-    }
 
     override func didReceiveMemoryWarning()
     {
@@ -86,4 +44,36 @@ class Login_ViewController: UIViewController, FBSDKLoginButtonDelegate
         
     }
 
+    @IBAction func login(sender: UIButton)
+    {
+        if(self.emailField.text != "" && self.passwordField != "")
+        {
+            DAOUser.logIn(self.emailField.text, password: self.passwordField.text)
+            
+            
+        }
+        else
+        {
+            let alert = UIAlertView(title: "Preencha corretamente os campos", message: "Preencha corretamente os campos", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+        }
+    }
+    
+    func userLogged()
+    {
+        var chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        self.presentViewController(chat, animated: true, completion: nil)
+    }
+    
+    
+    func userNotLogged()
+    {
+        let alert = UIAlertView(title: "Usuario nao cadastrado", message: "O usuario nao foi encontrado ou a senha esta incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    @IBAction func register(sender: UIButton)
+    {
+        
+    }
 }
