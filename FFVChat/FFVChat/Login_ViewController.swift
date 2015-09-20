@@ -32,9 +32,11 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
+
     }
     
 
@@ -48,7 +50,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         if(self.emailField.text != "" && self.passwordField != "")
         {
-            DAOUser.logIn(self.emailField.text, password: self.passwordField.text)
+            DAOUser.logIn(self.emailField.text!, password: self.passwordField.text!)
             
             
         }
@@ -61,7 +63,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func userLogged()
     {
-        var chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         self.presentViewController(chat, animated: true, completion: nil)
     }
     

@@ -17,17 +17,55 @@ class DAOUser
         PFUser.logInWithUsernameInBackground(username, password:password)
             {
             (user: PFUser?, error: NSError?) -> Void in
-            if user != nil {
-                NSNotificationCenter.defaultCenter().postNotificationName("userLogged", object: nil)
-            } else {
+            if user != nil
+            {
+                //Searching for mail
+                let query = PFUser.query()
+                query!.whereKey("username", equalTo: username)
+                
+                query!.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+                    
+                    if error == nil
+                    {
+                        if let objects = objects as? [PFObject]
+                        {
+                            let user = objects[0]
+                            let email = user["email"] as! String
+                            let trustLevel = user["trustLevel"] as! Int
+                            DAOUser.setEmail(email)
+                            DAOUser.setUserName(username)
+                            DAOUser.setPassword(password)
+                            DAOUser.setTrustLevel(trustLevel)
+                            NSNotificationCenter.defaultCenter().postNotificationName("userLogged", object: nil)
+                        }
+                    }
+                    else
+                    {
+                        print("Error: \(error!) \(error!.userInfo)")
+                    }
+                }
+                
+            }
+            else
+            {
                 NSNotificationCenter.defaultCenter().postNotificationName("userNotFound", object: nil)
             }
         }
     }
     
+    
+    class func logOut()
+    {
+        PFUser.logOut()
+        DAOUser.setEmail("")
+        DAOUser.setLastSync("")
+        DAOUser.setPassword("")
+        DAOUser.setTrustLevel(-1)
+    }
+    
     class func registerUser(username: String, email: String, password: String)
     {
-        var user = PFUser()
+        let user = PFUser()
         user.username = username
         user.password = password
         user.email = email
@@ -37,25 +75,15 @@ class DAOUser
         user.signUpInBackgroundWithBlock {
             (succeeded: Bool, error: NSError?) -> Void in
             if let error = error {
-                let errorString = error.userInfo?["error"] as? NSString
+                let errorString = error.userInfo["error"] as? NSString
+                print(errorString)
                 // Show the errorString somewhere and let the user try again.
             } else {
                 NSNotificationCenter.defaultCenter().postNotificationName("userRegistered", object: nil)
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     /**
     * Funcao que pega a plist existente no main bundle, e copia a mesma
@@ -76,19 +104,27 @@ class DAOUser
             // If it doesn't, copy it from the default file in the Bundle
             if let bundlePath = NSBundle.mainBundle().pathForResource("UserInfo", ofType: "plist")
             {
-                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
-                fileManager.copyItemAtPath(bundlePath, toPath: path, error: nil)
-                println("User info criado com sucesso!...")
+//                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
+            
+//                fileManager.copyItemAtPath(bundlePath, toPath: path, error: nil)
+                
+                do { try fileManager.copyItemAtPath(bundlePath, toPath: path)
+                    print("User info criado com sucesso!...")
+                }
+                catch
+                {
+                    print("User could not be created for some reason - bytes or whatever")
+                }
             }
             else
             {
-                println("UserInfo.plist not found. Please, make sure it is part of the bundle.")
+                print("UserInfo.plist not found. Please, make sure it is part of the bundle.")
             }
             
         }
         else
         {
-            println("UserInfo.plist already exits at path.")
+            print("UserInfo.plist already exits at path.")
             // use this to delete file from documents directory
             //fileManager.removeItemAtPath(path, error: nil)
         }
@@ -102,15 +138,21 @@ class DAOUser
     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
     * enquanto as de escrever utilizam o mutable dictionary
     **/
-    class func getUserName() -> String
+    class func getUserName() -> String!
     {
         
-        var documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        var content = NSDictionary(contentsOfFile: path)
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSDictionary(contentsOfFile: path)
+        
         if(content == nil)
         {
-            return ""
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return ""
+            }
         }
         
         let nome = content!.valueForKey("nome") as? String
@@ -132,13 +174,18 @@ class DAOUser
     **/
     class func getEmail() -> String
     {
-        var documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        var content = NSMutableDictionary(contentsOfFile: path)
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
-            return ""
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return ""
+            }
         }
         
         let email = content!.valueForKey("email") as? String
@@ -154,13 +201,18 @@ class DAOUser
     
     class func getLastSync() -> String
     {
-        var documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        var content = NSMutableDictionary(contentsOfFile: path)
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
-            return ""
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return ""
+            }
         }
         
         let sync = content!.valueForKey("ultimaSincronizacao") as? String
@@ -174,15 +226,74 @@ class DAOUser
     }
     
     
-    class func setLastSync(sync: String)
+    class func getTrustLevel() -> Int
     {
-        var documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        var content = NSMutableDictionary(contentsOfFile: path)
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
-            return
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return -1
+            }
+        }
+        
+        let tl = content!.valueForKey("trustLevel") as? Int
+        
+        if(tl == nil)
+        {
+            return -1
+        }
+        
+        return tl!
+    }
+    
+    
+    class func getPassword() -> String
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return ""
+            }
+        }
+        
+        let password = content!.valueForKey("password") as? String
+        
+        if(password == nil)
+        {
+            return ""
+        }
+        
+        return password!
+    }
+    
+
+    class func setLastSync(sync: String)
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
         }
         
         content!.setValue(sync, forKey: "ultimaSincronizacao")
@@ -191,13 +302,18 @@ class DAOUser
     
     class func setUserName(name: String)
     {
-        var documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        var content = NSMutableDictionary(contentsOfFile: path)
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
-            return
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
         }
         
         content!.setValue(name, forKey: "nome")
@@ -207,13 +323,18 @@ class DAOUser
     
     class func setEmail(email: String)
     {
-        var documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        var content = NSMutableDictionary(contentsOfFile: path)
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
-            return
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
         }
         
         content!.setValue(email, forKey: "email")
@@ -222,9 +343,52 @@ class DAOUser
     }
     
     
+    class func setPassword(password: String)
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
+        }
+        
+        content!.setValue(password, forKey: "password")
+        content!.writeToFile(path, atomically: true)
+        
+    }
+    
+    
+    class func setTrustLevel(trustLevel: Int)
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
+        }
+        
+        content!.setValue(trustLevel, forKey: "trustLevel")
+        content!.writeToFile(path, atomically: true)
+        
+    }
+    
     class func isLoged() -> Bool
     {
-        let email = self.getEmail()
+        let email = self.getUserName()
         if(email != "")
         {
             return true
@@ -236,3 +400,4 @@ class DAOUser
     }
 
 }
+

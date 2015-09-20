@@ -14,7 +14,10 @@ class Chat_ViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
+        print(DAOUser.getUserName())
+        print(DAOUser.getEmail())
+        print(DAOUser.getPassword())
+        print(DAOUser.getTrustLevel())
     }
 
     override func didReceiveMemoryWarning()
@@ -23,4 +26,9 @@ class Chat_ViewController: UIViewController
     }
 
 
+    @IBAction func logOut(sender: UIButton)
+    {
+        DAOUser.logOut()
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

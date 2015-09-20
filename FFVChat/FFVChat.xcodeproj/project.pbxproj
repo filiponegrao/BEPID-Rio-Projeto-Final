@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8019CB3D1BADDD780017CD7A /* FixedValues.swift */; settings = {ASSET_TAGS = (); }; };
+		8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */; };
+		8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB411BAE1D7A0017CD7A /* libz.tbd */; };
 		801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92531BA4928800D05CE7 /* AppDelegate.swift */; };
 		801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801D925A1BA4928800D05CE7 /* Images.xcassets */; };
 		801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D925C1BA4928800D05CE7 /* LaunchScreen.xib */; };
@@ -24,8 +27,6 @@
 		801D928B1BA4984300D05CE7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D928A1BA4984300D05CE7 /* Security.framework */; };
 		801D928D1BA4984800D05CE7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D928C1BA4984800D05CE7 /* StoreKit.framework */; };
 		801D928F1BA4985000D05CE7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D928E1BA4985000D05CE7 /* SystemConfiguration.framework */; };
-		801D92911BA4985900D05CE7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92901BA4985900D05CE7 /* libz.dylib */; };
-		801D92931BA4986400D05CE7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92921BA4986400D05CE7 /* libsqlite3.dylib */; };
 		801D92961BA4A21A00D05CE7 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */; };
 		801D92981BA4A7E900D05CE7 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */; };
 		801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */; };
@@ -81,6 +82,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8019CB3D1BADDD780017CD7A /* FixedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedValues.swift; sourceTree = "<group>"; };
+		8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		8019CB411BAE1D7A0017CD7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		801D924E1BA4928800D05CE7 /* FFVChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFVChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		801D92521BA4928800D05CE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		801D92531BA4928800D05CE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,8 +106,6 @@
 		801D928A1BA4984300D05CE7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		801D928C1BA4984800D05CE7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		801D928E1BA4985000D05CE7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		801D92901BA4985900D05CE7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		801D92921BA4986400D05CE7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRegister_ViewController.swift; sourceTree = "<group>"; };
@@ -153,8 +155,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				801D92931BA4986400D05CE7 /* libsqlite3.dylib in Frameworks */,
-				801D92911BA4985900D05CE7 /* libz.dylib in Frameworks */,
+				8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */,
+				8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */,
 				801D928F1BA4985000D05CE7 /* SystemConfiguration.framework in Frameworks */,
 				801D928D1BA4984800D05CE7 /* StoreKit.framework in Frameworks */,
 				801D92981BA4A7E900D05CE7 /* FBSDKLoginKit.framework in Frameworks */,
@@ -180,6 +182,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8019CB3B1BAD16280017CD7A /* Visual Itens */ = {
+			isa = PBXGroup;
+			children = (
+				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
+				F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */,
+				F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */,
+				F66B29F61BAB704D00BC43EE /* Password_View.swift */,
+				F66B29F41BAB703200BC43EE /* MidiaViewer_View.swift */,
+				F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */,
+				F66B29F01BAB6FF800BC43EE /* Notification_View.swift */,
+				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
+				F66B29FA1BAB708800BC43EE /* Search_View.swift */,
+				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
+			);
+			name = "Visual Itens";
+			sourceTree = "<group>";
+		};
+		8019CB3C1BAD16320017CD7A /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				801D92741BA492C200D05CE7 /* Login_ViewController.xib */,
+				F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */,
+				F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */,
+				801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */,
+				F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */,
+				F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */,
+				F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */,
+				F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */,
+				F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */,
+				801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */,
+				F66B29D91BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib */,
+				F66B29DD1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib */,
+				F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */,
+				F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */,
+			);
+			name = Screens;
+			sourceTree = "<group>";
+		};
 		801D92451BA4928800D05CE7 = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +284,7 @@
 			children = (
 				801D92771BA492D700D05CE7 /* User.swift */,
 				801D929D1BA5177400D05CE7 /* DAOUser.swift */,
+				8019CB3D1BADDD780017CD7A /* FixedValues.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -251,30 +292,8 @@
 		801D927A1BA492EC00D05CE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				801D92741BA492C200D05CE7 /* Login_ViewController.xib */,
-				F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */,
-				F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */,
-				801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */,
-				F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */,
-				F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */,
-				F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */,
-				F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */,
-				F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */,
-				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
-				801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */,
-				F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */,
-				F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */,
-				F66B29D91BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib */,
-				F66B29F61BAB704D00BC43EE /* Password_View.swift */,
-				F66B29DD1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib */,
-				F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */,
-				F66B29F41BAB703200BC43EE /* MidiaViewer_View.swift */,
-				F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */,
-				F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */,
-				F66B29F01BAB6FF800BC43EE /* Notification_View.swift */,
-				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
-				F66B29FA1BAB708800BC43EE /* Search_View.swift */,
-				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
+				8019CB3C1BAD16320017CD7A /* Screens */,
+				8019CB3B1BAD16280017CD7A /* Visual Itens */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -305,10 +324,10 @@
 		801D92941BA4986D00D05CE7 /* FrameWorks */ = {
 			isa = PBXGroup;
 			children = (
+				8019CB411BAE1D7A0017CD7A /* libz.tbd */,
+				8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */,
 				801D92971BA4A7E900D05CE7 /* FBSDKLoginKit.framework */,
 				801D92951BA4A21A00D05CE7 /* FBSDKCoreKit.framework */,
-				801D92921BA4986400D05CE7 /* libsqlite3.dylib */,
-				801D92901BA4985900D05CE7 /* libz.dylib */,
 				801D928E1BA4985000D05CE7 /* SystemConfiguration.framework */,
 				801D928C1BA4984800D05CE7 /* StoreKit.framework */,
 				801D928A1BA4984300D05CE7 /* Security.framework */,
@@ -367,7 +386,7 @@
 		801D92461BA4928800D05CE7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = FilipoNegrao;
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
@@ -455,6 +474,7 @@
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
 				F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
+				8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
 				F66B29D21BAB6B8300BC43EE /* Contacts_ViewController.swift in Sources */,
@@ -520,6 +540,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -594,6 +615,7 @@
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -611,6 +633,7 @@
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -630,6 +653,7 @@
 				);
 				INFOPLIST_FILE = FFVChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FFVChat.app/FFVChat";
 			};
@@ -645,6 +669,7 @@
 				);
 				INFOPLIST_FILE = FFVChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FFVChat.app/FFVChat";
 			};

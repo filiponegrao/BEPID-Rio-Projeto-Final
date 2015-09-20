@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-        let fRegister = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         
         if(DAOUser.isLoged())
@@ -56,15 +55,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         if application.respondsToSelector("registerUserNotificationSettings:")
         {
-            let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
-            let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+            let userNotificationTypes = (UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Sound.rawValue)
+            
+            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.init(rawValue: userNotificationTypes), categories: nil)
             application.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
         }
         else
         {
-            let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
-            application.registerForRemoteNotificationTypes(types)
+//            let types = UIRemoteNotificationType.Badge.rawValue | UIRemoteNotificationType.Alert.rawValue | UIRemoteNotificationType.Sound.rawValue
+            
+            let type = UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Sound.rawValue
+            
+            application.registerUserNotificationSettings(UIUserNotificationSettings.init(forTypes: UIUserNotificationType.init(rawValue: type), categories: nil))
         }
         
         //Facebook
@@ -72,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     }
     
     //Facebook
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
     {
             return FBSDKApplicationDelegate.sharedInstance().application( application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
@@ -109,9 +112,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         if error.code == 3010 {
-            println("Push notifications are not supported in the iOS Simulator.")
+            print("Push notifications are not supported in the iOS Simulator.")
         } else {
-            println("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
         }
     }
     
