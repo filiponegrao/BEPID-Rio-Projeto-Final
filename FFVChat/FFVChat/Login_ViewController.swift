@@ -25,9 +25,9 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: "userLogged", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: "userNotFound", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: UserCondition.userNotFound.rawValue, object: nil)
 
         
     }
@@ -76,6 +76,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func register(sender: UIButton)
     {
-        
+        let register = AppRegister_ViewController(nibName: "AppRegister_ViewController", bundle: nil)
+        self.presentViewController(register, animated: true, completion: nil)
     }
 }

@@ -11,6 +11,10 @@ import UIKit
 class FacebookRegister_ViewController: UIViewController
 {
 
+    @IBOutlet var labelUsername: UITextField!
+    
+    @IBOutlet var labelPassword: UITextField!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -22,4 +26,8 @@ class FacebookRegister_ViewController: UIViewController
         super.didReceiveMemoryWarning()
     }
 
+    @IBAction func register(sender: UIButton)
+    {
+        
+    }
 }

@@ -8,19 +8,59 @@
 
 import UIKit
 
-class AppRegister_ViewController: UIViewController {
+class AppRegister_ViewController: UIViewController, UITextFieldDelegate
+{
+    @IBOutlet var photo: UIImageView!
 
-    override func viewDidLoad() {
+    @IBOutlet var labelEmail: UITextField!
+    
+    @IBOutlet var labelUsername: UITextField!
+    
+    @IBOutlet var labelSenha: UITextField!
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
+    @IBAction func register(sender: UIButton)
+    {
+        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: photo.image!)
+    }
 
+    func next()
+    {
+        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        self.presentViewController(chat, animated: true, completion: nil)
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        self.view.endEditing(true)
+        
+    }
 
+    func userAlreadyRegistered()
+    {
+        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o nome de usuario desejado", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    
+    func emailInUse()
+    {
+        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o email utilizado", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
 }

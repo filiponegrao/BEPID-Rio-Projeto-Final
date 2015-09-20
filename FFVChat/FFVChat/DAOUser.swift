@@ -36,7 +36,7 @@ class DAOUser
                             DAOUser.setUserName(username)
                             DAOUser.setPassword(password)
                             DAOUser.setTrustLevel(trustLevel)
-                            NSNotificationCenter.defaultCenter().postNotificationName("userLogged", object: nil)
+                            NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                         }
                     }
                     else
@@ -48,7 +48,7 @@ class DAOUser
             }
             else
             {
-                NSNotificationCenter.defaultCenter().postNotificationName("userNotFound", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userNotFound.rawValue, object: nil)
             }
         }
     }
@@ -63,23 +63,36 @@ class DAOUser
         DAOUser.setTrustLevel(-1)
     }
     
-    class func registerUser(username: String, email: String, password: String)
+    class func registerUser(username: String, email: String, password: String, photo: UIImage)
     {
         let user = PFUser()
         user.username = username
         user.password = password
         user.email = email
+    
         // other fields can be set just like with PFObject
         user["trustLevel"] = 100
         
         user.signUpInBackgroundWithBlock {
             (succeeded: Bool, error: NSError?) -> Void in
-            if let error = error {
+            if let error = error
+            {
                 let errorString = error.userInfo["error"] as? NSString
                 print(errorString)
+                if(error.code == 202)
+                {
+                    NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userAlreadyExist.rawValue, object: nil)
+                }
+                else if(error.code == 203)
+                {
+                    NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.emailInUse.rawValue, object: nil)
+                }
                 // Show the errorString somewhere and let the user try again.
-            } else {
-                NSNotificationCenter.defaultCenter().postNotificationName("userRegistered", object: nil)
+            }
+            else
+            {
+                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userRegistered.rawValue, object: nil)
+                self.logIn(username, password: password)
             }
         }
     }

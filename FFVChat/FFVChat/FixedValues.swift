@@ -10,6 +10,23 @@ import Foundation
 
 
 
+enum UserCondition : String
+{
+    case userLogged = "userLogged"
+    
+    case wrongPassword = "wrongPassword"
+    
+    case userNotFound = "userNotFound"
+    
+    case emailInUse = "emailInUse"
+    
+    case userLoggedOut = "userLoggedOut"
+    
+    case userAlreadyExist = "userAlreadyExist"
+    
+    case userRegistered = "userRegistered"
+}
+
 
 extension String {
     

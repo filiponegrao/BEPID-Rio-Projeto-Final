@@ -29,6 +29,7 @@ class Chat_ViewController: UIViewController
     @IBAction func logOut(sender: UIButton)
     {
         DAOUser.logOut()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
+        self.presentViewController(login, animated: true, completion: nil)
     }
 }
