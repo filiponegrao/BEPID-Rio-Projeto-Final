@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import FBSDKCoreKit
+import ParseFacebookUtilsV4
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
@@ -37,7 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         Parse.setApplicationId("nxY5lzIPinULd8EmSTxb09vxmVx08tyC1Y2Rt2HK",
             clientKey: "ULiq579xkqwfJF3OKjMJeSLYX42UQ54jvEydaB8s")
         
-        // Register for Push Notitications
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+
+        
+        // Register for Push Notitications *******************************
+        
         if application.applicationState != UIApplicationState.Background {
             // Track an app open here if we launch with a push, unless
             // "content_available" was used to trigger a background push (introduced in iOS 7).
@@ -63,15 +68,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else
         {
-//            let types = UIRemoteNotificationType.Badge.rawValue | UIRemoteNotificationType.Alert.rawValue | UIRemoteNotificationType.Sound.rawValue
-            
             let type = UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Sound.rawValue
             
             application.registerUserNotificationSettings(UIUserNotificationSettings.init(forTypes: UIUserNotificationType.init(rawValue: type), categories: nil))
         }
+        // Fim das configuracoes de notificacao ********************************
         
-        //Facebook
-        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        return true
+        
     }
     
     //Facebook
@@ -79,6 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
             return FBSDKApplicationDelegate.sharedInstance().application( application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
+    
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -96,6 +101,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        FBSDKAppEvents.activateApp()
+
     }
     
     func applicationWillTerminate(application: UIApplication) {

@@ -8,11 +8,16 @@
 
 import Foundation
 import Parse
+import ParseFacebookUtilsV4
 
 class DAOUser
 {
-    
-    class func logIn(username: String, password: String)
+    /* Funcao assincrona que executa o login com o parse;
+     * A funcao nao retorna nenhuma condicao de retorno,
+     * entretanto ao executar o login emite uma notificacao
+     * contida em UserConditions
+     */
+    class func loginParse(username: String, password: String)
     {
         PFUser.logInWithUsernameInBackground(username, password:password)
             {
@@ -53,14 +58,52 @@ class DAOUser
         }
     }
     
+    /* Funcao assincrona que executa o login no Parse
+     * via Facebook (Parse é do Facebook);
+     * A funcao nao retorna nenhuma condicao de retorno,
+     * entretanto ao executar o login emite uma notificacao
+     * contida em UserConditions
+     */
+    class func loginFaceParse()
+    {
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(nil) {
+            (user: PFUser?, error: NSError?) -> Void in
+            if let user = user
+            {
+                if user.isNew
+                {
+                    print("User signed up and logged in through Facebook!")
+                    user.setValue("usernames", forKey: "username")
+                }
+                else
+                {
+                    print("User logged in through Facebook!")
+                }
+            }
+            else
+            {
+                print("Uh oh. The user cancelled the Facebook login.")
+            }
+        }
+    }
     
-    class func logOut()
+    
+    /* Funcao efetua o logout de um usuario!
+     * Sua condicao de retorno é um par : booleano
+     * e string, onde o primeiro indica se o logout
+     * foi efeutaod corretamente e o segundo a descricao
+     * de um possivel erro
+     */
+    class func logOut() -> (done: Bool, error: String)
     {
         PFUser.logOut()
+        DAOUser.setUserName("")
         DAOUser.setEmail("")
         DAOUser.setLastSync("")
         DAOUser.setPassword("")
         DAOUser.setTrustLevel(-1)
+        
+        return (done: true, error: "")
     }
     
     class func registerUser(username: String, email: String, password: String, photo: UIImage)
@@ -92,7 +135,7 @@ class DAOUser
             else
             {
                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userRegistered.rawValue, object: nil)
-                self.logIn(username, password: password)
+                self.loginParse(username, password: password)
             }
         }
     }
