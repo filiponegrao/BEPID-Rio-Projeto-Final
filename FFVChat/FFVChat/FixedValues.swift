@@ -10,24 +10,7 @@ import Foundation
 
 
 
-enum UserCondition : String
-{
-    case userLogged = "userLogged"
-    
-    case wrongPassword = "wrongPassword"
-    
-    case userNotFound = "userNotFound"
-    
-    case emailInUse = "emailInUse"
-    
-    case userLoggedOut = "userLoggedOut"
-    
-    case userAlreadyExist = "userAlreadyExist"
-    
-    case userRegistered = "userRegistered"
-    
-    case passwordMissing = "passwordMissing"
-}
+
 
 
 extension String {
@@ -79,5 +62,13 @@ extension String {
         let nsSt = self as NSString
         
         return nsSt.stringByAppendingPathExtension(ext)
+    }
+    
+    func replace(string:String, replacement:String) -> String {
+        return self.stringByReplacingOccurrencesOfString(string, withString: replacement, options: NSStringCompareOptions.LiteralSearch, range: nil)
+    }
+    
+    func removeWhitespace() -> String {
+        return self.replace(" ", replacement: "")
     }
 }

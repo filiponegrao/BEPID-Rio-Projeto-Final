@@ -10,6 +10,27 @@ import Foundation
 import Parse
 import ParseFacebookUtilsV4
 
+
+enum UserCondition : String
+{
+    case userLogged = "userLogged"
+    
+    case wrongPassword = "wrongPassword"
+    
+    case userNotFound = "userNotFound"
+    
+    case emailInUse = "emailInUse"
+    
+    case userLoggedOut = "userLoggedOut"
+    
+    case userAlreadyExist = "userAlreadyExist"
+    
+    case userRegistered = "userRegistered"
+    
+    case passwordMissing = "passwordMissing"
+}
+
+
 class DAOUser
 {
     /* Funcao assincrona que executa o login com o parse;
@@ -74,7 +95,7 @@ class DAOUser
                     print("Novo usuario cadastrado pelo Facebook")
                     user.setValue(100, forKey: "trustLevel")
                     user.save()
-                    self.configFaceUser()
+                    self.loadFaceInfo()
                 }
                 else
                 {
@@ -93,7 +114,7 @@ class DAOUser
      * informacoes do perfil do facebook ativo como,
      * imagem de perfil, amigos etc
      */
-    class func configFaceUser()
+    class func loadFaceInfo()
     {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
@@ -105,10 +126,9 @@ class DAOUser
             }
             else
             {
-//                let userName : NSString = result.valueForKey("name") as! NSString
+                let userName : NSString = result.valueForKey("name") as! NSString
                 let userEmail : NSString = result.valueForKey("email") as! NSString
-                let id = result.valueForKey("id")
-//                PFUser.currentUser()?.setValue(userName, forKey: "username")
+                let id = result.valueForKey("id") as! String
                 
                 let pictureURL = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
                 
@@ -116,29 +136,34 @@ class DAOUser
                 let URLRequestNeeded = NSURLRequest(URL: URLRequest!)
                 
                 NSURLConnection.sendAsynchronousRequest(URLRequestNeeded, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse? ,data: NSData?, error: NSError?) -> Void in
-                    if error == nil {
+                    if error == nil
+                    {
                         let picture = PFFile(data: data!)
+                        PFUser.currentUser()?.setValue(userName, forKey: "username")
                         PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
-                        PFUser.currentUser()!.saveInBackground()
+                        PFUser.currentUser()?.setValue(userEmail, forKey: "email")
+                        PFUser.currentUser()!.save()
+                        
+                        let image = UIImage(data: data!)
+                        DAOUser.setProfileImage(image!)
+                        DAOUser.setEmail(userEmail as String)
+                        DAOUser.setUserName(userName as String)
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
                     }
-                    else {
+                    else
+                    {
                         print("Error: \(error!.localizedDescription)")
                     }
                 })
-                
-                
-                PFUser.currentUser()?.setValue(userEmail, forKey: "email")
-                PFUser.currentUser()?.save()
-                DAOUser.setEmail(userEmail as String)
-                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
             }
         })
     }
     
-    
-    
-    
-    
+    //TO DO
+    class func configUserFace()
+    {
+        
+    }
     
     /* Funcao efetua o logout de um usuario!
      * Sua condicao de retorno é um par : booleano
