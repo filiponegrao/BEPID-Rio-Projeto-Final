@@ -25,6 +25,8 @@ enum UserCondition : String
     case userAlreadyExist = "userAlreadyExist"
     
     case userRegistered = "userRegistered"
+    
+    case passwordMissing = "passwordMissing"
 }
 
 

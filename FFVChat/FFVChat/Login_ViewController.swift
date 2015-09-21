@@ -28,6 +28,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: UserCondition.userNotFound.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "goValidation", name: UserCondition.passwordMissing.rawValue, object: nil)
 
         
     }
@@ -83,4 +85,16 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         DAOUser.loginFaceParse()
     }
+    
+    func goValidation()
+    {
+        let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
+        self.presentViewController(validate, animated: true, completion: nil)
+    }
+    
+    
+    
+    
+    
+    
 }

@@ -49,7 +49,6 @@ class DAOUser
                         print("Error: \(error!) \(error!.userInfo)")
                     }
                 }
-                
             }
             else
             {
@@ -66,18 +65,20 @@ class DAOUser
      */
     class func loginFaceParse()
     {
-        PFFacebookUtils.logInInBackgroundWithReadPermissions(nil) {
+        PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"]) {
             (user: PFUser?, error: NSError?) -> Void in
             if let user = user
             {
                 if user.isNew
                 {
-                    print("User signed up and logged in through Facebook!")
-                    user.setValue("usernames", forKey: "username")
+                    print("Novo usuario cadastrado pelo Facebook")
+                    user.setValue(100, forKey: "trustLevel")
+                    user.save()
+                    self.configFaceUser()
                 }
                 else
                 {
-                    print("User logged in through Facebook!")
+                    print("usuario logado pelo Facebook")
                 }
             }
             else
@@ -86,6 +87,57 @@ class DAOUser
             }
         }
     }
+    
+    /* Funcao que é chamada logo apos o cliente efetuar
+     * o login com o parse via Facebook, busca as 
+     * informacoes do perfil do facebook ativo como,
+     * imagem de perfil, amigos etc
+     */
+    class func configFaceUser()
+    {
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
+        graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+            
+            if ((error) != nil)
+            {
+                // Process error
+                print("Error: \(error)")
+            }
+            else
+            {
+//                let userName : NSString = result.valueForKey("name") as! NSString
+                let userEmail : NSString = result.valueForKey("email") as! NSString
+                let id = result.valueForKey("id")
+//                PFUser.currentUser()?.setValue(userName, forKey: "username")
+                
+                let pictureURL = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
+                
+                let URLRequest = NSURL(string: pictureURL)
+                let URLRequestNeeded = NSURLRequest(URL: URLRequest!)
+                
+                NSURLConnection.sendAsynchronousRequest(URLRequestNeeded, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse? ,data: NSData?, error: NSError?) -> Void in
+                    if error == nil {
+                        let picture = PFFile(data: data!)
+                        PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
+                        PFUser.currentUser()!.saveInBackground()
+                    }
+                    else {
+                        print("Error: \(error!.localizedDescription)")
+                    }
+                })
+                
+                
+                PFUser.currentUser()?.setValue(userEmail, forKey: "email")
+                PFUser.currentUser()?.save()
+                DAOUser.setEmail(userEmail as String)
+                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
+            }
+        })
+    }
+    
+    
+    
+    
     
     
     /* Funcao efetua o logout de um usuario!
@@ -106,6 +158,14 @@ class DAOUser
         return (done: true, error: "")
     }
     
+    
+    /* Funcao que cadatra manualmente um novo
+     * usuario no Parse. Possui um certo delay,
+     * por nao usar callback, nao retorna nada,
+     * mas apos o sucesso envia uma notifiacao
+     * contida em uma das notificacoes em
+     * UserCondition
+     */
     class func registerUser(username: String, email: String, password: String, photo: UIImage)
     {
         let user = PFUser()
@@ -154,16 +214,12 @@ class DAOUser
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist")
         let fileManager = NSFileManager.defaultManager()
         
-        //check if file exists
+        //Cria a plist na memoria do celular
         if(!fileManager.fileExistsAtPath(path))
         {
             // If it doesn't, copy it from the default file in the Bundle
             if let bundlePath = NSBundle.mainBundle().pathForResource("UserInfo", ofType: "plist")
             {
-//                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
-            
-//                fileManager.copyItemAtPath(bundlePath, toPath: path, error: nil)
-                
                 do { try fileManager.copyItemAtPath(bundlePath, toPath: path)
                     print("User info criado com sucesso!...")
                 }
@@ -184,7 +240,6 @@ class DAOUser
             // use this to delete file from documents directory
             //fileManager.removeItemAtPath(path, error: nil)
         }
-        
     }
     
     
@@ -335,6 +390,18 @@ class DAOUser
         return password!
     }
     
+    
+    class func getProfileImage() -> UIImage?
+    {
+        let userMail = self.getEmail()
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("\(userMail)Photo") as String
+        
+        let image = UIImage(contentsOfFile: path)
+        
+        return image
+        
+    }
 
     class func setLastSync(sync: String)
     {
@@ -439,6 +506,17 @@ class DAOUser
         
         content!.setValue(trustLevel, forKey: "trustLevel")
         content!.writeToFile(path, atomically: true)
+        
+    }
+    
+    
+    class func setProfileImage(image:UIImage)
+    {
+        let mailUser = self.getEmail()
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("\(mailUser)Photo") as String
+        
+        UIImagePNGRepresentation(image)?.writeToFile(path, atomically: true)
         
     }
     

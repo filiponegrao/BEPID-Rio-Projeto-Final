@@ -74,8 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         // Fim das configuracoes de notificacao ********************************
         
-        return true
-        
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)        
     }
     
     //Facebook
