@@ -33,11 +33,11 @@ enum UserCondition : String
 
 class DAOUser
 {
-    /* Funcao assincrona que executa o login com o parse;
-     * A funcao nao retorna nenhuma condicao de retorno,
-     * entretanto ao executar o login emite uma notificacao
-     * contida em UserConditions
-     */
+    /** Funcao assincrona que executa o login com o parse;
+      * A funcao nao retorna nenhuma condicao de retorno,
+      * entretanto ao executar o login emite uma notificacao
+      * contida em UserConditions
+      */
     class func loginParse(username: String, password: String)
     {
         PFUser.logInWithUsernameInBackground(username, password:password)
@@ -78,12 +78,12 @@ class DAOUser
         }
     }
     
-    /* Funcao assincrona que executa o login no Parse
-     * via Facebook (Parse é do Facebook);
-     * A funcao nao retorna nenhuma condicao de retorno,
-     * entretanto ao executar o login emite uma notificacao
-     * contida em UserConditions
-     */
+    /** Funcao assincrona que executa o login no Parse
+      * via Facebook (Parse é do Facebook);
+      * A funcao nao retorna nenhuma condicao de retorno,
+      * entretanto ao executar o login emite uma notificacao
+      * contida em UserConditions
+      */
     class func loginFaceParse()
     {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"]) {
@@ -109,11 +109,11 @@ class DAOUser
         }
     }
     
-    /* Funcao que é chamada logo apos o cliente efetuar
-     * o login com o parse via Facebook, busca as 
-     * informacoes do perfil do facebook ativo como,
-     * imagem de perfil, amigos etc
-     */
+    /** Funcao que é chamada logo apos o cliente efetuar
+      * o login com o parse via Facebook, busca as
+      * informacoes do perfil do facebook ativo como,
+      * imagem de perfil, amigos etc
+      */
     class func loadFaceInfo()
     {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
@@ -165,12 +165,12 @@ class DAOUser
         
     }
     
-    /* Funcao efetua o logout de um usuario!
-     * Sua condicao de retorno é um par : booleano
-     * e string, onde o primeiro indica se o logout
-     * foi efeutaod corretamente e o segundo a descricao
-     * de um possivel erro
-     */
+    /** Funcao efetua o logout de um usuario!
+      * Sua condicao de retorno é um par : booleano
+      * e string, onde o primeiro indica se o logout
+      * foi efeutaod corretamente e o segundo a descricao
+      * de um possivel erro
+      */
     class func logOut() -> (done: Bool, error: String)
     {
         PFUser.logOut()
@@ -184,13 +184,13 @@ class DAOUser
     }
     
     
-    /* Funcao que cadatra manualmente um novo
-     * usuario no Parse. Possui um certo delay,
-     * por nao usar callback, nao retorna nada,
-     * mas apos o sucesso envia uma notifiacao
-     * contida em uma das notificacoes em
-     * UserCondition
-     */
+    /** Funcao que cadatra manualmente um novo
+      * usuario no Parse. Possui um certo delay,
+      * por nao usar callback, nao retorna nada,
+      * mas apos o sucesso envia uma notifiacao
+      * contida em uma das notificacoes em
+      * UserCondition
+      */
     class func registerUser(username: String, email: String, password: String, photo: UIImage)
     {
         let user = PFUser()
@@ -227,11 +227,11 @@ class DAOUser
 
     
     /**
-    * Funcao que pega a plist existente no main bundle, e copia a mesma
-    * para o documents. Isso acontence pois a mesma (criada no bundle)
-    * serve apenas de referencia e modelo. A que sera modificavel e
-    * aplicavel vai permanecer no documents.
-    */
+     * Funcao que pega a plist existente no main bundle, e copia a mesma
+     * para o documents. Isso acontence pois a mesma (criada no bundle)
+     * serve apenas de referencia e modelo. A que sera modificavel e
+     * aplicavel vai permanecer no documents.
+     */
     class func initUserInformation()
     {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as   NSArray
