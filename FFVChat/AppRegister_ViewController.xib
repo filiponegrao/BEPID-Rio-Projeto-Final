@@ -10,7 +10,6 @@
                 <outlet property="labelEmail" destination="Wj2-0A-h8C" id="oNf-Ni-enl"/>
                 <outlet property="labelSenha" destination="8T6-Fq-yne" id="Xcj-6U-ft1"/>
                 <outlet property="labelUsername" destination="L1L-hY-RNY" id="qfb-q5-ymr"/>
-                <outlet property="photo" destination="ujg-of-maK" id="43U-O3-mlu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,25 +18,25 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1L-hY-RNY">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1L-hY-RNY">
                     <rect key="frame" x="178" y="353" width="244" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="244" id="V3E-4M-5Fm"/>
                         <constraint firstAttribute="height" constant="30" id="mOj-lB-y2B"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="senha" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-Fq-yne">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="senha" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-Fq-yne">
                     <rect key="frame" x="178" y="402" width="244" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="244" id="Sdj-DC-pEX"/>
                         <constraint firstAttribute="height" constant="30" id="f0v-Vn-7w1"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6b-AR-rgg">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6b-AR-rgg">
                     <rect key="frame" x="266" y="465" width="68" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="68" id="JYN-8w-hGr"/>
@@ -48,22 +47,29 @@
                         <action selector="register:" destination="-1" eventType="touchUpInside" id="uxd-Ur-jd7"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FullSizeRender 16" translatesAutoresizingMaskIntoConstraints="NO" id="ujg-of-maK">
-                    <rect key="frame" x="200" y="40" width="200" height="200"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="200" id="Luj-AN-0LI"/>
-                        <constraint firstAttribute="height" constant="200" id="dry-cW-bYh"/>
-                    </constraints>
-                </imageView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-0A-h8C">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-0A-h8C">
                     <rect key="frame" x="178" y="298" width="244" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="WYI-RA-ftD"/>
                         <constraint firstAttribute="width" constant="244" id="ukM-Li-ZSb"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                    <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQP-CG-gmK">
+                    <rect key="frame" x="190" y="58" width="220" height="220"/>
+                    <color key="backgroundColor" red="0.37647058820000001" green="0.36862745099999999" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="220" id="LZf-2Q-LtI"/>
+                        <constraint firstAttribute="height" constant="220" id="hYA-YS-wBQ"/>
+                    </constraints>
+                    <state key="normal" title="camera"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="0"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -72,15 +78,11 @@
                 <constraint firstItem="I6b-AR-rgg" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Z1a-i1-bg2"/>
                 <constraint firstItem="I6b-AR-rgg" firstAttribute="top" secondItem="8T6-Fq-yne" secondAttribute="bottom" constant="33" id="i3e-vK-xXa"/>
                 <constraint firstItem="Wj2-0A-h8C" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="i9u-65-Zoc"/>
-                <constraint firstItem="ujg-of-maK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="pcC-qP-D9n"/>
+                <constraint firstItem="Wj2-0A-h8C" firstAttribute="top" secondItem="XQP-CG-gmK" secondAttribute="bottom" constant="20" id="nvw-KQ-5lB"/>
                 <constraint firstItem="L1L-hY-RNY" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="q5S-oa-FI1"/>
-                <constraint firstItem="Wj2-0A-h8C" firstAttribute="top" secondItem="ujg-of-maK" secondAttribute="bottom" constant="58" id="rIt-Vy-ZOI"/>
+                <constraint firstItem="XQP-CG-gmK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vrq-C1-vWs"/>
                 <constraint firstItem="8T6-Fq-yne" firstAttribute="top" secondItem="L1L-hY-RNY" secondAttribute="bottom" constant="19" id="yjw-qO-NkN"/>
-                <constraint firstItem="ujg-of-maK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zOs-CS-JpB"/>
             </constraints>
         </view>
     </objects>
-    <resources>
-        <image name="FullSizeRender 16" width="637" height="633"/>
-    </resources>
 </document>

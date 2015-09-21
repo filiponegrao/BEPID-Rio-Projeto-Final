@@ -25,14 +25,14 @@
                         <constraint firstAttribute="height" constant="200" id="xFo-VB-CVk"/>
                     </constraints>
                 </imageView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UZo-Mh-L3T">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UZo-Mh-L3T">
                     <rect key="frame" x="200" y="297" width="200" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="MNF-xX-4GC"/>
                         <constraint firstAttribute="height" constant="30" id="c6n-m3-cRW"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Senha" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8OY-ey-3W8">
                     <rect key="frame" x="200" y="354" width="200" height="30"/>
@@ -41,7 +41,7 @@
                         <constraint firstAttribute="width" constant="200" id="tF5-4b-W9q"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-tM-soG">
                     <rect key="frame" x="200" y="421" width="200" height="30"/>

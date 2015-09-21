@@ -10,7 +10,6 @@ import UIKit
 
 class AppRegister_ViewController: UIViewController, UITextFieldDelegate
 {
-    @IBOutlet var photo: UIImageView!
 
     @IBOutlet var labelEmail: UITextField!
     
