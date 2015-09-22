@@ -10,6 +10,7 @@
                 <outlet property="labelEmail" destination="Wj2-0A-h8C" id="oNf-Ni-enl"/>
                 <outlet property="labelSenha" destination="8T6-Fq-yne" id="Xcj-6U-ft1"/>
                 <outlet property="labelUsername" destination="L1L-hY-RNY" id="qfb-q5-ymr"/>
+                <outlet property="photo" destination="XQP-CG-gmK" id="maM-Wu-PDl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -69,6 +70,9 @@
                             <integer key="value" value="0"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="photoButtonClicked:" destination="-1" eventType="touchUpInside" id="e7q-4f-z8k"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

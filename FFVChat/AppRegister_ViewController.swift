@@ -8,8 +8,16 @@
 
 import UIKit
 
-class AppRegister_ViewController: UIViewController, UITextFieldDelegate
+
+class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate
 {
+    var image : UIImage!
+    
+    var picker : UIImagePickerController? = UIImagePickerController()
+    
+    var popover : UIPopoverController? = nil
+    
+    @IBOutlet weak var photo: UIButton!
 
     @IBOutlet var labelEmail: UITextField!
     
@@ -33,9 +41,84 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate
         
     }
     
+    
+    @IBAction func photoButtonClicked(sender: AnyObject)
+    {
+        let alert: UIAlertController = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: {
+            
+            UIAlertAction in
+            self.openCamera()
+        })
+        
+        let galleryAction = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default, handler: {
+            UIAlertAction in
+            self.openGallery()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {
+            
+            UIAlertAction in
+        })
+        
+        alert.addAction(cameraAction)
+        alert.addAction(galleryAction)
+        alert.addAction(cancelAction)
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+        {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            popover = UIPopoverController(contentViewController: alert)
+            popover!.presentPopoverFromRect(photo.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+        }
+        
+    }
+    
+    func openCamera()
+    {
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
+        {
+            picker!.sourceType = UIImagePickerControllerSourceType.Camera
+            self.presentViewController(picker!, animated: true, completion: nil)
+        }
+        else
+        {
+            openGallery()
+        }
+    }
+    
+    func openGallery()
+    {
+        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+        {
+            self.presentViewController(picker!, animated: true, completion: nil)
+        }
+        else
+        {
+            popover = UIPopoverController(contentViewController: picker!)
+            popover!.presentPopoverFromRect(photo.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+        }
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+    {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        image = info[UIImagePickerControllerOriginalImage] as! UIImage
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("picker cancel")
+    }
+    
+    
     @IBAction func register(sender: UIButton)
     {
-        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: photo.image!)
+//        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: nil)
     }
 
     func next()
