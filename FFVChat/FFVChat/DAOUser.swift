@@ -216,9 +216,9 @@ class DAOUser
                         PFUser.currentUser()?.setValue(userEmail, forKey: "email")
                         PFUser.currentUser()!.save()
 
+                        DAOUser.setEmail(userEmail as String)
                         let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
-                        DAOUser.setEmail(userEmail as String)
                         DAOUser.setUserName(userName as String)
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
                     }
