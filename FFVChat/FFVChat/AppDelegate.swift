@@ -21,15 +21,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         
-        if(DAOUser.isLoged())
+        if(DAOUser.isLoged() == UserCondition.userLogged)
         {
+            let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
             self.window?.rootViewController = chat
         }
-        else
+        else if(DAOUser.isLoged() == UserCondition.userLoggedOut)
         {
+            let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
+            self.window?.rootViewController = login
+        }
+        else if(DAOUser.isLoged() == UserCondition.passwordMissing)
+        {
+            let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
             self.window?.rootViewController = login
         }
         

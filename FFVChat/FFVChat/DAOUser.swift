@@ -1,6 +1,7 @@
 //
 //  DAOUser.swift
-//  FFVChat
+//  Modulo de usuário genérico, com banco de dados Parse
+//
 //
 //  Created by Filipo Negrao on 12/09/15.
 //  Copyright (c) 2015 FilipoNegrao. All rights reserved.
@@ -161,6 +162,7 @@ class DAOUser
                     DAOUser.setUserName(user.valueForKey("username") as! String)
                     DAOUser.setEmail(user.valueForKey("email") as! String)
                     DAOUser.setPassword(user.valueForKey("username") as! String)
+                    DAOUser.setTrustLevel(user.valueForKey("trustLevel") as! Int)
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
@@ -381,7 +383,13 @@ class DAOUser
         return email!
     }
 
-
+    
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func getLastSync() -> String
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -408,7 +416,12 @@ class DAOUser
         return sync!
     }
 
-
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func getTrustLevel() -> Int
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -436,6 +449,12 @@ class DAOUser
     }
 
 
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func getPassword() -> String
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -463,6 +482,12 @@ class DAOUser
     }
 
 
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func getProfileImage() -> UIImage?
     {
         let userMail = self.getEmail()
@@ -475,6 +500,13 @@ class DAOUser
 
     }
 
+    
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func setLastSync(sync: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -495,6 +527,13 @@ class DAOUser
         content!.writeToFile(path, atomically: false)
     }
 
+    
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func setUserName(name: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -516,6 +555,13 @@ class DAOUser
 
     }
 
+    
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func setEmail(email: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -538,6 +584,12 @@ class DAOUser
     }
 
 
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func setPassword(password: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -560,6 +612,12 @@ class DAOUser
     }
 
 
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func setTrustLevel(trustLevel: Int)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -582,6 +640,12 @@ class DAOUser
     }
 
 
+    /**
+     * Funcao que retorna o nome cadastro uma unica vez
+     * do usuario do app
+     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+     * enquanto as de escrever utilizam o mutable dictionary
+     **/
     class func setProfileImage(image:UIImage)
     {
         let mailUser = self.getEmail()
@@ -592,16 +656,34 @@ class DAOUser
 
     }
 
-    class func isLoged() -> Bool
+    
+    /**
+     * Funcao que retorna um booleano que indica
+     * se um usuario esta logado ou nao. A condicao
+     * é retornada através da verificacao se há
+     * um username ativo na aplicaçao.
+     * obs: Vale ressaltar que a funcao nao verifica
+     * os demais valores, alem de username e senha.
+     **/
+    class func isLoged() -> UserCondition
     {
-        let email = self.getUserName()
-        if(email != "")
+        let username = self.getUserName()
+        if(username != "")
         {
-            return true
+            let senha = self.getPassword()
+            if(senha == "")
+            {
+                return UserCondition.passwordMissing
+            }
+            else
+            {
+                return UserCondition.userLogged
+            }
         }
         else
         {
-            return false
+        
+            return UserCondition.userLoggedOut
         }
     }
 
