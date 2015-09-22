@@ -22,9 +22,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate
         super.viewDidLoad()
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
+        
     }
 
     override func didReceiveMemoryWarning()
@@ -35,7 +37,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func register(sender: UIButton)
     {
-        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: photo.image!)
+        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: UIImage(named: "vovo")!)
     }
 
     func next()

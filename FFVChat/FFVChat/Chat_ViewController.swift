@@ -18,6 +18,7 @@ class Chat_ViewController: UIViewController
         print(DAOUser.getEmail())
         print(DAOUser.getPassword())
         print(DAOUser.getTrustLevel())
+        print(DAOUser.getProfileImage())
     }
 
     override func didReceiveMemoryWarning()

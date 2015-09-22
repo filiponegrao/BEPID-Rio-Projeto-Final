@@ -58,8 +58,6 @@
 		F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */; };
 		F66B29E31BAB6D6600BC43EE /* SelectedMidia_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */; };
 		F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29E41BAB6DB800BC43EE /* TakePhoto_ViewController.swift */; };
-		F66B29E81BAB6DED00BC43EE /* ValidateUser_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29E61BAB6DED00BC43EE /* ValidateUser_ViewController.swift */; };
-		F66B29E91BAB6DED00BC43EE /* ValidateUser_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */; };
 		F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */; };
 		F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */; };
 		F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */; };
@@ -138,8 +136,6 @@
 		F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedMidia_ViewController.swift; sourceTree = "<group>"; };
 		F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectedMidia_ViewController.xib; sourceTree = "<group>"; };
 		F66B29E41BAB6DB800BC43EE /* TakePhoto_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakePhoto_ViewController.swift; sourceTree = "<group>"; };
-		F66B29E61BAB6DED00BC43EE /* ValidateUser_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateUser_ViewController.swift; sourceTree = "<group>"; };
-		F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValidateUser_ViewController.xib; sourceTree = "<group>"; };
 		F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationChat_View.swift; sourceTree = "<group>"; };
 		F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationContact_View.swift; sourceTree = "<group>"; };
 		F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationMidia_View.swift; sourceTree = "<group>"; };
@@ -206,7 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				801D92741BA492C200D05CE7 /* Login_ViewController.xib */,
-				F66B29E71BAB6DED00BC43EE /* ValidateUser_ViewController.xib */,
 				F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */,
 				801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */,
 				F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */,
@@ -305,7 +300,6 @@
 			isa = PBXGroup;
 			children = (
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
-				F66B29E61BAB6DED00BC43EE /* ValidateUser_ViewController.swift */,
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
 				F66B29BE1BAB69B300BC43EE /* Tutorial_PageViewController.swift */,
@@ -437,7 +431,6 @@
 				F66B29E31BAB6D6600BC43EE /* SelectedMidia_ViewController.xib in Resources */,
 				F66B29DB1BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib in Resources */,
 				F66B29CF1BAB6B4E00BC43EE /* Import_ViewController.xib in Resources */,
-				F66B29E91BAB6DED00BC43EE /* ValidateUser_ViewController.xib in Resources */,
 				F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */,
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
@@ -463,7 +456,6 @@
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
-				F66B29E81BAB6DED00BC43EE /* ValidateUser_ViewController.swift in Sources */,
 				F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */,
 				F66B29C61BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
@@ -619,10 +611,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -638,10 +632,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
