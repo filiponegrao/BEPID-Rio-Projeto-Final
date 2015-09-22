@@ -19,6 +19,8 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
 
         let image = DAOUser.getProfileImage()
         
@@ -42,11 +44,17 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
 
     @IBAction func register(sender: UIButton)
     {
-        
+        DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
+    }
+    
+    func next()
+    {
+        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        self.presentViewController(chat, animated: true, completion: nil)
     }
 }

@@ -30,9 +30,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         super.viewDidLoad()
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
+        
     }
 
     override func didReceiveMemoryWarning()
