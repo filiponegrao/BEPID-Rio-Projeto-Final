@@ -111,6 +111,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         picker.dismissViewControllerAnimated(true, completion: nil)
         image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        photo.setBackgroundImage(image, forState: UIControlState.Normal)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
