@@ -16,6 +16,7 @@ class LoadScreen_View: UIView
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
         self.backgroundColor = UIColor.blackColor()
+        self.alpha = 0.5
     }
 
     required init?(coder aDecoder: NSCoder) {
