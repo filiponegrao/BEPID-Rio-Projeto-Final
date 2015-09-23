@@ -84,8 +84,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
                 self.scrollView.scrollRectToVisible(activeField!.frame, animated: true)
             }
         }
-        
-        
+        //testando
     }
     
     

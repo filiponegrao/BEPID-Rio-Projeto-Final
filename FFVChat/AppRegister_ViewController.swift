@@ -37,10 +37,14 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
         
-        //pra mover a tela quando abre o teclado
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: "willHide", object: nil)
+        self.picker!.delegate = self
 
+        self.buttonphoto.clipsToBounds = true
+        
+        print("chega aqui")
+        
+        self.buttonView = UIImageView(frame: CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height))
+        self.buttonphoto.addSubview(self.buttonView)
         
     }
 
