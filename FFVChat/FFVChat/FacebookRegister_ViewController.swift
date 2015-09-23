@@ -43,6 +43,9 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil)
 //        
     }
+    
+    
+    
 
     override func didReceiveMemoryWarning()
     {
