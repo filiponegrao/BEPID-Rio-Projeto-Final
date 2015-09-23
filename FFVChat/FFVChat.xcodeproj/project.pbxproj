@@ -36,6 +36,7 @@
 		801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */; };
 		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
 		80216BAC1BB084B40008F380 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */; settings = {ASSET_TAGS = (); }; };
+		8070BDA21BB3208A005573DC /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070BDA11BB3208A005573DC /* Contacts.swift */; settings = {ASSET_TAGS = (); }; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
 		F66B29BF1BAB69B300BC43EE /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BE1BAB69B300BC43EE /* Tutorial_PageViewController.swift */; };
@@ -114,6 +115,7 @@
 		801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat_ViewController.swift; sourceTree = "<group>"; };
 		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
 		80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		8070BDA11BB3208A005573DC /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
 		F66B29BE1BAB69B300BC43EE /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				801D92771BA492D700D05CE7 /* User.swift */,
+				8070BDA11BB3208A005573DC /* Contacts.swift */,
 				801D929D1BA5177400D05CE7 /* DAOUser.swift */,
 				8019CB3D1BADDD780017CD7A /* FixedValues.swift */,
 			);
@@ -467,6 +470,7 @@
 				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
 				F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */,
 				F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */,
+				8070BDA21BB3208A005573DC /* Contacts.swift in Sources */,
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
 				F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,

@@ -34,13 +34,12 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
-        
+                
     }
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        
     }
     
     
@@ -107,12 +106,13 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
     }
     
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
     {
         picker.dismissViewControllerAnimated(true, completion: nil)
         image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        photo.setBackgroundImage(image, forState: UIControlState.Normal)
     }
+    
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("picker cancel")

@@ -21,6 +21,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet var registerButton: UIButton!
     
+    var loadingScreen: LoadScreen_View!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -52,8 +54,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         if(self.emailField.text != "" && self.passwordField != "")
         {
             DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
-            
-            
+            self.loadingScreen = LoadScreen_View()
+            self.view.addSubview(self.loadingScreen)
         }
         else
         {
@@ -87,8 +89,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func goValidation()
     {
-        let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
-        self.presentViewController(validate, animated: true, completion: nil)
+        let fbregister = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
+        self.presentViewController(fbregister, animated: true, completion: nil)
     }
     
     
