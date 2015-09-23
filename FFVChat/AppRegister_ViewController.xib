@@ -7,10 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppRegister_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="buttonphoto" destination="XQP-CG-gmK" id="bzF-Kx-5zv"/>
                 <outlet property="labelEmail" destination="Wj2-0A-h8C" id="oNf-Ni-enl"/>
                 <outlet property="labelSenha" destination="8T6-Fq-yne" id="Xcj-6U-ft1"/>
                 <outlet property="labelUsername" destination="L1L-hY-RNY" id="qfb-q5-ymr"/>
-                <outlet property="photo" destination="XQP-CG-gmK" id="maM-Wu-PDl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

@@ -41,9 +41,10 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
 
         self.buttonphoto.clipsToBounds = true
         
-        self.buttonView = UIImageView()
-        self.buttonView.frame = CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height)
-        self.buttonphoto.addSubview(buttonView)
+        print("chega aqui")
+        
+        self.buttonView = UIImageView(frame: CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height))
+        self.buttonphoto.addSubview(self.buttonView)
         
     }
 
