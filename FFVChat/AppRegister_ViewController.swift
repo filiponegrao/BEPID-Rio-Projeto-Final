@@ -19,7 +19,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     var popover : UIPopoverController? = nil
     
-    @IBOutlet weak var photo: UIButton!
+    @IBOutlet weak var buttonphoto: UIButton!
 
     @IBOutlet var labelEmail: UITextField!
     
@@ -39,11 +39,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
         self.picker!.delegate = self
 
-        self.photo.clipsToBounds = true
+        self.buttonphoto.clipsToBounds = true
         
         self.buttonView = UIImageView()
-        self.buttonView.frame = CGRectMake(0, 0, self.photo.frame.width, self.photo.frame.height)
-        self.photo.addSubview(buttonView)
+        self.buttonView.frame = CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height)
+        self.buttonphoto.addSubview(buttonView)
         
     }
 
@@ -84,7 +84,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         else
         {
             popover = UIPopoverController(contentViewController: alert)
-            popover!.presentPopoverFromRect(photo.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
         
     }
@@ -112,14 +112,14 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         else
         {
             popover = UIPopoverController(contentViewController: picker!)
-            popover!.presentPopoverFromRect(photo.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         picker.dismissViewControllerAnimated(true, completion: nil)
         self.image = image
-        self.photo.setBackgroundImage(image, forState: .Normal)
+        self.buttonView.image = image
     }
     
     
@@ -130,7 +130,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBAction func register(sender: UIButton)
     {
-//        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: nil)
+//        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: self.image!)
     }
 
     func next()
