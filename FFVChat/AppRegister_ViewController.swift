@@ -34,7 +34,12 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
-                
+        
+        //pra mover a tela quando abre o teclado
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: "willHide", object: nil)
+
+        
     }
 
     override func didReceiveMemoryWarning()
@@ -42,6 +47,19 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         super.didReceiveMemoryWarning()
     }
     
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y -= keyboardSize.height/2
+        }
+        
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y += keyboardSize.height/2
+        }
+    }
     
     @IBAction func photoButtonClicked(sender: AnyObject)
     {
@@ -133,6 +151,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
+        NSNotificationCenter.defaultCenter().postNotificationName("willHide", object: nil)
+
         
     }
 

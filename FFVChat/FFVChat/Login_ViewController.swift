@@ -33,7 +33,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "goValidation", name: UserCondition.passwordMissing.rawValue, object: nil)
        
-        //OLAR AMIGOS
     }
     
     
@@ -41,7 +40,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         self.view.endEditing(true)
 
-        //sera que vai dar merda?
     }
     
 
@@ -75,7 +73,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func userNotLogged()
     {
-        let alert = UIAlertView(title: "Usuario nao cadastrado", message: "O usuario nao foi encontrado ou a senha esta incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Usuário nao cadastrado", message: "O usuário nao foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
