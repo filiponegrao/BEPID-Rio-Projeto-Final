@@ -92,6 +92,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
     }
     
+    
     func openCamera()
     {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
@@ -104,6 +105,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             openGallery()
         }
     }
+    
     
     func openGallery()
     {
