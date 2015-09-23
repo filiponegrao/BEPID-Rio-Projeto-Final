@@ -31,6 +31,8 @@ enum UserCondition : String
     case userAlreadyExist = "userAlreadyExist"
 
     case userRegistered = "userRegistered"
+    
+    case userCanceled = "userCanceled"
 
     /** Notficacao responsavel por encaminhar o suario para
      a tela de confirmacao de senha apos logar-se com o
@@ -133,6 +135,7 @@ class DAOUser
                     else
                     {
                         print("Error: \(error!) \(error!.userInfo)")
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userCanceled.rawValue, object: nil)
                     }
                 }
             }
