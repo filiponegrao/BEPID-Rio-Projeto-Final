@@ -174,7 +174,6 @@ class DAOUser
                         DAOUser.setProfileImage(image!)
                         
                         
-                        
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
                     

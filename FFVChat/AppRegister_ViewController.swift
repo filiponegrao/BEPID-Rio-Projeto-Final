@@ -121,7 +121,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBAction func register(sender: UIButton)
     {
-//        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: nil)
+        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: UIImage(named: "vovo")!)
     }
 
     func next()
