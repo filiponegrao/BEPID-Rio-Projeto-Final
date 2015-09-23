@@ -53,6 +53,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         if(self.emailField.text != "" && self.passwordField != "")
         {
+            self.loadingScreen = LoadScreen_View()
+            self.view.addSubview(loadingScreen)
             DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
         }
         else
@@ -84,7 +86,10 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func loginFace(sender: UIButton)
     {
+        self.loadingScreen = LoadScreen_View()
+        self.view.addSubview(loadingScreen)
         DAOUser.loginFaceParse()
+        
     }
     
     
