@@ -136,6 +136,10 @@ class DAOUser
         }
     }
 
+    
+    
+    
+    
     /** Funcao assincrona que executa o login no Parse
       * via Facebook (Parse é do Facebook);
       * A funcao nao retorna nenhuma condicao de retorno,
