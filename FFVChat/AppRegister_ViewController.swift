@@ -13,11 +13,13 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
 {
     var image : UIImage!
     
+    var buttonView : UIImageView!
+    
     var picker : UIImagePickerController? = UIImagePickerController()
     
     var popover : UIPopoverController? = nil
     
-    @IBOutlet weak var photo: UIButton!
+    @IBOutlet weak var buttonphoto: UIButton!
 
     @IBOutlet var labelEmail: UITextField!
     
@@ -34,7 +36,15 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
-                
+        
+        self.picker!.delegate = self
+
+        self.buttonphoto.clipsToBounds = true
+        
+        self.buttonView = UIImageView()
+        self.buttonView.frame = CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height)
+        self.buttonphoto.addSubview(buttonView)
+        
     }
 
     override func didReceiveMemoryWarning()
@@ -74,7 +84,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         else
         {
             popover = UIPopoverController(contentViewController: alert)
-            popover!.presentPopoverFromRect(photo.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
         
     }
@@ -102,15 +112,14 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         else
         {
             popover = UIPopoverController(contentViewController: picker!)
-            popover!.presentPopoverFromRect(photo.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
     }
     
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
-    {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         picker.dismissViewControllerAnimated(true, completion: nil)
-        image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        self.image = image
+        self.buttonView.image = image
     }
     
     
