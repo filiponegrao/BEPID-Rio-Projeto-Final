@@ -7,10 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppRegister_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="buttonphoto" destination="XQP-CG-gmK" id="bzF-Kx-5zv"/>
                 <outlet property="labelEmail" destination="Wj2-0A-h8C" id="oNf-Ni-enl"/>
                 <outlet property="labelSenha" destination="8T6-Fq-yne" id="Xcj-6U-ft1"/>
                 <outlet property="labelUsername" destination="L1L-hY-RNY" id="qfb-q5-ymr"/>
-                <outlet property="photo" destination="XQP-CG-gmK" id="maM-Wu-PDl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -57,20 +57,18 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQP-CG-gmK">
+                <button opaque="NO" contentMode="scaleAspectFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQP-CG-gmK">
                     <rect key="frame" x="190" y="58" width="220" height="220"/>
-                    <color key="backgroundColor" red="0.37647058820000001" green="0.36862745099999999" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="220" id="LZf-2Q-LtI"/>
                         <constraint firstAttribute="height" constant="220" id="hYA-YS-wBQ"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <state key="normal" title="camera">
-                        <color key="titleColor" red="0.33968008840000002" green="0.5417338948" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
+                    <state key="normal" title="camera" backgroundImage="cameraButton"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="0"/>
+                            <integer key="value" value="110"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
@@ -93,4 +91,7 @@
             <point key="canvasLocation" x="416" y="568"/>
         </view>
     </objects>
+    <resources>
+        <image name="cameraButton" width="355" height="353"/>
+    </resources>
 </document>
