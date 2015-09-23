@@ -14,8 +14,12 @@ import ParseFacebookUtilsV4
 
 enum UserCondition : String
 {
+    /** Notficacao responsavel por avisar quando o usaurio estiver
+     logad na aplicacao */
     case userLogged = "userLogged"
 
+    /** Notficacao responsavel por avisar ao usuario que a senha
+     esta incorreta */
     case wrongPassword = "wrongPassword"
 
     case userNotFound = "userNotFound"
@@ -27,7 +31,12 @@ enum UserCondition : String
     case userAlreadyExist = "userAlreadyExist"
 
     case userRegistered = "userRegistered"
+    
+    case userCanceled = "userCanceled"
 
+    /** Notficacao responsavel por encaminhar o suario para
+     a tela de confirmacao de senha apos logar-se com o
+     Facebook */
     case passwordMissing = "passwordMissing"
 }
 
@@ -126,6 +135,7 @@ class DAOUser
                     else
                     {
                         print("Error: \(error!) \(error!.userInfo)")
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userCanceled.rawValue, object: nil)
                     }
                 }
             }
@@ -225,6 +235,27 @@ class DAOUser
                         let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
                         DAOUser.setUserName(userName as String)
+                        
+                        let request = FBSDKGraphRequest(graphPath:"me", parameters:nil)
+                        
+                        // Send request to Facebook
+                        request.startWithCompletionHandler {
+                            
+                            (connection, result, error) in
+                            
+                            if error != nil {
+                                // Some error checking here
+                            }
+                            else if let userData = result as? [String:AnyObject] {
+                                
+                                // Access user data
+                                let username = userData["name"] as? String
+                                print(username)
+                                // ....
+                            }
+                        }
+
+                        
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
                     }
                     else

@@ -45,6 +45,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
         self.buttonView = UIImageView(frame: CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height))
         self.buttonphoto.addSubview(self.buttonView)
+        self.buttonphoto.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
+
         
     }
 
@@ -103,6 +105,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
     }
     
+    
     func openCamera()
     {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
@@ -115,6 +118,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             openGallery()
         }
     }
+    
     
     func openGallery()
     {
@@ -134,6 +138,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         picker.dismissViewControllerAnimated(true, completion: nil)
         self.image = image
         self.buttonView.image = image
+        self.buttonView.contentMode = UIViewContentMode.ScaleAspectFill
     }
     
     
@@ -144,7 +149,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBAction func register(sender: UIButton)
     {
-        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: UIImage(named: "vovo")!)
+        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: image!)
     }
 
     func next()
