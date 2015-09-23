@@ -40,6 +40,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         self.view.endEditing(true)
 
+        //sera que vai dar merda?
     }
     
 
