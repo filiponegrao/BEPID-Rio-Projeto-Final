@@ -13,6 +13,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
 {
     var image : UIImage!
     
+    var buttonView : UIImageView!
+    
     var picker : UIImagePickerController? = UIImagePickerController()
     
     var popover : UIPopoverController? = nil
@@ -34,6 +36,14 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
+        
+        self.picker!.delegate = self
+
+        self.photo.clipsToBounds = true
+        
+        self.buttonView = UIImageView()
+        self.buttonView.frame = CGRectMake(0, 0, self.photo.frame.width, self.photo.frame.height)
+        self.photo.addSubview(buttonView)
         
     }
 
@@ -107,12 +117,12 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
-    {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         picker.dismissViewControllerAnimated(true, completion: nil)
-        image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        photo.setBackgroundImage(image, forState: UIControlState.Normal)
+        self.image = image
+        self.photo.setBackgroundImage(image, forState: .Normal)
     }
+    
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("picker cancel")

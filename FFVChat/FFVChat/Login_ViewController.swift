@@ -51,7 +51,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         if(self.emailField.text != "" && self.passwordField != "")
         {
-            DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
+//            DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
             
             
         }
