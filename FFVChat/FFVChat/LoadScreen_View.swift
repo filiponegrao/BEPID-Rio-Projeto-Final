@@ -8,14 +8,20 @@
 
 import UIKit
 
-class LoadScreen_View: UIView {
+class LoadScreen_View: UIView
+{
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    init()
+    {
+        super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        
+        self.backgroundColor = UIColor.blackColor()
     }
-    */
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
 }

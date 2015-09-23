@@ -7,10 +7,17 @@
 //
 
 import Foundation
+import UIKit
 
+let screenSize: CGRect = UIScreen.mainScreen().bounds
+let screenWidth = screenSize.width
+let screenHeight = screenSize.height
 
-
-
+class FixedValues
+{
+    
+}
+//determina o tamanho da tela
 
 
 extension String {

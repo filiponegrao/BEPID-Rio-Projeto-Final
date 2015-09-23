@@ -136,6 +136,10 @@ class DAOUser
         }
     }
 
+    
+    
+    
+    
     /** Funcao assincrona que executa o login no Parse
       * via Facebook (Parse é do Facebook);
       * A funcao nao retorna nenhuma condicao de retorno,
@@ -168,6 +172,8 @@ class DAOUser
                         
                         let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
+                        
+                        
                         
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
@@ -216,9 +222,9 @@ class DAOUser
                         PFUser.currentUser()?.setValue(userEmail, forKey: "email")
                         PFUser.currentUser()!.save()
 
+                        DAOUser.setEmail(userEmail as String)
                         let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
-                        DAOUser.setEmail(userEmail as String)
                         DAOUser.setUserName(userName as String)
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
                     }

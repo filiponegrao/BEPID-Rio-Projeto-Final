@@ -88,6 +88,7 @@
                 <constraint firstItem="XQP-CG-gmK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vrq-C1-vWs"/>
                 <constraint firstItem="8T6-Fq-yne" firstAttribute="top" secondItem="L1L-hY-RNY" secondAttribute="bottom" constant="19" id="yjw-qO-NkN"/>
             </constraints>
+            <point key="canvasLocation" x="416" y="568"/>
         </view>
     </objects>
     <resources>

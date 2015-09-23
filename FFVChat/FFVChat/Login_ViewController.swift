@@ -21,6 +21,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet var registerButton: UIButton!
     
+    var loadingScreen: LoadScreen_View!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -38,6 +40,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         self.view.endEditing(true)
 
+        //sera que vai dar merda?
     }
     
 
@@ -87,8 +90,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func goValidation()
     {
-        let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
-        self.presentViewController(validate, animated: true, completion: nil)
+        let fbregister = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
+        self.presentViewController(fbregister, animated: true, completion: nil)
     }
     
     
