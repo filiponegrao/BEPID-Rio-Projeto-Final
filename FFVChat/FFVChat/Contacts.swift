@@ -12,7 +12,10 @@ class Contacts
 {
     
     var username : String!
+    
     var faceUsername : String!
+    
+    
     
     
     
