@@ -11,6 +11,8 @@ import Foundation
 class Contacts
 {
     
+    var username : String!
+    
     
     
     

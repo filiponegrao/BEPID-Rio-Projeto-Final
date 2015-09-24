@@ -27,6 +27,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBOutlet var labelSenha: UITextField!
     
+    @IBOutlet var containerView: UIView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -38,10 +40,12 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
         
         self.picker!.delegate = self
+        
+        self.labelEmail.delegate = self
+        self.labelSenha.delegate = self
+        self.labelUsername.delegate = self
 
         self.buttonphoto.clipsToBounds = true
-        
-        print("chega aqui")
         
         self.buttonView = UIImageView(frame: CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height))
         self.buttonphoto.addSubview(self.buttonView)
@@ -49,25 +53,32 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
 
         
     }
+    
+    
+    func textFieldDidBeginEditing(textField: UITextField)
+    {
+        print("did begin edtting")
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.containerView.frame.origin = CGPointMake(0, -150)
+        }
+    }
+    
+    
+    func textFieldDidEndEditing(textField: UITextField)
+    {
+        print("did endedditng")
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.containerView.frame.origin = CGPointMake(0, 0)
+        }
+    }
+    
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            self.view.frame.origin.y -= keyboardSize.height/2
-        }
-        
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            self.view.frame.origin.y += keyboardSize.height/2
-        }
-    }
     
     @IBAction func photoButtonClicked(sender: AnyObject)
     {
@@ -161,9 +172,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
-        NSNotificationCenter.defaultCenter().postNotificationName("willHide", object: nil)
-
-        
     }
 
     func userAlreadyRegistered()
@@ -178,4 +186,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o email utilizado", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
+    
+    @IBAction func cancel(sender: UIButton)
+    {
+        self.dismissViewControllerAnimated(true
+            , completion: nil)
+    }
+    
 }
