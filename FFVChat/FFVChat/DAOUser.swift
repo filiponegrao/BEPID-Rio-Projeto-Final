@@ -30,9 +30,13 @@ enum UserCondition : String
 
     case userAlreadyExist = "userAlreadyExist"
 
+    /** Notificaao responsavel por informar que houve SUCESSO
+     ao registrar o usuario */
     case userRegistered = "userRegistered"
     
-    case userCanceled = "userCanceled"
+    /** Login cancelado por algum motivo, pelo usuario ou
+     pelo sistema */
+    case loginCanceled = "loginCanceled"
 
     /** Notficacao responsavel por encaminhar o usuario para
      a tela de confirmacao de senha apos logar-se com o
@@ -784,7 +788,7 @@ class DAOUser
             let senha = self.getPassword()
             if(senha == "")
             {
-                return UserCondition.passwordMissing
+                return UserCondition.incompleteRegister
             }
             else
             {
