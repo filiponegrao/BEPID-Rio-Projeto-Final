@@ -29,10 +29,14 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: UserCondition.userNotFound.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotFound", name: UserCondition.userNotFound.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "incompleteRegister", name: UserCondition.incompleteRegister.rawValue, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "wrongPassword", name: UserCondition.wrongPassword.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+      
     }
     
     
@@ -71,7 +75,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     }
     
     
-    func userNotLogged()
+    func userNotFound()
     {
         let alert = UIAlertView(title: "Usuário nao cadastrado", message: "O usuário nao foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
