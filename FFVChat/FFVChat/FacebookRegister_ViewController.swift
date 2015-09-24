@@ -16,9 +16,13 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet var labelPassword: UITextField!
     
+    var activeField: UITextField?
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
 
@@ -30,18 +34,26 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
         
         let name = DAOUser.getUserName()
         let trimmedString = name.removeWhitespace()
+        
         let username = trimmedString.lowercaseString
         print(username)
         self.labelUsername.text = username
-
         
+//        //pra mover a tela quando abre o teclado
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name: UIKeyboardWillShowNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil)
+//        
     }
+    
+    
+    
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
     }
-
+    
+    
     @IBAction func register(sender: UIButton)
     {
         DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
@@ -50,6 +62,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
+
     }
     
     func next()

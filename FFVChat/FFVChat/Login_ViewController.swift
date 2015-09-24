@@ -56,8 +56,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
             self.loadingScreen = LoadScreen_View()
             self.view.addSubview(loadingScreen)
             DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
-            self.loadingScreen = LoadScreen_View()
-            self.view.addSubview(self.loadingScreen)
         }
         else
         {
@@ -75,7 +73,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func userNotLogged()
     {
-        let alert = UIAlertView(title: "Usuario nao cadastrado", message: "O usuario nao foi encontrado ou a senha esta incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Usuário nao cadastrado", message: "O usuário nao foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
@@ -84,6 +82,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         let register = AppRegister_ViewController(nibName: "AppRegister_ViewController", bundle: nil)
         self.presentViewController(register, animated: true, completion: nil)
     }
+    
+    
     @IBAction func loginFace(sender: UIButton)
     {
         self.loadingScreen = LoadScreen_View()

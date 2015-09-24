@@ -2,9 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ultimaSincronizacao</key>
-	<string></string>
 	<key>nome</key>
+	<string></string>
+	<key>faceUsername</key>
 	<string></string>
 	<key>email</key>
 	<string></string>
@@ -12,5 +12,7 @@
 	<string></string>
 	<key>trustLevel</key>
 	<integer>100</integer>
+	<key>ultimaSincronizacao</key>
+	<string></string>
 </dict>
 </plist>

@@ -34,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else if(DAOUser.isLoged() == UserCondition.passwordMissing)
         {
-            let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-            self.window?.rootViewController = login
+            let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
+            self.window?.rootViewController = validate
         }
         
         

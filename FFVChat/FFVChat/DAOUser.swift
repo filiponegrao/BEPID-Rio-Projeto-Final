@@ -14,8 +14,12 @@ import ParseFacebookUtilsV4
 
 enum UserCondition : String
 {
+    /** Notficacao responsavel por avisar quando o usaurio estiver
+     logad na aplicacao */
     case userLogged = "userLogged"
 
+    /** Notficacao responsavel por avisar ao usuario que a senha
+     esta incorreta */
     case wrongPassword = "wrongPassword"
 
     case userNotFound = "userNotFound"
@@ -27,8 +31,17 @@ enum UserCondition : String
     case userAlreadyExist = "userAlreadyExist"
 
     case userRegistered = "userRegistered"
+    
+    case userCanceled = "userCanceled"
 
-    case passwordMissing = "passwordMissing"
+    /** Notficacao responsavel por encaminhar o usuario para
+     a tela de confirmacao de senha apos logar-se com o
+     Facebook */
+    case incompleteRegister = "incompleteRegister"
+    
+    /** Notificacao responsavel por avisar quando os contatos do usuario
+     * foram carregados com sucesso */
+    case contactsLoaded = "contactsLoaded"
 }
 
 
@@ -126,6 +139,7 @@ class DAOUser
                     else
                     {
                         print("Error: \(error!) \(error!.userInfo)")
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userCanceled.rawValue, object: nil)
                     }
                 }
             }
@@ -164,16 +178,16 @@ class DAOUser
                     print("usuario logado pelo Facebook")
                     
                     DAOUser.setUserName(user.valueForKey("username") as! String)
+                    DAOUser.setFaceUsername(user.valueForKey("faceUsername") as! String)
                     DAOUser.setEmail(user.valueForKey("email") as! String)
                     DAOUser.setPassword(user.valueForKey("username") as! String)
                     DAOUser.setTrustLevel(user.valueForKey("trustLevel") as! Int)
+                    
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
                         let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
-                        
-                        
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
                     
@@ -217,14 +231,18 @@ class DAOUser
                     {
                         let picture = PFFile(data: data!)
                         PFUser.currentUser()?.setValue(userName, forKey: "username")
-                        PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()?.setValue(userEmail, forKey: "email")
+                        PFUser.currentUser()?.setValue(userName, forKey: "faceUsername")
+                        PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()!.save()
+                        
+                        let image = UIImage(data: data!)
 
                         DAOUser.setEmail(userEmail as String)
-                        let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
                         DAOUser.setUserName(userName as String)
+                        DAOUser.setFaceUsername(userName as String)
+
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
                     }
                     else
@@ -258,6 +276,34 @@ class DAOUser
             
             NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
         })
+    }
+    
+    
+    class func loadContacts()
+    {
+        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);
+        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+            
+            if error == nil
+            {
+                print("Friends are : \(result)")
+                let results = result as! NSDictionary
+                for(var i = 0; i < results.count; i++)
+                {
+                    let data = results.objectForKey("data") as! [NSDictionary]
+                    for(var j = 0; j < data.count; j++)
+                    {
+                        let name = data[j].valueForKey("name")
+                        print(name)
+                    }
+                }
+            }
+            else
+            {
+                print("Error Getting Friends \(error)");
+            }
+        }
+        
     }
 
     /** Funcao efetua o logout de um usuario!
@@ -355,7 +401,40 @@ class DAOUser
         return nome!
     }
 
-
+    
+    /**
+    * Funcao que retorna o nome de usuario no Facebook
+    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+    * enquanto as de escrever utilizam o mutable dictionary
+    **/
+    class func getFaceUsername() -> String!
+    {
+        
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return ""
+            }
+        }
+        
+        let nome = content!.valueForKey("faceUsername") as? String
+        
+        if(nome == nil)
+        {
+            return ""
+        }
+        
+        return nome!
+    }
+    
+    
     /**
      * Funcao que retorna o email do usuario
      *
@@ -558,6 +637,33 @@ class DAOUser
         content!.setValue(name, forKey: "nome")
         content!.writeToFile(path, atomically: true)
 
+    }
+    
+    
+    /**
+    * Funcao que retorna o nome cadastro uma unica vez
+    * do usuario do app
+    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+    * enquanto as de escrever utilizam o mutable dictionary
+    **/
+    class func setFaceUsername(name: String)
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
+        }
+        
+        content!.setValue(name, forKey: "faceUsername")
+        content!.writeToFile(path, atomically: true)
     }
 
     
