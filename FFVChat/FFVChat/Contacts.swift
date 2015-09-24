@@ -10,14 +10,26 @@ import Foundation
 
 class Contacts
 {
+    let username : String!
     
-    var username : String!
+    let faceUsername : String!
+        
+    let registerDate : NSDate!
     
-    var faceUsername : String!
+    let numberOfReports : Int!
     
+    let numberOfScreenshots : Int!
     
+    let trustLevel : Int!
     
-    
-    
+    init(username: String, faceUsername: String, registerDate: NSDate, numberOfReports: Int, mumberOfScreenshots: Int, trustLevel: Int)
+    {
+        self.username = username
+        self.faceUsername = faceUsername
+        self.registerDate = registerDate
+        self.numberOfReports = numberOfReports
+        self.numberOfScreenshots = mumberOfScreenshots
+        self.trustLevel = trustLevel
+    }
     
 }
