@@ -23,10 +23,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     var loadingScreen: LoadScreen_View!
     
-    override func viewDidLoad()
+    override func viewWillAppear(animated: Bool)
     {
-        super.viewDidLoad()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotFound", name: UserCondition.userNotFound.rawValue, object: nil)
@@ -36,7 +34,18 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "wrongPassword", name: UserCondition.wrongPassword.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
-      
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
     }
     
     
@@ -58,7 +67,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         if(self.emailField.text != "" && self.passwordField != "")
         {
             self.loadingScreen = LoadScreen_View()
-            self.view.addSubview(loadingScreen)
+            self.view.addSubview(self.loadingScreen)
             DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
         }
         else
@@ -72,7 +81,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func userLogged()
     {
-        self.loadingScreen.removeFromSuperview()
+        self.loadingScreen?.removeFromSuperview()
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         self.presentViewController(chat, animated: true, completion: nil)
     }
@@ -95,7 +104,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     @IBAction func loginFace(sender: UIButton)
     {
         self.loadingScreen = LoadScreen_View()
-        self.view.addSubview(loadingScreen)
+        self.view.addSubview(self.loadingScreen)
         DAOUser.loginFaceParse()
         
     }

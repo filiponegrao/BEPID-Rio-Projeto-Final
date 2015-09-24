@@ -33,16 +33,27 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBOutlet var containerView: UIView!
     
-    override func viewDidLoad()
+    override func viewWillAppear(animated: Bool)
     {
-        super.viewDidLoad()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyExist", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
-       
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        
+    }
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
         
         self.picker!.delegate = self
         
@@ -169,17 +180,39 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
         {
-            self.loadingScreen = LoadScreen_View()
-            self.view.addSubview(loadingScreen)
-            DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
+            if (self.labelPassword.text != self.labelConfirmPassword.text)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senhas não são correspondentes", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
             
+            else if (!(DAOUser.isValidEmail(self.labelEmail.text!)))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Por favor, digite um e-mail válido", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else
+            {
+                self.loadingScreen = LoadScreen_View()
+                self.view.addSubview(loadingScreen)
+                DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
+            }
+            
+            
+        }
+        else
+        {
+            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
         }
         
         
     }
 
-    func next()
+    func userLogged()
     {
+        self.loadingScreen.removeFromSuperview()
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         self.presentViewController(chat, animated: true, completion: nil)
     }
@@ -189,8 +222,9 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.view.endEditing(true)
     }
 
-    func userAlreadyRegistered()
+    func userAlreadyExist()
     {
+        self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
@@ -198,7 +232,15 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     func emailInUse()
     {
+        self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Ops!", message: "Este email já foi utilizado", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func loginCanceled()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
@@ -207,5 +249,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.dismissViewControllerAnimated(true
             , completion: nil)
     }
+    
     
 }
