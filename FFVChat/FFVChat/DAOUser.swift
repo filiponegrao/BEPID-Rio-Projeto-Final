@@ -34,14 +34,13 @@ enum UserCondition : String
     
     case userCanceled = "userCanceled"
 
-    /** Notficacao responsavel por encaminhar o suario para
+    /** Notficacao responsavel por encaminhar o usuario para
      a tela de confirmacao de senha apos logar-se com o
      Facebook */
-    case passwordMissing = "passwordMissing"
+    case incompleteRegister = "incompleteRegister"
     
     /** Notificacao responsavel por avisar quando os contatos do usuario
-     * foram carregados com sucesso
-     */
+     * foram carregados com sucesso */
     case contactsLoaded = "contactsLoaded"
 }
 
@@ -236,11 +235,13 @@ class DAOUser
                         PFUser.currentUser()?.setValue(userName, forKey: "faceUsername")
                         PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()!.save()
+                        
+                        let image = UIImage(data: data!)
 
                         DAOUser.setEmail(userEmail as String)
-                        let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
                         DAOUser.setUserName(userName as String)
+                        DAOUser.setFaceUsername(userName as String)
 
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
                     }
