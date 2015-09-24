@@ -9,8 +9,9 @@
             <connections>
                 <outlet property="buttonphoto" destination="XQP-CG-gmK" id="bzF-Kx-5zv"/>
                 <outlet property="containerView" destination="1Dj-cY-Hap" id="Vsb-F8-rEJ"/>
+                <outlet property="labelConfirmPassword" destination="cPV-Yj-w7Z" id="djY-yo-2sO"/>
                 <outlet property="labelEmail" destination="Wj2-0A-h8C" id="oNf-Ni-enl"/>
-                <outlet property="labelSenha" destination="8T6-Fq-yne" id="Xcj-6U-ft1"/>
+                <outlet property="labelPassword" destination="8T6-Fq-yne" id="Q2J-rw-fSV"/>
                 <outlet property="labelUsername" destination="L1L-hY-RNY" id="qfb-q5-ymr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

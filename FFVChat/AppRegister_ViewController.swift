@@ -27,7 +27,9 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBOutlet var labelUsername: UITextField!
     
-    @IBOutlet var labelSenha: UITextField!
+    @IBOutlet var labelPassword: UITextField!
+    
+    @IBOutlet weak var labelConfirmPassword: UITextField!
     
     @IBOutlet var containerView: UIView!
     
@@ -45,7 +47,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.picker!.delegate = self
         
         self.labelEmail.delegate = self
-        self.labelSenha.delegate = self
+        self.labelPassword.delegate = self
+        self.labelConfirmPassword.delegate = self
         self.labelUsername.delegate = self
 
         self.buttonphoto.clipsToBounds = true
@@ -151,7 +154,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
         picker.dismissViewControllerAnimated(true, completion: nil)
-        self.image = ImageEdition.compressImage(image)
+        self.image = image
         self.buttonView.image = self.image
         self.buttonView.contentMode = UIViewContentMode.ScaleAspectFill
     }
@@ -164,9 +167,15 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBAction func register(sender: UIButton)
     {
-        self.loadingScreen = LoadScreen_View()
-        self.view.addSubview(loadingScreen)
-        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: self.image!)
+        if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
+        {
+            self.loadingScreen = LoadScreen_View()
+            self.view.addSubview(loadingScreen)
+            DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
+            
+        }
+        
+        
     }
 
     func next()
