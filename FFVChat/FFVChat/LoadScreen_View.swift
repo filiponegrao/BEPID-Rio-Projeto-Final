@@ -21,16 +21,18 @@ class LoadScreen_View: UIView
         self.backgroundColor = UIColor.blackColor()
         self.alpha = 0.8
         
-        self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
+        self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         self.activityIndicator.frame = CGRectMake(0, 0, 40, 40)
-        activityIndicator.center = self.center
+        self.activityIndicator.center = self.center
+        self.activityIndicator.tintColor = UIColor.brownColor()
         self.activityIndicator.startAnimating()
         self.addSubview(activityIndicator)
         
         self.boxView = UIView()
         self.boxView.frame = CGRect(x: self.frame.midX - 90, y: self.frame.midY - 25, width: 59, height: 50)
-        self.boxView.backgroundColor = UIColor.blackColor()
-        self.boxView.alpha = 1
+        self.boxView.backgroundColor = UIColor.grayColor()
+        self.boxView.alpha = 0.6
+        self.boxView.center = self.center
         self.boxView.layer.cornerRadius = 10
         self.addSubview(boxView)
     }

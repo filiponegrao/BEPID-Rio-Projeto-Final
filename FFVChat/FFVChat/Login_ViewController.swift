@@ -81,7 +81,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userNotFound()
     {
         self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Usuário nao cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Usuário não cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
