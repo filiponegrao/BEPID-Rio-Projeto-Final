@@ -93,6 +93,7 @@ class DAOUser
             else
             {
                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userRegistered.rawValue, object: nil)
+                print("Usuario criado!")
                 self.loginParse(username, password: password)
             }
         }
