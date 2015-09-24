@@ -143,7 +143,7 @@ class DAOUser
                     else
                     {
                         print("Error: \(error!) \(error!.userInfo)")
-                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userCanceled.rawValue, object: nil)
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.loginCanceled.rawValue, object: nil)
                     }
                 }
             }
@@ -247,7 +247,7 @@ class DAOUser
                         DAOUser.setUserName(userName as String)
                         DAOUser.setFaceUsername(userName as String)
 
-                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
                     }
                     else
                     {

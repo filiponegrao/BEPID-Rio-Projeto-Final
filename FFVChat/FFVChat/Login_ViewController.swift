@@ -31,8 +31,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: UserCondition.userNotFound.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "goValidation", name: UserCondition.passwordMissing.rawValue, object: nil)
-       
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "goValidation", name: UserCondition.incompleteRegister.rawValue, object: nil)
+        
     }
     
     

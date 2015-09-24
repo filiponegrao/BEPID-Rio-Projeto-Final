@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
             self.window?.rootViewController = login
         }
-        else if(DAOUser.isLoged() == UserCondition.passwordMissing)
+        else if(DAOUser.isLoged() == UserCondition.incompleteRegister)
         {
             let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
             self.window?.rootViewController = validate
