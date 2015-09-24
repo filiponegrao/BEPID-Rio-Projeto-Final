@@ -11,18 +11,35 @@ import UIKit
 class LoadScreen_View: UIView
 {
 
+    var activityIndicator : UIActivityIndicatorView!
+    var boxView : UIView!
+    
     init()
     {
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
         self.backgroundColor = UIColor.blackColor()
-        self.alpha = 0.5
+        self.alpha = 0.8
+        
+        self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        self.activityIndicator.frame = CGRectMake(0, 0, 40, 40)
+        self.activityIndicator.center = self.center
+        self.activityIndicator.tintColor = UIColor.brownColor()
+        self.activityIndicator.startAnimating()
+        self.addSubview(activityIndicator)
+        
+        self.boxView = UIView()
+        self.boxView.frame = CGRect(x: self.frame.midX - 90, y: self.frame.midY - 25, width: 59, height: 50)
+        self.boxView.backgroundColor = UIColor.grayColor()
+        self.boxView.alpha = 0.6
+        self.boxView.center = self.center
+        self.boxView.layer.cornerRadius = 10
+        self.addSubview(boxView)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
     
 }

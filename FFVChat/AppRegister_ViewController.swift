@@ -19,30 +19,47 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     var popover : UIPopoverController? = nil
     
+    var loadingScreen: LoadScreen_View!
+    
     @IBOutlet weak var buttonphoto: UIButton!
 
     @IBOutlet var labelEmail: UITextField!
     
     @IBOutlet var labelUsername: UITextField!
     
-    @IBOutlet var labelSenha: UITextField!
+    @IBOutlet var labelPassword: UITextField!
+    
+    @IBOutlet weak var labelConfirmPassword: UITextField!
     
     @IBOutlet var containerView: UIView!
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyExist", name: UserCondition.userAlreadyExist.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
         
         self.picker!.delegate = self
         
         self.labelEmail.delegate = self
-        self.labelSenha.delegate = self
+        self.labelPassword.delegate = self
+        self.labelConfirmPassword.delegate = self
         self.labelUsername.delegate = self
 
         self.buttonphoto.clipsToBounds = true
@@ -145,10 +162,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
         picker.dismissViewControllerAnimated(true, completion: nil)
         self.image = image
-        self.buttonView.image = image
+        self.buttonView.image = self.image
         self.buttonView.contentMode = UIViewContentMode.ScaleAspectFill
     }
     
@@ -160,11 +178,41 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBAction func register(sender: UIButton)
     {
-        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: image!)
+        if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
+        {
+            if (self.labelPassword.text != self.labelConfirmPassword.text)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senhas não são correspondentes", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else if (!(DAOUser.isValidEmail(self.labelEmail.text!)))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Por favor, digite um e-mail válido", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else
+            {
+                self.loadingScreen = LoadScreen_View()
+                self.view.addSubview(loadingScreen)
+                DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
+            }
+            
+            
+        }
+        else
+        {
+            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+        }
+        
+        
     }
 
-    func next()
+    func userLogged()
     {
+        self.loadingScreen.removeFromSuperview()
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         self.presentViewController(chat, animated: true, completion: nil)
     }
@@ -174,16 +222,25 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.view.endEditing(true)
     }
 
-    func userAlreadyRegistered()
+    func userAlreadyExist()
     {
-        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o nome de usuario desejado", delegate: nil, cancelButtonTitle: "Ok")
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
     
     func emailInUse()
     {
-        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o email utilizado", delegate: nil, cancelButtonTitle: "Ok")
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Este email já foi utilizado", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func loginCanceled()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
@@ -192,5 +249,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.dismissViewControllerAnimated(true
             , completion: nil)
     }
+    
     
 }
