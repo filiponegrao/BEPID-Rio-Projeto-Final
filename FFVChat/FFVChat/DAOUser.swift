@@ -61,8 +61,8 @@ class DAOUser
      */
     class func registerUser(username: String, email: String, password: String, photo: UIImage)
     {
-        let data = UIImagePNGRepresentation(photo)
-        let picture = PFFile(data: data!)
+        let data = photo.mediumQualityJPEGNSData
+        let picture = PFFile(data: data)
 
         let user = PFUser()
 
