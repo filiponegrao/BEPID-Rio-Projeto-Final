@@ -27,12 +27,12 @@ class LoadScreen_View: UIView
         self.activityIndicator.startAnimating()
         self.addSubview(activityIndicator)
         
-//        self.boxView = UIView()
-//        self.boxView.frame = CGRect(x: self.frame.midX - 90, y: self.frame.midY - 25, width: 180, height: 50)
-//        self.boxView.backgroundColor = UIColor.whiteColor()
-//        self.boxView.alpha = 0.8
-//        self.boxView.layer.cornerRadius = 10
-//        self.addSubview(boxView)
+        self.boxView = UIView()
+        self.boxView.frame = CGRect(x: self.frame.midX - 90, y: self.frame.midY - 25, width: 59, height: 50)
+        self.boxView.backgroundColor = UIColor.blackColor()
+        self.boxView.alpha = 1
+        self.boxView.layer.cornerRadius = 10
+        self.addSubview(boxView)
     }
 
     required init?(coder aDecoder: NSCoder) {

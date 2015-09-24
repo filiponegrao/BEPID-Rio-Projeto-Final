@@ -53,7 +53,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
     }
 
-    @IBAction func login(sender: UIButton)
+    @IBAction func loginParse(sender: UIButton)
     {
         if(self.emailField.text != "" && self.passwordField != "")
         {
@@ -63,13 +63,16 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         }
         else
         {
-            let alert = UIAlertView(title: "Preencha corretamente os campos", message: "Preencha corretamente os campos", delegate: nil, cancelButtonTitle: "Ok")
+            let alert = UIAlertView(title: "Preencha corretamente os campos", message: "", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
         }
     }
     
+    
+    
     func userLogged()
     {
+        self.loadingScreen.removeFromSuperview()
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         self.presentViewController(chat, animated: true, completion: nil)
     }
@@ -77,7 +80,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func userNotFound()
     {
-        let alert = UIAlertView(title: "Usuário nao cadastrado", message: "O usuário nao foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Usuário nao cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
@@ -98,13 +102,23 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     func incompleteRegister()
     {
+        self.loadingScreen.removeFromSuperview()
         let fbregister = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
         self.presentViewController(fbregister, animated: true, completion: nil)
     }
     
+    func loginCanceled()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
     
-    
-    
-    
+    func wrongPassword()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Senha incorreta", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
     
 }
