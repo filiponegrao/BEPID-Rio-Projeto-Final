@@ -31,7 +31,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: UserCondition.userNotFound.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "goValidation", name: UserCondition.passwordMissing.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "incompleteRegister", name: UserCondition.incompleteRegister.rawValue, object: nil)
         
     }
     
@@ -92,7 +92,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
     }
     
-    func goValidation()
+    func incompleteRegister()
     {
         let fbregister = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
         self.presentViewController(fbregister, animated: true, completion: nil)

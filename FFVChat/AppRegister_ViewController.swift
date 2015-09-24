@@ -19,6 +19,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     var popover : UIPopoverController? = nil
     
+    var loadingScreen: LoadScreen_View!
+    
     @IBOutlet weak var buttonphoto: UIButton!
 
     @IBOutlet var labelEmail: UITextField!
@@ -134,6 +136,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBAction func register(sender: UIButton)
     {
+        self.loadingScreen = LoadScreen_View()
+        self.view.addSubview(loadingScreen)
         DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: image!)
     }
 
@@ -151,14 +155,14 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
 
     func userAlreadyRegistered()
     {
-        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o nome de usuario desejado", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
     
     func emailInUse()
     {
-        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o email utilizado", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Ops!", message: "Este email já foi utilizado", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
 }
