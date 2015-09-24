@@ -148,10 +148,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
         picker.dismissViewControllerAnimated(true, completion: nil)
-        self.image = image
-        self.buttonView.image = image
+        self.image = ImageEdition.compressImage(image)
+        self.buttonView.image = self.image
         self.buttonView.contentMode = UIViewContentMode.ScaleAspectFill
     }
     
@@ -165,7 +166,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         self.loadingScreen = LoadScreen_View()
         self.view.addSubview(loadingScreen)
-        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: image!)
+        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: self.image!)
     }
 
     func next()
