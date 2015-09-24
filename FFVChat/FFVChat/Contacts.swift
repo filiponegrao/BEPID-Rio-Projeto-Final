@@ -19,11 +19,12 @@ class Contact
     
     let thumb : UIImage!
     
-    init(username: String, faceUsername: String, registerDate: String)
+    init(username: String, faceUsername: String, registerDate: String, thumb: UIImage)
     {
         self.username = username
         self.faceUsername = faceUsername
         self.registerDate = registerDate
+        self.thumb = thumb
     }
 
 }

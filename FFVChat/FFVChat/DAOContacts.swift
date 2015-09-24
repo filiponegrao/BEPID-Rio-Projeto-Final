@@ -42,20 +42,20 @@ class DAOContacts
     }
     
     
-    class func getAllContacts() -> (condRet: ContactCondRet, contacts: [Contacts]?)
-    {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
-        
-        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
-        {
-            self.initContacts()
-        }
-        
-        let data = NSFileManager.defaultManager().contentsAtPath(dataPath) as!
-        
-    }
+//    class func getAllContacts() -> (condRet: ContactCondRet, contacts: [Contacts]?)
+//    {
+//        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+//        let documentsDirectory: AnyObject = paths[0]
+//        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+//        
+//        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+//        {
+//            self.initContacts()
+//        }
+//        
+//        let data = NSFileManager.defaultManager().contentsAtPath(dataPath) as!
+//        
+//    }
 
     
     class func addContact(username: String)
