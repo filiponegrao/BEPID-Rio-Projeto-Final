@@ -7,29 +7,24 @@
 //
 
 import Foundation
+import UIKit
 
-class Contacts
+class Contact
 {
     let username : String!
     
     let faceUsername : String!
         
-    let registerDate : NSDate!
+    let registerDate : String!
     
-    let numberOfReports : Int!
+    let thumb : UIImage!
     
-    let numberOfScreenshots : Int!
-    
-    let trustLevel : Int!
-    
-    init(username: String, faceUsername: String, registerDate: NSDate, numberOfReports: Int, mumberOfScreenshots: Int, trustLevel: Int)
+    init(username: String, faceUsername: String, registerDate: String, thumb: UIImage)
     {
         self.username = username
         self.faceUsername = faceUsername
         self.registerDate = registerDate
-        self.numberOfReports = numberOfReports
-        self.numberOfScreenshots = mumberOfScreenshots
-        self.trustLevel = trustLevel
+        self.thumb = thumb
     }
-    
+
 }
