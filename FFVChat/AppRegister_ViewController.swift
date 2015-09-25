@@ -48,7 +48,10 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     override func viewWillDisappear(animated: Bool)
     {
-        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "emailInUse", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
     }
     
     override func viewDidLoad()
@@ -180,25 +183,24 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
         {
-            if (self.labelPassword.text != self.labelConfirmPassword.text)
-            {
-                let alert = UIAlertView(title: "Ops!", message: "Senhas não são correspondentes", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-            }
-            
-            else if (!(DAOUser.isValidEmail(self.labelEmail.text!)))
+            if (!(DAOUser.isValidEmail(self.labelEmail.text!)))
             {
                 let alert = UIAlertView(title: "Ops!", message: "Por favor, digite um e-mail válido", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
-            
+                
+            else if (self.labelPassword.text != self.labelConfirmPassword.text)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senhas não são correspondentes", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+
             else
             {
                 self.loadingScreen = LoadScreen_View()
                 self.view.addSubview(loadingScreen)
                 DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
             }
-            
             
         }
         else
