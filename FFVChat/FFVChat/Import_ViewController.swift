@@ -8,19 +8,45 @@
 
 import UIKit
 
-class Import_ViewController: UIViewController {
+class Import_ViewController: UIViewController
+{
 
-    override func viewDidLoad() {
+    @IBOutlet var doneButton: UIButton!
+    
+    @IBOutlet var containerView: UIView!
+    
+    var option = -1
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
+        if(option == -1)
+        {
+            
+        }
 
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
+    
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
+    @IBAction func done(sender: UIButton)
+    {
+        
+    }
 
+    @IBAction func agree(sender: UIButton)
+    {
+        
+    }
 
+    @IBAction func dontAgree(sender: UIButton)
+    {
+        
+    }
 }

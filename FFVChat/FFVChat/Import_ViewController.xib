@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Import_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="containerView" destination="nZ5-VL-eqc" id="iFe-gR-nH7"/>
+                <outlet property="doneButton" destination="Roo-bH-7kz" id="QIn-cW-Vp2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +16,101 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ev5-Ed-9Fi">
+                    <rect key="frame" x="196" y="48" width="208" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="208" id="3IK-Yc-3Np"/>
+                        <constraint firstAttribute="height" constant="40" id="iEy-SE-Ynw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Roo-bH-7kz">
+                    <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                    <color key="backgroundColor" red="0.71764705882352942" green="0.71764705882352942" blue="0.71764705882352942" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="w78-e1-Ard"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Terminar">
+                        <color key="titleColor" red="0.27058823529411763" green="0.26666666666666666" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="done:" destination="-1" eventType="touchUpInside" id="Zj8-T8-LlC"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nZ5-VL-eqc">
+                    <rect key="frame" x="161" y="154" width="278" height="178"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Weh-LS-0Il">
+                            <rect key="frame" x="0.0" y="128" width="133" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="133" id="bpH-Yl-Szs"/>
+                                <constraint firstAttribute="height" constant="50" id="kDU-EZ-NVk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <inset key="titleEdgeInsets" minX="9" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Concordar" image="checkOff"/>
+                            <state key="selected" title="Concordar" image="checkOn"/>
+                            <connections>
+                                <action selector="agree:" destination="-1" eventType="touchUpInside" id="zph-34-a3k"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FtU-lo-D8h">
+                            <rect key="frame" x="141" y="121" width="137" height="57"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="137" id="QU3-m6-U5c"/>
+                                <constraint firstAttribute="height" constant="57" id="xR9-oo-Kiq"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Não obrigado." image="checkOff"/>
+                            <state key="selected" title="Não obrigado." image="checkOn"/>
+                            <connections>
+                                <action selector="dontAgree:" destination="-1" eventType="touchUpInside" id="b4k-zw-QDS"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNn-L3-2sD">
+                            <rect key="frame" x="0.0" y="2" width="278" height="103"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="103" id="1RG-CK-vCP"/>
+                            </constraints>
+                            <string key="text">Deseja importar seus contatos do Facebook? Clicando em concordar voce ficará visível para que seus contatos também possam importá-lo através do Facebook.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Weh-LS-0Il" firstAttribute="leading" secondItem="nZ5-VL-eqc" secondAttribute="leading" id="Fkz-UV-4m0"/>
+                        <constraint firstItem="cNn-L3-2sD" firstAttribute="top" secondItem="nZ5-VL-eqc" secondAttribute="top" constant="2" id="KCf-Di-9yK"/>
+                        <constraint firstAttribute="trailing" secondItem="FtU-lo-D8h" secondAttribute="trailing" id="Q9o-Ww-KsU"/>
+                        <constraint firstAttribute="width" constant="278" id="iyc-AX-wOo"/>
+                        <constraint firstAttribute="bottom" secondItem="FtU-lo-D8h" secondAttribute="bottom" id="kfU-v5-jzm"/>
+                        <constraint firstAttribute="bottom" secondItem="Weh-LS-0Il" secondAttribute="bottom" id="nEW-gv-PAi"/>
+                        <constraint firstAttribute="height" constant="178" id="nFm-IB-e4K"/>
+                        <constraint firstAttribute="trailing" secondItem="cNn-L3-2sD" secondAttribute="trailing" id="ukl-M4-uaq"/>
+                        <constraint firstItem="cNn-L3-2sD" firstAttribute="leading" secondItem="nZ5-VL-eqc" secondAttribute="leading" id="zLY-gM-956"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.30588235294117649" green="0.29411764705882354" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="nZ5-VL-eqc" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="8gP-ra-s9x"/>
+                <constraint firstItem="Ev5-Ed-9Fi" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ano-gh-tzC"/>
+                <constraint firstAttribute="bottom" secondItem="Roo-bH-7kz" secondAttribute="bottom" id="OEA-if-iPK"/>
+                <constraint firstItem="Roo-bH-7kz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UJJ-q8-wCQ"/>
+                <constraint firstItem="Ev5-Ed-9Fi" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="48" id="czv-Hb-ncT"/>
+                <constraint firstItem="nZ5-VL-eqc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="vam-eH-7aR"/>
+                <constraint firstAttribute="trailing" secondItem="Roo-bH-7kz" secondAttribute="trailing" id="zf9-7v-uVa"/>
+            </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="checkOff" width="20" height="20"/>
+        <image name="checkOn" width="20" height="20"/>
+    </resources>
 </document>

@@ -10,7 +10,7 @@ import Foundation
 import Parse
 
 
-enum ContactCondRet
+enum ContactCondRet : String
 {
     case Ok
     
@@ -86,22 +86,71 @@ class DAOContacts
                 {
                     for object in objects
                     {
-                        let username = object.valueForKey("username") as! String
-                        let faceUsername = object.valueForKey("faceUsername") as! String
-                        let registerDate = object.valueForKey("createdAt") as! String
-                        let contact = ["username": username, "faceUsername": faceUsername, "registerDate": registerDate]
-                        content?.setObject(contact, forKey: "\(username)")
-                        content?.writeToFile(dataPath, atomically: true)
+                        let data = object.objectForKey("profileImage") as! PFFile
+                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                            
+                            let image = UIImage(data: data!)
+                            let username = object.valueForKey("username") as! String
+                            let faceUsername = object.valueForKey("faceUsername") as! String
+                            let registerDate = object.valueForKey("createdAt") as! String
+                            
+//                            let contact = ["username": username, "faceUsername": faceUsername, "registerDate": registerDate, "thumb": image]
+                            let contact = NSDictionary()
+                            contact.setValue(image, forKey: "thumb")
+                            contact.setValue(username, forKey: "username")
+                            contact.setValue(faceUsername, forKey: "faceUsername")
+                            contact.setValue(registerDate, forKey: "createdAt")
+                            
+                            content?.setObject(contact, forKey: "\(username)")
+                            content?.writeToFile(dataPath, atomically: true)
+                            NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.Ok.rawValue, object: nil)
+                        })
                     }
                 }
             }
             else
             {
                 // Log details of the failure
+                NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.ContactNotFound.rawValue, object: nil)
                 print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
     
     
+    class func getContact(username: String) -> (contact: Contact?, condret: ContactCondRet)
+    {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        
+        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+        {
+            self.initContacts()
+        }
+        
+        let content = NSMutableDictionary(contentsOfFile: dataPath)
+        
+        let data = content?.objectForKey(username) as? NSDictionary
+        
+        if(data == nil)
+        {
+            return (contact: nil, condret: ContactCondRet.ContactNotFound)
+        }
+        
+        let contact = Contact(username: data?.valueForKey("username") as! String, faceUsername: data?.valueForKey("faceUsername") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: data?.objectForKey("thumb") as! UIImage)
+        
+        print("contato recuperado com sucesso")
+        return (contact: contact, condret: ContactCondRet.Ok)
+    }
+    
+    
+    
+    
+    
 }
+
+
+
+
+
