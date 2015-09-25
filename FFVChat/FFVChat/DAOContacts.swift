@@ -94,7 +94,13 @@ class DAOContacts
                             let faceUsername = object.valueForKey("faceUsername") as! String
                             let registerDate = object.valueForKey("createdAt") as! String
                             
-                            let contact = ["username": username, "faceUsername": faceUsername, "registerDate": registerDate, "thumb": image]
+//                            let contact = ["username": username, "faceUsername": faceUsername, "registerDate": registerDate, "thumb": image]
+                            let contact = NSDictionary()
+                            contact.setValue(image, forKey: "thumb")
+                            contact.setValue(username, forKey: "username")
+                            contact.setValue(faceUsername, forKey: "faceUsername")
+                            contact.setValue(registerDate, forKey: "createdAt")
+                            
                             content?.setObject(contact, forKey: "\(username)")
                             content?.writeToFile(dataPath, atomically: true)
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.Ok.rawValue, object: nil)

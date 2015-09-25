@@ -139,6 +139,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
         {
             picker!.sourceType = UIImagePickerControllerSourceType.Camera
+            picker?.cameraDevice = .Front
             self.presentViewController(picker!, animated: true, completion: nil)
         }
         else
