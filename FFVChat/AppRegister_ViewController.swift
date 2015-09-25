@@ -130,8 +130,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
         else
         {
-            popover = UIPopoverController(contentViewController: alert)
-            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            self.popover = UIPopoverController(contentViewController: alert)
+            self.popover!.presentPopoverFromRect(self.buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
         
     }
@@ -141,8 +141,9 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
         {
-            picker!.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(picker!, animated: true, completion: nil)
+            self.picker!.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker?.showsCameraControls = true
+            self.presentViewController(self.picker!, animated: true, completion: nil)
         }
         else
         {
@@ -153,15 +154,15 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     func openGallery()
     {
-        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
-            self.presentViewController(picker!, animated: true, completion: nil)
+            self.presentViewController(self.picker!, animated: true, completion: nil)
         }
         else
         {
-            popover = UIPopoverController(contentViewController: picker!)
-            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            self.popover = UIPopoverController(contentViewController: self.picker!)
+            self.popover!.presentPopoverFromRect(self.buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
     }
     
@@ -176,6 +177,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("picker cancel")
+        dismissViewControllerAnimated(true, completion: nil)
+
     }
     
     
