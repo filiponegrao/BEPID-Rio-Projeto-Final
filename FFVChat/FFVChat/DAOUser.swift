@@ -286,30 +286,31 @@ class DAOUser
     }
     
     
-    class func getFaceContacts()
-    {
+    class func getFaceContacts( callback : (metacontent: [metaContact]?) -> Void) -> Void {
+
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-            
+        
             if error == nil
             {
-                print("Friends are : \(result)")
+                var meta = [metaContact]()
+//                print("Friends are : \(result)")
                 let results = result as! NSDictionary
-                for(var i = 0; i < results.count; i++)
+                let data = results.objectForKey("data") as! [NSDictionary]
+                
+                for(var j = 0; j < data.count; j++)
                 {
-                    let data = results.objectForKey("data") as! [NSDictionary]
-                    for(var j = 0; j < data.count; j++)
-                    {
-                        let name = data[j].valueForKey("name")
-                        let id = data[j].valueForKey("id")
-                        print(name)
-                        print(id)
-                    }
+                    let name = data[j].valueForKey("name") as! String
+                    let id = data[j].valueForKey("id") as! String
+                    let c = metaContact(facebookID: id, faceUsername: name)
+                    meta.append(c)
                 }
+                callback(metacontent: meta)
             }
             else
             {
                 print("Error Getting Friends \(error)");
+                callback(metacontent: nil)
             }
         }
         

@@ -67,7 +67,9 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
     
     func next()
     {
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
+//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+//        self.presentViewController(chat, animated: true, completion: nil)
+        let importcontact = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
+        self.presentViewController(importcontact, animated: true, completion: nil)
     }
 }

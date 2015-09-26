@@ -28,3 +28,16 @@ class Contact
     }
 
 }
+
+class metaContact
+{
+    let facebookID : String!
+    
+    let faceUsername : String!
+    
+    init(facebookID: String, faceUsername: String)
+    {
+        self.facebookID = facebookID
+        self.faceUsername = faceUsername
+    }
+}

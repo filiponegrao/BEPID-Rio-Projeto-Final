@@ -144,7 +144,28 @@ class DAOContacts
         return (contact: contact, condret: ContactCondRet.Ok)
     }
     
+    
+    class func getProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
+
+        let pictureURL = "https://graph.facebook.com/\(facebookID)/picture?type=large&return_ssl_resources=1"
         
+        let URLRequest = NSURL(string: pictureURL)
+        let URLRequestNeeded = NSURLRequest(URL: URLRequest!)
+        
+        NSURLConnection.sendAsynchronousRequest(URLRequestNeeded, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse? ,data: NSData?, error: NSError?) -> Void in
+            if error == nil
+            {
+                let image = UIImage(data: data!)
+                callback(image)
+                
+            }
+            else
+            {
+                print("erro ao carregar imagem de um contato")
+                callback(nil)
+            }
+        })
+    }
     
     
 }
