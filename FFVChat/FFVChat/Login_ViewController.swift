@@ -39,7 +39,11 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     override func viewWillDisappear(animated: Bool)
     {
-        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userNotFound", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "incompleteRegister", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "wrongPassword", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
     }
     
     override func viewDidLoad()

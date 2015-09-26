@@ -34,14 +34,14 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Senha" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8OY-ey-3W8">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8OY-ey-3W8">
                     <rect key="frame" x="200" y="354" width="200" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="6Pf-Yl-EIL"/>
                         <constraint firstAttribute="width" constant="200" id="tF5-4b-W9q"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-tM-soG">
                     <rect key="frame" x="200" y="421" width="200" height="30"/>
@@ -49,7 +49,7 @@
                         <constraint firstAttribute="height" constant="30" id="ARI-it-sR2"/>
                         <constraint firstAttribute="width" constant="200" id="C0s-JV-399"/>
                     </constraints>
-                    <state key="normal" title="Finalizar"/>
+                    <state key="normal" title="register"/>
                     <connections>
                         <action selector="register:" destination="-1" eventType="touchUpInside" id="OFz-5F-fXU"/>
                     </connections>
