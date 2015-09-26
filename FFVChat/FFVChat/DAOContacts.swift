@@ -91,14 +91,14 @@ class DAOContacts
                             
                             let image = UIImage(data: data!)
                             let username = object.valueForKey("username") as! String
-                            let faceUsername = object.valueForKey("faceUsername") as! String
+                            let faceUsername = object.valueForKey("facebookID") as! String
                             let registerDate = object.valueForKey("createdAt") as! String
                             
 //                            let contact = ["username": username, "faceUsername": faceUsername, "registerDate": registerDate, "thumb": image]
                             let contact = NSDictionary()
                             contact.setValue(image, forKey: "thumb")
                             contact.setValue(username, forKey: "username")
-                            contact.setValue(faceUsername, forKey: "faceUsername")
+                            contact.setValue(faceUsername, forKey: "facebookID")
                             contact.setValue(registerDate, forKey: "createdAt")
                             
                             content?.setObject(contact, forKey: "\(username)")
@@ -138,14 +138,13 @@ class DAOContacts
             return (contact: nil, condret: ContactCondRet.ContactNotFound)
         }
         
-        let contact = Contact(username: data?.valueForKey("username") as! String, faceUsername: data?.valueForKey("faceUsername") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: data?.objectForKey("thumb") as! UIImage)
+        let contact = Contact(username: data?.valueForKey("username") as! String, facebookID: data?.valueForKey("facebookID") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: data?.objectForKey("thumb") as! UIImage)
         
         print("contato recuperado com sucesso")
         return (contact: contact, condret: ContactCondRet.Ok)
     }
     
-    
-    
+        
     
     
 }

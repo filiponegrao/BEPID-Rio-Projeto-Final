@@ -126,6 +126,7 @@ class DAOUser
                             let user = objects[0]
                             let email = user["email"] as! String
                             let trustLevel = user["trustLevel"] as! Int
+                            let faceID = user["facebookID"] as! String
                             let data = user["profileImage"] as! PFFile
                             data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                                 
@@ -135,6 +136,7 @@ class DAOUser
                                 DAOUser.setPassword(password)
                                 DAOUser.setTrustLevel(trustLevel)
                                 DAOUser.setProfileImage(image!)
+                                DAOUser.setFacebookID(faceID)
                                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                                 
                             })
@@ -183,7 +185,7 @@ class DAOUser
                     print("usuario logado pelo Facebook")
                     
                     DAOUser.setUserName(user.valueForKey("username") as! String)
-                    DAOUser.setFaceUsername(user.valueForKey("faceUsername") as! String)
+                    DAOUser.setFacebookID(user.valueForKey("facebookID") as! String)
                     DAOUser.setEmail(user.valueForKey("email") as! String)
                     DAOUser.setPassword(user.valueForKey("username") as! String)
                     DAOUser.setTrustLevel(user.valueForKey("trustLevel") as! Int)
@@ -237,7 +239,7 @@ class DAOUser
                         let picture = PFFile(data: data!)
                         PFUser.currentUser()?.setValue(userName, forKey: "username")
                         PFUser.currentUser()?.setValue(userEmail, forKey: "email")
-                        PFUser.currentUser()?.setValue(userName, forKey: "faceUsername")
+                        PFUser.currentUser()?.setValue(id, forKey: "facebookID")
                         PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()!.save()
                         
@@ -246,7 +248,7 @@ class DAOUser
                         DAOUser.setEmail(userEmail as String)
                         DAOUser.setProfileImage(image!)
                         DAOUser.setUserName(userName as String)
-                        DAOUser.setFaceUsername(userName as String)
+                        DAOUser.setFacebookID(id)
 
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
                     }
@@ -284,7 +286,7 @@ class DAOUser
     }
     
     
-    class func loadContacts()
+    class func getFaceContacts()
     {
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
@@ -299,7 +301,9 @@ class DAOUser
                     for(var j = 0; j < data.count; j++)
                     {
                         let name = data[j].valueForKey("name")
+                        let id = data[j].valueForKey("id")
                         print(name)
+                        print(id)
                     }
                 }
             }
@@ -322,9 +326,9 @@ class DAOUser
         PFUser.logOut()
         DAOUser.setUserName("")
         DAOUser.setEmail("")
-        DAOUser.setLastSync("")
         DAOUser.setPassword("")
         DAOUser.setTrustLevel(-1)
+        DAOUser.setFacebookID("")
 
         return (done: true, error: "")
     }
@@ -412,7 +416,7 @@ class DAOUser
     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
     * enquanto as de escrever utilizam o mutable dictionary
     **/
-    class func getFaceUsername() -> String!
+    class func getFacebookID() -> String!
     {
         
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -429,7 +433,7 @@ class DAOUser
             }
         }
         
-        let nome = content!.valueForKey("faceUsername") as? String
+        let nome = content!.valueForKey("facebookID") as? String
         
         if(nome == nil)
         {
@@ -651,7 +655,7 @@ class DAOUser
     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
     * enquanto as de escrever utilizam o mutable dictionary
     **/
-    class func setFaceUsername(name: String)
+    class func setFacebookID(name: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -667,7 +671,7 @@ class DAOUser
             }
         }
         
-        content!.setValue(name, forKey: "faceUsername")
+        content!.setValue(name, forKey: "facebookID")
         content!.writeToFile(path, atomically: true)
     }
 

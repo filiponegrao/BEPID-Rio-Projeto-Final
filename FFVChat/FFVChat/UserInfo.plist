@@ -4,7 +4,7 @@
 <dict>
 	<key>nome</key>
 	<string></string>
-	<key>faceUsername</key>
+	<key>facebookID</key>
 	<string></string>
 	<key>email</key>
 	<string></string>

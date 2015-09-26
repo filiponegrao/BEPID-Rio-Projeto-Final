@@ -13,16 +13,16 @@ class Contact
 {
     let username : String!
     
-    let faceUsername : String!
+    let facebookID : String!
         
     let registerDate : String!
     
     let thumb : UIImage!
     
-    init(username: String, faceUsername: String, registerDate: String, thumb: UIImage)
+    init(username: String, facebookID: String, registerDate: String, thumb: UIImage)
     {
         self.username = username
-        self.faceUsername = faceUsername
+        self.facebookID = facebookID
         self.registerDate = registerDate
         self.thumb = thumb
     }

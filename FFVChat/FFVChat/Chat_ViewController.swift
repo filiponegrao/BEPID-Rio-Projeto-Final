@@ -19,7 +19,7 @@ class Chat_ViewController: UIViewController
         print(DAOUser.getPassword())
         print(DAOUser.getTrustLevel())
         print(DAOUser.getProfileImage())
-        DAOUser.loadContacts()
+        DAOUser.getFaceContacts()
         
     }
 
