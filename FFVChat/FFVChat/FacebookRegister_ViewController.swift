@@ -16,16 +16,32 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet var labelPassword: UITextField!
     
+    @IBOutlet weak var labelConfirmPassword: UITextField!
+    
     var activeField: UITextField?
 
+    override func viewWillAppear(animated: Bool)
+    {
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyExist", name: UserCondition.userAlreadyExist.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
+        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
+        
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
-
         let image = DAOUser.getProfileImage()
         
         self.imageView.image = image
@@ -56,6 +72,16 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func register(sender: UIButton)
     {
+//        if (self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.imageView != nil)
+//        {
+//            
+//        }
+//        
+//        else
+//        {
+//            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
+//            alert.show()
+//        }
         DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
     }
     
@@ -65,7 +91,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
 
     }
     
-    func next()
+    func userLogged()
     {
 //        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
 //        self.presentViewController(chat, animated: true, completion: nil)
