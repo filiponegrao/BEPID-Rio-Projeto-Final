@@ -251,8 +251,12 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     func userLogged()
     {
         self.loadingScreen.removeFromSuperview()
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
+//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+//        self.presentViewController(chat, animated: true, completion: nil)
+        
+        let tutorial = Tutorial_PageViewController()
+        self.presentViewController(tutorial, animated: true, completion: nil)
+
     }
 
     func loginCanceled()

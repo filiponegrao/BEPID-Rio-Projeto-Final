@@ -8,10 +8,16 @@
 
 import UIKit
 
-class TutoSecond_ViewController: UIViewController {
+class TutoSecond_ViewController: UIViewController
+{
+    var index = 1
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.blueColor()
+
 
         // Do any additional setup after loading the view.
     }

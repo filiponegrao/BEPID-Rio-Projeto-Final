@@ -46,7 +46,7 @@
 		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
 		F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */; };
 		F66B29C61BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C41BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift */; };
-		F66B29C71BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */; };
+		F66B29C71BAB6A3B00BC43EE /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController.xib */; };
 		F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */; };
 		F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */; };
 		F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */; };
@@ -129,7 +129,7 @@
 		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
 		F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoFirst_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C41BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift"; sourceTree = "<group>"; };
-		F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib"; sourceTree = "<group>"; };
+		F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Privacy_ViewController.swift; sourceTree = "<group>"; };
 		F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Privacy_ViewController.xib; sourceTree = "<group>"; };
 		F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import_ViewController.swift; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 				F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */,
 				801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */,
 				F66B29C11BAB6A0600BC43EE /* TutoFirst_ViewController.xib */,
-				F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib */,
+				F66B29C51BAB6A3B00BC43EE /* TutoSecond_ViewController.xib */,
 				F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */,
 				F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */,
 				F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */,
@@ -467,7 +467,7 @@
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
 				F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */,
-				F66B29C71BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.xib in Resources */,
+				F66B29C71BAB6A3B00BC43EE /* TutoSecond_ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

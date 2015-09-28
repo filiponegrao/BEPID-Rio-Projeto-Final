@@ -106,7 +106,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         let register = AppRegister_ViewController(nibName: "AppRegister_ViewController", bundle: nil)
         self.presentViewController(register, animated: true, completion: nil)
-    }
+        }
     
     
     @IBAction func loginFace(sender: UIButton)
@@ -120,8 +120,12 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userLogged()
     {
         self.loadingScreen?.removeFromSuperview()
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
+//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+//        self.presentViewController(chat, animated: true, completion: nil)
+        
+        let tutorial = Tutorial_PageViewController()
+        self.presentViewController(tutorial, animated: true, completion: nil)
+
     }
     
     
