@@ -90,7 +90,14 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellImportContact_TableViewCell
         cell.name.text = self.metaContacts[indexPath.row].faceUsername
         cell.backgroundColor = UIColor.clearColor()
-        cell.checkOff()
+        if(cell.checked)
+        {
+            cell.checkOn()
+        }
+        else
+        {
+            cell.checkOff()
+        }
         
         DAOContacts.getProfilePicture(self.metaContacts[indexPath.row].facebookID) { (image: UIImage?) -> Void in
             cell.photo.image = image

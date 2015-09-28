@@ -284,6 +284,9 @@ class DAOUser
     }
     
     
+    /**
+     *
+     */
     class func getFaceContacts( callback : (metacontent: [metaContact]?) -> Void) -> Void {
 
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);

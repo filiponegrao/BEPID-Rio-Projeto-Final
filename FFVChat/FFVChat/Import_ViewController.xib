@@ -28,15 +28,6 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deseja importar seus contatos do Facebook? Optando por importar voce torna-se visivel para que seus contatos tambem o importem." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFk-nb-BLk">
-                    <rect key="frame" x="23" y="55" width="552" height="87"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="87" id="0E4-lQ-dtl"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="guR-1f-Kc8">
                     <rect key="frame" x="0.0" y="263" width="600" height="337"/>
                     <color key="backgroundColor" red="0.51764705879999995" green="0.51372549020000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,12 +35,21 @@
                         <constraint firstAttribute="height" constant="337" id="DFb-xA-iqK"/>
                     </constraints>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deseja importar seus contatos do Facebook? Optando por importar voce torna-se visivel para que seus contatos tambem o importem." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFk-nb-BLk">
+                    <rect key="frame" x="23" y="85" width="552" height="87"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="87" id="0E4-lQ-dtl"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.30588235294117649" green="0.29411764705882354" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="guR-1f-Kc8" secondAttribute="bottom" id="24F-aA-bpH"/>
                 <constraint firstAttribute="trailing" secondItem="DFk-nb-BLk" secondAttribute="trailing" constant="25" id="DsA-MP-8Qw"/>
-                <constraint firstItem="DFk-nb-BLk" firstAttribute="top" secondItem="qu8-s4-95e" secondAttribute="bottom" constant="1" id="Edy-PO-Reh"/>
+                <constraint firstItem="DFk-nb-BLk" firstAttribute="top" secondItem="qu8-s4-95e" secondAttribute="bottom" constant="31" id="Edy-PO-Reh"/>
                 <constraint firstItem="guR-1f-Kc8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QQy-DK-XqK"/>
                 <constraint firstItem="qu8-s4-95e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="b5h-Lp-Ve6"/>
                 <constraint firstAttribute="trailing" secondItem="guR-1f-Kc8" secondAttribute="trailing" id="iNY-7M-hI2"/>

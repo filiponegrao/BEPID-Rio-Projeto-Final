@@ -57,13 +57,19 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         print(username)
         self.labelUsername.text = username
         
+        self.labelPassword.delegate = self
+        self.labelConfirmPassword.delegate = self
+        
 //        //pra mover a tela quando abre o teclado
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name: UIKeyboardWillShowNotification, object: nil)
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil)
 //        
     }
     
-    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+        return newLength <= 6 // Bool
+    }
     
 
     override func didReceiveMemoryWarning()
