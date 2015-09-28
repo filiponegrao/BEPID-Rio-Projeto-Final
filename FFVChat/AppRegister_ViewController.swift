@@ -43,6 +43,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name:UIKeyboardWillShowNotification, object: nil);
 
     }
     
@@ -52,6 +54,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
     }
     
     override func viewDidLoad()
@@ -72,26 +75,23 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.buttonphoto.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
 
         
+        
     }
     
-    
-    func textFieldDidBeginEditing(textField: UITextField)
-    {
-        print("did begin edtting")
+    //Sobe a view e desce a view
+    func keyboardWillShow() {
+        self.view.frame.origin.y = -150
+    }
+    func keyboardWillHide() {
         UIView.animateWithDuration(0.3) { () -> Void in
-            
-            self.containerView.frame.origin = CGPointMake(0, -150)
+            self.view.frame.origin.y = 0
         }
     }
-    
-    
     func textFieldDidEndEditing(textField: UITextField)
     {
-        print("did endedditng")
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.containerView.frame.origin = CGPointMake(0, 0)
-        }
+        self.keyboardWillHide()
     }
+    
     
 
     override func didReceiveMemoryWarning()

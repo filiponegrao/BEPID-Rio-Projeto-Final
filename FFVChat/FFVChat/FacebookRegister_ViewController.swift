@@ -29,6 +29,9 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name:UIKeyboardWillShowNotification, object: nil);
+
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -38,6 +41,9 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+
     }
     
     override func viewDidLoad()
@@ -57,13 +63,23 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         print(username)
         self.labelUsername.text = username
         
+        self.labelUsername.delegate = self
         self.labelPassword.delegate = self
         self.labelConfirmPassword.delegate = self
-        
-//        //pra mover a tela quando abre o teclado
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name: UIKeyboardWillShowNotification, object: nil)
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil)
-//        
+    }
+    
+    //Sobe a view e desce a view
+    func keyboardWillShow() {
+        self.view.frame.origin.y = -150
+    }
+    func keyboardWillHide() {
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.view.frame.origin.y = 0
+        }
+    }
+    func textFieldDidEndEditing(textField: UITextField)
+    {
+        self.keyboardWillHide()
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
