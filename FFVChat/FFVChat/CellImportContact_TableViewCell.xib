@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hBF-ek-wKk">
-                        <rect key="frame" x="7" y="4" width="40" height="40"/>
+                        <rect key="frame" x="13" y="4" width="40" height="40"/>
                         <color key="backgroundColor" red="1" green="0.99482552069999997" blue="0.99170322799999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="h9J-Ky-fiU"/>
@@ -24,12 +24,12 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome Do fulaninho maldito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJS-Fl-Y8t">
-                        <rect key="frame" x="56" y="4" width="326" height="40"/>
+                        <rect key="frame" x="75" y="4" width="307" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="bHQ-oc-ZaB"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkOff" translatesAutoresizingMaskIntoConstraints="NO" id="Hht-bm-HND">
@@ -43,10 +43,10 @@
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="Hht-bm-HND" secondAttribute="bottom" constant="3.5" id="0Ou-X9-kjU"/>
                     <constraint firstItem="Hht-bm-HND" firstAttribute="leading" secondItem="oJS-Fl-Y8t" secondAttribute="trailing" constant="5" id="9MW-hC-dQv"/>
-                    <constraint firstItem="oJS-Fl-Y8t" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="9" id="Dov-NL-DaF"/>
+                    <constraint firstItem="oJS-Fl-Y8t" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="22" id="Dov-NL-DaF"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Hht-bm-HND" secondAttribute="trailing" constant="5" id="XK5-7V-3v5"/>
                     <constraint firstAttribute="bottomMargin" secondItem="oJS-Fl-Y8t" secondAttribute="bottom" constant="-4.5" id="c5l-vm-iPU"/>
-                    <constraint firstItem="hBF-ek-wKk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-1" id="iI2-qD-yus"/>
+                    <constraint firstItem="hBF-ek-wKk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="iI2-qD-yus"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hBF-ek-wKk" secondAttribute="bottom" constant="-4.5" id="wIg-tO-JJp"/>
                 </constraints>
             </tableViewCellContentView>
