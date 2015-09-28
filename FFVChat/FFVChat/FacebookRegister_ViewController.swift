@@ -8,8 +8,10 @@
 
 import UIKit
 
-class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
+class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlertViewDelegate
 {
+    var loadingScreen: LoadScreen_View!
+    
     @IBOutlet var imageView: UIImageView!
 
     @IBOutlet var labelUsername: UITextField!
@@ -22,20 +24,20 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
 
     override func viewWillAppear(animated: Bool)
     {
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyExist", name: UserCondition.userAlreadyExist.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyExist", name: UserCondition.userAlreadyExist.rawValue, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
         
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool)
     {
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
         
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
     }
     
     override func viewDidLoad()
@@ -72,17 +74,46 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
     
     @IBAction func register(sender: UIButton)
     {
-//        if (self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.imageView != nil)
-//        {
-//            
-//        }
-//        
-//        else
-//        {
-//            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
-//            alert.show()
-//        }
-        DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
+        if (self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.imageView != nil)
+        {
+            if (self.verifyWhiteSpace(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter espaços em branco", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else if (self.verifySpecialCharacter(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter caracteres especiais", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+                
+            else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senha deve conter exatamente 6 números", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else if (self.labelPassword.text != self.labelConfirmPassword.text)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senhas estão diferentes", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else
+            {
+                self.loadingScreen = LoadScreen_View()
+                self.view.addSubview(loadingScreen)
+                DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
+            }
+        }
+        
+        else
+        {
+            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+        }
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
@@ -91,6 +122,14 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
 
     }
     
+    func userAlreadyExist()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+
+    
     func userLogged()
     {
 //        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
@@ -98,4 +137,59 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
         let importcontact = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.presentViewController(importcontact, animated: true, completion: nil)
     }
+    
+    func loginCanceled()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func verifySpecialCharacter(username: String) -> Bool
+    {
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789_.-")
+        let searchTerm = username
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("special characters found")
+            return true
+        }
+        return false
+    }
+    
+    func verifyWhiteSpace (username: String) -> Bool
+    {
+        let whitespace = NSCharacterSet.whitespaceCharacterSet()
+        
+        let range = username.rangeOfCharacterFromSet(whitespace)
+        
+        // range will be nil if no whitespace is found
+        if (range != nil) {
+            print("whitespace found")
+            return true
+        }
+        else
+        {
+            print("whitespace not found")
+            return false
+        }
+    }
+    
+    func verifyInvalidPassword (password: String) -> Bool
+    {
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "0123456789")
+        let searchTerm = password
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("senha não contém só números")
+            return true
+        }
+        else if (password.characters.count != 6)
+        {
+            print("senha deve conter 6 números")
+            return true
+        }
+        return false
+    }
+
 }

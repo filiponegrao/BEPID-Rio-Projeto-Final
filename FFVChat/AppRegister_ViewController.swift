@@ -214,7 +214,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
                 
             else if (self.labelPassword.text != self.labelConfirmPassword.text)
             {
-                let alert = UIAlertView(title: "Ops!", message: "Senhas não são correspondentes", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Ops!", message: "Senhas estão diferentes", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
 
@@ -235,26 +235,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
     }
 
-    func userLogged()
-    {
-        self.loadingScreen.removeFromSuperview()
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
-    {
-        self.view.endEditing(true)
-    }
-
-    func userAlreadyExist()
-    {
-        self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
-    }
-    
-    
     func emailInUse()
     {
         self.loadingScreen.removeFromSuperview()
@@ -262,11 +242,30 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         alert.show()
     }
     
+    func userAlreadyExist()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func userLogged()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        self.presentViewController(chat, animated: true, completion: nil)
+    }
+
     func loginCanceled()
     {
         self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        self.view.endEditing(true)
     }
     
     @IBAction func cancel(sender: UIButton)
