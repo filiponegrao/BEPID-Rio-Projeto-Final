@@ -8,12 +8,25 @@
 
 import UIKit
 
-class Tutorial_PageViewController: UIViewController
+class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
+    var pageViewController : UIPageViewController!
+    
+    var pageIndex = 0
+    
+    var tutoFirst : TutoFirst_ViewController!
+    
+    var tutoSecond : TutoSecond_ViewController!
+    
+    var privacy : Privacy_ViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tutoFirst = TutoFirst_ViewController(nibName: "TutoFirst_ViewController", bundle: nil)
+        self.tutoSecond = TutoSecond_ViewController(nibName: "TutoSecond_ViewController", bundle: nil)
+
+        
         // Do any additional setup after loading the view.
     }
 
