@@ -2,13 +2,14 @@
 //  Tutorial_PageViewController.swift
 //  FFVChat
 //
-//  Created by Fernanda Carvalho on 17/09/15.
-//  Copyright (c) 2015 FilipoNegrao. All rights reserved.
+//  Created by Fernanda Carvalho on 27/09/15.
+//  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
 import UIKit
 
-class Tutorial_PageViewController: UIPageViewController {
+class Tutorial_PageViewController: UIViewController
+{
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,14 @@ class Tutorial_PageViewController: UIPageViewController {
     }
     
 
-  
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }

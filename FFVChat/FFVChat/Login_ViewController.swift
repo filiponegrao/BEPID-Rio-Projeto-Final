@@ -81,7 +81,41 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         }
     }
     
+//    func checkMaxLength(textField: UITextField!, maxLength: Int)
+//    {
+//        if (textField.text?.characters.count > maxLength)
+//        {
+//            textField.deleteBackward()
+//            
+//        }
+//    }
     
+//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+//    {
+//        let newLength:Int = (textField.text?.characters.count)! + (string as NSString).length - range.length
+//        return (newLength > 6) ? false : true
+//    }
+    
+    @IBAction func register(sender: UIButton)
+    {
+//        self.checkMaxLength(passwordField, maxLength: 6)
+        if (self.passwordField.text?.characters.count > 6)
+        {
+            self.passwordField.resignFirstResponder()
+        }
+        
+        let register = AppRegister_ViewController(nibName: "AppRegister_ViewController", bundle: nil)
+        self.presentViewController(register, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func loginFace(sender: UIButton)
+    {
+        self.loadingScreen = LoadScreen_View()
+        self.view.addSubview(self.loadingScreen)
+        DAOUser.loginFaceParse()
+        
+    }
     
     func userLogged()
     {
@@ -96,21 +130,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Usuário não cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
-    }
-    
-    @IBAction func register(sender: UIButton)
-    {
-        let register = AppRegister_ViewController(nibName: "AppRegister_ViewController", bundle: nil)
-        self.presentViewController(register, animated: true, completion: nil)
-    }
-    
-    
-    @IBAction func loginFace(sender: UIButton)
-    {
-        self.loadingScreen = LoadScreen_View()
-        self.view.addSubview(self.loadingScreen)
-        DAOUser.loginFaceParse()
-        
     }
     
     func incompleteRegister()

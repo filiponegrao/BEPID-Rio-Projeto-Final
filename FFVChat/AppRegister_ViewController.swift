@@ -93,7 +93,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
     }
     
-
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

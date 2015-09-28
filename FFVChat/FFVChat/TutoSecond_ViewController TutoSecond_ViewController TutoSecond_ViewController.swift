@@ -1,5 +1,5 @@
 //
-//  TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift
+//  TutoSecond_ViewController.swift
 //  FFVChat
 //
 //  Created by Fernanda Carvalho on 17/09/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TutoSecond_ViewController_TutoSecond_ViewController_TutoSecond_ViewController: UIViewController {
+class TutoSecond_ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
