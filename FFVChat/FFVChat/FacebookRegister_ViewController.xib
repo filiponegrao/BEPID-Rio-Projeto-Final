@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FacebookRegister_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
                 <outlet property="imageView" destination="O5Z-69-Dp6" id="ZsV-zn-vwC"/>
+                <outlet property="labelConfirmPassword" destination="DVS-25-8Un" id="16b-9z-3jH"/>
                 <outlet property="labelPassword" destination="8OY-ey-3W8" id="c4V-de-cIt"/>
                 <outlet property="labelUsername" destination="UZo-Mh-L3T" id="0C3-0E-HyJ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -32,18 +33,18 @@
                         <constraint firstAttribute="height" constant="30" id="c6n-m3-cRW"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert"/>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8OY-ey-3W8">
-                    <rect key="frame" x="200" y="354" width="200" height="30"/>
+                    <rect key="frame" x="200" y="341" width="200" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="6Pf-Yl-EIL"/>
-                        <constraint firstAttribute="width" constant="200" id="tF5-4b-W9q"/>
+                        <constraint firstAttribute="width" constant="200" id="RB3-GH-qaq"/>
+                        <constraint firstAttribute="height" constant="30" id="g9E-ba-XlX"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardAppearance="alert" secureTextEntry="YES"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" secureTextEntry="YES"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-tM-soG">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-tM-soG">
                     <rect key="frame" x="200" y="421" width="200" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="ARI-it-sR2"/>
@@ -54,17 +55,27 @@
                         <action selector="register:" destination="-1" eventType="touchUpInside" id="OFz-5F-fXU"/>
                     </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DVS-25-8Un">
+                    <rect key="frame" x="200" y="383" width="200" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="6Uw-ib-akv"/>
+                        <constraint firstAttribute="height" constant="30" id="cKM-pX-0uR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardAppearance="alert" secureTextEntry="YES"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="UZo-Mh-L3T" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="8VX-bA-Sfn"/>
-                <constraint firstItem="Imj-tM-soG" firstAttribute="top" secondItem="8OY-ey-3W8" secondAttribute="bottom" constant="37" id="HQo-um-PPn"/>
                 <constraint firstItem="Imj-tM-soG" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="N6K-4t-N5N"/>
                 <constraint firstItem="O5Z-69-Dp6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="NbI-FU-raL"/>
-                <constraint firstItem="8OY-ey-3W8" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Nsb-iT-RzS"/>
+                <constraint firstItem="DVS-25-8Un" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="WVA-8f-Lja"/>
                 <constraint firstItem="O5Z-69-Dp6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="X17-bG-yXR"/>
+                <constraint firstItem="DVS-25-8Un" firstAttribute="top" secondItem="8OY-ey-3W8" secondAttribute="bottom" constant="13" id="Yt5-Uh-vXF"/>
+                <constraint firstItem="8OY-ey-3W8" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="iHm-Hv-K8J"/>
                 <constraint firstItem="UZo-Mh-L3T" firstAttribute="top" secondItem="O5Z-69-Dp6" secondAttribute="bottom" constant="47" id="nM8-SN-hBl"/>
-                <constraint firstItem="8OY-ey-3W8" firstAttribute="top" secondItem="UZo-Mh-L3T" secondAttribute="bottom" constant="27" id="yhB-xr-Yte"/>
+                <constraint firstItem="8OY-ey-3W8" firstAttribute="top" secondItem="UZo-Mh-L3T" secondAttribute="bottom" constant="14" id="pzL-6O-I82"/>
             </constraints>
         </view>
     </objects>

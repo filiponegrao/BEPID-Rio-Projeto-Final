@@ -126,7 +126,6 @@ class DAOUser
                             let user = objects[0]
                             let email = user["email"] as! String
                             let trustLevel = user["trustLevel"] as! Int
-                            let faceID = user["facebookID"] as! String
                             let data = user["profileImage"] as! PFFile
                             data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                                 
@@ -136,7 +135,6 @@ class DAOUser
                                 DAOUser.setPassword(password)
                                 DAOUser.setTrustLevel(trustLevel)
                                 DAOUser.setProfileImage(image!)
-                                DAOUser.setFacebookID(faceID)
                                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                                 
                             })

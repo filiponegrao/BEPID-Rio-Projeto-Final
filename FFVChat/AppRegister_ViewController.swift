@@ -194,9 +194,27 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
                 alert.show()
             }
                 
+                else if (self.verifyWhiteSpace(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter espaços em branco", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+                
+            else if (self.verifySpecialCharacter(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter caracteres especiais", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senha deve conter exatamente 6 números", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+                
             else if (self.labelPassword.text != self.labelConfirmPassword.text)
             {
-                let alert = UIAlertView(title: "Ops!", message: "Senhas não são correspondentes", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Ops!", message: "Senhas estão diferentes", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
 
@@ -217,26 +235,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
     }
 
-    func userLogged()
-    {
-        self.loadingScreen.removeFromSuperview()
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
-    {
-        self.view.endEditing(true)
-    }
-
-    func userAlreadyExist()
-    {
-        self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
-    }
-    
-    
     func emailInUse()
     {
         self.loadingScreen.removeFromSuperview()
@@ -244,6 +242,20 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         alert.show()
     }
     
+    func userAlreadyExist()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func userLogged()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        self.presentViewController(chat, animated: true, completion: nil)
+    }
+
     func loginCanceled()
     {
         self.loadingScreen.removeFromSuperview()
@@ -251,10 +263,62 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         alert.show()
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        self.view.endEditing(true)
+    }
+    
     @IBAction func cancel(sender: UIButton)
     {
         self.dismissViewControllerAnimated(true
             , completion: nil)
+    }
+    
+    func verifySpecialCharacter(username: String) -> Bool
+    {
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789_.-")
+        let searchTerm = username
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("special characters found")
+            return true
+        }
+        return false
+    }
+    
+    func verifyWhiteSpace (username: String) -> Bool
+    {
+        let whitespace = NSCharacterSet.whitespaceCharacterSet()
+        
+        let range = username.rangeOfCharacterFromSet(whitespace)
+        
+        // range will be nil if no whitespace is found
+        if (range != nil) {
+            print("whitespace found")
+            return true
+        }
+        else
+        {
+            print("whitespace not found")
+            return false
+        }
+    }
+    
+    func verifyInvalidPassword (password: String) -> Bool
+    {
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "0123456789")
+        let searchTerm = password
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("senha não contém só números")
+            return true
+        }
+        else if (password.characters.count != 6)
+        {
+            print("senha deve conter 6 números")
+            return true
+        }
+        return false
     }
     
     
