@@ -81,28 +81,32 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         }
     }
     
+//    func checkMaxLength(textField: UITextField!, maxLength: Int)
+//    {
+//        if (textField.text?.characters.count > maxLength)
+//        {
+//            textField.deleteBackward()
+//            
+//        }
+//    }
     
-    
-    func userLogged()
-    {
-        self.loadingScreen?.removeFromSuperview()
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
-    }
-    
-    
-    func userNotFound()
-    {
-        self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Usuário não cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
-    }
+//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+//    {
+//        let newLength:Int = (textField.text?.characters.count)! + (string as NSString).length - range.length
+//        return (newLength > 6) ? false : true
+//    }
     
     @IBAction func register(sender: UIButton)
     {
+//        self.checkMaxLength(passwordField, maxLength: 6)
+        if (self.passwordField.text?.characters.count > 6)
+        {
+            self.passwordField.resignFirstResponder()
+        }
+        
         let register = AppRegister_ViewController(nibName: "AppRegister_ViewController", bundle: nil)
         self.presentViewController(register, animated: true, completion: nil)
-    }
+        }
     
     
     @IBAction func loginFace(sender: UIButton)
@@ -111,6 +115,25 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.view.addSubview(self.loadingScreen)
         DAOUser.loginFaceParse()
         
+    }
+    
+    func userLogged()
+    {
+        self.loadingScreen?.removeFromSuperview()
+//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+//        self.presentViewController(chat, animated: true, completion: nil)
+        
+        let tutorial = Tutorial_PageViewController()
+        self.presentViewController(tutorial, animated: true, completion: nil)
+
+    }
+    
+    
+    func userNotFound()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Usuário não cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
     }
     
     func incompleteRegister()
