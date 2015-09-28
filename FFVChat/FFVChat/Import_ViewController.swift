@@ -26,33 +26,33 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var agree : Bool = false
     
+    var all : Bool = false
+    
+    var agreeButton : UIButton!
+    
+    var dontAgreeButton : UIButton!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         //doneButton
-        self.doneButton = UIButton(frame: CGRectMake(screenWidth/2 + 2, self.tableView.frame.origin.y - 80, screenWidth/2-2, 40))
+        self.doneButton = UIButton(frame: CGRectMake(screenWidth/2 + 2, self.tableView.frame.origin.y - 65, screenWidth/2-2, 30))
         self.doneButton.backgroundColor = UIColor(netHex: 0x888686)
         self.doneButton.setTitle("Finalizar", forState: .Normal)
         self.doneButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.doneButton)
         
-        //allcontacts view
-        self.allContactsView = UIView(frame: CGRectMake(0, self.tableView.frame.origin.y
-             - 80, screenWidth/2 - 2, 40))
-        self.allContactsView.backgroundColor = UIColor(netHex: 0x888686)
-        self.view.addSubview(self.allContactsView)
-        
-        let text = UILabel(frame: CGRectMake(40, 10, self.allContactsView.frame.size.width - 40, 20))
-        text.text = "Todos"
-        self.allContactsView.addSubview(text)
-        
+
         //all contacts button
-        self.allContactsButton = UIButton(frame: CGRectMake(10, 10, 20, 20))
-        self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
+        self.allContactsButton = UIButton(frame: CGRectMake(0, self.tableView.frame.origin.y
+            - 80, screenWidth/2 - 2, 40))
+        self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
+        self.allContactsButton.setTitle("Todos", forState: .Normal)
         self.allContactsButton.addTarget(self, action: "selectAllContacts", forControlEvents: .TouchUpInside)
-        self.allContactsView.addSubview(self.allContactsButton)
+        self.allContactsButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 20)
+        self.view.addSubview(self.allContactsButton)
         
         //tableview
         self.tableView.delegate = self
@@ -68,6 +68,8 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.tableView.reloadData()
             }
         }
+        
+        self.selectAllContacts()
         
     }
 
@@ -120,7 +122,27 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func selectAllContacts()
     {
-        
+        self.all = !(self.all)
+        if(self.all)
+        {
+            self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
+            for(var i = 0; i < self.metaContacts.count; i++)
+            {
+                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath.init(forRow: i, inSection: 0)) as! CellImportContact_TableViewCell
+                cell.checkOn()
+            }
+        }
+        else
+        {
+            self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
+            for(var i = 0; i < self.metaContacts.count; i++)
+            {
+                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath.init(forRow: i, inSection: 0)) as! CellImportContact_TableViewCell
+                cell.checkOff()
+            }
+        }
     }
+    
+
     
 }
