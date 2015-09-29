@@ -297,7 +297,7 @@ class DAOUser
                 let id = friend.facebookID
                 busca!.whereKey("facebookID", equalTo: id)
                 busca!.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-
+                    print(objects?.count)
                     i++
                     if let objects = objects as? [PFObject]
                     {
