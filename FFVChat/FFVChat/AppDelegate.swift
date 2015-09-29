@@ -22,21 +22,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        if(DAOUser.isLoged() == UserCondition.userLogged)
-        {
-            let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-            self.window?.rootViewController = chat
-        }
-        else if(DAOUser.isLoged() == UserCondition.userLoggedOut)
-        {
-            let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-            self.window?.rootViewController = login
-        }
-        else if(DAOUser.isLoged() == UserCondition.passwordMissing)
-        {
-            let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
-            self.window?.rootViewController = validate
-        }
+        let terms = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
+        self.window?.rootViewController = terms
+
+        
+//        if(DAOUser.isLoged() == UserCondition.userLogged)
+//        {
+//            let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+//            self.window?.rootViewController = chat
+//        }
+//        else if(DAOUser.isLoged() == UserCondition.userLoggedOut)
+//        {
+//            let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
+//            self.window?.rootViewController = login
+//        }
+//        else if(DAOUser.isLoged() == UserCondition.passwordMissing)
+//        {
+//            let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
+//            self.window?.rootViewController = validate
+//        }
         
         
         self.window?.makeKeyAndVisible()
