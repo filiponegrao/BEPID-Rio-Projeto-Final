@@ -9,7 +9,18 @@
 import UIKit
 
 class Privacy_ViewController: UIViewController {
+    
+    @IBOutlet weak var topLabel: UILabel!
+    
+    @IBOutlet weak var termsText: UITextView!
 
+    @IBOutlet weak var backView: UIView!
+    
+    @IBOutlet weak var disagreeButton: UIButton!
+    
+    @IBOutlet weak var agreeButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,5 +33,12 @@ class Privacy_ViewController: UIViewController {
     }
     
 
+    @IBAction func userDisagreed(sender: AnyObject) {
+        
+        
+        
+    }
 
+    @IBAction func userAgreed(sender: AnyObject) {
+    }
 }

@@ -110,72 +110,59 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     
-    @IBAction func register(sender: UIButton)
-    {
-        if (self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.imageView != nil)
-        {
-            if (self.verifyWhiteSpace(self.labelUsername.text!))
-            {
-                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter espaços em branco", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-            }
-            
-            else if (self.verifySpecialCharacter(self.labelUsername.text!))
-            {
-                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter caracteres especiais", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-            }
-                
-            else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
-            {
-                let alert = UIAlertView(title: "Ops!", message: "Senha deve conter exatamente 6 números", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-            }
-            
-            else if (self.labelPassword.text != self.labelConfirmPassword.text)
-            {
-                let alert = UIAlertView(title: "Ops!", message: "Senhas estão diferentes", delegate: nil, cancelButtonTitle: "Ok")
-                alert.show()
-            }
-            
-            else
-            {
-                self.loadingScreen = LoadScreen_View()
-                self.view.addSubview(loadingScreen)
-                DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
-            }
-        }
-        
-        else
-        {
-            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
-            alert.show()
-        }
-        
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
-    {
-        self.view.endEditing(true)
+//    func keyboardWasShown(notification: NSNotification)
+//    {
+//        //Need to calculate keyboard exact size due to Apple suggestions
+//        self.scrollView.scrollEnabled = true
+//        var info : NSDictionary = notification.userInfo!
+//        var keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size
+//        var contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+//        
+//        self.scrollView.contentInset = contentInsets
+//        self.scrollView.scrollIndicatorInsets = contentInsets
+//        
+//        var aRect : CGRect = self.view.frame
+//        aRect.size.height -= keyboardSize!.height
+//        if let activeFieldPresent = activeField
+//        {
+//            if (!CGRectContainsPoint(aRect, activeField!.frame.origin))
+//            {
+//                self.scrollView.scrollRectToVisible(activeField!.frame, animated: true)
+//            }
+//        }
+//        //testando bugs
+//    }
+//    
+//    
+//    func keyboardWillBeHidden(notification: NSNotification)
+//    {
+//        //Once keyboard disappears, restore original positions
+//        var info : NSDictionary = notification.userInfo!
+//        var keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().size
+//        var contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, -keyboardSize!.height, 0.0)
+//        self.scrollView.contentInset = contentInsets
+//        self.scrollView.scrollIndicatorInsets = contentInsets
+//        self.view.endEditing(true)
+//        self.scrollView.scrollEnabled = false
+//        
+//    }
+//    
+//    func textFieldDidBeginEditing(textField: UITextField!)
+//    {
+//        activeField = textField
+//    }
+//    
+//    func textFieldDidEndEditing(textField: UITextField!)
+//    {
+//        activeField = nil
+//    }
 
-    }
-    
-    func userAlreadyExist()
-    {
-        self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
-    }
 
-    
-    func userLogged()
-    {
-        let tutorial = Tutorial_PageViewController()
-        self.presentViewController(tutorial, animated: true, completion: nil)
     }
     
     func loginCanceled()
     {
+        
         self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
@@ -228,4 +215,4 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         return false
     }
 
-}
+
