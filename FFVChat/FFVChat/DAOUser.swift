@@ -294,6 +294,7 @@ class DAOUser
             for(var i = 0; i < friends.count; i++)
             {
                 print(friends[i].facebookID)
+                
                 let busca = PFUser.query()
                 busca!.whereKey("facebookID", equalTo: friends[i].facebookID)
                 busca?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in

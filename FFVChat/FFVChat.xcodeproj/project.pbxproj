@@ -41,6 +41,7 @@
 		809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A01BB4A99600CEC425 /* ImageEdition.swift */; settings = {ASSET_TAGS = (); }; };
 		809E75A81BB6311300CEC425 /* CellImportContact_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; settings = {ASSET_TAGS = (); }; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
 		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
@@ -124,6 +125,7 @@
 		809E75A01BB4A99600CEC425 /* ImageEdition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdition.swift; sourceTree = "<group>"; };
 		809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImportContact_TableViewCell.swift; sourceTree = "<group>"; };
 		809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellImportContact_TableViewCell.xib; sourceTree = "<group>"; };
+		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
 				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
+				80B4D8221BBB157500BDA48F /* AppNavigationController.swift */,
 				F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */,
 				F66B29C41BAB6A3B00BC43EE /* TutoSecond_ViewController TutoSecond_ViewController TutoSecond_ViewController.swift */,
 				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
@@ -506,6 +509,7 @@
 				809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */,
+				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
 				F66B29D21BAB6B8300BC43EE /* Contacts_ViewController.swift in Sources */,

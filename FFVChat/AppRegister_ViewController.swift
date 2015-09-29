@@ -78,7 +78,20 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
     }
     
-    //Sobe a view e desce a view
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        if(textField == self.labelPassword || textField == self.labelConfirmPassword)
+        {
+            let newLength = (textField.text?.utf16.count)! + string.utf16.count - range.length
+            return newLength <= 6 // Bool
+        }
+        return true
+    }
+    
+    
+    
+    //Sobe a view e desce a viewb
     func keyboardWillShow(notification: NSNotification)
     {
         if(self.view.frame.origin.y == 0)

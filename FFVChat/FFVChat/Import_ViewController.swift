@@ -120,8 +120,8 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func done()
     {
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
+        let contacts = AppNavigationController()
+        self.presentViewController(contacts, animated: true, completion: nil)
     }
     
     

@@ -14,13 +14,21 @@ class Contacts_ViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
+        
     }
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
         
+    }
+    
+    
+    @IBAction func logout(sender: UIButton)
+    {
+        self.presentViewController(Login_ViewController(nibName: "", bundle: nil), animated: true, completion: nil)
+        
+        self.navigationController?.pushViewController(Login_ViewController(nibName: "", bundle: nil), animated: true)
     }
     
 
