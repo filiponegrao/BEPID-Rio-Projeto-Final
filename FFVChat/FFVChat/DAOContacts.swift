@@ -168,6 +168,23 @@ class DAOContacts
     }
     
     
+    class func getUsernameFromID(id: String, callback : (String)? -> Void) -> Void
+    {
+        let query = PFUser.query()
+        query?.whereKey("facebookID", equalTo: id)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if(objects?.count > 0)
+            {
+                let object = objects![0] as! PFObject
+                callback(object.valueForKey("username") as! String)
+            }
+        })
+        
+        callback(nil)
+    }
+    
+    
 }
 
 
