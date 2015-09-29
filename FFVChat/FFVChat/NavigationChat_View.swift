@@ -17,5 +17,6 @@ class NavigationChat_View: UIView {
         // Drawing code
     }
     */
+    
 
 }
