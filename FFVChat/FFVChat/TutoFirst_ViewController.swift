@@ -8,10 +8,15 @@
 
 import UIKit
 
-class TutoFirst_ViewController: UIViewController {
+class TutoFirst_ViewController: UIViewController
+{
+    var index = 0
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.redColor()
 
         // Do any additional setup after loading the view.
     }
@@ -22,5 +27,11 @@ class TutoFirst_ViewController: UIViewController {
     }
     
 
+    @IBAction func logOut(sender: AnyObject)
+    {
+        DAOUser.logOut()
+        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
+        self.presentViewController(login, animated: true, completion: nil)
+    }
  
 }

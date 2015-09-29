@@ -11,6 +11,7 @@ import Parse
 import FBSDKCoreKit
 import ParseFacebookUtilsV4
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
+
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         let terms = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
@@ -42,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 //            self.window?.rootViewController = validate
 //        }
         
-        
+//        self.window?.rootViewController = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.window?.makeKeyAndVisible()
         
         Parse.setApplicationId("nxY5lzIPinULd8EmSTxb09vxmVx08tyC1Y2Rt2HK",

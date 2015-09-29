@@ -23,16 +23,33 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     var loadingScreen: LoadScreen_View!
     
+    override func viewWillAppear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotFound", name: UserCondition.userNotFound.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "incompleteRegister", name: UserCondition.incompleteRegister.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "wrongPassword", name: UserCondition.wrongPassword.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userNotFound", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "incompleteRegister", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "wrongPassword", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userNotLogged", name: UserCondition.userNotFound.rawValue, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "goValidation", name: UserCondition.passwordMissing.rawValue, object: nil)
-       
     }
     
     
@@ -49,59 +66,95 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
     }
 
-    @IBAction func login(sender: UIButton)
+    @IBAction func loginParse(sender: UIButton)
     {
         if(self.emailField.text != "" && self.passwordField != "")
         {
             self.loadingScreen = LoadScreen_View()
-            self.view.addSubview(loadingScreen)
+            self.view.addSubview(self.loadingScreen)
             DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
         }
         else
         {
-            let alert = UIAlertView(title: "Preencha corretamente os campos", message: "Preencha corretamente os campos", delegate: nil, cancelButtonTitle: "Ok")
+            let alert = UIAlertView(title: "Preencha corretamente os campos", message: "", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
         }
     }
     
-    func userLogged()
-    {
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
-    }
+//    func checkMaxLength(textField: UITextField!, maxLength: Int)
+//    {
+//        if (textField.text?.characters.count > maxLength)
+//        {
+//            textField.deleteBackward()
+//            
+//        }
+//    }
     
-    
-    func userNotLogged()
-    {
-        let alert = UIAlertView(title: "Usuário nao cadastrado", message: "O usuário nao foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
-    }
+//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+//    {
+//        let newLength:Int = (textField.text?.characters.count)! + (string as NSString).length - range.length
+//        return (newLength > 6) ? false : true
+//    }
     
     @IBAction func register(sender: UIButton)
     {
+//        self.checkMaxLength(passwordField, maxLength: 6)
+        if (self.passwordField.text?.characters.count > 6)
+        {
+            self.passwordField.resignFirstResponder()
+        }
+        
         let register = AppRegister_ViewController(nibName: "AppRegister_ViewController", bundle: nil)
         self.presentViewController(register, animated: true, completion: nil)
-    }
+        }
     
     
     @IBAction func loginFace(sender: UIButton)
     {
         self.loadingScreen = LoadScreen_View()
-        self.view.addSubview(loadingScreen)
+        self.view.addSubview(self.loadingScreen)
         DAOUser.loginFaceParse()
         
     }
     
-    
-    func goValidation()
+    func userLogged()
     {
+        self.loadingScreen?.removeFromSuperview()
+//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+//        self.presentViewController(chat, animated: true, completion: nil)
+        
+        let tutorial = Tutorial_PageViewController()
+        self.presentViewController(tutorial, animated: true, completion: nil)
+
+    }
+    
+    
+    func userNotFound()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Usuário não cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func incompleteRegister()
+    {
+        self.loadingScreen.removeFromSuperview()
         let fbregister = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
         self.presentViewController(fbregister, animated: true, completion: nil)
     }
     
+    func loginCanceled()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
     
-    
-    
-    
+    func wrongPassword()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Senha incorreta", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
     
 }

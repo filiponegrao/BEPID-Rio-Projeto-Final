@@ -19,55 +19,105 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     var popover : UIPopoverController? = nil
     
+    var loadingScreen: LoadScreen_View!
+    
     @IBOutlet weak var buttonphoto: UIButton!
 
     @IBOutlet var labelEmail: UITextField!
     
     @IBOutlet var labelUsername: UITextField!
     
-    @IBOutlet var labelSenha: UITextField!
+    @IBOutlet var labelPassword: UITextField!
+    
+    @IBOutlet weak var labelConfirmPassword: UITextField!
+    
+    @IBOutlet var containerView: UIView!
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyExist", name: UserCondition.userAlreadyExist.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "emailInUse", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyRegistered", name: UserCondition.userAlreadyExist.rawValue, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "emailInUse", name: UserCondition.emailInUse.rawValue, object: nil)
         
         self.picker!.delegate = self
+        
+        self.labelEmail.delegate = self
+        self.labelPassword.delegate = self
+        self.labelConfirmPassword.delegate = self
+        self.labelUsername.delegate = self
 
         self.buttonphoto.clipsToBounds = true
-        
-        print("chega aqui")
         
         self.buttonView = UIImageView(frame: CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height))
         self.buttonphoto.addSubview(self.buttonView)
         self.buttonphoto.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
 
         
+        
     }
-
+    
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        if(textField == self.labelPassword || textField == self.labelConfirmPassword)
+        {
+            let newLength = (textField.text?.utf16.count)! + string.utf16.count - range.length
+            return newLength <= 6 // Bool
+        }
+        return true
+    }
+    
+    
+    
+    //Sobe a view e desce a viewb
+    func keyboardWillShow(notification: NSNotification)
+    {
+        if(self.view.frame.origin.y == 0)
+        {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.view.frame.origin.y = -keyboardSize.height
+            }
+        }
+    }
+        
+    func keyboardWillHide() {
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.view.frame.origin.y = 0
+        }
+    }
+    func textFieldDidEndEditing(textField: UITextField)
+    {
+        self.keyboardWillHide()
+    }
+    
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            self.view.frame.origin.y -= keyboardSize.height/2
-        }
-        
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            self.view.frame.origin.y += keyboardSize.height/2
-        }
-    }
     
     @IBAction func photoButtonClicked(sender: AnyObject)
     {
@@ -99,8 +149,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
         else
         {
-            popover = UIPopoverController(contentViewController: alert)
-            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            self.popover = UIPopoverController(contentViewController: alert)
+            self.popover!.presentPopoverFromRect(self.buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
         
     }
@@ -110,8 +160,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
         {
-            picker!.sourceType = UIImagePickerControllerSourceType.Camera
-            self.presentViewController(picker!, animated: true, completion: nil)
+            self.picker!.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker?.cameraDevice = .Front
+            self.picker?.cameraCaptureMode = .Photo
+            self.picker?.allowsEditing = true
+            self.presentViewController(self.picker!, animated: true, completion: nil)
         }
         else
         {
@@ -122,60 +175,174 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     func openGallery()
     {
-        picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
-            self.presentViewController(picker!, animated: true, completion: nil)
+            self.presentViewController(self.picker!, animated: true, completion: nil)
         }
         else
         {
-            popover = UIPopoverController(contentViewController: picker!)
-            popover!.presentPopoverFromRect(buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            self.popover = UIPopoverController(contentViewController: self.picker!)
+            self.popover!.presentPopoverFromRect(self.buttonphoto.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
         picker.dismissViewControllerAnimated(true, completion: nil)
         self.image = image
-        self.buttonView.image = image
+        self.buttonView.image = self.image
         self.buttonView.contentMode = UIViewContentMode.ScaleAspectFill
     }
     
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("picker cancel")
+        dismissViewControllerAnimated(true, completion: nil)
+
     }
     
     
     @IBAction func register(sender: UIButton)
     {
-        DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelSenha.text!, photo: image!)
+        if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
+        {
+            if (!(DAOUser.isValidEmail(self.labelEmail.text!)))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Por favor, digite um e-mail válido", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+                
+                else if (self.verifyWhiteSpace(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter espaços em branco", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+                
+            else if (self.verifySpecialCharacter(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter caracteres especiais", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senha deve conter exatamente 6 números", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+                
+            else if (self.labelPassword.text != self.labelConfirmPassword.text)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senhas estão diferentes", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+
+            else
+            {
+                self.loadingScreen = LoadScreen_View()
+                self.view.addSubview(loadingScreen)
+                DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
+            }
+            
+        }
+        else
+        {
+            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+        }
+        
+        
     }
 
-    func next()
+    func emailInUse()
     {
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Este email já foi utilizado", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func userAlreadyExist()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func userLogged()
+    {
+        self.loadingScreen.removeFromSuperview()
+//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+//        self.presentViewController(chat, animated: true, completion: nil)
+        
+        let tutorial = Tutorial_PageViewController()
+        self.presentViewController(tutorial, animated: true, completion: nil)
+
+    }
+
+    func loginCanceled()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
-        NSNotificationCenter.defaultCenter().postNotificationName("willHide", object: nil)
-
+    }
+    
+    @IBAction func cancel(sender: UIButton)
+    {
+        self.dismissViewControllerAnimated(true
+            , completion: nil)
+    }
+    
+    func verifySpecialCharacter(username: String) -> Bool
+    {
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789_.-")
+        let searchTerm = username
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("special characters found")
+            return true
+        }
+        return false
+    }
+    
+    func verifyWhiteSpace (username: String) -> Bool
+    {
+        let whitespace = NSCharacterSet.whitespaceCharacterSet()
         
+        let range = username.rangeOfCharacterFromSet(whitespace)
+        
+        // range will be nil if no whitespace is found
+        if (range != nil) {
+            print("whitespace found")
+            return true
+        }
+        else
+        {
+            print("whitespace not found")
+            return false
+        }
     }
-
-    func userAlreadyRegistered()
+    
+    func verifyInvalidPassword (password: String) -> Bool
     {
-        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o nome de usuario desejado", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "0123456789")
+        let searchTerm = password
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("senha não contém só números")
+            return true
+        }
+        else if (password.characters.count != 6)
+        {
+            print("senha deve conter 6 números")
+            return true
+        }
+        return false
     }
     
     
-    func emailInUse()
-    {
-        let alert = UIAlertView(title: "Ops!", message: "Ja existe um usuario com o email utilizado", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
-    }
 }

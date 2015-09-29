@@ -30,14 +30,22 @@ enum UserCondition : String
 
     case userAlreadyExist = "userAlreadyExist"
 
+    /** Notificaao responsavel por informar que houve SUCESSO
+     ao registrar o usuario */
     case userRegistered = "userRegistered"
     
-    case userCanceled = "userCanceled"
+    /** Login cancelado por algum motivo, pelo usuario ou
+     pelo sistema */
+    case loginCanceled = "loginCanceled"
 
-    /** Notficacao responsavel por encaminhar o suario para
+    /** Notficacao responsavel por encaminhar o usuario para
      a tela de confirmacao de senha apos logar-se com o
      Facebook */
-    case passwordMissing = "passwordMissing"
+    case incompleteRegister = "incompleteRegister"
+    
+    /** Notificacao responsavel por avisar quando os contatos do usuario
+     * foram carregados com sucesso */
+    case contactsLoaded = "contactsLoaded"
 }
 
 
@@ -53,8 +61,8 @@ class DAOUser
      */
     class func registerUser(username: String, email: String, password: String, photo: UIImage)
     {
-        let data = UIImagePNGRepresentation(photo)
-        let picture = PFFile(data: data!)
+        let data = photo.mediumQualityJPEGNSData
+        let picture = PFFile(data: data)
 
         let user = PFUser()
 
@@ -85,6 +93,7 @@ class DAOUser
             else
             {
                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userRegistered.rawValue, object: nil)
+                print("Usuario criado!")
                 self.loginParse(username, password: password)
             }
         }
@@ -135,7 +144,7 @@ class DAOUser
                     else
                     {
                         print("Error: \(error!) \(error!.userInfo)")
-                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userCanceled.rawValue, object: nil)
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.loginCanceled.rawValue, object: nil)
                     }
                 }
             }
@@ -174,16 +183,16 @@ class DAOUser
                     print("usuario logado pelo Facebook")
                     
                     DAOUser.setUserName(user.valueForKey("username") as! String)
+                    DAOUser.setFacebookID(user.valueForKey("facebookID") as! String)
                     DAOUser.setEmail(user.valueForKey("email") as! String)
                     DAOUser.setPassword(user.valueForKey("username") as! String)
                     DAOUser.setTrustLevel(user.valueForKey("trustLevel") as! Int)
+                    
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
                         let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
-                        
-                        
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
                     
@@ -227,36 +236,19 @@ class DAOUser
                     {
                         let picture = PFFile(data: data!)
                         PFUser.currentUser()?.setValue(userName, forKey: "username")
-                        PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()?.setValue(userEmail, forKey: "email")
+                        PFUser.currentUser()?.setValue(id, forKey: "facebookID")
+                        PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()!.save()
+                        
+                        let image = UIImage(data: data!)
 
                         DAOUser.setEmail(userEmail as String)
-                        let image = UIImage(data: data!)
                         DAOUser.setProfileImage(image!)
                         DAOUser.setUserName(userName as String)
-                        
-                        let request = FBSDKGraphRequest(graphPath:"me", parameters:nil)
-                        
-                        // Send request to Facebook
-                        request.startWithCompletionHandler {
-                            
-                            (connection, result, error) in
-                            
-                            if error != nil {
-                                // Some error checking here
-                            }
-                            else if let userData = result as? [String:AnyObject] {
-                                
-                                // Access user data
-                                let username = userData["name"] as? String
-                                print(username)
-                                // ....
-                            }
-                        }
+                        DAOUser.setFacebookID(id)
 
-                        
-                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.passwordMissing.rawValue, object: nil)
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
                     }
                     else
                     {
@@ -290,6 +282,64 @@ class DAOUser
             NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
         })
     }
+    
+    
+    class func getFaceContacts( callback : (metaContacts: [metaContact]!) -> Void) -> Void {
+        
+        var contacts = [metaContact]()
+        
+        self.getFaceFriends { (friends:[metaContact]!) -> Void in
+            
+            print(friends.count)
+            for(var i = 0; i < friends.count; i++)
+            {
+                print(friends[i].facebookID)
+                
+                let busca = PFUser.query()
+                busca!.whereKey("facebookID", equalTo: friends[i].facebookID)
+                busca?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                    
+                    print(objects?.count)
+                    
+                })
+            }
+        }
+    }
+    
+    
+    /**
+     * Funcao que cata os amigos no facebook
+     * e retorna os mesmos em forma de metaContact
+     */
+    class func getFaceFriends( callback : (friends: [metaContact]!) -> Void) -> Void {
+
+        var meta = [metaContact]()
+
+        let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);
+        fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+        
+            if error == nil
+            {
+//                print("Friends are : \(result)")
+                let results = result as! NSDictionary
+                let data = results.objectForKey("data") as! [NSDictionary]
+                
+                for(var j = 0; j < data.count; j++)
+                {
+                    let name = data[j].valueForKey("name") as! String
+                    let id = data[j].valueForKey("id") as! String
+                    let c = metaContact(facebookID: id, faceUsername: name)
+                    meta.append(c)
+                }
+                callback(friends: meta)
+            }
+            else
+            {
+                print("Error Getting Friends \(error)");
+                callback(friends: meta)
+            }
+        }
+    }
 
     /** Funcao efetua o logout de um usuario!
       * Sua condicao de retorno é um par : booleano
@@ -302,9 +352,9 @@ class DAOUser
         PFUser.logOut()
         DAOUser.setUserName("")
         DAOUser.setEmail("")
-        DAOUser.setLastSync("")
         DAOUser.setPassword("")
         DAOUser.setTrustLevel(-1)
+        DAOUser.setFacebookID("")
 
         return (done: true, error: "")
     }
@@ -386,7 +436,40 @@ class DAOUser
         return nome!
     }
 
-
+    
+    /**
+    * Funcao que retorna o nome de usuario no Facebook
+    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+    * enquanto as de escrever utilizam o mutable dictionary
+    **/
+    class func getFacebookID() -> String!
+    {
+        
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return ""
+            }
+        }
+        
+        let nome = content!.valueForKey("facebookID") as? String
+        
+        if(nome == nil)
+        {
+            return ""
+        }
+        
+        return nome!
+    }
+    
+    
     /**
      * Funcao que retorna o email do usuario
      *
@@ -590,6 +673,33 @@ class DAOUser
         content!.writeToFile(path, atomically: true)
 
     }
+    
+    
+    /**
+    * Funcao que retorna o nome cadastro uma unica vez
+    * do usuario do app
+    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+    * enquanto as de escrever utilizam o mutable dictionary
+    **/
+    class func setFacebookID(name: String)
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
+        }
+        
+        content!.setValue(name, forKey: "facebookID")
+        content!.writeToFile(path, atomically: true)
+    }
 
     
     /**
@@ -709,7 +819,7 @@ class DAOUser
             let senha = self.getPassword()
             if(senha == "")
             {
-                return UserCondition.passwordMissing
+                return UserCondition.incompleteRegister
             }
             else
             {
@@ -721,6 +831,15 @@ class DAOUser
         
             return UserCondition.userLoggedOut
         }
+    }
+    
+    class func isValidEmail(testStr:String) -> Bool
+    {
+        // println("validate calendar: \(testStr)")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr)
     }
 
 }

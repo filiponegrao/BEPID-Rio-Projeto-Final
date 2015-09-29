@@ -8,24 +8,48 @@
 
 import UIKit
 
-class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
+class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlertViewDelegate
 {
+    var loadingScreen: LoadScreen_View!
+    
     @IBOutlet var imageView: UIImageView!
 
     @IBOutlet var labelUsername: UITextField!
     
     @IBOutlet var labelPassword: UITextField!
     
+    @IBOutlet weak var labelConfirmPassword: UITextField!
+    
     var activeField: UITextField?
 
+    override func viewWillAppear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userAlreadyExist", name: UserCondition.userAlreadyExist.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "next", name: UserCondition.userLogged.rawValue, object: nil)
-
         let image = DAOUser.getProfileImage()
         
         self.imageView.image = image
@@ -34,37 +58,55 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
         
         let name = DAOUser.getUserName()
         let trimmedString = name.removeWhitespace()
+        
         let username = trimmedString.lowercaseString
         print(username)
         self.labelUsername.text = username
         
-//        //pra mover a tela quando abre o teclado
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name: UIKeyboardWillShowNotification, object: nil)
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide"), name:UIKeyboardWillHideNotification, object: nil)
-//        
+        self.labelUsername.delegate = self
+        self.labelPassword.delegate = self
+        self.labelConfirmPassword.delegate = self
+    }
+    
+    //Sobe a view e desce a view
+    func keyboardWillShow(notification: NSNotification)
+    {
+        if(self.view.frame.origin.y == 0)
+        {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.view.frame.origin.y = -keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide() {
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.view.frame.origin.y = 0
+        }
+    }
+    func textFieldDidEndEditing(textField: UITextField)
+    {
+        self.keyboardWillHide()
     }
     
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        if(textField == labelPassword || textField == labelConfirmPassword)
+        {
+            let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+            return newLength <= 6 // Bool
+        }
+        else
+        {
+            return true
+        }
+    }
     
 
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-    }
-    
-    func registerForKeyboardNotifications()
-    {
-        //Adding notifies on keyboard appearing
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWasShown:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    
-    func deregisterFromKeyboardNotifications()
-    {
-        //Removing notifies on keyboard appearing
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
 //    func keyboardWasShown(notification: NSNotification)
@@ -114,20 +156,61 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate
 //        activeField = nil
 //    }
 
-    @IBAction func register(sender: UIButton)
-    {
-        DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
-    }
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
-    {
-        self.view.endEditing(true)
 
     }
     
-    func next()
+    func loginCanceled()
     {
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        self.presentViewController(chat, animated: true, completion: nil)
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
     }
+    
+    func verifySpecialCharacter(username: String) -> Bool
+    {
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ0123456789_.-")
+        let searchTerm = username
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("special characters found")
+            return true
+        }
+        return false
+    }
+    
+    func verifyWhiteSpace (username: String) -> Bool
+    {
+        let whitespace = NSCharacterSet.whitespaceCharacterSet()
+        
+        let range = username.rangeOfCharacterFromSet(whitespace)
+        
+        // range will be nil if no whitespace is found
+        if (range != nil) {
+            print("whitespace found")
+            return true
+        }
+        else
+        {
+            print("whitespace not found")
+            return false
+        }
+    }
+    
+    func verifyInvalidPassword (password: String) -> Bool
+    {
+        let characterSet:NSCharacterSet = NSCharacterSet(charactersInString: "0123456789")
+        let searchTerm = password
+        if ((searchTerm.rangeOfCharacterFromSet(characterSet.invertedSet)) != nil)
+        {
+            print("senha não contém só números")
+            return true
+        }
+        else if (password.characters.count != 6)
+        {
+            print("senha deve conter 6 números")
+            return true
+        }
+        return false
+    }
+
 }
