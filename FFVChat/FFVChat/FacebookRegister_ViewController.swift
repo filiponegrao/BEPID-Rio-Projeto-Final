@@ -170,13 +170,8 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     
     func userLogged()
     {
-//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-//        self.presentViewController(chat, animated: true, completion: nil)
-        let importcontact = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
-        self.presentViewController(importcontact, animated: true, completion: nil)
-        
-
-
+        let tutorial = Tutorial_PageViewController()
+        self.presentViewController(tutorial, animated: true, completion: nil)
     }
     
     func loginCanceled()

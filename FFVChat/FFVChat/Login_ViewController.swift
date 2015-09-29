@@ -80,21 +80,18 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
             alert.show()
         }
     }
+
     
-//    func checkMaxLength(textField: UITextField!, maxLength: Int)
-//    {
-//        if (textField.text?.characters.count > maxLength)
-//        {
-//            textField.deleteBackward()
-//            
-//        }
-//    }
-    
-//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
-//    {
-//        let newLength:Int = (textField.text?.characters.count)! + (string as NSString).length - range.length
-//        return (newLength > 6) ? false : true
-//    }
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        if(textField == self.passwordField)
+        {
+            let newLength = (textField.text?.utf16.count)! + string.utf16.count - range.length
+            return newLength <= 6 // Bool
+        }
+        return true
+    }
+
     
     @IBAction func register(sender: UIButton)
     {
@@ -120,12 +117,9 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userLogged()
     {
         self.loadingScreen?.removeFromSuperview()
-//        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-//        self.presentViewController(chat, animated: true, completion: nil)
         
-        let tutorial = Tutorial_PageViewController()
-        self.presentViewController(tutorial, animated: true, completion: nil)
-
+        let contacts = AppNavigationController()
+        self.presentViewController(contacts, animated: true, completion: nil)
     }
     
     

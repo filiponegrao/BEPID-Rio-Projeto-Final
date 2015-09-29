@@ -3,10 +3,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TutoSecond_ViewController_TutoSecond_ViewController_TutoSecond_ViewController" customModule="FFVChat" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TutoSecond_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="skipButton" destination="4UM-VP-cpH" id="tCR-qq-QGw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +16,24 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4UM-VP-cpH">
+                    <rect key="frame" x="277" y="421" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="46" id="6Dk-zd-MJB"/>
+                        <constraint firstAttribute="height" constant="30" id="ewF-3z-Le4"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="skipToPrivacy:" destination="-1" eventType="touchUpInside" id="AtQ-i3-iOi"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="4UM-VP-cpH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="HER-EH-skc"/>
+                <constraint firstAttribute="bottomMargin" secondItem="4UM-VP-cpH" secondAttribute="bottom" constant="141" id="jlT-2y-43m"/>
+            </constraints>
         </view>
     </objects>
 </document>
