@@ -284,17 +284,41 @@ class DAOUser
     }
     
     
+    class func getFaceContacts( callback : (metaContacts: [metaContact]!) -> Void) -> Void {
+        
+        var contacts = [metaContact]()
+        
+        self.getFaceFriends { (friends:[metaContact]!) -> Void in
+            
+            print(friends.count)
+            for(var i = 0; i < friends.count; i++)
+            {
+                print(friends[i].facebookID)
+                let busca = PFUser.query()
+                busca!.whereKey("facebookID", equalTo: friends[i].facebookID)
+                busca?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
+                    
+                    print(objects?.count)
+                    
+                })
+            }
+        }
+    }
+    
+    
     /**
-     *
+     * Funcao que cata os amigos no facebook
+     * e retorna os mesmos em forma de metaContact
      */
-    class func getFaceContacts( callback : (metacontent: [metaContact]?) -> Void) -> Void {
+    class func getFaceFriends( callback : (friends: [metaContact]!) -> Void) -> Void {
+
+        var meta = [metaContact]()
 
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
         
             if error == nil
             {
-                var meta = [metaContact]()
 //                print("Friends are : \(result)")
                 let results = result as! NSDictionary
                 let data = results.objectForKey("data") as! [NSDictionary]
@@ -306,15 +330,14 @@ class DAOUser
                     let c = metaContact(facebookID: id, faceUsername: name)
                     meta.append(c)
                 }
-                callback(metacontent: meta)
+                callback(friends: meta)
             }
             else
             {
                 print("Error Getting Friends \(error)");
-                callback(metacontent: nil)
+                callback(friends: meta)
             }
         }
-        
     }
 
     /** Funcao efetua o logout de um usuario!

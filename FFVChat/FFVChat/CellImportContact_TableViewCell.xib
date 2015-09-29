@@ -24,9 +24,9 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome Do fulaninho maldito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJS-Fl-Y8t">
-                        <rect key="frame" x="75" y="4" width="307" height="40"/>
+                        <rect key="frame" x="75" y="4" width="307" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="bHQ-oc-ZaB"/>
+                            <constraint firstAttribute="height" constant="24" id="bHQ-oc-ZaB"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,21 +39,34 @@
                             <constraint firstAttribute="width" constant="20" id="dQC-4n-eD2"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djy-yK-P2X">
+                        <rect key="frame" x="75" y="23" width="304" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="BNb-cq-iaQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="Hht-bm-HND" secondAttribute="bottom" constant="3.5" id="0Ou-X9-kjU"/>
                     <constraint firstItem="Hht-bm-HND" firstAttribute="leading" secondItem="oJS-Fl-Y8t" secondAttribute="trailing" constant="5" id="9MW-hC-dQv"/>
                     <constraint firstItem="oJS-Fl-Y8t" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="22" id="Dov-NL-DaF"/>
+                    <constraint firstItem="djy-yK-P2X" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="22" id="KWQ-Zp-Hdo"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Hht-bm-HND" secondAttribute="trailing" constant="5" id="XK5-7V-3v5"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="oJS-Fl-Y8t" secondAttribute="bottom" constant="-4.5" id="c5l-vm-iPU"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="oJS-Fl-Y8t" secondAttribute="bottom" constant="12" id="c5l-vm-iPU"/>
                     <constraint firstItem="hBF-ek-wKk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="iI2-qD-yus"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="djy-yK-P2X" secondAttribute="bottom" constant="-4.5" id="kTa-CP-N1l"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hBF-ek-wKk" secondAttribute="bottom" constant="-4.5" id="wIg-tO-JJp"/>
+                    <constraint firstItem="Hht-bm-HND" firstAttribute="leading" secondItem="djy-yK-P2X" secondAttribute="trailing" constant="8" id="yL5-77-rPn"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="checkMark" destination="Hht-bm-HND" id="48i-41-Whd"/>
                 <outlet property="name" destination="oJS-Fl-Y8t" id="nwn-el-fOo"/>
                 <outlet property="photo" destination="hBF-ek-wKk" id="54r-2p-lWT"/>
+                <outlet property="username" destination="djy-yK-P2X" id="5Dl-QX-gjT"/>
             </connections>
             <point key="canvasLocation" x="533" y="289"/>
         </tableViewCell>

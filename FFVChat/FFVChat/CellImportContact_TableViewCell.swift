@@ -16,6 +16,8 @@ class CellImportContact_TableViewCell: UITableViewCell
     
     @IBOutlet var checkMark: UIImageView!
     
+    @IBOutlet var username: UILabel!
+    
     var checked : Bool = false
     
     override func awakeFromNib()

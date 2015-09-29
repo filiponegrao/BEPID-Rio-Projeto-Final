@@ -60,13 +60,10 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.registerNib(UINib(nibName: "CellImportContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         //carregando info...
-        DAOUser.getFaceContacts { (metacontent) -> Void in
+        DAOUser.getFaceContacts { (metaContacts) -> Void in
             
-            if(metacontent != nil)
-            {
-                self.metaContacts = metacontent!
-                self.tableView.reloadData()
-            }
+            self.metaContacts = metaContacts
+            self.tableView.reloadData()            
         }
         
         self.selectAllContacts()
@@ -89,6 +86,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellImportContact_TableViewCell
         cell.name.text = self.metaContacts[indexPath.row].faceUsername
+//        cell.username.text = self.metaContacts[indexPath.row].
         cell.backgroundColor = UIColor.clearColor()
         if(cell.checked)
         {

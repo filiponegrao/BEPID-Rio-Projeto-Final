@@ -30,7 +30,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
 
     }
     
@@ -69,9 +69,16 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     }
     
     //Sobe a view e desce a view
-    func keyboardWillShow() {
-        self.view.frame.origin.y = -150
+    func keyboardWillShow(notification: NSNotification)
+    {
+        if(self.view.frame.origin.y == 0)
+        {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.view.frame.origin.y = -keyboardSize.height
+            }
+        }
     }
+    
     func keyboardWillHide() {
         UIView.animateWithDuration(0.3) { () -> Void in
             self.view.frame.origin.y = 0
@@ -82,9 +89,18 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.keyboardWillHide()
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
-        return newLength <= 6 // Bool
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        if(textField == labelPassword || textField == labelConfirmPassword)
+        {
+            let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+            return newLength <= 6 // Bool
+        }
+        else
+        {
+            return true
+        }
     }
     
 
@@ -156,11 +172,10 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     {
 //        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
 //        self.presentViewController(chat, animated: true, completion: nil)
-//        let importcontact = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
-//        self.presentViewController(importcontact, animated: true, completion: nil)
+        let importcontact = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
+        self.presentViewController(importcontact, animated: true, completion: nil)
         
-        let tutorial = Tutorial_PageViewController()
-        self.presentViewController(tutorial, animated: true, completion: nil)
+
 
     }
     

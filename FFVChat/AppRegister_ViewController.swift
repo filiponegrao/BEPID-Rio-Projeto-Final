@@ -44,7 +44,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
 
     }
     
@@ -79,9 +79,16 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     }
     
     //Sobe a view e desce a view
-    func keyboardWillShow() {
-        self.view.frame.origin.y = -150
+    func keyboardWillShow(notification: NSNotification)
+    {
+        if(self.view.frame.origin.y == 0)
+        {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.view.frame.origin.y = -keyboardSize.height
+            }
+        }
     }
+        
     func keyboardWillHide() {
         UIView.animateWithDuration(0.3) { () -> Void in
             self.view.frame.origin.y = 0
@@ -93,7 +100,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     }
     
     
-
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
