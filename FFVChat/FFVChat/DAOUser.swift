@@ -287,22 +287,35 @@ class DAOUser
     class func getFaceContacts( callback : (metaContacts: [metaContact]!) -> Void) -> Void {
         
         var contacts = [metaContact]()
+        var i = 0
         
         self.getFaceFriends { (friends:[metaContact]!) -> Void in
             
-            print(friends.count)
-            for(var i = 0; i < friends.count; i++)
+            for friend in friends
             {
-                print(friends[i].facebookID)
-                
                 let busca = PFUser.query()
-                busca!.whereKey("facebookID", equalTo: friends[i].facebookID)
-                busca?.findObjectsInBackgroundWithBlock({ (objects, error) -> Void in
-                    
+                let id = friend.facebookID
+                busca!.whereKey("facebookID", equalTo: id)
+                busca!.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
                     print(objects?.count)
+                    i++
+                    if let objects = objects as? [PFObject]
+                    {
+                        if(objects.count > 0)
+                        {
+                            let contact = metaContact(facebookID: friend.facebookID, faceUsername: friend.faceUsername)
+                            contacts.append(contact)
+                        }
+                    }
                     
-                })
+                    if(i == friends.count-1)
+                    {
+                        callback(metaContacts: contacts)
+                    }
+                }
             }
+            
+            callback(metaContacts: contacts)
         }
     }
     

@@ -103,6 +103,10 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
     
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
     override func didReceiveMemoryWarning()
     {
@@ -166,5 +170,49 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         return false
     }
 
+    func register()
+    {
+        if(self.labelUsername != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "")
+        {
+            if(self.verifyWhiteSpace(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter espaços em branco", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else if (self.verifySpecialCharacter(self.labelUsername.text!))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter caracteres especiais", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senha deve conter exatamente 6 números", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+
+            else if (self.labelPassword.text != self.labelConfirmPassword.text)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Senhas estão diferentes", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+
+            else
+            {
+                self.loadingScreen = LoadScreen_View()
+                self.view.addSubview(loadingScreen)
+                DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
+            }
+
+        }
+        
+        else
+        {
+            let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+        }
+        
+    }
 
 }

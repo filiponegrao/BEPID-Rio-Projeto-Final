@@ -86,7 +86,6 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellImportContact_TableViewCell
         cell.name.text = self.metaContacts[indexPath.row].faceUsername
-//        cell.username.text = self.metaContacts[indexPath.row].
         cell.backgroundColor = UIColor.clearColor()
         if(cell.checked)
         {
@@ -99,6 +98,10 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         DAOContacts.getProfilePicture(self.metaContacts[indexPath.row].facebookID) { (image: UIImage?) -> Void in
             cell.photo.image = image
+        }
+        
+        DAOContacts.getUsernameFromID(self.metaContacts[indexPath.row].facebookID) { (string: String?) -> Void in
+            cell.username.text = string
         }
         
         return cell
