@@ -109,6 +109,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         super.didReceiveMemoryWarning()
     }
     
+    
 //    func keyboardWasShown(notification: NSNotification)
 //    {
 //        //Need to calculate keyboard exact size due to Apple suggestions
@@ -161,6 +162,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     
     func loginCanceled()
     {
+        
         self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
