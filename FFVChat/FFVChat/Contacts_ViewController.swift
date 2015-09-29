@@ -26,9 +26,8 @@ class Contacts_ViewController: UIViewController
     
     @IBAction func logout(sender: UIButton)
     {
-        self.presentViewController(Login_ViewController(nibName: "", bundle: nil), animated: true, completion: nil)
+        self.presentViewController(Login_ViewController(nibName: "Login_ViewController", bundle: nil), animated: true, completion: nil)
         
-        self.navigationController?.pushViewController(Login_ViewController(nibName: "", bundle: nil), animated: true)
     }
     
 
