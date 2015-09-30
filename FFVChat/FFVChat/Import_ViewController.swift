@@ -65,6 +65,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         //tableview
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
         self.tableView.registerNib(UINib(nibName: "CellImportContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         //carregando info...
@@ -161,6 +162,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         {
             if(self.selectedItens[item.facebookID]!)
             {
+                self.contactsShouldAdd++
                 DAOContacts.addContactByID(item.facebookID)
             }
         }
@@ -175,6 +177,12 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         self.contactsAdded++
         
+        if(self.contactsShouldAdd == self.contactsAdded)
+        {
+            let contacts = Contacts_ViewController(nibName: "Contacts_ViewController",bundle: nil)
+            self.presentViewController(contacts, animated: true, completion: nil)
+        }
+        
     }
     
     
@@ -184,6 +192,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if(self.all)
         {
+            self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
             for item in self.metaContacts
             {
                 self.selectedItens[item.facebookID] = true
@@ -192,6 +201,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else
         {
+            self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
             for item in self.metaContacts
             {
                 self.selectedItens[item.facebookID] = false

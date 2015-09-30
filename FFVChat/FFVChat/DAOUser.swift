@@ -303,6 +303,7 @@ class DAOUser
                     {
                         if(objects.count > 0)
                         {
+                            print("Amigo \(friend.faceUsername) esta no app")
                             let contact = metaContact(facebookID: friend.facebookID, faceUsername: friend.faceUsername)
                             contacts.append(contact)
                         }
@@ -310,6 +311,7 @@ class DAOUser
                     
                     if(i == friends.count-1)
                     {
+                        print("retornando \(contacts.count) amigos")
                         callback(metaContacts: contacts)
                     }
                 }
@@ -333,7 +335,6 @@ class DAOUser
         
             if error == nil
             {
-//                print("Friends are : \(result)")
                 let results = result as! NSDictionary
                 let data = results.objectForKey("data") as! [NSDictionary]
                 
@@ -342,6 +343,7 @@ class DAOUser
                     let name = data[j].valueForKey("name") as! String
                     let id = data[j].valueForKey("id") as! String
                     let c = metaContact(facebookID: id, faceUsername: name)
+                    print("Amigo \(name)")
                     meta.append(c)
                 }
                 callback(friends: meta)
