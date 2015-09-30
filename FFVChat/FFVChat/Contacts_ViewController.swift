@@ -27,6 +27,12 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
 
+    override func viewWillAppear(animated: Bool)
+    {
+        self.contacts = DAOContacts.getAllContacts()
+        self.tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -46,5 +52,15 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         return contacts.count
     }
 
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellContacts_TableViewCell
+        
+        cell.username.text = self.contacts[indexPath.row].username
+        cell.trustLevel.text = "Confiavel demais eim"
+        cell.photo.image = self.contacts[indexPath.row].thumb
+        
+        return cell
+    }
 
 }

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Contacts_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="searchDisplayController" destination="YO4-nF-n64" id="Lre-vw-Rsh"/>
                 <outlet property="tableView" destination="1v2-Q4-fKy" id="zfB-UE-Iwg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -42,5 +43,13 @@
                 <constraint firstAttribute="trailing" secondItem="1v2-Q4-fKy" secondAttribute="trailing" id="w29-0W-tfI"/>
             </constraints>
         </view>
+        <searchDisplayController id="YO4-nF-n64">
+            <connections>
+                <outlet property="delegate" destination="-1" id="O2Y-RC-ZNK"/>
+                <outlet property="searchContentsController" destination="-1" id="Dkt-6f-QgL"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="kvm-fk-6Fu"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="0tp-UZ-9P8"/>
+            </connections>
+        </searchDisplayController>
     </objects>
 </document>

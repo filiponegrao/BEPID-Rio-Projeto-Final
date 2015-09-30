@@ -34,7 +34,11 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var contactsAdded : Int = 0
     
+    var contactsShouldAdd : Int = 0
+    
     var selectedItens : [String : Bool]!
+    
+    var loadingView : UIView!
     
     override func viewDidLoad()
     {
@@ -61,6 +65,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         //tableview
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        
         self.tableView.registerNib(UINib(nibName: "CellImportContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         //carregando info...
@@ -85,9 +90,6 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactAdded" , name: ContactNotification.contactAdded.rawValue, object: nil)
     }
     
-    
-
-
     
     override func didReceiveMemoryWarning()
     {
@@ -146,13 +148,26 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         else
         {
             let id = self.metaContacts[indexPath.row].facebookID
-            self.selectedItens[id] = nil
+            self.selectedItens[id] = false
         }
     }
     
     
     func done()
     {
+        self.loadingView = LoadScreen_View()
+        self.view.addSubview(self.loadingView)
+        
+        for item in self.metaContacts
+        {
+            if(self.selectedItens[item.facebookID]!)
+            {
+                self.contactsShouldAdd++
+                DAOContacts.addContactByID(item.facebookID)
+            }
+        }
+
+        
         let contacts = AppNavigationController()
         self.presentViewController(contacts, animated: true, completion: nil)
     }
@@ -161,10 +176,13 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     func contactAdded()
     {
         self.contactsAdded++
-//        if(self.contactsAdded == )
-//        {
-//            
-//        }
+        
+        if(self.contactsShouldAdd == self.contactsAdded)
+        {
+            let contacts = Contacts_ViewController(nibName: "Contacts_ViewController",bundle: nil)
+            self.presentViewController(contacts, animated: true, completion: nil)
+        }
+        
     }
     
     
@@ -174,6 +192,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if(self.all)
         {
+            self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
             for item in self.metaContacts
             {
                 self.selectedItens[item.facebookID] = true
@@ -182,9 +201,10 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else
         {
+            self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
             for item in self.metaContacts
             {
-                self.selectedItens[item.facebookID] = nil
+                self.selectedItens[item.facebookID] = false
             }
             self.tableView.reloadData()
         }

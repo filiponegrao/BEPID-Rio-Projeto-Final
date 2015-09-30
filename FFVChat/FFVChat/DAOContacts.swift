@@ -206,6 +206,7 @@ class DAOContacts
                             contact.setValue(faceUsername, forKey: "facebookID")
                             contact.setValue(registerDate, forKey: "createdAt")
                             
+                            print("Contato \(username) foi adicionado")
                             content?.setObject(contact, forKey: "\(username)")
                             content?.writeToFile(dataPath, atomically: true)
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)

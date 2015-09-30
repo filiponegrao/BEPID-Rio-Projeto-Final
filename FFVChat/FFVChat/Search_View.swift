@@ -10,6 +10,10 @@ import UIKit
 
 class Search_View: UIView {
 
+    var tableView : UITableView!
+    
+    var searchBar : UISearchBar!
+    
     init()
     {
         super.init(frame: CGRectMake(screenWidth-50, 20, 10, 10))
@@ -26,6 +30,15 @@ class Search_View: UIView {
         backButton.addTarget(self, action: "back", forControlEvents: .TouchUpInside)
         self.addSubview(backButton)
         
+        //searchbar
+        self.searchBar = UISearchBar(frame: CGRectMake(0, 60, screenWidth, 40))
+        self.searchBar.barTintColor = UIColor.clearColor()
+        self.searchBar.tintColor = UIColor.clearColor()
+        self.addSubview(self.searchBar)
+        
+        self.tableView = UITableView(frame: CGRectMake(0, 100, screenWidth, screenHeight-100))
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.addSubview(self.tableView)
         
         
     }
@@ -33,7 +46,7 @@ class Search_View: UIView {
     
     func animateView()
     {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
             
             self.frame = CGRectMake(0, 0, screenWidth, screenHeight)
             self.layer.cornerRadius = 0
@@ -50,7 +63,7 @@ class Search_View: UIView {
     
     func back()
     {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
             
             self.frame = CGRectMake(screenWidth - 50, 20, 1, 1)
     
