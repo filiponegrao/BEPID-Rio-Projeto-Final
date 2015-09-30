@@ -8,11 +8,15 @@
 
 import UIKit
 
-class CellChat_TableViewCell: UITableViewCell {
+class CellChat_TableViewCell: UITableViewCell
+{
+    var checked : Bool = false
 
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
-        // Initialization code
+
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
