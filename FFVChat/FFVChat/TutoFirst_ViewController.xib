@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TutoFirst_ViewController" customModule="FFVChat" customModuleProvider="target">
@@ -16,22 +15,21 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1i8-61-i87">
-                    <rect key="frame" x="251" y="63" width="99" height="30"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tutorial" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rU9-Xp-TAl">
+                    <rect key="frame" x="279" y="289" width="90" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="1bZ-9d-NQU"/>
-                        <constraint firstAttribute="width" constant="99" id="xFu-sm-Hxc"/>
+                        <constraint firstAttribute="width" constant="90" id="i9M-N3-3uN"/>
+                        <constraint firstAttribute="height" constant="21" id="q5i-bE-Dch"/>
                     </constraints>
-                    <state key="normal" title="Logout"/>
-                    <connections>
-                        <action selector="logOut:" destination="-1" eventType="touchUpInside" id="cJj-TB-pob"/>
-                    </connections>
-                </button>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="1i8-61-i87" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" constant="55" id="1bL-FJ-7qp"/>
-                <constraint firstItem="1i8-61-i87" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="wco-2S-kiJ"/>
+                <constraint firstItem="rU9-Xp-TAl" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Nm7-8s-lcy"/>
+                <constraint firstItem="rU9-Xp-TAl" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xkw-Y4-Ebv"/>
             </constraints>
         </view>
     </objects>

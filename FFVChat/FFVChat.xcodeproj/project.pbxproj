@@ -76,6 +76,7 @@
 		F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FA1BAB708800BC43EE /* Search_View.swift */; };
 		F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */; };
 		F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,7 @@
 		F66B29FA1BAB708800BC43EE /* Search_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search_View.swift; sourceTree = "<group>"; };
 		F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScreen_View.swift; sourceTree = "<group>"; };
 		F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
+		F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect_.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
 				F66B29FA1BAB708800BC43EE /* Search_View.swift */,
 				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
+				F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -324,11 +327,11 @@
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
 				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
-				80B4D8221BBB157500BDA48F /* AppNavigationController.swift */,
 				F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */,
 				F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */,
 				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
 				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
+				80B4D8221BBB157500BDA48F /* AppNavigationController.swift */,
 				F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */,
 				801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */,
 				F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */,
@@ -500,6 +503,7 @@
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
 				F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */,
 				80B4D82A1BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift in Sources */,
+				F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,

@@ -37,15 +37,7 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func logout(sender: UIButton)
     {
         self.presentViewController(Login_ViewController(nibName: "Login_ViewController", bundle: nil), animated: true, completion: nil)
-    }
-    
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellContacts_TableViewCell
         
-        return cell
     }
     
     

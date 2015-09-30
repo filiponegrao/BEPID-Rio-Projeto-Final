@@ -23,6 +23,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     var loadingScreen: LoadScreen_View!
     
+    
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userLogged", name: UserCondition.userLogged.rawValue, object: nil)
@@ -111,16 +112,15 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.loadingScreen = LoadScreen_View()
         self.view.addSubview(self.loadingScreen)
         DAOUser.loginFaceParse()
-        
     }
     
     func userLogged()
     {
         self.loadingScreen?.removeFromSuperview()
-        
         let contacts = AppNavigationController()
         self.presentViewController(contacts, animated: true, completion: nil)
     }
+    
     
     
     func userNotFound()
