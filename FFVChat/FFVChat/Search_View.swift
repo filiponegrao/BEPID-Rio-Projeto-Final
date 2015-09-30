@@ -12,8 +12,9 @@ class Search_View: UIView {
 
     init()
     {
-        super.init(frame: CGRectMake(screenWidth-50, 20, 1, 1))
+        super.init(frame: CGRectMake(screenWidth-50, 20, 10, 10))
         self.clipsToBounds = true
+        self.layer.cornerRadius = screenWidth/2
         
         let blackScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         blackScreen.backgroundColor = UIColor.blackColor()
@@ -32,9 +33,12 @@ class Search_View: UIView {
     
     func animateView()
     {
-        UIView.animateWithDuration(0.3) { () -> Void in
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
             
             self.frame = CGRectMake(0, 0, screenWidth, screenHeight)
+            self.layer.cornerRadius = 0
+            
+            }) { (success) -> Void in
             
         }
     }
