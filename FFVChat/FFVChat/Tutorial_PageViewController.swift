@@ -18,7 +18,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     
     var tutoSecond : TutoSecond_ViewController!
     
-    var pageControl : UIPageControl!
+//    var pageControl : UIPageControl!
 
     
 //    var privacy : Privacy_ViewController!
@@ -30,8 +30,10 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.tutoSecond = TutoSecond_ViewController(nibName: "TutoSecond_ViewController", bundle: nil)
 //        self.privacy = Privacy_ViewController(nibName: "Privacy_ViewController", bundle: nil)
         
-//        self.pageControl.currentPageIndicatorTintColor = UIColor.darkGrayColor()
-//        self.pageControl.tintColor = UIColor.whiteColor()
+//        self.pageControl = UIPageControl.appearance()
+//        self.pageControl.pageIndicatorTintColor = UIColor.darkGrayColor()
+//        self.pageControl.currentPageIndicatorTintColor = UIColor.blueColor()
+//        self.pageControl.hidesForSinglePage = true
         
         self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
         
@@ -126,6 +128,5 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
             return 1
         }
     }
-
 
 }
