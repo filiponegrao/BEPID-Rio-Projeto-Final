@@ -213,5 +213,11 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
 
+    
+    func userLogged()
+    {
+        let contacts = AppNavigationController()
+        self.presentViewController(contacts, animated: true, completion: nil)
+    }
 
 }
