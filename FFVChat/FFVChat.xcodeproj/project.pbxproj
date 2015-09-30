@@ -42,6 +42,8 @@
 		809E75A81BB6311300CEC425 /* CellImportContact_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; settings = {ASSET_TAGS = (); }; };
+		80B4D82A1BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
@@ -74,6 +76,7 @@
 		F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FA1BAB708800BC43EE /* Search_View.swift */; };
 		F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */; };
 		F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +129,8 @@
 		809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImportContact_TableViewCell.swift; sourceTree = "<group>"; };
 		809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellImportContact_TableViewCell.xib; sourceTree = "<group>"; };
 		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellContacts_TableViewCell.swift; sourceTree = "<group>"; };
+		80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellContacts_TableViewCell.xib; sourceTree = "<group>"; };
 		F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoSecond_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
@@ -158,6 +163,7 @@
 		F66B29FA1BAB708800BC43EE /* Search_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search_View.swift; sourceTree = "<group>"; };
 		F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScreen_View.swift; sourceTree = "<group>"; };
 		F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
+		F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect_.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +199,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8019CB3B1BAD16280017CD7A /* Classes */ = {
+		8019CB3B1BAD16280017CD7A /* Elementos */ = {
 			isa = PBXGroup;
 			children = (
 				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
@@ -206,8 +212,9 @@
 				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
 				F66B29FA1BAB708800BC43EE /* Search_View.swift */,
 				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
+				F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */,
 			);
-			name = Classes;
+			name = Elementos;
 			sourceTree = "<group>";
 		};
 		8019CB3C1BAD16320017CD7A /* xibs */ = {
@@ -306,7 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				8019CB3C1BAD16320017CD7A /* xibs */,
-				8019CB3B1BAD16280017CD7A /* Classes */,
+				8019CB3B1BAD16280017CD7A /* Elementos */,
 				809E75AA1BB6312700CEC425 /* Cells */,
 			);
 			name = View;
@@ -362,6 +369,7 @@
 			isa = PBXGroup;
 			children = (
 				809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */,
+				80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -369,6 +377,7 @@
 		809E75AB1BB6313D00CEC425 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */,
 				809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */,
 			);
 			name = Cells;
@@ -470,6 +479,7 @@
 				809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */,
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
+				80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */,
 				F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,6 +502,8 @@
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
 				F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */,
+				80B4D82A1BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift in Sources */,
+				F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,

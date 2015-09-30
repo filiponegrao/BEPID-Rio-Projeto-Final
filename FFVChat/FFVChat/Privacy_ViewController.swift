@@ -33,7 +33,8 @@ class Privacy_ViewController: UIViewController {
     }
     
 
-    @IBAction func userDisagreed(sender: AnyObject) {
+    @IBAction func userDisagreed(sender: AnyObject)
+    {
         
         
         

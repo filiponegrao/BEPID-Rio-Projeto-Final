@@ -113,11 +113,22 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         super.didReceiveMemoryWarning()
     }
     
-
+    func userAlreadyExist()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let alert = UIAlertView(title: "Ops!", message: "Já existe um usuário com este nome ", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+    }
+    
+    func userLogged()
+    {
+        self.loadingScreen.removeFromSuperview()
+        let tutorial = TutoFirst_ViewController(nibName: "TutoFirst_ViewController", bundle: nil)
+        self.presentViewController(tutorial, animated: true, completion: nil)
+    }
     
     func loginCanceled()
     {
-        
         self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
@@ -213,5 +224,6 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
 
-
+    
+   
 }

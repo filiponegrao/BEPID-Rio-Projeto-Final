@@ -27,6 +27,15 @@ class CellImportContact_TableViewCell: UITableViewCell
         self.photo.contentMode = .ScaleAspectFill
         self.photo.layer.cornerRadius = self.photo.frame.size.width/2
         self.photo.clipsToBounds = true
+        
+        if(self.checked)
+        {
+            self.checkOn()
+        }
+        else
+        {
+            self.checkOff()
+        }
     }
 
     override func setSelected(selected: Bool, animated: Bool)

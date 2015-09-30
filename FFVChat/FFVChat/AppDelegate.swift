@@ -18,16 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     var window: UIWindow?
     
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
-
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         if(DAOUser.isLoged() == UserCondition.userLogged)
         {
-            let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-            self.window?.rootViewController = chat
+            let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
+            self.window?.rootViewController = contacts
         }
         else if(DAOUser.isLoged() == UserCondition.userLoggedOut)
         {
