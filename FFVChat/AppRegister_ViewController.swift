@@ -271,7 +271,6 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     func userLogged()
     {
         self.loadingScreen.removeFromSuperview()
-
         let tutorial = Tutorial_PageViewController()
         self.presentViewController(tutorial, animated: true, completion: nil)
     }

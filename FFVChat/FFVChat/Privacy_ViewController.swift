@@ -33,12 +33,16 @@ class Privacy_ViewController: UIViewController {
     }
     
 
-    @IBAction func userDisagreed(sender: AnyObject) {
+    @IBAction func userDisagreed(sender: AnyObject)
+    {
         
         
         
     }
 
-    @IBAction func userAgreed(sender: AnyObject) {
+    @IBAction func userAgreed(sender: AnyObject)
+    {
+        let importContact = Import_ViewController()
+        self.presentViewController(importContact, animated: true, completion: nil)
     }
 }

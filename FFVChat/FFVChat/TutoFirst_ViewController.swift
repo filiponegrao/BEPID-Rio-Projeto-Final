@@ -16,22 +16,12 @@ class TutoFirst_ViewController: UIViewController
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.redColor()
-
         // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-
-    @IBAction func logOut(sender: AnyObject)
-    {
-        DAOUser.logOut()
-        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-        self.presentViewController(login, animated: true, completion: nil)
     }
  
 }
