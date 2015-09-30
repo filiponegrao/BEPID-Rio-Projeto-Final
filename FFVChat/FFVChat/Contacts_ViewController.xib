@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Contacts_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="1v2-Q4-fKy" id="zfB-UE-Iwg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,15 +16,31 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S0-K0-Xvt">
-                    <rect key="frame" x="263" y="192" width="75" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S0-K0-Xvt">
+                    <rect key="frame" x="8" y="562" width="75" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="EKd-Yw-4Kn"/>
+                        <constraint firstAttribute="height" constant="30" id="SZF-eT-azp"/>
+                    </constraints>
                     <state key="normal" title="logout arrá"/>
                     <connections>
                         <action selector="logout:" destination="-1" eventType="touchUpInside" id="spc-2W-m2S"/>
                     </connections>
                 </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1v2-Q4-fKy">
+                    <rect key="frame" x="0.0" y="50" width="600" height="504"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="1v2-Q4-fKy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Acv-uc-uyG"/>
+                <constraint firstItem="1v2-Q4-fKy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="Dqf-ly-nrZ"/>
+                <constraint firstItem="3S0-K0-Xvt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="OH5-bW-M3q"/>
+                <constraint firstItem="3S0-K0-Xvt" firstAttribute="top" secondItem="1v2-Q4-fKy" secondAttribute="bottom" constant="8" id="lmA-iP-8Wo"/>
+                <constraint firstAttribute="bottom" secondItem="3S0-K0-Xvt" secondAttribute="bottom" constant="8" id="mNq-S1-X0w"/>
+                <constraint firstAttribute="trailing" secondItem="1v2-Q4-fKy" secondAttribute="trailing" id="w29-0W-tfI"/>
+            </constraints>
         </view>
     </objects>
 </document>
