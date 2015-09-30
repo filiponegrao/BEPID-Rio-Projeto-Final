@@ -112,7 +112,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.loadingScreen = LoadScreen_View()
         self.view.addSubview(self.loadingScreen)
         DAOUser.loginFaceParse()
-        
     }
     
     func userLogged()

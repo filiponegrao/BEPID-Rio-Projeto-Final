@@ -42,7 +42,7 @@ class Privacy_ViewController: UIViewController {
 
     @IBAction func userAgreed(sender: AnyObject)
     {
-        let importContacts = Import_ViewController()
-        self.presentViewController(importContacts, animated: true, completion: nil)
+        let importContact = Import_ViewController()
+        self.presentViewController(importContact, animated: true, completion: nil)
     }
 }

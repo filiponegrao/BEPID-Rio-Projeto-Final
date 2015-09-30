@@ -17,12 +17,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S0-K0-Xvt">
-                    <rect key="frame" x="263" y="285" width="75" height="30"/>
+                    <rect key="frame" x="8" y="562" width="75" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="vP9-lN-5W8"/>
-                        <constraint firstAttribute="width" constant="75" id="wZc-TW-zHR"/>
+                        <constraint firstAttribute="width" constant="75" id="EKd-Yw-4Kn"/>
+                        <constraint firstAttribute="height" constant="30" id="SZF-eT-azp"/>
                     </constraints>
-                    <state key="normal" title="logout "/>
+                    <state key="normal" title="logout arrá"/>
                     <connections>
                         <action selector="logout:" destination="-1" eventType="touchUpInside" id="spc-2W-m2S"/>
                     </connections>
@@ -34,8 +34,12 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="3S0-K0-Xvt" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="AEp-jQ-Vru"/>
-                <constraint firstItem="3S0-K0-Xvt" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ga0-oB-3M6"/>
+                <constraint firstItem="1v2-Q4-fKy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Acv-uc-uyG"/>
+                <constraint firstItem="1v2-Q4-fKy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="Dqf-ly-nrZ"/>
+                <constraint firstItem="3S0-K0-Xvt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="OH5-bW-M3q"/>
+                <constraint firstItem="3S0-K0-Xvt" firstAttribute="top" secondItem="1v2-Q4-fKy" secondAttribute="bottom" constant="8" id="lmA-iP-8Wo"/>
+                <constraint firstAttribute="bottom" secondItem="3S0-K0-Xvt" secondAttribute="bottom" constant="8" id="mNq-S1-X0w"/>
+                <constraint firstAttribute="trailing" secondItem="1v2-Q4-fKy" secondAttribute="trailing" id="w29-0W-tfI"/>
             </constraints>
         </view>
     </objects>
