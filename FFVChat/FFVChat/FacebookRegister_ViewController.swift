@@ -216,8 +216,8 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     
     func userLogged()
     {
-        let contacts = AppNavigationController()
-        self.presentViewController(contacts, animated: true, completion: nil)
+        let importation = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
+        self.presentViewController(importation, animated: true, completion: nil)
     }
 
 }

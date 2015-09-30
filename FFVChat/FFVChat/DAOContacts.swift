@@ -15,8 +15,11 @@ enum ContactCondRet : String
     case Ok
     
     case ContactNotFound
-    
-    
+}
+
+enum ContactNotification : String
+{
+    case contactAdded = "contactAdded"
 }
 
 class DAOContacts
@@ -42,23 +45,67 @@ class DAOContacts
     }
     
     
-//    class func getAllContacts() -> (condRet: ContactCondRet, contacts: [Contacts]?)
-//    {
-//        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-//        let documentsDirectory: AnyObject = paths[0]
-//        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
-//        
-//        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
-//        {
-//            self.initContacts()
-//        }
-//        
-//        let data = NSFileManager.defaultManager().contentsAtPath(dataPath) as!
-//        
-//    }
+    class func getAllContacts() -> [Contact]
+    {
+        var contacts = [Contact]()
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        
+        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+        {
+            self.initContacts()
+            if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+            {
+                return contacts
+            }
+            
+        }
+        
+        let content = NSDictionary(contentsOfFile: dataPath)
+        
+        if(content == nil)
+        {
+            return contacts
+        }
+        
+        for(var i = 0; i < content?.count; i++)
+        {
+            contacts.append( Contact(username: content?.allValues[i].valueForKey("username") as! String, facebookID: content?.allValues[i].valueForKey("facebookID") as! String, registerDate: content?.allValues[i].valueForKey("createdAt") as! String, thumb: content?.allValues[i].valueForKey("thumb") as! UIImage))
+        }
+        
+        return contacts
+    }
+    
+    
+    class func getContact(username: String) -> Contact?
+    {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: AnyObject = paths[0]
+        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        
+        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+        {
+            self.initContacts()
+        }
+        
+        let content = NSMutableDictionary(contentsOfFile: dataPath)
+        
+        let data = content?.objectForKey(username) as? NSDictionary
+        
+        if(data == nil)
+        {
+            return nil
+        }
+        
+        let contact = Contact(username: data?.valueForKey("username") as! String, facebookID: data?.valueForKey("facebookID") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: data?.objectForKey("thumb") as! UIImage)
+        
+        print("contato recuperado com sucesso")
+        return contact
+    }
 
     
-    class func addContact(username: String)
+    class func addContactByUsername(username: String)
     {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
@@ -94,7 +141,6 @@ class DAOContacts
                             let faceUsername = object.valueForKey("facebookID") as! String
                             let registerDate = object.valueForKey("createdAt") as! String
                             
-//                            let contact = ["username": username, "faceUsername": faceUsername, "registerDate": registerDate, "thumb": image]
                             let contact = NSDictionary()
                             contact.setValue(image, forKey: "thumb")
                             contact.setValue(username, forKey: "username")
@@ -103,7 +149,7 @@ class DAOContacts
                             
                             content?.setObject(contact, forKey: "\(username)")
                             content?.writeToFile(dataPath, atomically: true)
-                            NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.Ok.rawValue, object: nil)
+                            NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                         })
                     }
                 }
@@ -118,7 +164,7 @@ class DAOContacts
     }
     
     
-    class func getContact(username: String) -> (contact: Contact?, condret: ContactCondRet)
+    class func addContactByID(id: String)
     {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: AnyObject = paths[0]
@@ -131,17 +177,49 @@ class DAOContacts
         
         let content = NSMutableDictionary(contentsOfFile: dataPath)
         
-        let data = content?.objectForKey(username) as? NSDictionary
+        let query = PFQuery(className:"User")
+        query.whereKey("facebookID", equalTo: id)
         
-        if(data == nil)
-        {
-            return (contact: nil, condret: ContactCondRet.ContactNotFound)
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if error == nil
+            {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) users.")
+                // Do something with the found objects
+                if let objects = objects as? [PFObject]
+                {
+                    for object in objects
+                    {
+                        let data = object.objectForKey("profileImage") as! PFFile
+                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                            
+                            let image = UIImage(data: data!)
+                            let username = object.valueForKey("username") as! String
+                            let faceUsername = object.valueForKey("facebookID") as! String
+                            let registerDate = object.valueForKey("createdAt") as! String
+                            
+                            let contact = NSDictionary()
+                            contact.setValue(image, forKey: "thumb")
+                            contact.setValue(username, forKey: "username")
+                            contact.setValue(faceUsername, forKey: "facebookID")
+                            contact.setValue(registerDate, forKey: "createdAt")
+                            
+                            content?.setObject(contact, forKey: "\(username)")
+                            content?.writeToFile(dataPath, atomically: true)
+                            NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
+                        })
+                    }
+                }
+            }
+            else
+            {
+                // Log details of the failure
+                NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.ContactNotFound.rawValue, object: nil)
+                print("Error: \(error!) \(error!.userInfo)")
+            }
         }
-        
-        let contact = Contact(username: data?.valueForKey("username") as! String, facebookID: data?.valueForKey("facebookID") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: data?.objectForKey("thumb") as! UIImage)
-        
-        print("contato recuperado com sucesso")
-        return (contact: contact, condret: ContactCondRet.Ok)
     }
     
     

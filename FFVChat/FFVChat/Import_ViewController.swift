@@ -32,6 +32,10 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var dontAgreeButton : UIButton!
     
+    var contactsAdded : Int = 0
+    
+    var selectedItens : [String : Bool]!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -63,12 +67,26 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         DAOUser.getFaceContacts { (metaContacts) -> Void in
             
             self.metaContacts = metaContacts
-            self.tableView.reloadData()            
+            self.selectedItens = [:]
+            //iniciando o dicionario
+            for meta in self.metaContacts
+            {
+                self.selectedItens[meta.facebookID] = false
+            }
+            print(self.selectedItens.count)
+            self.tableView.reloadData()
         }
         
         self.selectAllContacts()
-        
     }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactAdded" , name: ContactNotification.contactAdded.rawValue, object: nil)
+    }
+    
+    
+
 
     
     override func didReceiveMemoryWarning()
@@ -87,7 +105,8 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellImportContact_TableViewCell
         cell.name.text = self.metaContacts[indexPath.row].faceUsername
         cell.backgroundColor = UIColor.clearColor()
-        if(cell.checked)
+        
+        if(self.selectedItens[self.metaContacts[indexPath.row].facebookID]!)
         {
             cell.checkOn()
         }
@@ -118,6 +137,17 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImportContact_TableViewCell
         cell.setClick()
         cell.backgroundColor = UIColor.clearColor()
+        
+        if(cell.checked)
+        {
+            let id = self.metaContacts[indexPath.row].facebookID
+            self.selectedItens[id] = true
+        }
+        else
+        {
+            let id = self.metaContacts[indexPath.row].facebookID
+            self.selectedItens[id] = nil
+        }
     }
     
     
@@ -128,26 +158,35 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
+    func contactAdded()
+    {
+        self.contactsAdded++
+//        if(self.contactsAdded == )
+//        {
+//            
+//        }
+    }
+    
+    
     func selectAllContacts()
     {
-        self.all = !(self.all)
+        self.all = !self.all
+        
         if(self.all)
         {
-            self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
-            for(var i = 0; i < self.metaContacts.count; i++)
+            for item in self.metaContacts
             {
-                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath.init(forRow: i, inSection: 0)) as! CellImportContact_TableViewCell
-                cell.checkOn()
+                self.selectedItens[item.facebookID] = true
             }
+            self.tableView.reloadData()
         }
         else
         {
-            self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
-            for(var i = 0; i < self.metaContacts.count; i++)
+            for item in self.metaContacts
             {
-                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath.init(forRow: i, inSection: 0)) as! CellImportContact_TableViewCell
-                cell.checkOff()
+                self.selectedItens[item.facebookID] = nil
             }
+            self.tableView.reloadData()
         }
     }
     
