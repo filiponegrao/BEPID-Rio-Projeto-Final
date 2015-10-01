@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         if(DAOUser.isLoged() == UserCondition.userLogged)
         {
-            let contacts = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+            let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
             self.window?.rootViewController = contacts
         }
         else if(DAOUser.isLoged() == UserCondition.userLoggedOut)
