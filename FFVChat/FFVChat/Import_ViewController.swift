@@ -22,7 +22,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet var tableView: UITableView!
     
-    var metaContacts = [metaContact]()
+    var metaContacts = [metaFaceContact]()
     
     var agree : Bool = false
     
@@ -78,7 +78,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             {
                 self.selectedItens[meta.facebookID] = false
             }
-            print(self.selectedItens.count)
+            print("\(self.selectedItens.count) contatos do face recuperados")
             self.tableView.reloadData()
         }
         
@@ -158,6 +158,8 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.loadingView = LoadScreen_View()
         self.view.addSubview(self.loadingView)
         
+        print(self.selectedItens)
+        
         for item in self.metaContacts
         {
             if(self.selectedItens[item.facebookID]!)
@@ -166,10 +168,6 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
                 DAOContacts.addContactByID(item.facebookID)
             }
         }
-
-        
-        let contacts = AppNavigationController()
-        self.presentViewController(contacts, animated: true, completion: nil)
     }
     
     
@@ -179,7 +177,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if(self.contactsShouldAdd == self.contactsAdded)
         {
-            let contacts = Contacts_ViewController(nibName: "Contacts_ViewController",bundle: nil)
+            let contacts = AppNavigationController()
             self.presentViewController(contacts, animated: true, completion: nil)
         }
         

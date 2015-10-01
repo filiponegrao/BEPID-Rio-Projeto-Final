@@ -13,7 +13,11 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var searchButton: UIButton!
+    
     var contacts : [Contact] = [Contact]()
+    
+    var searchView : Search_View!
     
     override func viewDidLoad()
     {
@@ -21,7 +25,8 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.addSubview(NavigationContact_View(requester: self))
         
         self.contacts = DAOContacts.getAllContacts()
-        
+        self.tableView.reloadData()
+        print("\(self.contacts.count) contatos recuperados")
         //tableView
         self.tableView.registerNib(UINib(nibName: "CellContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
@@ -63,4 +68,10 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
 
+    func search()
+    {
+        self.searchView = Search_View()
+        self.view.addSubview(self.searchView)
+        self.searchView.insertView()
+    }
 }
