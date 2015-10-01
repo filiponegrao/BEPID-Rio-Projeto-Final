@@ -53,11 +53,12 @@ class metaContact
     
     let id: String!
     
-    init(username: String, trustLevel: Int, photo: UIImage)
+    init(username: String, trustLevel: Int, photo: UIImage, id: String)
     {
         self.username = username
         self.trustLevel = trustLevel
         self.photo = photo
+        self.id = id
     }
 }
 

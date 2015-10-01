@@ -224,20 +224,24 @@ class DAOContacts
     }
     
     
-//    class func addUser()
-//    {
-//        
-//    }
-//    
-//    class func searchUserForName()
-//    {
-//        
-//    }
-//    
-//    class func searchUserForID()
-//    {
-//        
-//    }
+    class func testPush(id: String)
+    {
+        let message = "Alert !!"
+        
+        let data = [ "title": "Some Title",
+            "alert": message]
+        
+        let userQuery: PFQuery = PFUser.query()!
+        userQuery.whereKey("objectId", equalTo: id)
+        let query: PFQuery = PFInstallation.query()!
+        query.whereKey("currentUser", equalTo: userQuery)
+        
+        let push: PFPush = PFPush()
+        push.setQuery(query)
+        push.setData(data)
+        push.sendPushInBackground()
+    }
+    
     
     class func getProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
 
