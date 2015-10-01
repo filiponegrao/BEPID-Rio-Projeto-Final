@@ -51,7 +51,7 @@ class metaContact
     
     let photo : UIImage!
     
-    let id: String!
+//    let id: String!
     
     init(username: String, trustLevel: Int, photo: UIImage)
     {

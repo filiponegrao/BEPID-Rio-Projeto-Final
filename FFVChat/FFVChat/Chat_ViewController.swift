@@ -16,6 +16,8 @@ class Chat_ViewController: UIViewController, UITableViewDataSource, UITableViewD
     var senderMessages = ["Hello", "Good to see you"]
     var receiverMessages = ["Hi", "Manda nudes!" ]
     
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -39,8 +41,12 @@ class Chat_ViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
 
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        let message = self.senderMessages[0]
+        let currentMessage : NSString = message as NSString
+        let messageSize : CGSize! = currentMessage.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(14.0)])
+        return messageSize.height + 48
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -48,11 +54,13 @@ class Chat_ViewController: UIViewController, UITableViewDataSource, UITableViewD
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         return ((self.senderMessages.count) + (self.receiverMessages.count))
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
         
         return cell
