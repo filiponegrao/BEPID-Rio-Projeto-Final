@@ -49,11 +49,11 @@ class metaContact
     
     let trustLevel : Int!
     
-    let photo : UIImage!
+    let photo : UIImage?
     
     let id: String!
     
-    init(username: String, trustLevel: Int, photo: UIImage, id: String)
+    init(username: String, trustLevel: Int, photo: UIImage?, id: String)
     {
         self.username = username
         self.trustLevel = trustLevel

@@ -44,7 +44,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
 
     }
     
@@ -54,7 +55,10 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+        
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+
     }
     
     override func viewDidLoad()
@@ -102,14 +106,12 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         }
     }
         
-    func keyboardWillHide() {
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.view.frame.origin.y = 0
-        }
-    }
-    func textFieldDidEndEditing(textField: UITextField)
+    func keyboardWillHide(notification: NSNotification)
     {
-        self.keyboardWillHide()
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
+        {
+            self.view.frame.origin.y += keyboardSize.height
+        }
     }
     
     

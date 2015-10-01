@@ -16,6 +16,8 @@ class CellContacts_TableViewCell: UITableViewCell {
     
     @IBOutlet var photo: UIImageView!
     
+    var id : String!
+    
     override func awakeFromNib()
     {
         super.awakeFromNib()
@@ -32,4 +34,8 @@ class CellContacts_TableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func requestFriendAddition(sender: UIButton)
+    {
+        DAOContacts.testPush(self.id)
+    }
 }

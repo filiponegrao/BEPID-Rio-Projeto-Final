@@ -234,7 +234,7 @@ class DAOContacts
         let userQuery: PFQuery = PFUser.query()!
         userQuery.whereKey("objectId", equalTo: id)
         let query: PFQuery = PFInstallation.query()!
-        query.whereKey("currentUser", equalTo: userQuery)
+        query.whereKey("currentUser", matchesQuery: userQuery)
         
         let push: PFPush = PFPush()
         push.setQuery(query)
@@ -275,7 +275,7 @@ class DAOContacts
             if(objects?.count > 0)
             {
                 let object = objects![0] as! PFObject
-                callback(object.valueForKey("username") as! String)
+                callback(object.valueForKey("username") as? String)
             }
         })
         
@@ -283,9 +283,9 @@ class DAOContacts
     }
     
     
-    class func getUsersWithString(string: String, callback: ([String]) -> Void) -> Void
+    class func getUsersWithString(string: String, callback: ([metaContact]) -> Void) -> Void
     {
-        var result = [String]()
+        var result = [metaContact]()
         
         let query = PFUser.query()
         query?.whereKey("username", containsString: string)
@@ -295,7 +295,12 @@ class DAOContacts
             {
                 for object in objects
                 {
-                    result.append(object.valueForKey("username") as! String)
+                    let username = object.valueForKey("username") as! String
+                    let trustLevel = object.valueForKey("trustLevel") as! Int
+                    let id = object.valueForKey("objectId") as! String
+                    
+                    let mc = metaContact(username: username, trustLevel: trustLevel, photo: nil, id: id)
+                    result.append(mc)
                     
                     if(object.valueForKey("username") as! String == objects.last?.valueForKey("username") as! String)
                     {

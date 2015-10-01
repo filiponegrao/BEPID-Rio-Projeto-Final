@@ -10,7 +10,7 @@ import UIKit
 
 class Search_View: UIView, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate
 {
-    var result : [String]!
+    var result : [metaContact]!
 
     var backButton : UIButton!
     
@@ -53,7 +53,7 @@ class Search_View: UIView, UITableViewDataSource, UITableViewDelegate, UISearchB
         self.backButton.alpha = 0
         self.navBar.addSubview(self.backButton)
         
-        self.result = [String]()
+        self.result = [metaContact]()
         
     }
     
@@ -96,8 +96,9 @@ class Search_View: UIView, UITableViewDataSource, UITableViewDelegate, UISearchB
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellContacts_TableViewCell
         
-        cell.username.text = result[indexPath.row]
-        DAOContacts.getPhotoFromUsername(cell.username.text!) { (image) -> Void in
+        cell.id = result[indexPath.row].id
+        cell.username.text = result[indexPath.row].username
+        DAOContacts.getPhotoFromUsername(result[indexPath.row].username) { (image) -> Void in
             cell.photo.image = image
         }
         
@@ -114,9 +115,9 @@ class Search_View: UIView, UITableViewDataSource, UITableViewDelegate, UISearchB
     {
         if(searchText.characters.count > 2)
         {
-            DAOContacts.getUsersWithString(searchText) { (usernames: [String]) -> Void in
+            DAOContacts.getUsersWithString(searchText) { (metaContacts: [metaContact]) -> Void in
                 
-                self.result = usernames
+                self.result = metaContacts
                 self.tableView.reloadData()
             }
         }
