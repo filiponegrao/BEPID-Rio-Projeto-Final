@@ -8,12 +8,23 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController
+class Chat_ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    var senderMessages = ["Hello", "Good to see you"]
+    var receiverMessages = ["Hi", "Manda nudes!" ]
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        
+        self.tableView.registerNib(UINib(nibName: "CellChat_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        
         print(DAOUser.getUserName())
         print(DAOUser.getEmail())
         print(DAOUser.getPassword())
@@ -28,6 +39,25 @@ class Chat_ViewController: UIViewController
     }
 
 
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 50
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ((self.senderMessages.count) + (self.receiverMessages.count))
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
+        
+        return cell
+    }
+    
     @IBAction func logOut(sender: UIButton)
     {
         DAOUser.logOut()

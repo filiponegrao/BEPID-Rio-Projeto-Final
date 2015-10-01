@@ -47,6 +47,8 @@
 		80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		F62A68801BBC68C0007D3DBB /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687E1BBC68C0007D3DBB /* CellChat_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		F62A68811BBC68C0007D3DBB /* CellChat_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687F1BBC68C0007D3DBB /* CellChat_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
 		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
@@ -135,6 +137,8 @@
 		80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellContacts_TableViewCell.xib; sourceTree = "<group>"; };
 		F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoSecond_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
+		F62A687E1BBC68C0007D3DBB /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
+		F62A687F1BBC68C0007D3DBB /* CellChat_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellChat_TableViewCell.xib; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
@@ -373,6 +377,7 @@
 			children = (
 				809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */,
 				80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */,
+				F62A687F1BBC68C0007D3DBB /* CellChat_TableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 			children = (
 				80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */,
 				809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */,
+				F62A687E1BBC68C0007D3DBB /* CellChat_TableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -481,6 +487,7 @@
 				F66B29CF1BAB6B4E00BC43EE /* Import_ViewController.xib in Resources */,
 				F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */,
 				809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */,
+				F62A68811BBC68C0007D3DBB /* CellChat_TableViewCell.xib in Resources */,
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
 				80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */,
@@ -524,6 +531,7 @@
 				809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */,
+				F62A68801BBC68C0007D3DBB /* CellChat_TableViewCell.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
