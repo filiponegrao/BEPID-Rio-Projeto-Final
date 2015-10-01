@@ -92,6 +92,7 @@ class Search_View: UIView, UITableViewDataSource, UITableViewDelegate, UISearchB
         return result.count
     }
     
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellContacts_TableViewCell

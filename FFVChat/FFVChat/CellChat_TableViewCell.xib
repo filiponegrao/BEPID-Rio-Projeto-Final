@@ -10,10 +10,35 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="CellChat_TableViewCell" customModule="FFVChat" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+<<<<<<< HEAD
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
             </tableViewCellContentView>
+=======
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="oi" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Qia-Jk-Utx">
+                        <rect key="frame" x="66" y="0.0" width="200" height="43"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="8WH-aR-I18"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Qia-Jk-Utx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="Pkc-0c-R2l"/>
+                    <constraint firstItem="Qia-Jk-Utx" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="ks0-bE-mmw"/>
+                    <constraint firstAttribute="trailing" secondItem="Qia-Jk-Utx" secondAttribute="trailing" constant="54" id="nwU-cC-gde"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="labelMessage" destination="Qia-Jk-Utx" id="8Bq-zX-3md"/>
+            </connections>
+>>>>>>> origin/master
         </tableViewCell>
     </objects>
 </document>
