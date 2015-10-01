@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Chat_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="Nhy-PK-O7o" id="uzj-Tn-WYI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,10 +27,18 @@
                         <action selector="logOut:" destination="-1" eventType="touchUpInside" id="Tss-Gc-EfV"/>
                     </connections>
                 </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Nhy-PK-O7o">
+                    <rect key="frame" x="0.0" y="54" width="600" height="501"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="2ZD-dO-FYh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="0Ay-OT-gX3"/>
+                <constraint firstAttribute="trailing" secondItem="Nhy-PK-O7o" secondAttribute="trailing" id="6Hm-eE-2NK"/>
+                <constraint firstItem="Nhy-PK-O7o" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="Xiv-HR-c9M"/>
+                <constraint firstAttribute="bottom" secondItem="Nhy-PK-O7o" secondAttribute="bottom" constant="40" id="ipH-6A-D9W"/>
+                <constraint firstItem="Nhy-PK-O7o" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="k1T-b7-xja"/>
                 <constraint firstItem="2ZD-dO-FYh" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="szw-Sr-pfB"/>
             </constraints>
             <point key="canvasLocation" x="361" y="346"/>
