@@ -284,12 +284,12 @@ class DAOUser
     }
     
     
-    class func getFaceContacts( callback : (metaContacts: [metaContact]!) -> Void) -> Void {
+    class func getFaceContacts( callback : (metaContacts: [metaFaceContact]!) -> Void) -> Void {
         
-        var contacts = [metaContact]()
+        var contacts = [metaFaceContact]()
         var i = 0
         
-        self.getFaceFriends { (friends:[metaContact]!) -> Void in
+        self.getFaceFriends { (friends:[metaFaceContact]!) -> Void in
             
             for friend in friends
             {
@@ -303,13 +303,15 @@ class DAOUser
                     {
                         if(objects.count > 0)
                         {
-                            let contact = metaContact(facebookID: friend.facebookID, faceUsername: friend.faceUsername)
+                            print("Amigo \(friend.faceUsername) esta no app")
+                            let contact = metaFaceContact(facebookID: friend.facebookID, faceUsername: friend.faceUsername)
                             contacts.append(contact)
                         }
                     }
                     
-                    if(i == friends.count-1)
+                    if(friend.facebookID == friends.last?.facebookID)
                     {
+                        print("retornando \(contacts.count) amigos")
                         callback(metaContacts: contacts)
                     }
                 }
@@ -324,16 +326,15 @@ class DAOUser
      * Funcao que cata os amigos no facebook
      * e retorna os mesmos em forma de metaContact
      */
-    class func getFaceFriends( callback : (friends: [metaContact]!) -> Void) -> Void {
+    class func getFaceFriends( callback : (friends: [metaFaceContact]!) -> Void) -> Void {
 
-        var meta = [metaContact]()
+        var meta = [metaFaceContact]()
 
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
         
             if error == nil
             {
-//                print("Friends are : \(result)")
                 let results = result as! NSDictionary
                 let data = results.objectForKey("data") as! [NSDictionary]
                 
@@ -341,7 +342,8 @@ class DAOUser
                 {
                     let name = data[j].valueForKey("name") as! String
                     let id = data[j].valueForKey("id") as! String
-                    let c = metaContact(facebookID: id, faceUsername: name)
+                    let c = metaFaceContact(facebookID: id, faceUsername: name)
+                    print("Amigo \(name)")
                     meta.append(c)
                 }
                 callback(friends: meta)

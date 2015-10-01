@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Contacts_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
+                <outlet property="searchDisplayController" destination="YO4-nF-n64" id="Lre-vw-Rsh"/>
                 <outlet property="tableView" destination="1v2-Q4-fKy" id="zfB-UE-Iwg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,19 +29,27 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1v2-Q4-fKy">
-                    <rect key="frame" x="0.0" y="50" width="600" height="504"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="0.0" y="100" width="600" height="454"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.85882352939999995" green="0.85490196080000003" blue="0.83921568629999999" alpha="1" colorSpace="deviceRGB"/>
             <constraints>
                 <constraint firstItem="1v2-Q4-fKy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Acv-uc-uyG"/>
-                <constraint firstItem="1v2-Q4-fKy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="Dqf-ly-nrZ"/>
+                <constraint firstItem="1v2-Q4-fKy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="Dqf-ly-nrZ"/>
                 <constraint firstItem="3S0-K0-Xvt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="OH5-bW-M3q"/>
                 <constraint firstItem="3S0-K0-Xvt" firstAttribute="top" secondItem="1v2-Q4-fKy" secondAttribute="bottom" constant="8" id="lmA-iP-8Wo"/>
                 <constraint firstAttribute="bottom" secondItem="3S0-K0-Xvt" secondAttribute="bottom" constant="8" id="mNq-S1-X0w"/>
                 <constraint firstAttribute="trailing" secondItem="1v2-Q4-fKy" secondAttribute="trailing" id="w29-0W-tfI"/>
             </constraints>
         </view>
+        <searchDisplayController id="YO4-nF-n64">
+            <connections>
+                <outlet property="delegate" destination="-1" id="O2Y-RC-ZNK"/>
+                <outlet property="searchContentsController" destination="-1" id="Dkt-6f-QgL"/>
+                <outlet property="searchResultsDataSource" destination="-1" id="kvm-fk-6Fu"/>
+                <outlet property="searchResultsDelegate" destination="-1" id="0tp-UZ-9P8"/>
+            </connections>
+        </searchDisplayController>
     </objects>
 </document>

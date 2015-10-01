@@ -29,7 +29,7 @@ class Contact
 
 }
 
-class metaContact
+class metaFaceContact
 {
     let facebookID : String!
     
@@ -41,3 +41,21 @@ class metaContact
         self.faceUsername = faceUsername
     }
 }
+
+
+class metaContact
+{
+    let username : String!
+    
+    let trustLevel : Int!
+    
+    let photo : UIImage!
+    
+    init(username: String, trustLevel: Int, photo: UIImage)
+    {
+        self.username = username
+        self.trustLevel = trustLevel
+        self.photo = photo
+    }
+}
+

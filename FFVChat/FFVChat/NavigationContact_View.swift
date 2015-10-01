@@ -12,22 +12,27 @@ class NavigationContact_View: UIView {
 
     var vc : UIViewController!
     
+    var configButton : UIButton!
+    
+    var searchButton : UIButton!
+    
     init(requester: UIViewController)
     {
         self.vc = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 60))
-        self.backgroundColor = UIColor.grayColor()
+        self.backgroundColor = UIColor.whiteColor()
         
-        let searchButton = UIButton(frame: CGRectMake(screenWidth-50, 20, 30, 30))
-        searchButton.setImage(UIImage(named: "icon_search"), forState: .Normal)
-        searchButton.addTarget(self, action: "openSearch", forControlEvents: .TouchUpInside)
-        self.addSubview(searchButton)
+        self.configButton = UIButton(frame: CGRectMake(0, 20, 100, 30))
+        self.configButton.setTitle("Config", forState: .Normal)
+        self.configButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        self.configButton.addTarget(self, action: "openConfig", forControlEvents: .TouchUpInside)
+        self.addSubview(self.configButton)
         
-        let configButton = UIButton(frame: CGRectMake(10, 20, 30, 30))
-        configButton.setImage(UIImage(named: "icon_profile"), forState: .Normal)
-        configButton.addTarget(self, action: "openConfig", forControlEvents: .TouchUpInside)
-        self.addSubview(configButton)
-        
+        self.searchButton = UIButton(frame: CGRectMake(screenWidth-60, 20, 60, 30))
+        self.searchButton.setTitle("Search", forState: .Normal)
+        self.searchButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        self.searchButton.addTarget(self, action: "openSearch", forControlEvents: .TouchUpInside)
+        self.addSubview(self.searchButton)
         
     }
 
@@ -37,18 +42,17 @@ class NavigationContact_View: UIView {
     }
     
     
-    func openSearch()
+    func openConfig()
     {
-        let search = Search_View()
-        vc.view.addSubview(search)
-        search.animateView()
         
     }
     
     
-    func openConfig()
+    func openSearch()
     {
-        
+        let searchView = Search_View()
+        vc.view.addSubview(searchView)
+        searchView.insertView()
     }
     
     

@@ -20,6 +20,9 @@ class CellContacts_TableViewCell: UITableViewCell {
     {
         super.awakeFromNib()
         // Initialization code
+        
+        photo.layer.cornerRadius = photo.frame.size.width/2
+        photo.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool)

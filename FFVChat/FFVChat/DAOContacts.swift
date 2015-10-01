@@ -27,20 +27,33 @@ class DAOContacts
     
     class func initContacts()
     {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
+        let fileManager = NSFileManager.defaultManager()
         
-        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+        //check if file exists
+        if(!fileManager.fileExistsAtPath(path))
         {
-            do { try NSFileManager.defaultManager().createDirectoryAtPath(dataPath, withIntermediateDirectories: false, attributes: nil)
-                
-                print("Pasta de contatos criada com sucesso")
-            }
-            catch
+            // If it doesn't, copy it from the default file in the Bundle
+            if let bundlePath = NSBundle.mainBundle().pathForResource("Contacts", ofType: "plist")
             {
-                print("Deu merda ao criar a pasta de contatos")
+                //                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
+                do { try fileManager.copyItemAtPath(bundlePath, toPath: path) }
+                catch
+                {
+                    print("nao foi possivel criar a pasta")
+                }
             }
+            else
+            {
+                print("Contacts.plist not found. Please, make sure it is part of the bundle.")
+            }
+        }
+        else
+        {
+            print("Contacts.plist already exits at path.")
+            // use this to delete file from documents directory
+            //fileManager.removeItemAtPath(path, error: nil)
         }
     }
     
@@ -48,30 +61,22 @@ class DAOContacts
     class func getAllContacts() -> [Contact]
     {
         var contacts = [Contact]()
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
         
-        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
-        {
-            self.initContacts()
-            if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
-            {
-                return contacts
-            }
-            
-        }
-        
-        let content = NSDictionary(contentsOfFile: dataPath)
+        let content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
+            print("retornando pq nao tem nada em content")
             return contacts
         }
         
+        print(content?.count)
         for(var i = 0; i < content?.count; i++)
         {
             contacts.append( Contact(username: content?.allValues[i].valueForKey("username") as! String, facebookID: content?.allValues[i].valueForKey("facebookID") as! String, registerDate: content?.allValues[i].valueForKey("createdAt") as! String, thumb: content?.allValues[i].valueForKey("thumb") as! UIImage))
+            print(contacts)
         }
         
         return contacts
@@ -80,16 +85,16 @@ class DAOContacts
     
     class func getContact(username: String) -> Contact?
     {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
         
-        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+        let content = NSDictionary(contentsOfFile: path)
+        
+        if(content == nil)
         {
-            self.initContacts()
+            print("retornando pq nao tem nada em content")
+            return nil
         }
-        
-        let content = NSMutableDictionary(contentsOfFile: dataPath)
         
         let data = content?.objectForKey(username) as? NSDictionary
         
@@ -107,16 +112,15 @@ class DAOContacts
     
     class func addContactByUsername(username: String)
     {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
         
-        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
         {
             self.initContacts()
         }
-        
-        let content = NSMutableDictionary(contentsOfFile: dataPath)
         
         let query = PFQuery(className:"User")
         query.whereKey("username", equalTo: username)
@@ -141,14 +145,14 @@ class DAOContacts
                             let faceUsername = object.valueForKey("facebookID") as! String
                             let registerDate = object.valueForKey("createdAt") as! String
                             
-                            let contact = NSDictionary()
+                            let contact = NSMutableDictionary()
                             contact.setValue(image, forKey: "thumb")
                             contact.setValue(username, forKey: "username")
                             contact.setValue(faceUsername, forKey: "facebookID")
                             contact.setValue(registerDate, forKey: "createdAt")
                             
-                            content?.setObject(contact, forKey: "\(username)")
-                            content?.writeToFile(dataPath, atomically: true)
+                            content!.setObject(contact, forKey: "\(username)")
+                            content!.writeToFile(path, atomically: false)
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                         })
                     }
@@ -166,21 +170,20 @@ class DAOContacts
     
     class func addContactByID(id: String)
     {
-        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let documentsDirectory: AnyObject = paths[0]
-        let dataPath = documentsDirectory.stringByAppendingPathComponent("Contacts")
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
         
-        if (!NSFileManager.defaultManager().fileExistsAtPath(dataPath))
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
         {
             self.initContacts()
         }
         
-        let content = NSMutableDictionary(contentsOfFile: dataPath)
-        
-        let query = PFQuery(className:"User")
-        query.whereKey("facebookID", equalTo: id)
-        
-        query.findObjectsInBackgroundWithBlock {
+        let query = PFUser.query()
+        query!.whereKey("facebookID", equalTo: id)
+        print(id)
+        query!.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if error == nil
@@ -198,16 +201,14 @@ class DAOContacts
                             let image = UIImage(data: data!)
                             let username = object.valueForKey("username") as! String
                             let faceUsername = object.valueForKey("facebookID") as! String
-                            let registerDate = object.valueForKey("createdAt") as! String
+                            let registerDateDate = object.valueForKey("createdAt") as! NSDate
+                            let registerDate = "\(registerDateDate)"
                             
-                            let contact = NSDictionary()
-                            contact.setValue(image, forKey: "thumb")
-                            contact.setValue(username, forKey: "username")
-                            contact.setValue(faceUsername, forKey: "facebookID")
-                            contact.setValue(registerDate, forKey: "createdAt")
+                            let contact = ["thumb":image!, "username":username, "facebookID":faceUsername, "createdAt":registerDate]
+
                             
                             content?.setObject(contact, forKey: "\(username)")
-                            content?.writeToFile(dataPath, atomically: true)
+                            content?.writeToFile(path, atomically: false)
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                         })
                     }
@@ -222,6 +223,21 @@ class DAOContacts
         }
     }
     
+    
+//    class func addUser()
+//    {
+//        
+//    }
+//    
+//    class func searchUserForName()
+//    {
+//        
+//    }
+//    
+//    class func searchUserForID()
+//    {
+//        
+//    }
     
     class func getProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
 
@@ -262,6 +278,69 @@ class DAOContacts
         callback(nil)
     }
     
+    
+    class func getUsersWithString(string: String, callback: ([String]) -> Void) -> Void
+    {
+        var result = [String]()
+        
+        let query = PFUser.query()
+        query?.whereKey("username", containsString: string)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject]
+            {
+                for object in objects
+                {
+                    result.append(object.valueForKey("username") as! String)
+                    
+                    if(object.valueForKey("username") as! String == objects.last?.valueForKey("username") as! String)
+                    {
+                        callback(result)
+                    }
+
+                }
+            }
+            else
+            {
+                callback(result)
+            }
+        })
+    }
+    
+    
+    class func getPhotoFromUsername(username: String, callback: (image: UIImage?) -> Void) -> Void
+    {
+        let query = PFUser.query()
+        query?.whereKey("username", equalTo: username)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject]
+            {
+                for object in objects
+                {
+                    let data = object.objectForKey("profileImage") as! PFFile
+                    data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                        
+                        if(data == nil)
+                        {
+                            callback(image: nil)
+                        }
+                        else
+                        {
+                            let image = UIImage(data: data!)
+                            callback(image: image)
+                        }
+                    })
+                }
+                callback(image: nil)
+            }
+            else
+            {
+                callback(image: nil)
+            }
+            
+        })
+    }
     
 }
 

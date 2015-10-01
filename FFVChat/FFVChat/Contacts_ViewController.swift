@@ -13,7 +13,11 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
 
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var searchButton: UIButton!
+    
     var contacts : [Contact] = [Contact]()
+    
+    var searchView : Search_View!
     
     override func viewDidLoad()
     {
@@ -21,12 +25,19 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.addSubview(NavigationContact_View(requester: self))
         
         self.contacts = DAOContacts.getAllContacts()
-        
+        self.tableView.reloadData()
+        print("\(self.contacts.count) contatos recuperados")
         //tableView
         self.tableView.registerNib(UINib(nibName: "CellContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
     }
 
+    override func viewWillAppear(animated: Bool)
+    {
+        self.contacts = DAOContacts.getAllContacts()
+        self.tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -37,15 +48,7 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func logout(sender: UIButton)
     {
         self.presentViewController(Login_ViewController(nibName: "Login_ViewController", bundle: nil), animated: true, completion: nil)
-    }
-    
-    
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellContacts_TableViewCell
         
-        return cell
     }
     
     
@@ -54,5 +57,21 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         return contacts.count
     }
 
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellContacts_TableViewCell
+        
+        cell.username.text = self.contacts[indexPath.row].username
+        cell.trustLevel.text = "Confiavel demais eim"
+        cell.photo.image = self.contacts[indexPath.row].thumb
+        
+        return cell
+    }
 
+    func search()
+    {
+        self.searchView = Search_View()
+        self.view.addSubview(self.searchView)
+        self.searchView.insertView()
+    }
 }
