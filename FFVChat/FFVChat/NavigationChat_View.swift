@@ -8,15 +8,9 @@
 
 import UIKit
 
-class NavigationChat_View: UIView {
+class NavigationChat_View: UIView
+{
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
+
 
 }
