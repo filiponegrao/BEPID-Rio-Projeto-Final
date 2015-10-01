@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+class Chat_ViewController: UIViewController
 {
 
     @IBOutlet weak var tableView: UITableView!
@@ -22,8 +22,6 @@ class Chat_ViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         super.viewDidLoad()
         
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
         
         self.tableView.registerNib(UINib(nibName: "CellChat_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
@@ -54,22 +52,22 @@ class Chat_ViewController: UIViewController, UITableViewDataSource, UITableViewD
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return ((self.senderMessages.count) + (self.receiverMessages.count))
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
-        
-        return cell
-    }
-    
-    @IBAction func logOut(sender: UIButton)
-    {
-        DAOUser.logOut()
-        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-        self.presentViewController(login, animated: true, completion: nil)
-    }
+//    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+//    {
+//        return ((self.senderMessages.count) + (self.receiverMessages.count))
+//    }
+//    
+//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+//    {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
+//        
+//        return cell
+//    }
+//    
+//    @IBAction func logOut(sender: UIButton)
+//    {
+//        DAOUser.logOut()
+//        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
+//        self.presentViewController(login, animated: true, completion: nil)
+//    }
 }

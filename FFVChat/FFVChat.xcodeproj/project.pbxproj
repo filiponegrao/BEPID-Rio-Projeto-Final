@@ -78,8 +78,6 @@
 		F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */; };
 		F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */; settings = {ASSET_TAGS = (); }; };
-		F6E54B821BBCEEC1002FA3F4 /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E54B801BBCEEC1002FA3F4 /* CellChat_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		F6E54B831BBCEEC1002FA3F4 /* CellChat_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E54B811BBCEEC1002FA3F4 /* CellChat_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,8 +166,6 @@
 		F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScreen_View.swift; sourceTree = "<group>"; };
 		F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
 		F68F2E471BBBA29E0092A981 /* BlurEffect_.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect_.swift; sourceTree = "<group>"; };
-		F6E54B801BBCEEC1002FA3F4 /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
-		F6E54B811BBCEEC1002FA3F4 /* CellChat_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellChat_TableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -377,7 +373,6 @@
 			children = (
 				809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */,
 				80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */,
-				F6E54B811BBCEEC1002FA3F4 /* CellChat_TableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -387,7 +382,6 @@
 			children = (
 				80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */,
 				809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */,
-				F6E54B801BBCEEC1002FA3F4 /* CellChat_TableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -489,7 +483,6 @@
 				809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */,
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
-				F6E54B831BBCEEC1002FA3F4 /* CellChat_TableViewCell.xib in Resources */,
 				80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */,
 				F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */,
 			);
@@ -531,7 +524,6 @@
 				809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */,
-				F6E54B821BBCEEC1002FA3F4 /* CellChat_TableViewCell.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,

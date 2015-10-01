@@ -150,9 +150,9 @@ class DAOContacts
                             contact.setValue(username, forKey: "username")
                             contact.setValue(faceUsername, forKey: "facebookID")
                             contact.setValue(registerDate, forKey: "createdAt")
-                            
+                            print("passa qui porra")
                             content!.setObject(contact, forKey: "\(username)")
-                            content!.writeToFile(path, atomically: false)
+                            print(content!.writeToFile(path, atomically: false))
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                         })
                     }
@@ -173,11 +173,12 @@ class DAOContacts
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
         
-        let content = NSMutableDictionary(contentsOfFile: path)
+        var content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
             self.initContacts()
+            content = NSMutableDictionary(contentsOfFile: path)
         }
         
         let query = PFUser.query()
@@ -206,9 +207,10 @@ class DAOContacts
                             
                             let contact = ["thumb":image!, "username":username, "facebookID":faceUsername, "createdAt":registerDate]
 
+                            print(content)
+                            print(content?.setObject(contact, forKey: "\(username)"))
+                            print(content?.writeToFile(path, atomically: false))
                             
-                            content?.setObject(contact, forKey: "\(username)")
-                            content?.writeToFile(path, atomically: false)
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                         })
                     }
