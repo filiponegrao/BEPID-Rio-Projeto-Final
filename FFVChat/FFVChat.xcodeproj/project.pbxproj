@@ -10,6 +10,9 @@
 		8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8019CB3D1BADDD780017CD7A /* FixedValues.swift */; settings = {ASSET_TAGS = (); }; };
 		8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */; };
 		8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB411BAE1D7A0017CD7A /* libz.tbd */; };
+		801CF77A1BBCEC31006BF293 /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CF7761BBCEC31006BF293 /* CellChat_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		801CF77B1BBCEC31006BF293 /* CellChat_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801CF7771BBCEC31006BF293 /* CellChat_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CF77E1BBCECC2006BF293 /* Chat_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92531BA4928800D05CE7 /* AppDelegate.swift */; };
 		801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801D925A1BA4928800D05CE7 /* Images.xcassets */; };
 		801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D925C1BA4928800D05CE7 /* LaunchScreen.xib */; };
@@ -33,7 +36,6 @@
 		801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */; };
 		801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D929D1BA5177400D05CE7 /* DAOUser.swift */; };
 		801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801D929F1BA51E5900D05CE7 /* UserInfo.plist */; };
-		801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */; };
 		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
 		80216BAC1BB084B40008F380 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */; settings = {ASSET_TAGS = (); }; };
 		8070BDA21BB3208A005573DC /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070BDA11BB3208A005573DC /* Contacts.swift */; settings = {ASSET_TAGS = (); }; };
@@ -94,6 +96,9 @@
 		8019CB3D1BADDD780017CD7A /* FixedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedValues.swift; sourceTree = "<group>"; };
 		8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8019CB411BAE1D7A0017CD7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		801CF7761BBCEC31006BF293 /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
+		801CF7771BBCEC31006BF293 /* CellChat_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellChat_TableViewCell.xib; sourceTree = "<group>"; };
+		801CF77E1BBCECC2006BF293 /* Chat_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat_ViewController.swift; sourceTree = "<group>"; };
 		801D924E1BA4928800D05CE7 /* FFVChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFVChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		801D92521BA4928800D05CE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		801D92531BA4928800D05CE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,7 +126,6 @@
 		801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookRegister_ViewController.xib; sourceTree = "<group>"; };
 		801D929D1BA5177400D05CE7 /* DAOUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOUser.swift; sourceTree = "<group>"; };
 		801D929F1BA51E5900D05CE7 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
-		801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat_ViewController.swift; sourceTree = "<group>"; };
 		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
 		80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		8070BDA11BB3208A005573DC /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
@@ -336,7 +340,7 @@
 				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
 				80B4D8221BBB157500BDA48F /* AppNavigationController.swift */,
 				F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */,
-				801D92A11BA5304A00D05CE7 /* Chat_ViewController.swift */,
+				801CF77E1BBCECC2006BF293 /* Chat_ViewController.swift */,
 				F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */,
 				F66B29DC1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift */,
 				F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */,
@@ -371,6 +375,7 @@
 		809E75AA1BB6312700CEC425 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				801CF7771BBCEC31006BF293 /* CellChat_TableViewCell.xib */,
 				809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */,
 				80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */,
 			);
@@ -380,6 +385,7 @@
 		809E75AB1BB6313D00CEC425 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				801CF7761BBCEC31006BF293 /* CellChat_TableViewCell.swift */,
 				80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */,
 				809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */,
 			);
@@ -483,6 +489,7 @@
 				809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */,
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
+				801CF77B1BBCEC31006BF293 /* CellChat_TableViewCell.xib in Resources */,
 				80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */,
 				F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */,
 			);
@@ -508,8 +515,8 @@
 				F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */,
 				80B4D82A1BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift in Sources */,
 				F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */,
+				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
-				801D92A31BA5304A00D05CE7 /* Chat_ViewController.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
 				809E75A81BB6311300CEC425 /* CellImportContact_TableViewCell.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
@@ -524,6 +531,7 @@
 				809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */,
+				801CF77A1BBCEC31006BF293 /* CellChat_TableViewCell.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
