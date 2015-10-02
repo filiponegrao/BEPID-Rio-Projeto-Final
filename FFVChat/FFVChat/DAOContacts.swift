@@ -75,7 +75,9 @@ class DAOContacts
         print(content?.count)
         for(var i = 0; i < content?.count; i++)
         {
-            contacts.append( Contact(username: content?.allValues[i].valueForKey("username") as! String, facebookID: content?.allValues[i].valueForKey("facebookID") as! String, registerDate: content?.allValues[i].valueForKey("createdAt") as! String, thumb: content?.allValues[i].valueForKey("thumb") as! UIImage))
+            let data = content?.allValues[i].valueForKey("thumb") as! NSData
+            let image = UIImage(data: data)
+            contacts.append( Contact(username: content?.allValues[i].valueForKey("username") as! String, facebookID: content?.allValues[i].valueForKey("facebookID") as! String, registerDate: content?.allValues[i].valueForKey("createdAt") as! String, thumb: image!))
             print(contacts)
         }
         
@@ -140,19 +142,17 @@ class DAOContacts
                         let data = object.objectForKey("profileImage") as! PFFile
                         data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                             
-                            let image = UIImage(data: data!)
                             let username = object.valueForKey("username") as! String
                             let faceUsername = object.valueForKey("facebookID") as! String
                             let registerDate = object.valueForKey("createdAt") as! String
                             
                             let contact = NSMutableDictionary()
-                            contact.setValue(image, forKey: "thumb")
+                            contact.setValue(data, forKey: "thumb")
                             contact.setValue(username, forKey: "username")
                             contact.setValue(faceUsername, forKey: "facebookID")
                             contact.setValue(registerDate, forKey: "createdAt")
-                            print("passa qui porra")
                             content!.setObject(contact, forKey: "\(username)")
-                            print(content!.writeToFile(path, atomically: false))
+                            content!.writeToFile(path, atomically: false)
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                         })
                     }
@@ -205,7 +205,9 @@ class DAOContacts
                             let registerDateDate = object.valueForKey("createdAt") as! NSDate
                             let registerDate = "\(registerDateDate)"
                             
-                            let contact = ["thumb":image!, "username":username, "facebookID":faceUsername, "createdAt":registerDate]
+                            print("username: \(username) id: \(faceUsername) date: \(registerDate) image: \(data)")
+                            
+                            let contact = ["thumb":data!, "username":username, "facebookID":faceUsername, "createdAt":registerDate]
 
                             print(content)
                             print(content?.setObject(contact, forKey: "\(username)"))
@@ -351,6 +353,32 @@ class DAOContacts
             }
             
         })
+    }
+    
+    
+    class func isContact(username: String) -> Bool
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
+        
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            return false
+        }
+        
+        let contacts = self.getAllContacts()
+        
+        for contact in contacts
+        {
+            if(username == contact.username)
+            {
+                return true
+            }
+        }
+        
+        return false
     }
     
 }

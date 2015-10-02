@@ -16,6 +16,8 @@ class CellContacts_TableViewCell: UITableViewCell {
     
     @IBOutlet var photo: UIImageView!
     
+    @IBOutlet var addButton: UIButton!
+    
     var id : String!
     
     override func awakeFromNib()
@@ -25,6 +27,8 @@ class CellContacts_TableViewCell: UITableViewCell {
         
         photo.layer.cornerRadius = photo.frame.size.width/2
         photo.clipsToBounds = true
+        
+    
     }
 
     override func setSelected(selected: Bool, animated: Bool)

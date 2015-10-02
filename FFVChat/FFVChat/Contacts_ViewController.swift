@@ -28,7 +28,9 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.reloadData()
         print("\(self.contacts.count) contatos recuperados")
         //tableView
-        self.tableView.registerNib(UINib(nibName: "CellContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        self.tableView.registerNib(UINib(nibName: "CellContacts_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         
     }
 
@@ -64,8 +66,14 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.username.text = self.contacts[indexPath.row].username
         cell.trustLevel.text = "Confiavel demais eim"
         cell.photo.image = self.contacts[indexPath.row].thumb
+        cell.addButton.hidden = true
         
         return cell
+    }
+    
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 70
     }
 
     func search()
