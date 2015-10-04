@@ -22,13 +22,13 @@
                             <constraint firstAttribute="width" constant="50" id="rQ2-UB-BVv"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Nome do seu abiguinho" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Azf-qL-iZ6">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome do seu abiguinho" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Azf-qL-iZ6">
                         <rect key="frame" x="70" y="9" width="332" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="kt5-uI-wkj"/>
+                            <constraint firstAttribute="height" constant="21" id="jS3-vh-GYc"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seguro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HfT-M3-CD2">
@@ -37,7 +37,7 @@
                             <constraint firstAttribute="height" constant="21" id="JAi-OE-DM1"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.011764705882352941" green="0.73333333333333328" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZlJ-5k-sgt">
@@ -54,13 +54,14 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="ZlJ-5k-sgt" firstAttribute="leading" secondItem="Azf-qL-iZ6" secondAttribute="trailing" constant="8" id="5eX-Pb-ANC"/>
+                    <constraint firstItem="HfT-M3-CD2" firstAttribute="top" secondItem="Azf-qL-iZ6" secondAttribute="bottom" constant="8" id="99f-si-Ych"/>
                     <constraint firstAttribute="bottomMargin" secondItem="IP0-eS-R4e" secondAttribute="bottom" constant="2.5" id="Ann-T5-ROu"/>
-                    <constraint firstItem="ZlJ-5k-sgt" firstAttribute="leading" secondItem="Azf-qL-iZ6" secondAttribute="trailing" constant="8" id="Zck-LT-jsb"/>
+                    <constraint firstItem="Azf-qL-iZ6" firstAttribute="leading" secondItem="IP0-eS-R4e" secondAttribute="trailing" constant="11" id="E9h-Al-HIN"/>
                     <constraint firstItem="ZlJ-5k-sgt" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="a6e-dD-kOf"/>
                     <constraint firstItem="ZlJ-5k-sgt" firstAttribute="leading" secondItem="HfT-M3-CD2" secondAttribute="trailing" constant="8" id="gSB-dl-ToD"/>
                     <constraint firstItem="IP0-eS-R4e" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="1" id="jgR-ob-K1F"/>
                     <constraint firstAttribute="bottomMargin" secondItem="HfT-M3-CD2" secondAttribute="bottom" constant="2.5" id="p80-mU-cgs"/>
-                    <constraint firstItem="Azf-qL-iZ6" firstAttribute="leading" secondItem="IP0-eS-R4e" secondAttribute="trailing" constant="11" id="qKS-u0-ZCN"/>
                     <constraint firstItem="HfT-M3-CD2" firstAttribute="leading" secondItem="IP0-eS-R4e" secondAttribute="trailing" constant="11" id="rnk-ls-IF7"/>
                     <constraint firstAttribute="bottomMargin" secondItem="ZlJ-5k-sgt" secondAttribute="bottom" constant="9.5" id="rv7-a0-iFV"/>
                 </constraints>

@@ -23,6 +23,7 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         super.viewDidLoad()
         self.view.addSubview(NavigationContact_View(requester: self))
+        self.view.backgroundColor = UIColor(netHex: 0x343539)
         
         self.contacts = DAOContacts.getAllContacts()
         self.tableView.reloadData()
@@ -67,6 +68,7 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.trustLevel.text = "Confiavel demais eim"
         cell.photo.image = self.contacts[indexPath.row].thumb
         cell.addButton.hidden = true
+        cell.backgroundColor = UIColor.clearColor()
         
         return cell
     }
@@ -76,10 +78,10 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
         return 70
     }
 
-    func search()
-    {
-        self.searchView = Search_View()
-        self.view.addSubview(self.searchView)
-        self.searchView.insertView()
-    }
+//    func search()
+//    {
+//        self.searchView = Search_View()
+//        self.view.addSubview(self.searchView)
+//        self.searchView.insertView(self)
+//    }
 }

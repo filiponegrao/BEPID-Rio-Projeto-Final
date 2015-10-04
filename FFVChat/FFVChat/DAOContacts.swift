@@ -105,12 +105,28 @@ class DAOContacts
             return nil
         }
         
-        let contact = Contact(username: data?.valueForKey("username") as! String, facebookID: data?.valueForKey("facebookID") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: data?.objectForKey("thumb") as! UIImage)
+        let contact = Contact(username: data?.valueForKey("username") as! String, facebookID: data?.valueForKey("facebookID") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: UIImage(data: data?.objectForKey("thumb") as! NSData)!)
         
         print("contato recuperado com sucesso")
         return contact
     }
 
+    
+    class func deleteContact(username: String)
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
+        
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            return
+        }
+        
+//        content?.objectForKey(username) = nil
+    }
+    
     
     class func addContactByUsername(username: String)
     {
@@ -235,6 +251,7 @@ class DAOContacts
         let data = [ "title": "Some Title",
             "alert": message]
         
+        print("enviando notificacao")
         let userQuery: PFQuery = PFUser.query()!
         userQuery.whereKey("objectId", equalTo: id)
         let query: PFQuery = PFInstallation.query()!
