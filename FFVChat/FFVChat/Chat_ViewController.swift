@@ -24,6 +24,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         super.viewDidLoad()
         
+        self.view.backgroundColor = lightGray
+        
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
@@ -33,6 +35,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
+        self.tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(tableView)
         
         print(DAOUser.sharedInstance.getUserName())
@@ -70,6 +73,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
+        cell.backgroundColor = UIColor.clearColor()
         
         return cell
     }
