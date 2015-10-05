@@ -16,11 +16,16 @@ class Chat_ViewController: UIViewController
     var senderMessages = ["Hello", "Good to see you"]
     var receiverMessages = ["Hi", "Manda nudes!" ]
     
+    var contacts : Contact!
     
+    var navBar : NavigationChat_View!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        self.navBar = NavigationChat_View(requester: self)
+        self.view.addSubview(self.navBar)
         
         
         self.tableView.registerNib(UINib(nibName: "CellChat_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
@@ -52,22 +57,17 @@ class Chat_ViewController: UIViewController
         return 1
     }
     
-//    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-//    {
-//        return ((self.senderMessages.count) + (self.receiverMessages.count))
-//    }
-//    
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-//    {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
-//        
-//        return cell
-//    }
-//    
-//    @IBAction func logOut(sender: UIButton)
-//    {
-//        DAOUser.logOut()
-//        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-//        self.presentViewController(login, animated: true, completion: nil)
-//    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return ((self.senderMessages.count) + (self.receiverMessages.count))
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
+        
+        return cell
+    }
+    
+    
 }
