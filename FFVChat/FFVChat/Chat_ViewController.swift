@@ -8,10 +8,10 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
 
-    @IBOutlet weak var tableView: UITableView!
+    var tableView: UITableView!
     
     var senderMessages = ["Hello", "Good to see you"]
     var receiverMessages = ["Hi", "Manda nudes!" ]
@@ -25,10 +25,15 @@ class Chat_ViewController: UIViewController
         super.viewDidLoad()
         
         self.navBar = NavigationChat_View(requester: self)
+        self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
         
-        
-        self.tableView.registerNib(UINib(nibName: "CellChat_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        self.tableView = UITableView(frame: CGRectMake(0, 80, screenWidth, screenHeight))
+        self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.layer.zPosition = 0
+        self.view.addSubview(tableView)
         
         print(DAOUser.sharedInstance.getUserName())
         print(DAOUser.sharedInstance.getEmail())
