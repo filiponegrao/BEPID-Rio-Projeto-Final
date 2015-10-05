@@ -23,17 +23,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        if(DAOUser.isLoged() == UserCondition.userLogged)
+        if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
-            let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
+            let contacts = LoadingInfo_ViewController(nibName: "LoadingInfo_ViewController", bundle: nil)
             self.window?.rootViewController = contacts
         }
-        else if(DAOUser.isLoged() == UserCondition.userLoggedOut)
+        else if(DAOUser.sharedInstance.isLoged() == UserCondition.userLoggedOut)
         {
             let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
             self.window?.rootViewController = login
         }
-        else if(DAOUser.isLoged() == UserCondition.incompleteRegister)
+        else if(DAOUser.sharedInstance.isLoged() == UserCondition.incompleteRegister)
         {
             let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
             self.window?.rootViewController = validate

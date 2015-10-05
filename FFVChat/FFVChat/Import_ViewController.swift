@@ -69,7 +69,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.registerNib(UINib(nibName: "CellImportContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         //carregando info...
-        DAOUser.getFaceContacts { (metaContacts) -> Void in
+        DAOUser.sharedInstance.getFaceContacts { (metaContacts) -> Void in
             
             self.metaContacts = metaContacts
             self.selectedItens = [:]

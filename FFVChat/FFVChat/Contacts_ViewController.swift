@@ -131,6 +131,10 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
             {
                 print("Tem notificacao")
             }
+            else
+            {
+                print("nao tem notifi")
+            }
         }
     }
     

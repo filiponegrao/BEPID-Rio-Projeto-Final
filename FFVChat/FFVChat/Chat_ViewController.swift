@@ -25,11 +25,11 @@ class Chat_ViewController: UIViewController
         
         self.tableView.registerNib(UINib(nibName: "CellChat_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
-        print(DAOUser.getUserName())
-        print(DAOUser.getEmail())
-        print(DAOUser.getPassword())
-        print(DAOUser.getTrustLevel())
-        print(DAOUser.getProfileImage())
+        print(DAOUser.sharedInstance.getUserName())
+        print(DAOUser.sharedInstance.getEmail())
+        print(DAOUser.sharedInstance.getPassword())
+        print(DAOUser.sharedInstance.getTrustLevel())
+        print(DAOUser.sharedInstance.getProfileImage())
         
     }
 

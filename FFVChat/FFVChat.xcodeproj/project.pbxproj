@@ -20,6 +20,8 @@
 		8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8019CB3D1BADDD780017CD7A /* FixedValues.swift */; settings = {ASSET_TAGS = (); }; };
 		8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */; };
 		8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB411BAE1D7A0017CD7A /* libz.tbd */; };
+		801CB5C81BC2205E00F51E06 /* LoadingInfo_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CB5C61BC2205E00F51E06 /* LoadingInfo_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		801CB5C91BC2205E00F51E06 /* LoadingInfo_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801CB5C71BC2205E00F51E06 /* LoadingInfo_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CF77E1BBCECC2006BF293 /* Chat_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92531BA4928800D05CE7 /* AppDelegate.swift */; };
 		801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 801D925A1BA4928800D05CE7 /* Images.xcassets */; };
@@ -110,6 +112,8 @@
 		8019CB3D1BADDD780017CD7A /* FixedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedValues.swift; sourceTree = "<group>"; };
 		8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8019CB411BAE1D7A0017CD7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		801CB5C61BC2205E00F51E06 /* LoadingInfo_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingInfo_ViewController.swift; sourceTree = "<group>"; };
+		801CB5C71BC2205E00F51E06 /* LoadingInfo_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingInfo_ViewController.xib; sourceTree = "<group>"; };
 		801CF77E1BBCECC2006BF293 /* Chat_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chat_ViewController.swift; sourceTree = "<group>"; };
 		801D924E1BA4928800D05CE7 /* FFVChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFVChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		801D92521BA4928800D05CE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				F66B29DD1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib */,
 				F66B29E11BAB6D6600BC43EE /* SelectedMidia_ViewController.xib */,
 				F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */,
+				801CB5C71BC2205E00F51E06 /* LoadingInfo_ViewController.xib */,
 			);
 			name = xibs;
 			sourceTree = "<group>";
@@ -356,6 +361,7 @@
 				F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */,
 				F66B29E41BAB6DB800BC43EE /* TakePhoto_ViewController.swift */,
 				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
+				801CB5C61BC2205E00F51E06 /* LoadingInfo_ViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -493,6 +499,7 @@
 				F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */,
 				F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */,
 				801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */,
+				801CB5C91BC2205E00F51E06 /* LoadingInfo_ViewController.xib in Resources */,
 				8005974F1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib in Resources */,
 				F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */,
 				8005974B1BC1E76100327A3D /* CellAll_TableViewCell.xib in Resources */,
@@ -540,6 +547,7 @@
 				F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */,
 				F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */,
 				F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */,
+				801CB5C81BC2205E00F51E06 /* LoadingInfo_ViewController.swift in Sources */,
 				8070BDA21BB3208A005573DC /* Contacts.swift in Sources */,
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
 				F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */,

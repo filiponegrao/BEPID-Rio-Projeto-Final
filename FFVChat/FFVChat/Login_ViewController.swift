@@ -73,7 +73,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         {
             self.loadingScreen = LoadScreen_View()
             self.view.addSubview(self.loadingScreen)
-            DAOUser.loginParse(self.emailField.text!, password: self.passwordField.text!)
+            DAOUser.sharedInstance.loginParse(self.emailField.text!, password: self.passwordField.text!)
         }
         else
         {
@@ -110,7 +110,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         self.loadingScreen = LoadScreen_View()
         self.view.addSubview(self.loadingScreen)
-        DAOUser.loginFaceParse()
+        DAOUser.sharedInstance.loginFaceParse()
     }
     
     func userLogged()
