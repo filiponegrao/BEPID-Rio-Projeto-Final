@@ -14,7 +14,7 @@ class NavigationContact_View: UIView {
     
     var configButton : UIButton!
     
-    var searchButton : UIButton!
+    var notificationsButton : UIButton!
     
     init(requester: Contacts_ViewController)
     {
@@ -23,18 +23,15 @@ class NavigationContact_View: UIView {
         self.backgroundColor = UIColor(netHex: 0x03bbff)
         
         self.configButton = UIButton(frame: CGRectMake(0, 20, 40, 40))
-//        self.configButton.setTitle("Config", forState: .Normal)
-//        self.configButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
-        self.configButton.setImage(UIImage(named: "icon_profile"), forState: .Normal)
+
+        self.configButton.setImage(UIImage(named: "icon_config"), forState: .Normal)
         self.configButton.addTarget(self, action: "openConfig", forControlEvents: .TouchUpInside)
         self.addSubview(self.configButton)
         
-        self.searchButton = UIButton(frame: CGRectMake(screenWidth-40, 20, 40, 40))
-//        self.searchButton.setTitle("Search", forState: .Normal)
-//        self.searchButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
-        self.searchButton.setImage(UIImage(named: "icon_search"), forState: .Normal)
-        self.searchButton.addTarget(self, action: "openSearch", forControlEvents: .TouchUpInside)
-        self.addSubview(self.searchButton)
+        self.notificationsButton = UIButton(frame: CGRectMake(screenWidth-40, 20, 40, 40))
+
+        self.notificationsButton.setImage(UIImage(named: "icon_bell"), forState: .Normal)
+        self.addSubview(self.notificationsButton)
         
     }
 
@@ -47,15 +44,6 @@ class NavigationContact_View: UIView {
     func openConfig()
     {
         
-    }
-    
-    
-    func openSearch()
-    {
-        let searchView = Search_View()
-        searchView.contacts = vc
-        vc.view.addSubview(searchView)
-        searchView.insertView()
     }
     
     

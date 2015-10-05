@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800597481BC1E76100327A3D /* CellAll_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		8005974B1BC1E76100327A3D /* CellAll_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800597491BC1E76100327A3D /* CellAll_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8005974C1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		8005974F1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8005974D1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		800597521BC1E79400327A3D /* CellAdd_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800597501BC1E79400327A3D /* CellAdd_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		8005975B1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		801002531BC1D2BC00733723 /* DAOFriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801002521BC1D2BC00733723 /* DAOFriendRequests.swift */; settings = {ASSET_TAGS = (); }; };
+		801002551BC1D2CA00733723 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801002541BC1D2CA00733723 /* FriendRequest.swift */; settings = {ASSET_TAGS = (); }; };
 		8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8019CB3D1BADDD780017CD7A /* FixedValues.swift */; settings = {ASSET_TAGS = (); }; };
 		8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */; };
 		8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB411BAE1D7A0017CD7A /* libz.tbd */; };
@@ -40,11 +50,7 @@
 		809A71871BBCBAE3004DB12F /* Contacts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 809A71861BBCBAE3004DB12F /* Contacts.plist */; settings = {ASSET_TAGS = (); }; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; settings = {ASSET_TAGS = (); }; };
 		809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A01BB4A99600CEC425 /* ImageEdition.swift */; settings = {ASSET_TAGS = (); }; };
-		809E75A81BB6311300CEC425 /* CellImportContact_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; settings = {ASSET_TAGS = (); }; };
-		80B4D82A1BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
@@ -91,6 +97,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		800597481BC1E76100327A3D /* CellAll_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAll_TableViewCell.swift; sourceTree = "<group>"; };
+		800597491BC1E76100327A3D /* CellAll_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellAll_TableViewCell.xib; sourceTree = "<group>"; };
+		8005974C1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFavourites_TableViewCell.swift; sourceTree = "<group>"; };
+		8005974D1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellFavourites_TableViewCell.xib; sourceTree = "<group>"; };
+		800597501BC1E79400327A3D /* CellAdd_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAdd_TableViewCell.swift; sourceTree = "<group>"; };
+		800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellAdd_TableViewCell.xib; sourceTree = "<group>"; };
+		800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImportContact_TableViewCell.swift; sourceTree = "<group>"; };
+		8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellImportContact_TableViewCell.xib; sourceTree = "<group>"; };
+		801002521BC1D2BC00733723 /* DAOFriendRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFriendRequests.swift; sourceTree = "<group>"; };
+		801002541BC1D2CA00733723 /* FriendRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
 		8019CB3D1BADDD780017CD7A /* FixedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedValues.swift; sourceTree = "<group>"; };
 		8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8019CB411BAE1D7A0017CD7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -128,11 +144,7 @@
 		809A71861BBCBAE3004DB12F /* Contacts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Contacts.plist; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
 		809E75A01BB4A99600CEC425 /* ImageEdition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdition.swift; sourceTree = "<group>"; };
-		809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImportContact_TableViewCell.swift; sourceTree = "<group>"; };
-		809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellImportContact_TableViewCell.xib; sourceTree = "<group>"; };
 		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
-		80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellContacts_TableViewCell.swift; sourceTree = "<group>"; };
-		80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellContacts_TableViewCell.xib; sourceTree = "<group>"; };
 		F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoSecond_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
@@ -302,10 +314,12 @@
 		801D92791BA492E100D05CE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				801D92771BA492D700D05CE7 /* User.swift */,
 				801D929D1BA5177400D05CE7 /* DAOUser.swift */,
-				8070BDA11BB3208A005573DC /* Contacts.swift */,
 				809E759C1BB49FC100CEC425 /* DAOContacts.swift */,
+				801002521BC1D2BC00733723 /* DAOFriendRequests.swift */,
+				801D92771BA492D700D05CE7 /* User.swift */,
+				8070BDA11BB3208A005573DC /* Contacts.swift */,
+				801002541BC1D2CA00733723 /* FriendRequest.swift */,
 				8019CB3D1BADDD780017CD7A /* FixedValues.swift */,
 				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
 			);
@@ -371,8 +385,10 @@
 		809E75AA1BB6312700CEC425 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				809E75A71BB6311300CEC425 /* CellImportContact_TableViewCell.xib */,
-				80B4D8291BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib */,
+				800597491BC1E76100327A3D /* CellAll_TableViewCell.xib */,
+				8005974D1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib */,
+				800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */,
+				8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -380,8 +396,10 @@
 		809E75AB1BB6313D00CEC425 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				80B4D8281BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift */,
-				809E75A61BB6311300CEC425 /* CellImportContact_TableViewCell.swift */,
+				800597481BC1E76100327A3D /* CellAll_TableViewCell.swift */,
+				8005974C1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift */,
+				800597501BC1E79400327A3D /* CellAdd_TableViewCell.swift */,
+				800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -471,19 +489,21 @@
 				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
 				F66B29DF1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib in Resources */,
+				800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */,
 				F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */,
 				F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */,
 				801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */,
+				8005974F1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib in Resources */,
 				F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */,
+				8005974B1BC1E76100327A3D /* CellAll_TableViewCell.xib in Resources */,
+				8005975B1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib in Resources */,
 				F66B29E31BAB6D6600BC43EE /* SelectedMidia_ViewController.xib in Resources */,
 				809A71871BBCBAE3004DB12F /* Contacts.plist in Resources */,
 				F66B29DB1BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib in Resources */,
 				F66B29CF1BAB6B4E00BC43EE /* Import_ViewController.xib in Resources */,
 				F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */,
-				809E75A91BB6311300CEC425 /* CellImportContact_TableViewCell.xib in Resources */,
 				801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */,
 				801D925B1BA4928800D05CE7 /* Images.xcassets in Resources */,
-				80B4D82B1BBB8A0C00BDA48F /* CellContacts_TableViewCell.xib in Resources */,
 				F66B29C31BAB6A0600BC43EE /* TutoFirst_ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,14 +525,16 @@
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
+				800597521BC1E79400327A3D /* CellAdd_TableViewCell.swift in Sources */,
+				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
+				801002551BC1D2CA00733723 /* FriendRequest.swift in Sources */,
 				F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */,
-				80B4D82A1BBB8A0C00BDA48F /* CellContacts_TableViewCell.swift in Sources */,
 				F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
-				809E75A81BB6311300CEC425 /* CellImportContact_TableViewCell.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
+				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
 				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
 				F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */,
@@ -525,6 +547,7 @@
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
+				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
 				F66B29D21BAB6B8300BC43EE /* Contacts_ViewController.swift in Sources */,
@@ -533,6 +556,7 @@
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				801D92781BA492D700D05CE7 /* User.swift in Sources */,
+				801002531BC1D2BC00733723 /* DAOFriendRequests.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
 				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,
