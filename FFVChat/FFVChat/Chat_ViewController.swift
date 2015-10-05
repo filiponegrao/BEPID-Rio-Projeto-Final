@@ -8,22 +8,35 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
 
-    @IBOutlet weak var tableView: UITableView!
+    var tableView: UITableView!
     
     var senderMessages = ["Hello", "Good to see you"]
     var receiverMessages = ["Hi", "Manda nudes!" ]
     
+    var contacts : Contact!
     
+    var navBar : NavigationChat_View!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        self.view.backgroundColor = lightGray
         
-        self.tableView.registerNib(UINib(nibName: "CellChat_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        self.navBar = NavigationChat_View(requester: self)
+        self.navBar.layer.zPosition = 5
+        self.view.addSubview(self.navBar)
+        
+        self.tableView = UITableView(frame: CGRectMake(0, 80, screenWidth, screenHeight))
+        self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.layer.zPosition = 0
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.view.addSubview(tableView)
         
         print(DAOUser.sharedInstance.getUserName())
         print(DAOUser.sharedInstance.getEmail())
@@ -52,22 +65,18 @@ class Chat_ViewController: UIViewController
         return 1
     }
     
-//    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-//    {
-//        return ((self.senderMessages.count) + (self.receiverMessages.count))
-//    }
-//    
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-//    {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
-//        
-//        return cell
-//    }
-//    
-//    @IBAction func logOut(sender: UIButton)
-//    {
-//        DAOUser.logOut()
-//        let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-//        self.presentViewController(login, animated: true, completion: nil)
-//    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return ((self.senderMessages.count) + (self.receiverMessages.count))
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
+        cell.backgroundColor = UIColor.clearColor()
+        
+        return cell
+    }
+    
+    
 }
