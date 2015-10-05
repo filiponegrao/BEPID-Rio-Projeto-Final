@@ -209,7 +209,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
         {
-            if (!(DAOUser.isValidEmail(self.labelEmail.text!)))
+            if (!(DAOUser.sharedInstance.isValidEmail(self.labelEmail.text!)))
             {
                 let alert = UIAlertView(title: "Ops!", message: "Por favor, digite um e-mail válido", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
@@ -243,7 +243,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             {
                 self.loadingScreen = LoadScreen_View()
                 self.view.addSubview(loadingScreen)
-                DAOUser.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
+                DAOUser.sharedInstance.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)
             }
             
         }

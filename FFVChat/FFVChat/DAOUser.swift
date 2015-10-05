@@ -48,10 +48,39 @@ enum UserCondition : String
     case contactsLoaded = "contactsLoaded"
 }
 
+private let data : DAOUser = DAOUser()
 
 class DAOUser
 {
 
+    init()
+    {
+        let username = self.getUserName()
+        let password = self.getPassword()
+        if(username != "" && password != "" && PFUser.currentUser() == nil)
+        {
+            PFUser.logInWithUsernameInBackground(username, password:password) {
+                (user: PFUser?, error: NSError?) -> Void in
+                if user != nil
+                {
+                    print("logado")
+                    NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+                }
+                else
+                {
+                    print("deu erro")
+                }
+            }
+        }
+    }
+    
+    
+    class var sharedInstance : DAOUser
+    {
+        return data
+    }
+
+    
     /** Funcao que cadatra manualmente um novo
      * usuario no Parse. Possui um certo delay,
      * por nao usar callback, nao retorna nada,
@@ -59,7 +88,7 @@ class DAOUser
      * contida em uma das notificacoes em
      * UserCondition
      */
-    class func registerUser(username: String, email: String, password: String, photo: UIImage)
+    func registerUser(username: String, email: String, password: String, photo: UIImage)
     {
         let data = photo.mediumQualityJPEGNSData
         let picture = PFFile(data: data)
@@ -106,7 +135,7 @@ class DAOUser
       * entretanto ao executar o login emite uma notificacao
       * contida em UserConditions
       */
-    class func loginParse(username: String, password: String)
+    func loginParse(username: String, password: String)
     {
         PFUser.logInWithUsernameInBackground(username, password:password)
             {
@@ -116,7 +145,6 @@ class DAOUser
                 //Searching for mail
                 let query = PFUser.query()
                 query!.whereKey("username", equalTo: username)
-
                 query!.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
 
                     if error == nil
@@ -131,12 +159,13 @@ class DAOUser
                             data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                                 
                                 let image = UIImage(data: data!)
-                                DAOUser.setEmail(email)
-                                DAOUser.setUserName(username)
-                                DAOUser.setPassword(password)
-                                DAOUser.setTrustLevel(trustLevel)
-                                DAOUser.setProfileImage(image!)
-                                DAOUser.setParseKey(id!)
+                                self.setEmail(email)
+                                self.setUserName(username)
+                                self.setPassword(password)
+                                self.setTrustLevel(trustLevel)
+                                self.setProfileImage(image!)
+                                self.setParseKey(id!)
+                                print("Usuario logado!")
                                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                                 
                             })
@@ -152,6 +181,7 @@ class DAOUser
             }
             else
             {
+                print("Usuario nao encontrado")
                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userNotFound.rawValue, object: nil)
             }
         }
@@ -167,7 +197,7 @@ class DAOUser
       * entretanto ao executar o login emite uma notificacao
       * contida em UserConditions
       */
-    class func loginFaceParse()
+    func loginFaceParse()
     {
         PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"]) {
             (user: PFUser?, error: NSError?) -> Void in
@@ -184,18 +214,18 @@ class DAOUser
                 {
                     print("usuario logado pelo Facebook")
                     
-                    DAOUser.setUserName(user.valueForKey("username") as! String)
-                    DAOUser.setFacebookID(user.valueForKey("facebookID") as! String)
-                    DAOUser.setEmail(user.valueForKey("email") as! String)
-                    DAOUser.setPassword(user.valueForKey("username") as! String)
-                    DAOUser.setTrustLevel(user.valueForKey("trustLevel") as! Int)
-                    DAOUser.setParseKey(user.valueForKey("objectId") as! String)
+                    self.setUserName(user.valueForKey("username") as! String)
+                    self.setFacebookID(user.valueForKey("facebookID") as! String)
+                    self.setEmail(user.valueForKey("email") as! String)
+                    self.setPassword(user.valueForKey("username") as! String)
+                    self.setTrustLevel(user.valueForKey("trustLevel") as! Int)
+                    self.setParseKey(user.valueForKey("objectId") as! String)
                     
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
                         let image = UIImage(data: data!)
-                        DAOUser.setProfileImage(image!)
+                        self.setProfileImage(image!)
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
                     
@@ -213,7 +243,7 @@ class DAOUser
       * informacoes do perfil do facebook ativo como,
       * imagem de perfil, amigos etc
       */
-    class func loadFaceInfo()
+    func loadFaceInfo()
     {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
@@ -246,10 +276,10 @@ class DAOUser
                         
                         let image = UIImage(data: data!)
 
-                        DAOUser.setEmail(userEmail as String)
-                        DAOUser.setProfileImage(image!)
-                        DAOUser.setUserName(userName as String)
-                        DAOUser.setFacebookID(id)
+                        self.setEmail(userEmail as String)
+                        self.setProfileImage(image!)
+                        self.setUserName(userName as String)
+                        self.setFacebookID(id)
 
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
                     }
@@ -267,7 +297,7 @@ class DAOUser
      * as informacoes do usuario em relacao a senha e username.
      * Funcao essencial para o andamento do sistema.
      */
-    class func configUserFace(username: String, password: String)
+    func configUserFace(username: String, password: String)
     {
         let user = PFUser.currentUser()
         user?.setValue(username, forKey: "username")
@@ -278,16 +308,16 @@ class DAOUser
             let email = user?.valueForKey("email") as! String
             let password = user?.valueForKey("password") as! String
 
-            DAOUser.setUserName(username)
-            DAOUser.setEmail(email)
-            DAOUser.setPassword(password)
+            self.setUserName(username)
+            self.setEmail(email)
+            self.setPassword(password)
             
             NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
         })
     }
     
     
-    class func getFaceContacts( callback : (metaContacts: [metaFaceContact]!) -> Void) -> Void {
+    func getFaceContacts( callback : (metaContacts: [metaFaceContact]!) -> Void) -> Void {
         
         var contacts = [metaFaceContact]()
         var i = 0
@@ -329,7 +359,7 @@ class DAOUser
      * Funcao que cata os amigos no facebook
      * e retorna os mesmos em forma de metaContact
      */
-    class func getFaceFriends( callback : (friends: [metaFaceContact]!) -> Void) -> Void {
+    func getFaceFriends( callback : (friends: [metaFaceContact]!) -> Void) -> Void {
 
         var meta = [metaFaceContact]()
 
@@ -365,14 +395,14 @@ class DAOUser
       * foi efeutaod corretamente e o segundo a descricao
       * de um possivel erro
       */
-    class func logOut() -> (done: Bool, error: String)
+    func logOut() -> (done: Bool, error: String)
     {
         PFUser.logOut()
-        DAOUser.setUserName("")
-        DAOUser.setEmail("")
-        DAOUser.setPassword("")
-        DAOUser.setTrustLevel(-1)
-        DAOUser.setFacebookID("")
+        self.setUserName("")
+        self.setEmail("")
+        self.setPassword("")
+        self.setTrustLevel(-1)
+        self.setFacebookID("")
 
         return (done: true, error: "")
     }
@@ -385,7 +415,7 @@ class DAOUser
       * serve apenas de referencia e modelo. A que sera modificavel e
       * aplicavel vai permanecer no documents.
       */
-    class func initUserInformation()
+    func initUserInformation()
     {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as   NSArray
         let documentsDirectory = paths[0] as! String
@@ -427,7 +457,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func getUserName() -> String!
+    func getUserName() -> String!
     {
 
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -460,7 +490,7 @@ class DAOUser
     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
     * enquanto as de escrever utilizam o mutable dictionary
     **/
-    class func getFacebookID() -> String!
+    func getFacebookID() -> String!
     {
         
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -494,7 +524,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func getEmail() -> String
+    func getEmail() -> String
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -527,7 +557,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func getLastSync() -> String
+    func getLastSync() -> String
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -559,7 +589,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func getTrustLevel() -> Int
+    func getTrustLevel() -> Int
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -592,7 +622,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func getPassword() -> String
+    func getPassword() -> String
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -625,7 +655,7 @@ class DAOUser
     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
     * enquanto as de escrever utilizam o mutable dictionary
     **/
-    class func getBdKey() -> String
+    func getBdKey() -> String
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -657,7 +687,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func getProfileImage() -> UIImage?
+    func getProfileImage() -> UIImage?
     {
         let userMail = self.getEmail()
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -676,7 +706,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func setLastSync(sync: String)
+    func setLastSync(sync: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -703,7 +733,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func setUserName(name: String)
+    func setUserName(name: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -731,7 +761,7 @@ class DAOUser
     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
     * enquanto as de escrever utilizam o mutable dictionary
     **/
-    class func setFacebookID(name: String)
+    func setFacebookID(name: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -758,7 +788,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func setEmail(email: String)
+    func setEmail(email: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -786,7 +816,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func setPassword(password: String)
+    func setPassword(password: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -814,7 +844,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func setTrustLevel(trustLevel: Int)
+    func setTrustLevel(trustLevel: Int)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -836,7 +866,7 @@ class DAOUser
     }
 
     
-    class func setParseKey(id: String)
+    func setParseKey(id: String)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -863,7 +893,7 @@ class DAOUser
      * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
      * enquanto as de escrever utilizam o mutable dictionary
      **/
-    class func setProfileImage(image:UIImage)
+    func setProfileImage(image:UIImage)
     {
         let mailUser = self.getEmail()
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
@@ -882,7 +912,7 @@ class DAOUser
      * obs: Vale ressaltar que a funcao nao verifica
      * os demais valores, alem de username e senha.
      **/
-    class func isLoged() -> UserCondition
+    func isLoged() -> UserCondition
     {
         let username = self.getUserName()
         if(username != "")
@@ -904,7 +934,7 @@ class DAOUser
         }
     }
     
-    class func isValidEmail(testStr:String) -> Bool
+    func isValidEmail(testStr:String) -> Bool
     {
         // println("validate calendar: \(testStr)")
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"

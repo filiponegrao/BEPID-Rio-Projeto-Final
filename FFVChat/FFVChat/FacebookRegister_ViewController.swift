@@ -50,13 +50,13 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     {
         super.viewDidLoad()
         
-        let image = DAOUser.getProfileImage()
+        let image = DAOUser.sharedInstance.getProfileImage()
         
         self.imageView.image = image
         self.imageView.clipsToBounds = true
         self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2
         
-        let name = DAOUser.getUserName()
+        let name = DAOUser.sharedInstance.getUserName()
         let trimmedString = name.removeWhitespace()
         
         let username = trimmedString.lowercaseString
@@ -213,7 +213,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
             {
                 self.loadingScreen = LoadScreen_View()
                 self.view.addSubview(loadingScreen)
-                DAOUser.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
+                DAOUser.sharedInstance.configUserFace(self.labelUsername.text!, password: self.labelPassword.text!)
             }
             
         }
