@@ -12,5 +12,5 @@ class NavigationChat_View: UIView
 {
 
 
-
+    //qualquer coisa
 }
