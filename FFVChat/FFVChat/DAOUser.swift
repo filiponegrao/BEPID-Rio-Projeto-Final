@@ -126,6 +126,7 @@ class DAOUser
                             let user = objects[0]
                             let email = user["email"] as! String
                             let trustLevel = user["trustLevel"] as! Int
+                            let id = user.objectId
                             let data = user["profileImage"] as! PFFile
                             data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                                 
@@ -135,6 +136,7 @@ class DAOUser
                                 DAOUser.setPassword(password)
                                 DAOUser.setTrustLevel(trustLevel)
                                 DAOUser.setProfileImage(image!)
+                                DAOUser.setParseKey(id!)
                                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                                 
                             })
@@ -187,6 +189,7 @@ class DAOUser
                     DAOUser.setEmail(user.valueForKey("email") as! String)
                     DAOUser.setPassword(user.valueForKey("username") as! String)
                     DAOUser.setTrustLevel(user.valueForKey("trustLevel") as! Int)
+                    DAOUser.setParseKey(user.valueForKey("objectId") as! String)
                     
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
@@ -615,6 +618,38 @@ class DAOUser
         return password!
     }
 
+    
+    /**
+    * Funcao que retorna o nome cadastro uma unica vez
+    * do usuario do app
+    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
+    * enquanto as de escrever utilizam o mutable dictionary
+    **/
+    class func getBdKey() -> String
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return ""
+            }
+        }
+        
+        let id = content!.valueForKey("bdKey") as? String
+        
+        if(id == nil)
+        {
+            return ""
+        }
+        
+        return id!
+    }
 
     /**
      * Funcao que retorna o nome cadastro uma unica vez
@@ -800,6 +835,27 @@ class DAOUser
 
     }
 
+    
+    class func setParseKey(id: String)
+    {
+        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        if(content == nil)
+        {
+            self.initUserInformation()
+            
+            if(content == nil)
+            {
+                return
+            }
+        }
+        
+        content!.setValue(id, forKey: "bdKey")
+        content!.writeToFile(path, atomically: true)
+        
+    }
 
     /**
      * Funcao que retorna o nome cadastro uma unica vez
