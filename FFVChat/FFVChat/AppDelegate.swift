@@ -12,7 +12,6 @@ import FBSDKCoreKit
 import ParseFacebookUtilsV4
 
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
@@ -25,8 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
-            let contacts = LoadingInfo_ViewController(nibName: "LoadingInfo_ViewController", bundle: nil)
-            self.window?.rootViewController = contacts
+            if(PFUser.currentUser() != nil)
+            {
+                let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
+                self.window?.rootViewController = contacts
+            }
+            else
+            {
+//                let contacts = LoadingInfo_ViewController(nibName: "LoadingInfo_ViewController", bundle: nil)
+//                self.window?.rootViewController = contacts
+                let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
+                self.window?.rootViewController = contacts
+            }
         }
         else if(DAOUser.sharedInstance.isLoged() == UserCondition.userLoggedOut)
         {

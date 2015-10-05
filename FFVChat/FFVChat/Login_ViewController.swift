@@ -15,9 +15,9 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
 
     @IBOutlet var loginButton: UIButton!
     
-    @IBOutlet var emailField: UITextField!
+    @IBOutlet var emailField: MKTextField!
     
-    @IBOutlet var passwordField: UITextField!
+    @IBOutlet var passwordField: MKTextField!
     
     @IBOutlet var registerButton: UIButton!
     
@@ -50,6 +50,28 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = lightGray
+
+        self.emailField.floatingPlaceholderEnabled = true
+        self.emailField.cornerRadius = 1.0
+        self.emailField.placeholder = "username"
+        self.emailField.layer.borderColor = lightBlue.CGColor
+        self.emailField.layer.cornerRadius = 8
+        self.emailField.rippleLayerColor = UIColor.MKColor.Blue
+        self.emailField.tintColor = UIColor.MKColor.Blue
+        self.emailField.textColor = lightBlue
+        
+        self.passwordField.floatingPlaceholderEnabled = true
+        self.passwordField.cornerRadius = 1.0
+        self.passwordField.placeholder = "username"
+        self.passwordField.layer.borderColor = lightBlue.CGColor
+        self.passwordField.layer.cornerRadius = 8
+        self.passwordField.rippleLayerColor = UIColor.MKColor.Blue
+        self.passwordField.tintColor = UIColor.MKColor.Blue
+        self.passwordField.textColor = lightBlue
+        
+        
         
     }
     
