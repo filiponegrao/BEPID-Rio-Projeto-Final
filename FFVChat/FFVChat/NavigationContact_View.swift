@@ -19,6 +19,8 @@ class NavigationContact_View: UIView {
     
     var filterButtons : UIButton!
     
+    var blackScreen : UIView!
+    
     init(requester: Contacts_ViewController)
     {
         self.vc = requester
@@ -27,6 +29,7 @@ class NavigationContact_View: UIView {
         
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 50, 20, 40, 40))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
+        self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
         self.addSubview(self.toolsButton)
         
         self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 40))
@@ -38,7 +41,17 @@ class NavigationContact_View: UIView {
         
         
     }
-
+    
+    func openTools()
+    {
+        self.blackScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.blackScreen.backgroundColor = UIColor.blackColor()
+        self.blackScreen.alpha = 0
+        
+        self.blackScreen.addGestureRecognizer(UITapGestureRecognizer(target: self, action: ""))
+        self.vc.view.addSubview(self.blackScreen)
+    }
+    
     
     required init?(coder aDecoder: NSCoder)
     {
@@ -51,7 +64,6 @@ class NavigationContact_View: UIView {
         DAOUser.sharedInstance.logOut()
         self.vc.dismissViewControllerAnimated(true, completion: nil)
     }
-    
     
     
     func alertOn()
