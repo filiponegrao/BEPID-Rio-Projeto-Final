@@ -20,11 +20,28 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var navBar : NavigationChat_View!
     
+    var containerView : UIView!
+    
     var messageView : UIView!
     
     var messageText : UITextField!
     
     var cameraButton : UIButton!
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+
+    }
     
     override func viewDidLoad()
     {
@@ -37,18 +54,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
         
-        self.tableView = UITableView(frame: CGRectMake(0, 80, screenWidth, screenHeight))
+        self.containerView = UIView(frame: CGRectMake(0, 80, screenWidth, screenHeight - 80))
+        self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "EndEditing"))
+        self.view.addSubview(containerView)
+        
+        self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, self.containerView.frame.height - 50))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
         self.tableView.backgroundColor = UIColor.clearColor()
 //        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.view.addSubview(tableView)
+        self.containerView.addSubview(tableView)
         
-        self.messageView = UIView(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
+        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, 50))
         self.messageView.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(messageView)
+        self.containerView.addSubview(messageView)
         
         self.cameraButton = UIButton(frame: CGRectMake(10, 15 , 30, 20))
         self.cameraButton.setImage(UIImage(named: "cameraChatButton"), forState: UIControlState.Normal)
@@ -74,9 +95,30 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.didReceiveMemoryWarning()
     }
 
+    
+    //Sobe a view e desce a view
+    func keyboardWillShow(notification: NSNotification)
+    {
+        if(self.view.frame.origin.y == 0)
+        {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.containerView.frame.origin.y = -keyboardSize.height + 80
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification)
+    {
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.containerView.frame.origin.y = 80
+        }
+    }
+
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.messageText.endEditing(true)
+        print("touches")
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
@@ -109,6 +151,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         self.messageText.endEditing(true)
+        print("didSelected")
+    }
+    
+    func EndEditing()
+    {
+        self.containerView.endEditing(true)
+        print("container did editing")
     }
     
 }
