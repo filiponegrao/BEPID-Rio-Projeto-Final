@@ -76,7 +76,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.cameraButton.alpha = 0.7
         self.messageView.addSubview(cameraButton)
         
-        self.messageText = UITextField(frame: CGRectMake(50, 10, screenWidth - 60, 30))
+        self.messageText = UITextField(frame: CGRectMake(50, 10, screenWidth - 120, 30))
         self.messageText.delegate = self
         self.messageText.borderStyle = UITextBorderStyle.RoundedRect
         self.messageText.placeholder = "Message"
