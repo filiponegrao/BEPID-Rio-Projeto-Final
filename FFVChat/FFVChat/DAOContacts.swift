@@ -140,7 +140,7 @@ class DAOContacts
             self.initContacts()
         }
         
-        let query = PFQuery(className:"User")
+        let query = PFUser.query()!
         query.whereKey("username", equalTo: username)
         
         query.findObjectsInBackgroundWithBlock {
@@ -159,16 +159,18 @@ class DAOContacts
                         data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                             
                             let username = object.valueForKey("username") as! String
-                            let faceUsername = object.valueForKey("facebookID") as! String
-                            let registerDate = object.valueForKey("createdAt") as! String
+                            let faceUsername = object.valueForKey("facebookID") as? String
+                            let registerDate = object.valueForKey("createdAt") as! NSDate
+                            let date = "\(registerDate)"
                             
                             let contact = NSMutableDictionary()
                             contact.setValue(data, forKey: "thumb")
                             contact.setValue(username, forKey: "username")
                             contact.setValue(faceUsername, forKey: "facebookID")
-                            contact.setValue(registerDate, forKey: "createdAt")
+                            contact.setValue(date, forKey: "createdAt")
                             content!.setObject(contact, forKey: "\(username)")
                             content!.writeToFile(path, atomically: false)
+                            print("\(username) adicionado com sucesso!")
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                         })
                     }

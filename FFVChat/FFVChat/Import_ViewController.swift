@@ -90,6 +90,11 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactAdded" , name: ContactNotification.contactAdded.rawValue, object: nil)
     }
     
+    override func viewWillDisappear(animated: Bool)
+    {
+        
+    }
+    
     
     override func didReceiveMemoryWarning()
     {
@@ -167,6 +172,11 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.contactsShouldAdd++
                 DAOContacts.addContactByID(item.facebookID)
             }
+        }
+        if(self.contactsShouldAdd == 0)
+        {
+            let contacts = AppNavigationController()
+            self.presentViewController(contacts, animated: true, completion: nil)
         }
     }
     

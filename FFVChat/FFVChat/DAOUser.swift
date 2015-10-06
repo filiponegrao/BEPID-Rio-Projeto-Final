@@ -52,25 +52,13 @@ private let data : DAOUser = DAOUser()
 
 class DAOUser
 {
-
+    var user : PFUser!
+    
     init()
     {
-        let username = self.getUserName()
-        let password = self.getPassword()
-        if(username != "" && password != "" && PFUser.currentUser() == nil)
+        if(self.getUserName() != "" && self.getPassword() != "" && PFUser.currentUser() == nil)
         {
-            PFUser.logInWithUsernameInBackground(username, password:password) {
-                (user: PFUser?, error: NSError?) -> Void in
-                if user != nil
-                {
-                    print("logado")
-                    NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
-                }
-                else
-                {
-                    print("deu erro")
-                }
-            }
+            self.loginParse(self.getUserName(), password: self.getPassword())
         }
     }
     
@@ -79,9 +67,8 @@ class DAOUser
     {
         return data
     }
-
     
-    /** Funcao que cadatra manualmente um novo
+    /** Funcao que cadastra manualmente um novo
      * usuario no Parse. Possui um certo delay,
      * por nao usar callback, nao retorna nada,
      * mas apos o sucesso envia uma notifiacao
@@ -169,7 +156,6 @@ class DAOUser
                                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                                 
                             })
-                            
                         }
                     }
                     else
@@ -228,7 +214,6 @@ class DAOUser
                         self.setProfileImage(image!)
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
-                    
                 }
             }
             else

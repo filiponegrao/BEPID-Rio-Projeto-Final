@@ -52,6 +52,13 @@
 		809A71871BBCBAE3004DB12F /* Contacts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 809A71861BBCBAE3004DB12F /* Contacts.plist */; settings = {ASSET_TAGS = (); }; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; settings = {ASSET_TAGS = (); }; };
 		809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A01BB4A99600CEC425 /* ImageEdition.swift */; settings = {ASSET_TAGS = (); }; };
+		80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135B1BC3038C0035E8B2 /* MKButton.swift */; settings = {ASSET_TAGS = (); }; };
+		80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135C1BC3038C0035E8B2 /* MKColor.swift */; settings = {ASSET_TAGS = (); }; };
+		80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135D1BC3038C0035E8B2 /* MKImageView.swift */; settings = {ASSET_TAGS = (); }; };
+		80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135E1BC3038C0035E8B2 /* MKLabel.swift */; settings = {ASSET_TAGS = (); }; };
+		80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135F1BC3038C0035E8B2 /* MKLayer.swift */; settings = {ASSET_TAGS = (); }; };
+		80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA13601BC3038C0035E8B2 /* MKTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA13611BC3038C0035E8B2 /* MKTextField.swift */; settings = {ASSET_TAGS = (); }; };
 		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
@@ -149,6 +156,13 @@
 		809A71861BBCBAE3004DB12F /* Contacts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Contacts.plist; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
 		809E75A01BB4A99600CEC425 /* ImageEdition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdition.swift; sourceTree = "<group>"; };
+		80AA135B1BC3038C0035E8B2 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
+		80AA135C1BC3038C0035E8B2 /* MKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKColor.swift; sourceTree = "<group>"; };
+		80AA135D1BC3038C0035E8B2 /* MKImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKImageView.swift; sourceTree = "<group>"; };
+		80AA135E1BC3038C0035E8B2 /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
+		80AA135F1BC3038C0035E8B2 /* MKLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLayer.swift; sourceTree = "<group>"; };
+		80AA13601BC3038C0035E8B2 /* MKTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTableViewCell.swift; sourceTree = "<group>"; };
+		80AA13611BC3038C0035E8B2 /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
 		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoSecond_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
@@ -371,6 +385,7 @@
 		801D92941BA4986D00D05CE7 /* FrameWorks */ = {
 			isa = PBXGroup;
 			children = (
+				80AA13691BC303920035E8B2 /* MaterialKit */,
 				80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */,
 				8019CB411BAE1D7A0017CD7A /* libz.tbd */,
 				8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */,
@@ -411,6 +426,20 @@
 				800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		80AA13691BC303920035E8B2 /* MaterialKit */ = {
+			isa = PBXGroup;
+			children = (
+				80AA135B1BC3038C0035E8B2 /* MKButton.swift */,
+				80AA135C1BC3038C0035E8B2 /* MKColor.swift */,
+				80AA135D1BC3038C0035E8B2 /* MKImageView.swift */,
+				80AA135E1BC3038C0035E8B2 /* MKLabel.swift */,
+				80AA135F1BC3038C0035E8B2 /* MKLayer.swift */,
+				80AA13601BC3038C0035E8B2 /* MKTableViewCell.swift */,
+				80AA13611BC3038C0035E8B2 /* MKTextField.swift */,
+			);
+			name = MaterialKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,6 +561,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
@@ -539,6 +569,7 @@
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
 				801002551BC1D2CA00733723 /* FriendRequest.swift in Sources */,
 				F66B29FB1BAB708800BC43EE /* Search_View.swift in Sources */,
+				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
 				F68F2E481BBBA29E0092A981 /* BlurEffect_.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				F655B1201BC2E31700D399FE /* CellChat_TableViewCell.swift in Sources */,
@@ -546,6 +577,7 @@
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
 				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
+				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
 				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
 				F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */,
@@ -566,12 +598,16 @@
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
+				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				801D92781BA492D700D05CE7 /* User.swift in Sources */,
 				801002531BC1D2BC00733723 /* DAOFriendRequests.swift in Sources */,
+				80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */,
+				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
 				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,
+				80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */,
 				F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
 			);

@@ -95,7 +95,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     
     
-    //Sobe a view e desce a viewb
+    //Sobe a view e desce a view
     func keyboardWillShow(notification: NSNotification)
     {
         if(self.view.frame.origin.y == 0)
@@ -105,12 +105,10 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             }
         }
     }
-        
-    func keyboardWillHide(notification: NSNotification)
-    {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
-        {
-            self.view.frame.origin.y += keyboardSize.height
+    
+    func keyboardWillHide(notification: NSNotification) {
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.view.frame.origin.y = 0
         }
     }
     

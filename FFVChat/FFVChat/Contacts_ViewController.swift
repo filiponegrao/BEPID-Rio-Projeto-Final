@@ -15,6 +15,8 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var navBar : NavigationContact_View!
     
+    var notificationView : Notification_View!
+    
     var allButton : UIButton!
     
     var favouritesButton : UIButton!
@@ -124,24 +126,35 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         self.contacts = DAOContacts.getAllContacts()
         self.tableView1.reloadData()
+        DAOFriendRequests.sharedInstance.loadRequests()
         
-        DAOFriendRequests.requestsRemain { (requests) -> Void in
-            self.requests = requests
-            if(self.requests.count > 0)
-            {
-                print("Tem notificacao")
-            }
-            else
-            {
-                print("nao tem notifi")
-            }
-        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: requestNotification.requestsLoaded.rawValue, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: requestNotification.requestsLoaded.rawValue, object: nil)
     }
     
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
         
+    }
+    
+    
+    func reloadNotifications()
+    {
+        self.requests = DAOFriendRequests.sharedInstance.getRequests()
+        if(self.requests.count > 0)
+        {
+            self.navBar.alertOn()
+            print("tem convite")
+        }
+        else
+        {
+            self.navBar.alertOff()
+        }
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String)
@@ -234,6 +247,7 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func clickAll()
     {
+        DAOFriendRequests.sharedInstance.loadRequests()
         self.sb.endEditing(true)
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             self.containerView.frame.origin.x = 0
@@ -247,6 +261,8 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func clickFavourites()
     {
+        DAOFriendRequests.sharedInstance.loadRequests()
+
         self.sb.endEditing(true)
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             self.containerView.frame.origin.x = -screenWidth
@@ -260,6 +276,8 @@ class Contacts_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func clickAdd()
     {
+        DAOFriendRequests.sharedInstance.loadRequests()
+
         UIView.animateWithDuration(0.2, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             self.containerView.frame.origin.x = -screenWidth*2
             
