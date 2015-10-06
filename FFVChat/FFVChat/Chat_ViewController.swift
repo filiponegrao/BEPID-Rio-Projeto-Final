@@ -30,6 +30,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         super.viewDidLoad()
         
+        
         self.view.backgroundColor = lightGray
         
         self.navBar = NavigationChat_View(requester: self)
