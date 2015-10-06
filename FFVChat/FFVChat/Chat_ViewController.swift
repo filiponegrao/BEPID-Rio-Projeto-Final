@@ -43,6 +43,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
         self.tableView.backgroundColor = UIColor.clearColor()
+//        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.view.addSubview(tableView)
         
         self.messageView = UIView(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
@@ -100,6 +101,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
         cell.backgroundColor = UIColor.clearColor()
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
     }

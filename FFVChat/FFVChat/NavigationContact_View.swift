@@ -32,7 +32,6 @@ class NavigationContact_View: UIView {
         self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 40))
         self.filterButtons.setTitle("ALL", forState: .Normal)
         self.filterButtons.setTitleColor(lightGray, forState: .Normal)
-        self.filterButtons.titleLabel?.s
         self.addSubview(self.filterButtons)
         
     }
