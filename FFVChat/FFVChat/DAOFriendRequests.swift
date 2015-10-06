@@ -9,6 +9,11 @@
 import Foundation
 import Parse
 
+enum requestNotification : String
+{
+    case requestsLoaded
+}
+
 private let data = DAOFriendRequests()
 
 class DAOFriendRequests
@@ -18,9 +23,7 @@ class DAOFriendRequests
     
     init()
     {
-        
-        
-        
+        self.loadRequests()
     }
     
     
@@ -29,12 +32,20 @@ class DAOFriendRequests
         return data
     }
     
-    func requestsRemain()
+    
+    func getRequests() -> [FriendRequest]
+    {
+        return self.requests
+    }
+    
+    
+    func loadRequests()
     {
         var requests = [FriendRequest]()
         let query = PFQuery(className: "FriendRequest")
         print(DAOUser.sharedInstance.getUserName())
         query.whereKey("target", equalTo: DAOUser.sharedInstance.getUserName())
+        query.whereKey("status", equalTo: "Pendente")
         query.findObjectsInBackgroundWithBlock { ( objects:[AnyObject]?, error: NSError?) -> Void in
             print(objects?.count)
             if let objects = objects as? [PFObject]
@@ -46,6 +57,8 @@ class DAOFriendRequests
                     if(object == objects.last)
                     {
                         self.requests = requests
+                        print("notificacoes carregadas")
+                        NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
                     }
                 }
             }
@@ -53,9 +66,27 @@ class DAOFriendRequests
         }
         self.requests = requests
     }
+
     
-    
-    func getRequests
+    func acceptRequest(request: FriendRequest)
+    {
+        let query = PFQuery(className: "FriendRequest")
+        query.whereKey("sender", equalTo: request.sender)
+        query.whereKey("target", equalTo: DAOUser.sharedInstance.getUserName())
+        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject]
+            {
+                for object in objects
+                {
+                    object.setValue("Aceito", forKey: "status")
+                    DAOContacts.addContactByUsername(request.sender)
+                    object.saveEventually()
+                }
+            }
+            
+        }
+    }
     
     func friendsAccepted()
     {
@@ -78,5 +109,31 @@ class DAOFriendRequests
             
         }
     }
+    
+    
+    func sendRequest(username: String)
+    {
+        let query = PFUser.query()
+        query?.whereKey("username", equalTo: username)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if let objects = objects as? [PFObject]
+            {
+                print(objects.count)
+                if objects.count > 0
+                {
+                    let request = PFObject(className: "FriendRequest")
+                    request["sender"] = DAOUser.sharedInstance.getUserName()
+                    request["target"] = username
+                    request["status"] = "Pendente"
+                    request.saveEventually()
+                }
+            }
+            
+        })
+    }
+    
+    
+    
     
 }

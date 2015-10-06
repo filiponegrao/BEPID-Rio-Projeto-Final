@@ -35,6 +35,7 @@ class CellAdd_TableViewCell: UITableViewCell {
     
     @IBAction func addContact(sender: UIButton)
     {
-        
+        let username = self.username.text!
+        DAOFriendRequests.sharedInstance.sendRequest(username)
     }
 }

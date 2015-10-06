@@ -17,6 +17,8 @@ class NavigationContact_View: UIView {
     
     var notificationsButton : UIButton!
     
+    var alert : UIImageView!
+    
     init(requester: Contacts_ViewController)
     {
         self.vc = requester
@@ -32,7 +34,14 @@ class NavigationContact_View: UIView {
         self.notificationsButton = UIButton(frame: CGRectMake(screenWidth-40, 20, 40, 40))
 
         self.notificationsButton.setImage(UIImage(named: "icon_bell"), forState: .Normal)
+        self.notificationsButton.addTarget(self, action: "openNotification", forControlEvents: .TouchUpInside)
         self.addSubview(self.notificationsButton)
+        
+        self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
+        self.alert.image = UIImage(named: "icon_alert")
+        self.alert.contentMode = .ScaleAspectFit
+        self.notificationsButton.addSubview(self.alert)
+        self.alert.hidden = true
         
     }
 
@@ -52,7 +61,21 @@ class NavigationContact_View: UIView {
     
     func openNotification()
     {
-        
+        self.vc.notificationView = Notification_View()
+        self.vc.view.addSubview(self.vc.notificationView)
+        self.vc.notificationView.senderViewController = self.vc
+        self.vc.notificationView.startView()
+    }
+    
+    
+    func alertOn()
+    {
+        self.alert.hidden = false
+    }
+    
+    func alertOff()
+    {
+        self.alert.hidden = true
     }
 
 }

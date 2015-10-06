@@ -15,9 +15,9 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
 
     @IBOutlet var loginButton: UIButton!
     
-    @IBOutlet var emailField: MKTextField!
+    var emailField: MKTextField!
     
-    @IBOutlet var passwordField: MKTextField!
+    var passwordField: MKTextField!
     
     @IBOutlet var registerButton: UIButton!
     
@@ -45,7 +45,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "incompleteRegister", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "wrongPassword", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
-    }
+            }
     
     override func viewDidLoad()
     {
@@ -53,28 +53,50 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         self.view.backgroundColor = lightGray
 
+        self.emailField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
+        self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3)
+        self.emailField.autocapitalizationType = .None
+        self.emailField.autocorrectionType = .No
+        self.emailField.textAlignment = .Center
+        self.emailField.layer.borderColor = UIColor.clearColor().CGColor
         self.emailField.floatingPlaceholderEnabled = true
-        self.emailField.cornerRadius = 1.0
         self.emailField.placeholder = "username"
-        self.emailField.layer.borderColor = lightBlue.CGColor
-        self.emailField.layer.cornerRadius = 8
-        self.emailField.rippleLayerColor = UIColor.MKColor.Blue
+        self.emailField.tintColor = UIColor.MKColor.Blue
+        self.emailField.rippleLocation = MKRippleLocation.TapLocation
+        self.emailField.bottomBorderEnabled = true
+        self.emailField.bottomBorderColor = UIColor.MKColor.Blue
         self.emailField.tintColor = UIColor.MKColor.Blue
         self.emailField.textColor = lightBlue
+        self.emailField.keyboardType = UIKeyboardType.EmailAddress
+        self.view.addSubview(self.emailField)
         
+        self.passwordField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
+        self.passwordField.center = CGPointMake(screenWidth/2, self.emailField.center.y + 60)
+        self.passwordField.autocapitalizationType = .None
+        self.passwordField.autocorrectionType = .No
+        self.passwordField.textAlignment = .Center
+        self.passwordField.layer.borderColor = UIColor.clearColor().CGColor
         self.passwordField.floatingPlaceholderEnabled = true
-        self.passwordField.cornerRadius = 1.0
-        self.passwordField.placeholder = "username"
-        self.passwordField.layer.borderColor = lightBlue.CGColor
-        self.passwordField.layer.cornerRadius = 8
-        self.passwordField.rippleLayerColor = UIColor.MKColor.Blue
+        self.passwordField.placeholder = "password"
+        self.passwordField.tintColor = UIColor.MKColor.Blue
+        self.passwordField.rippleLocation = MKRippleLocation.TapLocation
+        self.passwordField.bottomBorderEnabled = true
+        self.passwordField.bottomBorderColor = UIColor.MKColor.Blue
         self.passwordField.tintColor = UIColor.MKColor.Blue
         self.passwordField.textColor = lightBlue
-        
-        
+        self.passwordField.keyboardType = UIKeyboardType.NumberPad
+        self.passwordField.secureTextEntry = true
+        self.passwordField.delegate = self
+        self.view.addSubview(self.passwordField)
         
     }
     
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    {
+        let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+        return newLength <= 6 // Bool
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
@@ -104,16 +126,17 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         }
     }
 
+
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
-    {
-        if(textField == self.passwordField)
-        {
-            let newLength = (textField.text?.utf16.count)! + string.utf16.count - range.length
-            return newLength <= 6 // Bool
-        }
-        return true
-    }
+//    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+//    {
+//        if(textField == self.passwordField)
+//        {
+//            let newLength = (textField.text?.utf16.count)! + string.utf16.count - range.length
+//            return newLength <= 6 // Bool
+//        }
+//        return true
+//    }
     
     @IBAction func register(sender: UIButton)
     {

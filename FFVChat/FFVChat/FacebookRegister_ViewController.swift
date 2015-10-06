@@ -84,6 +84,8 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
             self.view.frame.origin.y = 0
         }
     }
+    
+    
     func textFieldDidEndEditing(textField: UITextField)
     {
         self.keyboardWillHide()

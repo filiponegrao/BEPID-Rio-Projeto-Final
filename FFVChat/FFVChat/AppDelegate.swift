@@ -20,6 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
+        Parse.setApplicationId("nxY5lzIPinULd8EmSTxb09vxmVx08tyC1Y2Rt2HK",
+            clientKey: "ULiq579xkqwfJF3OKjMJeSLYX42UQ54jvEydaB8s")
+        
+        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
@@ -31,10 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             }
             else
             {
-//                let contacts = LoadingInfo_ViewController(nibName: "LoadingInfo_ViewController", bundle: nil)
-//                self.window?.rootViewController = contacts
-                let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
+                let contacts = LoadingInfo_ViewController(nibName: "LoadingInfo_ViewController", bundle: nil)
                 self.window?.rootViewController = contacts
+
             }
         }
         else if(DAOUser.sharedInstance.isLoged() == UserCondition.userLoggedOut)
@@ -51,10 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 //        self.window?.rootViewController = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.window?.makeKeyAndVisible()
         
-        Parse.setApplicationId("nxY5lzIPinULd8EmSTxb09vxmVx08tyC1Y2Rt2HK",
-            clientKey: "ULiq579xkqwfJF3OKjMJeSLYX42UQ54jvEydaB8s")
         
-        PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
 
         
         // Register for Push Notitications *******************************

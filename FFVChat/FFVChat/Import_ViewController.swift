@@ -90,6 +90,11 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactAdded" , name: ContactNotification.contactAdded.rawValue, object: nil)
     }
     
+    override func viewWillDisappear(animated: Bool)
+    {
+        
+    }
+    
     
     override func didReceiveMemoryWarning()
     {
