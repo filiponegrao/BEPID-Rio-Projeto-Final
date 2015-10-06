@@ -48,6 +48,8 @@
 		801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801D929F1BA51E5900D05CE7 /* UserInfo.plist */; };
 		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
 		80216BAC1BB084B40008F380 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */; settings = {ASSET_TAGS = (); }; };
+		803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		8070BDA21BB3208A005573DC /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070BDA11BB3208A005573DC /* Contacts.swift */; settings = {ASSET_TAGS = (); }; };
 		809A71871BBCBAE3004DB12F /* Contacts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 809A71861BBCBAE3004DB12F /* Contacts.plist */; settings = {ASSET_TAGS = (); }; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; settings = {ASSET_TAGS = (); }; };
@@ -71,8 +73,6 @@
 		F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */; };
 		F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */; };
 		F66B29CF1BAB6B4E00BC43EE /* Import_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */; };
-		F66B29D21BAB6B8300BC43EE /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */; };
-		F66B29D31BAB6B8300BC43EE /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */; };
 		F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */; };
 		F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */; };
 		F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */; };
@@ -152,6 +152,8 @@
 		801D929F1BA51E5900D05CE7 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
 		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
 		80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
+		803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		8070BDA11BB3208A005573DC /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		809A71861BBCBAE3004DB12F /* Contacts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Contacts.plist; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
@@ -175,8 +177,6 @@
 		F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Privacy_ViewController.xib; sourceTree = "<group>"; };
 		F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Import_ViewController.swift; sourceTree = "<group>"; };
 		F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Import_ViewController.xib; sourceTree = "<group>"; };
-		F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
-		F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings_ViewController.swift; sourceTree = "<group>"; };
 		F66B29D51BAB6BB400BC43EE /* Settings_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings_ViewController.xib; sourceTree = "<group>"; };
 		F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverProfile_ViewController.swift; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 				F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */,
 				F66B29C91BAB6AE700BC43EE /* Privacy_ViewController.xib */,
 				F66B29CD1BAB6B4E00BC43EE /* Import_ViewController.xib */,
-				F66B29D11BAB6B8300BC43EE /* Contacts_ViewController.xib */,
+				803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */,
 				801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */,
 				F66B29D91BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib */,
 				F66B29DD1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib */,
@@ -367,10 +367,10 @@
 				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
 				F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */,
 				F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */,
+				803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */,
 				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
 				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
 				80B4D8221BBB157500BDA48F /* AppNavigationController.swift */,
-				F66B29D01BAB6B8300BC43EE /* Contacts_ViewController.swift */,
 				801CF77E1BBCECC2006BF293 /* Chat_ViewController.swift */,
 				F66B29D81BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift */,
 				F66B29DC1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift */,
@@ -523,7 +523,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				801D92761BA492C200D05CE7 /* Login_ViewController.xib in Resources */,
-				F66B29D31BAB6B8300BC43EE /* Contacts_ViewController.xib in Resources */,
 				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
 				F66B29DF1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib in Resources */,
@@ -536,6 +535,7 @@
 				F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */,
 				8005974B1BC1E76100327A3D /* CellAll_TableViewCell.xib in Resources */,
 				8005975B1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib in Resources */,
+				803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */,
 				F66B29E31BAB6D6600BC43EE /* SelectedMidia_ViewController.xib in Resources */,
 				809A71871BBCBAE3004DB12F /* Contacts.plist in Resources */,
 				F66B29DB1BAB6C0700BC43EE /* ReceiverProfile_ViewController.xib in Resources */,
@@ -565,6 +565,7 @@
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
+				803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */,
 				800597521BC1E79400327A3D /* CellAdd_TableViewCell.swift in Sources */,
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
 				801002551BC1D2CA00733723 /* FriendRequest.swift in Sources */,
@@ -594,7 +595,6 @@
 				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
-				F66B29D21BAB6B8300BC43EE /* Contacts_ViewController.swift in Sources */,
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,

@@ -159,14 +159,12 @@ class DAOContacts
                         data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                             
                             let username = object.valueForKey("username") as! String
-                            let faceUsername = object.valueForKey("facebookID") as? String
                             let registerDate = object.valueForKey("createdAt") as! NSDate
                             let date = "\(registerDate)"
                             
                             let contact = NSMutableDictionary()
                             contact.setValue(data, forKey: "thumb")
                             contact.setValue(username, forKey: "username")
-                            contact.setValue(faceUsername, forKey: "facebookID")
                             contact.setValue(date, forKey: "createdAt")
                             content!.setObject(contact, forKey: "\(username)")
                             content!.writeToFile(path, atomically: false)
@@ -217,15 +215,13 @@ class DAOContacts
                         let data = object.objectForKey("profileImage") as! PFFile
                         data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                             
-                            let image = UIImage(data: data!)
                             let username = object.valueForKey("username") as! String
-                            let faceUsername = object.valueForKey("facebookID") as! String
                             let registerDateDate = object.valueForKey("createdAt") as! NSDate
                             let registerDate = "\(registerDateDate)"
                             
-                            print("username: \(username) id: \(faceUsername) date: \(registerDate) image: \(data)")
+                            print("username: \(username) date: \(registerDate) image: \(data)")
                             
-                            let contact = ["thumb":data!, "username":username, "facebookID":faceUsername, "createdAt":registerDate]
+                            let contact = ["thumb":data!, "username":username, "createdAt":registerDate]
 
                             print(content)
                             print(content?.setObject(contact, forKey: "\(username)"))

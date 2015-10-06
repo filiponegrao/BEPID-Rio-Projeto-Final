@@ -13,35 +13,27 @@ class NavigationContact_View: UIView {
 
     var vc : Contacts_ViewController!
     
-    var configButton : UIButton!
-    
-    var notificationsButton : UIButton!
+    var toolsButton : UIButton!
     
     var alert : UIImageView!
+    
+    var filterButtons : UIButton!
     
     init(requester: Contacts_ViewController)
     {
         self.vc = requester
-        super.init(frame: CGRectMake(0, 0, screenWidth, 60))
-        self.backgroundColor = UIColor(netHex: 0x03bbff)
+        super.init(frame: CGRectMake(0, 0, screenWidth, 70))
+        self.backgroundColor = lightBlue
         
-        self.configButton = UIButton(frame: CGRectMake(0, 20, 40, 40))
-
-        self.configButton.setImage(UIImage(named: "icon_config"), forState: .Normal)
-        self.configButton.addTarget(self, action: "openConfig", forControlEvents: .TouchUpInside)
-        self.addSubview(self.configButton)
+        self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 50, 20, 40, 40))
+        self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
+        self.addSubview(self.toolsButton)
         
-        self.notificationsButton = UIButton(frame: CGRectMake(screenWidth-40, 20, 40, 40))
-
-        self.notificationsButton.setImage(UIImage(named: "icon_bell"), forState: .Normal)
-        self.notificationsButton.addTarget(self, action: "openNotification", forControlEvents: .TouchUpInside)
-        self.addSubview(self.notificationsButton)
-        
-        self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
-        self.alert.image = UIImage(named: "icon_alert")
-        self.alert.contentMode = .ScaleAspectFit
-        self.notificationsButton.addSubview(self.alert)
-        self.alert.hidden = true
+        self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 40))
+        self.filterButtons.setTitle("ALL", forState: .Normal)
+        self.filterButtons.setTitleColor(lightGray, forState: .Normal)
+        self.filterButtons.titleLabel?.s
+        self.addSubview(self.filterButtons)
         
     }
 
@@ -58,14 +50,6 @@ class NavigationContact_View: UIView {
         self.vc.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
-    func openNotification()
-    {
-        self.vc.notificationView = Notification_View()
-        self.vc.view.addSubview(self.vc.notificationView)
-        self.vc.notificationView.senderViewController = self.vc
-        self.vc.notificationView.startView()
-    }
     
     
     func alertOn()
