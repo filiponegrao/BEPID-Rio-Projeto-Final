@@ -13,8 +13,6 @@ class Contact
 {
     let username : String!
     
-    let facebookID : String!
-        
     let registerDate : String!
     
     let thumb : UIImage!
@@ -22,7 +20,6 @@ class Contact
     init(username: String, facebookID: String, registerDate: String, thumb: UIImage)
     {
         self.username = username
-        self.facebookID = facebookID
         self.registerDate = registerDate
         self.thumb = thumb
     }
