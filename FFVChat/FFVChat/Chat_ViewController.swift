@@ -28,6 +28,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var cameraButton : UIButton!
     
+    var sendButton : UIButton!
+    
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -80,7 +82,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.delegate = self
         self.messageText.borderStyle = UITextBorderStyle.RoundedRect
         self.messageText.placeholder = "Message"
+        self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
         self.messageView.addSubview(messageText)
+        
+        self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 62, 17, 55, 16))
+        self.sendButton.setTitle("Send", forState: UIControlState.Normal)
+        self.sendButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        self.messageView.addSubview(sendButton)
         
         print(DAOUser.sharedInstance.getUserName())
         print(DAOUser.sharedInstance.getEmail())
