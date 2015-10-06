@@ -12,7 +12,7 @@ import Parse
 class NavigationContact_View: UIView {
 
     var vc : Contacts_ViewController!
-    
+        
     var toolsButton : UIButton!
     
     var alert : UIImageView!
@@ -30,9 +30,12 @@ class NavigationContact_View: UIView {
         self.addSubview(self.toolsButton)
         
         self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 40))
+        self.filterButtons.layer.borderWidth = 1
         self.filterButtons.setTitle("ALL", forState: .Normal)
         self.filterButtons.setTitleColor(lightGray, forState: .Normal)
+        self.filterButtons.titleLabel?.textAlignment = .Left
         self.addSubview(self.filterButtons)
+        
         
     }
 

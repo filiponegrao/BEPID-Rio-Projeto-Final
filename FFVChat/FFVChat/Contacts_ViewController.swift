@@ -12,7 +12,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
 {
     var tableView : UITableView!
     
-    var contacts : [Contact]!
+    var contacts = [Contact]()
     
     var navigationBar : NavigationContact_View!
     
@@ -24,6 +24,15 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
         self.view.addSubview(self.navigationBar)
+        
+        //Table view
+        self.tableView = UITableView(frame: CGRectMake(0, self.navigationBar.frame.size.height, screenWidth, screenHeight - self.navigationBar.frame.size.height))
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.registerNib(UINib(nibName: "CellAll_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.view.addSubview(self.tableView)
+        
     }
 
     override func didReceiveMemoryWarning()
@@ -44,6 +53,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellAll_TableViewCell
         cell.username.text = self.contacts[indexPath.row].username
         cell.photo.image = self.contacts[indexPath.row].thumb
+        cell.backgroundColor = UIColor.clearColor()
         
         return cell
     }
@@ -51,6 +61,11 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return 70
     }
     
     //** TABLE VIEW PROPRIETS END ******//
