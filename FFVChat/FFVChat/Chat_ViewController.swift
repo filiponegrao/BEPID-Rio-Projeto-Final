@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
 {
 
     var tableView: UITableView!
@@ -20,9 +20,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var navBar : NavigationChat_View!
     
+    var messageView : UIView!
+    
+    var messageText : UITextField!
+    
+    var cameraButton : UIButton!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
         
         self.view.backgroundColor = lightGray
         
@@ -36,7 +43,23 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
         self.tableView.backgroundColor = UIColor.clearColor()
+//        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.view.addSubview(tableView)
+        
+        self.messageView = UIView(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
+        self.messageView.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(messageView)
+        
+        self.cameraButton = UIButton(frame: CGRectMake(10, 15 , 30, 20))
+        self.cameraButton.setImage(UIImage(named: "cameraChatButton"), forState: UIControlState.Normal)
+        self.cameraButton.alpha = 0.7
+        self.messageView.addSubview(cameraButton)
+        
+        self.messageText = UITextField(frame: CGRectMake(50, 10, screenWidth - 60, 30))
+        self.messageText.delegate = self
+        self.messageText.borderStyle = UITextBorderStyle.RoundedRect
+        self.messageText.placeholder = "Message"
+        self.messageView.addSubview(messageText)
         
         print(DAOUser.sharedInstance.getUserName())
         print(DAOUser.sharedInstance.getEmail())
@@ -51,6 +74,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.didReceiveMemoryWarning()
     }
 
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        self.messageText.endEditing(true)
+    }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
@@ -74,9 +101,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
         cell.backgroundColor = UIColor.clearColor()
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        self.messageText.endEditing(true)
+    }
     
 }
