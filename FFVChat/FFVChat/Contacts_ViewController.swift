@@ -38,7 +38,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         {
             DAOContacts.addContactByUsername("teste")
         }
-        
+        //end.
     }
     
     //*** PROPRIEDADES DE APRESENTACAO DO CONTROOLER **//

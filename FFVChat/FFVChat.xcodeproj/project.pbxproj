@@ -432,6 +432,7 @@
 				800597501BC1E79400327A3D /* CellAdd_TableViewCell.swift */,
 				800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */,
 				80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */,
+				F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
