@@ -30,7 +30,7 @@ class Tools_ViewController: UIViewController
         self.blackScreen.alpha = 0
         self.view.addSubview(self.blackScreen)
         
-        self.notificationButton = UIButton(frame: CGRectMake(screenWidth - 60, 20, 40, 40))
+        self.notificationButton = UIButton(frame: CGRectMake(screenWidth - 80, 20, 80, 80))
         self.notificationButton.setImage(UIImage(named: "notificationButton"), forState: .Normal)
         self.notificationButton.alpha = 0
         self.view.addSubview(self.notificationButton)
