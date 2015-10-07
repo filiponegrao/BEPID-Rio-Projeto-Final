@@ -205,38 +205,52 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     @IBAction func register(sender: UIButton)
     {
+        //todos os campos preenchidos
         if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
         {
+            //verifica se e-mail é válido
             if (!(DAOUser.sharedInstance.isValidEmail(self.labelEmail.text!)))
             {
                 let alert = UIAlertView(title: "Ops!", message: "Por favor, digite um e-mail válido", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
-                
-                else if (self.verifyWhiteSpace(self.labelUsername.text!))
+            
+            //verifica se há espaço em branco no username
+            else if (self.verifyWhiteSpace(self.labelUsername.text!))
             {
                 let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter espaços em branco", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
-                
+            
+            //verifica se há caracter especial no username
             else if (self.verifySpecialCharacter(self.labelUsername.text!))
             {
                 let alert = UIAlertView(title: "Ops!", message: "Nome de usuário não pode conter caracteres especiais", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
+            //verifica se username contém menos de 4 caracteres
+            else if (self.labelUsername.text?.characters.count < 4)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário deve conter, ao mínimo, 4 caracteres", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            //verifica se senha é válida
             else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
             {
                 let alert = UIAlertView(title: "Ops!", message: "Senha deve conter exatamente 6 números", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
-                
+            
+            //verifica se campos de senha e confirmação de senha são iguais
             else if (self.labelPassword.text != self.labelConfirmPassword.text)
             {
                 let alert = UIAlertView(title: "Ops!", message: "Senhas estão diferentes", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
-
+            
+            //está tudo ok com o preenchimento dos campos de registro
             else
             {
                 self.loadingScreen = LoadScreen_View()
@@ -245,6 +259,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             }
             
         }
+            
+        //não preencheu todos os campos
         else
         {
             let alert = UIAlertView(title: "Ops!", message: "Por favor, preencha todos os campos corretamente", delegate: nil, cancelButtonTitle: "Ok")
