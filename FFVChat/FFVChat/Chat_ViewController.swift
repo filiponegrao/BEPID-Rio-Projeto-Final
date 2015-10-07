@@ -158,8 +158,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.backgroundColor = UIColor.clearColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None
 //        cell.frame.size.height = 70
- 
-        cell.message.text = senderMessages[indexPath.row]
+        
+        //adiciona mensagens do array
+//        cell.message.text = senderMessages[indexPath.row]
+        
         
         return cell
     }
@@ -188,7 +190,19 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height), animated: true)
             self.tableView.endUpdates()
 //            self.tableView.reloadData()
+            tableviewScroll(true)
             self.messageText.text = ""
         }
+    }
+    
+    func tableviewScroll(animated: Bool)
+    {
+        
+        if (self.tableView.numberOfRowsInSection(0) > 0)
+        {
+            let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: (self.tableView.numberOfSections-1))
+            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
+        }
+        
     }
 }
