@@ -25,7 +25,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
         
         self.view.backgroundColor = lightGray
-        self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.navigationBar.hidden = true
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "doneSearch"))
         
         self.backButton = UIButton(frame: CGRectMake(0, 10, 80, 80))
@@ -129,10 +129,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     //** CONTROLLER MANAGEMENT FUNCTIONS ****//
     func quitSearch()
     {
-        self.dismissViewControllerAnimated(true) { () -> Void in
-            
-            
-        }
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     

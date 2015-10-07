@@ -47,12 +47,13 @@ class NavigationContact_View: UIView
     
     func openTools()
     {
-        let tools = Tools_ViewController()
+        let tools = UINavigationController(nibName: "AppNavigation2", bundle: nil)
+        tools.viewControllers = [Tools_ViewController()]
         tools.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         tools.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         tools.modalInPopover = true
         self.vc.presentViewController(tools, animated: true) { () -> Void in
-            tools.openTools()
+            (tools.viewControllers.first as! Tools_ViewController).openTools()
         }
 
     }

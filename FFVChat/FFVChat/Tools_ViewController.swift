@@ -24,6 +24,7 @@ class Tools_ViewController: UIViewController
     {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.hidden = true
         
         self.blackScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.blackScreen.backgroundColor = UIColor.blackColor()
@@ -41,8 +42,8 @@ class Tools_ViewController: UIViewController
         self.addButton.alpha = 0
         self.view.addSubview(self.addButton)
         
-        self.configButton = UIButton(frame: CGRectMake(screenWidth - 60, 20, 40, 40))
-        self.configButton.setImage(UIImage(named: "configButton"), forState: .Normal)
+        self.configButton = UIButton(frame: CGRectMake(screenWidth - 80, 20, 80, 80))
+        self.configButton.setImage(UIImage(named: "settingsButton"), forState: .Normal)
         self.configButton.alpha = 0
         self.view.addSubview(self.configButton)
         
@@ -93,10 +94,7 @@ class Tools_ViewController: UIViewController
     func presentAddController()
     {
         let addController = AddContact_ViewController()
-        self.presentViewController(addController, animated: true) { () -> Void in
-            
-            
-        }
+        self.navigationController?.pushViewController(addController, animated: true)
     }
     
     
