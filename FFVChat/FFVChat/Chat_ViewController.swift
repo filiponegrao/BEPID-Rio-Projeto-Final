@@ -49,15 +49,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         super.viewDidLoad()
         
-        
         self.view.backgroundColor = lightGray
         
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
         
-        self.containerView = UIView(frame: CGRectMake(0, 80, screenWidth, screenHeight - 80))
+        self.containerView = UIView(frame: CGRectMake(0, 82.5, screenWidth, screenHeight - 80))
         self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "EndEditing"))
+        self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
         
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, self.containerView.frame.height - 50))
@@ -66,7 +66,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
         self.tableView.backgroundColor = UIColor.clearColor()
-//        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.containerView.addSubview(tableView)
         
         self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, 50))
@@ -76,12 +76,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.cameraButton = UIButton(frame: CGRectMake(10, 15 , 30, 20))
         self.cameraButton.setImage(UIImage(named: "cameraChatButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
-        self.cameraButton.backgroundColor = UIColor.grayColor()
+//        self.cameraButton.backgroundColor = UIColor.grayColor()
         self.messageView.addSubview(cameraButton)
         
         self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 17, 55, 16))
         self.sendButton.setTitle("Send", forState: UIControlState.Normal)
-        self.sendButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        self.sendButton.setTitleColor(lightBlue, forState: UIControlState.Normal)
         self.messageView.addSubview(sendButton)
         
         self.messageText = UITextField(frame: CGRectMake(self.cameraButton.frame.width + 20, 10, screenWidth - (self.cameraButton.frame.width + 20 + self.sendButton.frame.width + 20), 30))
@@ -126,13 +126,20 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.endEditing(true)
         print("touches")
     }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return 70
+    }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        let message = self.senderMessages[0]
-        let currentMessage : NSString = message as NSString
-        let messageSize : CGSize! = currentMessage.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(14.0)])
-        return messageSize.height + 48
+//        let message = self.senderMessages[0]
+//        let currentMessage : NSString = message as NSString
+//        let messageSize : CGSize! = currentMessage.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(14.0)])
+//        return messageSize.height + 48
+        
+        return 70
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -150,6 +157,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
         cell.backgroundColor = UIColor.clearColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+//        cell.frame.size.height = 70
         
         return cell
     }

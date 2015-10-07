@@ -67,7 +67,7 @@
 		80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		F655B1201BC2E31700D399FE /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F655B11F1BC2E31700D399FE /* CellChat_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
 		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
@@ -172,7 +172,7 @@
 		80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContact_ViewController.swift; sourceTree = "<group>"; };
 		F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoSecond_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
-		F655B11F1BC2E31700D399FE /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
+		F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
@@ -423,10 +423,10 @@
 			isa = PBXGroup;
 			children = (
 				800597481BC1E76100327A3D /* CellAll_TableViewCell.swift */,
-				F655B11F1BC2E31700D399FE /* CellChat_TableViewCell.swift */,
 				8005974C1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift */,
 				800597501BC1E79400327A3D /* CellAdd_TableViewCell.swift */,
 				800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */,
+				F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -565,6 +565,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */,
+				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
@@ -575,7 +576,6 @@
 				801002551BC1D2CA00733723 /* FriendRequest.swift in Sources */,
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
-				F655B1201BC2E31700D399FE /* CellChat_TableViewCell.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
