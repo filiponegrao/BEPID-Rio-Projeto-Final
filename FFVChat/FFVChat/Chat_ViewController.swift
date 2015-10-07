@@ -79,17 +79,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.cameraButton.backgroundColor = UIColor.grayColor()
         self.messageView.addSubview(cameraButton)
         
-        self.messageText = UITextField(frame: CGRectMake(50, 10, screenWidth - 120, 30))
+        self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 17, 55, 16))
+        self.sendButton.setTitle("Send", forState: UIControlState.Normal)
+        self.sendButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        self.messageView.addSubview(sendButton)
+        
+        self.messageText = UITextField(frame: CGRectMake(self.cameraButton.frame.width + 20, 10, screenWidth - (self.cameraButton.frame.width + 20 + self.sendButton.frame.width + 20), 30))
         self.messageText.delegate = self
         self.messageText.borderStyle = UITextBorderStyle.RoundedRect
         self.messageText.placeholder = "Message"
         self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
         self.messageView.addSubview(messageText)
-        
-        self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 62, 17, 55, 16))
-        self.sendButton.setTitle("Send", forState: UIControlState.Normal)
-        self.sendButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
-        self.messageView.addSubview(sendButton)
+
         
         self.navBar.contactImage.image = contact.thumb
         
