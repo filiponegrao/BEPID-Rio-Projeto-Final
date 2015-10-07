@@ -91,11 +91,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.sendButton.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
         self.messageView.addSubview(sendButton)
         
-        print(DAOUser.sharedInstance.getUserName())
-        print(DAOUser.sharedInstance.getEmail())
-        print(DAOUser.sharedInstance.getPassword())
-        print(DAOUser.sharedInstance.getTrustLevel())
-        print(DAOUser.sharedInstance.getProfileImage())
+        self.navBar.contactImage.image = contact.thumb
         
     }
 
