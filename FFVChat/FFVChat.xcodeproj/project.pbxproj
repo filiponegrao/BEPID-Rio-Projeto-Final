@@ -51,7 +51,6 @@
 		803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962971BC4707400AFFD24 /* BlurEffect.swift */; settings = {ASSET_TAGS = (); }; };
-		8039629A1BC4731300AFFD24 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962991BC4731300AFFD24 /* ToolsView.swift */; settings = {ASSET_TAGS = (); }; };
 		8070BDA21BB3208A005573DC /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070BDA11BB3208A005573DC /* Contacts.swift */; settings = {ASSET_TAGS = (); }; };
 		809A71871BBCBAE3004DB12F /* Contacts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 809A71861BBCBAE3004DB12F /* Contacts.plist */; settings = {ASSET_TAGS = (); }; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; settings = {ASSET_TAGS = (); }; };
@@ -157,7 +156,6 @@
 		803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
 		803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		803962971BC4707400AFFD24 /* BlurEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
-		803962991BC4731300AFFD24 /* ToolsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
 		8070BDA11BB3208A005573DC /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		809A71861BBCBAE3004DB12F /* Contacts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Contacts.plist; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 				F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */,
 				F66B29F01BAB6FF800BC43EE /* Notification_View.swift */,
 				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
-				803962991BC4731300AFFD24 /* ToolsView.swift */,
 				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
 			);
 			name = Elementos;
@@ -612,7 +609,6 @@
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
-				8039629A1BC4731300AFFD24 /* ToolsView.swift in Sources */,
 				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,
 				80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */,
 				80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */,
