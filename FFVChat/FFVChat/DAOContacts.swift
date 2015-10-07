@@ -72,7 +72,6 @@ class DAOContacts
             return contacts
         }
         
-        print(content?.count)
         for(var i = 0; i < content?.count; i++)
         {
             let data = content?.allValues[i].valueForKey("thumb") as! NSData

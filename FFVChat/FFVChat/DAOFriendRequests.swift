@@ -2,19 +2,35 @@
 //  DAOFriendRequests.swift
 //  FFVChat
 //
-//  Created by Filipo Negrao on 04/10/15.
+//  Created by Filipo Negrao on 07/10/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
 import Foundation
 import Parse
 
+
 enum requestNotification : String
 {
     case requestsLoaded
 }
 
+
+class FriendRequest
+{
+    let sender : String
+    
+    let target : String
+    
+    init(sender : String, target: String)
+    {
+        self.sender = sender
+        self.target = target
+    }
+}
+
 private let data = DAOFriendRequests()
+
 
 class DAOFriendRequests
 {
@@ -39,17 +55,23 @@ class DAOFriendRequests
     }
     
     
+    func reloadInfos()
+    {
+        self.loadRequests()
+        self.friendsAccepted()
+    }
+    
     func loadRequests()
     {
+        print("meu nome é \(DAOUser.sharedInstance.getUserName())")
         var requests = [FriendRequest]()
         let query = PFQuery(className: "FriendRequest")
-        print(DAOUser.sharedInstance.getUserName())
         query.whereKey("target", equalTo: DAOUser.sharedInstance.getUserName())
         query.whereKey("status", equalTo: "Pendente")
         query.findObjectsInBackgroundWithBlock { ( objects:[AnyObject]?, error: NSError?) -> Void in
-            print(objects?.count)
             if let objects = objects as? [PFObject]
             {
+                print("objetos retornados em requests: \(objects.count)")
                 for object in objects
                 {
                     requests.append(FriendRequest(sender: object.valueForKey("sender") as! String, target: DAOUser.sharedInstance.getUserName()))
@@ -66,7 +88,7 @@ class DAOFriendRequests
         }
         self.requests = requests
     }
-
+    
     
     func acceptRequest(request: FriendRequest)
     {
@@ -75,13 +97,16 @@ class DAOFriendRequests
         query.whereKey("target", equalTo: DAOUser.sharedInstance.getUserName())
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
+            print("Recebidos \(objects?.count) requests")
             if let objects = objects as? [PFObject]
             {
                 for object in objects
                 {
                     object.setValue("Aceito", forKey: "status")
                     DAOContacts.addContactByUsername(request.sender)
-                    object.saveEventually()
+                    object.saveEventually({ (success: Bool, error: NSError?) -> Void in
+                        self.loadRequests()
+                    })
                 }
             }
             
@@ -119,7 +144,6 @@ class DAOFriendRequests
             
             if let objects = objects as? [PFObject]
             {
-                print(objects.count)
                 if objects.count > 0
                 {
                     let request = PFObject(className: "FriendRequest")

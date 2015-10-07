@@ -15,8 +15,6 @@
 		800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		8005975B1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
-		801002531BC1D2BC00733723 /* DAOFriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801002521BC1D2BC00733723 /* DAOFriendRequests.swift */; settings = {ASSET_TAGS = (); }; };
-		801002551BC1D2CA00733723 /* FriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801002541BC1D2CA00733723 /* FriendRequest.swift */; settings = {ASSET_TAGS = (); }; };
 		8019CB3E1BADDD780017CD7A /* FixedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8019CB3D1BADDD780017CD7A /* FixedValues.swift */; settings = {ASSET_TAGS = (); }; };
 		8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */; };
 		8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB411BAE1D7A0017CD7A /* libz.tbd */; };
@@ -48,6 +46,7 @@
 		801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801D929F1BA51E5900D05CE7 /* UserInfo.plist */; };
 		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
 		80216BAC1BB084B40008F380 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */; settings = {ASSET_TAGS = (); }; };
+		80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */; settings = {ASSET_TAGS = (); }; };
 		803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962971BC4707400AFFD24 /* BlurEffect.swift */; settings = {ASSET_TAGS = (); }; };
@@ -66,6 +65,8 @@
 		80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		80E8BD781BC58E7D00B49C31 /* DAONotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD771BC58E7D00B49C31 /* DAONotifications.swift */; settings = {ASSET_TAGS = (); }; };
+		80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F655B1201BC2E31700D399FE /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F655B11F1BC2E31700D399FE /* CellChat_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -117,8 +118,6 @@
 		800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellAdd_TableViewCell.xib; sourceTree = "<group>"; };
 		800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImportContact_TableViewCell.swift; sourceTree = "<group>"; };
 		8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellImportContact_TableViewCell.xib; sourceTree = "<group>"; };
-		801002521BC1D2BC00733723 /* DAOFriendRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFriendRequests.swift; sourceTree = "<group>"; };
-		801002541BC1D2CA00733723 /* FriendRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequest.swift; sourceTree = "<group>"; };
 		8019CB3D1BADDD780017CD7A /* FixedValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedValues.swift; sourceTree = "<group>"; };
 		8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8019CB411BAE1D7A0017CD7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -154,6 +153,7 @@
 		801D929F1BA51E5900D05CE7 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
 		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
 		80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFriendRequests.swift; sourceTree = "<group>"; };
 		803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
 		803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		803962971BC4707400AFFD24 /* BlurEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
@@ -172,6 +172,8 @@
 		80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools_ViewController.swift; sourceTree = "<group>"; };
 		80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContact_ViewController.swift; sourceTree = "<group>"; };
 		80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications_ViewController.swift; sourceTree = "<group>"; };
+		80E8BD771BC58E7D00B49C31 /* DAONotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAONotifications.swift; sourceTree = "<group>"; };
+		80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification_TableViewCell.swift; sourceTree = "<group>"; };
 		F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoSecond_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
 		F655B11F1BC2E31700D399FE /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
@@ -339,10 +341,10 @@
 			children = (
 				801D929D1BA5177400D05CE7 /* DAOUser.swift */,
 				809E759C1BB49FC100CEC425 /* DAOContacts.swift */,
-				801002521BC1D2BC00733723 /* DAOFriendRequests.swift */,
+				80E8BD771BC58E7D00B49C31 /* DAONotifications.swift */,
+				80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */,
 				801D92771BA492D700D05CE7 /* User.swift */,
 				8070BDA11BB3208A005573DC /* Contacts.swift */,
-				801002541BC1D2CA00733723 /* FriendRequest.swift */,
 				8019CB3D1BADDD780017CD7A /* FixedValues.swift */,
 				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
 			);
@@ -430,6 +432,7 @@
 				8005974C1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift */,
 				800597501BC1E79400327A3D /* CellAdd_TableViewCell.swift */,
 				800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */,
+				80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -575,13 +578,13 @@
 				800597521BC1E79400327A3D /* CellAdd_TableViewCell.swift in Sources */,
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
-				801002551BC1D2CA00733723 /* FriendRequest.swift in Sources */,
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				F655B1201BC2E31700D399FE /* CellChat_TableViewCell.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
+				80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */,
 				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
@@ -602,12 +605,12 @@
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
+				80E8BD781BC58E7D00B49C31 /* DAONotifications.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
 				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				801D92781BA492D700D05CE7 /* User.swift in Sources */,
-				801002531BC1D2BC00733723 /* DAOFriendRequests.swift in Sources */,
 				80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
 				80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */,
@@ -617,6 +620,7 @@
 				80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */,
 				80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */,
 				F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */,
+				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

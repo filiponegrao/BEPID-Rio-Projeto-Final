@@ -33,6 +33,7 @@ class Tools_ViewController: UIViewController
         
         self.notificationButton = UIButton(frame: CGRectMake(screenWidth - 80, 20, 80, 80))
         self.notificationButton.setImage(UIImage(named: "notificationButton"), forState: .Normal)
+        self.notificationButton.addTarget(self, action: "presentNotificationsController", forControlEvents: .TouchUpInside)
         self.notificationButton.alpha = 0
         self.view.addSubview(self.notificationButton)
         
@@ -52,6 +53,11 @@ class Tools_ViewController: UIViewController
         
     }
     
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        DAOFriendRequests.sharedInstance.reloadInfos()
+    }
     func openTools()
     {
         UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
@@ -97,6 +103,12 @@ class Tools_ViewController: UIViewController
         self.navigationController?.pushViewController(addController, animated: true)
     }
     
+    
+    func presentNotificationsController()
+    {
+        let notifiController = Notifications_ViewController()
+        self.navigationController?.pushViewController(notifiController, animated: true)
+    }
     
     //**** END PRESENTING FUNCTIONS   ******//
 
