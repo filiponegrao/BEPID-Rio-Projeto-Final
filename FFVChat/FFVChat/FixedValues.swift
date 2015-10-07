@@ -16,6 +16,7 @@ let screenHeight = screenSize.height
 let lightBlue = UIColor(netHex: 0x03bbff)
 let lightGray = UIColor(netHex: 0x343539)
 
+
 class FixedValues
 {
     
