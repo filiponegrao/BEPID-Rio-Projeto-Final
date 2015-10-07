@@ -37,6 +37,7 @@ class Tools_ViewController: UIViewController
         
         self.addButton = UIButton(frame: CGRectMake(screenWidth - 80, 20, 80, 80))
         self.addButton.setImage(UIImage(named: "addButton"), forState: .Normal)
+        self.addButton.addTarget(self, action: "presentAddController", forControlEvents: .TouchUpInside)
         self.addButton.alpha = 0
         self.view.addSubview(self.addButton)
         
@@ -44,7 +45,6 @@ class Tools_ViewController: UIViewController
         self.configButton.setImage(UIImage(named: "configButton"), forState: .Normal)
         self.configButton.alpha = 0
         self.view.addSubview(self.configButton)
-        
         
         
         self.blackScreen.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "closeTools"))
@@ -87,6 +87,20 @@ class Tools_ViewController: UIViewController
         }
 
     }
+    
+    //***  PRESENTING FUNCTIONS *****//
+    
+    func presentAddController()
+    {
+        let addController = AddContact_ViewController()
+        self.presentViewController(addController, animated: true) { () -> Void in
+            
+            
+        }
+    }
+    
+    
+    //**** END PRESENTING FUNCTIONS   ******//
 
     override func didReceiveMemoryWarning()
     {

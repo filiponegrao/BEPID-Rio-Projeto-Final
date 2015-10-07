@@ -50,6 +50,19 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         
     }
     
+    //** SEARCH BAR FUNCTONS ***//
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        DAOContacts.getUsersWithString(searchText) { (contacts) -> Void in
+            
+        }
+        
+    }
+    
+    
+    //** END SEARCH BAR FUNCTIONS **//
+    
+    
     //** TABLE VIEW PROPRIETS *********//
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
