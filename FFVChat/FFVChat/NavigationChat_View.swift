@@ -31,9 +31,10 @@ class NavigationChat_View: UIView
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.backButton.clipsToBounds = true
         self.backButton.layer.cornerRadius = self.backButton.frame.size.width/2
+        self.backButton.backgroundColor = UIColor.whiteColor()
         self.addSubview((self.backButton))
         
-        self.contactImage = UIImageView(frame: CGRectMake(screenWidth/2, 30, screenWidth/4, screenWidth/4))
+        self.contactImage = UIImageView(frame: CGRectMake(screenWidth/2, 30, screenWidth/5, screenWidth/5))
         self.contactImage.backgroundColor = UIColor.grayColor()
         self.contactImage.layer.borderColor = UIColor.whiteColor().CGColor
         self.contactImage.layer.borderWidth = 1.0
@@ -48,8 +49,9 @@ class NavigationChat_View: UIView
         self.contactName.textColor = UIColor.whiteColor()
         self.addSubview(self.contactName)
         
-        self.galleryButton = UIButton(frame: CGRectMake(50, 30, 40, 40))
+        self.galleryButton = UIButton(frame: CGRectMake(60, 30, 40, 40))
         self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: UIControlState.Normal)
+        self.galleryButton.backgroundColor = UIColor.whiteColor()
         self.addSubview(self.galleryButton)
         
     }
