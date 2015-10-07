@@ -46,7 +46,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: ContactNotification.contactAdded.rawValue, object: nil)
-        self.navigationController?.navigationBar.hidden = true
+//        self.navigationController?.navigationBar.hidden = true
     }
     
     

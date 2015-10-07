@@ -65,6 +65,7 @@
 		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; settings = {ASSET_TAGS = (); }; };
 		80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -170,6 +171,7 @@
 		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools_ViewController.swift; sourceTree = "<group>"; };
 		80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContact_ViewController.swift; sourceTree = "<group>"; };
+		80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications_ViewController.swift; sourceTree = "<group>"; };
 		F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoSecond_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
 		F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				801CB5C61BC2205E00F51E06 /* LoadingInfo_ViewController.swift */,
 				80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */,
 				80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */,
+				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				801002531BC1D2BC00733723 /* DAOFriendRequests.swift in Sources */,
 				80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
+				80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
 				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,
