@@ -16,7 +16,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var senderMessages = ["Hello", "Good to see you"]
     var receiverMessages = ["Hi", "Manda nudes!" ]
     
-    var contacts : Contact!
+    var contact : Contact!
     
     var navBar : NavigationChat_View!
     

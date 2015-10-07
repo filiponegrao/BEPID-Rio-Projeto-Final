@@ -33,8 +33,30 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
+        self.contacts = DAOContacts.getAllContacts()
+        if(self.contacts.count == 0)
+        {
+            DAOContacts.addContactByUsername("teste")
+        }
+        
     }
-
+    
+    //*** PROPRIEDADES DE APRESENTACAO DO CONTROOLER **//
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: ContactNotification.contactAdded.rawValue, object: nil)
+    }
+    
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: ContactNotification.contactAdded.rawValue, object: nil)
+    }
+    //**  FIM DAS PROPRIEDADES DE APRESENTACAO DO CONTROLLER **//
+    
+    
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -60,7 +82,9 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        
+        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+        chat.contact = self.contacts[indexPath.row]
+        self.navigationController?.pushViewController(chat, animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
@@ -70,4 +94,21 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     //** TABLE VIEW PROPRIETS END ******//
     
+    
+    //** FUNCOES DE MANEGAMENTO DE DADOS **//
+    
+    func reloadContacts()
+    {
+        self.contacts = DAOContacts.getAllContacts()
+        self.tableView.reloadData()
+    }
+    
+    //** FIM DAS FUNCOES DE MANEGAMENTO DE DADOS **//
+    
+    
+    
 }
+
+
+
+

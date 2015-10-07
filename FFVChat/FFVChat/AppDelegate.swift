@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         {
             if(PFUser.currentUser() != nil)
             {
-                let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
+                let contacts = AppNavigationController()
                 self.window?.rootViewController = contacts
             }
             else

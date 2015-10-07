@@ -17,7 +17,7 @@ class Contact
     
     let thumb : UIImage!
     
-    init(username: String, facebookID: String, registerDate: String, thumb: UIImage)
+    init(username: String, registerDate: String, thumb: UIImage)
     {
         self.username = username
         self.registerDate = registerDate

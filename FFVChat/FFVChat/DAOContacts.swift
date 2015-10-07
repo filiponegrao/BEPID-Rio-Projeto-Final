@@ -77,7 +77,7 @@ class DAOContacts
         {
             let data = content?.allValues[i].valueForKey("thumb") as! NSData
             let image = UIImage(data: data)
-            contacts.append( Contact(username: content?.allValues[i].valueForKey("username") as! String, facebookID: content?.allValues[i].valueForKey("facebookID") as! String, registerDate: content?.allValues[i].valueForKey("createdAt") as! String, thumb: image!))
+            contacts.append( Contact(username: content?.allValues[i].valueForKey("username") as! String, registerDate: content?.allValues[i].valueForKey("createdAt") as! String, thumb: image!))
             print(contacts)
         }
         
@@ -105,7 +105,7 @@ class DAOContacts
             return nil
         }
         
-        let contact = Contact(username: data?.valueForKey("username") as! String, facebookID: data?.valueForKey("facebookID") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: UIImage(data: data?.objectForKey("thumb") as! NSData)!)
+        let contact = Contact(username: data?.valueForKey("username") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: UIImage(data: data?.objectForKey("thumb") as! NSData)!)
         
         print("contato recuperado com sucesso")
         return contact
@@ -133,11 +133,12 @@ class DAOContacts
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
         
-        let content = NSMutableDictionary(contentsOfFile: path)
+        var content = NSMutableDictionary(contentsOfFile: path)
         
         if(content == nil)
         {
             self.initContacts()
+            content = NSMutableDictionary(contentsOfFile: path)
         }
         
         let query = PFUser.query()!
