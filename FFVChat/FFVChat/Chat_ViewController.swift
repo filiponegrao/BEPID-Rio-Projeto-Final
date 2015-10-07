@@ -42,7 +42,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-
     }
     
     override func viewDidLoad()
@@ -82,6 +81,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 17, 55, 16))
         self.sendButton.setTitle("Send", forState: UIControlState.Normal)
         self.sendButton.setTitleColor(lightBlue, forState: UIControlState.Normal)
+        self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(sendButton)
         
         self.messageText = UITextField(frame: CGRectMake(self.cameraButton.frame.width + 20, 10, screenWidth - (self.cameraButton.frame.width + 20 + self.sendButton.frame.width + 20), 30))
@@ -116,7 +116,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func keyboardWillHide(notification: NSNotification)
     {
         UIView.animateWithDuration(0.3) { () -> Void in
-            self.containerView.frame.origin.y = 80
+            self.containerView.frame.origin.y = 82.5
         }
     }
 
@@ -149,7 +149,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return ((self.senderMessages.count) + (self.receiverMessages.count))
+        return (self.senderMessages.count)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -158,6 +158,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.backgroundColor = UIColor.clearColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None
 //        cell.frame.size.height = 70
+ 
+        cell.message.text = senderMessages[indexPath.row]
         
         return cell
     }
@@ -174,4 +176,19 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print("container did editing")
     }
     
+    func sendMessage()
+    {
+        if (self.messageText.text?.characters.count > 0)
+        {
+            self.senderMessages.append(self.messageText.text!)
+            let lastPath = NSIndexPath(forRow: senderMessages.count - 1, inSection: 0)
+            self.tableView.beginUpdates()
+            self.tableView.insertRowsAtIndexPaths([lastPath], withRowAnimation: .Automatic)
+            self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + self.tableView.rowHeight)
+            self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height), animated: true)
+            self.tableView.endUpdates()
+//            self.tableView.reloadData()
+            self.messageText.text = ""
+        }
+    }
 }
