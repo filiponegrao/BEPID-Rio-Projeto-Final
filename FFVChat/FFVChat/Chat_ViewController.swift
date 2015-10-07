@@ -76,6 +76,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.cameraButton = UIButton(frame: CGRectMake(10, 15 , 30, 20))
         self.cameraButton.setImage(UIImage(named: "cameraChatButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
+        self.cameraButton.backgroundColor = UIColor.grayColor()
         self.messageView.addSubview(cameraButton)
         
         self.messageText = UITextField(frame: CGRectMake(50, 10, screenWidth - 120, 30))
