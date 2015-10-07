@@ -160,7 +160,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //        cell.frame.size.height = 70
         
         //adiciona mensagens do array
-//        cell.message.text = senderMessages[indexPath.row]
+        cell.message.text = senderMessages[indexPath.row]
         
         
         return cell
