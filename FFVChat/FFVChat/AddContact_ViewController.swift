@@ -38,7 +38,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.barTintColor = lightGray
         self.searchBar.tintColor = lightBlue
         self.searchBar.becomeFirstResponder()
-        self.searchBar.placeholder = "Insert a username for add as contact"
+        self.searchBar.placeholder = "Search for a username"
         self.view.addSubview(self.searchBar)
         
         self.tableView = UITableView(frame: CGRectMake(0, 100, screenWidth, screenHeight))

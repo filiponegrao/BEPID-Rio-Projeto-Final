@@ -39,6 +39,17 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: requestNotification.requestsLoaded.rawValue, object: nil)
+        
+        self.navigationController?.navigationBar.hidden = false
+        let bar:UINavigationBar! =  self.navigationController?.navigationBar
+        
+        bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        bar.shadowImage = UIImage()
+        bar.backgroundColor = lightGray
+        bar.tintColor = lightBlue
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        bar.titleTextAttributes = titleDict as? [String : AnyObject]
+        self.title = "Notifications"
     }
     
     override func viewWillDisappear(animated: Bool)
