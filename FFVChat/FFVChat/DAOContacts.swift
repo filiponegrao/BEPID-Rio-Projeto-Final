@@ -122,8 +122,6 @@ class DAOContacts
         {
             return
         }
-        
-//        content?.objectForKey(username) = nil
     }
     
     
@@ -169,7 +167,9 @@ class DAOContacts
                             content!.setObject(contact, forKey: "\(username)")
                             let success = content!.writeToFile(path, atomically: false)
                             print("\(username) adicionado com sucesso!")
+                            NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
                             callback(success: success, error: NSError(domain: "Campo nulo em contato adicionado", code: 100, userInfo: nil))
+                            
                         })
                     }
                 }
@@ -256,22 +256,25 @@ class DAOContacts
     
     
     
-    class func testPush(id: String)
+    class func sendPushForFriendRequest(username: String)
     {
-        let message = "Alert !!"
+        let message = "\(DAOUser.sharedInstance.getUserName()) quer lhe adicionar como um contato"
         
-        let data = [ "title": "Some Title",
-            "alert": message]
+        let data = [ "title": "Convite de amizade no FFVChat",
+            "alert": message, "badge": 1]
         
         print("enviando notificacao")
-        let userQuery: PFQuery = PFUser.query()!
-        userQuery.whereKey("objectId", equalTo: id)
-        let query: PFQuery = PFInstallation.query()!
-        query.whereKey("currentUser", matchesQuery: userQuery)
+        let userQuery = PFUser.query()
+        userQuery?.whereKey("username", equalTo: username)
         
-        let push: PFPush = PFPush()
-        push.setQuery(query)
-        push.setData(data)
+        // Find devices associated with these users
+        let pushQuery = PFInstallation.query()
+        pushQuery!.whereKey("user", matchesQuery: userQuery!)
+        
+        // Send push notification to query
+        let push = PFPush()
+        push.setQuery(pushQuery) // Set our Installation query
+        push.setData(data as [NSObject : AnyObject])
         push.sendPushInBackground()
     }
     
@@ -329,17 +332,19 @@ class DAOContacts
                 for object in objects
                 {
                     let username = object.valueForKey("username") as! String
-                    let trustLevel = object.valueForKey("trustLevel") as! Int
-                    let id = object.valueForKey("objectId") as! String
-                    
-                    let mc = metaContact(username: username, trustLevel: trustLevel, photo: nil, id: id)
-                    result.append(mc)
-                    
+                    if(!DAOContacts.isContact(username) && username != DAOUser.sharedInstance.getUserName())
+                    {
+                        let trustLevel = object.valueForKey("trustLevel") as! Int
+                        let id = object.valueForKey("objectId") as! String
+                        
+                        let mc = metaContact(username: username, trustLevel: trustLevel, photo: nil, id: id)
+                        result.append(mc)
+                        
+                    }
                     if(object.valueForKey("username") as! String == objects.last?.valueForKey("username") as! String)
                     {
                         callback(result)
                     }
-
                 }
             }
             else
@@ -348,7 +353,7 @@ class DAOContacts
             }
         })
     }
-    
+
     
     class func getPhotoFromUsername(username: String, callback: (image: UIImage?) -> Void) -> Void
     {

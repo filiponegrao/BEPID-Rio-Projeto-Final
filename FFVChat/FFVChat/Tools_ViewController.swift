@@ -57,6 +57,7 @@ class Tools_ViewController: UIViewController
     override func viewWillAppear(animated: Bool)
     {
         DAOFriendRequests.sharedInstance.reloadInfos()
+        self.navigationController?.navigationBar.hidden = true
     }
     func openTools()
     {

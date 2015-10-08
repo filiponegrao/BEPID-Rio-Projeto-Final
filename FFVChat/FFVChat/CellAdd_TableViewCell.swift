@@ -16,8 +16,11 @@ class CellAdd_TableViewCell: UITableViewCell {
     
     @IBOutlet var trustLevel: UILabel!
     
-    @IBOutlet var addButton: UIButton!
+    @IBOutlet var addButton: MKButton!
     
+    var invited : UIImageView!
+    
+    var invitedLabel : UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +39,20 @@ class CellAdd_TableViewCell: UITableViewCell {
     @IBAction func addContact(sender: UIButton)
     {
         let username = self.username.text!
+        self.addButton.hidden = true
+        
+        self.invited = UIImageView(frame: CGRectMake(addButton.frame.origin.x, addButton.frame.origin.y + 10, addButton.frame.size.width/2, addButton.frame.size.height/2))
+        self.invited.image = UIImage(named: "accept")
+        self.invited.center = CGPointMake(self.addButton.center.x, self.addButton.center.y/2)
+        self.addSubview(self.invited)
+        
+        self.invitedLabel = UILabel(frame: CGRectMake(self.invited.frame.origin.x, self.invited.frame.origin.y + self.invited.frame.size.height, self.addButton.frame.size.width, self.addButton.frame.size.height/2))
+        self.invitedLabel.text = "Invited"
+        self.invitedLabel.textColor = lightGreen
+        self.invitedLabel.adjustsFontSizeToFitWidth = true
+        self.addSubview(self.invitedLabel)
+        
         DAOFriendRequests.sharedInstance.sendRequest(username)
+        DAOContacts.sendPushForFriendRequest(username)
     }
 }

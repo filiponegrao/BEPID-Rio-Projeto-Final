@@ -62,8 +62,18 @@ class DAOUser
         {
             self.loginParse(self.getUserName(), password: self.getPassword())
         }
+        else if(PFUser.currentUser() != nil)
+        {
+            self.setInstallation()
+        }
     }
     
+    func setInstallation()
+    {
+        let installation = PFInstallation.currentInstallation()
+        installation["user"] = PFUser.currentUser()
+        installation.saveInBackground()
+    }
     
     class var sharedInstance : DAOUser
     {
@@ -164,6 +174,7 @@ class DAOUser
                                 }
                                 
                                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+                                self.setInstallation()
                                 
                             })
                         }
