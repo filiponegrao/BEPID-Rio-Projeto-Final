@@ -188,5 +188,23 @@ class DAOFriendRequests
         })
     }
     
-    
+    func wasAlreadyRequested(username: String, callback: (was: Bool) -> Void) -> Void
+    {
+        let query = PFQuery(className: "FriendRequest")
+        query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
+        query.whereKey("target", equalTo: username)
+        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            if(objects?.count > 0)
+            {
+                callback(was: true)
+            }
+            else
+            {
+                callback(was: false)
+            }
+            
+        }
+    }
+        
 }
