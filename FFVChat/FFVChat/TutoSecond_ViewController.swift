@@ -14,6 +14,9 @@ class TutoSecond_ViewController: UIViewController
 
     @IBOutlet weak var skipButton: UIButton!
     
+    
+    @IBOutlet weak var tutorial: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

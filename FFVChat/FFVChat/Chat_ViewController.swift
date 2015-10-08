@@ -48,7 +48,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = lightGray
+        self.view.backgroundColor = oficialDarkGray
         
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
@@ -81,7 +81,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 17, 55, 16))
         self.sendButton.setTitle("Send", forState: UIControlState.Normal)
-        self.sendButton.setTitleColor(lightBlue, forState: UIControlState.Normal)
+        self.sendButton.setTitleColor(oficialGreen, forState: UIControlState.Normal)
         self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(sendButton)
         

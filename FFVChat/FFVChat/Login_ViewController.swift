@@ -51,7 +51,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = lightGray
+        self.view.backgroundColor = oficialDarkGray
 
         self.emailField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
         self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3)
@@ -61,12 +61,14 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.emailField.layer.borderColor = UIColor.clearColor().CGColor
         self.emailField.floatingPlaceholderEnabled = true
         self.emailField.placeholder = "username"
-        self.emailField.tintColor = UIColor.MKColor.Blue
-        self.emailField.rippleLocation = MKRippleLocation.TapLocation
+        self.emailField.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.emailField.tintColor = oficialGreen
+        self.emailField.rippleLayerColor = UIColor.clearColor()
+//        self.emailField.rippleLocation = MKRippleLocation.TapLocation
         self.emailField.bottomBorderEnabled = true
-        self.emailField.bottomBorderColor = UIColor.MKColor.Blue
-        self.emailField.tintColor = UIColor.MKColor.Blue
-        self.emailField.textColor = lightBlue
+        self.emailField.bottomBorderColor = oficialGreen
+        self.emailField.tintColor = oficialGreen
+        self.emailField.textColor = oficialLightGray
         self.emailField.keyboardType = UIKeyboardType.EmailAddress
         self.view.addSubview(self.emailField)
         
@@ -78,12 +80,14 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.passwordField.layer.borderColor = UIColor.clearColor().CGColor
         self.passwordField.floatingPlaceholderEnabled = true
         self.passwordField.placeholder = "password"
-        self.passwordField.tintColor = UIColor.MKColor.Blue
-        self.passwordField.rippleLocation = MKRippleLocation.TapLocation
+        self.passwordField.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.passwordField.tintColor = oficialGreen
+//        self.passwordField.rippleLocation = MKRippleLocation.TapLocation
+        self.passwordField.rippleLayerColor = UIColor.clearColor()
         self.passwordField.bottomBorderEnabled = true
-        self.passwordField.bottomBorderColor = UIColor.MKColor.Blue
-        self.passwordField.tintColor = UIColor.MKColor.Blue
-        self.passwordField.textColor = lightBlue
+        self.passwordField.bottomBorderColor = oficialGreen
+        self.passwordField.tintColor = oficialGreen
+        self.passwordField.textColor = oficialLightGray
         self.passwordField.keyboardType = UIKeyboardType.NumberPad
         self.passwordField.secureTextEntry = true
         self.passwordField.delegate = self

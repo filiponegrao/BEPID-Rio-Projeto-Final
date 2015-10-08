@@ -48,7 +48,7 @@ class CellAdd_TableViewCell: UITableViewCell {
         
         self.invitedLabel = UILabel(frame: CGRectMake(self.invited.frame.origin.x, self.invited.frame.origin.y + self.invited.frame.size.height, self.addButton.frame.size.width, self.addButton.frame.size.height/2))
         self.invitedLabel.text = "Invited"
-        self.invitedLabel.textColor = lightGreen
+        self.invitedLabel.textColor = oficialGreen
         self.invitedLabel.adjustsFontSizeToFitWidth = true
         self.addSubview(self.invitedLabel)
         

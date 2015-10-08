@@ -22,15 +22,6 @@
                             <constraint firstAttribute="width" constant="50" id="xTw-NG-0Tl"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome do maluco desgraçado que quer te adicionar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ6-xt-5vS">
-                        <rect key="frame" x="69" y="10" width="315" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="pBA-Vc-acE"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.01176470588" green="0.73333333329999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confiança do caboclo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIX-fU-foM">
                         <rect key="frame" x="69" y="39" width="315" height="21"/>
                         <constraints>
@@ -54,6 +45,15 @@
                             <action selector="addContact:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YAq-JC-i0q"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome de quem te adicionou" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ6-xt-5vS">
+                        <rect key="frame" x="69" y="10" width="315" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="pBA-Vc-acE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.1215686275" green="0.8980392157" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="gDq-x6-6LT" firstAttribute="leading" secondItem="KJ6-xt-5vS" secondAttribute="trailing" constant="8" id="5MY-XZ-Hjp"/>

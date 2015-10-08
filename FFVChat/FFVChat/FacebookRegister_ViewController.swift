@@ -51,7 +51,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = lightGray
+        self.view.backgroundColor = oficialDarkGray
         
         let image = DAOUser.sharedInstance.getProfileImage()
         
@@ -76,12 +76,14 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.labelUsername.layer.borderColor = UIColor.clearColor().CGColor
         self.labelUsername.floatingPlaceholderEnabled = true
         self.labelUsername.placeholder = "username"
-        self.labelUsername.tintColor = UIColor.MKColor.Blue
-        self.labelUsername.rippleLocation = MKRippleLocation.TapLocation
+         self.labelUsername.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.labelUsername.tintColor = oficialGreen
+//        self.labelUsername.rippleLocation = MKRippleLocation.TapLocation
+        self.labelUsername.rippleLayerColor = UIColor.clearColor()
         self.labelUsername.bottomBorderEnabled = true
-        self.labelUsername.bottomBorderColor = UIColor.MKColor.Blue
-        self.labelUsername.tintColor = UIColor.MKColor.Blue
-        self.labelUsername.textColor = lightBlue
+        self.labelUsername.bottomBorderColor = oficialGreen
+        self.labelUsername.tintColor = oficialGreen
+        self.labelUsername.textColor = oficialLightGray
         
         self.labelPassword.autocapitalizationType = .None
         self.labelPassword.autocorrectionType = .No
@@ -89,12 +91,14 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.labelPassword.layer.borderColor = UIColor.clearColor().CGColor
         self.labelPassword.floatingPlaceholderEnabled = true
         self.labelPassword.placeholder = "password"
-        self.labelPassword.tintColor = UIColor.MKColor.Blue
-        self.labelPassword.rippleLocation = MKRippleLocation.TapLocation
+        self.labelPassword.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.labelPassword.tintColor = oficialGreen
+        self.labelPassword.rippleLayerColor = UIColor.clearColor()
+//        self.labelPassword.rippleLocation = MKRippleLocation.TapLocation
         self.labelPassword.bottomBorderEnabled = true
-        self.labelPassword.bottomBorderColor = UIColor.MKColor.Blue
-        self.labelPassword.tintColor = UIColor.MKColor.Blue
-        self.labelPassword.textColor = lightBlue
+        self.labelPassword.bottomBorderColor = oficialGreen
+        self.labelPassword.tintColor = oficialGreen
+        self.labelPassword.textColor = oficialLightGray
         
         self.labelConfirmPassword.autocapitalizationType = .None
         self.labelConfirmPassword.autocorrectionType = .No
@@ -102,12 +106,14 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.labelConfirmPassword.layer.borderColor = UIColor.clearColor().CGColor
         self.labelConfirmPassword.floatingPlaceholderEnabled = true
         self.labelConfirmPassword.placeholder = "confirm password"
-        self.labelConfirmPassword.tintColor = UIColor.MKColor.Blue
-        self.labelConfirmPassword.rippleLocation = MKRippleLocation.TapLocation
+        self.labelConfirmPassword.attributedPlaceholder = NSAttributedString(string: "confirm password", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.labelConfirmPassword.tintColor = oficialGreen
+//        self.labelConfirmPassword.rippleLocation = MKRippleLocation.TapLocation
+        self.labelConfirmPassword.rippleLayerColor = UIColor.clearColor()
         self.labelConfirmPassword.bottomBorderEnabled = true
-        self.labelConfirmPassword.bottomBorderColor = UIColor.MKColor.Blue
-        self.labelConfirmPassword.tintColor = UIColor.MKColor.Blue
-        self.labelConfirmPassword.textColor = lightBlue
+        self.labelConfirmPassword.bottomBorderColor = oficialGreen
+        self.labelConfirmPassword.tintColor = oficialGreen
+        self.labelConfirmPassword.textColor = oficialLightGray
 
     }
     

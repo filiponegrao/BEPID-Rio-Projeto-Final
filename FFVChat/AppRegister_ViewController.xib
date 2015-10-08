@@ -24,8 +24,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Dj-cY-Hap">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-Fq-yne">
-                            <rect key="frame" x="178" y="390" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-Fq-yne">
+                            <rect key="frame" x="178" y="386" width="244" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="244" id="XPK-Gv-fZr"/>
                                 <constraint firstAttribute="height" constant="30" id="hfe-GS-B56"/>
@@ -34,18 +34,20 @@
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" secureTextEntry="YES"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6b-AR-rgg">
-                            <rect key="frame" x="266" y="495" width="68" height="30"/>
+                            <rect key="frame" x="266" y="493" width="68" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="gXO-xG-v6s"/>
                                 <constraint firstAttribute="width" constant="68" id="jRo-La-HuH"/>
                             </constraints>
-                            <state key="normal" title="register"/>
+                            <state key="normal" title="register">
+                                <color key="titleColor" red="0.1215686275" green="0.8980392157" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
                             <connections>
                                 <action selector="register:" destination="-1" eventType="touchUpInside" id="uxd-Ur-jd7"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-0A-h8C">
-                            <rect key="frame" x="178" y="314" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-0A-h8C">
+                            <rect key="frame" x="178" y="310" width="244" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="244" id="RyF-4y-bzF"/>
                                 <constraint firstAttribute="height" constant="30" id="Vni-oa-oMM"/>
@@ -66,8 +68,8 @@
                                 <action selector="cancel:" destination="-1" eventType="touchUpInside" id="QU0-cD-X87"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cPV-Yj-w7Z">
-                            <rect key="frame" x="178" y="428" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cPV-Yj-w7Z">
+                            <rect key="frame" x="178" y="424" width="244" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="mE1-1m-a89"/>
                                 <constraint firstAttribute="width" constant="244" id="wcB-3v-SJY"/>
@@ -75,8 +77,8 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" secureTextEntry="YES"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1L-hY-RNY">
-                            <rect key="frame" x="178" y="352" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1L-hY-RNY">
+                            <rect key="frame" x="178" y="348" width="244" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="ME0-eV-7CM"/>
                                 <constraint firstAttribute="width" constant="244" id="y30-rw-PfK"/>
@@ -103,13 +105,13 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="The password must have six characters." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSt-va-om8">
-                            <rect key="frame" x="178" y="457" width="244" height="21"/>
+                            <rect key="frame" x="178" y="462" width="244" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="244" id="HsB-Iw-OIg"/>
                                 <constraint firstAttribute="height" constant="21" id="v2A-9r-yP7"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <color key="textColor" red="0.82554056186868685" green="0.82554056186868685" blue="0.82554056186868685" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.56470588239999997" green="0.58039215690000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>

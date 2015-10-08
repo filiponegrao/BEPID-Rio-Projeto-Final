@@ -24,7 +24,7 @@ class NavigationChat_View: UIView
     {
         self.viewController = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 80))
-        self.backgroundColor = UIColor.darkGrayColor()
+        self.backgroundColor = oficialLightGray
         
         self.backButton = UIButton(frame: CGRectMake(10, 35, 20, 20))
         self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
