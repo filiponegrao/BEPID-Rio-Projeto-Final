@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else if(DAOUser.sharedInstance.isLoged() == UserCondition.userLoggedOut)
         {
-            let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
+            let login = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
             self.window?.rootViewController = login
         }
         else if(DAOUser.sharedInstance.isLoged() == UserCondition.incompleteRegister)
