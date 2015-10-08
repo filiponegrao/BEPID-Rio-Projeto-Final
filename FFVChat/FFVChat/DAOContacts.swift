@@ -127,7 +127,7 @@ class DAOContacts
     }
     
     
-    class func addContactByUsername(username: String)
+    class func addContactByUsername(username: String, callback: (success: Bool, error: NSError?) -> Void) -> Void
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
@@ -167,24 +167,29 @@ class DAOContacts
                             contact.setValue(username, forKey: "username")
                             contact.setValue(date, forKey: "createdAt")
                             content!.setObject(contact, forKey: "\(username)")
-                            content!.writeToFile(path, atomically: false)
+                            let success = content!.writeToFile(path, atomically: false)
                             print("\(username) adicionado com sucesso!")
-                            NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
+                            callback(success: success, error: NSError(domain: "Campo nulo em contato adicionado", code: 100, userInfo: nil))
                         })
                     }
                 }
+                else
+                {
+                    callback(success: false, error: NSError(domain: "username nao encontrado", code: 101, userInfo: nil))
+                }
+                
             }
             else
             {
                 // Log details of the failure
-                NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.ContactNotFound.rawValue, object: nil)
+                callback(success: false, error: error)
                 print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
     
     
-    class func addContactByID(id: String)
+    class func addContactByID(id: String, callback: (success: Bool, error: NSError?) -> Void) -> Void
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("Contacts.plist") as String
@@ -195,6 +200,10 @@ class DAOContacts
         {
             self.initContacts()
             content = NSMutableDictionary(contentsOfFile: path)
+            if(content == nil)
+            {
+                callback(success: false, error: NSError(domain: "Erro ao criar a pasta para salvar contatos, verifique sua memoria disponivel", code: 999, userInfo: nil))
+            }
         }
         
         let query = PFUser.query()
@@ -223,13 +232,15 @@ class DAOContacts
                             
                             let contact = ["thumb":data!, "username":username, "createdAt":registerDate]
 
-                            print(content)
-                            print(content?.setObject(contact, forKey: "\(username)"))
-                            print(content?.writeToFile(path, atomically: false))
-                            
-                            NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
+                            content!.setObject(contact, forKey: "\(username)")
+                            let success = content!.writeToFile(path, atomically: false)
+                            callback(success: success, error: nil)
                         })
                     }
+                }
+                else
+                {
+                    callback(success: false, error: NSError(domain: "facebook ID nao encontrado", code: 102, userInfo: nil))
                 }
             }
             else
@@ -237,9 +248,12 @@ class DAOContacts
                 // Log details of the failure
                 NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.ContactNotFound.rawValue, object: nil)
                 print("Error: \(error!) \(error!.userInfo)")
+                callback(success: false, error: error)
             }
         }
     }
+    
+    
     
     
     class func testPush(id: String)
@@ -262,7 +276,7 @@ class DAOContacts
     }
     
     
-    class func getProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
+    class func getFacebookProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
 
         let pictureURL = "https://graph.facebook.com/\(facebookID)/picture?type=large&return_ssl_resources=1"
         
@@ -285,7 +299,7 @@ class DAOContacts
     }
     
     
-    class func getUsernameFromID(id: String, callback : (String)? -> Void) -> Void
+    class func getUsernameFromFacebookID(id: String, callback : (String)? -> Void) -> Void
     {
         let query = PFUser.query()
         query?.whereKey("facebookID", equalTo: id)

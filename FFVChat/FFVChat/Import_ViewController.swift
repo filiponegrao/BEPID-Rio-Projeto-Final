@@ -122,11 +122,11 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.checkOff()
         }
         
-        DAOContacts.getProfilePicture(self.metaContacts[indexPath.row].facebookID) { (image: UIImage?) -> Void in
+        DAOContacts.getFacebookProfilePicture(self.metaContacts[indexPath.row].facebookID) { (image: UIImage?) -> Void in
             cell.photo.image = image
         }
         
-        DAOContacts.getUsernameFromID(self.metaContacts[indexPath.row].facebookID) { (string: String?) -> Void in
+        DAOContacts.getUsernameFromFacebookID(self.metaContacts[indexPath.row].facebookID) { (string: String?) -> Void in
             cell.username.text = string
         }
         
@@ -170,7 +170,16 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             if(self.selectedItens[item.facebookID]!)
             {
                 self.contactsShouldAdd++
-                DAOContacts.addContactByID(item.facebookID)
+                DAOContacts.addContactByID(item.facebookID, callback: { (success, error) -> Void in
+                    if(success == true)
+                    {
+                        print("\(item.faceUsername) adicionado como contato!")
+                    }
+                    else
+                    {
+                        print(error)
+                    }
+                })
             }
         }
         if(self.contactsShouldAdd == 0)

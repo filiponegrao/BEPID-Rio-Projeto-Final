@@ -29,11 +29,14 @@ class FriendRequest
     }
 }
 
+
+
 private let data = DAOFriendRequests()
 
 
 class DAOFriendRequests
 {
+    var tried = 0
     
     var requests : [FriendRequest] = [FriendRequest]()
     
@@ -63,7 +66,6 @@ class DAOFriendRequests
     
     func loadRequests()
     {
-        print("meu nome é \(DAOUser.sharedInstance.getUserName())")
         var requests = [FriendRequest]()
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("target", equalTo: DAOUser.sharedInstance.getUserName())
@@ -71,7 +73,6 @@ class DAOFriendRequests
         query.findObjectsInBackgroundWithBlock { ( objects:[AnyObject]?, error: NSError?) -> Void in
             if let objects = objects as? [PFObject]
             {
-                print("objetos retornados em requests: \(objects.count)")
                 for object in objects
                 {
                     requests.append(FriendRequest(sender: object.valueForKey("sender") as! String, target: DAOUser.sharedInstance.getUserName()))
@@ -79,7 +80,7 @@ class DAOFriendRequests
                     if(object == objects.last)
                     {
                         self.requests = requests
-                        print("notificacoes carregadas")
+                        print("\(self.requests.count) requisicoes de amizade foram carregadas para o usuario atual")
                         NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
                     }
                 }
@@ -103,16 +104,19 @@ class DAOFriendRequests
                 for object in objects
                 {
                     object.setValue("Aceito", forKey: "status")
-                    DAOContacts.addContactByUsername(request.sender)
-                    object.saveEventually({ (success: Bool, error: NSError?) -> Void in
-                        self.loadRequests()
+                    DAOContacts.addContactByUsername(request.sender, callback: { (success, error) -> Void in
+                        if(success == true)
+                        {
+                            print("Convite de amizade de \(request.sender) aceito e adicionado como contato")
+                            self.updateObject(object)
+                        }
                     })
                 }
             }
             
         }
     }
-    
+        
     func friendsAccepted()
     {
         let query = PFQuery(className: "FriendRequest")
@@ -126,8 +130,14 @@ class DAOFriendRequests
                     let status = object.valueForKey("status") as! String
                     if(status == "Aceito")
                     {
-                        DAOContacts.addContactByUsername(object.valueForKey("target") as! String)
-                        object.deleteEventually()
+                        let contact = object.valueForKey("target") as! String
+                        DAOContacts.addContactByUsername(contact, callback: { (success, error) -> Void in
+                            if(success == true)
+                            {
+                                print("adicionando \(contact) por ter aceitado o pedido de amizade")
+                                object.deleteEventually()
+                            }
+                        })
                     }
                 }
             }
@@ -150,14 +160,33 @@ class DAOFriendRequests
                     request["sender"] = DAOUser.sharedInstance.getUserName()
                     request["target"] = username
                     request["status"] = "Pendente"
-                    request.saveEventually()
+                    request.saveEventually({ (success : Bool, error: NSError?) -> Void in
+                        if(success == true)
+                        {
+                            print("Convite de amizade enviado para \(username)")
+                        }
+                    })
                 }
             }
             
         })
     }
     
-    
+    func updateObject(object: PFObject)
+    {
+        object.saveEventually({ (success: Bool, error: NSError?) -> Void in
+            if(success != true)
+            {
+                self.tried = 0
+                self.loadRequests()
+            }
+            else if(self.tried < 10)
+            {
+                self.tried++
+                self.updateObject(object)
+            }
+        })
+    }
     
     
 }

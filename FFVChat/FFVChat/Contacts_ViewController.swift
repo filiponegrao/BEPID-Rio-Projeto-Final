@@ -36,7 +36,9 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         self.contacts = DAOContacts.getAllContacts()
         if(self.contacts.count == 0)
         {
-            DAOContacts.addContactByUsername("teste")
+            DAOContacts.addContactByUsername("teste", callback: { (success, error) -> Void in
+                print("teste adicionado como contato teste")
+            })
         }
         //end.
     }

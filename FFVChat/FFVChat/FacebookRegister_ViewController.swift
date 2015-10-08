@@ -14,11 +14,11 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     
     @IBOutlet var imageView: UIImageView!
 
-    @IBOutlet var labelUsername: UITextField!
+    @IBOutlet var labelUsername: MKTextField!
     
-    @IBOutlet var labelPassword: UITextField!
+    @IBOutlet var labelPassword: MKTextField!
     
-    @IBOutlet weak var labelConfirmPassword: UITextField!
+    @IBOutlet weak var labelConfirmPassword: MKTextField!
     
     var activeField: UITextField?
 
@@ -30,7 +30,8 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginCanceled", name: UserCondition.loginCanceled.rawValue, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
 
     }
     
@@ -43,12 +44,14 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
 
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.view.backgroundColor = lightGray
         
         let image = DAOUser.sharedInstance.getProfileImage()
         
@@ -66,8 +69,49 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.labelUsername.delegate = self
         self.labelPassword.delegate = self
         self.labelConfirmPassword.delegate = self
+        
+        self.labelUsername.autocapitalizationType = .None
+        self.labelUsername.autocorrectionType = .No
+        self.labelUsername.textAlignment = .Center
+        self.labelUsername.layer.borderColor = UIColor.clearColor().CGColor
+        self.labelUsername.floatingPlaceholderEnabled = true
+        self.labelUsername.placeholder = "username"
+        self.labelUsername.tintColor = UIColor.MKColor.Blue
+        self.labelUsername.rippleLocation = MKRippleLocation.TapLocation
+        self.labelUsername.bottomBorderEnabled = true
+        self.labelUsername.bottomBorderColor = UIColor.MKColor.Blue
+        self.labelUsername.tintColor = UIColor.MKColor.Blue
+        self.labelUsername.textColor = lightBlue
+        
+        self.labelPassword.autocapitalizationType = .None
+        self.labelPassword.autocorrectionType = .No
+        self.labelPassword.textAlignment = .Center
+        self.labelPassword.layer.borderColor = UIColor.clearColor().CGColor
+        self.labelPassword.floatingPlaceholderEnabled = true
+        self.labelPassword.placeholder = "password"
+        self.labelPassword.tintColor = UIColor.MKColor.Blue
+        self.labelPassword.rippleLocation = MKRippleLocation.TapLocation
+        self.labelPassword.bottomBorderEnabled = true
+        self.labelPassword.bottomBorderColor = UIColor.MKColor.Blue
+        self.labelPassword.tintColor = UIColor.MKColor.Blue
+        self.labelPassword.textColor = lightBlue
+        
+        self.labelConfirmPassword.autocapitalizationType = .None
+        self.labelConfirmPassword.autocorrectionType = .No
+        self.labelConfirmPassword.textAlignment = .Center
+        self.labelConfirmPassword.layer.borderColor = UIColor.clearColor().CGColor
+        self.labelConfirmPassword.floatingPlaceholderEnabled = true
+        self.labelConfirmPassword.placeholder = "confirm password"
+        self.labelConfirmPassword.tintColor = UIColor.MKColor.Blue
+        self.labelConfirmPassword.rippleLocation = MKRippleLocation.TapLocation
+        self.labelConfirmPassword.bottomBorderEnabled = true
+        self.labelConfirmPassword.bottomBorderColor = UIColor.MKColor.Blue
+        self.labelConfirmPassword.tintColor = UIColor.MKColor.Blue
+        self.labelConfirmPassword.textColor = lightBlue
+
     }
     
+    //Sobe a view e desce a view
     //Sobe a view e desce a view
     func keyboardWillShow(notification: NSNotification)
     {
@@ -79,16 +123,10 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
     
-    func keyboardWillHide() {
+    func keyboardWillHide(notification: NSNotification) {
         UIView.animateWithDuration(0.3) { () -> Void in
             self.view.frame.origin.y = 0
         }
-    }
-    
-    
-    func textFieldDidEndEditing(textField: UITextField)
-    {
-        self.keyboardWillHide()
     }
     
     

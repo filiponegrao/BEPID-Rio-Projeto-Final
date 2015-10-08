@@ -46,6 +46,8 @@ enum UserCondition : String
     /** Notificacao responsavel por avisar quando os contatos do usuario
      * foram carregados com sucesso */
     case contactsLoaded = "contactsLoaded"
+    
+    case unknowError = "unknowError"
 }
 
 private let data : DAOUser = DAOUser()
@@ -94,8 +96,6 @@ class DAOUser
             (succeeded: Bool, error: NSError?) -> Void in
             if let error = error
             {
-                let errorString = error.userInfo["error"] as? NSString
-                print(errorString)
                 if(error.code == 202)
                 {
                     NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userAlreadyExist.rawValue, object: nil)
@@ -103,6 +103,10 @@ class DAOUser
                 else if(error.code == 203)
                 {
                     NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.emailInUse.rawValue, object: nil)
+                }
+                else
+                {
+                    NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.unknowError.rawValue, object: nil)
                 }
                 // Show the errorString somewhere and let the user try again.
             }
@@ -142,17 +146,23 @@ class DAOUser
                             let email = user["email"] as! String
                             let trustLevel = user["trustLevel"] as! Int
                             let id = user.objectId
+                            
+                            self.setEmail(email)
+                            self.setUserName(username)
+                            self.setPassword(password)
+                            self.setTrustLevel(trustLevel)
+                            self.setParseKey(id!)
+                            
                             let data = user["profileImage"] as! PFFile
                             data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                                 
-                                let image = UIImage(data: data!)
-                                self.setEmail(email)
-                                self.setUserName(username)
-                                self.setPassword(password)
-                                self.setTrustLevel(trustLevel)
-                                self.setProfileImage(image!)
-                                self.setParseKey(id!)
-                                print("Usuario logado!")
+                                if(data != nil)
+                                {
+                                    print("Usuario logado!")
+                                    let image = UIImage(data: data!)
+                                    self.setProfileImage(image!)
+                                }
+                                
                                 NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                                 
                             })
@@ -173,7 +183,6 @@ class DAOUser
         }
     }
 
-    
     
     
     
@@ -210,8 +219,11 @@ class DAOUser
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
-                        let image = UIImage(data: data!)
-                        self.setProfileImage(image!)
+                        if(data != nil)
+                        {
+                            let image = UIImage(data: data!)
+                            self.setProfileImage(image!)
+                        }
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
                 }
