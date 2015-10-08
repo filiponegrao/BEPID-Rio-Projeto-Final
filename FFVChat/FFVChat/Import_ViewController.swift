@@ -46,9 +46,9 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         //doneButton
         self.doneButton = UIButton(frame: CGRectMake(screenWidth/2 + 2, self.tableView.frame.origin.y - 65, screenWidth/2-2, 30))
-        self.doneButton.backgroundColor = UIColor(netHex: 0x888686)
-        self.doneButton.setTitle("Finalizar", forState: .Normal)
-        self.doneButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        self.doneButton.backgroundColor = oficialGreen
+        self.doneButton.setTitle("Done", forState: .Normal)
+        self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.doneButton)
         
