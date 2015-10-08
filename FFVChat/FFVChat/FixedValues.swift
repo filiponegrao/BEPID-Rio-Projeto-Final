@@ -20,6 +20,7 @@ let lightGreen = UIColor(hex: 0x5c9b5b)
 let oficialGreen = UIColor(netHex: 0x08e7c5)
 let oficialDarkGray = UIColor(netHex: 0x343539)
 let oficialLightGray = UIColor(netHex: 0xa1a5a4)
+let oficialBlue = UIColor(netHex: 0x1a4dd0)
 
 
 class FixedValues
