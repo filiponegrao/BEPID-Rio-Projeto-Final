@@ -13,8 +13,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     var tableView: UITableView!
     
-    var senderMessages = ["Hello", "Good to see you"]
-    var receiverMessages = ["Hi", "Manda nudes!" ]
+    var senderMessages = ["Hello"]
+    var receiverMessages = ["Hi" ]
     
     var contact : Contact!
     
@@ -66,6 +66,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.layer.zPosition = 0
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+//        self.tableView.reloadData()
         self.containerView.addSubview(tableView)
         
         self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, 50))
@@ -197,11 +198,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableviewScroll(animated: Bool)
     {
-        
         if (self.tableView.numberOfRowsInSection(0) > 0)
         {
-            let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: (self.tableView.numberOfSections-1))
-            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
+//            let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: (self.tableView.numberOfSections-1))
+            
+            let lastRowIndex = self.tableView.numberOfRowsInSection(0) - 1
+            let pathToLastRow = NSIndexPath(forRow: lastRowIndex - 1, inSection: 0)
+            
+            print(lastRowIndex)
+            
+            self.tableView.scrollToRowAtIndexPath(pathToLastRow, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
         }
         
     }

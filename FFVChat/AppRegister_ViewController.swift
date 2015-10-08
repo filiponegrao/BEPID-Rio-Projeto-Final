@@ -66,6 +66,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         super.viewDidLoad()
         
         self.picker!.delegate = self
+        self.view.backgroundColor = lightGray
+
         
         self.labelEmail.delegate = self
         self.labelPassword.delegate = self

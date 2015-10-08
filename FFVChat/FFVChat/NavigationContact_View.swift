@@ -25,7 +25,7 @@ class NavigationContact_View: UIView
     {
         self.vc = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 70))
-        self.backgroundColor = lightBlue
+        self.backgroundColor = UIColor.darkGrayColor()
         
         self.toolsButton = MKButton(frame: CGRectMake(screenWidth - 50, 20, 40, 40))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
