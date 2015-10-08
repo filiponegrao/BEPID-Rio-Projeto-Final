@@ -14,7 +14,41 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="twS-CA-qRu">
+                    <rect key="frame" x="241" y="285" width="119" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="119" id="5XN-2v-WRf"/>
+                        <constraint firstAttribute="height" constant="30" id="OtV-Ck-deR"/>
+                    </constraints>
+                    <state key="normal" title="Logout">
+                        <color key="titleColor" red="0.13075417780977827" green="0.77556818181818188" blue="0.65825585701471134" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="nR7-EA-FqZ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tg-7A-3nc">
+                    <rect key="frame" x="21" y="40" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Afx-wP-9jl"/>
+                        <constraint firstAttribute="width" constant="46" id="Qyq-wp-b8M"/>
+                    </constraints>
+                    <state key="normal" title="X">
+                        <color key="titleColor" red="0.83134075129999996" green="0.83134075129999996" blue="0.83134075129999996" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="back:" destination="-1" eventType="touchUpInside" id="GR0-9R-Fb6"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="1tg-7A-3nc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="21" id="4vT-OA-n4F"/>
+                <constraint firstItem="1tg-7A-3nc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="Dad-IU-hxV"/>
+                <constraint firstItem="twS-CA-qRu" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="K1u-yS-y5y"/>
+                <constraint firstItem="twS-CA-qRu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yi7-kx-XGd"/>
+            </constraints>
         </view>
     </objects>
 </document>

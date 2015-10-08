@@ -47,6 +47,7 @@ class Tools_ViewController: UIViewController
         self.configButton = UIButton(frame: CGRectMake(screenWidth - 80, 20, 80, 80))
         self.configButton.setImage(UIImage(named: "settingsButton"), forState: .Normal)
         self.configButton.alpha = 0
+        self.configButton.addTarget(self, action: "showSettings", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.configButton)
         
         
@@ -95,6 +96,14 @@ class Tools_ViewController: UIViewController
                 
         }
 
+    }
+    
+    
+    //going to settings
+    func showSettings()
+    {
+        let settingsController = Settings_ViewController()
+        self.navigationController?.pushViewController(settingsController, animated: true)
     }
     
     //***  PRESENTING FUNCTIONS *****//

@@ -237,6 +237,12 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
                 alert.show()
             }
                 
+            else if (self.labelUsername.text?.characters.count < 4)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Nome de usuário deve conter, ao mínimo, 4 caracteres", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+                
             else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
             {
                 let alert = UIAlertView(title: "Ops!", message: "Senha deve conter exatamente 6 números", delegate: nil, cancelButtonTitle: "Ok")
