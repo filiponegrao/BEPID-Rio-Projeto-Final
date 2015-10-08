@@ -28,6 +28,7 @@ class Settings_ViewController: UIViewController
  
     @IBAction func logout(sender: AnyObject)
     {
+        DAOUser.sharedInstance.logOut()
         let login = Login_ViewController()
         self.presentViewController(login, animated: true, completion: nil)
     }
