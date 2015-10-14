@@ -48,7 +48,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = oficialDarkGray
+        if(self.contact.username == "filiponegrao")
+        {
+            self.view.backgroundColor = goodTrust
+        }
+        else
+        {
+            self.view.backgroundColor = badTrust
+        }
         
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
@@ -79,7 +86,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //        self.cameraButton.backgroundColor = UIColor.grayColor()
         self.messageView.addSubview(cameraButton)
         
-        self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 17, 55, 16))
+        self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 5, 55, 40))
         self.sendButton.setTitle("Send", forState: UIControlState.Normal)
         self.sendButton.setTitleColor(oficialGreen, forState: UIControlState.Normal)
         self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
@@ -92,7 +99,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
         self.messageView.addSubview(messageText)
 
-        
+
         self.navBar.contactImage.setImage(self.contact.thumb, forState: UIControlState.Normal)
         
     }
@@ -202,7 +209,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         {
 //            let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: (self.tableView.numberOfSections-1))
             
-            let lastRowIndex = self.tableView.numberOfRowsInSection(0) - 1
+            let lastRowIndex = self.tableView.numberOfRowsInSection(0)
             let pathToLastRow = NSIndexPath(forRow: lastRowIndex - 1, inSection: 0)
             
             print(lastRowIndex)

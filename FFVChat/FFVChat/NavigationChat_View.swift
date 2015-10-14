@@ -24,7 +24,16 @@ class NavigationChat_View: UIView
     {
         self.viewController = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 80))
-        self.backgroundColor = oficialLightGray
+        
+        if(self.viewController.contact.username == "filiponegrao")
+        {
+            self.backgroundColor = goodTrustNav
+        }
+        else
+        {
+            self.backgroundColor = badTrustNav
+        }
+        
         
         self.backButton = UIButton(frame: CGRectMake(10, 35, 20, 20))
         self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
@@ -48,17 +57,20 @@ class NavigationChat_View: UIView
         self.contactImage.addTarget(self, action: "goToProfile", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(self.contactImage)
         
-        self.galleryButton = UIButton(frame: CGRectMake(self.center.x - (self.contactImage.frame.width/2 + 65), 30, 40, 40))
-        self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: UIControlState.Normal)
-        self.galleryButton.center = CGPointMake(self.center.x/2, self.galleryButton.frame.height/2 + 30)
-//        self.galleryButton.backgroundColor = UIColor.whiteColor()
-        self.addSubview(self.galleryButton)
+        self.galleryButton = UIButton(frame: CGRectMake(self.frame.size.width - 50 , 30, 40, 40))
+        self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: .Normal)
+        self.addSubview(galleryButton)
         
-        self.contactName = UILabel(frame: CGRectMake(self.contactImage.center.x + self.contactImage.frame.height/2 + 10, self.contactImage.center.y - 25, screenWidth/3, self.frame.height/2))
-        self.contactName.text = "filiponegrao"
-        self.contactName.textAlignment = .Center
-        self.contactName.textColor = UIColor.whiteColor()
-        self.addSubview(self.contactName)
+//        self.galleryButton = UIButton(frame: CGRectMake(self.center.x - (self.contactImage.frame.width/2 + 65), 30, 40, 40))
+//        self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: UIControlState.Normal)
+//        self.galleryButton.center = CGPointMake(self.center.x/2, self.galleryButton.frame.height/2 + 30)
+//        self.addSubview(self.galleryButton)
+        
+//        self.contactName = UILabel(frame: CGRectMake(self.contactImage.center.x + self.contactImage.frame.height/2 + 10, self.contactImage.center.y - 25, screenWidth/3, self.frame.height/2))
+//        self.contactName.text = "filiponegrao"
+//        self.contactName.textAlignment = .Center
+//        self.contactName.textColor = UIColor.whiteColor()
+//        self.addSubview(self.contactName)
 
         
     }

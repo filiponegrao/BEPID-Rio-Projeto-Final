@@ -20,6 +20,15 @@ class ReceiverProfile_ViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        if (self.contact.username == "filiponegrao")
+        {
+            self.view.backgroundColor = goodTrust
+
+        }
+        else
+        {
+            self.view.backgroundColor = badTrust
+        }
         
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.height/2
         self.contactImage.clipsToBounds = true
