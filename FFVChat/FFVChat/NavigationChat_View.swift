@@ -14,7 +14,7 @@ class NavigationChat_View: UIView
     
     var backButton : UIButton!
     
-    var contactImage : UIImageView!
+    var contactImage : UIButton!
     
     var contactName : UILabel!
     
@@ -34,7 +34,7 @@ class NavigationChat_View: UIView
 //        self.backButton.backgroundColor = UIColor.whiteColor()
         self.addSubview((self.backButton))
         
-        self.contactImage = UIImageView(frame: CGRectMake(screenWidth/2, 25, screenWidth/5, screenWidth/5))
+        self.contactImage = UIButton(frame: CGRectMake(screenWidth/2, 25, screenWidth/5, screenWidth/5))
         self.contactImage.backgroundColor = UIColor.grayColor()
         self.contactImage.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.contactImage.layer.borderWidth = 1.0
@@ -45,6 +45,7 @@ class NavigationChat_View: UIView
         self.contactImage.clipsToBounds = true
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width/2
         self.contactImage.center = CGPointMake(self.center.x, self.center.y + 15)
+        self.contactImage.addTarget(self, action: "goToProfile", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(self.contactImage)
         
         self.galleryButton = UIButton(frame: CGRectMake(self.center.x - (self.contactImage.frame.width/2 + 65), 30, 40, 40))
@@ -70,5 +71,12 @@ class NavigationChat_View: UIView
     func back()
     {
         self.viewController.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func goToProfile()
+    {
+        let profile = ReceiverProfile_ViewController()
+        profile.contact = viewController.contact
+        self.viewController.navigationController?.pushViewController(profile, animated: true)
     }
 }

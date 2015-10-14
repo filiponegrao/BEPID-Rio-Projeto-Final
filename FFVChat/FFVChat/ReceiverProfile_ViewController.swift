@@ -15,6 +15,7 @@ class ReceiverProfile_ViewController: UIViewController
     
     var contact : Contact!
     
+    var backButton : UIButton!
 
     override func viewDidLoad()
     {
@@ -25,7 +26,13 @@ class ReceiverProfile_ViewController: UIViewController
         self.contactImage.image = DAOUser.sharedInstance.getProfileImage()
         self.contactImage.layer.borderWidth = 1.5
         self.contactImage.layer.borderColor = UIColor.whiteColor().CGColor
+        self.contactImage.image = self.contact.thumb
         
+        self.backButton = UIButton(frame: CGRectMake(10, 35, 20, 20))
+        self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
+        self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(backButton)
+
 
         // Do any additional setup after loading the view.
     }
@@ -36,6 +43,9 @@ class ReceiverProfile_ViewController: UIViewController
         // Dispose of any resources that can be recreated.
     }
     
-
+    func back()
+    {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
 }

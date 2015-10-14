@@ -93,7 +93,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.addSubview(messageText)
 
         
-        self.navBar.contactImage.image = contact.thumb
+        self.navBar.contactImage.setImage(self.contact.thumb, forState: UIControlState.Normal)
         
     }
 
