@@ -144,9 +144,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("didReceiveRemoteNotification \(userInfo)")
+        let notification = userInfo as NSDictionary
         PFPush.handlePush(userInfo)
-        if application.applicationState == UIApplicationState.Inactive {
+        if application.applicationState == UIApplicationState.Inactive
+        {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+        }
+        
+        if(notification.valueForKey("do") as! String == appNotification.friendRequest.rawValue)
+        {
+            print("carregando friend requests ordenado por notifiacao")
+            DAOFriendRequests.sharedInstance.loadRequests()
+        }
+        else if(notification.valueForKey("do") as! String == appNotification.requestAccepted.rawValue)
+        {
+            print("Adicionando amigo ordenado por notifiacao")
+            DAOFriendRequests.sharedInstance.friendsAccepted()
+        }
+        else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
+        {
+            let sender = notification.valueForKey("sender") as! String
+            DAOParseMessages.sharedInstance.checkForContactMessages(sender)
         }
     }
     

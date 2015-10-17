@@ -138,9 +138,13 @@ class DAOContacts
             content = NSMutableDictionary(contentsOfFile: path)
         }
         
+        if(DAOUser.sharedInstance.getUserName() == username)
+        {
+            callback(success: false, error: NSError(domain: "Usuario desejado é o corrente", code: 998, userInfo: nil))
+        }
+        
         let query = PFUser.query()!
         query.whereKey("username", equalTo: username)
-        
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
@@ -168,7 +172,7 @@ class DAOContacts
                             let success = content!.writeToFile(path, atomically: false)
                             print("\(username) adicionado com sucesso!")
                             NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
-                            callback(success: success, error: NSError(domain: "Campo nulo em contato adicionado", code: 100, userInfo: nil))
+                            callback(success: success, error: nil)
                             
                         })
                     }
@@ -181,9 +185,9 @@ class DAOContacts
             }
             else
             {
+                print("Error: \(error!) \(error!.userInfo)")
                 // Log details of the failure
                 callback(success: false, error: error)
-                print("Error: \(error!) \(error!.userInfo)")
             }
         }
     }
@@ -252,32 +256,7 @@ class DAOContacts
             }
         }
     }
-    
-    
-    
-    
-    class func sendPushForFriendRequest(username: String)
-    {
-        let message = "\(DAOUser.sharedInstance.getUserName()) quer lhe adicionar como um contato"
-        
-        let data = [ "title": "Convite de amizade no FFVChat",
-            "alert": message, "badge": 1]
-        
-        print("enviando notificacao")
-        let userQuery = PFUser.query()
-        userQuery?.whereKey("username", equalTo: username)
-        
-        // Find devices associated with these users
-        let pushQuery = PFInstallation.query()
-        pushQuery!.whereKey("user", matchesQuery: userQuery!)
-        
-        // Send push notification to query
-        let push = PFPush()
-        push.setQuery(pushQuery) // Set our Installation query
-        push.setData(data as [NSObject : AnyObject])
-        push.sendPushInBackground()
-    }
-    
+
     
     class func getFacebookProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
 

@@ -50,7 +50,10 @@
 		803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962971BC4707400AFFD24 /* BlurEffect.swift */; settings = {ASSET_TAGS = (); }; };
+		803ECB961BD09BF000F67D2E /* Messages.plist in Resources */ = {isa = PBXBuildFile; fileRef = 803ECB951BD09BF000F67D2E /* Messages.plist */; settings = {ASSET_TAGS = (); }; };
 		8070BDA21BB3208A005573DC /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070BDA11BB3208A005573DC /* Contacts.swift */; settings = {ASSET_TAGS = (); }; };
+		808B589B1BC9656D008BE9FE /* DAOParseMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808B589A1BC9656D008BE9FE /* DAOParseMessages.swift */; settings = {ASSET_TAGS = (); }; };
+		808B58AA1BCE0D58008BE9FE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808B58A91BCE0D58008BE9FE /* Message.swift */; settings = {ASSET_TAGS = (); }; };
 		809A71871BBCBAE3004DB12F /* Contacts.plist in Resources */ = {isa = PBXBuildFile; fileRef = 809A71861BBCBAE3004DB12F /* Contacts.plist */; settings = {ASSET_TAGS = (); }; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; settings = {ASSET_TAGS = (); }; };
 		809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A01BB4A99600CEC425 /* ImageEdition.swift */; settings = {ASSET_TAGS = (); }; };
@@ -157,7 +160,10 @@
 		803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
 		803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		803962971BC4707400AFFD24 /* BlurEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
+		803ECB951BD09BF000F67D2E /* Messages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Messages.plist; sourceTree = "<group>"; };
 		8070BDA11BB3208A005573DC /* Contacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
+		808B589A1BC9656D008BE9FE /* DAOParseMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOParseMessages.swift; sourceTree = "<group>"; };
+		808B58A91BCE0D58008BE9FE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		809A71861BBCBAE3004DB12F /* Contacts.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Contacts.plist; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
 		809E75A01BB4A99600CEC425 /* ImageEdition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdition.swift; sourceTree = "<group>"; };
@@ -313,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				801D92521BA4928800D05CE7 /* Info.plist */,
+				803ECB951BD09BF000F67D2E /* Messages.plist */,
 				809A71861BBCBAE3004DB12F /* Contacts.plist */,
 				801D929F1BA51E5900D05CE7 /* UserInfo.plist */,
 			);
@@ -343,6 +350,8 @@
 				809E759C1BB49FC100CEC425 /* DAOContacts.swift */,
 				80E8BD771BC58E7D00B49C31 /* DAONotifications.swift */,
 				80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */,
+				808B589A1BC9656D008BE9FE /* DAOParseMessages.swift */,
+				808B58A91BCE0D58008BE9FE /* Message.swift */,
 				801D92771BA492D700D05CE7 /* User.swift */,
 				8070BDA11BB3208A005573DC /* Contacts.swift */,
 				8019CB3D1BADDD780017CD7A /* FixedValues.swift */,
@@ -540,6 +549,7 @@
 				F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */,
 				801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */,
 				801CB5C91BC2205E00F51E06 /* LoadingInfo_ViewController.xib in Resources */,
+				803ECB961BD09BF000F67D2E /* Messages.plist in Resources */,
 				8005974F1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib in Resources */,
 				F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */,
 				8005974B1BC1E76100327A3D /* CellAll_TableViewCell.xib in Resources */,
@@ -591,6 +601,7 @@
 				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
 				F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */,
 				F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */,
+				808B58AA1BCE0D58008BE9FE /* Message.swift in Sources */,
 				F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */,
 				801CB5C81BC2205E00F51E06 /* LoadingInfo_ViewController.swift in Sources */,
 				8070BDA21BB3208A005573DC /* Contacts.swift in Sources */,
@@ -610,6 +621,7 @@
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
 				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
+				808B589B1BC9656D008BE9FE /* DAOParseMessages.swift in Sources */,
 				801D92781BA492D700D05CE7 /* User.swift in Sources */,
 				80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,

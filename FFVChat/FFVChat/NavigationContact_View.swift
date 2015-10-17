@@ -42,11 +42,18 @@ class NavigationContact_View: UIView
         self.filterButtons.titleLabel?.textAlignment = .Left
         self.addSubview(self.filterButtons)
         
+        self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
+        self.alert.image = UIImage(named: "icon_alert")
+        self.alert.hidden = true
+        self.toolsButton.addSubview(self.alert)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: requestNotification.requestsLoaded.rawValue, object: nil)
         
     }
     
     func openTools()
     {
+        self.alertOff()
         let tools = UINavigationController(nibName: "AppNavigation2", bundle: nil)
         tools.viewControllers = [Tools_ViewController()]
         tools.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen

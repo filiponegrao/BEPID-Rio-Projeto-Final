@@ -13,8 +13,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     var tableView: UITableView!
     
-    var senderMessages = ["Hello"]
-    var receiverMessages = ["Hi" ]
+    var messages = [Message]()
     
     var contact : Contact!
     
@@ -34,7 +33,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReady.rawValue, object: nil)
+        DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
         
+        self.messages = DAOParseMessages.sharedInstance.getMessages(self.contact.username)
+        print(self.messages.count)
 
     }
     
@@ -44,18 +47,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    func reloadMessages()
+    {
+        self.messages = DAOParseMessages.sharedInstance.getMessages(self.contact.username)
+        self.tableView.reloadData()
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        if(self.contact.username == "filiponegrao")
-        {
-            self.view.backgroundColor = goodTrust
-        }
-        else
-        {
-            self.view.backgroundColor = badTrust
-        }
+        self.view.backgroundColor = lightGray
         
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
@@ -99,7 +100,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
         self.messageView.addSubview(messageText)
 
-
         self.navBar.contactImage.setImage(self.contact.thumb, forState: UIControlState.Normal)
         
     }
@@ -132,7 +132,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.messageText.endEditing(true)
-        print("touches")
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
@@ -142,11 +141,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-//        let message = self.senderMessages[0]
-//        let currentMessage : NSString = message as NSString
-//        let messageSize : CGSize! = currentMessage.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(14.0)])
-//        return messageSize.height + 48
-        
         return 70
     }
     
@@ -157,7 +151,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return (self.senderMessages.count)
+        return self.messages.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -165,11 +159,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
         cell.backgroundColor = UIColor.clearColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-//        cell.frame.size.height = 70
         
         //adiciona mensagens do array
-        cell.message.text = senderMessages[indexPath.row]
-        
+        cell.message.text = self.messages[indexPath.row].text
         
         return cell
     }
@@ -177,29 +169,38 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         self.messageText.endEditing(true)
-        print("didSelected")
     }
     
     func EndEditing()
     {
         self.containerView.endEditing(true)
-        print("container did editing")
     }
     
     func sendMessage()
     {
         if (self.messageText.text?.characters.count > 0)
-        {
-            self.senderMessages.append(self.messageText.text!)
-            let lastPath = NSIndexPath(forRow: senderMessages.count - 1, inSection: 0)
-            self.tableView.beginUpdates()
-            self.tableView.insertRowsAtIndexPaths([lastPath], withRowAnimation: .Automatic)
-            self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + self.tableView.rowHeight)
-            self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height), animated: true)
-            self.tableView.endUpdates()
-//            self.tableView.reloadData()
-            tableviewScroll(true)
-            self.messageText.text = ""
+        {            
+            DAOParseMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageText.text!, callback: { (ret) -> Void in
+                
+                if(ret == messageCondRet.unknowError)
+                {
+                    print("deu erro ao enviar mesangegem")
+                }
+                else
+                {
+//                    let lastPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
+//                    self.tableView.beginUpdates()
+//                    self.tableView.insertRowsAtIndexPaths([lastPath], withRowAnimation: .Automatic)
+//                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + self.tableView.rowHeight)
+//                    self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height), animated: true)
+//                    self.tableView.endUpdates()
+//                    self.tableviewScroll(true)
+                    self.messageText.text = ""
+                    self.reloadMessages()
+                }
+                
+            })
+            
         }
     }
     

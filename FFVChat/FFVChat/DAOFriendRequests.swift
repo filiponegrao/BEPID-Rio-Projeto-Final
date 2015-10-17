@@ -13,6 +13,8 @@ import Parse
 enum requestNotification : String
 {
     case requestsLoaded
+    
+    case reloadRequest
 }
 
 
@@ -43,6 +45,7 @@ class DAOFriendRequests
     init()
     {
         self.loadRequests()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadInfos", name: requestNotification.reloadRequest.rawValue, object: nil)
     }
     
     
@@ -116,7 +119,12 @@ class DAOFriendRequests
             
         }
     }
-        
+    
+    /**
+     * Check for friend that have accepted friend notifications
+     * and add these friends as contact, and them remove the
+     * notification from parse.
+     */
     func friendsAccepted()
     {
         let query = PFQuery(className: "FriendRequest")
@@ -163,6 +171,7 @@ class DAOFriendRequests
                     request.saveEventually({ (success : Bool, error: NSError?) -> Void in
                         if(success == true)
                         {
+                            self.sendPushForFriendRequest(username)
                             print("Convite de amizade enviado para \(username)")
                         }
                     })
@@ -170,6 +179,28 @@ class DAOFriendRequests
             }
             
         })
+    }
+    
+    func sendPushForFriendRequest(username: String)
+    {
+        let message = "\(DAOUser.sharedInstance.getUserName()) quer lhe adicionar como um contato"
+        
+        let data = [ "title": "Convite de amizade no FFVChat",
+            "alert": message, "badge": 1, "do": appNotification.friendRequest.rawValue]
+        
+        print("enviando notificacao")
+        let userQuery = PFUser.query()
+        userQuery?.whereKey("username", equalTo: username)
+        
+        // Find devices associated with these users
+        let pushQuery = PFInstallation.query()
+        pushQuery!.whereKey("user", matchesQuery: userQuery!)
+        
+        // Send push notification to query
+        let push = PFPush()
+        push.setQuery(pushQuery) // Set our Installation query
+        push.setData(data as [NSObject : AnyObject])
+        push.sendPushInBackground()
     }
     
     func updateObject(object: PFObject)

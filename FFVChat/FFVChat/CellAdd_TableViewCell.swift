@@ -53,6 +53,5 @@ class CellAdd_TableViewCell: UITableViewCell {
         self.addSubview(self.invitedLabel)
         
         DAOFriendRequests.sharedInstance.sendRequest(username)
-        DAOContacts.sendPushForFriendRequest(username)
     }
 }

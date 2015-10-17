@@ -28,7 +28,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.tableView)
  
-        DAOFriendRequests.sharedInstance.reloadInfos()
         self.requests = DAOFriendRequests.sharedInstance.getRequests()
 
     }

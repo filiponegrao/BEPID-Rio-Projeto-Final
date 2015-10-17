@@ -73,6 +73,7 @@ class DAOUser
         let installation = PFInstallation.currentInstallation()
         installation["user"] = PFUser.currentUser()
         installation.saveInBackground()
+        
     }
     
     class var sharedInstance : DAOUser
@@ -235,6 +236,7 @@ class DAOUser
                             let image = UIImage(data: data!)
                             self.setProfileImage(image!)
                         }
+                        self.setInstallation()
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
                     })
                 }
@@ -950,6 +952,7 @@ class DAOUser
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(testStr)
     }
+    
 
 }
 

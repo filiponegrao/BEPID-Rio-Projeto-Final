@@ -34,12 +34,6 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         self.view.addSubview(self.tableView)
         
         self.contacts = DAOContacts.getAllContacts()
-        if(self.contacts.count == 0)
-        {
-            DAOContacts.addContactByUsername("teste", callback: { (success, error) -> Void in
-                print("teste adicionado como contato teste")
-            })
-        }
         //end.
     }
     
@@ -48,7 +42,8 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: ContactNotification.contactAdded.rawValue, object: nil)
-        DAOFriendRequests.sharedInstance.reloadInfos()
+        DAOFriendRequests.sharedInstance.friendsAccepted()
+        
 //        self.navigationController?.navigationBar.hidden = true
     }
     
@@ -71,7 +66,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return contacts.count
+        return self.contacts.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
@@ -89,6 +84,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         chat.contact = self.contacts[indexPath.row]
         self.navigationController?.pushViewController(chat, animated: true)
+//        DAOFriendRequests.sharedInstance.sendPushForFriendRequest(self.contacts[indexPath.row].username)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
@@ -106,11 +102,10 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         self.contacts = DAOContacts.getAllContacts()
         self.tableView.reloadData()
     }
-    
     //** FIM DAS FUNCOES DE MANEGAMENTO DE DADOS **//
     
     
-    
+    //commit a alegria
 }
 
 

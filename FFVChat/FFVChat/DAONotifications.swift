@@ -1,38 +1,46 @@
-////
-////  DAONotifications.swift
-////  FFVChat
-////
-////  Created by Filipo Negrao on 07/10/15.
-////  Copyright © 2015 FilipoNegrao. All rights reserved.
-////
 //
-//import Foundation
-//import Parse
+//  DAONotifications.swift
+//  FFVChat
 //
+//  Created by Filipo Negrao on 07/10/15.
+//  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
-//enum notificationNotification : String
-//{
-//    case notificationsLoaded
-//}
-//
-//
-//class Notification
-//{
-//    let text : String
-//    
-//    init(text: String)
-//    {
-//        self.text = text
-//    }
-//}
-//
-//
-//private let data = DAONotifications()
-//
-//
-//class DAONotifications
-//{
-//    
+
+import Foundation
+import Parse
+
+
+enum appNotification : String
+{
+    case friendRequest
+    
+    case requestAccepted
+    
+    case messageReceived
+    
+    case messageReady
+    
+    case messageSent
+}
+
+
+class Notification
+{
+    let text : String
+    
+    init(text: String)
+    {
+        self.text = text
+    }
+}
+
+
+private let data = DAONotifications()
+
+
+class DAONotifications
+{
+    
 //    var notifications : [Notification] = [Notification]()
 //    
 //    init()
@@ -51,7 +59,7 @@
 //    {
 //        return self.notifications
 //    }
-//    
+//
 //    
 //    func loadRequests()
 //    {
@@ -144,9 +152,9 @@
 //            
 //        })
 //    }
-//    
-//    
-//    
-//    
-//}
-//
+    
+    
+    
+    
+}
+

@@ -23,7 +23,6 @@ class CellChat_TableViewCell: UITableViewCell
         self.frame.size.height = 70
         
         self.cellView = UIView(frame: CGRectMake(screenWidth/6, 5, (screenWidth/6) * 5, self.frame.size.height - 5))
-        print(self.frame.size.height)
         self.cellView.backgroundColor = UIColor.clearColor()
         self.cellView.clipsToBounds = true
         self.cellView.layer.cornerRadius = 7.0

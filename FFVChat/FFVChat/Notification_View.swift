@@ -107,7 +107,6 @@
 //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
 //    {
 //        DAOFriendRequests.sharedInstance.acceptRequest(requests[indexPath.row])
-//        DAOFriendRequests.sharedInstance.loadRequests()
 //    }
 //    
 //    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
