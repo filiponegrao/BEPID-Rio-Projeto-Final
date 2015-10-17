@@ -79,34 +79,31 @@ class DAOParseMessages
             
             let query = PFUser.query()
             query?.whereKey("username", equalTo: username)
-            query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+            query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
                 
-                if let objects = objects as? [PFObject]
+                if(object != nil)
                 {
-                    if let object = objects.first
-                    {
-                        let message = PFObject(className: "Message")
-                        message["sender"] = user
-                        message["target"] = object as! PFUser
-                        message["text"] = text
-                        message["received"] = false
-                        message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
-                            
-                            if(error == nil)
-                            {
-                                self.addSelfMessage(Message(sender: user!.username!, target: username, date: NSDate(), text: text))
-                                self.pushMessageNotification(username, text: text)
-                                callback(ret: messageCondRet.success)
-                            }
-                            else
-                            {
-                                callback(ret: messageCondRet.unknowError)
-                            }
-                        })
-                    }
-                    callback(ret: messageCondRet.userNotFound)
+                    let message = PFObject(className: "Message")
+                    message["sender"] = user
+                    message["senderName"] = DAOUser.sharedInstance.getUserName()
+                    message["target"] = object as! PFUser
+                    message["text"] = text
+                    message["received"] = false
+                    message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
+                        
+                        if(error == nil)
+                        {
+                            self.addSelfMessage(Message(sender: user!.username!, target: username, date: NSDate(), text: text))
+                            self.pushMessageNotification(username, text: text)
+                            callback(ret: messageCondRet.success)
+                        }
+                        else
+                        {
+                            callback(ret: messageCondRet.unknowError)
+                        }
+                    })
                 }
-                callback(ret: messageCondRet.userNotFound)
+                
             })
         }
         else
@@ -121,40 +118,39 @@ class DAOParseMessages
         let user = PFUser.currentUser()
         if(user != nil)
         {
-            
             let query = PFUser.query()
             query?.whereKey("username", equalTo: username)
-            query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+            query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
                 
-                if let objects = objects as? [PFObject]
+                if(object != nil)
                 {
-                    if let object = objects.first
-                    {
-                        let data = image.highestQualityJPEGNSData
-                        let picture = PFFile(data: data)
-
-                        let message = PFObject(className: "Message")
-                        message["sender"] = user
-                        message["target"] = object as! PFUser
-                        message["image"] = picture
-                        message["received"] = false
-                        message.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-                            
-                            if(error != nil)
-                            {
-                                self.addSelfMessage(Message(sender: user!.username!, target: username, date: NSDate(), image: image))
-                                self.pushImageNotification(username)
-                                callback(ret: messageCondRet.success)
-                            }
-                            else
-                            {
-                                callback(ret: messageCondRet.unknowError)
-                            }
-                        })
-                    }
-                    callback(ret: messageCondRet.userNotFound)
+                    let msgm = Message(sender: user!.username!, target: username, date: NSDate(), image: image)
+                    self.addSelfMessage(msgm)
+                    
+                    let data = image.highestQualityJPEGNSData
+                    let picture = PFFile(data: data)
+                    
+                    let message = PFObject(className: "Message")
+                    message["sender"] = user
+                    message["senderName"] = DAOUser.sharedInstance.getUserName()
+                    message["target"] = object as! PFUser
+                    message["image"] = picture
+                    message["received"] = false
+                    message.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                        
+                        if(error != nil)
+                        {
+                            self.pushImageNotification(username)
+                            callback(ret: messageCondRet.success)
+                        }
+                        else
+                        {
+                            self.deleteMessage(msgm)
+                            callback(ret: messageCondRet.unknowError)
+                        }
+                    })
                 }
-                callback(ret: messageCondRet.userNotFound)
+                
             })
         }
         else
@@ -233,7 +229,7 @@ class DAOParseMessages
             
             content!.setObject(newConversation, forKey: message.target)
             content!.writeToFile(path, atomically: true)
-            
+            NSNotificationCenter.defaultCenter().postNotificationName(appNotification.messageSent.rawValue, object: nil)
         }
         else
         {
@@ -244,6 +240,8 @@ class DAOParseMessages
                 let newSelfMesages = NSMutableArray(object: msgm)
                 conversation!.setObject(newSelfMesages, forKey: self.myMessagesKey)
                 content!.setObject(conversation!, forKey: message.target)
+                content?.writeToFile(path, atomically: false)
+                NSNotificationCenter.defaultCenter().postNotificationName(appNotification.messageSent.rawValue, object: nil)
             }
             else
             {
@@ -254,6 +252,7 @@ class DAOParseMessages
                         myMessages![i] = myMessages![i+1]
                     }
                     myMessages!.replaceObjectAtIndex(9, withObject: msgm)
+                    NSNotificationCenter.defaultCenter().postNotificationName(appNotification.messageSent.rawValue, object: nil)
                 }
                 else
                 {
@@ -262,6 +261,7 @@ class DAOParseMessages
                 conversation!.setObject(myMessages!, forKey: self.myMessagesKey)
                 content!.setObject(conversation!, forKey: message.target)
                 content!.writeToFile(path, atomically: false)
+                NSNotificationCenter.defaultCenter().postNotificationName(appNotification.messageSent.rawValue, object: nil)
             }
             
         }
@@ -271,13 +271,19 @@ class DAOParseMessages
     func addContactMessage(message: Message)
     {
         let localpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = localpath.stringByAppendingPathComponent("Messages") as String
+        let path = localpath.stringByAppendingPathComponent("Messages.plist") as String
         
         let content = NSMutableDictionary(contentsOfFile: path)
         
         let conversation = content!.objectForKey(message.sender) as? NSMutableDictionary
         
         var msgm : NSDictionary!
+        
+        if(self.contactMessageExist(message))
+        {
+            return
+        }
+        
         //É Texto
         if(message.image == nil)
         {
@@ -337,6 +343,56 @@ class DAOParseMessages
     }
     
     
+    func contactMessageExist(contactMessage: Message) -> Bool
+    {
+        let messages = self.getMessages(contactMessage.sender)
+        
+        for message in messages
+        {
+            if(contactMessage.date == message.date)
+            {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    
+    func deleteMessage(message: Message)
+    {
+        let localpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = localpath.stringByAppendingPathComponent("Messages.plist") as String
+        
+        let content = NSMutableDictionary(contentsOfFile: path)
+        
+        let conversation = content?.objectForKey(message.target) as? NSMutableDictionary
+        
+        if(conversation == nil)
+        {
+            return
+        }
+        else
+        {
+            let myMessages = conversation?.objectForKey(self.myMessagesKey) as? NSMutableArray
+            if(myMessages == nil)
+            {
+                return
+            }
+            else
+            {
+                for(var i = 0; i < myMessages?.count ; i++)
+                {
+                    if(((myMessages?.objectAtIndex(i) as! NSDictionary).valueForKey("date") as! NSDate) == message.date)
+                    {
+                        myMessages?.removeObjectAtIndex(i)
+                    }
+                }
+            }
+        }
+    }
+    
+    
     func checkForContactMessages(username: String)
     {
         let userQuery = PFUser.query()
@@ -345,19 +401,17 @@ class DAOParseMessages
         let query = PFQuery(className: "Message")
         query.whereKey("sender", matchesQuery: userQuery!)
         query.whereKey("received", equalTo: false)
+        
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if let objects = objects as? [PFObject]
             {
                 for object in objects
                 {
-                    print("passa aqui")
-                    let target = object.valueForKey("target") as! PFUser
                     let date = object.valueForKey("createdAt") as! NSDate
                     let text = object.valueForKey("text") as? String
-                    print(target.username!)
-                    print(date)
-                    print(text)
+                    let target = object.valueForKey("senderName") as! String
+                    
                     if(text == nil)
                     {
                         let data = object.objectForKey("image") as! PFFile
@@ -365,7 +419,7 @@ class DAOParseMessages
                             
                             if(data != nil)
                             {
-                                let message = Message(sender: username, target: target.username!, date: date, image: UIImage(data: data!)!)
+                                let message = Message(sender: username, target: target, date: date, image: UIImage(data: data!)!)
                                 self.addContactMessage(message)
                             }
                             object["received"] = true
@@ -377,7 +431,7 @@ class DAOParseMessages
                     else
                     {
                         
-                        let message = Message(sender: username, target: target.username!, date: date, text: text)
+                        let message = Message(sender: username, target: target, date: date, text: text)
                         self.addContactMessage(message)
                         object["received"] = true
                         object.saveEventually()
@@ -472,17 +526,29 @@ class DAOParseMessages
                     msgm = Message(sender: sender, target: target, date: date, image: UIImage(data: image)!)
                 }
                 
+                
                 messages.append(msgm)
             }
         }
         
-        print("ta retornando essas mensagens: \(messages)")
+        messages.sortInPlace({ $0.date < $1.date })
+      
+
         return messages
         
     }
     
 }
 
+public func <(a: NSDate, b: NSDate) -> Bool {
+    return a.compare(b) == NSComparisonResult.OrderedAscending
+}
+
+public func ==(a: NSDate, b: NSDate) -> Bool {
+    return a.compare(b) == NSComparisonResult.OrderedSame
+}
+
+extension NSDate: Comparable { }
 
 
 

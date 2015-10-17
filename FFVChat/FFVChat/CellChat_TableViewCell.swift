@@ -20,7 +20,7 @@ class CellChat_TableViewCell: UITableViewCell
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.frame.size.height = 70
+        self.frame.size.height = 40
         
         self.cellView = UIView(frame: CGRectMake(screenWidth/6, 5, (screenWidth/6) * 5, self.frame.size.height - 5))
         self.cellView.backgroundColor = UIColor.clearColor()
@@ -37,6 +37,8 @@ class CellChat_TableViewCell: UITableViewCell
         self.message = UILabel(frame: CGRectMake(5, 5, self.cellView.frame.size.width - 10, self.cellView.frame.size.height - 10))
         self.message.textColor = UIColor.whiteColor()
         self.message.textAlignment = .Center
+        self.message.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        self.message.numberOfLines = 0
         self.cellView.addSubview(message)
     }
     

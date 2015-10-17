@@ -34,6 +34,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReady.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageSent.rawValue, object: nil)
+        
         DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
         
         self.messages = DAOParseMessages.sharedInstance.getMessages(self.contact.username)
@@ -62,7 +64,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
         
-        self.containerView = UIView(frame: CGRectMake(0, 82.5, screenWidth, screenHeight - 80))
+        self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
         self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "EndEditing"))
         self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
@@ -74,7 +76,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.layer.zPosition = 0
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-//        self.tableView.reloadData()
         self.containerView.addSubview(tableView)
         
         self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, 50))
@@ -134,14 +135,42 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.endEditing(true)
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    
+    //****************************************************//
+    //*********** TABLE VIEW PROPERTIES ******************//
+    //****************************************************//
+    
+    //Espaçamento em baixo
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
     {
-        return 70
+        return 10
     }
-
+    
+    //Espaçamento em cima
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return 10
+    }
+    
+    //View transparente do espaçamento de baixo
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
+    {
+        let clear = UIView(frame: CGRectMake(0, 0, screenWidth, 10))
+        clear.backgroundColor = UIColor.clearColor()
+        return clear
+    }
+    
+    //View transparente do espaçamento de cima
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
+        let clear = UIView(frame: CGRectMake(0, 0, screenWidth, 10))
+        clear.backgroundColor = UIColor.clearColor()
+        return clear
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return 70
+        return 40
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -163,6 +192,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //adiciona mensagens do array
         cell.message.text = self.messages[indexPath.row].text
         
+        
         return cell
     }
     
@@ -170,6 +200,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         self.messageText.endEditing(true)
     }
+    
+    //****************************************************//
+    //*********** END TABLE VIEW PROPERTIES **************//
+    //****************************************************//
+    
     
     func EndEditing()
     {
@@ -195,8 +230,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 //                    self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height), animated: true)
 //                    self.tableView.endUpdates()
 //                    self.tableviewScroll(true)
+                    
                     self.messageText.text = ""
-                    self.reloadMessages()
+                    DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
                 }
                 
             })

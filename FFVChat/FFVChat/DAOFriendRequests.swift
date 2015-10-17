@@ -158,24 +158,21 @@ class DAOFriendRequests
     {
         let query = PFUser.query()
         query?.whereKey("username", equalTo: username)
-        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if let objects = objects as? [PFObject]
+        query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+            if(object != nil)
             {
-                if objects.count > 0
-                {
-                    let request = PFObject(className: "FriendRequest")
-                    request["sender"] = DAOUser.sharedInstance.getUserName()
-                    request["target"] = username
-                    request["status"] = "Pendente"
-                    request.saveEventually({ (success : Bool, error: NSError?) -> Void in
-                        if(success == true)
-                        {
-                            self.sendPushForFriendRequest(username)
-                            print("Convite de amizade enviado para \(username)")
-                        }
-                    })
-                }
+                let request = PFObject(className: "FriendRequest")
+                request["sender"] = DAOUser.sharedInstance.getUserName()
+                request["target"] = username
+                request["status"] = "Pendente"
+                request.saveEventually({ (success : Bool, error: NSError?) -> Void in
+                    if(success == true)
+                    {
+                        self.sendPushForFriendRequest(username)
+                        print("Convite de amizade enviado para \(username)")
+                    }
+                })
+
             }
             
         })
@@ -224,9 +221,9 @@ class DAOFriendRequests
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
         query.whereKey("target", equalTo: username)
-        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+        query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
             
-            if(objects?.count > 0)
+            if(object != nil)
             {
                 callback(was: true)
             }
