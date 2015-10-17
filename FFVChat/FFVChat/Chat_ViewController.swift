@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
 
     var tableView: UITableView!
@@ -28,6 +28,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var cameraButton : UIButton!
     
     var sendButton : UIButton!
+    
+    var imagePicker : UIImagePickerController!
+    
+    var photo : UIImageView!
     
     override func viewWillAppear(animated: Bool)
     {
@@ -58,11 +62,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = lightGray
+        self.view.backgroundColor = oficialDarkGray
         
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
+        
+        self.photo = UIImageView(frame: CGRectMake(0, 0, 400, 400))
         
         self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
         self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "EndEditing"))
@@ -71,6 +77,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, self.containerView.frame.height - 50))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.registerClass(CellImage_TableViewCell.self, forCellReuseIdentifier: "ImageCell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
@@ -82,10 +89,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.backgroundColor = UIColor.whiteColor()
         self.containerView.addSubview(messageView)
         
-        self.cameraButton = UIButton(frame: CGRectMake(10, 15 , 30, 20))
+        self.cameraButton = UIButton(frame: CGRectMake(10, 5 , 40, 40))
         self.cameraButton.setImage(UIImage(named: "cameraChatButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
 //        self.cameraButton.backgroundColor = UIColor.grayColor()
+        self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(cameraButton)
         
         self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 5, 55, 40))
@@ -185,15 +193,29 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
-        cell.backgroundColor = UIColor.clearColor()
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        if(self.messageText.text == nil  && self.photo.image != nil)
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.imageCell.image = self.photo.image
+            print("tem foto")
+            return cell
+        }
+        else
+        {
+            let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
+            cell.backgroundColor = UIColor.clearColor()
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            print("nao tem foto")
+            return cell
+        }
+        
+//        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
+//        cell.backgroundColor = UIColor.clearColor()
+//        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         //adiciona mensagens do array
-        cell.message.text = self.messages[indexPath.row].text
-        
-        
-        return cell
+//        cell.message.text = self.messages[indexPath.row].text
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
@@ -219,7 +241,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 
                 if(ret == messageCondRet.unknowError)
                 {
-                    print("deu erro ao enviar mesangegem")
+                    print("deu erro ao enviar mensagem")
                 }
                 else
                 {
@@ -254,5 +276,21 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.tableView.scrollToRowAtIndexPath(pathToLastRow, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
         }
         
+    }
+    
+    func takePhoto()
+    {
+        self.imagePicker = UIImagePickerController()
+        self.imagePicker.delegate = self
+        self.imagePicker.sourceType = .Camera
+        
+        presentViewController(self.imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+    {
+        self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        self.photo.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        print("capturou imagem")
     }
 }
