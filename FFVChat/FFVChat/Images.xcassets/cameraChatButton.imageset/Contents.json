@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "cameraChatButton.png",
+      "filename" : "cameraPrancheta-1cameraChatButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "cameraPrancheta-1cameraChatButton@2x.png",
       "scale" : "2x"
     },
     {

@@ -62,7 +62,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = oficialDarkGray
+//        self.view.backgroundColor = oficialDarkGray
+        
+        if (self.contact.username == "filiponegrao")
+        {
+            self.view.backgroundColor = goodTrust
+            
+        }
+        else
+        {
+            self.view.backgroundColor = badTrust
+        }
+
         
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
@@ -89,7 +100,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.backgroundColor = UIColor.whiteColor()
         self.containerView.addSubview(messageView)
         
-        self.cameraButton = UIButton(frame: CGRectMake(10, 5 , 40, 40))
+        self.cameraButton = UIButton(frame: CGRectMake(7, 2.5 , 45, 45))
         self.cameraButton.setImage(UIImage(named: "cameraChatButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
 //        self.cameraButton.backgroundColor = UIColor.grayColor()
@@ -102,7 +113,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(sendButton)
         
-        self.messageText = UITextField(frame: CGRectMake(self.cameraButton.frame.width + 20, 10, screenWidth - (self.cameraButton.frame.width + 20 + self.sendButton.frame.width + 20), 30))
+        self.messageText = UITextField(frame: CGRectMake(self.cameraButton.frame.width + 14, 10, screenWidth - (self.cameraButton.frame.width + 20 + self.sendButton.frame.width + 20), 30))
         self.messageText.delegate = self
         self.messageText.borderStyle = UITextBorderStyle.RoundedRect
         self.messageText.placeholder = "Message"
@@ -207,15 +218,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             print("nao tem foto")
+            //adiciona mensagens do array
+            cell.message.text = self.messages[indexPath.row].text
             return cell
         }
         
 //        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
 //        cell.backgroundColor = UIColor.clearColor()
 //        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        
-        //adiciona mensagens do array
-//        cell.message.text = self.messages[indexPath.row].text
+
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)

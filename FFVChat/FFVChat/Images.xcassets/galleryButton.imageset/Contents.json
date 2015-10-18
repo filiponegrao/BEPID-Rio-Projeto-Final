@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "galleryButton.png",
+      "filename" : "cameraPrancheta-1galleryButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "cameraPrancheta-1galleryButton@2x.png",
       "scale" : "2x"
     },
     {

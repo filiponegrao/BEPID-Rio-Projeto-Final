@@ -57,7 +57,8 @@ class NavigationChat_View: UIView
         self.contactImage.addTarget(self, action: "goToProfile", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(self.contactImage)
         
-        self.galleryButton = UIButton(frame: CGRectMake(self.frame.size.width - 50 , 30, 40, 40))
+        self.galleryButton = UIButton(frame: CGRectMake(self.frame.size.width - 54 , 25, 44, 44))
+        self.galleryButton.alpha = 0.3
         self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: .Normal)
         self.addSubview(galleryButton)
         
