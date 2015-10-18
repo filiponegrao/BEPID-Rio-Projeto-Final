@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
 
     var tableView: UITableView!
@@ -23,7 +23,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var messageView : UIView!
     
-    var messageText : UITextField!
+    var messageText : UITextView!
     
     var cameraButton : UIButton!
     
@@ -41,10 +41,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageSent.rawValue, object: nil)
         
         DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
-        
         self.messages = DAOParseMessages.sharedInstance.getMessages(self.contact.username)
-        print(self.messages.count)
-
+        self.tableView.reloadData()
+        
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -82,7 +81,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.photo = UIImageView(frame: CGRectMake(0, 0, 400, 400))
         
         self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
-        self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "EndEditing"))
+        self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "endEditing"))
         self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
         
@@ -100,27 +99,31 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.backgroundColor = UIColor.whiteColor()
         self.containerView.addSubview(messageView)
         
-        self.cameraButton = UIButton(frame: CGRectMake(7, 2.5 , 45, 45))
-        self.cameraButton.setImage(UIImage(named: "cameraChatButton"), forState: UIControlState.Normal)
+        self.cameraButton = UIButton(frame: CGRectMake(0, 0 , self.messageView.frame.size.height - 5, self.messageView.frame.size.height - 5))
+        self.cameraButton.setImage(UIImage(named: "photoButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
 //        self.cameraButton.backgroundColor = UIColor.grayColor()
         self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(cameraButton)
         
-        self.sendButton = UIButton(frame: CGRectMake(self.messageView.frame.width - 65, 5, 55, 40))
+        self.sendButton = UIButton(frame: CGRectMake(screenWidth - screenWidth/4, 0, screenWidth/4, self.messageView.frame.size.height))
         self.sendButton.setTitle("Send", forState: UIControlState.Normal)
         self.sendButton.setTitleColor(oficialGreen, forState: UIControlState.Normal)
         self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(sendButton)
         
-        self.messageText = UITextField(frame: CGRectMake(self.cameraButton.frame.width + 14, 10, screenWidth - (self.cameraButton.frame.width + 20 + self.sendButton.frame.width + 20), 30))
-        self.messageText.delegate = self
-        self.messageText.borderStyle = UITextBorderStyle.RoundedRect
-        self.messageText.placeholder = "Message"
+        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.width, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
         self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
-        self.messageView.addSubview(messageText)
+        self.messageText.font = UIFont(name: "Helvetica", size: 16)
+        self.messageText.textContainer.lineFragmentPadding = 10;
+        self.messageText.text = "Message..."
+        self.messageText.textAlignment = .Left
+        self.messageText.textColor = UIColor.grayColor()
+        self.messageText.delegate = self
+        self.messageView.addSubview(self.messageText)
 
         self.navBar.contactImage.setImage(self.contact.thumb, forState: UIControlState.Normal)
+        
         
     }
 
@@ -135,23 +138,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         if(self.view.frame.origin.y == 0)
         {
-            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                self.containerView.frame.origin.y = -keyboardSize.height + 80
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
+            {
+                self.containerView.frame.origin.y = -keyboardSize.height + self.navBar.frame.size.height
             }
         }
     }
     
     func keyboardWillHide(notification: NSNotification)
     {
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.containerView.frame.origin.y = 82.5
-        }
-    }
-
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
-    {
-        self.messageText.endEditing(true)
+        self.containerView.frame.origin.y = self.navBar.frame.size.height
     }
     
     
@@ -204,12 +200,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        if(self.messageText.text == nil  && self.photo.image != nil)
+        if(self.messages[indexPath.row].text == nil  && self.messages[indexPath.row].image != nil)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.imageCell.image = self.photo.image
-            print("tem foto")
+            cell.imageCell.image = self.messages[indexPath.row].image
             return cell
         }
         else
@@ -217,7 +212,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            print("nao tem foto")
             //adiciona mensagens do array
             cell.message.text = self.messages[indexPath.row].text
             return cell
@@ -239,55 +233,94 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //****************************************************//
     
     
-    func EndEditing()
-    {
-        self.containerView.endEditing(true)
-    }
     
-    func sendMessage()
+    //****************************************************//
+    //*********** TEXT VIEW DELEGATES ********************//
+    //****************************************************//
+    func textViewDidBeginEditing(textView: UITextView)
     {
-        if (self.messageText.text?.characters.count > 0)
-        {            
-            DAOParseMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageText.text!, callback: { (ret) -> Void in
-                
-                if(ret == messageCondRet.unknowError)
-                {
-                    print("deu erro ao enviar mensagem")
-                }
-                else
-                {
-//                    let lastPath = NSIndexPath(forRow: self.messages.count - 1, inSection: 0)
-//                    self.tableView.beginUpdates()
-//                    self.tableView.insertRowsAtIndexPaths([lastPath], withRowAnimation: .Automatic)
-//                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + self.tableView.rowHeight)
-//                    self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height), animated: true)
-//                    self.tableView.endUpdates()
-//                    self.tableviewScroll(true)
-                    
-                    self.messageText.text = ""
-                    DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
-                }
-                
-            })
-            
-        }
-    }
-    
-    func tableviewScroll(animated: Bool)
-    {
-        if (self.tableView.numberOfRowsInSection(0) > 0)
+        if(textView.text == "Message...")
         {
-//            let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: (self.tableView.numberOfSections-1))
-            
-            let lastRowIndex = self.tableView.numberOfRowsInSection(0)
-            let pathToLastRow = NSIndexPath(forRow: lastRowIndex - 1, inSection: 0)
-            
-            print(lastRowIndex)
-            
-            self.tableView.scrollToRowAtIndexPath(pathToLastRow, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
+            textView.text = ""
         }
-        
     }
+    
+    func textViewDidEndEditing(textView: UITextView)
+    {
+        if(textView.text == "")
+        {
+            textView.text = "Message..."
+        }
+    }
+    
+    func textViewDidChange(textView: UITextView)
+    {
+        let frame = self.messageText.frame
+        
+        let h = self.messageText.contentSize.height
+        
+        if(h > frame.size.height)
+        {
+            self.expandTextField()
+        }
+        else if(h < frame.size.height)
+        {
+            self.reduceTextField()
+        }
+    }
+    
+    func expandTextField()
+    {
+        let frame = self.messageText.frame
+        
+        let h = self.messageText.contentSize.height
+        
+        let plus = h - frame.size.height
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.messageView.frame.origin.y -= plus
+            self.messageView.frame.size.height += plus
+            self.tableView.frame.size.height -= plus
+            self.messageText.frame.size.height += plus
+            
+            }) { (success: Bool) -> Void in
+        }
+    }
+    
+    func reduceTextField()
+    {
+        let frame = self.messageText.frame
+        
+        let h = self.messageText.contentSize.height
+        
+        let plus = frame.size.height - h
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.messageView.frame.origin.y += plus
+            self.messageView.frame.size.height -= plus
+            self.tableView.frame.size.height += plus
+            self.messageText.frame.size.height -= plus
+            
+            }) { (success: Bool) -> Void in
+        }
+    }
+    
+    func endEditing()
+    {
+        self.messageText.endEditing(true)
+    }
+    
+    //****************************************************//
+    //***********  END TEXT VIEW DELEGATES ***************//
+    //****************************************************//
+    
+    
+
+    //****************************************************//
+    //*********** MESSAGE FUNCTIONS AND HANDLES  *********//
+    //****************************************************//
     
     func takePhoto()
     {
@@ -304,4 +337,48 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.photo.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         print("capturou imagem")
     }
+    
+    
+    func sendMessage()
+    {
+        if (self.messageText.text?.characters.count > 0 || self.messageText.text != "Message...")
+        {            
+            DAOParseMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageText.text!, callback: { (ret) -> Void in
+                
+                if(ret == messageCondRet.unknowError)
+                {
+                    print("deu erro ao enviar mensagem")
+                }
+                else
+                {
+                    self.messageText.text = ""
+                    DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
+                }
+                
+            })
+            
+        }
+    }
+    
+    //****************************************************//
+    //******* END MESSAGE FUNCTIONS AND HANDLES  *********//
+    //****************************************************//
+    
+    
+    func tableviewScroll(animated: Bool)
+    {
+        if (self.tableView.numberOfRowsInSection(0) > 0)
+        {
+//            let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: (self.tableView.numberOfSections-1))
+            
+            let lastRowIndex = self.tableView.numberOfRowsInSection(0)
+            let pathToLastRow = NSIndexPath(forRow: lastRowIndex - 1, inSection: 0)
+            
+            print(lastRowIndex)
+            
+            self.tableView.scrollToRowAtIndexPath(pathToLastRow, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
+        }
+        
+    }
+
 }

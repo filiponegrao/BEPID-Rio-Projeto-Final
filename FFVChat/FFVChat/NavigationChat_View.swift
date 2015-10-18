@@ -35,11 +35,11 @@ class NavigationChat_View: UIView
         }
         
         
-        self.backButton = UIButton(frame: CGRectMake(10, 35, 20, 20))
-        self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
+        self.backButton = UIButton(frame: CGRectMake(10, 20, 100, 44))
+//        self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
+        self.backButton.setTitle("< Contacts", forState: .Normal)
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.backButton.clipsToBounds = true
-        self.backButton.layer.cornerRadius = self.backButton.frame.size.width/2
 //        self.backButton.backgroundColor = UIColor.whiteColor()
         self.addSubview((self.backButton))
         

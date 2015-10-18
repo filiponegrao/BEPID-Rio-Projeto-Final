@@ -62,7 +62,18 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     }
 
     
-    //** TABLE VIEW PROPRIETS *********//
+    //** TABLE VIEW PROPERTIE *********//
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
+    {
+        let clearConversation = UITableViewRowAction(style: .Normal, title: "Clear") { (action: UITableViewRowAction, indexPath: NSIndexPath) -> Void in
+            DAOParseMessages.sharedInstance.clearConversation(self.contacts[indexPath.row].username)
+        }
+        clearConversation.backgroundColor = oficialGreen
+        
+        return [clearConversation]
+    }
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {

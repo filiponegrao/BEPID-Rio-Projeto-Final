@@ -26,6 +26,8 @@ let badTrustNav = UIColor(netHex: 0x76141a)
 let goodTrust = UIColor(netHex: 0x356847)
 let goodTrustNav = UIColor(netHex: 0x314e39)
 
+let mySelf = DAOUser.sharedInstance.getUserName()
+
 
 class FixedValues
 {

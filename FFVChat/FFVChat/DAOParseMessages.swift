@@ -323,11 +323,11 @@ class DAOParseMessages
             {
                 if(contactMessages!.count >= 10)
                 {
-                    for(var i = 0; i < 10; i++)
+                    for(var i = 0; i < 9; i++)
                     {
                         contactMessages![i] = contactMessages![i+1]
                     }
-                    contactMessages![10] = msgm
+                    contactMessages![9] = msgm
                 }
                 else
                 {
@@ -410,7 +410,6 @@ class DAOParseMessages
                 {
                     let date = object.valueForKey("createdAt") as! NSDate
                     let text = object.valueForKey("text") as? String
-                    let target = object.valueForKey("senderName") as! String
                     
                     if(text == nil)
                     {
@@ -419,7 +418,7 @@ class DAOParseMessages
                             
                             if(data != nil)
                             {
-                                let message = Message(sender: username, target: target, date: date, image: UIImage(data: data!)!)
+                                let message = Message(sender: username, target: mySelf, date: date, image: UIImage(data: data!)!)
                                 self.addContactMessage(message)
                             }
                             object["received"] = true
@@ -431,7 +430,7 @@ class DAOParseMessages
                     else
                     {
                         
-                        let message = Message(sender: username, target: target, date: date, text: text)
+                        let message = Message(sender: username, target: mySelf, date: date, text: text)
                         self.addContactMessage(message)
                         object["received"] = true
                         object.saveEventually()
@@ -448,6 +447,28 @@ class DAOParseMessages
         
     }
     
+    func clearConversation(username: String)
+    {
+        let localpath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let path = localpath.stringByAppendingPathComponent("Messages.plist") as String
+        
+        let contents = NSMutableDictionary(contentsOfFile: path)
+        
+        let conversation = contents?.objectForKey(username) as? NSMutableDictionary
+
+        if(conversation == nil)
+        {
+            return
+        }
+        
+        let my = conversation?.objectForKey(self.myMessagesKey) as? NSMutableArray
+        my?.removeAllObjects()
+        
+        let contact = conversation?.objectForKey(self.contactMessagesKey) as? NSMutableArray
+        contact?.removeAllObjects()
+        
+        contents?.writeToFile(path, atomically: false)
+    }
     
     
     func getMessages(withContactUsername: String) -> [Message]
@@ -469,6 +490,8 @@ class DAOParseMessages
         
         let myMessages = conversation!.objectForKey(self.myMessagesKey) as? NSMutableArray
         let contactMessages = conversation!.objectForKey(self.contactMessagesKey) as? NSMutableArray
+        
+        print(contents)
         
         if(myMessages != nil)
         {
