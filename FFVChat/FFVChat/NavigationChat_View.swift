@@ -24,15 +24,7 @@ class NavigationChat_View: UIView
     {
         self.viewController = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 80))
-        
-        if(self.viewController.contact.username == "filiponegrao")
-        {
-            self.backgroundColor = goodTrustNav
-        }
-        else
-        {
-            self.backgroundColor = badTrustNav
-        }
+        self.backgroundColor = UIColor.grayColor()
         
         
         self.backButton = UIButton(frame: CGRectMake(10, 20, 100, 44))

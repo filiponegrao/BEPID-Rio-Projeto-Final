@@ -29,6 +29,31 @@ let goodTrustNav = UIColor(netHex: 0x314e39)
 let mySelf = DAOUser.sharedInstance.getUserName()
 
 
+//*** CELL SIZES AND PROPERTIES ******///
+let cellWidth = screenWidth
+let cellHeightDefault : CGFloat = 40
+
+let margemLateral : CGFloat = 10
+let margemVertical : CGFloat = 5
+
+let cellBackgroundWidth : CGFloat = screenWidth - (2 * margemLateral)
+let cellBackgroundHeigth : CGFloat = cellHeightDefault - (2 * margemVertical)
+
+let cellTextWidth = cellBackgroundWidth - (2 * margemLateral)
+let cellTextHeigth = cellBackgroundHeigth - (2 * margemVertical) - 10
+
+let dateTextHeigth : CGFloat = 10
+let dateTextWidth : CGFloat = 80
+
+let cellImageWidth : CGFloat = cellBackgroundWidth - (2 * margemLateral)
+let cellImageHeigth : CGFloat = cellImageWidth
+
+
+let textMessageFont = UIFont(name: "Helvetica", size: 16)
+
+//*** END CELL SIZES AND PROPERTIES **//
+
+
 class FixedValues
 {
     
@@ -94,4 +119,13 @@ extension String {
     func removeWhitespace() -> String {
         return self.replace(" ", replacement: "")
     }
+}
+
+extension Int{
+    
+    func mod(mod : Int) -> Int{
+        let n = self/mod;
+        return self - n*mod;
+    }
+    
 }

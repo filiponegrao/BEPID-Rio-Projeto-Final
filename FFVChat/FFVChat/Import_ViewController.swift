@@ -122,11 +122,11 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.checkOff()
         }
         
-        DAOContacts.getFacebookProfilePicture(self.metaContacts[indexPath.row].facebookID) { (image: UIImage?) -> Void in
+        DAOParse.getFacebookProfilePicture(self.metaContacts[indexPath.row].facebookID) { (image: UIImage?) -> Void in
             cell.photo.image = image
         }
         
-        DAOContacts.getUsernameFromFacebookID(self.metaContacts[indexPath.row].facebookID) { (string: String?) -> Void in
+        DAOParse.getUsernameFromFacebookID(self.metaContacts[indexPath.row].facebookID) { (string: String?) -> Void in
             cell.username.text = string
         }
         

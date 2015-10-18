@@ -85,7 +85,6 @@ class DAOParseMessages
                 {
                     let message = PFObject(className: "Message")
                     message["sender"] = user
-                    message["senderName"] = DAOUser.sharedInstance.getUserName()
                     message["target"] = object as! PFUser
                     message["text"] = text
                     message["received"] = false
@@ -132,7 +131,6 @@ class DAOParseMessages
                     
                     let message = PFObject(className: "Message")
                     message["sender"] = user
-                    message["senderName"] = DAOUser.sharedInstance.getUserName()
                     message["target"] = object as! PFUser
                     message["image"] = picture
                     message["received"] = false
@@ -162,7 +160,7 @@ class DAOParseMessages
     func pushMessageNotification(username: String, text: String)
     {
         let data = [ "title": "Mensagem de \(DAOUser.sharedInstance.getUserName())",
-            "alert": text, "badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUserName()]
+            "alert": text ,"badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUserName()]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)
@@ -327,7 +325,7 @@ class DAOParseMessages
                     {
                         contactMessages![i] = contactMessages![i+1]
                     }
-                    contactMessages![9] = msgm
+                    contactMessages!.replaceObjectAtIndex(9, withObject: msgm)
                 }
                 else
                 {
@@ -395,14 +393,17 @@ class DAOParseMessages
     
     func checkForContactMessages(username: String)
     {
-        let userQuery = PFUser.query()
-        userQuery?.whereKey("username", equalTo: username)
+        let userQuery = PFUser.query()!
+        userQuery.whereKey("username", equalTo: username)
         
         let query = PFQuery(className: "Message")
-        query.whereKey("sender", matchesQuery: userQuery!)
+        query.whereKey("sender", matchesQuery: userQuery)
         query.whereKey("received", equalTo: false)
+        query.whereKey("target", equalTo: PFUser.currentUser()!)
         
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            print("\(objects?.count) Mensagens nao lidas")
             
             if let objects = objects as? [PFObject]
             {
@@ -418,7 +419,8 @@ class DAOParseMessages
                             
                             if(data != nil)
                             {
-                                let message = Message(sender: username, target: mySelf, date: date, image: UIImage(data: data!)!)
+                                print(mySelf)
+                                let message = Message(sender: username, target: DAOUser.sharedInstance.getUserName(), date: date, image: UIImage(data: data!)!)
                                 self.addContactMessage(message)
                             }
                             object["received"] = true
@@ -430,7 +432,7 @@ class DAOParseMessages
                     else
                     {
                         
-                        let message = Message(sender: username, target: mySelf, date: date, text: text)
+                        let message = Message(sender: username, target: DAOUser.sharedInstance.getUserName(), date: date, text: text)
                         self.addContactMessage(message)
                         object["received"] = true
                         object.saveEventually()
@@ -484,14 +486,12 @@ class DAOParseMessages
         
         if(conversation == nil)
         {
-            print("nao achou foi nada")
             return messages
         }
         
         let myMessages = conversation!.objectForKey(self.myMessagesKey) as? NSMutableArray
         let contactMessages = conversation!.objectForKey(self.contactMessagesKey) as? NSMutableArray
         
-        print(contents)
         
         if(myMessages != nil)
         {
@@ -556,7 +556,6 @@ class DAOParseMessages
         
         messages.sortInPlace({ $0.date < $1.date })
       
-
         return messages
         
     }

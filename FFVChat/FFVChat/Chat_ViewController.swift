@@ -31,8 +31,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var imagePicker : UIImagePickerController!
     
-    var photo : UIImageView!
-    
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -61,25 +59,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-//        self.view.backgroundColor = oficialDarkGray
+        self.view.backgroundColor = oficialDarkGray
         
-        if (self.contact.username == "filiponegrao")
-        {
-            self.view.backgroundColor = goodTrust
-            
-        }
-        else
-        {
-            self.view.backgroundColor = badTrust
-        }
-
         
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
-        
-        self.photo = UIImageView(frame: CGRectMake(0, 0, 400, 400))
-        
+                
         self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
         self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "endEditing"))
         self.containerView.backgroundColor = UIColor.clearColor()
@@ -183,9 +169,35 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return clear
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         return 40
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        //IMAGE
+        if(self.messages[indexPath.row].text == nil && self.messages[indexPath.row].image != nil)
+        {
+            return screenWidth
+        }
+        //TEXT
+        else
+        {
+            let necessaryHeigth = self.heightForView(self.messages[indexPath.row].text!, font: textMessageFont!, width: cellTextWidth)
+            let textHeight = cellTextHeigth
+            
+            if(necessaryHeigth > textHeight)
+            {
+                let increase = necessaryHeigth - textHeight
+                return cellHeightDefault + increase
+                
+            }
+            else
+            {
+                return cellHeightDefault
+            }
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -200,26 +212,37 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
+        //IMAGE
         if(self.messages[indexPath.row].text == nil  && self.messages[indexPath.row].image != nil)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
+            cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.imageCell.image = self.messages[indexPath.row].image
+            cell.imageCell.blur(blurRadius: 5)
             return cell
         }
+        //TEXT
         else
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             //adiciona mensagens do array
-            cell.message.text = self.messages[indexPath.row].text
+            cell.textMessage.text = self.messages[indexPath.row].text
+            
+            //Verificando o tamanho
+            let necessaryHeigth = self.heightForView(self.messages[indexPath.row].text!, font: textMessageFont!, width: cellTextWidth)
+            if(necessaryHeigth > cellTextHeigth)
+            {
+                let increase = necessaryHeigth - cellTextHeigth
+                cell.backgroundLabel.frame.size.height = cellBackgroundHeigth + increase
+                cell.textMessage.frame.size.height = cellTextHeigth + increase
+                cell.sentDate.frame.origin.y = cell.textMessage.frame.origin.y + cell.textMessage.frame.size.height + 5
+            }
+            
             return cell
         }
-        
-//        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
-//        cell.backgroundColor = UIColor.clearColor()
-//        cell.selectionStyle = UITableViewCellSelectionStyle.None
 
     }
     
@@ -307,11 +330,35 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    func backToOriginal()
+    {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
+            self.messageView.frame.size.height = 50
+            self.tableView.frame.size.height = self.containerView.frame.size.height - 50
+            self.messageText.frame.size.height = self.messageView.frame.size.height - 20
+            
+            }) { (success: Bool) -> Void in
+        }
+    }
+    
     func endEditing()
     {
         self.messageText.endEditing(true)
     }
-    
+
+    func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat
+    {
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.font = font
+        label.text = text
+        
+        label.sizeToFit()
+        return label.frame.height
+    }
     //****************************************************//
     //***********  END TEXT VIEW DELEGATES ***************//
     //****************************************************//
@@ -331,11 +378,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         presentViewController(self.imagePicker, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
         self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        self.photo.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        print("capturou imagem")
+        DAOParseMessages.sharedInstance.sendMessage(self.contact.username, image: image) { (ret) -> Void in
+            
+            
+        }
     }
     
     
@@ -351,6 +400,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
                 else
                 {
+                    self.backToOriginal()
                     self.messageText.text = ""
                     DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
                 }
@@ -380,5 +430,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
     }
+    
 
 }

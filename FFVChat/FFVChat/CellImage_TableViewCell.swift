@@ -12,7 +12,11 @@ class CellImage_TableViewCell: UITableViewCell
 {
     var cellView : UIView!
     
+    var backgroundLabel : UIView!
+    
     var imageCell : UIImageView!
+    
+    var sentDate : UILabel!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
@@ -20,19 +24,31 @@ class CellImage_TableViewCell: UITableViewCell
         
         self.frame.size.height = screenWidth/6 * 2
         
-        self.cellView = UIView(frame: CGRectMake(0, 5, self.frame.size.height , self.frame.size.height))
-        self.cellView.clipsToBounds = true
-        self.cellView.layer.cornerRadius = 7.0
-        self.cellView.backgroundColor = UIColor.whiteColor()
-        self.cellView.center = CGPointMake(self.center.x, self.center.y)
+        self.cellView = UIView(frame: CGRectMake(0, 0, self.frame.size.height , self.frame.size.height))
+        self.cellView.backgroundColor = UIColor.clearColor()
         self.contentView.addSubview(cellView)
         
-        self.imageCell = UIImageView(frame: CGRectMake(2.5, 2.5, self.cellView.frame.size.width - 5, self.cellView.frame.size.height - 5))
+        self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundWidth))
+        self.backgroundLabel.backgroundColor = UIColor.whiteColor()
+        self.backgroundLabel.alpha = 0.2
+        self.backgroundLabel.layer.cornerRadius = 5
+        self.backgroundLabel.layer.zPosition = 0
+        self.addSubview(self.backgroundLabel)
+        
+        self.imageCell = UIImageView(frame: CGRectMake(margemLateral * 2, margemVertical * 2, cellBackgroundWidth - (margemLateral * 2), cellBackgroundWidth - (margemLateral * 2) - dateTextHeigth))
         self.imageCell.clipsToBounds = true
-        self.imageCell.layer.cornerRadius = 7.0
-        self.imageCell.center = CGPointMake(self.cellView.center.x, self.cellView.center.y)
-        self.imageCell.backgroundColor = oficialGreen
+        self.imageCell.layer.cornerRadius = 5
+        self.imageCell.contentMode = .ScaleAspectFill
+        self.imageCell.layer.zPosition = 5
         self.cellView.addSubview(imageCell)
+        
+        self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth, cellBackgroundWidth - dateTextHeigth - margemVertical, dateTextWidth, dateTextHeigth))
+        self.sentDate.text = "28-09-1992 09:00"
+        self.sentDate.font = UIFont(name: "Helvetica", size: 8)
+        self.sentDate.textAlignment = .Right
+        self.sentDate.textColor = oficialGreen
+        self.cellView.addSubview(self.sentDate)
+
        
     }
     

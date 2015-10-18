@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Parse
+import UIKit
 
 
 enum ContactCondRet : String
@@ -104,7 +104,7 @@ class DAOContacts
             return nil
         }
         
-        let contact = Contact(username: data?.valueForKey("username") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: UIImage(data: data?.objectForKey("thumb") as! NSData)!)
+        let contact = Contact(username: data?.valueForKey("username") as! String, registerDate: data?.valueForKey("createdAt") as! String, thumb: UIImage(data: data!.objectForKey("thumb") as! NSData)!)
         
         print("contato recuperado com sucesso")
         return contact
@@ -140,55 +140,22 @@ class DAOContacts
         
         if(DAOUser.sharedInstance.getUserName() == username)
         {
-            callback(success: false, error: NSError(domain: "Usuario desejado é o corrente", code: 998, userInfo: nil))
+            callback(success: false, error: error_selfUser)
         }
         
-        let query = PFUser.query()!
-        query.whereKey("username", equalTo: username)
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        DAOParse.getContactFromParse(username) { (contact, error) -> Void in
             
-            if error == nil
+            if(contact != nil)
             {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) users.")
-                // Do something with the found objects
-                if let objects = objects as? [PFObject]
-                {
-                    for object in objects
-                    {
-                        let data = object.objectForKey("profileImage") as! PFFile
-                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                            
-                            let username = object.valueForKey("username") as! String
-                            let registerDate = object.valueForKey("createdAt") as! NSDate
-                            let date = "\(registerDate)"
-                            
-                            let contact = NSMutableDictionary()
-                            contact.setValue(data, forKey: "thumb")
-                            contact.setValue(username, forKey: "username")
-                            contact.setValue(date, forKey: "createdAt")
-                            content!.setObject(contact, forKey: "\(username)")
-                            let success = content!.writeToFile(path, atomically: false)
-                            print("\(username) adicionado com sucesso!")
-                            NSNotificationCenter.defaultCenter().postNotificationName(ContactNotification.contactAdded.rawValue, object: nil)
-                            callback(success: success, error: nil)
-                            
-                        })
-                    }
-                }
-                else
-                {
-                    callback(success: false, error: NSError(domain: "username nao encontrado", code: 101, userInfo: nil))
-                }
-                
+                let cont = ["username" : contact!.username, "createdAt" : contact!.registerDate, "thumb" : contact!.thumb.highestQualityJPEGNSData]
+                content!.setObject(cont, forKey: contact!.username)
+                content!.writeToFile(path, atomically: false)
             }
             else
             {
-                print("Error: \(error!) \(error!.userInfo)")
-                // Log details of the failure
                 callback(success: false, error: error)
             }
+            
         }
     }
     
@@ -204,168 +171,41 @@ class DAOContacts
         {
             self.initContacts()
             content = NSMutableDictionary(contentsOfFile: path)
-            if(content == nil)
-            {
-                callback(success: false, error: NSError(domain: "Erro ao criar a pasta para salvar contatos, verifique sua memoria disponivel", code: 999, userInfo: nil))
-            }
         }
         
-        let query = PFUser.query()
-        query!.whereKey("facebookID", equalTo: id)
-        print(id)
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        if(DAOUser.sharedInstance.getFacebookID() == id)
+        {
+            callback(success: false, error: error_selfUser)
+        }
+        
+        
+        DAOParse.getContactFromParseWithID(id) { (contact, error) -> Void in
             
-            if error == nil
+            if(contact != nil)
             {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) users.")
-                // Do something with the found objects
-                if let objects = objects as? [PFObject]
-                {
-                    for object in objects
-                    {
-                        let data = object.objectForKey("profileImage") as! PFFile
-                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                            
-                            let username = object.valueForKey("username") as! String
-                            let registerDateDate = object.valueForKey("createdAt") as! NSDate
-                            let registerDate = "\(registerDateDate)"
-                            
-                            print("username: \(username) date: \(registerDate) image: \(data)")
-                            
-                            let contact = ["thumb":data!, "username":username, "createdAt":registerDate]
-
-                            content!.setObject(contact, forKey: "\(username)")
-                            let success = content!.writeToFile(path, atomically: false)
-                            callback(success: success, error: nil)
-                        })
-                    }
-                }
-                else
-                {
-                    callback(success: false, error: NSError(domain: "facebook ID nao encontrado", code: 102, userInfo: nil))
-                }
+                let cont = ["username" : contact!.username, "createdAt" : contact!.registerDate, "thumb" : contact!.thumb.highestQualityJPEGNSData]
+                content!.setObject(cont, forKey: contact!.username)
+                content!.writeToFile(path, atomically: false)
+                callback(success: true, error: nil)
             }
             else
             {
-                // Log details of the failure
-                NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.ContactNotFound.rawValue, object: nil)
-                print("Error: \(error!) \(error!.userInfo)")
                 callback(success: false, error: error)
             }
+            
         }
     }
-
-    
-    class func getFacebookProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
-
-        let pictureURL = "https://graph.facebook.com/\(facebookID)/picture?type=large&return_ssl_resources=1"
-        
-        let URLRequest = NSURL(string: pictureURL)
-        let URLRequestNeeded = NSURLRequest(URL: URLRequest!)
-        
-        NSURLConnection.sendAsynchronousRequest(URLRequestNeeded, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse? ,data: NSData?, error: NSError?) -> Void in
-            if error == nil
-            {
-                let image = UIImage(data: data!)
-                callback(image)
-                
-            }
-            else
-            {
-                print("erro ao carregar imagem de um contato")
-                callback(nil)
-            }
-        })
-    }
     
     
-    class func getUsernameFromFacebookID(id: String, callback : (String)? -> Void) -> Void
-    {
-        let query = PFUser.query()
-        query?.whereKey("facebookID", equalTo: id)
-        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if(objects?.count > 0)
-            {
-                let object = objects![0] as! PFObject
-                callback(object.valueForKey("username") as? String)
-            }
-        })
-        
-        callback(nil)
-    }
-    
-    
-    class func getUsersWithString(string: String, callback: ([metaContact]) -> Void) -> Void
+    class func searchUsersWithString(string: String, callback: ([metaContact]) -> Void) -> Void
     {
         var result = [metaContact]()
         
-        let query = PFUser.query()
-        query?.whereKey("username", containsString: string)
-        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+        DAOParse.getUsersWithString(string) { (users: [metaContact]) -> Void in
             
-            if let objects = objects as? [PFObject]
-            {
-                for object in objects
-                {
-                    let username = object.valueForKey("username") as! String
-                    if(!DAOContacts.isContact(username) && username != DAOUser.sharedInstance.getUserName())
-                    {
-                        let trustLevel = object.valueForKey("trustLevel") as! Int
-                        let id = object.valueForKey("objectId") as! String
-                        
-                        let mc = metaContact(username: username, trustLevel: trustLevel, photo: nil, id: id)
-                        result.append(mc)
-                        
-                    }
-                    if(object.valueForKey("username") as! String == objects.last?.valueForKey("username") as! String)
-                    {
-                        callback(result)
-                    }
-                }
-            }
-            else
-            {
-                callback(result)
-            }
-        })
-    }
-
-    
-    class func getPhotoFromUsername(username: String, callback: (image: UIImage?) -> Void) -> Void
-    {
-        let query = PFUser.query()
-        query?.whereKey("username", equalTo: username)
-        query?.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if let objects = objects as? [PFObject]
-            {
-                for object in objects
-                {
-                    let data = object.objectForKey("profileImage") as! PFFile
-                    data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                        
-                        if(data == nil)
-                        {
-                            callback(image: nil)
-                        }
-                        else
-                        {
-                            let image = UIImage(data: data!)
-                            callback(image: image)
-                        }
-                    })
-                }
-                callback(image: nil)
-            }
-            else
-            {
-                callback(image: nil)
-            }
-            
-        })
+            result = users
+            callback(result)
+        }
     }
     
     

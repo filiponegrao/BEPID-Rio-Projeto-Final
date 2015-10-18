@@ -88,7 +88,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         cell.notification.text = "\(self.requests[indexPath.row].sender) te adicionou como amigo. Clique para aceitar"
         cell.request = self.requests[indexPath.row]
         
-        DAOContacts.getPhotoFromUsername(self.requests[indexPath.row].sender) { (image) -> Void in
+        DAOParse.getPhotoFromUsername(self.requests[indexPath.row].sender) { (image) -> Void in
             cell.icon.image = image
         }
 

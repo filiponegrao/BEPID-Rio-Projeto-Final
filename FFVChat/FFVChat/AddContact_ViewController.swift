@@ -78,7 +78,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         
         if(searchText.characters.count > 1)
         {
-            DAOContacts.getUsersWithString(searchText) { (contacts) -> Void in
+            DAOParse.getUsersWithString(searchText) { (contacts) -> Void in
                 
                 self.results = contacts
                 self.tableView.reloadData()
@@ -91,7 +91,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.endEditing(true)
         if(self.searchBar.text?.characters.count > 1)
         {
-            DAOContacts.getUsersWithString(self.searchBar.text!) { (contacts) -> Void in
+            DAOParse.getUsersWithString(self.searchBar.text!) { (contacts) -> Void in
                 
                 self.results = contacts
                 self.tableView.reloadData()
@@ -159,7 +159,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             })
             
-            DAOContacts.getPhotoFromUsername(self.results[indexPath.row].username) { (image) -> Void in
+            DAOParse.getPhotoFromUsername(self.results[indexPath.row].username) { (image) -> Void in
                 cell.photo.image = image
             }
             

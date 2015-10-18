@@ -12,34 +12,41 @@ class CellChat_TableViewCell: UITableViewCell
 {
     var cellView : UIView!
     
-    var cellBackgroundView : UIView!
+    var backgroundLabel : UIView!
     
-    var message : UILabel!
+    var textMessage : UILabel!
+    
+    var sentDate : UILabel!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.frame.size.height = 40
-        
-        self.cellView = UIView(frame: CGRectMake(screenWidth/6, 5, (screenWidth/6) * 5, self.frame.size.height - 5))
+        self.cellView = UIView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         self.cellView.backgroundColor = UIColor.clearColor()
-        self.cellView.clipsToBounds = true
-        self.cellView.layer.cornerRadius = 7.0
-        self.cellView.center = CGPointMake(self.center.x, self.center.y)
         self.contentView.addSubview(cellView)
         
-        self.cellBackgroundView = UIView(frame: CGRectMake(0, 0, self.cellView.frame.size.width, self.cellView.frame.size.height))
-        self.cellBackgroundView.backgroundColor = UIColor.whiteColor()
-        self.cellBackgroundView.alpha = 0.2
-        self.cellView.addSubview(cellBackgroundView)
+        self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundHeigth))
+        self.backgroundLabel.backgroundColor = UIColor.whiteColor()
+        self.backgroundLabel.layer.cornerRadius = 5
+        self.backgroundLabel.alpha = 0.2
+        self.cellView.addSubview(self.backgroundLabel)
         
-        self.message = UILabel(frame: CGRectMake(5, 5, self.cellView.frame.size.width - 10, self.cellView.frame.size.height - 10))
-        self.message.textColor = UIColor.whiteColor()
-        self.message.textAlignment = .Center
-        self.message.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        self.message.numberOfLines = 0
-        self.cellView.addSubview(message)
+        self.textMessage = UILabel(frame: CGRectMake(margemLateral * 2, margemVertical * 2, cellTextWidth, cellTextHeigth))
+        self.textMessage.textColor = UIColor.whiteColor()
+        self.textMessage.font = textMessageFont
+        self.textMessage.textAlignment = .Center
+        self.textMessage.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        self.textMessage.numberOfLines = 0
+        self.cellView.addSubview(self.textMessage)
+        
+        self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth, cellBackgroundHeigth - dateTextHeigth - margemVertical, dateTextWidth, dateTextHeigth))
+        self.sentDate.text = "28-09-1992 09:00"
+        self.sentDate.font = UIFont(name: "Helvetica", size: 8)
+        self.sentDate.textAlignment = .Right
+        self.sentDate.textColor = oficialGreen
+        self.cellView.addSubview(self.sentDate)
+        
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -57,5 +64,7 @@ class CellChat_TableViewCell: UITableViewCell
 
         // Configure the view for the selected state
     }
+    
+    
 
 }

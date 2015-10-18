@@ -924,11 +924,12 @@ class DAOUser
      **/
     func isLoged() -> UserCondition
     {
+        let user = PFUser.currentUser()
         let username = self.getUserName()
-        if(username != "")
+        if(user != nil)
         {
             let senha = self.getPassword()
-            if(senha == "")
+            if(senha == "" || username == "")
             {
                 return UserCondition.incompleteRegister
             }
