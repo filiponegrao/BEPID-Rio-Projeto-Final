@@ -121,7 +121,6 @@ class Tools_ViewController: UIViewController
             self.notificationButton.frame.origin.y = 8
             self.addButton.frame.origin.y = 8
             self.configButton.frame.origin.y = 8
-           
             self.view.unBlur()
             
             }) { (success) -> Void in
