@@ -27,7 +27,7 @@ class NavigationContact_View: UIView
         super.init(frame: CGRectMake(0, 0, screenWidth, 70))
         self.backgroundColor = oficialGreen
         
-        self.toolsButton = MKButton(frame: CGRectMake(screenWidth - 60, 25, 40, 40))
+        self.toolsButton = MKButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
         self.toolsButton.rippleLocation = .Center
@@ -38,7 +38,7 @@ class NavigationContact_View: UIView
         self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 40))
 //        self.filterButtons.layer.borderWidth = 1
         self.filterButtons.setTitle("Contacts", forState: .Normal)
-        self.filterButtons.setTitleColor(lightGray, forState: .Normal)
+        self.filterButtons.setTitleColor(oficialDarkGray, forState: .Normal)
         self.filterButtons.titleLabel?.textAlignment = .Left
         self.addSubview(self.filterButtons)
         

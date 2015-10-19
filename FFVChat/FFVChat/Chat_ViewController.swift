@@ -76,9 +76,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = oficialLightGray
-        
-        
+        self.view.backgroundColor = oficialMediumGray
+        badTrustNav
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)

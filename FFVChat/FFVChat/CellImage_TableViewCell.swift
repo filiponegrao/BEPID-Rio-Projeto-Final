@@ -29,8 +29,8 @@ class CellImage_TableViewCell: UITableViewCell
         self.contentView.addSubview(cellView)
         
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundWidth))
-        self.backgroundLabel.backgroundColor = goodTrustNav
-        self.backgroundLabel.alpha = 0.5
+        self.backgroundLabel.backgroundColor = UIColor.whiteColor()
+        self.backgroundLabel.alpha = 0.1
         self.backgroundLabel.layer.cornerRadius = 5
         self.backgroundLabel.layer.zPosition = 0
         self.addSubview(self.backgroundLabel)

@@ -18,7 +18,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = lightGray
+        self.view.backgroundColor = oficialDarkGray
         self.navigationController?.navigationBar.hidden = true
         
         self.tableView = UITableView(frame: CGRectMake(0, 90, screenWidth, screenHeight))
@@ -44,8 +44,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         
         bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         bar.shadowImage = UIImage()
-        bar.backgroundColor = lightGray
-        bar.tintColor = lightBlue
+        bar.backgroundColor = oficialDarkGray
+        bar.tintColor = oficialBlue
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.title = "Notifications"

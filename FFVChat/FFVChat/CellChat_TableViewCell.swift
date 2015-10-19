@@ -27,9 +27,9 @@ class CellChat_TableViewCell: UITableViewCell
         self.contentView.addSubview(cellView)
         
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundHeigth))
-        self.backgroundLabel.backgroundColor = goodTrustNav
+        self.backgroundLabel.backgroundColor = UIColor.whiteColor()
         self.backgroundLabel.layer.cornerRadius = 5
-        self.backgroundLabel.alpha = 0.5
+        self.backgroundLabel.alpha = 0.1
         self.cellView.addSubview(self.backgroundLabel)
         
         self.textMessage = UILabel(frame: CGRectMake(margemLateral * 2, margemVertical * 2, cellTextWidth, cellTextHeigth))

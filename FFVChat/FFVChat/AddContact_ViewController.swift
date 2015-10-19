@@ -22,7 +22,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = lightGray
+        self.view.backgroundColor = oficialDarkGray
         self.navigationController?.navigationBar.hidden = true
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "doneSearch"))
         
@@ -35,8 +35,8 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.delegate = self
         self.searchBar.autocapitalizationType = .None
         self.searchBar.autocorrectionType = .No
-        self.searchBar.barTintColor = lightGray
-        self.searchBar.tintColor = lightBlue
+        self.searchBar.barTintColor = oficialDarkGray
+        self.searchBar.tintColor = oficialBlue
         self.searchBar.becomeFirstResponder()
         self.searchBar.placeholder = "Search for a username"
         self.view.addSubview(self.searchBar)
@@ -59,8 +59,8 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         
         bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         bar.shadowImage = UIImage()
-        bar.backgroundColor = lightGray
-        bar.tintColor = lightBlue
+        bar.backgroundColor = oficialDarkGray
+        bar.tintColor = oficialBlue
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.title = "Search"
@@ -153,7 +153,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
                     
                     cell.invitedLabel = UILabel(frame: CGRectMake(cell.invited.frame.origin.x, cell.invited.frame.origin.y + cell.invited.frame.size.height, cell.invited.frame.size.width, cell.addButton.frame.size.height/2))
                     cell.invitedLabel.text = "Invited"
-                    cell.invitedLabel.textColor = lightGreen
+                    cell.invitedLabel.textColor = oficialGreen
                     cell.invitedLabel.adjustsFontSizeToFitWidth = true
                     cell.addSubview(cell.invitedLabel)
                 }

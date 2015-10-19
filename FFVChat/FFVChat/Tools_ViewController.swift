@@ -118,9 +118,9 @@ class Tools_ViewController: UIViewController
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0
-            self.notificationButton.frame.origin.y = 8
-            self.addButton.frame.origin.y = 8
-            self.configButton.frame.origin.y = 8
+            self.notificationButton.frame.origin.y = 6
+            self.addButton.frame.origin.y = 6
+            self.configButton.frame.origin.y = 6
             self.view.unBlur()
             
             }) { (success) -> Void in
