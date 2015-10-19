@@ -18,6 +18,7 @@
 		8017D37B1BD40394000CB8F0 /* StaticValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8017D37A1BD40394000CB8F0 /* StaticValues.swift */; settings = {ASSET_TAGS = (); }; };
 		8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8017D37D1BD43155000CB8F0 /* DAOParse.swift */; settings = {ASSET_TAGS = (); }; };
 		8017D3801BD4330D000CB8F0 /* ReturnsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8017D37F1BD4330D000CB8F0 /* ReturnsController.swift */; settings = {ASSET_TAGS = (); }; };
+		8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8017D3831BD46481000CB8F0 /* TheJudger.swift */; settings = {ASSET_TAGS = (); }; };
 		8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */; };
 		8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8019CB411BAE1D7A0017CD7A /* libz.tbd */; };
 		801CB5C81BC2205E00F51E06 /* LoadingInfo_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801CB5C61BC2205E00F51E06 /* LoadingInfo_ViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -127,6 +128,7 @@
 		8017D37A1BD40394000CB8F0 /* StaticValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticValues.swift; sourceTree = "<group>"; };
 		8017D37D1BD43155000CB8F0 /* DAOParse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOParse.swift; sourceTree = "<group>"; };
 		8017D37F1BD4330D000CB8F0 /* ReturnsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnsController.swift; sourceTree = "<group>"; };
+		8017D3831BD46481000CB8F0 /* TheJudger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheJudger.swift; sourceTree = "<group>"; };
 		8019CB3F1BAE1D6F0017CD7A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8019CB411BAE1D7A0017CD7A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		801CB5C61BC2205E00F51E06 /* LoadingInfo_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingInfo_ViewController.swift; sourceTree = "<group>"; };
@@ -260,9 +262,27 @@
 				80E8BD771BC58E7D00B49C31 /* DAONotifications.swift */,
 				80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */,
 				808B589A1BC9656D008BE9FE /* DAOParseMessages.swift */,
-				8017D37F1BD4330D000CB8F0 /* ReturnsController.swift */,
 			);
 			name = DAOs;
+			sourceTree = "<group>";
+		};
+		8017D3811BD46459000CB8F0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				808B58A91BCE0D58008BE9FE /* Message.swift */,
+				801D92771BA492D700D05CE7 /* User.swift */,
+				8070BDA11BB3208A005573DC /* Contacts.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		8017D3821BD4646D000CB8F0 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				8017D37A1BD40394000CB8F0 /* StaticValues.swift */,
+				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 		8019CB3B1BAD16280017CD7A /* Elementos */ = {
@@ -367,11 +387,10 @@
 			isa = PBXGroup;
 			children = (
 				8017D37C1BD43132000CB8F0 /* DAOs */,
-				808B58A91BCE0D58008BE9FE /* Message.swift */,
-				801D92771BA492D700D05CE7 /* User.swift */,
-				8070BDA11BB3208A005573DC /* Contacts.swift */,
-				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
-				8017D37A1BD40394000CB8F0 /* StaticValues.swift */,
+				8017D3811BD46459000CB8F0 /* Models */,
+				8017D3821BD4646D000CB8F0 /* Tools */,
+				8017D37F1BD4330D000CB8F0 /* ReturnsController.swift */,
+				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -609,6 +628,7 @@
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
+				8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
