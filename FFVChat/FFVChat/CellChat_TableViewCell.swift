@@ -27,9 +27,9 @@ class CellChat_TableViewCell: UITableViewCell
         self.contentView.addSubview(cellView)
         
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundHeigth))
-        self.backgroundLabel.backgroundColor = UIColor.whiteColor()
+        self.backgroundLabel.backgroundColor = goodTrustNav
         self.backgroundLabel.layer.cornerRadius = 5
-        self.backgroundLabel.alpha = 0.2
+        self.backgroundLabel.alpha = 0.5
         self.cellView.addSubview(self.backgroundLabel)
         
         self.textMessage = UILabel(frame: CGRectMake(margemLateral * 2, margemVertical * 2, cellTextWidth, cellTextHeigth))
@@ -44,7 +44,7 @@ class CellChat_TableViewCell: UITableViewCell
         self.sentDate.text = "28-09-1992 09:00"
         self.sentDate.font = UIFont(name: "Helvetica", size: 8)
         self.sentDate.textAlignment = .Right
-        self.sentDate.textColor = oficialGreen
+        self.sentDate.textColor = UIColor.whiteColor()
         self.cellView.addSubview(self.sentDate)
         
     }

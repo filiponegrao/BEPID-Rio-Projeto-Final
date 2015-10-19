@@ -76,7 +76,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = oficialDarkGray
+        self.view.backgroundColor = oficialLightGray
         
         
         self.navBar = NavigationChat_View(requester: self)
@@ -104,11 +104,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.addSubview(tableView)
         
         self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, 50))
-        self.messageView.backgroundColor = UIColor.whiteColor()
+        self.messageView.backgroundColor = oficialDarkGray
         self.containerView.addSubview(messageView)
         
-        self.cameraButton = UIButton(frame: CGRectMake(0, 0 , self.messageView.frame.size.height - 5, self.messageView.frame.size.height - 5))
-        self.cameraButton.setImage(UIImage(named: "photoButton"), forState: UIControlState.Normal)
+        self.cameraButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
+        self.cameraButton.setImage(UIImage(named: "chatCameraButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
 //        self.cameraButton.backgroundColor = UIColor.grayColor()
         self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
@@ -120,13 +120,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(sendButton)
         
-        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.width, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
+        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
         self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
         self.messageText.font = UIFont(name: "Helvetica", size: 16)
         self.messageText.textContainer.lineFragmentPadding = 10;
         self.messageText.text = "Message..."
         self.messageText.textAlignment = .Left
-        self.messageText.textColor = UIColor.grayColor()
+        self.messageText.textColor = oficialLightGray
+        self.messageText.backgroundColor = UIColor.clearColor()
         self.messageText.delegate = self
         self.messageView.addSubview(self.messageText)
 

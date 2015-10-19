@@ -20,7 +20,7 @@ let lightGreen = UIColor(hex: 0x5c9b5b)
 let oficialGreen = UIColor(netHex: 0x08e7c5)
 let oficialDarkGray = UIColor(netHex: 0x343539)
 let oficialLightGray = UIColor(netHex: 0xa1a5a4)
-let oficialBlue = UIColor(netHex: 0x1a4dd0)
+let oficialBlue = UIColor(netHex: 0x1d71d6)
 let badTrust = UIColor(netHex: 0xa31c24)
 let badTrustNav = UIColor(netHex: 0x76141a)
 let goodTrust = UIColor(netHex: 0x356847)
@@ -33,7 +33,7 @@ let mySelf = DAOUser.sharedInstance.getUserName()
 let cellWidth = screenWidth
 let cellHeightDefault : CGFloat = 40
 
-let margemLateral : CGFloat = 10
+let margemLateral : CGFloat = 30
 let margemVertical : CGFloat = 5
 
 let cellBackgroundWidth : CGFloat = screenWidth - (2 * margemLateral)

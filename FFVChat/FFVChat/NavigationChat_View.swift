@@ -24,21 +24,19 @@ class NavigationChat_View: UIView
     {
         self.viewController = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 80))
-        self.backgroundColor = UIColor.grayColor()
+        self.backgroundColor = oficialDarkGray
         
         
-        self.backButton = UIButton(frame: CGRectMake(10, 20, 100, 44))
-//        self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
-        self.backButton.setTitle("< Contacts", forState: .Normal)
+        self.backButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
+        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
+        self.backButton.alpha = 0.7
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
-        self.backButton.clipsToBounds = true
-//        self.backButton.backgroundColor = UIColor.whiteColor()
         self.addSubview((self.backButton))
         
         self.contactImage = UIButton(frame: CGRectMake(screenWidth/2, 25, screenWidth/5, screenWidth/5))
         self.contactImage.backgroundColor = UIColor.grayColor()
         self.contactImage.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.contactImage.layer.borderWidth = 1.0
+        self.contactImage.layer.borderWidth = 2.0
         self.contactImage.layer.shadowOpacity = 1
         self.contactImage.layer.shadowRadius = 3.5
         self.contactImage.layer.shadowColor = UIColor.blackColor().CGColor
@@ -50,9 +48,9 @@ class NavigationChat_View: UIView
         self.addSubview(self.contactImage)
         
         self.galleryButton = UIButton(frame: CGRectMake(self.frame.size.width - 54 , 25, 44, 44))
-        self.galleryButton.alpha = 0.3
+        self.galleryButton.alpha = 0.7
         self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: .Normal)
-        self.addSubview(galleryButton)
+        self.addSubview(self.galleryButton)
         
 //        self.galleryButton = UIButton(frame: CGRectMake(self.center.x - (self.contactImage.frame.width/2 + 65), 30, 40, 40))
 //        self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: UIControlState.Normal)
