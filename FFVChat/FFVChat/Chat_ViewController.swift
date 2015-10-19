@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate
 {
 
     var tableView: UITableView!
@@ -31,6 +31,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var imagePicker : UIImagePickerController!
     
+    var redScreen : UIView!
+    
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -41,7 +43,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
         self.messages = DAOParseMessages.sharedInstance.getMessages(self.contact.username)
         self.tableView.reloadData()
+        self.reloadTrustLevel()
         
+        
+    }
+    
+    func reloadTrustLevel()
+    {
+        DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
+            
+            print(trustLevel)
+            if(trustLevel != nil)
+            {
+                self.redScreen.alpha = CGFloat(100 - CGFloat(trustLevel!))/100
+            }
+            
+        }
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -65,11 +82,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
-                
+        
         self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
-        self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "endEditing"))
+//        self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "endEditing"))
         self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
+        
+        self.redScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.redScreen.backgroundColor = UIColor.redColor()
+        self.redScreen.alpha = 0
+//        self.containerView.addSubview(self.redScreen)
         
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, self.containerView.frame.height - 50))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -219,7 +241,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.imageCell.image = self.messages[indexPath.row].image
-            cell.imageCell.blur(blurRadius: 5)
+            cell.imageCell.blur(blurRadius: 10)
             return cell
         }
         //TEXT
@@ -229,8 +251,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             //adiciona mensagens do array
-            cell.textMessage.text = self.messages[indexPath.row].text
             
+            let intireDate = NSString(string: "\(self.messages[indexPath.row].date)")
+            let date = intireDate.substringWithRange(NSMakeRange(0, 16))
+            
+            cell.textMessage.text = self.messages[indexPath.row].text
+            cell.sentDate.text = date
             //Verificando o tamanho
             let necessaryHeigth = self.heightForView(self.messages[indexPath.row].text!, font: textMessageFont!, width: cellTextWidth)
             if(necessaryHeigth > cellTextHeigth)
@@ -246,9 +272,26 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     }
     
+    func scrollViewDidScrollToTop(scrollView: UIScrollView) {
+        self.messageText.endEditing(true)
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        print("clicando")
         self.messageText.endEditing(true)
+        
+        if(self.messages[indexPath.row].image != nil)
+        {
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImage_TableViewCell
+            var rect = tableView.rectForRowAtIndexPath(indexPath)
+            
+            rect = CGRectOffset(rect, -tableView.contentOffset.x, -tableView.contentOffset.y);
+            
+            let zoom = ImageZoom_View(image: self.messages[indexPath.row].image!)
+            self.view.addSubview(zoom)
+        }
+        
     }
     
     //****************************************************//
@@ -403,6 +446,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.backToOriginal()
                     self.messageText.text = ""
                     DAOParseMessages.sharedInstance.checkForContactMessages(self.contact.username)
+                    self.reloadTrustLevel()
                 }
                 
             })
@@ -415,21 +459,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //****************************************************//
     
     
-    func tableviewScroll(animated: Bool)
+    func openImage()
     {
-        if (self.tableView.numberOfRowsInSection(0) > 0)
-        {
-//            let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: (self.tableView.numberOfSections-1))
-            
-            let lastRowIndex = self.tableView.numberOfRowsInSection(0)
-            let pathToLastRow = NSIndexPath(forRow: lastRowIndex - 1, inSection: 0)
-            
-            print(lastRowIndex)
-            
-            self.tableView.scrollToRowAtIndexPath(pathToLastRow, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
-        }
         
     }
     
-
+    
 }

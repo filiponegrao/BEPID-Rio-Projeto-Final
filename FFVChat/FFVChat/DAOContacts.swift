@@ -149,7 +149,7 @@ class DAOContacts
             {
                 let cont = ["username" : contact!.username, "createdAt" : contact!.registerDate, "thumb" : contact!.thumb.highestQualityJPEGNSData]
                 content!.setObject(cont, forKey: contact!.username)
-                content!.writeToFile(path, atomically: false)
+                print(content!.writeToFile(path, atomically: false))
             }
             else
             {

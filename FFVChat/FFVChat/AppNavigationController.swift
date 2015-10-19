@@ -18,7 +18,6 @@ class AppNavigationController : UINavigationController
         let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
         self.viewControllers = [contacts]
         self.navigationBar.hidden = true
-
     }
 
     required init?(coder aDecoder: NSCoder) {

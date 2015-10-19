@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
+        TheJudger.Singleton.inicializandoJudger()
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)

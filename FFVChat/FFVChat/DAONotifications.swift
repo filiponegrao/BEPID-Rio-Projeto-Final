@@ -21,6 +21,8 @@ enum appNotification : String
     case messageReady
     
     case messageSent
+    
+    case trustLevelChanged
 }
 
 
