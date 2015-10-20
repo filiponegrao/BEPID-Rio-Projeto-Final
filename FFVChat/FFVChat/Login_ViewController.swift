@@ -23,6 +23,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     var loadingScreen: LoadScreen_View!
     
+    var logo : UIImageView!
+    
     
     override func viewWillAppear(animated: Bool)
     {
@@ -52,6 +54,11 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialDarkGray
+        
+        self.logo = UIImageView(frame: CGRectMake(0,0, screenWidth/2, screenWidth/4))
+        self.logo.center = CGPointMake(screenWidth/2, screenHeight/6)
+        self.logo.image = UIImage(named: "logo")
+        self.view.addSubview(self.logo)
 
         self.emailField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
         self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3)
