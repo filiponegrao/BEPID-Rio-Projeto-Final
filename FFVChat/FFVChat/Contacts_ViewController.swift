@@ -86,6 +86,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         cell.username.text = self.contacts[indexPath.row].username
         cell.photo.image = self.contacts[indexPath.row].thumb
         cell.backgroundColor = UIColor.clearColor()
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
     }

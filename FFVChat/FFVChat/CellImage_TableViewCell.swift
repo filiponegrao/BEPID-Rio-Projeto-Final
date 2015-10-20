@@ -30,7 +30,7 @@ class CellImage_TableViewCell: UITableViewCell
         
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundWidth))
         self.backgroundLabel.backgroundColor = UIColor.whiteColor()
-        self.backgroundLabel.alpha = 0.2
+        self.backgroundLabel.alpha = 0.1
         self.backgroundLabel.layer.cornerRadius = 5
         self.backgroundLabel.layer.zPosition = 0
         self.addSubview(self.backgroundLabel)
@@ -46,7 +46,7 @@ class CellImage_TableViewCell: UITableViewCell
         self.sentDate.text = "28-09-1992 09:00"
         self.sentDate.font = UIFont(name: "Helvetica", size: 8)
         self.sentDate.textAlignment = .Right
-        self.sentDate.textColor = oficialGreen
+        self.sentDate.textColor = UIColor.whiteColor()
         self.cellView.addSubview(self.sentDate)
 
        

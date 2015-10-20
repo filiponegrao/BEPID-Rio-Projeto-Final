@@ -15,7 +15,7 @@ class Settings_ViewController: UIViewController
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = lightGray
+        self.view.backgroundColor = oficialDarkGray
 
         // Do any additional setup after loading the view.
     }
