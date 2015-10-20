@@ -113,6 +113,11 @@
       "scale" : "2x"
     },
     {
+      "idiom" : "car",
+      "size" : "60x60",
+      "scale" : "2x"
+    },
+    {
       "size" : "60x60",
       "idiom" : "car",
       "filename" : "Icon-60@3x-4.png",
