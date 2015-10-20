@@ -201,7 +201,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //IMAGE
         if(self.messages[indexPath.row].text == nil && self.messages[indexPath.row].image != nil)
         {
-            return screenWidth
+            return cellBackgroundWidth + 10
         }
         //TEXT
         else
