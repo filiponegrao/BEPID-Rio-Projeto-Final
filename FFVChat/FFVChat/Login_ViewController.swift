@@ -77,6 +77,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.emailField.tintColor = oficialGreen
         self.emailField.textColor = oficialLightGray
         self.emailField.keyboardType = UIKeyboardType.EmailAddress
+        self.emailField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.view.addSubview(self.emailField)
         
         self.passwordField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
@@ -96,6 +97,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.passwordField.tintColor = oficialGreen
         self.passwordField.textColor = oficialLightGray
         self.passwordField.keyboardType = UIKeyboardType.NumberPad
+        self.passwordField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.passwordField.secureTextEntry = true
         self.passwordField.delegate = self
         self.view.addSubview(self.passwordField)
