@@ -82,6 +82,8 @@ extension Blurable
             else
             {
                 blurOverlay.frame.origin = frame.origin
+                blurOverlay.layer.cornerRadius = self.layer.cornerRadius
+                blurOverlay.clipsToBounds = true
                 
                 UIView.transitionFromView(this,
                     toView: blurOverlay,

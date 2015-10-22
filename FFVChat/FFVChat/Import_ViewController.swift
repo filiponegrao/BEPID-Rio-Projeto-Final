@@ -38,7 +38,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var selectedItens : [String : Bool]!
     
-    var loadingView : UIView!
+    var loadingView : LoadScreen_View!
     
     override func viewDidLoad()
     {
@@ -68,6 +68,9 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.tableView.registerNib(UINib(nibName: "CellImportContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
+        self.loadingView = LoadScreen_View()
+        self.view.addSubview(self.loadingView)
+        
         //carregando info...
         DAOUser.sharedInstance.getFaceContacts { (metaContacts) -> Void in
             
@@ -76,13 +79,15 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             //iniciando o dicionario
             for meta in self.metaContacts
             {
-                self.selectedItens[meta.facebookID] = false
+                self.selectedItens[meta.facebookID] = true
             }
             print("\(self.selectedItens.count) contatos do face recuperados")
             self.tableView.reloadData()
+            self.loadingView.removeFromSuperview()
+            self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
+            self.all = true
         }
         
-        self.selectAllContacts()
     }
     
     override func viewWillAppear(animated: Bool)
@@ -111,6 +116,8 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellImportContact_TableViewCell
         cell.name.text = self.metaContacts[indexPath.row].faceUsername
+        cell.username.text = "Carregando..."
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell.backgroundColor = UIColor.clearColor()
         
         if(self.selectedItens[self.metaContacts[indexPath.row].facebookID]!)
@@ -142,18 +149,19 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImportContact_TableViewCell
-        cell.setClick()
-        cell.backgroundColor = UIColor.clearColor()
-        
         if(cell.checked)
         {
             let id = self.metaContacts[indexPath.row].facebookID
             self.selectedItens[id] = true
+            cell.checkOff()
+            self.all = false
+            self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
         }
         else
         {
             let id = self.metaContacts[indexPath.row].facebookID
             self.selectedItens[id] = false
+            cell.checkOn()
         }
     }
     
@@ -170,17 +178,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             if(self.selectedItens[item.facebookID]!)
             {
                 self.contactsShouldAdd++
-                DAOContacts.addContactByID(item.facebookID, callback: { (success, error) -> Void in
-                    if(success == true)
-                    {
-                        print("\(item.faceUsername) adicionado como contato!")
-                        self.contactAdded()
-                    }
-                    else
-                    {
-                        print(error)
-                    }
-                })
+                DAOFriendRequests.sharedInstance.sendRequest(facebookID: item.facebookID)
             }
         }
         if(self.contactsShouldAdd == 0)
@@ -214,6 +212,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             for item in self.metaContacts
             {
                 self.selectedItens[item.facebookID] = true
+                
             }
             self.tableView.reloadData()
         }
