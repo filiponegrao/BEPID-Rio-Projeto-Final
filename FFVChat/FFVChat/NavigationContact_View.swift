@@ -14,7 +14,7 @@ class NavigationContact_View: UIView
     
     var vc : Contacts_ViewController!
         
-    var toolsButton : MKButton!
+    var toolsButton : UIButton!
     
     var alert : UIImageView!
     
@@ -25,14 +25,15 @@ class NavigationContact_View: UIView
     {
         self.vc = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 70))
-        self.backgroundColor = oficialGreen
+        self.backgroundColor = oficialDarkGray
         
-        self.toolsButton = MKButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
+        self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
-        self.toolsButton.rippleLocation = .Center
-        self.toolsButton.rippleAniDuration = 0.5
-        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
+//        self.toolsButton.rippleLocation = .Center
+//        self.toolsButton.rippleLayerColor = UIColor.clearColor()
+//        self.toolsButton.rippleAniDuration = 0.5
+//        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
         self.addSubview(self.toolsButton)
         
         self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 45))

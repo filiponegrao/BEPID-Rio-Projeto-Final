@@ -30,7 +30,7 @@ class Tools_ViewController: UIViewController
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clearColor()
         self.navigationController?.navigationBar.hidden = true
-        self.title = "Menu"
+        self.title = " "
         
         self.blackScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.blackScreen.backgroundColor = UIColor.blackColor()

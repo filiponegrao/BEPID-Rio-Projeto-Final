@@ -38,6 +38,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.barTintColor = oficialDarkGray
         self.searchBar.tintColor = oficialBlue
         self.searchBar.becomeFirstResponder()
+        self.searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         self.searchBar.placeholder = "Search for a username"
         self.view.addSubview(self.searchBar)
         
@@ -64,6 +65,11 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.title = "Search"
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: UIBarButtonItemStyle.Done, target: self, action: "back")
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
+        
 
     }
 

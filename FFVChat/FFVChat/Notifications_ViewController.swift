@@ -49,6 +49,10 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.title = "Notifications"
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
+
+
     }
     
     override func viewWillDisappear(animated: Bool)

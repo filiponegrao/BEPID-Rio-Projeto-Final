@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppRegister_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
                 <outlet property="buttonphoto" destination="XQP-CG-gmK" id="bzF-Kx-5zv"/>
+                <outlet property="cancel" destination="3jp-eJ-Wbd" id="EYM-KY-WMJ"/>
                 <outlet property="containerView" destination="1Dj-cY-Hap" id="Vsb-F8-rEJ"/>
                 <outlet property="labelConfirmPassword" destination="cPV-Yj-w7Z" id="djY-yo-2sO"/>
                 <outlet property="labelEmail" destination="Wj2-0A-h8C" id="oNf-Ni-enl"/>
@@ -24,20 +25,20 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Dj-cY-Hap">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-Fq-yne">
-                            <rect key="frame" x="178" y="386" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-Fq-yne" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
+                            <rect key="frame" x="178" y="378" width="244" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="244" id="XPK-Gv-fZr"/>
-                                <constraint firstAttribute="height" constant="30" id="hfe-GS-B56"/>
+                                <constraint firstAttribute="height" constant="30" id="EAC-w0-yWh"/>
+                                <constraint firstAttribute="width" constant="244" id="N4F-MJ-wRQ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" secureTextEntry="YES"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6b-AR-rgg">
-                            <rect key="frame" x="266" y="493" width="68" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6b-AR-rgg">
+                            <rect key="frame" x="266" y="487" width="68" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="30" id="gXO-xG-v6s"/>
-                                <constraint firstAttribute="width" constant="68" id="jRo-La-HuH"/>
+                                <constraint firstAttribute="width" constant="68" id="UZd-5D-OyM"/>
+                                <constraint firstAttribute="height" constant="30" id="coH-Yf-2UC"/>
                             </constraints>
                             <state key="normal" title="register">
                                 <color key="titleColor" red="0.1215686275" green="0.8980392157" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,11 +47,11 @@
                                 <action selector="register:" destination="-1" eventType="touchUpInside" id="uxd-Ur-jd7"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-0A-h8C">
-                            <rect key="frame" x="178" y="310" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-0A-h8C" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
+                            <rect key="frame" x="178" y="302" width="244" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="244" id="RyF-4y-bzF"/>
-                                <constraint firstAttribute="height" constant="30" id="Vni-oa-oMM"/>
+                                <constraint firstAttribute="height" constant="30" id="642-jh-tDQ"/>
+                                <constraint firstAttribute="width" constant="244" id="Qv2-WL-R6Q"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" keyboardAppearance="alert"/>
@@ -68,30 +69,30 @@
                                 <action selector="cancel:" destination="-1" eventType="touchUpInside" id="QU0-cD-X87"/>
                             </connections>
                         </button>
-                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="confirm password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cPV-Yj-w7Z">
-                            <rect key="frame" x="178" y="424" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cPV-Yj-w7Z" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
+                            <rect key="frame" x="178" y="416" width="244" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="30" id="mE1-1m-a89"/>
-                                <constraint firstAttribute="width" constant="244" id="wcB-3v-SJY"/>
+                                <constraint firstAttribute="width" constant="244" id="0ul-FC-Enf"/>
+                                <constraint firstAttribute="height" constant="30" id="NRb-Zs-yYy"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" secureTextEntry="YES"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1L-hY-RNY">
-                            <rect key="frame" x="178" y="348" width="244" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1L-hY-RNY" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
+                            <rect key="frame" x="178" y="340" width="244" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="30" id="ME0-eV-7CM"/>
-                                <constraint firstAttribute="width" constant="244" id="y30-rw-PfK"/>
+                                <constraint firstAttribute="height" constant="30" id="8JE-p3-VHf"/>
+                                <constraint firstAttribute="width" constant="244" id="vx3-KB-MhP"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
                         </textField>
-                        <button opaque="NO" contentMode="scaleAspectFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQP-CG-gmK">
-                            <rect key="frame" x="190" y="82" width="220" height="220"/>
+                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQP-CG-gmK">
+                            <rect key="frame" x="190" y="66" width="220" height="220"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="220" id="atn-Xv-vvQ"/>
-                                <constraint firstAttribute="height" constant="220" id="upb-Th-XIj"/>
+                                <constraint firstAttribute="height" constant="220" id="k1D-AA-IMp"/>
+                                <constraint firstAttribute="width" constant="220" id="xsm-UH-MKM"/>
                             </constraints>
                             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <state key="normal" title="camera" backgroundImage="cameraButton"/>
@@ -104,35 +105,23 @@
                                 <action selector="photoButtonClicked:" destination="-1" eventType="touchUpInside" id="e7q-4f-z8k"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="The password must have six characters." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSt-va-om8">
-                            <rect key="frame" x="178" y="462" width="244" height="21"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="244" id="HsB-Iw-OIg"/>
-                                <constraint firstAttribute="height" constant="21" id="v2A-9r-yP7"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <color key="textColor" red="0.56470588239999997" green="0.58039215690000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="wSt-va-om8" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="4rf-m0-4g7"/>
+                        <constraint firstItem="XQP-CG-gmK" firstAttribute="top" secondItem="1Dj-cY-Hap" secondAttribute="top" constant="66" id="4H7-YK-icN"/>
+                        <constraint firstItem="XQP-CG-gmK" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="5Ck-75-heN"/>
                         <constraint firstItem="3jp-eJ-Wbd" firstAttribute="leading" secondItem="1Dj-cY-Hap" secondAttribute="leading" constant="6" id="6ZI-Sr-oh5"/>
-                        <constraint firstItem="wSt-va-om8" firstAttribute="top" secondItem="8T6-Fq-yne" secondAttribute="bottom" constant="37" id="Fib-7B-5gX"/>
+                        <constraint firstItem="8T6-Fq-yne" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="8ZL-Tl-WtU"/>
+                        <constraint firstItem="cPV-Yj-w7Z" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="9wl-yS-DSj"/>
+                        <constraint firstItem="Wj2-0A-h8C" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="B0B-jZ-1Ba"/>
+                        <constraint firstItem="I6b-AR-rgg" firstAttribute="top" secondItem="cPV-Yj-w7Z" secondAttribute="bottom" constant="41" id="Fwt-N6-lSg"/>
+                        <constraint firstItem="8T6-Fq-yne" firstAttribute="top" secondItem="L1L-hY-RNY" secondAttribute="bottom" constant="8" id="Gkj-tG-RYy"/>
                         <constraint firstItem="3jp-eJ-Wbd" firstAttribute="top" secondItem="1Dj-cY-Hap" secondAttribute="top" constant="23" id="HgG-oz-IQK"/>
-                        <constraint firstItem="8T6-Fq-yne" firstAttribute="top" secondItem="L1L-hY-RNY" secondAttribute="bottom" constant="8" id="Ml7-KF-vK2"/>
-                        <constraint firstItem="Wj2-0A-h8C" firstAttribute="top" secondItem="XQP-CG-gmK" secondAttribute="bottom" constant="12" id="WuO-qE-XPE"/>
-                        <constraint firstItem="cPV-Yj-w7Z" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="X1b-3o-K6a"/>
-                        <constraint firstItem="8T6-Fq-yne" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="cXM-TJ-dae"/>
-                        <constraint firstItem="I6b-AR-rgg" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="cYq-XG-zaK"/>
-                        <constraint firstItem="L1L-hY-RNY" firstAttribute="top" secondItem="Wj2-0A-h8C" secondAttribute="bottom" constant="8" id="f8z-hd-jvJ"/>
-                        <constraint firstItem="L1L-hY-RNY" firstAttribute="top" secondItem="Wj2-0A-h8C" secondAttribute="bottom" constant="8" id="hdb-iV-lLL"/>
-                        <constraint firstItem="XQP-CG-gmK" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="kf8-Gs-LFe"/>
-                        <constraint firstItem="I6b-AR-rgg" firstAttribute="top" secondItem="wSt-va-om8" secondAttribute="bottom" constant="17" id="mk4-wo-JzQ"/>
-                        <constraint firstItem="Wj2-0A-h8C" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="oho-3V-uYV"/>
-                        <constraint firstItem="L1L-hY-RNY" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="uX5-uy-tCe"/>
-                        <constraint firstItem="cPV-Yj-w7Z" firstAttribute="top" secondItem="8T6-Fq-yne" secondAttribute="bottom" constant="8" id="yhQ-Ch-wc9"/>
+                        <constraint firstItem="I6b-AR-rgg" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="MF1-j5-VJ6"/>
+                        <constraint firstItem="cPV-Yj-w7Z" firstAttribute="top" secondItem="8T6-Fq-yne" secondAttribute="bottom" constant="8" id="U4U-bu-feL"/>
+                        <constraint firstItem="L1L-hY-RNY" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="ZJJ-bI-Y3L"/>
+                        <constraint firstItem="Wj2-0A-h8C" firstAttribute="top" secondItem="XQP-CG-gmK" secondAttribute="bottom" constant="16" id="cwA-FW-TfD"/>
+                        <constraint firstItem="L1L-hY-RNY" firstAttribute="top" secondItem="Wj2-0A-h8C" secondAttribute="bottom" constant="8" id="vha-6P-WNU"/>
                     </constraints>
                 </view>
             </subviews>
