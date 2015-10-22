@@ -22,7 +22,7 @@
                             <constraint firstAttribute="width" constant="50" id="xTw-NG-0Tl"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confiança do caboclo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIX-fU-foM">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TrustLevel : 100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIX-fU-foM">
                         <rect key="frame" x="69" y="39" width="315" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="HkJ-Jr-4vh"/>

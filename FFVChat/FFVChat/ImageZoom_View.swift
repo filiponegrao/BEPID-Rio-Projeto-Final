@@ -39,6 +39,9 @@ class ImageZoom_View: UIView {
         
         let delay = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "fadeIn", userInfo: nil, repeats: false)
         
+        self.unblurVision = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenWidth/4))
+//        self.unblurVision.image = self.getRectImage(image, rect: CGRectMake(<#T##x: CGFloat##CGFloat#>, <#T##y: CGFloat##CGFloat#>, <#T##width: CGFloat##CGFloat#>, <#T##height: CGFloat##CGFloat#>))
+        
         self.alpha = 0
     }
 
@@ -84,8 +87,8 @@ class ImageZoom_View: UIView {
         
     }
     
-//    
-//    func getRectImage(original: UIImage, point: CGPoint) -> UIImage
+
+//    func getRectImage(original: UIImage, rect: CGRect) -> UIImage
 //    {
 //        let size = CGSizeMake(screenWidth, screenHeight/4)
 //        UIGraphicsBeginImageContext(size)
