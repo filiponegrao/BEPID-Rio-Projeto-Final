@@ -105,6 +105,18 @@ class DAOFriendRequests
         DAOParse.sendPushFriendRequest(username)
     }
     
+    func sendRequest(facebookID facebookID : String)
+    {
+        DAOParse.getUsernameFromFacebookId(facebookID) { (username) -> Void in
+            
+            if(username != nil)
+            {
+                DAOParse.sendFriendRequest(username!)
+                DAOParse.sendPushFriendRequest(username!)
+            }
+        }
+    }
+    
     
     func wasAlreadyRequested(username: String, callback: (was: Bool) -> Void) -> Void
     {

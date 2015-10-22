@@ -420,5 +420,25 @@ class DAOParse
             
         })
     }
+    
+    class func getUsernameFromFacebookId(facebookId: String, callback: (username: String?) -> Void) -> Void
+    {
+        let query = PFUser.query()
+        query?.whereKey("facebookID", equalTo: facebookId)
+        query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+            
+            if(object != nil)
+            {
+                callback(username: object?.valueForKey("username") as? String)
+            }
+            else
+            {
+                callback(username: nil)
+            }
+        })
+    }
 
 }
+
+
+

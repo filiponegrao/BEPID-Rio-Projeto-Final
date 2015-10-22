@@ -85,6 +85,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellAll_TableViewCell
         cell.username.text = self.contacts[indexPath.row].username
         cell.photo.image = self.contacts[indexPath.row].thumb
+        cell.rippleLocation = .Center
         cell.backgroundColor = UIColor.clearColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         

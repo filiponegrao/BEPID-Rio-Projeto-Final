@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CellAll_TableViewCell: UITableViewCell {
+class CellAll_TableViewCell: MKTableViewCell {
 
     @IBOutlet var photo: UIImageView!
     
