@@ -35,7 +35,7 @@ class NavigationContact_View: UIView
         self.toolsButton.rippleLayerColor = UIColor.whiteColor()
         self.addSubview(self.toolsButton)
         
-        self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 40))
+        self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 45))
 //        self.filterButtons.layer.borderWidth = 1
         self.filterButtons.setTitle("Contacts", forState: .Normal)
         self.filterButtons.setTitleColor(oficialDarkGray, forState: .Normal)
