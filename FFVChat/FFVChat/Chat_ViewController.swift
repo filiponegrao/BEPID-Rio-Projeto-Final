@@ -39,13 +39,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReady.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageSent.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageSent", name: appNotification.messageSent.rawValue, object: nil)
         
         DAOMessages.sharedInstance.receiveMessagesFromContact(self.contact.username)
         self.messages = DAOMessages.sharedInstance.getMessages(self.contact.username)
         self.tableView.reloadData()
-        self.reloadTrustLevel()
         
+        self.reloadTrustLevel()
         self.tableViewScrollToBottom(false)
     }
     
@@ -71,7 +71,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    
+    func messageSent()
+    {
+        self.messages = DAOMessages.sharedInstance.getMessages(self.contact.username)
+        self.tableView.reloadData()
+        
+    }
     
     func reloadMessages()
     {
@@ -252,6 +257,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.imageCell.image = self.messages[indexPath.row].image
             cell.imageCell.blur(blurRadius: 10)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = .LongStyle
+            dateFormatter.timeZone = NSTimeZone.localTimeZone()
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].date)
+            cell.sentDate.text = date
             
             cell.backgroundLabel.layer.cornerRadius = 4
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
@@ -271,8 +282,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             //adiciona mensagens do array
             
-            let intireDate = NSString(string: "\(self.messages[indexPath.row].date)")
-            let date = intireDate.substringWithRange(NSMakeRange(0, 16))
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = .LongStyle
+            dateFormatter.timeZone = NSTimeZone.localTimeZone()
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].date)
             
             cell.textMessage.text = self.messages[indexPath.row].text
             cell.sentDate.text = date

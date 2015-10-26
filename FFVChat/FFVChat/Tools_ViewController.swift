@@ -83,6 +83,7 @@ class Tools_ViewController: UIViewController
     {
         self.navigationController?.navigationBar.hidden = true
     }
+    
     func openTools()
     {
         UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
