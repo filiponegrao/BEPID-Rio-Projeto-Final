@@ -62,6 +62,7 @@ class DAOMessages
 
     func sendMessage(username: String, text: String)
     {
+        DAOParse.pushMessageNotification(username, text: text)
         DAOParse.sendMessage(username, text: text) { (success, theMessage) -> Void in
             
             if(success)
@@ -73,6 +74,7 @@ class DAOMessages
     
     func sendMessage(username: String, image: UIImage)
     {
+        DAOParse.pushImageNotification(username)
         DAOParse.sendMessage(username, image: image) { (success, theMessage) -> Void in
             
             if(success)
