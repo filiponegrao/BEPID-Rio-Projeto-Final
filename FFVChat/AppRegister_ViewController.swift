@@ -21,15 +21,17 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     var loadingScreen: LoadScreen_View!
     
+    @IBOutlet weak var cancel: UIButton!
+    
     @IBOutlet weak var buttonphoto: UIButton!
 
-    @IBOutlet var labelEmail: UITextField!
+    @IBOutlet var labelEmail: MKTextField!
     
-    @IBOutlet var labelUsername: UITextField!
+    @IBOutlet var labelUsername: MKTextField!
     
-    @IBOutlet var labelPassword: UITextField!
+    @IBOutlet var labelPassword: MKTextField!
     
-    @IBOutlet weak var labelConfirmPassword: UITextField!
+    @IBOutlet weak var labelConfirmPassword: MKTextField!
     
     @IBOutlet var containerView: UIView!
     
@@ -70,9 +72,67 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
 
         
         self.labelEmail.delegate = self
-        self.labelPassword.delegate = self
-        self.labelConfirmPassword.delegate = self
+        self.labelEmail.autocapitalizationType = .None
+        self.labelEmail.autocorrectionType = .No
+        self.labelEmail.textAlignment = .Center
+        self.labelEmail.layer.borderColor = UIColor.clearColor().CGColor
+        self.labelEmail.floatingPlaceholderEnabled = true
+        self.labelEmail.placeholder = "email"
+        self.labelEmail.attributedPlaceholder = NSAttributedString(string: "email", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.labelEmail.rippleLayerColor = UIColor.clearColor()
+        self.labelEmail.bottomBorderEnabled = true
+        self.labelEmail.bottomBorderColor = oficialGreen
+        self.labelEmail.tintColor = oficialGreen
+        self.labelEmail.textColor = oficialLightGray
+        self.labelEmail.keyboardType = UIKeyboardType.EmailAddress
+//        self.labelEmail.keyboardAppearance = UIKeyboardAppearance.Dark
+        
         self.labelUsername.delegate = self
+        self.labelUsername.autocapitalizationType = .None
+        self.labelUsername.autocorrectionType = .No
+        self.labelUsername.textAlignment = .Center
+        self.labelUsername.layer.borderColor = UIColor.clearColor().CGColor
+        self.labelUsername.floatingPlaceholderEnabled = true
+        self.labelUsername.placeholder = "username"
+        self.labelUsername.attributedPlaceholder = NSAttributedString(string: "username", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.labelUsername.rippleLayerColor = UIColor.clearColor()
+        self.labelUsername.bottomBorderEnabled = true
+        self.labelUsername.bottomBorderColor = oficialGreen
+        self.labelUsername.tintColor = oficialGreen
+        self.labelUsername.textColor = oficialLightGray
+//        self.labelUsername.keyboardAppearance = UIKeyboardAppearance.Dark
+        
+        
+        self.labelPassword.delegate = self
+        self.labelPassword.autocapitalizationType = .None
+        self.labelPassword.autocorrectionType = .No
+        self.labelPassword.textAlignment = .Center
+        self.labelPassword.layer.borderColor = UIColor.clearColor().CGColor
+        self.labelPassword.floatingPlaceholderEnabled = true
+        self.labelPassword.placeholder = "password"
+        self.labelPassword.attributedPlaceholder = NSAttributedString(string: "password", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.labelPassword.rippleLayerColor = UIColor.clearColor()
+        self.labelPassword.tintColor = oficialGreen
+        self.labelPassword.textColor = oficialLightGray
+//        self.labelPassword.keyboardAppearance = UIKeyboardAppearance.Dark
+        self.labelPassword.bottomBorderEnabled = true
+        self.labelPassword.bottomBorderColor = oficialGreen
+      
+        
+        self.labelConfirmPassword.delegate = self
+        self.labelConfirmPassword.autocapitalizationType = .None
+        self.labelConfirmPassword.autocorrectionType = .No
+        self.labelConfirmPassword.textAlignment = .Center
+        self.labelConfirmPassword.layer.borderColor = UIColor.clearColor().CGColor
+        self.labelConfirmPassword.floatingPlaceholderEnabled = true
+        self.labelConfirmPassword.placeholder = "confirm password"
+        self.labelConfirmPassword.attributedPlaceholder = NSAttributedString(string: "confirm password", attributes: [NSForegroundColorAttributeName: UIColor.darkGrayColor()])
+        self.labelConfirmPassword.rippleLayerColor = UIColor.clearColor()
+        self.labelConfirmPassword.tintColor = oficialGreen
+        self.labelConfirmPassword.textColor = oficialLightGray
+        self.labelConfirmPassword.bottomBorderEnabled = true
+        self.labelConfirmPassword.bottomBorderColor = oficialGreen
+        
 
         self.buttonphoto.clipsToBounds = true
         
@@ -80,7 +140,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.buttonphoto.addSubview(self.buttonView)
         self.buttonphoto.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
 
-        
+        self.cancel.setImage(UIImage(named: "backButton"), forState: .Normal)
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
     }
     
