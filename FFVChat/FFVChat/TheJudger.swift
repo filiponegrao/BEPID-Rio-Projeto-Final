@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import Photos
 
+import Parse
+
 private let data : TheJudger = TheJudger()
 
 class TheJudger : NSObject
@@ -20,6 +22,7 @@ class TheJudger : NSObject
         super.init()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "judge", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
+        
     }
     
     func inicializandoJudger()

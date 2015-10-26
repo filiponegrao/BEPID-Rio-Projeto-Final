@@ -22,6 +22,7 @@ class CellChat_TableViewCell: UITableViewCell
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        
         self.cellView = UIView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         self.cellView.backgroundColor = UIColor.clearColor()
         self.contentView.addSubview(cellView)
@@ -30,6 +31,7 @@ class CellChat_TableViewCell: UITableViewCell
         self.backgroundLabel.backgroundColor = UIColor.whiteColor()
         self.backgroundLabel.layer.cornerRadius = 5
         self.backgroundLabel.alpha = 0.1
+        
         self.cellView.addSubview(self.backgroundLabel)
         
         self.textMessage = UILabel(frame: CGRectMake(margemLateral * 2, margemVertical * 2, cellTextWidth, cellTextHeigth))

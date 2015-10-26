@@ -22,7 +22,11 @@ enum appNotification : String
     
     case messageSent
     
+    case messageNotSent
+    
     case trustLevelChanged
+    
+    case friendAdded
 }
 
 

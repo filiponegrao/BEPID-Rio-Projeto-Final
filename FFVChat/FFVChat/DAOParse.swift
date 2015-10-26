@@ -313,6 +313,7 @@ class DAOParse
                         DAOContacts.addContactByUsername(contact, callback: { (success, error) -> Void in
                             if(success == true)
                             {
+                                NSNotificationCenter.defaultCenter().postNotificationName(appNotification.friendAdded.rawValue, object: nil)
                                 print("adicionando \(contact) por ter aceitado o pedido de amizade")
                                 object.deleteEventually()
                             }
@@ -438,6 +439,184 @@ class DAOParse
         })
     }
 
+    //***************************
+    //** Funcoes para MENSAGEM
+    //***************************
+    class func sendMessage(username: String, text: String, callback: (success: Bool, theMessage: Message?) -> Void) -> Void
+    {
+        let user = PFUser.currentUser()
+        if(user != nil)
+        {
+            
+            let query = PFUser.query()
+            query?.whereKey("username", equalTo: username)
+            query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+                
+                if(object != nil)
+                {
+                    let message = PFObject(className: "Message")
+                    message["sender"] = user
+                    message["target"] = object as! PFUser
+                    message["text"] = text
+                    message["received"] = false
+                    message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
+                        
+                        if(error == nil)
+                        {
+                            let message = Message(sender: DAOUser.sharedInstance.getUserName(), target: username, date: NSDate(), text: text)
+                            callback(success: true, theMessage : message)
+                        }
+                        else
+                        {
+                            callback(success: false, theMessage : nil)
+                        }
+                    })
+                }
+                
+            })
+        }
+        else
+        {
+            callback(success: false, theMessage: nil)
+        }
+    }
+    
+    class func sendMessage(username: String, image: UIImage, callback: (success: Bool, theMessage: Message?) -> Void) -> Void
+    {
+        let user = PFUser.currentUser()
+        if(user != nil)
+        {
+            
+            let query = PFUser.query()
+            query?.whereKey("username", equalTo: username)
+            query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+                
+                if(object != nil)
+                {
+                    let message = PFObject(className: "Message")
+                    message["sender"] = user
+                    message["target"] = object as! PFUser
+                    message["image"] = image.highestQualityJPEGNSData
+                    message["received"] = false
+                    message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
+                        
+                        if(error == nil)
+                        {
+                            let message = Message(sender: DAOUser.sharedInstance.getUserName(), target: username, date: NSDate(), image: image)
+                            callback(success: true, theMessage: message)
+                        }
+                        else
+                        {
+                            callback(success: false, theMessage: nil)
+                        }
+                    })
+                }
+            })
+        }
+        else
+        {
+            callback(success: false, theMessage: nil)
+        }
+    }
+    
+    
+    class func pushMessageNotification(username: String, text: String)
+    {
+        let data = [ "title": "Mensagem de \(DAOUser.sharedInstance.getUserName())",
+            "alert": text ,"badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUserName()]
+        
+        let userQuery = PFUser.query()
+        userQuery?.whereKey("username", equalTo: username)
+        
+        // Find devices associated with these users
+        let pushQuery = PFInstallation.query()
+        pushQuery!.whereKey("user", matchesQuery: userQuery!)
+        
+        // Send push notification to query
+        let push = PFPush()
+        push.setQuery(pushQuery) // Set our Installation query
+        push.setData(data as [NSObject : AnyObject])
+        push.sendPushInBackground()
+    }
+
+    
+    class func pushImageNotification(username: String)
+    {
+        let data = [ "title": "\(DAOUser.sharedInstance.getUserName()) Enviou-lhe uma imagem",
+            "alert": "Imagem", "badge": 1, "do": appNotification.messageReceived.rawValue]
+        
+        let userQuery = PFUser.query()
+        userQuery?.whereKey("username", equalTo: username)
+        
+        // Find devices associated with these users
+        let pushQuery = PFInstallation.query()
+        pushQuery!.whereKey("user", matchesQuery: userQuery!)
+        
+        // Send push notification to query
+        let push = PFPush()
+        push.setQuery(pushQuery) // Set our Installation query
+        push.setData(data as [NSObject : AnyObject])
+        push.sendPushInBackground()
+    }
+
+    
+    class func checkForContactMessages(username: String, callback: (messages:[Message]) -> Void) -> Void
+    {
+        let userQuery = PFUser.query()!
+        userQuery.whereKey("username", equalTo: username)
+        
+        var messages = [Message]()
+        
+        let query = PFQuery(className: "Message")
+        query.whereKey("sender", matchesQuery: userQuery)
+        query.whereKey("received", equalTo: false)
+        query.whereKey("target", equalTo: PFUser.currentUser()!)
+        
+        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+            
+            print("\(objects?.count) Mensagens nao lidas")
+            
+            if let objects = objects as? [PFObject]
+            {
+                for object in objects
+                {
+                    let date = object.valueForKey("createdAt") as! NSDate
+                    let text = object.valueForKey("text") as? String
+                    
+                    if(text == nil)
+                    {
+                        let data = object.objectForKey("image") as! PFFile
+                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                            
+                            if(data != nil)
+                            {
+                                let message = Message(sender: username, target: DAOUser.sharedInstance.getUserName(), date: date, image: UIImage(data: data!)!)
+                                messages.append(message)
+                            }
+                            object["received"] = true
+                            object.saveEventually()
+                        })
+                    }
+                    else
+                    {
+                        let message = Message(sender: username, target: DAOUser.sharedInstance.getUserName(), date: date, text: text)
+                        messages.append(message)
+                        object["received"] = true
+                        object.saveEventually()
+                        
+                    }
+                    if object == objects.last
+                    {
+                        callback(messages: messages)
+                    }
+                }
+            }
+            else
+            {
+                callback(messages: messages)
+            }
+        }
+    }
 }
 
 

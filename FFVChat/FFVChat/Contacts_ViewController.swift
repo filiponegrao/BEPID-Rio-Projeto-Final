@@ -41,7 +41,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewWillAppear(animated: Bool)
     {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: ContactNotification.contactAdded.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: appNotification.friendAdded.rawValue, object: nil)
         DAOFriendRequests.sharedInstance.friendsAccepted()
         
 //        self.navigationController?.navigationBar.hidden = true
@@ -67,7 +67,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
     {
         let clearConversation = UITableViewRowAction(style: .Normal, title: "Clear") { (action: UITableViewRowAction, indexPath: NSIndexPath) -> Void in
-            DAOParseMessages.sharedInstance.clearConversation(self.contacts[indexPath.row].username)
+            DAOMessages.sharedInstance.clearConversation(self.contacts[indexPath.row].username)
         }
         clearConversation.backgroundColor = oficialGreen
         
