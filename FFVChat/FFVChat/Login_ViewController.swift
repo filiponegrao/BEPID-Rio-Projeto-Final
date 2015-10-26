@@ -134,7 +134,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         }
         else
         {
-            let alert = UIAlertView(title: "Preencha corretamente os campos", message: "", delegate: nil, cancelButtonTitle: "Ok")
+            let alert = UIAlertView(title: "Please, fill out all fields correctly", message: "", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
         }
     }
@@ -183,7 +183,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userNotFound()
     {
         self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Usuário não cadastrado", message: "O usuário não foi encontrado ou a senha está incorreta", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "User not registered", message: "User not found or incorrect password", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
@@ -197,14 +197,14 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func loginCanceled()
     {
         self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Falha ao logar", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Login failed", message: "Please, try again", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
     func wrongPassword()
     {
         self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Senha incorreta", message: "Por favor, tente novamente.", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Incorrect password", message: "Please, try again", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
