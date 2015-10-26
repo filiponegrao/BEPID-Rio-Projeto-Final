@@ -172,7 +172,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
         {
             let sender = notification.valueForKey("sender") as! String
-            DAOParseMessages.sharedInstance.checkForContactMessages(sender)
+            DAOMessages.sharedInstance.receiveMessagesFromContact(sender)
         }
     }
     
