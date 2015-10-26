@@ -75,7 +75,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         self.messages = DAOMessages.sharedInstance.getMessages(self.contact.username)
         self.tableView.reloadData()
-        
+        self.tableViewScrollToBottom(false)
     }
     
     func reloadMessages()
@@ -83,7 +83,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.getMessages(self.contact.username)
         self.tableView.reloadData()
         self.tableViewScrollToBottom(false)
-
     }
     
     override func viewDidLoad()
@@ -96,7 +95,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.view.addSubview(self.navBar)
         
         self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
-//        self.containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "endEditing"))
         self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
         
