@@ -168,6 +168,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     
     func userLogged()
     {
+        
         self.loadingScreen.removeFromSuperview()
 //        let tutorial = TutoFirst_ViewController(nibName: "TutoFirst_ViewController", bundle: nil)
         let importa = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
