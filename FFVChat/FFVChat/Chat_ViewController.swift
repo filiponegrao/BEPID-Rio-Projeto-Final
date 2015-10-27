@@ -475,6 +475,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.imagePicker = UIImagePickerController()
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .Camera
+        self.imagePicker.cameraDevice = .Front
         
         presentViewController(self.imagePicker, animated: true, completion: nil)
     }

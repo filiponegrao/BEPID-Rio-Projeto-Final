@@ -222,7 +222,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             self.picker!.sourceType = UIImagePickerControllerSourceType.Camera
             self.picker?.cameraDevice = .Front
             self.picker?.cameraCaptureMode = .Photo
-            self.picker?.allowsEditing = true
+            self.picker?.allowsEditing = true 
             self.presentViewController(self.picker!, animated: true, completion: nil)
         }
         else
