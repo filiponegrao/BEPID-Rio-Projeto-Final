@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000B4DB1BDFFB4800CD00A6 /* Editor.swift */; };
 		8000FBD81BDA7E4700C1680A /* DAOMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000FBD71BDA7E4700C1680A /* DAOMessages.swift */; };
 		8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800597481BC1E76100327A3D /* CellAll_TableViewCell.swift */; };
 		8005974B1BC1E76100327A3D /* CellAll_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800597491BC1E76100327A3D /* CellAll_TableViewCell.xib */; };
@@ -117,6 +118,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8000B4DB1BDFFB4800CD00A6 /* Editor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Editor.swift; sourceTree = "<group>"; };
 		8000FBD71BDA7E4700C1680A /* DAOMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOMessages.swift; sourceTree = "<group>"; };
 		800597481BC1E76100327A3D /* CellAll_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAll_TableViewCell.swift; sourceTree = "<group>"; };
 		800597491BC1E76100327A3D /* CellAll_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellAll_TableViewCell.xib; sourceTree = "<group>"; };
@@ -253,6 +255,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8000B4DD1BDFFB5200CD00A6 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				8017D37A1BD40394000CB8F0 /* StaticValues.swift */,
+				8000B4DB1BDFFB4800CD00A6 /* Editor.swift */,
+				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
+			);
+			name = Tools;
+			sourceTree = "<group>";
+		};
 		8017D37C1BD43132000CB8F0 /* DAOs */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,15 +286,6 @@
 				8070BDA11BB3208A005573DC /* Contacts.swift */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		8017D3821BD4646D000CB8F0 /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				8017D37A1BD40394000CB8F0 /* StaticValues.swift */,
-				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
-			);
-			name = Tools;
 			sourceTree = "<group>";
 		};
 		8019CB3B1BAD16280017CD7A /* Elementos */ = {
@@ -345,6 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				801D92531BA4928800D05CE7 /* AppDelegate.swift */,
+				8000B4DD1BDFFB5200CD00A6 /* Tools */,
 				801D92791BA492E100D05CE7 /* Model */,
 				801D927A1BA492EC00D05CE7 /* View */,
 				801D927B1BA492F200D05CE7 /* Controller */,
@@ -388,7 +392,6 @@
 			children = (
 				8017D37C1BD43132000CB8F0 /* DAOs */,
 				8017D3811BD46459000CB8F0 /* Models */,
-				8017D3821BD4646D000CB8F0 /* Tools */,
 				8017D37F1BD4330D000CB8F0 /* ReturnsController.swift */,
 				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
 			);
@@ -617,6 +620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */,
+				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
 				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
