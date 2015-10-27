@@ -57,8 +57,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 //        self.window?.rootViewController = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.window?.makeKeyAndVisible()
         
+        //Status bar color
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-
         
         // Register for Push Notitications *******************************
         

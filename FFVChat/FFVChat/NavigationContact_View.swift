@@ -24,7 +24,7 @@ class NavigationContact_View: UIView
     init(requester: Contacts_ViewController)
     {
         self.vc = requester
-        super.init(frame: CGRectMake(0, 0, screenWidth, 70))
+        super.init(frame: CGRectMake(0, 0, screenWidth, 80))
         self.backgroundColor = oficialDarkGray
         
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
@@ -39,7 +39,7 @@ class NavigationContact_View: UIView
         self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 45))
 //        self.filterButtons.layer.borderWidth = 1
         self.filterButtons.setTitle("Contacts", forState: .Normal)
-        self.filterButtons.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.filterButtons.setTitleColor(oficialGreen, forState: .Normal)
         self.filterButtons.titleLabel?.textAlignment = .Left
         self.addSubview(self.filterButtons)
         
