@@ -19,7 +19,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = oficialDarkGray
+        self.view.backgroundColor = oficialMediumGray
         
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
@@ -119,6 +119,8 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     //commit a alegria
+    
+ 
 }
 
 
