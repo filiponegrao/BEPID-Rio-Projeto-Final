@@ -8,6 +8,10 @@
 
 import UIKit
 
+let diametro = screenWidth/2
+
+let raio = diametro/2
+
 class ImageZoom_View: UIView {
     
     var image : UIImageView!
@@ -21,12 +25,14 @@ class ImageZoom_View: UIView {
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.backgroundColor = UIColor.blackColor()
         self.layer.zPosition = 10
+        self.alpha = 0
         
         self.image = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenWidth))
         self.image.center = self.center
         self.image.contentMode = .ScaleAspectFill
         self.image.clipsToBounds = true
         self.image.image = image
+        self.image.layer.zPosition = 0
         self.addSubview(self.image)
         
         
@@ -39,10 +45,12 @@ class ImageZoom_View: UIView {
         
         let delay = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "fadeIn", userInfo: nil, repeats: false)
         
-        self.unblurVision = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenWidth/4))
-//        self.unblurVision.image = self.getRectImage(image, rect: CGRectMake(<#T##x: CGFloat##CGFloat#>, <#T##y: CGFloat##CGFloat#>, <#T##width: CGFloat##CGFloat#>, <#T##height: CGFloat##CGFloat#>))
-        
-        self.alpha = 0
+        self.unblurVision = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
+        self.unblurVision.image = Editor.circleUnblur(self.image.image!, x: 0, y: 0)
+        self.unblurVision.layer.cornerRadius = raio
+        self.unblurVision.alpha = 0
+        self.unblurVision.layer.zPosition = 5
+        self.addSubview(self.unblurVision)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -71,34 +79,39 @@ class ImageZoom_View: UIView {
         }
     }
     
+    
+    
     //*** UNBLUR FUNCTIONS ****///
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        
+        if let touch = touches.first
+        {
+            let x = touch.locationInView(self).x - raio
+            let y = touch.locationInView(self).y - raio
+            self.unblurVision.alpha = 1
+            self.unblurVision.image = Editor.circleUnblur(self.image.image!, x: x, y: y)
+            self.unblurVision.frame.origin = CGPointMake(x, y)
+        }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        
+        if let touch = touches.first
+        {
+            let x = touch.locationInView(self).x - raio
+            let y = touch.locationInView(self).y - raio
+            self.unblurVision.image = Editor.circleUnblur(self.image.image!, x: x, y: y)
+            self.unblurVision.frame.origin = CGPointMake(x, y)
+        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        
+        self.unblurVision.alpha = 0
     }
     
-
-//    func getRectImage(original: UIImage, rect: CGRect) -> UIImage
-//    {
-//        let size = CGSizeMake(screenWidth, screenHeight/4)
-//        UIGraphicsBeginImageContext(size)
-//        
-//        
-//        
-//        let image = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        
-//    }
+    
+    
     
     
 }
