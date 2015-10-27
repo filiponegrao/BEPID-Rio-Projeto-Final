@@ -139,9 +139,9 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.buttonView = UIImageView(frame: CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height))
         self.buttonphoto.addSubview(self.buttonView)
         self.buttonphoto.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
-
-        self.cancel.setImage(UIImage(named: "backButton"), forState: .Normal)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+//
+//        self.cancel.setImage(UIImage(named: "backButton"), forState: .Normal)
+//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
     }
     

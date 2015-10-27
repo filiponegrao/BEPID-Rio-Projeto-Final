@@ -19,7 +19,7 @@ class TutoSecond_ViewController: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = oficialDarkGray
 
         // Do any additional setup after loading the view.
     }
