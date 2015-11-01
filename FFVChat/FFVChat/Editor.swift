@@ -17,6 +17,7 @@ class Editor
         
         if(image.size.width > image.size.height)
         {
+            print("wi maior")
             if(image.size.width > screenWidth)
             {
                 prop = screenWidth/image.size.width
@@ -28,6 +29,7 @@ class Editor
         }
         else if(image.size.height > image.size.width)
         {
+            print("hei maior")
             if(image.size.height > screenHeight)
             {
                 prop = screenHeight/image.size.height
@@ -35,6 +37,13 @@ class Editor
             else
             {
                 prop = screenHeight/image.size.height
+            }
+        }
+        else
+        {
+            if(image.size.width > screenWidth)
+            {
+                prop = screenWidth/image.size.width
             }
         }
         

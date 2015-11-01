@@ -16,7 +16,6 @@ import ParseFacebookUtilsV4
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
-    
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
@@ -159,7 +158,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         let notification = userInfo as NSDictionary
         //Isso causava o alerta no meio da porra da aplicação
 //        PFPush.handlePush(userInfo)
-        if application.applicationState == UIApplicationState.Inactive
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber += 1
+       
+        if application.applicationState == UIApplicationState.Background
         {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }

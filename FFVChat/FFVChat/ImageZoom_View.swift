@@ -33,8 +33,7 @@ class ImageZoom_View: UIView {
         
         self.imageView = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenWidth))
         self.imageView.center = self.center
-        self.imageView.contentMode = .ScaleAspectFill
-        self.imageView.clipsToBounds = true
+        self.imageView.contentMode = .ScaleAspectFit
         self.imageView.image = image
         
         //blur
@@ -118,30 +117,6 @@ class ImageZoom_View: UIView {
     {
         self.unblurVision.alpha = 0
     }
-    
-    
-    //Blur Effect
-    func applyBlurEffect(image: UIImage) -> UIImage
-    {
-        let imageToBlur = CIImage(image: image)
-        
-        let blurfilter = CIFilter(name: "CIGaussianBlur")
-        blurfilter!.setValue(30, forKey: kCIInputRadiusKey)
-        blurfilter!.setValue(imageToBlur, forKey: "inputImage")
-        
-        let context = CIContext(options:nil)
-        
-        let cgimg = context.createCGImage(blurfilter!.outputImage!, fromRect: blurfilter!.outputImage!.extent)
-        
-        let newImage = UIImage(CGImage: cgimg)
-
-        
-        let resultImage = blurfilter!.valueForKey("outputImage") as! CIImage
-        let img =  UIImage(CIImage: resultImage)
-        
-        return newImage
-    }
-    
     
     
 }
