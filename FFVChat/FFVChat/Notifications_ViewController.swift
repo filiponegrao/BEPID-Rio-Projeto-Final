@@ -28,8 +28,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.tableView)
  
-        self.requests = DAOFriendRequests.sharedInstance.getRequests()
-
     }
 
     
@@ -48,6 +46,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
         self.title = "Notifications"
         bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
+        
+        self.requests = DAOFriendRequests.sharedInstance.getRequests()
 
     }
     

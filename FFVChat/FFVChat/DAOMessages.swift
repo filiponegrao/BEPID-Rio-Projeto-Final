@@ -16,8 +16,7 @@ private let data = DAOMessages()
 class DAOMessages
 {
     
-    let myMessagesKey = "myMessages"
-    let contactMessagesKey = "contactMessages"
+    var lastMessage : Message!
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -37,7 +36,7 @@ class DAOMessages
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 86400)
         self.save()
         
-        DAOParse.sendMessage(username, text: text)
+        DAOParse.sendMessage(username, text: text, lifeTime: 86400)
         DAOParse.pushMessageNotification(username, text: "Mensagem de \(DAOUser.sharedInstance.getUserName())")
         
         return message
@@ -57,13 +56,49 @@ class DAOMessages
     
     func addReceivedMessage(sender: String, text: String, sentDate: NSDate, lifeTime: Int)
     {
+        //Tratamento de excessao
+        let query = NSFetchRequest(entityName: "Message")
+        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUserName(), sentDate)
+        query.predicate = predicate
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(query) as! [Message]
+            if(results.count > 0)
+            {
+                return
+            }
+        }
+        catch {}
+        
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime)
+        
+        self.lastMessage = message
+        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
+        
         self.save()
     }
     
     func addReceivedMessage(sender: String, image: NSData, sentDate: NSDate, lifeTime: Int)
     {
+        //Tratamento de excessao
+        let query = NSFetchRequest(entityName: "Message")
+        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUserName(), sentDate)
+        query.predicate = predicate
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(query) as! [Message]
+            if(results.count > 0)
+            {
+                return
+            }
+        }
+        catch {}
+        
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime)
+        
+        self.lastMessage = message
+        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
+        
         self.save()
     }
     

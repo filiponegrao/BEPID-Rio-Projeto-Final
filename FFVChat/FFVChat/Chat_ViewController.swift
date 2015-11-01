@@ -44,7 +44,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReceived.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReceived.rawValue, object: nil)
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageSent", name: appNotification., object: nil)
         
         DAOMessages.sharedInstance.receiveMessagesFromContact()
@@ -59,7 +59,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageReady.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageReceived.rawValue, object: nil)
 //        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageSent.rawValue, object: nil)
 
     }
@@ -72,20 +72,23 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 self.redScreen.alpha = CGFloat(100 - CGFloat(trustLevel!))/100
             }
-            
         }
     }
     
     func messageSent()
     {
-        self.tableView.reloadData()
-        self.tableViewScrollToBottom(false)
+        
     }
     
     func reloadMessages()
     {
-        self.tableView.reloadData()
-        self.tableViewScrollToBottom(false)
+        if(DAOMessages.sharedInstance.lastMessage.sender == self.contact.username)
+        {
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            let index = self.messages.indexOf(DAOMessages.sharedInstance.lastMessage)!
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
+            self.tableViewScrollToBottom(false)
+        }
     }
     
     override func viewDidLoad()
@@ -520,6 +523,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
             let index = self.messages.indexOf(message)
             
+            let numberOfMessages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username).count
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
             
             self.tableViewScrollToBottom(false)

@@ -157,12 +157,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         print("didReceiveRemoteNotification \(userInfo)")
         let notification = userInfo as NSDictionary
-        PFPush.handlePush(userInfo)
+        //Isso causava o alerta no meio da porra da aplicação
+//        PFPush.handlePush(userInfo)
         if application.applicationState == UIApplicationState.Inactive
         {
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
-        
+     
         if(notification.valueForKey("do") as! String == appNotification.friendRequest.rawValue)
         {
             print("carregando friend requests ordenado por notifiacao")

@@ -244,19 +244,28 @@ class DAOParse
             {
                 for object in objects
                 {
-                    let user = object.valueForKey("sender") as! PFUser
-                    let username = user["username"] as! String
-                    let facebookId = user["facebookID"] as? String
-                    let createdAt = user["createdAt"] as! NSDate
-                    let trustLevel = user["trustLevel"] as! Int
-                    let photo = user["profileImage"] as! PFFile
+                    let sender = object.valueForKey("sender") as! String
                     
-                    photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                    let query2 = PFUser.query()
+                    query2?.whereKey("username", equalTo: request.sender)
+                    query2?.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
                         
-                        DAOContacts.sharedInstance.addContact(username, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
-                        object.setValue("Aceito", forKey: "status")
-                        object.saveEventually()
-                        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
+                        if(user != nil)
+                        {
+                            let facebookId = user!.valueForKey("facebookID") as? String
+                            let createdAt = user!.valueForKey("createdAt") as! NSDate
+                            let trustLevel = user!.valueForKey("trustLevel") as! Int
+                            let photo = user!.objectForKey("profileImage") as! PFFile
+                            
+                            photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                                
+                                DAOContacts.sharedInstance.addContact(sender, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
+                                object.setValue("Aceito", forKey: "status")
+                                object.saveEventually()
+                                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
+                            })
+                        }
+                        
                     })
                 }
             }
@@ -348,7 +357,7 @@ class DAOParse
         let message = "\(DAOUser.sharedInstance.getUserName()) quer lhe adicionar como um contato"
         
         let data = [ "title": "Convite de amizade no FFVChat",
-            "alert": message, "badge": 1, "do": appNotification.friendRequest.rawValue]
+            "alert": message, "badge": 1, "do": appNotification.friendRequest.rawValue, "content-avaliable" : 1]
         
         print("enviando notificacao")
         let userQuery = PFUser.query()
@@ -435,7 +444,7 @@ class DAOParse
     //***************************
     //** Funcoes para MENSAGEM
     //***************************
-    class func sendMessage(username: String, text: String)
+    class func sendMessage(username: String, text: String, lifeTime: Int)
     {
         let user = PFUser.currentUser()
         if(user != nil)
@@ -452,6 +461,7 @@ class DAOParse
                     message["target"] = object as! PFUser
                     message["text"] = text
                     message["received"] = false
+                    message["lifeTime"] = lifeTime
                     message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
                         
     
@@ -500,7 +510,7 @@ class DAOParse
     class func pushMessageNotification(username: String, text: String)
     {
         let data = [ "title": "Mensagem de \(DAOUser.sharedInstance.getUserName())",
-            "alert": text ,"badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUserName()]
+            "alert": text ,"badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUserName(), "content-avaliable" : 1]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)
@@ -520,7 +530,7 @@ class DAOParse
     class func pushImageNotification(username: String)
     {
         let data = [ "title": "\(DAOUser.sharedInstance.getUserName()) Enviou-lhe uma imagem",
-            "alert": "Imagem", "badge": 1, "do": appNotification.messageReceived.rawValue]
+            "alert": "Imagem", "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)
@@ -594,10 +604,6 @@ class DAOParse
                         }
                     }
                     
-                    if(objects?.count > 0)
-                    {
-                        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
-                    }
                 }
             }
         }
