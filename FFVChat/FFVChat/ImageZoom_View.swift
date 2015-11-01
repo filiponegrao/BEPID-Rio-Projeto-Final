@@ -14,7 +14,9 @@ let raio = diametro/2
 
 class ImageZoom_View: UIView {
     
-    var image : UIImageView!
+    var image : UIImage!
+    
+    var imageView : UIImageView!
     
     var backButton : UIButton!
     
@@ -27,13 +29,21 @@ class ImageZoom_View: UIView {
         self.layer.zPosition = 10
         self.alpha = 0
         
-        self.image = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenWidth))
-        self.image.center = self.center
-        self.image.contentMode = .ScaleAspectFill
-        self.image.clipsToBounds = true
-        self.image.image = image
-        self.image.layer.zPosition = 0
-        self.addSubview(self.image)
+        self.image = image
+        
+        self.imageView = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenWidth))
+        self.imageView.center = self.center
+        self.imageView.contentMode = .ScaleAspectFill
+        self.imageView.clipsToBounds = true
+        self.imageView.image = image
+        
+        //blur
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        visualEffectView.frame = imageView.bounds
+        imageView.addSubview(visualEffectView)
+        
+        self.imageView.layer.zPosition = 0
+        self.addSubview(self.imageView)
         
         
         self.unblurVision = UIImageView(frame: CGRectMake(0, screenHeight/2, screenWidth, screenHeight/4))
@@ -46,7 +56,7 @@ class ImageZoom_View: UIView {
         let delay = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "fadeIn", userInfo: nil, repeats: false)
         
         self.unblurVision = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
-        self.unblurVision.image = Editor.circleUnblur(self.image.image!, x: 0, y: 0)
+        self.unblurVision.image = Editor.circleUnblur(self.image!, x: 0, y: 0)
         self.unblurVision.layer.cornerRadius = raio
         self.unblurVision.alpha = 0
         self.unblurVision.layer.zPosition = 5
@@ -62,7 +72,6 @@ class ImageZoom_View: UIView {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
             self.alpha = 1
-            self.image.blur(blurRadius: 10)
             
             }) { (success: Bool) -> Void in
         }
@@ -89,7 +98,7 @@ class ImageZoom_View: UIView {
             let x = touch.locationInView(self).x - raio
             let y = touch.locationInView(self).y - raio
             self.unblurVision.alpha = 1
-            self.unblurVision.image = Editor.circleUnblur(self.image.image!, x: x, y: y)
+            self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y)
             self.unblurVision.frame.origin = CGPointMake(x, y)
         }
     }
@@ -100,7 +109,7 @@ class ImageZoom_View: UIView {
         {
             let x = touch.locationInView(self).x - raio
             let y = touch.locationInView(self).y - raio
-            self.unblurVision.image = Editor.circleUnblur(self.image.image!, x: x, y: y)
+            self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y)
             self.unblurVision.frame.origin = CGPointMake(x, y)
         }
     }
@@ -111,6 +120,27 @@ class ImageZoom_View: UIView {
     }
     
     
+    //Blur Effect
+    func applyBlurEffect(image: UIImage) -> UIImage
+    {
+        let imageToBlur = CIImage(image: image)
+        
+        let blurfilter = CIFilter(name: "CIGaussianBlur")
+        blurfilter!.setValue(30, forKey: kCIInputRadiusKey)
+        blurfilter!.setValue(imageToBlur, forKey: "inputImage")
+        
+        let context = CIContext(options:nil)
+        
+        let cgimg = context.createCGImage(blurfilter!.outputImage!, fromRect: blurfilter!.outputImage!.extent)
+        
+        let newImage = UIImage(CGImage: cgimg)
+
+        
+        let resultImage = blurfilter!.valueForKey("outputImage") as! CIImage
+        let img =  UIImage(CIImage: resultImage)
+        
+        return newImage
+    }
     
     
     

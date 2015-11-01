@@ -22,7 +22,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet var tableView: UITableView!
     
-    var metaContacts = [metaFaceContact]()
+    var metaContacts = [facebookContact]()
     
     var agree : Bool = false
     
@@ -79,7 +79,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             //iniciando o dicionario
             for meta in self.metaContacts
             {
-                self.selectedItens[meta.facebookID] = true
+                self.selectedItens[meta.facebookId] = true
             }
             print("\(self.selectedItens.count) contatos do face recuperados")
             self.tableView.reloadData()
@@ -115,12 +115,12 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellImportContact_TableViewCell
-        cell.name.text = self.metaContacts[indexPath.row].faceUsername
+        cell.name.text = self.metaContacts[indexPath.row].facebookName
         cell.username.text = "Carregando..."
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell.backgroundColor = UIColor.clearColor()
         
-        if(self.selectedItens[self.metaContacts[indexPath.row].facebookID]!)
+        if(self.selectedItens[self.metaContacts[indexPath.row].facebookId]!)
         {
             cell.checkOn()
         }
@@ -129,11 +129,11 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             cell.checkOff()
         }
         
-        DAOParse.getFacebookProfilePicture(self.metaContacts[indexPath.row].facebookID) { (image: UIImage?) -> Void in
+        DAOParse.getFacebookProfilePicture(self.metaContacts[indexPath.row].facebookId) { (image: UIImage?) -> Void in
             cell.photo.image = image
         }
         
-        DAOParse.getUsernameFromFacebookID(self.metaContacts[indexPath.row].facebookID) { (string: String?) -> Void in
+        DAOParse.getUsernameFromFacebookID(self.metaContacts[indexPath.row].facebookId) { (string: String?) -> Void in
             cell.username.text = string
         }
         
@@ -151,7 +151,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImportContact_TableViewCell
         if(cell.checked)
         {
-            let id = self.metaContacts[indexPath.row].facebookID
+            let id = self.metaContacts[indexPath.row].facebookId
             self.selectedItens[id] = true
             cell.checkOff()
             self.all = false
@@ -159,7 +159,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         else
         {
-            let id = self.metaContacts[indexPath.row].facebookID
+            let id = self.metaContacts[indexPath.row].facebookId
             self.selectedItens[id] = false
             cell.checkOn()
         }
@@ -175,10 +175,10 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         for item in self.metaContacts
         {
-            if(self.selectedItens[item.facebookID]!)
+            if(self.selectedItens[item.facebookId]!)
             {
                 self.contactsShouldAdd++
-                DAOFriendRequests.sharedInstance.sendRequest(facebookID: item.facebookID)
+                DAOFriendRequests.sharedInstance.sendRequest(facebookID: item.facebookId)
             }
         }
         if(self.contactsShouldAdd == 0)
@@ -211,7 +211,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
             for item in self.metaContacts
             {
-                self.selectedItens[item.facebookID] = true
+                self.selectedItens[item.facebookId] = true
                 
             }
             self.tableView.reloadData()
@@ -221,7 +221,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
             for item in self.metaContacts
             {
-                self.selectedItens[item.facebookID] = false
+                self.selectedItens[item.facebookId] = false
             }
             self.tableView.reloadData()
         }

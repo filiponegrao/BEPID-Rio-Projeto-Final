@@ -11,6 +11,19 @@ import Foundation
 import Parse
 import ParseFacebookUtilsV4
 
+class facebookContact
+{
+    var facebookId : String!
+    
+    var facebookName: String
+    
+    init(facebookId: String, facebookName: String)
+    {
+        self.facebookId = facebookId
+        self.facebookName = facebookName
+    }
+
+}
 
 enum UserCondition : String
 {
@@ -327,17 +340,17 @@ class DAOUser
     }
     
     
-    func getFaceContacts( callback : (metaContacts: [metaFaceContact]!) -> Void) -> Void {
+    func getFaceContacts( callback : (metaContacts: [facebookContact]!) -> Void) -> Void {
         
-        var contacts = [metaFaceContact]()
+        var contacts = [facebookContact]()
         var i = 0
         
-        self.getFaceFriends { (friends:[metaFaceContact]!) -> Void in
+        self.getFaceFriends { (friends:[facebookContact]!) -> Void in
             
             for friend in friends
             {
                 let busca = PFUser.query()
-                let id = friend.facebookID
+                let id = friend.facebookId
                 busca!.whereKey("facebookID", equalTo: id)
                 busca!.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
                     print(objects?.count)
@@ -346,13 +359,13 @@ class DAOUser
                     {
                         if(objects.count > 0)
                         {
-                            print("Amigo \(friend.faceUsername) esta no app")
-                            let contact = metaFaceContact(facebookID: friend.facebookID, faceUsername: friend.faceUsername)
+                            print("Amigo \(friend.facebookName) esta no app")
+                            let contact = facebookContact(facebookId: friend.facebookId, facebookName: friend.facebookName)
                             contacts.append(contact)
                         }
                     }
                     
-                    if(friend.facebookID == friends.last?.facebookID)
+                    if(friend.facebookId == friends.last?.facebookId)
                     {
                         print("retornando \(contacts.count) amigos")
                         callback(metaContacts: contacts)
@@ -369,9 +382,9 @@ class DAOUser
      * Funcao que cata os amigos no facebook
      * e retorna os mesmos em forma de metaContact
      */
-    func getFaceFriends( callback : (friends: [metaFaceContact]!) -> Void) -> Void {
+    func getFaceFriends( callback : (friends: [facebookContact]!) -> Void) -> Void {
 
-        var meta = [metaFaceContact]()
+        var meta = [facebookContact]()
 
         let fbRequest = FBSDKGraphRequest(graphPath:"/me/friends", parameters: ["fields":"name"]);
         fbRequest.startWithCompletionHandler { (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
@@ -385,7 +398,7 @@ class DAOUser
                 {
                     let name = data[j].valueForKey("name") as! String
                     let id = data[j].valueForKey("id") as! String
-                    let c = metaFaceContact(facebookID: id, faceUsername: name)
+                    let c = facebookContact(facebookId: id, facebookName: name)
                     print("Amigo \(name)")
                     meta.append(c)
                 }

@@ -40,18 +40,14 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: requestNotification.requestsLoaded.rawValue, object: nil)
         
         self.navigationController?.navigationBar.hidden = false
-        let bar:UINavigationBar! =  self.navigationController?.navigationBar
+        let bar : UINavigationBar! =  self.navigationController?.navigationBar
         
-        bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        bar.shadowImage = UIImage()
-        bar.backgroundColor = oficialDarkGray
+        bar.barTintColor = oficialDarkGray
         bar.tintColor = oficialBlue
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.title = "Notifications"
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
-
+        self.title = "Search"
+        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
 
     }
     

@@ -31,10 +31,11 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.backButton.addTarget(self, action: "quitSearch", forControlEvents: .TouchUpInside)
 //        self.view.addSubview(self.backButton)
         
-        self.searchBar = UISearchBar(frame: CGRectMake(0, 70, screenWidth, 30))
+        self.searchBar = UISearchBar(frame: CGRectMake(10, 70, screenWidth - 20, 30))
         self.searchBar.delegate = self
         self.searchBar.autocapitalizationType = .None
         self.searchBar.autocorrectionType = .No
+        self.searchBar.searchBarStyle = .Minimal
         self.searchBar.barTintColor = oficialDarkGray
         self.searchBar.tintColor = oficialBlue
         self.searchBar.becomeFirstResponder()
@@ -56,11 +57,11 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(animated: Bool)
     {
         self.navigationController?.navigationBar.hidden = false
-        let bar:UINavigationBar! =  self.navigationController?.navigationBar
+        let bar : UINavigationBar! =  self.navigationController?.navigationBar
         
-        bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        bar.shadowImage = UIImage()
-        bar.backgroundColor = oficialDarkGray
+//        bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        bar.shadowImage = UIImage()
+        bar.barTintColor = oficialDarkGray
         bar.tintColor = oficialBlue
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]

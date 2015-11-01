@@ -17,99 +17,83 @@ class DAOParse
     //** Funcoes para contatos
     //***************************
     
-    class func getContactFromParse(username: String, callback: (contact: Contact?, error: NSError?) -> Void) -> Void
+    class func getContactInfoFromParse(username: String, callback: (contactInfo: NSDictionary, error: NSError?) -> Void) -> Void
     {
+        let info = NSMutableDictionary()
+        
         let query = PFUser.query()!
         query.whereKey("username", equalTo: username)
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
             
-            if error == nil
+            if(object != nil)
             {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) users.")
-                // Do something with the found objects
-                if let objects = objects as? [PFObject]
-                {
-                    for object in objects
+                let photo = object?.objectForKey("profileImage") as! PFFile
+                photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                    
+                    let createdAt = object!.valueForKey("createdAt") as! NSDate
+                    let trustLevel = object!.valueForKey("trustLevel") as! Int
+                    let facebookId = object!.valueForKey("facebookID") as? String
+                    
+                    info["username"] = username
+                    info["createdAt"] = createdAt
+                    info["trustLevel"] = trustLevel
+                    
+                    if(data != nil)
                     {
-                        let data = object.objectForKey("profileImage") as! PFFile
-                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                            
-                            let username = object.valueForKey("username") as! String
-                            let registerDate = object.valueForKey("createdAt") as! NSDate
-                            let date = "\(registerDate)"
-                            
-                            let contact = Contact(username: username, registerDate: date, thumb: UIImage(data: data!)!)
-                            callback(contact: contact, error: nil)
-                        })
+                        info["profileImage"] = data
                     }
-                }
-                else
-                {
-                    callback(contact: nil, error: error_noUser)
-                }
-                
+                    if(facebookId != nil)
+                    {
+                        info["facebookId"] = facebookId
+                    }
+                    
+                    callback(contactInfo: info, error: nil)
+                })
             }
             else
             {
-                print("Error: \(error!) \(error!.userInfo)")
-                callback(contact: nil, error: NSError(domain: (error?.description)!, code: 999, userInfo: nil))
+                callback(contactInfo: NSDictionary(), error: error)
             }
+            
         }
     }
     
-    
-    class func getContactFromParseWithID(facebookId: String, callback: (contact: Contact?, error: NSError?) -> Void) -> Void
+    class func getContactInfoFromParse(facebookId facebookId: String, callback: (contactInfo: NSDictionary?, error: NSError?) -> Void) -> Void
     {
-        let query = PFUser.query()
-        query!.whereKey("facebookID", equalTo: facebookId)
-        query!.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        let info = NSMutableDictionary()
+        
+        let query = PFUser.query()!
+        query.whereKey("facebookID", equalTo: facebookId)
+        query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
             
-            if error == nil
+            if(object != nil)
             {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) users.")
-                // Do something with the found objects
-                if let objects = objects as? [PFObject]
-                {
-                    for object in objects
+                let photo = object?.objectForKey("profileImage") as! PFFile
+                photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                    
+                    let username = object!.valueForKey("username") as! String
+                    let createdAt = object!.valueForKey("createdAt") as! NSDate
+                    let trustLevel = object!.valueForKey("trustLevel") as! Int
+                    
+                    info["username"] = username
+                    info["createdAt"] = createdAt
+                    info["trustLevel"] = trustLevel
+                    info["facebookId"] = facebookId
+                    
+                    if(data != nil)
                     {
-                        let data = object.objectForKey("profileImage") as! PFFile
-                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                            
-                            if(data != nil)
-                            {
-                                let username = object.valueForKey("username") as! String
-                                let registerDateDate = object.valueForKey("createdAt") as! NSDate
-                                let registerDate = "\(registerDateDate)"
-                                
-                                let contact = Contact(username: username, registerDate: registerDate, thumb: UIImage(data: data!)!)
-                                callback(contact: contact, error: nil)
-                            }
-                            else
-                            {
-                                callback(contact: nil, error: error_incompleteUser)
-                            }
-                        })
+                        info["profileImage"] = data
                     }
-                }
-                else
-                {
-                    callback(contact: nil, error: error_noUser)
-                }
+                    
+                    callback(contactInfo: info, error: nil)
+                })
             }
             else
             {
-                // Log details of the failure
-                NSNotificationCenter.defaultCenter().postNotificationName(ContactCondRet.ContactNotFound.rawValue, object: nil)
-                print("Error: \(error!) \(error!.userInfo)")
-                callback(contact: nil, error: error)
+                callback(contactInfo: nil, error: error)
             }
         }
     }
-    
     
     class func getFacebookProfilePicture(facebookID: String, callback : (UIImage?) -> Void) -> Void {
         
@@ -151,7 +135,7 @@ class DAOParse
     }
     
     
-    class func getUsersWithString(string: String, callback: ([metaContact]) -> Void) -> Void
+    class func getUsersWithString(string: String, callback: (contact: [metaContact]) -> Void) -> Void
     {
         var result = [metaContact]()
         
@@ -164,24 +148,22 @@ class DAOParse
                 for object in objects
                 {
                     let username = object.valueForKey("username") as! String
-                    if(!DAOContacts.isContact(username) && username != DAOUser.sharedInstance.getUserName())
+                    if(!DAOContacts.sharedInstance.isContact(username) && username != DAOUser.sharedInstance.getUserName())
                     {
-                        let trustLevel = object.valueForKey("trustLevel") as! Int
                         let id = object.valueForKey("objectId") as! String
                         
-                        let mc = metaContact(username: username, trustLevel: trustLevel, photo: nil, id: id)
+                        let mc = metaContact(username: username, facebookId: id)
                         result.append(mc)
-                        
                     }
                     if(object.valueForKey("username") as! String == objects.last?.valueForKey("username") as! String)
                     {
-                        callback(result)
+                        callback(contact: result)
                     }
                 }
             }
             else
             {
-                callback(result)
+                callback(contact: result)
             }
         })
     }
@@ -262,13 +244,19 @@ class DAOParse
             {
                 for object in objects
                 {
-                    object.setValue("Aceito", forKey: "status")
-                    DAOContacts.addContactByUsername(request.sender, callback: { (success, error) -> Void in
-                        if(success == true)
-                        {
-                            print("Convite de amizade de \(request.sender) aceito e adicionado como contato")
-                            self.updateObject(object)
-                        }
+                    let user = object.valueForKey("sender") as! PFUser
+                    let username = user["username"] as! String
+                    let facebookId = user["facebookID"] as? String
+                    let createdAt = user["createdAt"] as! NSDate
+                    let trustLevel = user["trustLevel"] as! Int
+                    let photo = user["profileImage"] as! PFFile
+                    
+                    photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                        
+                        DAOContacts.sharedInstance.addContact(username, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
+                        object.setValue("Aceito", forKey: "status")
+                        object.saveEventually()
+                        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
                     })
                 }
             }
@@ -299,29 +287,34 @@ class DAOParse
     {
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
+        query.whereKey("status", equalTo: "Aceito")
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
-            print(objects?.count)
-            if let objects = objects as? [PFObject]
+            if(objects != nil)
             {
-                for object in objects
+                for object in objects!
                 {
-                    let status = object.valueForKey("status") as! String
-                    if(status == "Aceito")
-                    {
-                        let contact = object.valueForKey("target") as! String
-                        DAOContacts.addContactByUsername(contact, callback: { (success, error) -> Void in
-                            if(success == true)
-                            {
-                                NSNotificationCenter.defaultCenter().postNotificationName(appNotification.friendAdded.rawValue, object: nil)
-                                print("adicionando \(contact) por ter aceitado o pedido de amizade")
+                    let target = object.valueForKey("target") as! String
+                    let query2 = PFUser.query()
+                    query2?.whereKey("username", equalTo: target)
+                    query2?.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
+                        
+                        if user != nil
+                        {
+                            let facebookId = user?.valueForKey("facebookID") as? String
+                            let createdAt = user?.valueForKey("createdAt") as! NSDate
+                            let trustLevel = user?.valueForKey("trustLevel") as! Int
+                            let photo = user?.objectForKey("profileImage") as! PFFile
+                            photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                                
+                                DAOContacts.sharedInstance.addContact(target, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
                                 object.deleteEventually()
-                            }
-                        })
-                    }
+                                
+                            })
+                        }
+                    })
                 }
             }
-            
         }
     }
     
@@ -442,7 +435,7 @@ class DAOParse
     //***************************
     //** Funcoes para MENSAGEM
     //***************************
-    class func sendMessage(username: String, text: String, callback: (success: Bool, theMessage: Message?) -> Void) -> Void
+    class func sendMessage(username: String, text: String)
     {
         let user = PFUser.currentUser()
         if(user != nil)
@@ -461,15 +454,7 @@ class DAOParse
                     message["received"] = false
                     message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
                         
-                        if(error == nil)
-                        {
-                            let message = Message(sender: DAOUser.sharedInstance.getUserName(), target: username, date: NSDate(), text: text)
-                            callback(success: true, theMessage : message)
-                        }
-                        else
-                        {
-                            callback(success: false, theMessage : nil)
-                        }
+    
                     })
                 }
                 
@@ -477,16 +462,16 @@ class DAOParse
         }
         else
         {
-            callback(success: false, theMessage: nil)
+            
         }
     }
     
-    class func sendMessage(username: String, image: UIImage, callback: (success: Bool, theMessage: Message?) -> Void) -> Void
+    class func sendMessage(username: String, image: UIImage, lifeTime: Int)
     {
         let user = PFUser.currentUser()
         if(user != nil)
         {
-            
+            print("passa aqui")
             let query = PFUser.query()
             query?.whereKey("username", equalTo: username)
             query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
@@ -496,26 +481,18 @@ class DAOParse
                     let message = PFObject(className: "Message")
                     message["sender"] = user
                     message["target"] = object as! PFUser
-                    message["image"] = image.highestQualityJPEGNSData
+                    message["image"] = PFFile(data: image.highestQualityJPEGNSData)
                     message["received"] = false
+                    message["lifeTime"] = lifeTime
                     message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
                         
-                        if(error == nil)
-                        {
-                            let message = Message(sender: DAOUser.sharedInstance.getUserName(), target: username, date: NSDate(), image: image)
-                            callback(success: true, theMessage: message)
-                        }
-                        else
-                        {
-                            callback(success: false, theMessage: nil)
-                        }
                     })
                 }
             })
         }
         else
         {
-            callback(success: false, theMessage: nil)
+            
         }
     }
     
@@ -560,63 +537,74 @@ class DAOParse
     }
 
     
-    class func checkForContactMessages(username: String, callback: (messages:[Message]) -> Void) -> Void
+    class func checkForContactsMessage()
     {
-        let userQuery = PFUser.query()!
-        userQuery.whereKey("username", equalTo: username)
+        if(PFUser.currentUser() == nil)
+        {
+            print("Usuario nao logado")
+            return
+        }
         
-        var messages = [Message]()
+        let contacts = DAOContacts.sharedInstance.getAllContacts()
         
-        let query = PFQuery(className: "Message")
-        query.whereKey("sender", matchesQuery: userQuery)
-        query.whereKey("received", equalTo: false)
-        query.whereKey("target", equalTo: PFUser.currentUser()!)
-        
-        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+        for contact in contacts
+        {
+            let query = PFQuery(className: "Message")
+            query.whereKey("target", equalTo: PFUser.currentUser()!)
+            query.whereKey("received", equalTo: false)
             
-            print("\(objects?.count) Mensagens nao lidas")
-            
-            if let objects = objects as? [PFObject]
-            {
-                for object in objects
+            query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+                
+                if(objects != nil)
                 {
-                    let date = object.valueForKey("createdAt") as! NSDate
-                    let text = object.valueForKey("text") as? String
-                    
-                    if(text == nil)
+                    for object in objects!
                     {
-                        let data = object.objectForKey("image") as! PFFile
-                        data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                            
-                            if(data != nil)
-                            {
-                                let message = Message(sender: username, target: DAOUser.sharedInstance.getUserName(), date: date, image: UIImage(data: data!)!)
-                                messages.append(message)
-                            }
-                            object["received"] = true
-                            object.saveEventually()
-                        })
-                    }
-                    else
-                    {
-                        let message = Message(sender: username, target: DAOUser.sharedInstance.getUserName(), date: date, text: text)
-                        messages.append(message)
-                        object["received"] = true
-                        object.saveEventually()
+                        let sentDate = object.valueForKey("createdAt") as! NSDate
+                        let lifeTime = object.valueForKey("lifeTime") as! Int
+                        let text = object.valueForKey("text") as? String
                         
+                        //Texto
+                        if(text != nil)
+                        {
+                            object.setValue(true, forKey: "received")
+                            object.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
+                                
+                                DAOMessages.sharedInstance.addReceivedMessage(contact.username, text: text!, sentDate: sentDate, lifeTime: lifeTime)
+                            })
+                        }
+                        //Image
+                        else
+                        {
+                            let photo = object.objectForKey("image") as! PFFile
+                            photo.getDataInBackgroundWithBlock({ (data: NSData?, error2: NSError?) -> Void in
+                                
+                                if(data != nil)
+                                {
+                                    object.setValue(true, forKey: "received")
+                                    object.saveInBackgroundWithBlock({ (success: Bool, error3: NSError?) -> Void in
+                                        
+                                        if(success)
+                                        {
+                                            DAOMessages.sharedInstance.addReceivedMessage(contact.username, image: data!, sentDate: sentDate, lifeTime: lifeTime)
+                                        }
+                                        
+                                    })
+                                }
+                            })
+                        }
                     }
-                    if object == objects.last
+                    
+                    if(objects?.count > 0)
                     {
-                        callback(messages: messages)
+                        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
                     }
                 }
             }
-            else
-            {
-                callback(messages: messages)
-            }
         }
     }
+    
+    
+    
 }
 
 

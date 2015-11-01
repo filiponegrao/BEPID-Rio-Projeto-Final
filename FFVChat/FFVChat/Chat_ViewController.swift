@@ -8,6 +8,12 @@
 
 import UIKit
 
+let navigationBarHeigth : CGFloat = 80
+
+let messageViewHeigth : CGFloat = 50
+
+let tableViewHeigth : CGFloat = screenHeight - navigationBarHeigth - messageViewHeigth
+
 class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate
 {
 
@@ -38,11 +44,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReady.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageSent", name: appNotification.messageSent.rawValue, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReceived.rawValue, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageSent", name: appNotification., object: nil)
         
-        DAOMessages.sharedInstance.receiveMessagesFromContact(self.contact.username)
-        self.messages = DAOMessages.sharedInstance.getMessages(self.contact.username)
+        DAOMessages.sharedInstance.receiveMessagesFromContact()
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
         
         self.reloadTrustLevel()
@@ -53,8 +59,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageReady.rawValue, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageSent.rawValue, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageReady.rawValue, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageSent.rawValue, object: nil)
 
     }
     
@@ -62,7 +68,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
             
-            print(trustLevel)
             if(trustLevel != nil)
             {
                 self.redScreen.alpha = CGFloat(100 - CGFloat(trustLevel!))/100
@@ -73,14 +78,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func messageSent()
     {
-        self.messages = DAOMessages.sharedInstance.getMessages(self.contact.username)
         self.tableView.reloadData()
         self.tableViewScrollToBottom(false)
     }
     
     func reloadMessages()
     {
-        self.messages = DAOMessages.sharedInstance.getMessages(self.contact.username)
         self.tableView.reloadData()
         self.tableViewScrollToBottom(false)
     }
@@ -103,7 +106,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.redScreen.alpha = 0
 //        self.containerView.addSubview(self.redScreen)
         
-        self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, self.containerView.frame.height - 50))
+        self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.registerClass(CellImage_TableViewCell.self, forCellReuseIdentifier: "ImageCell")
         self.tableView.delegate = self
@@ -113,7 +116,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.containerView.addSubview(tableView)
         
-        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, 50))
+        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, messageViewHeigth))
         self.messageView.backgroundColor = oficialDarkGray
         self.containerView.addSubview(messageView)
         
@@ -141,7 +144,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.delegate = self
         self.messageView.addSubview(self.messageText)
 
-        self.navBar.contactImage.setImage(self.contact.thumb, forState: UIControlState.Normal)
+        self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
         
     }
 
@@ -158,19 +161,28 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         {
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
             {
-                self.containerView.frame.origin.y = -keyboardSize.height + self.navBar.frame.size.height
+                self.containerView.frame.size.height = screenHeight - navigationBarHeigth - keyboardSize.height
+                self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
+                self.tableView.frame.size.height = tableViewHeigth - keyboardSize.height
+                
+                if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+                {
+                    self.tableView.setContentOffset(CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height), animated: true)
+                }
             }
         }
     }
     
     func keyboardWillHide(notification: NSNotification)
     {
-        self.containerView.frame.origin.y = self.navBar.frame.size.height
+        self.containerView.frame.size.height = screenHeight - navigationBarHeigth
+        self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
+        self.tableView.frame.size.height = tableViewHeigth
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        print("toque")
+        
     }
     //****************************************************//
     //*********** TABLE VIEW PROPERTIES ******************//
@@ -253,13 +265,20 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.imageCell.image = self.messages[indexPath.row].image
-            cell.imageCell.blur(blurRadius: 10)
+            cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
+            
+            //blur
+            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+            
+            visualEffectView.frame = cell.imageCell.bounds
+            cell.imageCell.subviews.last?.removeFromSuperview()
+            cell.imageCell.addSubview(visualEffectView)
+            
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
             dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].date)
+            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             cell.sentDate.text = date
             
             cell.backgroundLabel.layer.cornerRadius = 4
@@ -284,7 +303,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
             dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].date)
+            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             
             cell.textMessage.text = self.messages[indexPath.row].text
             cell.sentDate.text = date
@@ -328,7 +347,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             rect = CGRectOffset(rect, -tableView.contentOffset.x, -tableView.contentOffset.y);
             
-            let zoom = ImageZoom_View(image: self.messages[indexPath.row].image!)
+            let zoom = ImageZoom_View(image: UIImage(data: self.messages[indexPath.row].image!)!)
             self.view.addSubview(zoom)
         }
         
@@ -336,7 +355,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableViewScrollToBottom(animated: Bool) {
         
-        let delay = 0.1 * Double(NSEC_PER_SEC)
+        let delay = 0.0 * Double(NSEC_PER_SEC)
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         
         dispatch_after(time, dispatch_get_main_queue(), {
@@ -483,15 +502,28 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
         self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image)
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: 60)
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        let index = self.messages.indexOf(message)
+        
+        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
+        
+        self.tableViewScrollToBottom(false)
     }
     
     
     func sendMessage()
     {
-        if (self.messageText.text?.characters.count > 0 || self.messageText.text != "Message...")
+        if (self.messageText.text?.characters.count > 0 && self.messageText.text != "Message...")
         {
-            DAOMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageText.text!)
+            let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageText.text!)
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            let index = self.messages.indexOf(message)
+            
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
+            
+            self.tableViewScrollToBottom(false)
+            
             self.messageText.text = ""
             self.backToOriginal()
         }

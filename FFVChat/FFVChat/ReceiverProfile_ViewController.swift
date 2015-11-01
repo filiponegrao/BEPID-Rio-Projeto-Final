@@ -35,7 +35,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.contactImage.image = DAOUser.sharedInstance.getProfileImage()
         self.contactImage.layer.borderWidth = 1.5
         self.contactImage.layer.borderColor = UIColor.whiteColor().CGColor
-        self.contactImage.image = self.contact.thumb
+        self.contactImage.image = UIImage(data: self.contact.profileImage!)
         
         self.backButton = UIButton(frame: CGRectMake(10, 35, 20, 20))
         self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)

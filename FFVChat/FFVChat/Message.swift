@@ -2,64 +2,29 @@
 //  Message.swift
 //  FFVChat
 //
-//  Created by Filipo Negrao on 14/10/15.
+//  Created by Filipo Negrao on 31/10/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
 import Foundation
-import UIKit
+import CoreData
 
 
+class Message: NSManagedObject {
 
-class Message
-{
-    let date : NSDate!
+// Insert code here to add functionality to your managed object subclass
     
-    let sender : String!
-    
-    let target : String!
-    
-    let text : String?
-    
-    let image : UIImage?
-    
-    
-    init(sender: String, target: String, date: NSDate, text: String!)
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, sender: String, target: String, text: String?, image: NSData?, sentDate: NSDate, lifeTime: Int) -> Message
     {
-        self.sender = sender
-        self.target = target
-        self.date = date
-        self.text = text
-        self.image = nil
+        let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as! Message
+        message.sender = sender
+        message.target = target
+        message.text = text
+        message.image = image
+        message.sentDate = sentDate
+        message.lifeTime = lifeTime
+        
+        return message
     }
-    
-    init(sender: String, target: String, date: NSDate, image: UIImage)
-    {
-        self.sender = sender
-        self.target = target
-        self.date = date
-        self.image = image
-        self.text = nil
-    }
-    
-    //COMING SOON  
-//    init(sender: String, target: String, date: NSDate, text: String, image: UIImage)
-//    {
-//        self.sender = sender
-//        self.target = target
-//        self.date = date
-//        self.image = image
-//        self.text = text
-//    }
-    
-    
+
 }
-
-
-class Chat
-{
-    
-}
-
-
-

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Settings_ViewController" customModule="FFVChat" customModuleProvider="target">
@@ -14,41 +14,8 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="twS-CA-qRu">
-                    <rect key="frame" x="241" y="285" width="119" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="119" id="5XN-2v-WRf"/>
-                        <constraint firstAttribute="height" constant="30" id="OtV-Ck-deR"/>
-                    </constraints>
-                    <state key="normal" title="Logout">
-                        <color key="titleColor" red="0.13075417780977827" green="0.77556818181818188" blue="0.65825585701471134" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="nR7-EA-FqZ"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tg-7A-3nc">
-                    <rect key="frame" x="21" y="40" width="46" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="Afx-wP-9jl"/>
-                        <constraint firstAttribute="width" constant="46" id="Qyq-wp-b8M"/>
-                    </constraints>
-                    <state key="normal" title="X">
-                        <color key="titleColor" red="0.83134075129999996" green="0.83134075129999996" blue="0.83134075129999996" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="back:" destination="-1" eventType="touchUpInside" id="GR0-9R-Fb6"/>
-                    </connections>
-                </button>
-            </subviews>
+            <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="1tg-7A-3nc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="21" id="4vT-OA-n4F"/>
-                <constraint firstItem="1tg-7A-3nc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="Dad-IU-hxV"/>
-                <constraint firstItem="twS-CA-qRu" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="K1u-yS-y5y"/>
-                <constraint firstItem="twS-CA-qRu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yi7-kx-XGd"/>
-            </constraints>
         </view>
     </objects>
 </document>

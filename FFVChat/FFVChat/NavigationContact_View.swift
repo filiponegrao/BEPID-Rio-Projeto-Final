@@ -62,6 +62,11 @@ class NavigationContact_View: UIView
         tools.modalInPopover = true
         self.vc.presentViewController(tools, animated: true) { () -> Void in
             (tools.viewControllers.first as! Tools_ViewController).openTools()
+            
+//            //blur
+//            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+//            visualEffectView.frame = self.vc.view.bounds
+//            self.vc.view.addSubview(visualEffectView)
         }
 
     }

@@ -33,15 +33,15 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
-        self.contacts = DAOContacts.getAllContacts()
+        self.contacts = DAOContacts.sharedInstance.getAllContacts()
         //end.
     }
     
     //*** PROPRIEDADES DE APRESENTACAO DO CONTROOLER **//
     
     override func viewWillAppear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: appNotification.friendAdded.rawValue, object: nil)
+    {        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: NotificationController.center.friendAdded.name, object: nil)
         DAOFriendRequests.sharedInstance.friendsAccepted()
         
 //        self.navigationController?.navigationBar.hidden = true
@@ -50,7 +50,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidDisappear(animated: Bool)
     {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: ContactNotification.contactAdded.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
     }
     //**  FIM DAS PROPRIEDADES DE APRESENTACAO DO CONTROLLER **//
     
@@ -84,7 +84,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellAll_TableViewCell
         cell.username.text = self.contacts[indexPath.row].username
-        cell.photo.image = self.contacts[indexPath.row].thumb
+        cell.photo.image = UIImage(data: self.contacts[indexPath.row].profileImage!)
         cell.rippleLocation = .Center
         cell.backgroundColor = UIColor.clearColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -112,7 +112,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     func reloadContacts()
     {
-        self.contacts = DAOContacts.getAllContacts()
+        self.contacts = DAOContacts.sharedInstance.getAllContacts()
         self.tableView.reloadData()
     }
     //** FIM DAS FUNCOES DE MANEGAMENTO DE DADOS **//

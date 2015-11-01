@@ -38,7 +38,6 @@ class TheJudger : NSObject
 
     func judge()
     {
-        NSNotificationCenter.defaultCenter().postNotificationName(appNotification.trustLevelChanged.rawValue, object: nil)
         DAOParse.decreaseTrustLevel()
         let timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "deletePhoto", userInfo: nil, repeats: false)
     }

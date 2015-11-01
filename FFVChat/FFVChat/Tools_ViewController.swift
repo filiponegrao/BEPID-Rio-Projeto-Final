@@ -88,7 +88,7 @@ class Tools_ViewController: UIViewController
     {
         UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
-            self.blackScreen.alpha = 0.9
+            self.blackScreen.alpha = 0.7
             self.notificationButton.frame.origin.y = screenHeight*1/4
             self.addButton.frame.origin.y = screenHeight/2
             self.configButton.frame.origin.y = screenHeight*3/4
