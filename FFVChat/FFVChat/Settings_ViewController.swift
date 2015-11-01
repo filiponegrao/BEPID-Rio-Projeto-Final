@@ -23,12 +23,8 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = oficialMediumGray
+        self.view.backgroundColor = UIColor(hex: 0xe5e5e5)
         
-        self.title = "Settings"
-        
-        let navBar = self.navigationController!.navigationBar
-
         self.tableView = UITableView(frame: CGRectMake(0,0, screenWidth, screenHeight))
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.delegate = self
@@ -45,11 +41,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.navigationBar.hidden = false
         let bar : UINavigationBar! =  self.navigationController?.navigationBar
     
-        bar.barTintColor = oficialDarkGray
+        bar.barTintColor = UIColor.whiteColor()
         bar.tintColor = oficialBlue
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.title = "Search"
+        self.title = "Settings"
         bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
     }
     
@@ -138,7 +134,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.backgroundColor = oficialDarkGray
+        cell.backgroundColor = UIColor.whiteColor()
         cell.selectionStyle = .None
         
         if(indexPath.row == 0 && indexPath.section == 0)

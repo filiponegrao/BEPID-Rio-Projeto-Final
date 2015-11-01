@@ -430,11 +430,11 @@
 				F66B29DC1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift */,
 				F66B29E01BAB6D6600BC43EE /* SelectedMidia_ViewController.swift */,
 				F66B29E41BAB6DB800BC43EE /* TakePhoto_ViewController.swift */,
-				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
 				801CB5C61BC2205E00F51E06 /* LoadingInfo_ViewController.swift */,
 				80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */,
 				80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */,
 				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
+				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";

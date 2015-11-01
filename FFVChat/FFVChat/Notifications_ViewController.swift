@@ -46,7 +46,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         bar.tintColor = oficialBlue
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         bar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.title = "Search"
+        self.title = "Notifications"
         bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
 
     }
