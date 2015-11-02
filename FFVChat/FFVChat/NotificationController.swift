@@ -25,6 +25,8 @@ class NotificationController: NSObject
     
     var friendAdded : NSNotification!
     
+    var friendRequested : NSNotification!
+    
     override init()
     {
         self.friendRequest = NSNotification(name: "friendRequest", object: NSMutableDictionary())
@@ -33,6 +35,7 @@ class NotificationController: NSObject
         self.messageSent = NSNotification(name: "messageSent", object: nil)
         self.messageNotSent = NSNotification(name: "messageNotSent", object: nil)
         self.friendAdded = NSNotification(name: "friendAdded", object: nil)
+        self.friendRequested = NSNotification(name: "friendRequested", object: nil)
     }
     
     class var center : NotificationController

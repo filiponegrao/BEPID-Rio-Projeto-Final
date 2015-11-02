@@ -115,6 +115,7 @@ class DAOUser
         // other fields can be set just like with PFObject
         user["trustLevel"] = 100
         user["profileImage"] = picture
+        user["contentPassword"] = password
 
         user.signUpInBackgroundWithBlock {
             (succeeded: Bool, error: NSError?) -> Void in
@@ -169,13 +170,12 @@ class DAOUser
                             let user = objects[0]
                             let email = user["email"] as! String
                             let trustLevel = user["trustLevel"] as! Int
-                            let id = user.objectId
+                            let password = user["contentPassword"] as! String
                             
                             self.setEmail(email)
                             self.setUserName(username)
                             self.setPassword(password)
                             self.setTrustLevel(trustLevel)
-                            self.setParseKey(id!)
                             
                             let data = user["profileImage"] as! PFFile
                             data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
@@ -227,19 +227,28 @@ class DAOUser
                 {
                     print("Novo usuario cadastrado pelo Facebook")
                     user.setValue(100, forKey: "trustLevel")
-                    user.save()
+                    user.saveEventually()
                     self.loadFaceInfo()
                 }
                 else
                 {
                     print("usuario logado pelo Facebook")
                     
-                    self.setUserName(user.valueForKey("username") as! String)
-                    self.setFacebookID(user.valueForKey("facebookID") as! String)
-                    self.setEmail(user.valueForKey("email") as! String)
-                    self.setPassword(user.valueForKey("username") as! String)
-                    self.setTrustLevel(user.valueForKey("trustLevel") as! Int)
-                    self.setParseKey(user.valueForKey("objectId") as! String)
+                    let current = PFUser.currentUser()
+                    print("current user: \(current)")
+                    print("password from current user \(current?.password)")
+                    
+                    let username = user.valueForKey("username") as! String
+                    let facebookId = user.valueForKey("facebookID") as? String
+                    let email = user.valueForKey("email") as! String
+                    let password = user.valueForKey("contentPassword") as! String
+                    let trustLevel = user.valueForKey("trustLevel") as! Int
+                    
+                    self.setUserName(username)
+                    self.setFacebookID(facebookId)
+                    self.setEmail(email)
+                    self.setPassword(password)
+                    self.setTrustLevel(trustLevel)
                     
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
@@ -295,7 +304,7 @@ class DAOUser
                         PFUser.currentUser()?.setValue(userEmail, forKey: "email")
                         PFUser.currentUser()?.setValue(id, forKey: "facebookID")
                         PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
-                        PFUser.currentUser()!.save()
+                        PFUser.currentUser()!.saveEventually()
                         
                         let image = UIImage(data: data!)
 
@@ -325,11 +334,13 @@ class DAOUser
         let user = PFUser.currentUser()
         user?.setValue(username, forKey: "username")
         user?.setValue(password, forKey: "password")
+        user?.setValue(password, forKey: "contentPassword")
         user?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
             
             let username = user?.valueForKey("username") as! String
             let email = user?.valueForKey("email") as! String
             let password = user?.valueForKey("password") as! String
+            print("password retrived from parse: \(password)")
 
             self.setUserName(username)
             self.setEmail(email)
@@ -670,39 +681,7 @@ class DAOUser
 
         return password!
     }
-
     
-    /**
-    * Funcao que retorna o nome cadastro uma unica vez
-    * do usuario do app
-    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-    * enquanto as de escrever utilizam o mutable dictionary
-    **/
-    func getBdKey() -> String
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-        
-        if(content == nil)
-        {
-            self.initUserInformation()
-            
-            if(content == nil)
-            {
-                return ""
-            }
-        }
-        
-        let id = content!.valueForKey("bdKey") as? String
-        
-        if(id == nil)
-        {
-            return ""
-        }
-        
-        return id!
-    }
 
     /**
      * Funcao que retorna o nome cadastro uma unica vez
@@ -784,7 +763,7 @@ class DAOUser
     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
     * enquanto as de escrever utilizam o mutable dictionary
     **/
-    func setFacebookID(name: String)
+    func setFacebookID(name: String?)
     {
         let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
@@ -889,26 +868,7 @@ class DAOUser
     }
 
     
-    func setParseKey(id: String)
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-        
-        if(content == nil)
-        {
-            self.initUserInformation()
-            
-            if(content == nil)
-            {
-                return
-            }
-        }
-        
-        content!.setValue(id, forKey: "bdKey")
-        content!.writeToFile(path, atomically: true)
-        
-    }
+   
 
     /**
      * Funcao que retorna o nome cadastro uma unica vez

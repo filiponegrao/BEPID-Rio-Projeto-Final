@@ -53,6 +53,10 @@
 		803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */; };
 		803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */; };
 		803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962971BC4707400AFFD24 /* BlurEffect.swift */; };
+		804B3DAD1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */; };
+		804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAC1BE7296A0021DF4E /* SentMidia.swift */; };
+		804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */; };
+		804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; };
 		809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A01BB4A99600CEC425 /* ImageEdition.swift */; };
 		80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135B1BC3038C0035E8B2 /* MKButton.swift */; };
@@ -169,6 +173,10 @@
 		803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
 		803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		803962971BC4707400AFFD24 /* BlurEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
+		804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SentMidia+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		804B3DAC1BE7296A0021DF4E /* SentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMidia.swift; sourceTree = "<group>"; };
+		804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOSentMidia.swift; sourceTree = "<group>"; };
+		804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSentMidia_CollectionViewCell.swift; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
 		809E75A01BB4A99600CEC425 /* ImageEdition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdition.swift; sourceTree = "<group>"; };
 		80AA135B1BC3038C0035E8B2 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
@@ -275,6 +283,7 @@
 				809E759C1BB49FC100CEC425 /* DAOContacts.swift */,
 				80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */,
 				8000FBD71BDA7E4700C1680A /* DAOMessages.swift */,
+				804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */,
 			);
 			name = DAOs;
 			sourceTree = "<group>";
@@ -392,6 +401,8 @@
 				80FF18A91BE5A53400C5F35E /* Contact.swift */,
 				80FF18AA1BE5A53400C5F35E /* Message+CoreDataProperties.swift */,
 				80FF18AB1BE5A53400C5F35E /* Message.swift */,
+				804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */,
+				804B3DAC1BE7296A0021DF4E /* SentMidia.swift */,
 				8017D37C1BD43132000CB8F0 /* DAOs */,
 				8017D3811BD46459000CB8F0 /* Models */,
 				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
@@ -478,6 +489,7 @@
 			isa = PBXGroup;
 			children = (
 				800597481BC1E76100327A3D /* CellAll_TableViewCell.swift */,
+				804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */,
 				8005974C1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift */,
 				800597501BC1E79400327A3D /* CellAdd_TableViewCell.swift */,
 				800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */,
@@ -660,14 +672,18 @@
 				803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
 				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,
+				804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
+				804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */,
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
+				804B3DAD1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift in Sources */,
 				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				8000FBD81BDA7E4700C1680A /* DAOMessages.swift in Sources */,
+				804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */,
 				80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */,
 				8017D37B1BD40394000CB8F0 /* StaticValues.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,

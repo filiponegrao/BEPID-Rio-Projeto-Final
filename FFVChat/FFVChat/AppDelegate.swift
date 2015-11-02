@@ -78,6 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
                 PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions)
             }
         }
+    
+        
         if application.respondsToSelector("registerUserNotificationSettings:")
         {
             let userNotificationTypes = (UIUserNotificationType.Alert.rawValue | UIUserNotificationType.Badge.rawValue | UIUserNotificationType.Sound.rawValue)

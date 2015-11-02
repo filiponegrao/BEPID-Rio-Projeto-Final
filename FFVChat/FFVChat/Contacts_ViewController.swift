@@ -42,6 +42,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(animated: Bool)
     {        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: NotificationController.center.friendAdded.name, object: nil)
+        
         DAOFriendRequests.sharedInstance.friendsAccepted()
         
 //        self.navigationController?.navigationBar.hidden = true
@@ -113,7 +114,8 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     func reloadContacts()
     {
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
-        self.tableView.reloadData()
+        let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
+        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
     }
     //** FIM DAS FUNCOES DE MANEGAMENTO DE DADOS **//
     

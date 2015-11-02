@@ -304,6 +304,7 @@ class DAOParse
                 for object in objects!
                 {
                     let target = object.valueForKey("target") as! String
+                    print("Amigo \(target) aceitou a solicitacao de amizade")
                     let query2 = PFUser.query()
                     query2?.whereKey("username", equalTo: target)
                     query2?.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
@@ -318,7 +319,6 @@ class DAOParse
                                 
                                 DAOContacts.sharedInstance.addContact(target, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
                                 object.deleteEventually()
-                                
                             })
                         }
                     })
@@ -343,6 +343,7 @@ class DAOParse
                     if(success == true)
                     {
                         print("Convite de amizade enviado para \(username)")
+                        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequested)
                     }
                 })
                 
@@ -463,7 +464,10 @@ class DAOParse
                     message["received"] = false
                     message["lifeTime"] = lifeTime
                     message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
-                        
+                        if(success)
+                        {
+                            self.pushMessageNotification(username, text: text)
+                        }
     
                     })
                 }
@@ -496,6 +500,10 @@ class DAOParse
                     message["lifeTime"] = lifeTime
                     message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
                         
+                        if(success)
+                        {
+                            self.pushImageNotification(username)
+                        }
                     })
                 }
             })

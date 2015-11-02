@@ -14,6 +14,7 @@ private let data : DAOContacts = DAOContacts()
 
 class DAOContacts
 {
+    var lastContactAdded : Contact!
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -113,6 +114,10 @@ class DAOContacts
     {
         let contact = Contact.createInManagedObjectContext(self.managedObjectContext, username: username, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: profileImage)
         self.save()
+        
+        self.lastContactAdded = contact
+        
+        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
     }
     
     

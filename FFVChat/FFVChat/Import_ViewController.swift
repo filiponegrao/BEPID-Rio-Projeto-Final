@@ -92,12 +92,12 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(animated: Bool)
     {
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactAdded", name: NotificationController.center.friendRequested.name, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool)
     {
-        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendRequested.name, object: nil)
     }
     
     

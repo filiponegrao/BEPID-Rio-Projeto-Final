@@ -50,6 +50,7 @@ class NavigationChat_View: UIView
         self.galleryButton = UIButton(frame: CGRectMake(self.frame.size.width - 54 , 25, 44, 44))
         self.galleryButton.alpha = 0.7
         self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: .Normal)
+        self.galleryButton.addTarget(self, action: "goToGallery", forControlEvents: .TouchUpInside)
         self.addSubview(self.galleryButton)
         
 //        self.galleryButton = UIButton(frame: CGRectMake(self.center.x - (self.contactImage.frame.width/2 + 65), 30, 40, 40))
@@ -79,7 +80,17 @@ class NavigationChat_View: UIView
     func goToProfile()
     {
         let profile = ReceiverProfile_ViewController()
-        profile.contact = viewController.contact
+        profile.contact = self.viewController.contact
         self.viewController.navigationController?.pushViewController(profile, animated: true)
     }
+    
+    func goToGallery()
+    {
+        let gallery = SentMidiaGallery_ViewController(nibName: "SentMidiaGallery_ViewController",bundle: nil)
+        gallery.contact = self.viewController.contact
+        self.viewController.navigationController?.pushViewController(gallery, animated: true)
+    }
+    
+    
+    
 }

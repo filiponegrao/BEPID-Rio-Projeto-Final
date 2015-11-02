@@ -37,7 +37,8 @@ class DAOMessages
         self.save()
         
         DAOParse.sendMessage(username, text: text, lifeTime: 86400)
-        DAOParse.pushMessageNotification(username, text: "Mensagem de \(DAOUser.sharedInstance.getUserName())")
+        //Notificacao deve ser enviada so quando a mensagem estiver no banco
+//        DAOParse.pushMessageNotification(username, text: "Mensagem de \(DAOUser.sharedInstance.getUserName())")
         
         return message
     }
@@ -48,7 +49,9 @@ class DAOMessages
         self.save()
         
         DAOParse.sendMessage(username, image: image, lifeTime: 60)
-        DAOParse.pushImageNotification(username)
+        //Notificacao so deve chegar quando a imagem for salva no banco
+        //DAOParse.pushImageNotification(username)
+        DAOSentMidia.sharedInstance.addSentMidia(message)
         
         return message
     }

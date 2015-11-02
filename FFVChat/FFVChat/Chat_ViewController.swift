@@ -45,7 +45,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReceived.rawValue, object: nil)
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageSent", name: appNotification., object: nil)
         
         DAOMessages.sharedInstance.receiveMessagesFromContact()
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
@@ -95,7 +94,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         super.viewDidLoad()
         self.view.backgroundColor = oficialMediumGray
-        badTrustNav
+//        badTrustNav
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
