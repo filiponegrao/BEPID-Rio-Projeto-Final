@@ -135,19 +135,24 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         cell.backgroundColor = UIColor.whiteColor()
-        cell.selectionStyle = .None
+        cell.selectionStyle = .Default
         
         if(indexPath.row == 0 && indexPath.section == 0)
         {
             let image = DAOUser.sharedInstance.getProfileImage()
-            let imageView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2, screenWidth/2))
-            imageView.image = image
-            imageView.clipsToBounds = true
-            imageView.layer.cornerRadius = imageView.frame.size.width/2
-            imageView.contentMode = .ScaleAspectFill
-            imageView.center = CGPointMake(cell.center.x, cell.center.y - 20)
+            let button = UIButton(frame: CGRectMake(0, 0, screenWidth/2, screenWidth/2))
+            
+            button.setImage(image, forState: .Normal)
+            button.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
+            button.clipsToBounds = true
+            button.layer.cornerRadius = button.frame.size.width/2
+            button.contentMode = .ScaleAspectFill
+            button.center = CGPointMake(cell.center.x, cell.center.y - 20)
             cell.subviews.last?.removeFromSuperview()
-            cell.addSubview(imageView)
+            cell.addSubview(button)
+            cell.backgroundColor = UIColor.clearColor()
+            cell.selectionStyle = .None
+
         }
         else
         {
@@ -211,7 +216,21 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func changeProfilePicture()
     {
+        let alert = UIAlertController(title: "Select a photo", message: "Choose the source", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
         
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Photo Album", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction) -> Void in
+            alert.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func aboutUs()
