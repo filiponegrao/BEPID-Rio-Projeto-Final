@@ -12,7 +12,7 @@ import Foundation
 class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate
 {
     
-    let bWidth = screenWidth/4
+    let bWidth = screenWidth/5
     
     let bMargem : CGFloat = 15
 
