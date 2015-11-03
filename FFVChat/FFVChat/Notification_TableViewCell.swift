@@ -30,7 +30,7 @@ class Notification_TableViewCell: UITableViewCell
         self.addSubview(self.icon)
         
         self.notification = UILabel(frame: CGRectMake(70, 10, screenWidth - 70 - 70, 40))
-        self.notification.textColor = oficialBlue
+        self.notification.textColor = oficialGreen
         self.notification.numberOfLines = 3
         self.addSubview(self.notification)
         
