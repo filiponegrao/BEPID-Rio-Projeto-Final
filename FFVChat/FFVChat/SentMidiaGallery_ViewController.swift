@@ -147,7 +147,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         self.passwordLabel = UILabel(frame: CGRectMake(20,text.frame.origin.y + text.frame.size.height, screenWidth - 40,50))
         self.passwordLabel.text = "_ _ _ _ _ _"
         self.passwordLabel.textColor = UIColor.whiteColor()
-        self.passwordLabel.font = UIFont(name: "Helvetica", size: 40)
+        self.passwordLabel.font = UIFont(name: "Helvetica", size: 20)
         self.passwordLabel.textAlignment = .Center
         password.addSubview(self.passwordLabel)
         
@@ -159,6 +159,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b1.tag = 1
         b1.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b1.layer.borderWidth = 1
+        b1.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b1)
         
         let b2 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
@@ -169,6 +170,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b2.layer.borderWidth = 1
         b2.tag = 2
         b2.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b2.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b2)
         
         let b3 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
@@ -179,6 +181,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b3.layer.borderWidth = 1
         b3.tag = 3
         b3.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b3.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b3)
         
         let b4 = UIButton(frame: CGRectMake(b1.frame.origin.x, b1.frame.origin.y + b1.frame.size.height + bMargem, bWidth, bWidth))
@@ -188,6 +191,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b4.layer.borderWidth = 1
         b4.tag = 4
         b4.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b4.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b4)
         
         let b5 = UIButton(frame: CGRectMake(b2.frame.origin.x, b2.frame.origin.y + b2.frame.size.height + bMargem, bWidth, bWidth))
@@ -197,6 +201,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b5.layer.borderWidth = 1
         b5.tag = 5
         b5.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b5.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b5)
         
         let b6 = UIButton(frame: CGRectMake(b3.frame.origin.x, b3.frame.origin.y + b3.frame.size.height + bMargem, bWidth, bWidth))
@@ -206,6 +211,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b6.layer.borderWidth = 1
         b6.tag = 6
         b6.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b6.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b6)
         
         let b7 = UIButton(frame: CGRectMake(b4.frame.origin.x, b4.frame.origin.y + b4.frame.size.height + bMargem, bWidth, bWidth))
@@ -215,6 +221,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b7.layer.borderWidth = 1
         b7.tag = 7
         b7.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b7.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b7)
         
         let b8 = UIButton(frame: CGRectMake(b5.frame.origin.x, b5.frame.origin.y + b5.frame.size.height + bMargem, bWidth, bWidth))
@@ -224,6 +231,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b8.layer.borderWidth = 1
         b8.tag = 8
         b8.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b8.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b8)
         
         let b9 = UIButton(frame: CGRectMake(b6.frame.origin.x, b6.frame.origin.y + b6.frame.size.height + bMargem, bWidth, bWidth))
@@ -233,6 +241,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b9.layer.borderWidth = 1
         b9.tag = 9
         b9.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b9.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b9)
         
         let b0 = UIButton(frame: CGRectMake(b8.frame.origin.x, b8.frame.origin.y + b5.frame.size.height + bMargem, bWidth, bWidth))
@@ -242,7 +251,13 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         b0.layer.borderWidth = 1
         b0.tag = 0
         b0.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+        b0.titleLabel?.font = UIFont(name: "Arial", size: 35)
         password.addSubview(b0)
+        
+        let limpar = UIButton(frame: CGRectMake(b9.frame.origin.x,b0.frame.origin.y, bWidth, bWidth))
+        limpar.setTitle("Clean", forState: .Normal)
+        limpar.addTarget(self, action: "clean", forControlEvents: .TouchUpInside)
+        password.addSubview(limpar)
         
         
         return password
@@ -301,6 +316,34 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
             self.passwordLabel.text = "* * * *"
         }
         
+    }
+    
+    func clean()
+    {
+        if(self.passwordNumbers.count > 0)
+        {
+            self.passwordNumbers.removeLast()
+        }
+        
+        switch self.passwordNumbers.count
+        {
+        case 0:
+            self.passwordLabel.text = "_ _ _ _ _ _"
+            
+        case 1:
+            self.passwordLabel.text = "\(self.passwordNumbers[0]) _ _ _ _ _"
+            
+        case 2:
+            self.passwordLabel.text = "* \(self.passwordNumbers[1]) _ _ _ _"
+            
+        case 3:
+            self.passwordLabel.text = "* * \(self.passwordNumbers[2]) _ _ _"
+            
+        case 4:
+            self.passwordLabel.text = "* * * \(self.passwordNumbers[3]) _ _"
+        default:
+            self.passwordLabel.text = "_ _ _ _ _ _"
+        }
     }
     
 }

@@ -54,14 +54,29 @@ class NavigationContact_View: UIView
     
     func openTools()
     {
+        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.vc.blurView.frame = self.vc.view.bounds
+        self.vc.blurView.alpha = 0
+        self.vc.view.addSubview(self.vc.blurView)
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            
+            self.vc.blurView.alpha = 0.7
+            
+            }) { (success: Bool) -> Void in
+                
+        }
+
+        
         self.alertOff()
-        let tools = UINavigationController(nibName: "AppNavigation2", bundle: nil)
-        tools.viewControllers = [Tools_ViewController()]
-        tools.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
-        tools.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        tools.modalInPopover = true
-        self.vc.presentViewController(tools, animated: true) { () -> Void in
-            (tools.viewControllers.first as! Tools_ViewController).openTools()
+        let toolscontroller = Tools_ViewController()
+        toolscontroller.contacts = self.vc
+        let toolsNavigation = UINavigationController(nibName: "AppNavigation2", bundle: nil)
+        toolsNavigation.viewControllers = [toolscontroller]
+        toolsNavigation.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
+        toolsNavigation.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        toolsNavigation.modalInPopover = true
+        self.vc.presentViewController(toolsNavigation, animated: true) { () -> Void in
+            (toolsNavigation.viewControllers.first as! Tools_ViewController).openTools()
             
 //            //blur
 //            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView

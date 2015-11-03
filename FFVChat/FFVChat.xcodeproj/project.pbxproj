@@ -69,6 +69,7 @@
 		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; };
 		80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */; };
 		80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */; };
+		80E458AA1BE853580066F1B1 /* JudgerAlert_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E458A91BE853580066F1B1 /* JudgerAlert_ViewController.swift */; };
 		80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */; };
 		80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */; };
 		80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF185A1BE3B15200C5F35E /* metaContact.swift */; };
@@ -189,6 +190,7 @@
 		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools_ViewController.swift; sourceTree = "<group>"; };
 		80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContact_ViewController.swift; sourceTree = "<group>"; };
+		80E458A91BE853580066F1B1 /* JudgerAlert_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JudgerAlert_ViewController.swift; sourceTree = "<group>"; };
 		80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications_ViewController.swift; sourceTree = "<group>"; };
 		80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification_TableViewCell.swift; sourceTree = "<group>"; };
 		80FF185A1BE3B15200C5F35E /* metaContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = metaContact.swift; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 		801D927B1BA492F200D05CE7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				80E458AB1BE8535F0066F1B1 /* Judger Workers */,
 				809E75AB1BB6313D00CEC425 /* Cells */,
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
@@ -512,6 +515,14 @@
 				80AA13611BC3038C0035E8B2 /* MKTextField.swift */,
 			);
 			name = MaterialKit;
+			sourceTree = "<group>";
+		};
+		80E458AB1BE8535F0066F1B1 /* Judger Workers */ = {
+			isa = PBXGroup;
+			children = (
+				80E458A91BE853580066F1B1 /* JudgerAlert_ViewController.swift */,
+			);
+			name = "Judger Workers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -676,6 +687,7 @@
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
 				804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */,
+				80E458AA1BE853580066F1B1 /* JudgerAlert_ViewController.swift in Sources */,
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,

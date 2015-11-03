@@ -10,7 +10,8 @@ import UIKit
 
 class Tools_ViewController: UIViewController
 {
-
+    var contacts : Contacts_ViewController!
+    
     var blackScreen : UIView!
     
     var addButton : UIButton!
@@ -86,6 +87,7 @@ class Tools_ViewController: UIViewController
     
     func openTools()
     {
+        
         UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0.7
@@ -122,12 +124,12 @@ class Tools_ViewController: UIViewController
             self.notificationButton.frame.origin.y = 6
             self.addButton.frame.origin.y = 6
             self.configButton.frame.origin.y = 6
-            self.view.unBlur()
+            self.contacts.blurView.alpha = 0
             
             }) { (success) -> Void in
                 
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    
+                    self.contacts.blurView.removeFromSuperview()
                 })
                 
         }

@@ -16,6 +16,8 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     var navigationBar : NavigationContact_View!
     
+    var blurView : UIVisualEffectView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()

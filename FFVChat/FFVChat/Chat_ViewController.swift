@@ -50,7 +50,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
         
-        self.reloadTrustLevel()
+//        self.reloadTrustLevel()
         self.tableViewScrollToBottom(false)
     }
     
@@ -59,7 +59,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageReceived.rawValue, object: nil)
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageSent.rawValue, object: nil)
 
     }
     
