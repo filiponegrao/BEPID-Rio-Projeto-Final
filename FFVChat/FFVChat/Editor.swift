@@ -14,30 +14,15 @@ class Editor
     class func circleUnblur(image: UIImage, x: CGFloat, y: CGFloat) -> UIImage
     {
         var prop : CGFloat!
+        var margem : CGFloat!
         
         if(image.size.width > image.size.height)
         {
-            print("wi maior")
-            if(image.size.width > screenWidth)
-            {
-                prop = screenWidth/image.size.width
-            }
-            else
-            {
-                prop = screenWidth/image.size.width
-            }
+            prop = screenHeight/image.size.height
         }
         else if(image.size.height > image.size.width)
         {
-            print("hei maior")
-            if(image.size.height > screenHeight)
-            {
-                prop = screenHeight/image.size.height
-            }
-            else
-            {
-                prop = screenHeight/image.size.height
-            }
+            prop = screenWidth/image.size.width
         }
         else
         {

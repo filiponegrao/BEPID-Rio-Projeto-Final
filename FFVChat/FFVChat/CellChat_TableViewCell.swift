@@ -42,7 +42,7 @@ class CellChat_TableViewCell: UITableViewCell
         self.textMessage.numberOfLines = 0
         self.cellView.addSubview(self.textMessage)
         
-        self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth, cellBackgroundHeigth - dateTextHeigth - margemVertical, dateTextWidth, dateTextHeigth))
+        self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth + margemLateral/2, cellBackgroundHeigth - dateTextHeigth - margemVertical, dateTextWidth, dateTextHeigth))
         self.sentDate.text = "28-09-1992 09:00"
         self.sentDate.font = UIFont(name: "Helvetica", size: 8)
         self.sentDate.textAlignment = .Right

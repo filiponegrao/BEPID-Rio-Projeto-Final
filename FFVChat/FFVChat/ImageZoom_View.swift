@@ -33,13 +33,13 @@ class ImageZoom_View: UIView {
         
         self.imageView = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenWidth))
         self.imageView.center = self.center
-        self.imageView.contentMode = .ScaleAspectFit
+        self.imageView.contentMode = .ScaleAspectFill
         self.imageView.image = image
         
         //blur
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        visualEffectView.frame = imageView.bounds
-        imageView.addSubview(visualEffectView)
+        visualEffectView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
+        self.addSubview(visualEffectView)
         
         self.imageView.layer.zPosition = 0
         self.addSubview(self.imageView)

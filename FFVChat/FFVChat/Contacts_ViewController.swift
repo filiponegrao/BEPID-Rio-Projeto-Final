@@ -100,7 +100,6 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         chat.contact = self.contacts[indexPath.row]
         self.navigationController?.pushViewController(chat, animated: true)
-//        DAOFriendRequests.sharedInstance.sendPushForFriendRequest(self.contacts[indexPath.row].username)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat

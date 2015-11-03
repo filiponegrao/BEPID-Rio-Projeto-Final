@@ -151,7 +151,7 @@ class DAOMessages
     {
         var messages = [Message]()
         
-        let pred1 = NSPredicate(format: "sender == %@ OR target == %@", DAOUser.sharedInstance.getUserName(), DAOUser.sharedInstance.getUserName())
+        let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact, contact)
 
         let fetchRequest = NSFetchRequest(entityName: "Message")
         fetchRequest.predicate = pred1

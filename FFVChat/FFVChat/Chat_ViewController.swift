@@ -14,7 +14,7 @@ let messageViewHeigth : CGFloat = 50
 
 let tableViewHeigth : CGFloat = screenHeight - navigationBarHeigth - messageViewHeigth
 
-class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIScrollViewDelegate
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
 
     var tableView: UITableView!
@@ -50,7 +50,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
         
-//        self.reloadTrustLevel()
         self.tableViewScrollToBottom(false)
     }
     
@@ -165,11 +164,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.containerView.frame.size.height = screenHeight - navigationBarHeigth - keyboardSize.height
                 self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
                 self.tableView.frame.size.height = tableViewHeigth - keyboardSize.height
-                
-                if(self.tableView.contentSize.height > self.tableView.frame.size.height)
-                {
-                    self.tableView.setContentOffset(CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height), animated: true)
-                }
+                self.tableView.contentOffset.y += keyboardSize.height
+
+//                if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+//                {
+//                    self.tableView.setContentOffset(CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height), animated: true)
+//                }
             }
         }
     }
@@ -278,7 +278,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
-            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+//            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            dateFormatter.dateFormat = "HH:mm:ss"
             let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             cell.sentDate.text = date
             
@@ -303,7 +304,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
-            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+//            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            dateFormatter.dateFormat = "HH:mm"
             let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             
             cell.textMessage.text = self.messages[indexPath.row].text
@@ -330,10 +332,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return cell
         }
 
-    }
-    
-    func scrollViewDidScrollToTop(scrollView: UIScrollView) {
-        self.messageText.endEditing(true)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
@@ -521,10 +519,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
             let index = self.messages.indexOf(message)
             
-            let numberOfMessages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username).count
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
-            
             self.tableViewScrollToBottom(false)
+
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
             
             self.messageText.text = ""
             self.backToOriginal()
