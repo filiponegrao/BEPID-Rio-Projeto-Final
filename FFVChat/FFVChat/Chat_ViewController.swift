@@ -16,7 +16,8 @@ let tableViewHeigth : CGFloat = screenHeight - navigationBarHeigth - messageView
 
 class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
-
+    var imageZoom : ImageZoom_View!
+    
     var tableView: UITableView!
     
     var messages = [Message]()
@@ -91,6 +92,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a lnha \(index)")
         self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
+        self.imageZoom?.fadeOut()
     }
     
     
@@ -375,8 +377,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let message = self.messages[indexPath.row]
         if(message.image != nil)
         {
-            let zoom = ImageZoom_View(image: UIImage(data: message.image!)!)
-            self.view.addSubview(zoom)
+            self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
+            self.view.addSubview(self.imageZoom)
             
             if(message.sender != DAOUser.sharedInstance.getUserName())
             {
