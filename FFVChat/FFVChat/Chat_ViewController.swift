@@ -316,7 +316,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
 //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            dateFormatter.dateFormat = "HH:mm"
+            dateFormatter.dateFormat = "HH:mm:ss:ms"
             let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             
             cell.textMessage.text = self.messages[indexPath.row].text
