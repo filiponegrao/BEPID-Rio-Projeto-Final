@@ -491,7 +491,6 @@ class DAOParse
         let user = PFUser.currentUser()
         if(user != nil)
         {
-            print("passa aqui")
             let query = PFUser.query()
             query?.whereKey("username", equalTo: username)
             query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in

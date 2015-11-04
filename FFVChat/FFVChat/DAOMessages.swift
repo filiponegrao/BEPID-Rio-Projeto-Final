@@ -153,16 +153,27 @@ class DAOMessages
             // Do something in response to error condition
         }
         
-        do {
-            try self.managedObjectContext.save()
-        } catch {
-            // Do something in response to error condition
-        }
+        self.save()
     }
     
     func clearConversation(username: String)
     {
+        let predicate = NSPredicate(format: "sender == %@ OR target == %@", username,username)
         
+        let fetchRequest = NSFetchRequest(entityName: "Message")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
+            
+            for entity in fetchedEntities {
+                self.managedObjectContext.deleteObject(entity)
+            }
+        } catch {
+            // Do something in response to error condition
+        }
+        
+        self.save()
     }
     
     
@@ -188,6 +199,28 @@ class DAOMessages
             return messages
         }
         return messages
+    }
+    
+    func deleteMessageAfterTime(message: Message)
+    {
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)/10) * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            var contact : String
+            if (message.sender == DAOUser.sharedInstance.getUserName())
+            {
+                contact = message.target
+            }
+            else
+            {
+                contact = message.sender
+            }
+            
+            let messages = self.conversationWithContact(contact)
+            let index = messages.indexOf(message)
+            
+            self.deleteMessage(message)
+            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
+        }
     }
     
     func receiveMessagesFromContact()
