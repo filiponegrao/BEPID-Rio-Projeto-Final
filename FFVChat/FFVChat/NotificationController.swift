@@ -27,6 +27,7 @@ class NotificationController: NSObject
     
     var friendRequested : NSNotification!
     
+    
     override init()
     {
         self.friendRequest = NSNotification(name: "friendRequest", object: NSMutableDictionary())

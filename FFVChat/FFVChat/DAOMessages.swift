@@ -15,6 +15,7 @@ private let data = DAOMessages()
 
 class DAOMessages
 {
+    var currentMessage : Message?
     
     var lastMessage : Message!
     
@@ -22,7 +23,7 @@ class DAOMessages
     
     init()
     {
-        
+        self.currentMessage = nil
     }
     
     class var sharedInstance : DAOMessages
@@ -45,7 +46,7 @@ class DAOMessages
     
     func sendMessage(username: String, image: UIImage, lifeTime: Int) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.highestQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime)
         self.save()
         
         DAOParse.sendMessage(username, image: image, lifeTime: 60)
@@ -138,7 +139,25 @@ class DAOMessages
     
     func deleteMessage(message: Message)
     {
+        let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@",message.sentDate,message.target,message.sender)
         
+        let fetchRequest = NSFetchRequest(entityName: "Message")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
+            if let entityToDelete = fetchedEntities.first {
+                self.managedObjectContext.deleteObject(entityToDelete)
+            }
+        } catch {
+            // Do something in response to error condition
+        }
+        
+        do {
+            try self.managedObjectContext.save()
+        } catch {
+            // Do something in response to error condition
+        }
     }
     
     func clearConversation(username: String)
@@ -152,9 +171,11 @@ class DAOMessages
         var messages = [Message]()
         
         let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact, contact)
+//        let pred2 = NSPredicate(format: "target == %@", contact)
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1])
 
         let fetchRequest = NSFetchRequest(entityName: "Message")
-        fetchRequest.predicate = pred1
+        fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sentDate", ascending: true)]
         
         do
