@@ -16,7 +16,8 @@ let tableViewHeigth : CGFloat = screenHeight - navigationBarHeigth - messageView
 
 class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
-
+    var imageZoom : ImageZoom_View!
+    
     var tableView: UITableView!
     
     var messages = [Message]()
@@ -43,8 +44,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReceived.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
+
         
         DAOMessages.sharedInstance.receiveMessagesFromContact()
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
@@ -58,6 +62,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageReceived.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
 
     }
     
@@ -76,6 +82,19 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         
     }
+    
+    
+    func messageEvaporated(notification: NSNotification)
+    {
+        let info : [NSObject : AnyObject] = notification.userInfo!
+        let index = info["index"] as! Int
+        print("Meu indicie é \(index) e minha abela tem \(self.messages.count)")
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a lnha \(index)")
+        self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
+        self.imageZoom?.fadeOut()
+    }
+    
     
     func reloadMessages()
     {
@@ -279,7 +298,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
 //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            dateFormatter.dateFormat = "HH:mm:ss"
+            dateFormatter.dateFormat = "HH:mm"
             let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             cell.sentDate.text = date
             
@@ -291,6 +310,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundLabel.layer.masksToBounds = false
             cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
+            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUserName())
+            {
+                cell.backgroundLabel.alpha = 0.2
+            }
+            else
+            {
+                cell.backgroundLabel.alpha = 0.1
+            }
+            
             return cell
         }
         //TEXT
@@ -300,7 +328,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             //adiciona mensagens do array
-            
+                        
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
@@ -327,27 +355,35 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundLabel.layer.shadowOpacity = 1
             cell.backgroundLabel.layer.masksToBounds = false
             cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
-
+            
+            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUserName())
+            {
+                cell.backgroundLabel.alpha = 0.2
+            }
+            else
+            {
+                cell.backgroundLabel.alpha = 0.08
+            }
             
             return cell
         }
-
+        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         print("clicando")
         self.messageText.endEditing(true)
-        
-        if(self.messages[indexPath.row].image != nil)
+        let message = self.messages[indexPath.row]
+        if(message.image != nil)
         {
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImage_TableViewCell
-            var rect = tableView.rectForRowAtIndexPath(indexPath)
+            self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
+            self.view.addSubview(self.imageZoom)
             
-            rect = CGRectOffset(rect, -tableView.contentOffset.x, -tableView.contentOffset.y);
-            
-            let zoom = ImageZoom_View(image: UIImage(data: self.messages[indexPath.row].image!)!)
-            self.view.addSubview(zoom)
+            if(message.sender != DAOUser.sharedInstance.getUserName())
+            {
+                DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+            }
         }
         
     }
@@ -519,9 +555,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
             let index = self.messages.indexOf(message)
             
-            self.tableViewScrollToBottom(false)
-
-            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
+            self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
+            let h = self.heightForView(self.messageText.text!, font: fontCell!, width: cellBackgroundWidth)
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical)
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
             
             self.messageText.text = ""
             self.backToOriginal()
@@ -533,9 +576,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //****************************************************//
     
     
-    func openImage()
+    func didTakeScreenShot()
     {
-        
+        let alert = JudgerAlert_ViewController()
+        alert.modalPresentationStyle = .OverFullScreen
+        self.presentViewController(alert, animated: true) { () -> Void in
+            
+        }
     }
     
     

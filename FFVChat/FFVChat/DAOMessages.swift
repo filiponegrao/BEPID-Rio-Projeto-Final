@@ -15,6 +15,7 @@ private let data = DAOMessages()
 
 class DAOMessages
 {
+    var currentMessage : Message?
     
     var lastMessage : Message!
     
@@ -22,7 +23,7 @@ class DAOMessages
     
     init()
     {
-        
+        self.currentMessage = nil
     }
     
     class var sharedInstance : DAOMessages
@@ -45,7 +46,7 @@ class DAOMessages
     
     func sendMessage(username: String, image: UIImage, lifeTime: Int) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.highestQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime)
         self.save()
         
         DAOParse.sendMessage(username, image: image, lifeTime: 60)
@@ -138,12 +139,41 @@ class DAOMessages
     
     func deleteMessage(message: Message)
     {
+        let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@",message.sentDate,message.target,message.sender)
         
+        let fetchRequest = NSFetchRequest(entityName: "Message")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
+            if let entityToDelete = fetchedEntities.first {
+                self.managedObjectContext.deleteObject(entityToDelete)
+            }
+        } catch {
+            // Do something in response to error condition
+        }
+        
+        self.save()
     }
     
     func clearConversation(username: String)
     {
+        let predicate = NSPredicate(format: "sender == %@ OR target == %@", username,username)
         
+        let fetchRequest = NSFetchRequest(entityName: "Message")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
+            
+            for entity in fetchedEntities {
+                self.managedObjectContext.deleteObject(entity)
+            }
+        } catch {
+            // Do something in response to error condition
+        }
+        
+        self.save()
     }
     
     
@@ -152,9 +182,11 @@ class DAOMessages
         var messages = [Message]()
         
         let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact, contact)
+//        let pred2 = NSPredicate(format: "target == %@", contact)
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1])
 
         let fetchRequest = NSFetchRequest(entityName: "Message")
-        fetchRequest.predicate = pred1
+        fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sentDate", ascending: true)]
         
         do
@@ -167,6 +199,28 @@ class DAOMessages
             return messages
         }
         return messages
+    }
+    
+    func deleteMessageAfterTime(message: Message)
+    {
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)/10) * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            var contact : String
+            if (message.sender == DAOUser.sharedInstance.getUserName())
+            {
+                contact = message.target
+            }
+            else
+            {
+                contact = message.sender
+            }
+            
+            let messages = self.conversationWithContact(contact)
+            let index = messages.indexOf(message)
+            
+            self.deleteMessage(message)
+            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
+        }
     }
     
     func receiveMessagesFromContact()
