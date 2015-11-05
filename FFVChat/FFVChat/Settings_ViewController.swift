@@ -140,16 +140,35 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         if(indexPath.row == 0 && indexPath.section == 0)
         {
             let image = DAOUser.sharedInstance.getProfileImage()
-            let button = UIButton(frame: CGRectMake(0, 0, screenWidth/2, screenWidth/2))
+            let button = UIButton(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5))
+            
+            let username = DAOUser.sharedInstance.getUserName()
+            let usernameLabel = UILabel(frame: CGRectMake(screenWidth/2 + 10, ((screenWidth/2 + 20)/3), screenWidth/2 - 10, 20))
+            usernameLabel.text = username
+            usernameLabel.textColor = oficialLightGray
+            
+            //pegar DAO Parse
+            let trustLevel = "100%"
+            let trustLabel = UILabel(frame: CGRectMake(screenWidth/2 + 10, ((screenWidth/2 + 20)/3) + 10, screenWidth/2 - 10, 80))
+            trustLabel.text = trustLevel
+            trustLabel.textColor = oficialLightGray
+            
+            let imageBorderView = UIView(frame: CGRectMake(0, 0, screenWidth/3, screenWidth/3))
+            imageBorderView.backgroundColor = oficialGreen
+            imageBorderView.center = CGPointMake(cell.center.x/2 + 10, cell.center.y - 20)
+            
             
             button.setImage(image, forState: .Normal)
             button.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
             button.clipsToBounds = true
             button.layer.cornerRadius = button.frame.size.width/2
             button.contentMode = .ScaleAspectFill
-            button.center = CGPointMake(cell.center.x, cell.center.y - 20)
+            button.center = CGPointMake(cell.center.x/2 + 10, cell.center.y - 20)
             cell.subviews.last?.removeFromSuperview()
             cell.addSubview(button)
+            cell.addSubview(usernameLabel)
+            cell.addSubview(trustLabel)
+            cell.addSubview(imageBorderView)
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = .None
 
