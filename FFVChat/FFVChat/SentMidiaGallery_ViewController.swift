@@ -12,7 +12,7 @@ import Foundation
 class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate
 {
     
-    let bWidth = screenWidth/5
+    let bWidth = screenWidth/4.5
     
     let bMargem : CGFloat = 15
 
@@ -131,18 +131,19 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         background.backgroundColor = oficialDarkGray
         background.alpha = 0.7
         password.addSubview(background)
+
+        let text = UILabel(frame: CGRectMake(10, 50,screenWidth - 20,50))
+        text.text = "Insert your\nMyne password"
+        text.numberOfLines = 2
+        text.font = UIFont(name: "Helvetica", size: 20)
+        text.textColor = oficialGreen
+        text.textAlignment = .Center
+        password.addSubview(text)
         
         let cancelButton = UIButton(frame: CGRectMake(0,20,50,50))
         cancelButton.setTitle("X", forState: .Normal)
         cancelButton.addTarget(self, action: "back", forControlEvents: .TouchUpInside)
         password.addSubview(cancelButton)
-
-        let text = UILabel(frame: CGRectMake(10,70,screenWidth - 20,50))
-        text.text = "Insert your Myne password"
-        text.font = UIFont(name: "Helvetica", size: 20)
-        text.textColor = oficialGreen
-        text.textAlignment = .Center
-        password.addSubview(text)
         
         self.passwordLabel = UILabel(frame: CGRectMake(20,text.frame.origin.y + text.frame.size.height, screenWidth - 40,50))
         self.passwordLabel.text = "_ _ _ _ _ _"
@@ -152,7 +153,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         password.addSubview(self.passwordLabel)
         
         let b1 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
-        b1.center = CGPointMake(screenWidth/4 - bMargem, screenHeight*2/5)
+        b1.center = CGPointMake(screenWidth/4 - bMargem, screenHeight*2/5 - 10)
         b1.layer.cornerRadius = bWidth/2
         b1.layer.borderColor = oficialGreen.CGColor
         b1.setTitle("1", forState: .Normal)
@@ -163,7 +164,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         password.addSubview(b1)
         
         let b2 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
-        b2.center = CGPointMake(screenWidth/2, screenHeight*2/5)
+        b2.center = CGPointMake(screenWidth/2, screenHeight*2/5 - 10)
         b2.layer.cornerRadius = bWidth/2
         b2.layer.borderColor = oficialGreen.CGColor
         b2.setTitle("2", forState: .Normal)
@@ -174,7 +175,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         password.addSubview(b2)
         
         let b3 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
-        b3.center = CGPointMake(screenWidth*3/4 + bMargem, screenHeight*2/5)
+        b3.center = CGPointMake(screenWidth*3/4 + bMargem, screenHeight*2/5 - 10)
         b3.layer.cornerRadius = bWidth/2
         b3.layer.borderColor = oficialGreen.CGColor
         b3.setTitle("3", forState: .Normal)

@@ -28,15 +28,18 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         self.view.addSubview(self.navigationBar)
         
         //Table view
-        self.tableView = UITableView(frame: CGRectMake(0, self.navigationBar.frame.size.height, screenWidth, screenHeight - self.navigationBar.frame.size.height))
+        self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.registerNib(UINib(nibName: "CellAll_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
+        self.view.bringSubviewToFront(self.navigationBar)
+        
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
         //end.
+        
     }
     
     //*** PROPRIEDADES DE APRESENTACAO DO CONTROOLER **//
@@ -47,7 +50,6 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         
         DAOFriendRequests.sharedInstance.friendsAccepted()
         
-//        self.navigationController?.navigationBar.hidden = true
     }
     
     
@@ -65,7 +67,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     }
 
     
-    //** TABLE VIEW PROPERTIE *********//
+    //** TABLE VIEW PROPERTIES *********//
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
     {
@@ -107,6 +109,19 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         return 70
     }
     
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return self.navigationBar.frame.size.height
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
+        let view = UIView(frame: CGRectMake(0,0,screenWidth,self.navigationBar.frame.size.height))
+        view.backgroundColor = UIColor.clearColor()
+        return view
+        
+    }
     //** TABLE VIEW PROPRIETS END ******//
     
     
