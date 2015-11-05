@@ -296,6 +296,7 @@ class DAOParse
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
         query.whereKey("status", equalTo: "Aceito")
+        query.includeKey("sender")
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if(objects != nil)
@@ -349,6 +350,30 @@ class DAOParse
             }
             
         })
+    }
+    
+    
+    class func sendPushRequestAccepted(username: String)
+    {
+        let message = "\(DAOUser.sharedInstance.getUserName()) lhe aceitou como amigo(a)"
+        
+        let data = [ "title": "Convite de amizade no FFVChat",
+            "alert": message, "badge": 1, "do": appNotification.requestAccepted.rawValue, "content-avaliable" : 1]
+        
+        print("enviando notificacao")
+        let userQuery = PFUser.query()
+        userQuery?.whereKey("username", equalTo: username)
+        
+        // Find devices associated with these users
+        let pushQuery = PFInstallation.query()
+        pushQuery!.whereKey("user", matchesQuery: userQuery!)
+        
+        // Send push notification to query
+        let push = PFPush()
+        push.setQuery(pushQuery) // Set our Installation query
+        push.setData(data as [NSObject : AnyObject])
+        push.sendPushInBackground()
+
     }
     
     

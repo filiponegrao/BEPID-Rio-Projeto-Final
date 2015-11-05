@@ -48,6 +48,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     {        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: NotificationController.center.friendAdded.name, object: nil)
         
+        print("vai carregar")
         DAOFriendRequests.sharedInstance.friendsAccepted()
         
     }
