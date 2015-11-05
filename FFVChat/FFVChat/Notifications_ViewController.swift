@@ -99,6 +99,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        //aqui que contece a treta 
+        indexPath.section == 0
         
     }
     

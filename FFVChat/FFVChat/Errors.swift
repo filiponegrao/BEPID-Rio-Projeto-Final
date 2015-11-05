@@ -18,6 +18,8 @@ let error_selfUser = NSError(domain: "Usuario é o atua", code: 002, userInfo: n
 
 let error_incompleteUser = NSError(domain: "Usuario desejado nao possui dados completos", code: 003, userInfo: nil)
 
+let error_RequestInexistent = NSError(domain: "Request nao encontrada", code: 004, userInfo: nil)
+
 
 
 

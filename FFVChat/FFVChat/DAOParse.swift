@@ -232,7 +232,7 @@ class DAOParse
     }
     
     
-    class func acceptRequestOnParse(request: FriendRequest, callback: (success: Bool, error: NSError) -> Void) -> Void
+    class func acceptRequestOnParse(request: FriendRequest, callback: (success: Bool, error: NSError?) -> Void) -> Void
     {
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: request.sender)
@@ -262,13 +262,17 @@ class DAOParse
                                 DAOContacts.sharedInstance.addContact(sender, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
                                 object.setValue("Aceito", forKey: "status")
                                 object.saveEventually()
+                                callback(success: true, error: nil)
                             })
                         }
                         
                     })
                 }
             }
-            
+            else
+            {
+                callback(success: false, error: error_RequestInexistent)
+            }
         }
 
     }
