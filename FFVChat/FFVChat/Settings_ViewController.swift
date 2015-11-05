@@ -29,6 +29,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.separatorStyle = .None
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         self.view.addSubview(self.tableView)
@@ -144,19 +145,23 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let username = DAOUser.sharedInstance.getUserName()
             let usernameLabel = UILabel(frame: CGRectMake(screenWidth/2 + 10, ((screenWidth/2 + 20)/3), screenWidth/2 - 10, 20))
-            usernameLabel.text = username
-            usernameLabel.textColor = oficialLightGray
             
             //pegar DAO Parse
             let trustLevel = "100%"
-            let trustLabel = UILabel(frame: CGRectMake(screenWidth/2 + 10, ((screenWidth/2 + 20)/3) + 10, screenWidth/2 - 10, 80))
-            trustLabel.text = trustLevel
-            trustLabel.textColor = oficialLightGray
+            let trustLabel = UILabel(frame: CGRectMake(screenWidth/2 + 10, ((screenWidth/2 + 20)/3) + 10, screenWidth/2 - 10, 40))
             
-            let imageBorderView = UIView(frame: CGRectMake(0, 0, screenWidth/3, screenWidth/3))
-            imageBorderView.backgroundColor = oficialGreen
-            imageBorderView.center = CGPointMake(cell.center.x/2 + 10, cell.center.y - 20)
+            let editPhotoButton = UIButton(frame: CGRectMake(0, (screenWidth/2 + 20) - 20, screenWidth/2, 20))
             
+            editPhotoButton.setTitle("Edit", forState: .Normal)
+            editPhotoButton.setTitleColor(oficialGreen, forState: .Normal)
+            editPhotoButton.titleLabel?.textAlignment = .Center
+            
+            usernameLabel.text = username
+            usernameLabel.textColor = oficialLightGray
+            
+                        trustLabel.text = trustLevel
+            trustLabel.textColor = oficialGreen //verificar trust level para setar cor
+            trustLabel.font = UIFont(name: "Helvetica", size: 25)
             
             button.setImage(image, forState: .Normal)
             button.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
@@ -164,11 +169,14 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             button.layer.cornerRadius = button.frame.size.width/2
             button.contentMode = .ScaleAspectFill
             button.center = CGPointMake(cell.center.x/2 + 10, cell.center.y - 20)
+            button.layer.borderColor = oficialGreen.CGColor // verificar trust level para setar cor
+            button.layer.borderWidth = 4
+            
             cell.subviews.last?.removeFromSuperview()
             cell.addSubview(button)
             cell.addSubview(usernameLabel)
             cell.addSubview(trustLabel)
-            cell.addSubview(imageBorderView)
+            cell.addSubview(editPhotoButton)
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = .None
 
