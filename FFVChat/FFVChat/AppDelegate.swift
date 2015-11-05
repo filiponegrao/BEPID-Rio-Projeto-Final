@@ -164,10 +164,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         //Isso causava o alerta no meio da porra da aplicação
 //        PFPush.handlePush(userInfo)
         
-        UIApplication.sharedApplication().applicationIconBadgeNumber += 1
-       
         if application.applicationState == UIApplicationState.Background
         {
+            UIApplication.sharedApplication().applicationIconBadgeNumber += 1
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
         }
      

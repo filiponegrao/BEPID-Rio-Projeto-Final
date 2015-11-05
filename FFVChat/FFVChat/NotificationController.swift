@@ -49,6 +49,9 @@ class NotificationController: NSObject
 
 }
 
+/* This information is used between notifications from
+ * diferent phones
+ */
 public enum appNotification : String
 {
     case friendRequest
