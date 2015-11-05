@@ -18,6 +18,10 @@ class AppNavigationController : UINavigationController
         let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
         self.viewControllers = [contacts]
         self.navigationBar.hidden = true
+        self.navigationBar.barStyle = .Default
+        self.navigationBar.barTintColor = oficialDarkGray
+        self.navigationBar.translucent = true
+        self.navigationBar.hideBottomHairline()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -25,4 +29,62 @@ class AppNavigationController : UINavigationController
     }
 
 
+}
+
+extension UINavigationBar {
+    
+    func hideBottomHairline() {
+        let navigationBarImageView = hairlineImageViewInNavigationBar(self)
+        navigationBarImageView!.hidden = true
+    }
+    
+    func showBottomHairline() {
+        let navigationBarImageView = hairlineImageViewInNavigationBar(self)
+        navigationBarImageView!.hidden = false
+    }
+    
+    private func hairlineImageViewInNavigationBar(view: UIView) -> UIImageView? {
+        if view.isKindOfClass(UIImageView) && view.bounds.height <= 1.0 {
+            return (view as! UIImageView)
+        }
+        
+        let subviews = (view.subviews as [UIView])
+        for subview: UIView in subviews {
+            if let imageView: UIImageView = hairlineImageViewInNavigationBar(subview) {
+                return imageView
+            }
+        }
+        
+        return nil
+    }
+    
+}
+
+extension UIToolbar {
+    
+    func hideHairline() {
+        let navigationBarImageView = hairlineImageViewInToolbar(self)
+        navigationBarImageView!.hidden = true
+    }
+    
+    func showHairline() {
+        let navigationBarImageView = hairlineImageViewInToolbar(self)
+        navigationBarImageView!.hidden = false
+    }
+    
+    private func hairlineImageViewInToolbar(view: UIView) -> UIImageView? {
+        if view.isKindOfClass(UIImageView) && view.bounds.height <= 1.0 {
+            return (view as! UIImageView)
+        }
+        
+        let subviews = (view.subviews as [UIView])
+        for subview: UIView in subviews {
+            if let imageView: UIImageView = hairlineImageViewInToolbar(subview) {
+                return imageView
+            }
+        }
+        
+        return nil
+    }
+    
 }

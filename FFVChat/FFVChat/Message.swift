@@ -14,7 +14,7 @@ class Message: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
     
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, sender: String, target: String, text: String?, image: NSData?, sentDate: NSDate, lifeTime: Int) -> Message
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, sender: String, target: String, text: String?, image: NSData?, sentDate: NSDate, lifeTime: Int, status: String) -> Message
     {
         let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as! Message
         message.sender = sender
@@ -23,6 +23,7 @@ class Message: NSManagedObject {
         message.image = image
         message.sentDate = sentDate
         message.lifeTime = lifeTime
+        message.status = status
         
         return message
     }

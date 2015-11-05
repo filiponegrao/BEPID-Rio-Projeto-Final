@@ -161,6 +161,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.textColor = oficialLightGray
         self.messageText.backgroundColor = UIColor.clearColor()
         self.messageText.delegate = self
+        self.messageText.keyboardAppearance = .Dark
         self.messageView.addSubview(self.messageText)
 
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
@@ -183,12 +184,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.containerView.frame.size.height = screenHeight - navigationBarHeigth - keyboardSize.height
                 self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
                 self.tableView.frame.size.height = tableViewHeigth - keyboardSize.height
-                self.tableView.contentOffset.y += keyboardSize.height
 
-//                if(self.tableView.contentSize.height > self.tableView.frame.size.height)
-//                {
-//                    self.tableView.setContentOffset(CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height), animated: true)
-//                }
+                if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+                {
+                    self.tableView.contentOffset.y += keyboardSize.height
+                }
             }
         }
     }
@@ -202,7 +202,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        
+        print("viado");
+        self.messageText.endEditing(true)
     }
     //****************************************************//
     //*********** TABLE VIEW PROPERTIES ******************//
@@ -380,9 +381,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
             self.view.addSubview(self.imageZoom)
             
-            if(message.sender != DAOUser.sharedInstance.getUserName())
+            print(message.status)
+            if(message.sender != DAOUser.sharedInstance.getUserName() && message.status == "unseen")
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+                message.status = "seen"
             }
         }
         

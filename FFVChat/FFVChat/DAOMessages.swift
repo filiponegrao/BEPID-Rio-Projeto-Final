@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import CoreData
 
+
+
 private let data = DAOMessages()
 
 
@@ -34,7 +36,7 @@ class DAOMessages
 
     func sendMessage(username: String, text: String) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 86400)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 86400, status: "sent")
         self.save()
         
         DAOParse.sendMessage(username, text: text, lifeTime: 86400)
@@ -46,7 +48,7 @@ class DAOMessages
     
     func sendMessage(username: String, image: UIImage, lifeTime: Int) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
         self.save()
         
         DAOParse.sendMessage(username, image: image, lifeTime: 60)
@@ -74,7 +76,7 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "unseen")
         
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
@@ -98,11 +100,18 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime,status: "unseen")
         
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
+        self.save()
+    }
+    
+    
+    func setMessageSeen(message: Message)
+    {
+        message.status = "seen"
         self.save()
     }
     
@@ -203,23 +212,29 @@ class DAOMessages
     
     func deleteMessageAfterTime(message: Message)
     {
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)/10) * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            var contact : String
-            if (message.sender == DAOUser.sharedInstance.getUserName())
-            {
-                contact = message.target
-            }
-            else
-            {
-                contact = message.sender
-            }
+        if(message.status != "seen")
+        {
+            message.status = "seen"
+            self.save()
             
-            let messages = self.conversationWithContact(contact)
-            let index = messages.indexOf(message)
-            
-            self.deleteMessage(message)
-            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)/10) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                var contact : String
+                if (message.sender == DAOUser.sharedInstance.getUserName())
+                {
+                    contact = message.target
+                }
+                else
+                {
+                    contact = message.sender
+                }
+                
+                let messages = self.conversationWithContact(contact)
+                let index = messages.indexOf(message)
+                
+                self.deleteMessage(message)
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
+            }
         }
     }
     

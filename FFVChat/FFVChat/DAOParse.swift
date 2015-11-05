@@ -262,7 +262,6 @@ class DAOParse
                                 DAOContacts.sharedInstance.addContact(sender, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
                                 object.setValue("Aceito", forKey: "status")
                                 object.saveEventually()
-                                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
                             })
                         }
                         

@@ -112,12 +112,16 @@ class DAOContacts
     
     func addContact(username: String, facebookId: String?, createdAt: NSDate, trustLevel: Int, profileImage: NSData?)
     {
-        let contact = Contact.createInManagedObjectContext(self.managedObjectContext, username: username, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: profileImage)
-        self.save()
-        
-        self.lastContactAdded = contact
-        
-        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
+        if(!self.isContact(username))
+        {
+            let contact = Contact.createInManagedObjectContext(self.managedObjectContext, username: username, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: profileImage)
+            self.save()
+            
+            self.lastContactAdded = contact
+            
+            NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
+
+        }
     }
     
     

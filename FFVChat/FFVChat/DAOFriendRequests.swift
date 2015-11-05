@@ -84,7 +84,7 @@ class DAOFriendRequests
     func acceptRequest(request: FriendRequest)
     {
         DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
-            NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.friendAdded.rawValue, object: nil)
+            
         }
     }
     

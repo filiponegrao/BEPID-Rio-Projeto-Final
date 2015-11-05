@@ -50,7 +50,6 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         
         DAOFriendRequests.sharedInstance.friendsAccepted()
         
-//        self.navigationController?.navigationBar.hidden = true
     }
     
     
