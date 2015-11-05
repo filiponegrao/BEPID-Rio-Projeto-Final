@@ -140,14 +140,14 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         if(indexPath.row == 0 && indexPath.section == 0)
         {
             let image = DAOUser.sharedInstance.getProfileImage()
-            let button = UIButton(frame: CGRectMake(0, 0, screenWidth/2, screenWidth/2))
+            let button = UIButton(frame: CGRectMake(cell.frame.size.width/8, cell.frame.size.height/4, screenWidth/2, screenWidth/2))
             
             button.setImage(image, forState: .Normal)
             button.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
             button.clipsToBounds = true
             button.layer.cornerRadius = button.frame.size.width/2
             button.contentMode = .ScaleAspectFill
-            button.center = CGPointMake(cell.center.x, cell.center.y - 20)
+//            button.center = CGPointMake(cell.center.x, cell.center.y - 20)
             cell.subviews.last?.removeFromSuperview()
             cell.addSubview(button)
             cell.backgroundColor = UIColor.clearColor()
