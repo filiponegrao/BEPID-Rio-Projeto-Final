@@ -11,29 +11,56 @@ import UIKit
 
 class Editor
 {
-    class func circleUnblur(image: UIImage, x: CGFloat, y: CGFloat) -> UIImage
+    class func circleUnblur(image: UIImage, x: CGFloat, y: CGFloat, imageFrame : CGRect) -> UIImage
     {
         var prop : CGFloat!
-        var margem : CGFloat!
+        var margemX : CGFloat!
+        var margemY : CGFloat!
+        let w : CGFloat = imageFrame.size.width
+        let h : CGFloat = imageFrame.size.height
         
         if(image.size.width > image.size.height)
         {
-            prop = screenHeight/image.size.height
+            if(image.size.width > w)
+            {
+                prop = w/image.size.width
+                margemX = 0
+                margemY = (h - image.size.height * prop)/2
+            }
+            else
+            {
+                prop = w/image.size.width
+                margemX = 0
+                margemY = (h - image.size.height * prop)/2
+            }
         }
         else if(image.size.height > image.size.width)
         {
-            prop = screenWidth/image.size.width
+            
+            if(image.size.height > h)
+            {
+                prop = h/image.size.height
+                margemX = (w - image.size.width * prop)/2
+                margemY = 0
+                print("altura da view: \(h), altura da imagem: \(image.size.height) prp: \(prop) e margens \(margemX) e \(margemY)")
+            }
+            else
+            {
+                prop = h/image.size.height
+                margemX = (w - image.size.width * prop)/2
+                margemY = 0
+            }
         }
         else
         {
-            if(image.size.width > screenWidth)
+            if(image.size.width > w)
             {
-                prop = screenWidth/image.size.width
+                prop = w/image.size.width
             }
         }
         
         UIGraphicsBeginImageContext(CGSizeMake(diametro, diametro))
-        image.drawInRect(CGRectMake(-x, -y, image.size.width * prop, image.size.height * prop), blendMode: CGBlendMode.Normal, alpha: 1)
+        image.drawInRect(CGRectMake(-(x)+margemX+imageFrame.origin.x , -(y)+margemY+imageFrame.origin.y, image.size.width * prop, image.size.height * prop), blendMode: CGBlendMode.Normal, alpha: 1)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

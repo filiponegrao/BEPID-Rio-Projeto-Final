@@ -300,7 +300,6 @@ class DAOParse
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
         query.whereKey("status", equalTo: "Aceito")
-        query.includeKey("sender")
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if(objects != nil)
@@ -528,7 +527,7 @@ class DAOParse
                     let message = PFObject(className: "Message")
                     message["sender"] = user
                     message["target"] = object as! PFUser
-                    message["image"] = PFFile(data: image.highestQualityJPEGNSData)
+                    message["image"] = PFFile(data: image.lowQualityJPEGNSData)
                     message["received"] = false
                     message["lifeTime"] = lifeTime
                     message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
@@ -663,6 +662,11 @@ class DAOParse
         }
     }
     
+    
+    class func getTrustLevel() -> Void
+    {
+        
+    }
     
     
 }
