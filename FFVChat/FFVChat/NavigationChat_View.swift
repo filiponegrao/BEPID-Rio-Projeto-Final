@@ -29,7 +29,6 @@ class NavigationChat_View: UIView
         
         self.backButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
         self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
-        self.backButton.alpha = 0.7
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview((self.backButton))
         
