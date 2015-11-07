@@ -307,7 +307,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func changeProfilePicture()
     {
-        let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: "Change profile picture", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: {
             

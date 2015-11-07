@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Sem-título-2Prancheta-1nextButton.png",
+      "filename" : "nextButton.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Sem-título-2Prancheta-1nextButton@2x.png",
+      "filename" : "nextButton@2x.png",
       "scale" : "2x"
     },
     {
