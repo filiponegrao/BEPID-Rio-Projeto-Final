@@ -214,7 +214,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        print("viado");
         self.messageText.endEditing(true)
     }
     //****************************************************//
