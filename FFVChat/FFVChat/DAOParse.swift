@@ -663,9 +663,22 @@ class DAOParse
     }
     
     
-    class func getTrustLevel() -> Void
+    class func getTrustLevel(username: String, callback: (trustLevel: Int) -> Void) -> Void
     {
-        
+        let query = PFUser.query()
+        query?.whereKey("username", equalTo: username)
+        query?.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error: NSError?) -> Void in
+            
+            if(user != nil)
+            {
+                let tl = user!["trustLevel"] as! Int
+                callback(trustLevel: tl)
+            }
+            else
+            {
+                callback(trustLevel: -1)
+            }
+        })
     }
     
     

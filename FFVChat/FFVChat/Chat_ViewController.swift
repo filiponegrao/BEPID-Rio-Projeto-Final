@@ -565,14 +565,23 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
-        self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        self.imagePicker.dismissViewControllerAnimated(false) { () -> Void in
+            
+            self.presentViewController(SelectedMidia_ViewController(image: image,contact: self.contact), animated: true, completion: { () -> Void in
+                
+            })
+            
+        }
+    }
+    
+    
+    func sendImage(image: UIImage, lifetime: Int)
+    {
         let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: 60)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
         
         self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
-        
-        self.tableViewScrollToBottom(false)
     }
     
     
@@ -603,7 +612,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //****************************************************//
     //******* END MESSAGE FUNCTIONS AND HANDLES  *********//
     //****************************************************//
-    
     
     func didTakeScreenShot()
     {
