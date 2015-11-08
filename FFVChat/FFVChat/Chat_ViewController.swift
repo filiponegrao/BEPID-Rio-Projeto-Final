@@ -104,17 +104,29 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let mssg = DAOMessages.sharedInstance.lastMessage
             let index = self.messages.indexOf(mssg)!
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
+            
+            print(mssg.status)
+            print(mssg.lifeTime)
+            if(mssg.sender != DAOUser.sharedInstance.getUserName() && mssg.status == "unseen")
+            {
+                DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+                mssg.status = "seen"
+            }
+            
             if(mssg.image == nil && mssg.text != nil)
             {
                 let h = self.heightForView(mssg.text!, font: fontCell!, width: cellTextWidth)
-                if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+                if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
                 {
                     self.tableView.contentOffset.y += (cellTextHeigth + margemVertical*4 + h)
                 }
             }
             else
             {
-                
+                if((self.tableView.contentSize.height + screenWidth) > self.tableView.frame.size.height)
+                {
+                    self.tableView.contentOffset.y += screenWidth
+                }
             }
         }
     }
