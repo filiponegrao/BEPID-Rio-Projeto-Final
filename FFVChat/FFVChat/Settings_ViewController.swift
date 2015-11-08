@@ -9,45 +9,84 @@
 import UIKit
 import Foundation
 
-class Settings_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
+class Settings_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverControllerDelegate
 {
     var tableView : UITableView!
     
-    let section1 = ["About us", "Privacy and Terms"]
+    let section1 = ["Change password", "Delete Profile", "Clean all media gallery"]
     
-    let section2 = ["Change password", "Clean Conversation"]
+    let section2 = ["About us"]
     
-    let section3 = ["Logout"]
+    var navBar : NavigationSettings_View!
+
+    var picker : UIImagePickerController? = UIImagePickerController()
+    
+    var popover : UIPopoverController? = nil
+    
+    var photoButton : UIButton!
+    
+    var editPhotoButton : UIButton!
+    
+    var image : UIImage!
+    
+    var profilePicView : UIImageView!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = oficialDarkGray
+        self.view.backgroundColor = oficialMediumGray
         
-        self.tableView = UITableView(frame: CGRectMake(0,0, screenWidth, screenHeight))
+        self.navBar = NavigationSettings_View(requester: self)
+        self.navBar.layer.zPosition = 5
+        self.view.addSubview(self.navBar)
+        
+        self.tableView = UITableView(frame: CGRectMake(0,60, screenWidth, screenHeight - 60))
         self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.layer.zPosition = 0
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .None
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
         self.view.addSubview(self.tableView)
         // Do any additional setup after loading the view.
+        
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.barTintColor = oficialDarkGray
+        
+        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
+       
     }
 
     override func viewWillAppear(animated: Bool)
     {
         
-        self.navigationController?.navigationBar.hidden = false
-        let bar : UINavigationBar! =  self.navigationController?.navigationBar
-    
-        bar.barTintColor = oficialDarkGray
-        bar.tintColor = oficialGreen
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        bar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.title = "Settings"
-        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
+        self.navigationController?.navigationBar.hidden = true
+//        let bar : UINavigationBar! =  self.navigationController?.navigationBar
+//        
+//        let backButton = UIBarButtonItem(image: UIImage(named: "backButton"), style: .Plain, target: self, action: "back")
+//        
+//        self.navigationItem.backBarButtonItem = backButton
+//        
+//    
+//        bar.barTintColor = oficialDarkGray
+//        bar.tintColor = oficialGreen
+//        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+//        bar.titleTextAttributes = titleDict as? [String : AnyObject]
+//        self.title = "Settings"
+//        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
+//        
+        self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
+        
+        self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
+        self.editPhotoButton.alpha = 0.5
+//        self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
+        self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
+
+        self.photoButton = UIButton(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto
+        
+       
     }
     
     override func didReceiveMemoryWarning()
@@ -105,17 +144,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         else if(section == 1)
         {
-            return 2
+            return 3
         }
         else if(section == 2)
         {
-            return 2
-        }
-        else if(section == 3)
-        {
             return 1
         }
-        
+
         return 0
     }
     
@@ -135,45 +170,57 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.backgroundColor = oficialMediumGray
+        cell.backgroundColor = oficialSemiGray
         cell.selectionStyle = .Default
+        
+        let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 4))
+        separatorLineView.backgroundColor = oficialMediumGray
+        
         
         if(indexPath.row == 0 && indexPath.section == 0)
         {
             let image = DAOUser.sharedInstance.getProfileImage()
-            let button = UIButton(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5))
             
             let username = DAOUser.sharedInstance.getUserName()
-            let usernameLabel = UILabel(frame: CGRectMake(screenWidth/2 + 10, ((screenWidth/2 + 20)/3), screenWidth/2 - 10, 20))
+            let usernameLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 20))
             
             //pegar DAO Parse
             let trustLevel = "100%"
-            let trustLabel = UILabel(frame: CGRectMake(screenWidth/2 + 10, ((screenWidth/2 + 20)/3) + 10, screenWidth/2 - 10, 40))
+            let trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             
-            let editPhotoButton = UIButton(frame: CGRectMake(0, (screenWidth/2 + 20) - 20, screenWidth/2, 20))
+
             
-            editPhotoButton.setTitle("Edit", forState: .Normal)
-            editPhotoButton.setTitleColor(oficialGreen, forState: .Normal)
-            editPhotoButton.titleLabel?.textAlignment = .Center
+//            let trustIndicatorView 
+            
+
+            self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
+            
+//            editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
+//            editPhotoButton.alpha = 0.5
+//            editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
+            
             
             usernameLabel.text = username
-            usernameLabel.textColor = oficialLightGray
+            usernameLabel.textColor = oficialGreen // verificar trust level
+            usernameLabel.textAlignment = .Center
+            usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + photoButton.frame.height/4 + 10)
             
-                        trustLabel.text = trustLevel
+            trustLabel.text = trustLevel
             trustLabel.textColor = oficialGreen //verificar trust level para setar cor
             trustLabel.font = UIFont(name: "Helvetica", size: 25)
+            trustLabel.center = CGPointMake(cell.center.x, cell.center.y + photoButton.frame.height/4 + usernameLabel.frame.height + 10)
+            trustLabel.textAlignment = .Center
             
-            button.setImage(image, forState: .Normal)
-            button.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
-            button.clipsToBounds = true
-            button.layer.cornerRadius = button.frame.size.width/2
-            button.contentMode = .ScaleAspectFill
-            button.center = CGPointMake(cell.center.x/2 + 10, cell.center.y - 20)
-            button.layer.borderColor = oficialGreen.CGColor // verificar trust level para setar cor
-            button.layer.borderWidth = 4
+            photoButton.setImage(image, forState: .Normal)
+//            button.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
+            photoButton.clipsToBounds = true
+            photoButton.layer.cornerRadius = photoButton.frame.size.width/2
+            photoButton.contentMode = .ScaleAspectFill
+            photoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
+
             
             cell.subviews.last?.removeFromSuperview()
-            cell.addSubview(button)
+            cell.addSubview(photoButton)
             cell.addSubview(usernameLabel)
             cell.addSubview(trustLabel)
             cell.addSubview(editPhotoButton)
@@ -181,27 +228,44 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.selectionStyle = .None
 
         }
-        else
-        {
             
-            if(indexPath.section == 1)
+        else if(indexPath.section == 1)
+        {
+            if(indexPath.row == 0)
+            {
+                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+                cell.addSubview(nextButton)
+                
+                
+                cell.textLabel?.text = self.section1[indexPath.row]
+                cell.textLabel?.textColor = UIColor.grayColor()
+            }
+            else if(indexPath.row == 1)
             {
                 cell.textLabel?.text = self.section1[indexPath.row]
                 cell.textLabel?.textColor = UIColor.grayColor()
             }
-            else if(indexPath.section == 2)
+            else if(indexPath.row == 2)
             {
-                cell.textLabel?.text = self.section2[indexPath.row]
+                cell.textLabel?.text = self.section1[indexPath.row]
                 cell.textLabel?.textColor = UIColor.grayColor()
-
-            }
-            else
-            {
-                cell.textLabel?.text = self.section3[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
-
             }
         }
+        
+        else if(indexPath.section == 2)
+        {
+            let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+            nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+            cell.addSubview(nextButton)
+            
+            cell.textLabel?.text = self.section2[indexPath.row]
+            cell.textLabel?.textColor = UIColor.grayColor()
+
+        }
+        
+        cell.contentView.addSubview(separatorLineView)
+
         
         return cell
     }
@@ -243,21 +307,101 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func changeProfilePicture()
     {
-        let alert = UIAlertController(title: "Select a photo", message: "Choose the source", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        alert.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
+        let alert = UIAlertController(title: "Change profile picture", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
+        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: {
             
-        }))
-        alert.addAction(UIAlertAction(title: "Photo Album", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            UIAlertAction in
+            self.openCamera()
+        })
+        
+        let galleryAction = UIAlertAction(title: "Gallery", style: .Default, handler: {
             
+            UIAlertAction in
+            self.openGallery()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: {
             
-        }))
-        alert.addAction(UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction) -> Void in
-            alert.dismissViewControllerAnimated(true, completion: nil)
-        }))
+            UIAlertAction in
+        })
+        
+        alert.addAction(cameraAction)
+        alert.addAction(galleryAction)
+        alert.addAction(cancelAction)
+        
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
+        {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            self.popover = UIPopoverController(contentViewController: self.picker!)
+            self.popover!.presentPopoverFromRect(self.editPhotoButton.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+        }
+
         
         
-        self.presentViewController(alert, animated: true, completion: nil)
+//        alert.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
+//        
+//            
+//        }))
+//        alert.addAction(UIAlertAction(title: "Photo Album", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//            
+//            
+//        }))
+//        alert.addAction(UIAlertAction(title: "Cancelar", style: UIAlertActionStyle.Cancel, handler: { (action: UIAlertAction) -> Void in
+//            alert.dismissViewControllerAnimated(true, completion: nil)
+//        }))
+//        
+//        
+//        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func openCamera()
+    {
+        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
+        {
+            self.picker?.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker?.cameraDevice = .Front
+            self.picker?.allowsEditing = true
+            self.presentViewController(self.picker!, animated: true, completion: nil)
+        }
+        else
+        {
+            openGallery()
+        }
+    }
+    
+    func openGallery()
+    {
+        self.picker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        
+        if(UIDevice.currentDevice().userInterfaceIdiom == .Phone)
+        {
+            self.presentViewController(self.picker!, animated: true, completion: nil)
+        }
+        else
+        {
+            self.popover = UIPopoverController(contentViewController: self.picker!)
+            self.popover?.presentPopoverFromRect(self.editPhotoButton.frame, inView: self.view, permittedArrowDirections: .Any, animated: true)
+        }
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        self.image = image
+        self.profilePicView.image = self.image
+        self.profilePicView.contentMode = UIViewContentMode.ScaleAspectFill
+//        self.photoButton.setImage(self.profilePicView.image, forState: .Normal)
+//        self.tableView.reloadData()
+        
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController)
+    {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func aboutUs()
@@ -285,6 +429,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
+    func back()
+    {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
 
 }
