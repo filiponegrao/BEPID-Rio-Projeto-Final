@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectedMidia_ViewController: UIViewController
+class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate
 {
 
     var navigationBar : NavigationMidia_View!
@@ -22,6 +22,8 @@ class SelectedMidia_ViewController: UIViewController
     var lifeTime : Int!
     
     var contact: Contact!
+    
+    var pickerView : UIPickerView
     
     init(image: UIImage, contact: Contact)
     {
@@ -88,5 +90,16 @@ class SelectedMidia_ViewController: UIViewController
         }
 
     }
+    
+    //** Picker View **//
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+    }func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        
+        
+    }
+    
+    
 
 }

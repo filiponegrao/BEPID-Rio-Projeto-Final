@@ -42,6 +42,7 @@ class ImageZoom_View: UIView {
         //blur
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
         visualEffectView.frame = self.imageView.frame
+        visualEffectView.alpha = 0.95
         self.addSubview(visualEffectView)
         
         
