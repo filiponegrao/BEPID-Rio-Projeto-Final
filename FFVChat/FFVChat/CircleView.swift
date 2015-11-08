@@ -24,8 +24,8 @@ class CircleView: UIView
         // Setup the CAShapeLayer with the path, colors, and line width
         circleLayer = CAShapeLayer()
         circleLayer.path = circlePath.CGPath
-        circleLayer.fillColor = oficialLightGray.CGColor
-        circleLayer.strokeColor = oficialLightGray.CGColor
+        circleLayer.fillColor = UIColor.clearColor().CGColor
+        circleLayer.strokeColor = UIColor.clearColor().CGColor
         circleLayer.lineWidth = 5.0;
         
         // Don't draw the circle initially
@@ -40,39 +40,42 @@ class CircleView: UIView
         fatalError("init(coder:) has not been implemented")
     }
 
-    func animateCircle(duration: NSTimeInterval) {
+    func animateCircle(duration: NSTimeInterval, trustLevel: Int)
+    {
         // We want to animate the strokeEnd property of the circleLayer
         let animation = CABasicAnimation(keyPath: "strokeEnd")
+        
+        let time = CGFloat(trustLevel)
         
         // Set the animation duration appropriately
         animation.duration = duration
         
         // Animate from 0 (no circle) to 1 (full circle)
         animation.fromValue = 0
-        animation.toValue = 0.35
+        animation.toValue = time / 100
         
         // Do a linear animation (i.e. the speed of the animation stays the same)
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
         
         // Set the circleLayer's strokeEnd property to 1.0 now so that it's the
         // right value when the animation ends.
-        circleLayer.strokeEnd = 0.35
+        circleLayer.strokeEnd = time / 100
         
         // Do the actual animation
         circleLayer.addAnimation(animation, forKey: "animateCircle")
     }
 
-    func setColor (trust: String!)
+    func setColor (trustLevel: Int!)
     {
-        if(trust == "100")
+        if(trustLevel == 100)
         {
             circleLayer.strokeColor = oficialGreen.CGColor
-            circleLayer.fillColor = oficialGreen.CGColor
+//            circleLayer.fillColor = oficialGreen.CGColor
         }
         else
         {
             circleLayer.strokeColor = oficialRed.CGColor
-            circleLayer.fillColor = oficialRed.CGColor
+//            circleLayer.fillColor = oficialRed.CGColor
         }
     }
 }

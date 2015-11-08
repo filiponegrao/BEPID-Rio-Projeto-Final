@@ -31,7 +31,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var circleView : CircleView!
     
-    var trustLevel : String!
+    var trustLevel : Int!
     
     override func viewDidLoad()
     {
@@ -52,7 +52,8 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
-        self.trustLevel = "90"  //pegar DAO Parse
+        self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
+        print(self.trustLevel)
         
         self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
         
@@ -202,9 +203,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             usernameLabel.textAlignment = .Center
             usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + 10)
             
-            trustLabel.text = self.trustLevel + "%"
+            trustLabel.text = "\(self.trustLevel)" + "%"
             
-            if(self.trustLevel == "100")
+            if(self.trustLevel == 100)
             {
                 trustLabel.textColor = oficialGreen
             }
@@ -461,7 +462,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         view.addSubview(circleView)
         
         // Animate the drawing of the circle over the course of 1 second
-        circleView.animateCircle(1.0)
+        circleView.animateCircle(1.0, trustLevel: self.trustLevel)
     }
     
 
