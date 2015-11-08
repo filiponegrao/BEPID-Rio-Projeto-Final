@@ -31,6 +31,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var profilePicView : UIImageView!
     
+    var circleView : CircleView!
+    
+    var trustLevel : String!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -49,6 +53,21 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.separatorStyle = .None
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
+        
+        self.trustLevel = "90"  //pegar DAO Parse
+
+        
+        self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
+        
+        self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
+        self.editPhotoButton.alpha = 0.5
+        //        self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
+        self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
+        
+        self.photoButton = UIButton(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto
+        
+        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
+        
         // Do any additional setup after loading the view.
         
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
@@ -77,14 +96,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
 //        self.title = "Settings"
 //        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
 //        
-        self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
-        
-        self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
-        self.editPhotoButton.alpha = 0.5
-//        self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
-        self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
 
-        self.photoButton = UIButton(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto
         
        
     }
@@ -184,28 +196,19 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             let username = DAOUser.sharedInstance.getUserName()
             let usernameLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 20))
             
-            //pegar DAO Parse
-            let trustLevel = "100%"
-            let trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
-            
 
-            
-//            let trustIndicatorView 
+            let trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             
 
             self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
             
-//            editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
-//            editPhotoButton.alpha = 0.5
-//            editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
-            
             
             usernameLabel.text = username
-            usernameLabel.textColor = oficialGreen // verificar trust level
+            usernameLabel.textColor = oficialLightGray // verificar trust level
             usernameLabel.textAlignment = .Center
             usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + photoButton.frame.height/4 + 10)
             
-            trustLabel.text = trustLevel
+            trustLabel.text = self.trustLevel + "%"
             trustLabel.textColor = oficialGreen //verificar trust level para setar cor
             trustLabel.font = UIFont(name: "Helvetica", size: 25)
             trustLabel.center = CGPointMake(cell.center.x, cell.center.y + photoButton.frame.height/4 + usernameLabel.frame.height + 10)
@@ -217,7 +220,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             photoButton.layer.cornerRadius = photoButton.frame.size.width/2
             photoButton.contentMode = .ScaleAspectFill
             photoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
-
+            
+//            self.circleView.center = CGPointMake(cell.center.x, cell.center.y - 40)
+            
+            addCircleView()
             
             cell.subviews.last?.removeFromSuperview()
             cell.addSubview(photoButton)
@@ -432,6 +438,24 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     func back()
     {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func addCircleView()
+    {
+        let circleWidth = screenWidth/2
+        let circleHeight = screenWidth/2
+        
+        // Create a new CircleView
+        let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
+        
+        circleView.center = CGPointMake(self.photoButton.center.x, self.photoButton.center.y)
+        
+        circleView.setColor(self.trustLevel)
+        
+        view.addSubview(circleView)
+        
+        // Animate the drawing of the circle over the course of 1 second
+        circleView.animateCircle(1.0)
     }
     
 
