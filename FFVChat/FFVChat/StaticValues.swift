@@ -19,7 +19,7 @@ let oficialDarkGray = UIColor(netHex: 0x343539) //navs e alguns backgrounds
 let oficialMediumGray = UIColor(netHex: 0x3c3d41) //background contatos e chat
 let oficialSemiGray = UIColor(netHex: 0x4a4b4e) //usado na tela de importação
 let oficialLightGray = UIColor(netHex: 0xa0a4a5) //textos e ícones
-let oficialRed = UIColor(netHex: 0x540305) //círculo trust level negativo tela destinatário
+let oficialRed = UIColor(netHex: 0xc70040) //círculo trust level negativo tela destinatário
 let badTrust = UIColor(netHex: 0x540305) //background chat negativo
 let badTrustNav = UIColor(netHex: 0x470204) //nav chat negativo
 
