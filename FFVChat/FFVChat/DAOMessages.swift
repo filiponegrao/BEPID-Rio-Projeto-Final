@@ -51,7 +51,7 @@ class DAOMessages
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
         self.save()
         
-        DAOParse.sendMessage(username, image: image, lifeTime: 60)
+        DAOParse.sendMessage(username, image: image, lifeTime: lifeTime)
         //Notificacao so deve chegar quando a imagem for salva no banco
         //DAOParse.pushImageNotification(username)
         DAOSentMidia.sharedInstance.addSentMidia(message)
@@ -217,7 +217,7 @@ class DAOMessages
             message.status = "seen"
             self.save()
             
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)/10) * Double(NSEC_PER_SEC)))
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)) * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
                 var contact : String
                 if (message.sender == DAOUser.sharedInstance.getUserName())

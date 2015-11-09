@@ -663,10 +663,7 @@ class DAOParse
     }
     
     
-    class func getTrustLevel() -> Void
-    {
-        
-    }
+   
     
     
 }

@@ -66,7 +66,7 @@ class NavigationContact_View: UIView
         self.vc.view.addSubview(self.vc.blurView)
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             
-            self.vc.blurView.alpha = 0.7
+            self.vc.blurView.alpha = 0.8
             
             }) { (success: Bool) -> Void in
                 

@@ -129,7 +129,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         
         let background = UIView(frame: CGRectMake(0,0,screenWidth,screenHeight))
         background.backgroundColor = oficialDarkGray
-        background.alpha = 0.7
+        background.alpha = 0.8
         password.addSubview(background)
 
         let text = UILabel(frame: CGRectMake(10, 50,screenWidth - 20,50))
