@@ -13,9 +13,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
 {
     var tableView : UITableView!
     
-    let section1 = ["Change password", "Delete Profile", "Clean all media gallery"]
+    let section1 = ["Change password", "Delete Profile"]
     
-    let section2 = ["About us"]
+    let section2 = ["Default photos filter", "Default photos time", "Clean all media gallery"]
+    
+    let section3 = ["About us"]
     
     var navBar : NavigationSettings_View!
 
@@ -140,9 +142,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         else if(section == 1)
         {
-            return 3
+            return 2
         }
         else if(section == 2)
+        {
+            return 3
+        }
+        else if(section == 3)
         {
             return 1
         }
@@ -258,27 +264,49 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.textLabel?.text = self.section1[indexPath.row]
                 cell.textLabel?.textColor = UIColor.grayColor()
             }
-            else if(indexPath.row == 2)
-            {
-                cell.textLabel?.text = self.section1[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
-            }
         }
         
         else if(indexPath.section == 2)
+        {
+            if(indexPath.row == 0)
+            {
+                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+                cell.addSubview(nextButton)
+                
+                
+                cell.textLabel?.text = self.section2[indexPath.row]
+                cell.textLabel?.textColor = UIColor.grayColor()
+            }
+            else if(indexPath.row == 1)
+            {
+                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+                cell.addSubview(nextButton)
+                
+                cell.textLabel?.text = self.section2[indexPath.row]
+                cell.textLabel?.textColor = UIColor.grayColor()
+            }
+            else if(indexPath.row == 2)
+            {
+                cell.textLabel?.text = self.section2[indexPath.row]
+                cell.textLabel?.textColor = UIColor.grayColor()
+            }
+
+        }
+        
+        else if(indexPath.section == 3)
         {
             let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
             nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
             cell.addSubview(nextButton)
             
-            cell.textLabel?.text = self.section2[indexPath.row]
+            cell.textLabel?.text = self.section3[indexPath.row]
             cell.textLabel?.textColor = UIColor.grayColor()
-
         }
         
         cell.contentView.addSubview(separatorLineView)
 
-        
         return cell
     }
     
