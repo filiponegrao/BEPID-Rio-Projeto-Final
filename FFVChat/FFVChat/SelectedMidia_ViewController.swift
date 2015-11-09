@@ -23,7 +23,10 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     var contact: Contact!
     
-    var pickerView : UIPickerView
+    var pickerView : UIPickerView!
+    
+    let minutes = Array(0...9)
+    let seconds = Array(0...59)
     
     init(image: UIImage, contact: Contact)
     {
@@ -50,21 +53,29 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.navigationBar)
         
 
-        self.imageView = UIImageView(frame: CGRectMake(10, self.navigationBar.frame.size.height + 10, screenWidth - 20, screenWidth - 20))
+        self.imageView = UIImageView(frame: CGRectMake(20, self.navigationBar.frame.size.height + 10, screenWidth - 40, screenWidth - 40))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.image = image
         self.imageView.backgroundColor = UIColor.blackColor()
         self.imageView.layer.cornerRadius = 4
-//        self.imageView.layer.borderColor = UIColor.grayColor().CGColor
-//        self.imageView.layer.borderWidth = 1
+        self.imageView.layer.borderColor = UIColor.grayColor().CGColor
+        self.imageView.layer.borderWidth = 1
         self.view.addSubview(self.imageView)
         
-        self.sendButton = UIButton(frame: CGRectMake(0,screenHeight - 60,screenWidth,60))
+        self.sendButton = UIButton(frame: CGRectMake(0,screenHeight - 44,screenWidth,44))
         self.sendButton.backgroundColor = oficialGreen
         self.sendButton.setTitle("Send", forState: .Normal)
         self.sendButton.addTarget(self, action: "sendPhoto", forControlEvents: .TouchUpInside)
-        self.sendButton.titleLabel?.textColor = oficialDarkGray
+        self.sendButton.titleLabel!.tintColor = oficialDarkGray
         self.view.addSubview(self.sendButton)
+    
+        
+        self.pickerView = UIPickerView(frame: CGRectMake(0,self.imageView.frame.origin.y + self.imageView.frame.size.height + 10, screenWidth, screenHeight - self.navigationBar.frame.size.height - self.imageView.frame.size.height - self.sendButton.frame.size.height - 20))
+        self.pickerView.delegate = self
+        self.pickerView.dataSource = self
+        self.pickerView.backgroundColor = oficialDarkGray
+        self.view.addSubview(self.pickerView)
+        
         
     }
 
@@ -93,12 +104,58 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     //** Picker View **//
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+    {
+        return 2
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+//        let row = pickerView.selectedRowInComponent(0)
         
-    }func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        if component == 0 {
+            return minutes.count
+        }
+            
+        else {
+            return seconds.count
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String {
         
+        if component == 0 {
+            return String(minutes[row])
+        } else {
+            
+            return String(seconds[row])
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        
+        let view = UIView(frame: CGRectMake(0,0,pickerView.frame.size.height, 20))
+        view.backgroundColor = UIColor.clearColor()
+        
+        if component == 0
+        {
+            let number = UILabel(frame: view.frame)
+            number.text = "\(self.minutes[row]) Minutes and"
+            number.textColor = UIColor.whiteColor()
+            view.addSubview(number)
+        }
+        else
+        {
+            let number = UILabel(frame: view.frame)
+            number.text = "\(self.seconds[row]) Seconds"
+            number.textColor = UIColor.whiteColor()
+            view.addSubview(number)
+        }
+        
+        return view
         
     }
+    
     
     
 

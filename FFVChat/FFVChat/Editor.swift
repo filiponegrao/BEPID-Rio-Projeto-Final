@@ -42,7 +42,6 @@ class Editor
                 prop = h/image.size.height
                 margemX = (w - image.size.width * prop)/2
                 margemY = 0
-                print("altura da view: \(h), altura da imagem: \(image.size.height) prp: \(prop) e margens \(margemX) e \(margemY)")
             }
             else
             {

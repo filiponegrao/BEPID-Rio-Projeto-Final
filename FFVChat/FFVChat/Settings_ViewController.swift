@@ -19,9 +19,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var navBar : NavigationSettings_View!
 
-    var picker : UIImagePickerController? = UIImagePickerController()
+    var picker = UIImagePickerController()
     
-    var popover : UIPopoverController? = nil
+    var popover : UIPopoverController!
     
     var photoButton : UIButton!
     
@@ -58,21 +58,14 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
 
         
         self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
-        
         self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
         self.editPhotoButton.alpha = 0.5
-        //        self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
         self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
         
         self.photoButton = UIButton(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto
         
-        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
+//        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
         
-        // Do any additional setup after loading the view.
-        
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.barTintColor = oficialDarkGray
         
         self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
        
@@ -80,25 +73,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
 
     override func viewWillAppear(animated: Bool)
     {
-        
         self.navigationController?.navigationBar.hidden = true
-//        let bar : UINavigationBar! =  self.navigationController?.navigationBar
-//        
-//        let backButton = UIBarButtonItem(image: UIImage(named: "backButton"), style: .Plain, target: self, action: "back")
-//        
-//        self.navigationItem.backBarButtonItem = backButton
-//        
-//    
-//        bar.barTintColor = oficialDarkGray
-//        bar.tintColor = oficialGreen
-//        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-//        bar.titleTextAttributes = titleDict as? [String : AnyObject]
-//        self.title = "Settings"
-//        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
-//        
-
-        
-       
     }
     
     override func didReceiveMemoryWarning()
@@ -221,10 +196,20 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             photoButton.contentMode = .ScaleAspectFill
             photoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
             
-//            self.circleView.center = CGPointMake(cell.center.x, cell.center.y - 40)
             
-            addCircleView()
+//            self.addCircleView()
             
+            let circleWidth = self.editPhotoButton.frame.size.width+20
+            let circleHeight = circleWidth
+            
+            // Create a new CircleView
+            let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
+            
+            circleView.center = CGPointMake(self.photoButton.center.x, self.photoButton.center.y)
+            
+            circleView.setColor(self.trustLevel)
+            
+        
             cell.subviews.last?.removeFromSuperview()
             cell.addSubview(photoButton)
             cell.addSubview(usernameLabel)
@@ -232,6 +217,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.addSubview(editPhotoButton)
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = .None
+            
+            cell.addSubview(circleView)
+            circleView.animateCircle(2.0)
+            
 
         }
             
@@ -342,7 +331,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         else
         {
-            self.popover = UIPopoverController(contentViewController: self.picker!)
+            self.popover = UIPopoverController(contentViewController: self.picker)
             self.popover!.presentPopoverFromRect(self.editPhotoButton.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
         }
 
@@ -368,10 +357,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera))
         {
-            self.picker?.sourceType = UIImagePickerControllerSourceType.Camera
-            self.picker?.cameraDevice = .Front
-            self.picker?.allowsEditing = true
-            self.presentViewController(self.picker!, animated: true, completion: nil)
+            self.picker.sourceType = UIImagePickerControllerSourceType.Camera
+            self.picker.cameraDevice = .Front
+            self.picker.allowsEditing = true
+            self.presentViewController(self.picker, animated: true, completion: nil)
         }
         else
         {
@@ -381,15 +370,15 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func openGallery()
     {
-        self.picker?.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
         if(UIDevice.currentDevice().userInterfaceIdiom == .Phone)
         {
-            self.presentViewController(self.picker!, animated: true, completion: nil)
+            self.presentViewController(self.picker, animated: true, completion: nil)
         }
         else
         {
-            self.popover = UIPopoverController(contentViewController: self.picker!)
+            self.popover = UIPopoverController(contentViewController: self.picker)
             self.popover?.presentPopoverFromRect(self.editPhotoButton.frame, inView: self.view, permittedArrowDirections: .Any, animated: true)
         }
     }

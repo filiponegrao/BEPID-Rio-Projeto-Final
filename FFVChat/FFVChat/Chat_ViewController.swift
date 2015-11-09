@@ -581,7 +581,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
         
-        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
+        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
+        
+        if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+        {
+            UIView.animateWithDuration(0.4, animations: { () -> Void in
+                
+                self.tableView.contentOffset.y += screenWidth
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
     }
     
     
