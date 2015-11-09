@@ -46,6 +46,7 @@ class ReceiverProfile_ViewController: UIViewController
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialDarkGray
+        self.view.clipsToBounds = true
 
         self.backButton = UIButton(frame: CGRectMake(0, 25, 45, 45))
         self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
@@ -59,11 +60,11 @@ class ReceiverProfile_ViewController: UIViewController
         self.view.addSubview(self.contentView)
         
         self.username = self.contact.username
-        self.trustLevel = 73 // PEGAR DAO PARSE
+        self.trustLevel = 0 // PEGAR DAO PARSE
         
         //mostra o trust level do usuário
         self.trustLevelLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6, screenWidth/2, screenWidth/7))
-        self.trustLevelLabel.text = "\(self.trustLevel)" + "%"
+        self.trustLevelLabel.text = "\(self.trustLevel)%"
         self.trustLevelLabel.font = UIFont(name: "Helvetica", size: 40)
         self.trustLevelLabel.textAlignment = .Left
         self.trustLevelLabel.textColor = UIColor.whiteColor()
@@ -121,7 +122,16 @@ class ReceiverProfile_ViewController: UIViewController
         view.addSubview(circleView)
         
         // Animate the drawing of the circle over the course of 1 second
-        circleView.animateCircle(1.0, trustLevel: self.trustLevel)
+        
+        DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
+            
+            if(trustLevel != nil)
+            {
+                circleView.animateCircle(1.0, trustLevel: trustLevel!)
+                self.trustLevelLabel.text = "\(trustLevel!)%"
+            }
+            
+        }
     }
 
 

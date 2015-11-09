@@ -73,7 +73,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(trustLevel != nil)
             {
-                self.redScreen.alpha = CGFloat(100 - CGFloat(trustLevel!))/100
+                if(trustLevel < 100)
+                {
+                    UIView.animateWithDuration(1, animations: { () -> Void in
+                        
+                        self.redScreen.alpha = 0
+                        
+                        }, completion: { (success: Bool) -> Void in
+                            
+                    })
+                }
             }
         }
     }
@@ -145,9 +154,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.view.addSubview(containerView)
         
         self.redScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
-        self.redScreen.backgroundColor = UIColor.redColor()
-        self.redScreen.alpha = 0
-//        self.containerView.addSubview(self.redScreen)
+        self.redScreen.backgroundColor = badTrust
+        self.redScreen.alpha = 90
+        self.containerView.addSubview(self.redScreen)
         
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -189,7 +198,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.addSubview(self.messageText)
 
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
-        
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.reloadTrustLevel()
     }
 
     override func didReceiveMemoryWarning()
