@@ -52,9 +52,6 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
-        
-        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
-        
         // Do any additional setup after loading the view.
         
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
@@ -184,7 +181,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             let usernameLabel : UILabel!
             let trustLabel : UILabel!
             
-            self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
+            self.trustLevel = 100 // PEGAR DAO PARSE
+            
+//            self.trustLevel = 100
             
             // image view que mostra a foto do usuário
             self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
@@ -226,7 +225,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
 
-            
+//            self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
             addCircleView()
 
             
@@ -449,13 +448,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func addCircleView()
     {
-        let circleWidth = screenWidth/2
-        let circleHeight = screenWidth/2
+        let circleWidth = screenWidth/2.3
+        let circleHeight = screenWidth/2.3
         
         // Create a new CircleView
         let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
         
-        circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y)
+        circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y + 80)
         
         circleView.setColor(self.trustLevel)
         circleView.layer.zPosition = 0
