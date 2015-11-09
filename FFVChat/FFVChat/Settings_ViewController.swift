@@ -58,6 +58,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
         self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
         self.editPhotoButton.alpha = 0.5
+        
         self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
         
         self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
@@ -193,13 +194,15 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
             trustLabel.textAlignment = .Center
             
-            photoButton.setImage(image, forState: .Normal)
-//            button.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
-            photoButton.clipsToBounds = true
-            photoButton.layer.cornerRadius = photoButton.frame.size.width/2
-            photoButton.contentMode = .ScaleAspectFill
-            photoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
+            self.profilePicView.image = image
+
+            self.profilePicView.clipsToBounds = true
+            self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.width/2
+            self.profilePicView.contentMode = .ScaleAspectFill
+            self.profilePicView.center = CGPointMake(cell.center.x, cell.center.y - 40)
+            self.profilePicView.layer.zPosition = 5
             
+
             
 //            self.addCircleView()
             
@@ -209,7 +212,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             // Create a new CircleView
             let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
             
-            circleView.center = CGPointMake(self.photoButton.center.x, self.photoButton.center.y)
+            circleView.center = CGPointMake(self.editPhotoButton.center.x, self.editPhotoButton.center.y)
             
             circleView.setColor(self.trustLevel)
             
@@ -222,9 +225,8 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = .None
             
-            cell.addSubview(circleView)
-            circleView.animateCircle(2.0)
-            
+            addCircleView()
+
 
         }
             

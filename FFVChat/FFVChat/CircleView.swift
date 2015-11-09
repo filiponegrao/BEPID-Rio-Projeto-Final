@@ -65,17 +65,17 @@ class CircleView: UIView
         circleLayer.addAnimation(animation, forKey: "animateCircle")
     }
 
-    func setColor(trust: String!)
+    func setColor (trustLevel: Int!)
     {
         if(trustLevel == 100)
         {
             circleLayer.strokeColor = oficialGreen.CGColor
-            circleLayer.fillColor = UIColor.clearColor().CGColor
+//            circleLayer.fillColor = oficialGreen.CGColor
         }
         else
         {
             circleLayer.strokeColor = oficialRed.CGColor
-            circleLayer.fillColor = UIColor.clearColor().CGColor
+//            circleLayer.fillColor = oficialRed.CGColor
         }
     }
 }

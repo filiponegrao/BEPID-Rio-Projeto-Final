@@ -25,6 +25,8 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     var pickerView : UIPickerView!
     
+    var clockImage : UIImageView!
+    
     let minutes = Array(0...9)
     let seconds = Array(0...59)
     
@@ -62,6 +64,14 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.imageView.layer.borderWidth = 1
         self.view.addSubview(self.imageView)
         
+        
+        self.pickerView = UIPickerView(frame: CGRectMake(0,self.imageView.frame.origin.y + self.imageView.frame.size.height + 20, screenWidth, screenHeight - self.navigationBar.frame.size.height - self.imageView.frame.size.height - 44 - 20))
+        self.pickerView.delegate = self
+        self.pickerView.dataSource = self
+        self.pickerView.backgroundColor = oficialDarkGray
+        self.view.addSubview(self.pickerView)
+        
+        
         self.sendButton = UIButton(frame: CGRectMake(0,screenHeight - 44,screenWidth,44))
         self.sendButton.backgroundColor = oficialGreen
         self.sendButton.setTitle("Send", forState: .Normal)
@@ -70,11 +80,11 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.sendButton)
     
         
-        self.pickerView = UIPickerView(frame: CGRectMake(0,self.imageView.frame.origin.y + self.imageView.frame.size.height + 10, screenWidth, screenHeight - self.navigationBar.frame.size.height - self.imageView.frame.size.height - self.sendButton.frame.size.height - 20))
-        self.pickerView.delegate = self
-        self.pickerView.dataSource = self
-        self.pickerView.backgroundColor = oficialDarkGray
-        self.view.addSubview(self.pickerView)
+        self.clockImage = UIImageView(frame: CGRectMake(0, 0, screenWidth/5, screenWidth/5))
+        self.clockImage.image = UIImage(named: "clockButton")
+        self.clockImage.center = CGPointMake(screenWidth/2, self.imageView.frame.origin.y + self.imageView.frame.size.height + self.clockImage.frame.size.width/2)
+        self.view.addSubview(self.clockImage)
+
         
         
     }
