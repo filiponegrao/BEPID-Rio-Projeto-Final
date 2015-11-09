@@ -52,18 +52,8 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
-        self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
-        print(self.trustLevel)
         
-        self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
-        self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
-        self.editPhotoButton.alpha = 0.5
-        
-        self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
-        
-        self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
-        
-//        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
+        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
         
         
         self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)

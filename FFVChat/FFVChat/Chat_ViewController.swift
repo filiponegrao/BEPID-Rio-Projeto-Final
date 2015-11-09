@@ -577,7 +577,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func sendImage(image: UIImage, lifetime: Int)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: 60)
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
         

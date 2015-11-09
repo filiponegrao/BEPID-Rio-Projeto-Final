@@ -80,7 +80,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.sendButton)
     
         
-        self.clockImage = UIImageView(frame: CGRectMake(0, 0, screenWidth/5, screenWidth/5))
+        self.clockImage = UIImageView(frame: CGRectMake(0, 0, screenWidth/8, screenWidth/8))
         self.clockImage.image = UIImage(named: "clockButton")
         self.clockImage.center = CGPointMake(screenWidth/2, self.imageView.frame.origin.y + self.imageView.frame.size.height + self.clockImage.frame.size.width/2)
         self.view.addSubview(self.clockImage)
@@ -98,18 +98,37 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     func sendPhoto()
     {
-        let nav = presentingViewController as! AppNavigationController
-        let controller = nav.viewControllers.last
+        let min = self.pickerView.selectedRowInComponent(0)
+        let sec = self.pickerView.selectedRowInComponent(1)
         
-        if controller!.isKindOfClass(Chat_ViewController)
+        if(min != 0 || sec != 0)
         {
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            let time = (min * 60) + sec
+            
+            let nav = presentingViewController as! AppNavigationController
+            let controller = nav.viewControllers.last
+            
+            if controller!.isKindOfClass(Chat_ViewController)
+            {
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    
+                    (controller as! Chat_ViewController).sendImage(self.image, lifetime: time)
+                    
+                })
+            }
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Ops!", message: "It's not possible send an image for been visible for 0 minutes and 0 seconds", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
                 
-                (controller as! Chat_ViewController).sendImage(self.image, lifetime: self.lifeTime)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: { () -> Void in
                 
             })
         }
-
     }
     
     //** Picker View **//
