@@ -13,9 +13,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
 {
     var tableView : UITableView!
     
-    let section1 = ["Change password", "Delete Profile", "Clean all media gallery"]
+    let section1 = ["Change password", "Delete Profile"]
     
-    let section2 = ["About us"]
+    let section2 = ["Default photos filter", "Default photos time", "Clean all media gallery"]
+    
+    let section3 = ["About us"]
     
     var navBar : NavigationSettings_View!
 
@@ -120,9 +122,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         else if(section == 1)
         {
-            return 3
+            return 2
         }
         else if(section == 2)
+        {
+            return 3
+        }
+        else if(section == 3)
         {
             return 1
         }
@@ -161,7 +167,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             let usernameLabel : UILabel!
             let trustLabel : UILabel!
             
-            self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
+            self.trustLevel = 100 // PEGAR DAO PARSE
+            
+//            self.trustLevel = 100
             
             // image view que mostra a foto do usuário
             self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
@@ -203,7 +211,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
 
-            
+//            self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
             addCircleView()
 
             
@@ -249,27 +257,49 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.textLabel?.text = self.section1[indexPath.row]
                 cell.textLabel?.textColor = UIColor.grayColor()
             }
-            else if(indexPath.row == 2)
-            {
-                cell.textLabel?.text = self.section1[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
-            }
         }
         
         else if(indexPath.section == 2)
+        {
+            if(indexPath.row == 0)
+            {
+                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+                cell.addSubview(nextButton)
+                
+                
+                cell.textLabel?.text = self.section2[indexPath.row]
+                cell.textLabel?.textColor = UIColor.grayColor()
+            }
+            else if(indexPath.row == 1)
+            {
+                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+                cell.addSubview(nextButton)
+                
+                cell.textLabel?.text = self.section2[indexPath.row]
+                cell.textLabel?.textColor = UIColor.grayColor()
+            }
+            else if(indexPath.row == 2)
+            {
+                cell.textLabel?.text = self.section2[indexPath.row]
+                cell.textLabel?.textColor = UIColor.grayColor()
+            }
+
+        }
+        
+        else if(indexPath.section == 3)
         {
             let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
             nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
             cell.addSubview(nextButton)
             
-            cell.textLabel?.text = self.section2[indexPath.row]
+            cell.textLabel?.text = self.section3[indexPath.row]
             cell.textLabel?.textColor = UIColor.grayColor()
-
         }
         
         cell.contentView.addSubview(separatorLineView)
 
-        
         return cell
     }
     
@@ -439,13 +469,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func addCircleView()
     {
-        let circleWidth = screenWidth/2
-        let circleHeight = screenWidth/2
+        let circleWidth = screenWidth/2.3
+        let circleHeight = screenWidth/2.3
         
         // Create a new CircleView
         let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
         
-        circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y)
+        circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y + 80)
         
         circleView.setColor(self.trustLevel)
         circleView.layer.zPosition = 0
