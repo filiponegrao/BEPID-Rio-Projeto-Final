@@ -165,21 +165,43 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if(indexPath.row == 0 && indexPath.section == 0)
         {
-            let image = DAOUser.sharedInstance.getProfileImage()
-            
+            let image = DAOUser.sharedInstance.getProfileImage()  // imagem do usuário
             let username = DAOUser.sharedInstance.getUserName()
-            let usernameLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 20))
-            let trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             
+            let usernameLabel : UILabel!
+            let trustLabel : UILabel!
+            
+            self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
+            
+            // image view que mostra a foto do usuário
+            self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
+            self.profilePicView.image = image
+            self.profilePicView.clipsToBounds = true
+            self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.width/2
+            self.profilePicView.contentMode = .ScaleAspectFill
+            self.profilePicView.center = CGPointMake(cell.center.x, cell.center.y - 40)
+            self.profilePicView.layer.zPosition = 5
+            
+            // botão ícone câmera por cima da foto de perfil
+            self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5))
+            self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
+            self.editPhotoButton.alpha = 0.5
+            self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
             self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
             
-            
+            // label que mostra nome do usuário
+            usernameLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 20))
             usernameLabel.text = username
             usernameLabel.textColor = oficialLightGray // verificar trust level
             usernameLabel.textAlignment = .Center
             usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + 10)
             
+            // label que mostra trust level do usuário
+            trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             trustLabel.text = "\(self.trustLevel)" + "%"
+            trustLabel.font = UIFont(name: "Helvetica", size: 25)
+            trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
+            trustLabel.textAlignment = .Center
             
             if(self.trustLevel == 100)
             {
@@ -190,18 +212,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 trustLabel.textColor = oficialRed
             }
             
-            trustLabel.font = UIFont(name: "Helvetica", size: 25)
-            trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
-            trustLabel.textAlignment = .Center
-            
-            self.profilePicView.image = image
 
-            self.profilePicView.clipsToBounds = true
-            self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.width/2
-            self.profilePicView.contentMode = .ScaleAspectFill
-            self.profilePicView.center = CGPointMake(cell.center.x, cell.center.y - 40)
-            self.profilePicView.layer.zPosition = 5
             
+            addCircleView()
 
             
 //            self.addCircleView()
@@ -218,14 +231,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
         
             cell.subviews.last?.removeFromSuperview()
-            cell.addSubview(self.editPhotoButton)
-            cell.addSubview(self.profilePicView)
             cell.addSubview(usernameLabel)
             cell.addSubview(trustLabel)
+            cell.addSubview(self.profilePicView)
+            cell.addSubview(self.editPhotoButton)
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = .None
             
-            addCircleView()
 
 
         }
