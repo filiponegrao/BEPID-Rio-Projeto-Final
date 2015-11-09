@@ -29,7 +29,6 @@ class NavigationChat_View: UIView
         
         self.backButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
         self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
-        self.backButton.alpha = 0.7
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview((self.backButton))
         
@@ -52,17 +51,6 @@ class NavigationChat_View: UIView
         self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: .Normal)
         self.galleryButton.addTarget(self, action: "goToGallery", forControlEvents: .TouchUpInside)
         self.addSubview(self.galleryButton)
-        
-//        self.galleryButton = UIButton(frame: CGRectMake(self.center.x - (self.contactImage.frame.width/2 + 65), 30, 40, 40))
-//        self.galleryButton.setImage(UIImage(named: "galleryButton"), forState: UIControlState.Normal)
-//        self.galleryButton.center = CGPointMake(self.center.x/2, self.galleryButton.frame.height/2 + 30)
-//        self.addSubview(self.galleryButton)
-        
-//        self.contactName = UILabel(frame: CGRectMake(self.contactImage.center.x + self.contactImage.frame.height/2 + 10, self.contactImage.center.y - 25, screenWidth/3, self.frame.height/2))
-//        self.contactName.text = "filiponegrao"
-//        self.contactName.textAlignment = .Center
-//        self.contactName.textColor = UIColor.whiteColor()
-//        self.addSubview(self.contactName)
 
         
     }

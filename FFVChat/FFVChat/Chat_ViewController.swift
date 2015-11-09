@@ -101,9 +101,33 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if(DAOMessages.sharedInstance.lastMessage.sender == self.contact.username)
         {
             self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-            let index = self.messages.indexOf(DAOMessages.sharedInstance.lastMessage)!
+            let mssg = DAOMessages.sharedInstance.lastMessage
+            let index = self.messages.indexOf(mssg)!
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
-            self.tableViewScrollToBottom(false)
+            
+            print(mssg.status)
+            print(mssg.lifeTime)
+            if(mssg.sender != DAOUser.sharedInstance.getUserName() && mssg.status == "unseen")
+            {
+                DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+                mssg.status = "seen"
+            }
+            
+            if(mssg.image == nil && mssg.text != nil)
+            {
+                let h = self.heightForView(mssg.text!, font: fontCell!, width: cellTextWidth)
+                if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
+                {
+                    self.tableView.contentOffset.y += (cellTextHeigth + margemVertical*4 + h)
+                }
+            }
+            else
+            {
+                if((self.tableView.contentSize.height + screenWidth) > self.tableView.frame.size.height)
+                {
+                    self.tableView.contentOffset.y += screenWidth
+                }
+            }
         }
     }
     
@@ -202,7 +226,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        print("viado");
         self.messageText.endEditing(true)
     }
     //****************************************************//
@@ -458,14 +481,17 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         let plus = h - frame.size.height
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.messageView.frame.origin.y -= plus
-            self.messageView.frame.size.height += plus
-            self.tableView.frame.size.height -= plus
-            self.messageText.frame.size.height += plus
-            
-            }) { (success: Bool) -> Void in
+        if(self.messageText.frame.size.height < screenHeight/5)
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.messageView.frame.origin.y -= plus
+                self.messageView.frame.size.height += plus
+                self.tableView.frame.size.height -= plus
+                self.messageText.frame.size.height += plus
+                
+                }) { (success: Bool) -> Void in
+            }
         }
     }
     
@@ -539,14 +565,34 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
-        self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: 60)
+        self.imagePicker.dismissViewControllerAnimated(false) { () -> Void in
+            
+            self.presentViewController(SelectedMidia_ViewController(image: image,contact: self.contact), animated: true, completion: { () -> Void in
+                
+            })
+            
+        }
+    }
+    
+    
+    func sendImage(image: UIImage, lifetime: Int)
+    {
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
         
-        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Automatic)
+        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
         
-        self.tableViewScrollToBottom(false)
+        if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+        {
+            UIView.animateWithDuration(0.4, animations: { () -> Void in
+                
+                self.tableView.contentOffset.y += screenWidth
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
     }
     
     
@@ -559,11 +605,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let index = self.messages.indexOf(message)
             
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
-            let h = self.heightForView(self.messageText.text!, font: fontCell!, width: cellBackgroundWidth)
+            let h = self.heightForView(self.messageText.text!, font: fontCell!, width: cellTextWidth)
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
-                self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical)
+                self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical*2)
                 
                 }, completion: { (success: Bool) -> Void in
                     
@@ -577,7 +623,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //****************************************************//
     //******* END MESSAGE FUNCTIONS AND HANDLES  *********//
     //****************************************************//
-    
     
     func didTakeScreenShot()
     {

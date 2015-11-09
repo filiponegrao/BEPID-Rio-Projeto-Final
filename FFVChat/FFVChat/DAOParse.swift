@@ -232,7 +232,7 @@ class DAOParse
     }
     
     
-    class func acceptRequestOnParse(request: FriendRequest, callback: (success: Bool, error: NSError) -> Void) -> Void
+    class func acceptRequestOnParse(request: FriendRequest, callback: (success: Bool, error: NSError?) -> Void) -> Void
     {
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: request.sender)
@@ -262,13 +262,17 @@ class DAOParse
                                 DAOContacts.sharedInstance.addContact(sender, facebookId: facebookId, createdAt: createdAt, trustLevel: trustLevel, profileImage: data)
                                 object.setValue("Aceito", forKey: "status")
                                 object.saveEventually()
+                                callback(success: true, error: nil)
                             })
                         }
                         
                     })
                 }
             }
-            
+            else
+            {
+                callback(success: false, error: error_RequestInexistent)
+            }
         }
 
     }
@@ -296,7 +300,6 @@ class DAOParse
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
         query.whereKey("status", equalTo: "Aceito")
-        query.includeKey("sender")
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
             if(objects != nil)
@@ -524,7 +527,7 @@ class DAOParse
                     let message = PFObject(className: "Message")
                     message["sender"] = user
                     message["target"] = object as! PFUser
-                    message["image"] = PFFile(data: image.highestQualityJPEGNSData)
+                    message["image"] = PFFile(data: image.lowQualityJPEGNSData)
                     message["received"] = false
                     message["lifeTime"] = lifeTime
                     message.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
@@ -659,6 +662,8 @@ class DAOParse
         }
     }
     
+    
+   
     
     
 }
