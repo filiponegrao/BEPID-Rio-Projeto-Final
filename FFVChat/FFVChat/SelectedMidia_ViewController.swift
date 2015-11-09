@@ -186,6 +186,12 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     
+    func back()
+    {
+        self.dismissViewControllerAnimated(true) { () -> Void in
+            
+        }
+    }
     
 
 }
