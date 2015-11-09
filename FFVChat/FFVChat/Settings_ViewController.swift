@@ -23,17 +23,15 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var popover : UIPopoverController!
     
-    var photoButton : UIButton!
-    
-    var editPhotoButton : UIButton!
+    var editPhotoButton : UIButton! // botão para mudar foto de perfil
     
     var image : UIImage!
     
-    var profilePicView : UIImageView!
+    var profilePicView : UIImageView! // onde fica a foto de perfil
     
     var circleView : CircleView!
     
-    var trustLevel : String!
+    var trustLevel : Int!
     
     override func viewDidLoad()
     {
@@ -54,15 +52,15 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
-        self.trustLevel = "90"  //pegar DAO Parse
-
+        self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
+        print(self.trustLevel)
         
         self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , screenWidth/2.5, screenWidth/2.5)) // botao camera
         self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
         self.editPhotoButton.alpha = 0.5
         self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
         
-        self.photoButton = UIButton(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto
+        self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
         
 //        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
         
@@ -170,23 +168,29 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let username = DAOUser.sharedInstance.getUserName()
             let usernameLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 20))
-            
-
             let trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             
-
             self.editPhotoButton.center = CGPointMake(cell.center.x, cell.center.y - 40)
             
             
             usernameLabel.text = username
             usernameLabel.textColor = oficialLightGray // verificar trust level
             usernameLabel.textAlignment = .Center
-            usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + photoButton.frame.height/4 + 10)
+            usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + 10)
             
-            trustLabel.text = self.trustLevel + "%"
-            trustLabel.textColor = oficialGreen //verificar trust level para setar cor
+            trustLabel.text = "\(self.trustLevel)" + "%"
+            
+            if(self.trustLevel == 100)
+            {
+                trustLabel.textColor = oficialGreen
+            }
+            else
+            {
+                trustLabel.textColor = oficialRed
+            }
+            
             trustLabel.font = UIFont(name: "Helvetica", size: 25)
-            trustLabel.center = CGPointMake(cell.center.x, cell.center.y + photoButton.frame.height/4 + usernameLabel.frame.height + 10)
+            trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
             trustLabel.textAlignment = .Center
             
             photoButton.setImage(image, forState: .Normal)
@@ -211,10 +215,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
         
             cell.subviews.last?.removeFromSuperview()
-            cell.addSubview(photoButton)
+            cell.addSubview(self.editPhotoButton)
+            cell.addSubview(self.profilePicView)
             cell.addSubview(usernameLabel)
             cell.addSubview(trustLabel)
-            cell.addSubview(editPhotoButton)
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = .None
             
@@ -437,14 +441,15 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         // Create a new CircleView
         let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
         
-        circleView.center = CGPointMake(self.photoButton.center.x, self.photoButton.center.y)
+        circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y)
         
         circleView.setColor(self.trustLevel)
+        circleView.layer.zPosition = 0
         
         view.addSubview(circleView)
         
         // Animate the drawing of the circle over the course of 1 second
-        circleView.animateCircle(1.0)
+        circleView.animateCircle(1.0, trustLevel: self.trustLevel)
     }
     
 
