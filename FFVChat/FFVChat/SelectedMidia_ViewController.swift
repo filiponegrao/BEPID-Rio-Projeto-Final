@@ -55,13 +55,13 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.navigationBar)
         
 
-        self.imageView = UIImageView(frame: CGRectMake(20, self.navigationBar.frame.size.height + 10, screenWidth - 40, screenWidth - 40))
+        self.imageView = UIImageView(frame: CGRectMake(20, self.navigationBar.frame.size.height + 10, screenWidth - 40, screenWidth/1.5))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.image = image
-        self.imageView.backgroundColor = UIColor.blackColor()
+        self.imageView.backgroundColor = oficialDarkGray
         self.imageView.layer.cornerRadius = 4
-        self.imageView.layer.borderColor = UIColor.grayColor().CGColor
-        self.imageView.layer.borderWidth = 1
+//        self.imageView.layer.borderColor = UIColor.grayColor().CGColor
+//        self.imageView.layer.borderWidth = 1
         self.view.addSubview(self.imageView)
         
         
@@ -76,6 +76,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.sendButton.backgroundColor = oficialGreen
         self.sendButton.setTitle("Send", forState: .Normal)
         self.sendButton.addTarget(self, action: "sendPhoto", forControlEvents: .TouchUpInside)
+        self.sendButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.sendButton.titleLabel!.tintColor = oficialDarkGray
         self.view.addSubview(self.sendButton)
     
@@ -169,7 +170,8 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         if component == 0
         {
             let number = UILabel(frame: view.frame)
-            number.text = "\(self.minutes[row]) Minutes and"
+            number.text = "\(self.minutes[row]) Minutes"
+            number.textAlignment = .Center
             number.textColor = UIColor.whiteColor()
             view.addSubview(number)
         }
@@ -178,11 +180,11 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
             let number = UILabel(frame: view.frame)
             number.text = "\(self.seconds[row]) Seconds"
             number.textColor = UIColor.whiteColor()
+            number.textAlignment = .Center
             view.addSubview(number)
         }
         
         return view
-        
     }
     
     

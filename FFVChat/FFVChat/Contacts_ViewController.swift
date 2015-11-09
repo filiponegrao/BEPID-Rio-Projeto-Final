@@ -35,6 +35,8 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
+        
+        
         self.view.bringSubviewToFront(self.navigationBar)
         
         self.contacts = DAOContacts.sharedInstance.getAllContacts()

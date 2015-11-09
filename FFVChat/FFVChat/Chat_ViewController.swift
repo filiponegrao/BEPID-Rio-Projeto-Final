@@ -67,6 +67,71 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     }
     
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        self.view.backgroundColor = oficialMediumGray
+//        badTrustNav
+        self.navBar = NavigationChat_View(requester: self)
+        self.navBar.layer.zPosition = 5
+        self.view.addSubview(self.navBar)
+        
+        self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
+        self.containerView.backgroundColor = UIColor.clearColor()
+        self.view.addSubview(containerView)
+        
+        self.redScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.redScreen.backgroundColor = badTrust
+        self.redScreen.alpha = 0
+        self.containerView.addSubview(self.redScreen)
+        
+        self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
+        self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.registerClass(CellImage_TableViewCell.self, forCellReuseIdentifier: "ImageCell")
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.layer.zPosition = 0
+        self.tableView.backgroundColor = UIColor.clearColor()
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.containerView.addSubview(tableView)
+        
+        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, messageViewHeigth))
+        self.messageView.backgroundColor = oficialDarkGray
+        self.containerView.addSubview(messageView)
+        
+        self.cameraButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
+        self.cameraButton.setImage(UIImage(named: "chatCameraButton"), forState: UIControlState.Normal)
+        self.cameraButton.alpha = 0.7
+//        self.cameraButton.backgroundColor = UIColor.grayColor()
+        self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
+        self.messageView.addSubview(cameraButton)
+        
+        self.sendButton = UIButton(frame: CGRectMake(screenWidth - screenWidth/4, 0, screenWidth/4, self.messageView.frame.size.height))
+        self.sendButton.setTitle("Send", forState: UIControlState.Normal)
+        self.sendButton.setTitleColor(oficialGreen, forState: UIControlState.Normal)
+        self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
+        self.messageView.addSubview(sendButton)
+        
+        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
+        self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
+        self.messageText.font = UIFont(name: "Helvetica", size: 16)
+        self.messageText.textContainer.lineFragmentPadding = 10;
+        self.messageText.text = "Message..."
+        self.messageText.textAlignment = .Left
+        self.messageText.textColor = oficialLightGray
+        self.messageText.backgroundColor = UIColor.clearColor()
+        self.messageText.delegate = self
+        self.messageText.keyboardAppearance = .Dark
+        self.messageView.addSubview(self.messageText)
+
+        self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.reloadTrustLevel()
+    }
+    
     func reloadTrustLevel()
     {
         DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
@@ -75,7 +140,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 if(trustLevel < 100)
                 {
-                    UIView.animateWithDuration(1, animations: { () -> Void in
+                    self.redScreen.alpha = 1
+                    
+                    UIView.animateWithDuration(2, animations: { () -> Void in
                         
                         self.redScreen.alpha = 0
                         
@@ -138,71 +205,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
             }
         }
-    }
-    
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        self.view.backgroundColor = oficialMediumGray
-//        badTrustNav
-        self.navBar = NavigationChat_View(requester: self)
-        self.navBar.layer.zPosition = 5
-        self.view.addSubview(self.navBar)
-        
-        self.containerView = UIView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
-        self.containerView.backgroundColor = UIColor.clearColor()
-        self.view.addSubview(containerView)
-        
-        self.redScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
-        self.redScreen.backgroundColor = badTrust
-        self.redScreen.alpha = 90
-        self.containerView.addSubview(self.redScreen)
-        
-        self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
-        self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.registerClass(CellImage_TableViewCell.self, forCellReuseIdentifier: "ImageCell")
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        self.tableView.layer.zPosition = 0
-        self.tableView.backgroundColor = UIColor.clearColor()
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.containerView.addSubview(tableView)
-        
-        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, messageViewHeigth))
-        self.messageView.backgroundColor = oficialDarkGray
-        self.containerView.addSubview(messageView)
-        
-        self.cameraButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
-        self.cameraButton.setImage(UIImage(named: "chatCameraButton"), forState: UIControlState.Normal)
-        self.cameraButton.alpha = 0.7
-//        self.cameraButton.backgroundColor = UIColor.grayColor()
-        self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
-        self.messageView.addSubview(cameraButton)
-        
-        self.sendButton = UIButton(frame: CGRectMake(screenWidth - screenWidth/4, 0, screenWidth/4, self.messageView.frame.size.height))
-        self.sendButton.setTitle("Send", forState: UIControlState.Normal)
-        self.sendButton.setTitleColor(oficialGreen, forState: UIControlState.Normal)
-        self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
-        self.messageView.addSubview(sendButton)
-        
-        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
-        self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
-        self.messageText.font = UIFont(name: "Helvetica", size: 16)
-        self.messageText.textContainer.lineFragmentPadding = 10;
-        self.messageText.text = "Message..."
-        self.messageText.textAlignment = .Left
-        self.messageText.textColor = oficialLightGray
-        self.messageText.backgroundColor = UIColor.clearColor()
-        self.messageText.delegate = self
-        self.messageText.keyboardAppearance = .Dark
-        self.messageView.addSubview(self.messageText)
-
-        self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
-    }
-    
-    override func viewDidAppear(animated: Bool)
-    {
-        self.reloadTrustLevel()
     }
 
     override func didReceiveMemoryWarning()

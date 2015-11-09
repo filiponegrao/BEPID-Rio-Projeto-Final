@@ -71,14 +71,7 @@ class DAOUser
     
     init()
     {
-        if(self.getUserName() != "" && self.getPassword() != "" && PFUser.currentUser() == nil)
-        {
-            self.loginParse(self.getUserName(), password: self.getPassword())
-        }
-        else if(PFUser.currentUser() != nil)
-        {
-            self.setInstallation()
-        }
+        
     }
     
     func setInstallation()
@@ -898,25 +891,34 @@ class DAOUser
     func isLoged() -> UserCondition
     {
         let user = PFUser.currentUser()
-        let username = self.getUserName()
-        if(user != nil)
+        if(user == nil)
         {
-            let senha = self.getPassword()
-            if(senha == "" || username == "")
-            {
-                return UserCondition.incompleteRegister
-            }
-            else
-            {
-                return UserCondition.userLogged
-            }
+            return UserCondition.userLoggedOut
         }
         else
         {
-        
-            return UserCondition.userLoggedOut
+            return UserCondition.userLogged
         }
     }
+    
+    
+    func checkPassword(password: String, callback: (correct: Bool) -> Void ) -> Void
+    {
+        PFUser.logInWithUsernameInBackground(PFUser.currentUser()!.username!, password: password) { (user: PFUser?, error: NSError?) -> Void in
+            
+            if(error?.code == 101)
+            {
+                callback(correct: false)
+            }
+            else
+            {
+                callback(correct: true)
+            }
+            
+        }
+    }
+    
+    
     
     func isValidEmail(testStr:String) -> Bool
     {
