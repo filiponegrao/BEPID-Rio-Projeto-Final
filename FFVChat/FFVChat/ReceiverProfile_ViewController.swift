@@ -108,8 +108,8 @@ class ReceiverProfile_ViewController: UIViewController
     
     func addCircleView()
     {
-        let circleWidth = screenWidth/1.84
-        let circleHeight = screenWidth/1.84
+        let circleWidth = screenWidth/1.95
+        let circleHeight = screenWidth/1.95
         
         // Create a new CircleView
         let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
