@@ -212,6 +212,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
 
 //            self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
+            
             addCircleView()
 
             
