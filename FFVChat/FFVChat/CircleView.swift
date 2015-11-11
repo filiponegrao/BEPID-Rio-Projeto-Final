@@ -65,7 +65,7 @@ class CircleView: UIView
         circleLayer.addAnimation(animation, forKey: "animateCircle")
     }
 
-    func setColor (trustLevel: Int!)
+    func setColor (trustLevel: Int)
     {
         if(trustLevel == 100)
         {

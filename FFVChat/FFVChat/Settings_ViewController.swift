@@ -54,9 +54,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
-        
-        self.circleView = CircleView(frame: CGRect(x: 0, y: 0, width: screenWidth/2.3, height: screenWidth/2.3)) //circle do trust level
-        
+        // Do any additional setup after loading the view.
         
         self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
        

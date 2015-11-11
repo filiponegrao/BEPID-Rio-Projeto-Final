@@ -13,15 +13,15 @@ let screenSize: CGRect = UIScreen.mainScreen().bounds
 let screenWidth = screenSize.width
 let screenHeight = screenSize.height
 
-let oficialGreen = UIColor(netHex: 0x5ebdb1) //verde padrão
-let oficialDarkGreen = UIColor(netHex: 0x436b69) //detalhes telas de login
-let oficialDarkGray = UIColor(netHex: 0x343539) //navs e alguns backgrounds
-let oficialMediumGray = UIColor(netHex: 0x3c3d41) //background contatos e chat
-let oficialSemiGray = UIColor(netHex: 0x4a4b4e) //usado na tela de importação
-let oficialLightGray = UIColor(netHex: 0xa0a4a5) //textos e ícones
-let oficialRed = UIColor(netHex: 0xc70040) //círculo trust level negativo tela destinatário
-let badTrust = UIColor(netHex: 0x540305) //background chat negativo
-let badTrustNav = UIColor(netHex: 0x470204) //nav chat negativo
+let oficialGreen = UIColor(hex: 0x5ebdb1) //verde padrão
+let oficialDarkGreen = UIColor(hex: 0x436b69) //detalhes telas de login
+let oficialDarkGray = UIColor(hex: 0x343539) //navs e alguns backgrounds
+let oficialMediumGray = UIColor(hex: 0x3c3d41) //background contatos e chat
+let oficialSemiGray = UIColor(hex: 0x4a4b4e) //usado na tela de importação
+let oficialLightGray = UIColor(hex: 0xa0a4a5) //textos e ícones
+let oficialRed = UIColor(hex: 0xc70040) //círculo trust level negativo tela destinatário
+let badTrust = UIColor(hex: 0x540305) //background chat negativo
+let badTrustNav = UIColor(hex: 0x470204) //nav chat negativo
 
 
 let mySelf = DAOUser.sharedInstance.getUserName()
