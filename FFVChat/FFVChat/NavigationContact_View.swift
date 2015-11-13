@@ -12,7 +12,7 @@ import Parse
 class NavigationContact_View: UIView
 {
     
-    var vc : Contacts_ViewController!
+    var vc : ContactsBubble_CollectionViewController!
     
     var fundo : UIView!
     
@@ -25,7 +25,7 @@ class NavigationContact_View: UIView
     var filterButtons : UIButton!
     
     
-    init(requester: Contacts_ViewController)
+    init(requester: ContactsBubble_CollectionViewController)
     {
         self.vc = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 80))
@@ -60,13 +60,13 @@ class NavigationContact_View: UIView
     
     func openTools()
     {
-        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        self.vc.blurView.frame = self.vc.view.bounds
-        self.vc.blurView.alpha = 0
-        self.vc.view.addSubview(self.vc.blurView)
+//        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+//        self.vc.blurView.frame = self.vc.view.bounds
+//        self.vc.blurView.alpha = 0
+//        self.vc.view.addSubview(self.vc.blurView)
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             
-            self.vc.blurView.alpha = 0.8
+//            self.vc.blurView.alpha = 0.8
             
             }) { (success: Bool) -> Void in
                 

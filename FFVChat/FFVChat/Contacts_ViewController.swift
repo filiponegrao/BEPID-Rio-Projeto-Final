@@ -23,9 +23,9 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         self.view.backgroundColor = oficialMediumGray
         
-        //Nav Bar
-        self.navigationBar = NavigationContact_View(requester: self)
-        self.view.addSubview(self.navigationBar)
+//        //Nav Bar
+//        self.navigationBar = NavigationContact_View(requester: self)
+//        self.view.addSubview(self.navigationBar)
         
         //Table view
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
@@ -137,10 +137,6 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     }
     //** FIM DAS FUNCOES DE MANEGAMENTO DE DADOS **//
     
-    
-    //commit a alegria
-    
- 
 }
 
 

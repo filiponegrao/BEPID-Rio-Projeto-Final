@@ -15,8 +15,12 @@ class AppNavigationController : UINavigationController
     init()
     {
         super.init(nibName: "AppNavigationController", bundle: nil)
-        let contacts = Contacts_ViewController(nibName: "Contacts_ViewController", bundle: nil)
-        self.viewControllers = [contacts]
+        
+    
+        let flow = flowLayoutSetup()
+        let collectView = ContactsBubble_CollectionViewController(collectionViewLayout: flow)
+        //self.viewControllers = [collectView]
+        self.pushViewController(collectView, animated: false)
         self.navigationBar.hidden = true
         self.navigationBar.barStyle = .Default
         self.navigationBar.barTintColor = oficialDarkGray
@@ -28,6 +32,22 @@ class AppNavigationController : UINavigationController
         fatalError("init(coder:) has not been implemented")
     }
 
+
+    
+    func flowLayoutSetup() -> UICollectionViewFlowLayout
+    {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
+        
+        let dimension:CGFloat = self.view.frame.width * 0.23
+        let labelHeight:CGFloat = 30
+        flowLayout.itemSize = CGSize(width: dimension, height: dimension + labelHeight)
+        
+        flowLayout.sectionInset = UIEdgeInsets(top: 50, left: 30, bottom: 10, right: 30)
+        flowLayout.minimumLineSpacing = 20.0
+        
+        return flowLayout
+    }
 
 }
 

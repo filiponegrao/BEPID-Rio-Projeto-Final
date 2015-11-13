@@ -10,7 +10,7 @@ import UIKit
 
 class Tools_ViewController: UIViewController
 {
-    var contacts : Contacts_ViewController!
+    var contacts : ContactsBubble_CollectionViewController!
     
     var blackScreen : UIView!
     
@@ -124,12 +124,12 @@ class Tools_ViewController: UIViewController
             self.notificationButton.frame.origin.y = 6
             self.addButton.frame.origin.y = 6
             self.configButton.frame.origin.y = 6
-            self.contacts.blurView.alpha = 0
+//            self.contacts.blurView.alpha = 0
             
             }) { (success) -> Void in
                 
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                    self.contacts.blurView.removeFromSuperview()
+//                    self.contacts.blurView.removeFromSuperview()
                 })
                 
         }
