@@ -71,6 +71,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidLayoutSubviews()
+    {
+        self.navBar.tittle.font = self.navBar.tittle.font.fontWithSize(22)
+    }
+    
     //****************************************************//
     //*********** TABLE VIEW PROPERTIES ******************//
     //****************************************************//
@@ -189,6 +194,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             // label que mostra trust level do usuário
             trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             trustLabel.text = "100%"
+            trustLabel.textColor = oficialLightGray
             trustLabel.font = UIFont(name: "Helvetica", size: 25)
             trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
             trustLabel.textAlignment = .Center
@@ -204,10 +210,12 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                     if(self.trustLevel == 100)
                     {
                         trustLabel.textColor = oficialGreen
+                        self.navBar.tittle.textColor = oficialGreen
                     }
                     else
                     {
                         trustLabel.textColor = oficialRed
+                        self.navBar.tittle.textColor = UIColor.whiteColor()
                     }
                     
                     // Create a new CircleView
