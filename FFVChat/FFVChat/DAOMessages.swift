@@ -40,8 +40,6 @@ class DAOMessages
         self.save()
         
         DAOParse.sendMessage(username, text: text, lifeTime: 86400)
-        //Notificacao deve ser enviada so quando a mensagem estiver no banco
-//        DAOParse.pushMessageNotification(username, text: "Mensagem de \(DAOUser.sharedInstance.getUserName())")
         
         return message
     }
