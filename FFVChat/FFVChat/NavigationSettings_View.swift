@@ -27,10 +27,12 @@ class NavigationSettings_View: UIView
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(backButton)
         
-        self.tittle = UILabel(frame: CGRectMake(0, 25, screenWidth, 20))
+        self.tittle = UILabel(frame: CGRectMake(0, 20, screenWidth, 40))
         self.tittle.text = "Settings"
         self.tittle.textAlignment = .Center
-        self.tittle.textColor = oficialGreen
+        self.tittle.textColor = oficialLightGray
+        self.tittle.font = self.tittle.font
+        .fontWithSize(30)
         self.addSubview(tittle)
     }
 

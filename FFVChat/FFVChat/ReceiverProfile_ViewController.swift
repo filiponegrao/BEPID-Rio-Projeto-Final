@@ -130,8 +130,8 @@ class ReceiverProfile_ViewController: UIViewController
                 circleView.animateCircle(1.0, trustLevel: trustLevel!)
                 self.trustLevelLabel.text = "\(trustLevel!)%"
             }
-            
         }
+        
     }
 
 
