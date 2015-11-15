@@ -50,7 +50,7 @@ class DAOPostgres
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
     {
-        let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUserName())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
+        let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
         Alamofire.request(.POST, self.localUrl, parameters: parameters, encoding: .URL)
             .responseString { response in

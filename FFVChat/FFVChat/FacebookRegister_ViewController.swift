@@ -59,7 +59,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.imageView.clipsToBounds = true
         self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2
         
-        let name = DAOUser.sharedInstance.getUserName()
+        let name = DAOUser.sharedInstance.getUsername()
         let trimmedString = name.removeWhitespace()
         
         let username = trimmedString.lowercaseString

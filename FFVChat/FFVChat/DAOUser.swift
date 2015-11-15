@@ -10,6 +10,7 @@
 import Foundation
 import Parse
 import ParseFacebookUtilsV4
+import CoreData
 
 class facebookContact
 {
@@ -67,11 +68,17 @@ private let data : DAOUser = DAOUser()
 
 class DAOUser
 {
-    var user : PFUser!
+    var user : User!
+    
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     init()
     {
-        
+        if(PFUser.currentUser() != nil && self.user == nil)
+        {
+            self.loginInApp(PFUser.currentUser()!.username!)
+            if(self.user == nil) { print("Registro do usuario incompleto") }
+        }
     }
     
     func setInstallation()
@@ -108,7 +115,6 @@ class DAOUser
         // other fields can be set just like with PFObject
         user["trustLevel"] = 100
         user["profileImage"] = picture
-        user["contentPassword"] = password
 
         user.signUpInBackgroundWithBlock {
             (succeeded: Bool, error: NSError?) -> Void in
@@ -151,47 +157,31 @@ class DAOUser
             (user: PFUser?, error: NSError?) -> Void in
             if user != nil
             {
-                //Searching for mail
-                let query = PFUser.query()
-                query!.whereKey("username", equalTo: username)
-                query!.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-
-                    if error == nil
-                    {
-                        if let objects = objects as? [PFObject]
+                let username = user!.username
+                
+                let loginApp = self.loginInApp(username!)
+                
+                //novo usuario localmente
+                if(!loginApp)
+                {
+                    let email = user!.email!
+                    let trustLevel = user!["trustLevel"] as! Int
+                    let photo = user!["profileImage"] as! PFFile
+                    let facebookID = user!["facebookID"] as? String
+                    
+                    photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                        
+                        if(data != nil)
                         {
-                            let user = objects[0]
-                            let email = user["email"] as! String
-                            let trustLevel = user["trustLevel"] as! Int
-                            let password = user["contentPassword"] as! String
+                            let localUser = self.createUser(username!, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookID)
                             
-                            self.setEmail(email)
-                            self.setUserName(username)
-                            self.setPassword(password)
-                            self.setTrustLevel(trustLevel)
-                            
-                            let data = user["profileImage"] as! PFFile
-                            data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                                
-                                if(data != nil)
-                                {
-                                    print("Usuario logado!")
-                                    let image = UIImage(data: data!)
-                                    self.setProfileImage(image!)
-                                }
-                                
-                                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
-                                self.setInstallation()
-                                
-                            })
+                            self.user = localUser
+                            NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+
                         }
-                    }
-                    else
-                    {
-                        print("Error: \(error!) \(error!.userInfo)")
-                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.loginCanceled.rawValue, object: nil)
-                    }
+                    })
                 }
+                self.setInstallation()
             }
             else
             {
@@ -234,22 +224,23 @@ class DAOUser
                     let username = user.valueForKey("username") as! String
                     let facebookId = user.valueForKey("facebookID") as? String
                     let email = user.valueForKey("email") as! String
-                    let password = user.valueForKey("contentPassword") as! String
                     let trustLevel = user.valueForKey("trustLevel") as! Int
-                    
-                    self.setUserName(username)
-                    self.setFacebookID(facebookId)
-                    self.setEmail(email)
-                    self.setPassword(password)
-                    self.setTrustLevel(trustLevel)
                     
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
                         if(data != nil)
                         {
-                            let image = UIImage(data: data!)
-                            self.setProfileImage(image!)
+                            if(!self.loginInApp(username))
+                            {
+                                let localUser = self.createUser(username, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookId)
+                                self.user = localUser
+                            }
+                            
+                            self.user.trustLevel = trustLevel
+                            self.user.facebookID = facebookId
+                            self.save()
+                            
                         }
                         self.setInstallation()
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
@@ -280,8 +271,8 @@ class DAOUser
             }
             else
             {
-                let userName : NSString = result.valueForKey("name") as! NSString
-                let userEmail : NSString = result.valueForKey("email") as! NSString
+                let username : NSString = result.valueForKey("name") as! NSString
+                let email : NSString = result.valueForKey("email") as! NSString
                 let id = result.valueForKey("id") as! String
 
                 let pictureURL = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
@@ -293,18 +284,13 @@ class DAOUser
                     if error == nil
                     {
                         let picture = PFFile(data: data!)
-                        PFUser.currentUser()?.setValue(userName, forKey: "username")
-                        PFUser.currentUser()?.setValue(userEmail, forKey: "email")
+                        PFUser.currentUser()?.setValue(username, forKey: "username")
+                        PFUser.currentUser()?.setValue(email, forKey: "email")
                         PFUser.currentUser()?.setValue(id, forKey: "facebookID")
                         PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
+                        PFUser.currentUser()?.setValue(100, forKey: "trustLevel")
                         PFUser.currentUser()!.saveEventually()
-                        
-                        let image = UIImage(data: data!)
 
-                        self.setEmail(userEmail as String)
-                        self.setProfileImage(image!)
-                        self.setUserName(userName as String)
-                        self.setFacebookID(id)
 
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
                     }
@@ -327,19 +313,31 @@ class DAOUser
         let user = PFUser.currentUser()
         user?.setValue(username, forKey: "username")
         user?.setValue(password, forKey: "password")
-        user?.setValue(password, forKey: "contentPassword")
         user?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
             
             let username = user?.valueForKey("username") as! String
             let email = user?.valueForKey("email") as! String
-            let password = user?.valueForKey("password") as! String
-            print("password retrived from parse: \(password)")
-
-            self.setUserName(username)
-            self.setEmail(email)
-            self.setPassword(password)
+            let facebookID = user?.valueForKey("facebookID") as! String
+            let photo = user?.objectForKey("profileImage") as! PFFile
             
-            NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+            photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                
+                if(!self.loginInApp(username))
+                {
+                    if(data != nil)
+                    {
+                        let localUser = self.createUser(username, email: email, trustLevel: 100, profileImage: data!, facebookID: facebookID)
+                        self.user = localUser
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+
+                    }
+                    else
+                    {
+                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.loginCanceled.rawValue, object: nil)
+                    }
+                }
+                
+            })
         })
     }
     
@@ -415,469 +413,63 @@ class DAOUser
             }
         }
     }
+    
+    func createUser(username: String, email: String, trustLevel: Int, profileImage: NSData, facebookID: String?) -> User
+    {
+        let user = User.createInManagedObjectContext(self.managedObjectContext, username: username, email: email, profileImage: profileImage, trustLevel: trustLevel, facebookID: facebookID)
+        
+        self.save()
+        
+        return user
+        
+    }
 
+    
+    func loginInApp(username: String) -> Bool
+    {
+        let request = NSFetchRequest(entityName: "User")
+        
+        let predicate = NSPredicate(format: "username == %@", username)
+        
+        request.predicate = predicate
+        
+        do { let result = try self.managedObjectContext.executeFetchRequest(request) as! [User]
+        
+            if(result.count > 0)
+            {
+                print("logando como \(result.first)")
+                self.user = result.first!
+                return true
+            }
+            else
+            {
+                print("Nao foram encontrados usuarios no sistema")
+                return false
+            }
+        }
+        catch
+        {
+            print("Erro inesperado ao procurar usuarios no sistema")
+            return false
+        }
+    }
+    
     /** Funcao efetua o logout de um usuario!
       * Sua condicao de retorno é um par : booleano
       * e string, onde o primeiro indica se o logout
       * foi efeutaod corretamente e o segundo a descricao
       * de um possivel erro
       */
-    func logOut() -> (done: Bool, error: String)
+    func logOut() -> (done: Bool, error: String?)
     {
+        self.user = nil
         PFUser.logOut()
-        self.setUserName("")
-        self.setEmail("")
-        self.setPassword("")
-        self.setTrustLevel(-1)
-        self.setFacebookID("")
-
-        return (done: true, error: "")
+        return (done: true, error: nil)
     }
 
 
 
-    /**
-      * Funcao que pega a plist existente no main bundle, e copia a mesma
-      * para o documents. Isso acontence pois a mesma (criada no bundle)
-      * serve apenas de referencia e modelo. A que sera modificavel e
-      * aplicavel vai permanecer no documents.
-      */
-    func initUserInformation()
-    {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as   NSArray
-        let documentsDirectory = paths[0] as! String
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist")
-        let fileManager = NSFileManager.defaultManager()
 
-        //Cria a plist na memoria do celular
-        if(!fileManager.fileExistsAtPath(path))
-        {
-            // If it doesn't, copy it from the default file in the Bundle
-            if let bundlePath = NSBundle.mainBundle().pathForResource("UserInfo", ofType: "plist")
-            {
-                do { try fileManager.copyItemAtPath(bundlePath, toPath: path)
-                    print("User info criado com sucesso!...")
-                }
-                catch
-                {
-                    print("User could not be created for some reason - bytes or whatever")
-                }
-            }
-            else
-            {
-                print("UserInfo.plist not found. Please, make sure it is part of the bundle.")
-            }
-
-        }
-        else
-        {
-            print("UserInfo.plist already exits at path.")
-            // use this to delete file from documents directory
-            //fileManager.removeItemAtPath(path, error: nil)
-        }
-    }
-
-
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func getUserName() -> String!
-    {
-
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return ""
-            }
-        }
-
-        let nome = content!.valueForKey("nome") as? String
-
-        if(nome == nil)
-        {
-            return ""
-        }
-
-        return nome!
-    }
-
-    
-    /**
-    * Funcao que retorna o nome de usuario no Facebook
-    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-    * enquanto as de escrever utilizam o mutable dictionary
-    **/
-    func getFacebookID() -> String!
-    {
-        
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSDictionary(contentsOfFile: path)
-        
-        if(content == nil)
-        {
-            self.initUserInformation()
-            
-            if(content == nil)
-            {
-                return ""
-            }
-        }
-        
-        let nome = content!.valueForKey("facebookID") as? String
-        
-        if(nome == nil)
-        {
-            return ""
-        }
-        
-        return nome!
-    }
-    
-    
-    /**
-     * Funcao que retorna o email do usuario
-     *
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func getEmail() -> String
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return ""
-            }
-        }
-
-        let email = content!.valueForKey("email") as? String
-
-        if(email == nil)
-        {
-            return ""
-        }
-
-        return email!
-    }
-
-    
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func getLastSync() -> String
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return ""
-            }
-        }
-
-        let sync = content!.valueForKey("ultimaSincronizacao") as? String
-
-        if(sync == nil)
-        {
-            return ""
-        }
-
-        return sync!
-    }
-
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func getTrustLevel() -> Int
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return -1
-            }
-        }
-
-        let tl = content!.valueForKey("trustLevel") as? Int
-
-        if(tl == nil)
-        {
-            return -1
-        }
-
-        return tl!
-    }
-
-
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func getPassword() -> String
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return ""
-            }
-        }
-
-        let password = content!.valueForKey("password") as? String
-
-        if(password == nil)
-        {
-            return ""
-        }
-
-        return password!
-    }
-    
-
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func getProfileImage() -> UIImage?
-    {
-        let userMail = self.getEmail()
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("\(userMail)Photo") as String
-
-        let image = UIImage(contentsOfFile: path)
-
-        return image
-
-    }
-
-    
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func setLastSync(sync: String)
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return
-            }
-        }
-
-        content!.setValue(sync, forKey: "ultimaSincronizacao")
-        content!.writeToFile(path, atomically: false)
-    }
-
-    
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func setUserName(name: String)
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return
-            }
-        }
-
-        content!.setValue(name, forKey: "nome")
-        content!.writeToFile(path, atomically: true)
-
-    }
-    
-    
-    /**
-    * Funcao que retorna o nome cadastro uma unica vez
-    * do usuario do app
-    * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-    * enquanto as de escrever utilizam o mutable dictionary
-    **/
-    func setFacebookID(name: String?)
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-        
-        if(content == nil)
-        {
-            self.initUserInformation()
-            
-            if(content == nil)
-            {
-                return
-            }
-        }
-        
-        content!.setValue(name, forKey: "facebookID")
-        content!.writeToFile(path, atomically: true)
-    }
-
-    
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func setEmail(email: String)
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return
-            }
-        }
-
-        content!.setValue(email, forKey: "email")
-        content!.writeToFile(path, atomically: true)
-
-    }
-
-
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func setPassword(password: String)
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return
-            }
-        }
-
-        content!.setValue(password, forKey: "password")
-        content!.writeToFile(path, atomically: true)
-
-    }
-
-
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func setTrustLevel(trustLevel: Int)
-    {
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("UserInfo.plist") as String
-        let content = NSMutableDictionary(contentsOfFile: path)
-
-        if(content == nil)
-        {
-            self.initUserInformation()
-
-            if(content == nil)
-            {
-                return
-            }
-        }
-
-        content!.setValue(trustLevel, forKey: "trustLevel")
-        content!.writeToFile(path, atomically: true)
-
-    }
-
-    
-   
-
-    /**
-     * Funcao que retorna o nome cadastro uma unica vez
-     * do usuario do app
-     * OBS: Funcoes de leitura/obtencao utilizam nsdictionary
-     * enquanto as de escrever utilizam o mutable dictionary
-     **/
-    func setProfileImage(image:UIImage)
-    {
-        let mailUser = self.getEmail()
-        let documentsDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = documentsDirectory.stringByAppendingPathComponent("\(mailUser)Photo") as String
-
-        UIImagePNGRepresentation(image)?.writeToFile(path, atomically: true)
-
-    }
 
     
     /**
@@ -890,10 +482,13 @@ class DAOUser
      **/
     func isLoged() -> UserCondition
     {
-        let user = PFUser.currentUser()
-        if(user == nil)
+        if(PFUser.currentUser() == nil)
         {
             return UserCondition.userLoggedOut
+        }
+        else if(PFUser.currentUser() != nil && self.user == nil)
+        {
+            return UserCondition.incompleteRegister
         }
         else
         {
@@ -901,7 +496,26 @@ class DAOUser
         }
     }
     
+    func getProfileImage() -> UIImage
+    {
+        return UIImage(data: self.user.profileImage!)!
+    }
     
+    func getUsername() -> String
+    {
+        return self.user.username
+    }
+    
+    func getEmail() -> String
+    {
+        return self.user.email
+    }
+    
+    func getTrustLevel() -> Int
+    {
+        return Int(self.user.trustLevel!)
+    }
+
     func checkPassword(password: String, callback: (correct: Bool) -> Void ) -> Void
     {
         PFUser.logInWithUsernameInBackground(PFUser.currentUser()!.username!, password: password) { (user: PFUser?, error: NSError?) -> Void in
@@ -930,5 +544,13 @@ class DAOUser
     }
     
 
+    func save()
+    {
+        do { try self.managedObjectContext.save() }
+        catch let error
+        {
+            print(error)
+        }
+    }
 }
 

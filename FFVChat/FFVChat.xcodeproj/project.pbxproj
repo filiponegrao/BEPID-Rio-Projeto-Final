@@ -46,13 +46,46 @@
 		801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */; };
 		801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */; };
 		801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D929D1BA5177400D05CE7 /* DAOUser.swift */; };
-		801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801D929F1BA51E5900D05CE7 /* UserInfo.plist */; };
 		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
 		80216BAC1BB084B40008F380 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */; };
 		80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */; };
+		803657801BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036575F1BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift */; };
+		803657811BF94A97000907BD /* NVActivityIndicatorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657601BF94A97000907BD /* NVActivityIndicatorShape.swift */; };
+		803657821BF94A97000907BD /* NVActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657621BF94A97000907BD /* NVActivityIndicatorView.swift */; };
+		803657831BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657631BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift */; };
+		803657841BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657641BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotate.swift */; };
+		803657851BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657651BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift */; };
+		803657861BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657661BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */; };
+		803657871BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657671BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift */; };
+		803657881BF94A97000907BD /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657681BF94A97000907BD /* NVActivityIndicatorAnimationBallGridPulse.swift */; };
+		803657891BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657691BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift */; };
+		8036578A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036576A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift */; };
+		8036578B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036576B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift */; };
+		8036578C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036576C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift */; };
+		8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036576D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift */; };
+		8036578E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036576E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift */; };
+		8036578F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036576F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift */; };
+		803657901BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657701BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */; };
+		803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657711BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift */; };
+		803657921BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657721BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift */; };
+		803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657731BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift */; };
+		803657941BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657741BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift */; };
+		803657951BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657751BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift */; };
+		803657961BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657761BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift */; };
+		803657971BF94A97000907BD /* NVActivityIndicatorAnimationLineScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657771BF94A97000907BD /* NVActivityIndicatorAnimationLineScale.swift */; };
+		803657981BF94A97000907BD /* NVActivityIndicatorAnimationLineScaleParty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657781BF94A97000907BD /* NVActivityIndicatorAnimationLineScaleParty.swift */; };
+		803657991BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657791BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOut.swift */; };
+		8036579A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift */; };
+		8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */; };
+		8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift */; };
+		8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift */; };
+		8036579E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift */; };
+		8036579F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */; };
 		803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */; };
 		803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */; };
 		803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962971BC4707400AFFD24 /* BlurEffect.swift */; };
+		803D610A1BF925AD004EF38F /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D61081BF925AD004EF38F /* User+CoreDataProperties.swift */; };
+		803D610B1BF925AD004EF38F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803D61091BF925AD004EF38F /* User.swift */; };
 		804B3DAD1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */; };
 		804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAC1BE7296A0021DF4E /* SentMidia.swift */; };
 		804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */; };
@@ -177,13 +210,47 @@
 		801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookRegister_ViewController.swift; sourceTree = "<group>"; };
 		801D929A1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FacebookRegister_ViewController.xib; sourceTree = "<group>"; };
 		801D929D1BA5177400D05CE7 /* DAOUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOUser.swift; sourceTree = "<group>"; };
-		801D929F1BA51E5900D05CE7 /* UserInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
 		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
 		80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFriendRequests.swift; sourceTree = "<group>"; };
+		8036575F1BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationDelegate.swift; sourceTree = "<group>"; };
+		803657601BF94A97000907BD /* NVActivityIndicatorShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorShape.swift; sourceTree = "<group>"; };
+		803657611BF94A97000907BD /* NVActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVActivityIndicatorView.h; sourceTree = "<group>"; };
+		803657621BF94A97000907BD /* NVActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorView.swift; sourceTree = "<group>"; };
+		803657631BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallBeat.swift; sourceTree = "<group>"; };
+		803657641BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallClipRotate.swift; sourceTree = "<group>"; };
+		803657651BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallClipRotateMultiple.swift; sourceTree = "<group>"; };
+		803657661BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallClipRotatePulse.swift; sourceTree = "<group>"; };
+		803657671BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallGridBeat.swift; sourceTree = "<group>"; };
+		803657681BF94A97000907BD /* NVActivityIndicatorAnimationBallGridPulse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallGridPulse.swift; sourceTree = "<group>"; };
+		803657691BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallPulse.swift; sourceTree = "<group>"; };
+		8036576A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallPulseRise.swift; sourceTree = "<group>"; };
+		8036576B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallPulseSync.swift; sourceTree = "<group>"; };
+		8036576C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallRotate.swift; sourceTree = "<group>"; };
+		8036576D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallScale.swift; sourceTree = "<group>"; };
+		8036576E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallScaleMultiple.swift; sourceTree = "<group>"; };
+		8036576F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallScaleRipple.swift; sourceTree = "<group>"; };
+		803657701BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallScaleRippleMultiple.swift; sourceTree = "<group>"; };
+		803657711BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallSpinFadeLoader.swift; sourceTree = "<group>"; };
+		803657721BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallTrianglePath.swift; sourceTree = "<group>"; };
+		803657731BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallZigZag.swift; sourceTree = "<group>"; };
+		803657741BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBallZigZagDeflect.swift; sourceTree = "<group>"; };
+		803657751BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationBlank.swift; sourceTree = "<group>"; };
+		803657761BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationCubeTransition.swift; sourceTree = "<group>"; };
+		803657771BF94A97000907BD /* NVActivityIndicatorAnimationLineScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationLineScale.swift; sourceTree = "<group>"; };
+		803657781BF94A97000907BD /* NVActivityIndicatorAnimationLineScaleParty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationLineScaleParty.swift; sourceTree = "<group>"; };
+		803657791BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationLineScalePulseOut.swift; sourceTree = "<group>"; };
+		8036577A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationLineScalePulseOutRapid.swift; sourceTree = "<group>"; };
+		8036577B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationLineSpinFadeLoader.swift; sourceTree = "<group>"; };
+		8036577C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationPacman.swift; sourceTree = "<group>"; };
+		8036577D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationSemiCircleSpin.swift; sourceTree = "<group>"; };
+		8036577E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationSquareSpin.swift; sourceTree = "<group>"; };
+		8036577F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationTriangleSkewSpin.swift; sourceTree = "<group>"; };
 		803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
 		803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		803962971BC4707400AFFD24 /* BlurEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
+		803D61081BF925AD004EF38F /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		803D61091BF925AD004EF38F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SentMidia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		804B3DAC1BE7296A0021DF4E /* SentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMidia.swift; sourceTree = "<group>"; };
 		804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOSentMidia.swift; sourceTree = "<group>"; };
@@ -400,7 +467,6 @@
 			isa = PBXGroup;
 			children = (
 				801D92521BA4928800D05CE7 /* Info.plist */,
-				801D929F1BA51E5900D05CE7 /* UserInfo.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -433,6 +499,8 @@
 				80FF18AB1BE5A53400C5F35E /* Message.swift */,
 				804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */,
 				804B3DAC1BE7296A0021DF4E /* SentMidia.swift */,
+				803D61081BF925AD004EF38F /* User+CoreDataProperties.swift */,
+				803D61091BF925AD004EF38F /* User.swift */,
 				8017D37C1BD43132000CB8F0 /* DAOs */,
 				8017D3811BD46459000CB8F0 /* Models */,
 				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
@@ -446,6 +514,7 @@
 		801D927A1BA492EC00D05CE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				803657A01BF94A9D000907BD /* NVActivtyIndicator */,
 				8019CB3C1BAD16320017CD7A /* xibs */,
 				8019CB3B1BAD16280017CD7A /* Elementos */,
 				809E75AA1BB6312700CEC425 /* Cells */,
@@ -505,6 +574,46 @@
 				803962971BC4707400AFFD24 /* BlurEffect.swift */,
 			);
 			name = FrameWorks;
+			sourceTree = "<group>";
+		};
+		803657A01BF94A9D000907BD /* NVActivtyIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				8036575F1BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift */,
+				803657601BF94A97000907BD /* NVActivityIndicatorShape.swift */,
+				803657611BF94A97000907BD /* NVActivityIndicatorView.h */,
+				803657621BF94A97000907BD /* NVActivityIndicatorView.swift */,
+				803657631BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift */,
+				803657641BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotate.swift */,
+				803657651BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift */,
+				803657661BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift */,
+				803657671BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift */,
+				803657681BF94A97000907BD /* NVActivityIndicatorAnimationBallGridPulse.swift */,
+				803657691BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift */,
+				8036576A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift */,
+				8036576B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift */,
+				8036576C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift */,
+				8036576D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift */,
+				8036576E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift */,
+				8036576F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift */,
+				803657701BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift */,
+				803657711BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift */,
+				803657721BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift */,
+				803657731BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift */,
+				803657741BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift */,
+				803657751BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift */,
+				803657761BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift */,
+				803657771BF94A97000907BD /* NVActivityIndicatorAnimationLineScale.swift */,
+				803657781BF94A97000907BD /* NVActivityIndicatorAnimationLineScaleParty.swift */,
+				803657791BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOut.swift */,
+				8036577A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift */,
+				8036577B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift */,
+				8036577C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift */,
+				8036577D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift */,
+				8036577E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift */,
+				8036577F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */,
+			);
+			name = NVActivtyIndicator;
 			sourceTree = "<group>";
 		};
 		809E75AA1BB6312700CEC425 /* Cells */ = {
@@ -625,7 +734,7 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = D56YT45BUR;
+						DevelopmentTeam = M7KY4TXQRJ;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -664,7 +773,6 @@
 				800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */,
 				F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */,
 				F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */,
-				801D92A01BA51E5900D05CE7 /* UserInfo.plist in Resources */,
 				801CB5C91BC2205E00F51E06 /* LoadingInfo_ViewController.xib in Resources */,
 				8005974F1BC1E77E00327A3D /* CellFavourites_TableViewCell.xib in Resources */,
 				F66B29D71BAB6BB400BC43EE /* Settings_ViewController.xib in Resources */,
@@ -744,8 +852,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */,
+				803657821BF94A97000907BD /* NVActivityIndicatorView.swift in Sources */,
+				8036579A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */,
 				80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */,
 				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
+				8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
 				80FF18AE1BE5A53400C5F35E /* Message+CoreDataProperties.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
@@ -753,8 +864,11 @@
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
 				803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */,
+				803657801BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
+				803D610A1BF925AD004EF38F /* User+CoreDataProperties.swift in Sources */,
 				800597521BC1E79400327A3D /* CellAdd_TableViewCell.swift in Sources */,
 				F6BD6C201BD2F7A000069570 /* CellImage_TableViewCell.swift in Sources */,
+				803657961BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
 				8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */,
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
 				80FF18AD1BE5A53400C5F35E /* Contact.swift in Sources */,
@@ -762,43 +876,62 @@
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
 				8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
+				803657941BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
 				80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */,
 				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
+				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
+				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
 				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
 				80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */,
+				803657841BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
+				803657981BF94A97000907BD /* NVActivityIndicatorAnimationLineScaleParty.swift in Sources */,
+				803657881BF94A97000907BD /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */,
 				F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */,
 				F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */,
 				F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */,
 				F648CED81BEEF2880094F3B6 /* CircleView.swift in Sources */,
 				801CB5C81BC2205E00F51E06 /* LoadingInfo_ViewController.swift in Sources */,
+				803657891BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
 				F6EBC8691BF8526F00BD443E /* NavigationAddContact_View.swift in Sources */,
+				803657971BF94A97000907BD /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
 				F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */,
 				809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */,
 				F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */,
+				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
+				8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */,
+				803657851BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
 				F6178A5C1BF6753C0044FBA9 /* UsefulFunctions.swift in Sources */,
 				80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */,
+				803657811BF94A97000907BD /* NVActivityIndicatorShape.swift in Sources */,
+				803657951BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift in Sources */,
+				8036578B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */,
+				803657901BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
+				803657831BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
 				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,
 				804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
+				8036578E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
 				F6703D811BEDB132009E57E0 /* NavigationSettings_View.swift in Sources */,
 				804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */,
 				80E458AA1BE853580066F1B1 /* JudgerAlert_ViewController.swift in Sources */,
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
+				8036579F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				804B3DAD1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift in Sources */,
 				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
+				8036578F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				8000FBD81BDA7E4700C1680A /* DAOMessages.swift in Sources */,
 				804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */,
@@ -808,16 +941,25 @@
 				80FF18AF1BE5A53400C5F35E /* Message.swift in Sources */,
 				80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
+				8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
 				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,
 				80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */,
 				80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */,
 				F6178A581BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift in Sources */,
+				803657991BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
+				8036579E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */,
+				803657861BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
 				F62A687C1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift in Sources */,
 				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
+				803657921BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
 				80FF18AC1BE5A53400C5F35E /* Contact+CoreDataProperties.swift in Sources */,
+				8036578C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
+				803657871BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
 				F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */,
+				803D610B1BF925AD004EF38F /* User.swift in Sources */,
+				8036578A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,7 +36,7 @@ class DAOMessages
 
     func sendMessage(username: String, text: String) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 86400, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 86400, status: "sent")
         self.save()
         
         DAOParse.sendMessage(username, text: text, lifeTime: 86400)
@@ -46,7 +46,7 @@ class DAOMessages
     
     func sendMessage(username: String, image: UIImage, lifeTime: Int) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUserName(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
         self.save()
         
         DAOParse.sendMessage(username, image: image, lifeTime: lifeTime)
@@ -62,7 +62,7 @@ class DAOMessages
     {
         //Tratamento de excessao
         let query = NSFetchRequest(entityName: "Message")
-        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUserName(), sentDate)
+        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUsername(), sentDate)
         query.predicate = predicate
         do
         {
@@ -74,7 +74,7 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "unseen")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "unseen")
         
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
@@ -86,7 +86,7 @@ class DAOMessages
     {
         //Tratamento de excessao
         let query = NSFetchRequest(entityName: "Message")
-        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUserName(), sentDate)
+        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUsername(), sentDate)
         query.predicate = predicate
         do
         {
@@ -98,7 +98,7 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUserName(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime,status: "unseen")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime,status: "unseen")
         
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
@@ -218,7 +218,7 @@ class DAOMessages
             let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)) * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
                 var contact : String
-                if (message.sender == DAOUser.sharedInstance.getUserName())
+                if (message.sender == DAOUser.sharedInstance.getUsername())
                 {
                     contact = message.target
                 }
