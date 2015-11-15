@@ -18,17 +18,24 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     
     var searchBar : UISearchBar!
     
+    var navBar : NavigationAddContact_View!
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = oficialDarkGray
+        self.view.backgroundColor = oficialMediumGray
         self.navigationController?.navigationBar.hidden = true
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "doneSearch"))
         
-        self.backButton = UIButton(frame: CGRectMake(0, 20, 50, 50))
-        self.backButton.setImage(UIImage(named: "quitButton"), forState: .Normal)
-        self.backButton.addTarget(self, action: "quitSearch", forControlEvents: .TouchUpInside)
+        self.navBar = NavigationAddContact_View(requester: self)
+        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.view.addSubview(self.navBar)
+        
+//        self.backButton = UIButton(frame: CGRectMake(0, 20, 50, 50))
+//        self.backButton.setImage(UIImage(named: "quitButton"), forState: .Normal)
+//        self.backButton.addTarget(self, action: "quitSearch", forControlEvents: .TouchUpInside)
 //        self.view.addSubview(self.backButton)
         
         self.searchBar = UISearchBar(frame: CGRectMake(10, 70, screenWidth - 20, 30))
@@ -36,16 +43,18 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.autocapitalizationType = .None
         self.searchBar.autocorrectionType = .No
         self.searchBar.searchBarStyle = .Minimal
-        self.searchBar.barTintColor = oficialDarkGray
+//        self.searchBar.barTintColor = oficialSemiGray
         self.searchBar.tintColor = oficialGreen
+        self.searchBar.barStyle = .Default
         self.searchBar.becomeFirstResponder()
         self.searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         self.searchBar.placeholder = "Search for a username"
         self.view.addSubview(self.searchBar)
         
-        self.tableView = UITableView(frame: CGRectMake(0, 100, screenWidth, screenHeight))
+        self.tableView = UITableView(frame: CGRectMake(0, 110, screenWidth, screenHeight))
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.separatorStyle = .None
         self.tableView.registerNib(UINib(nibName: "CellAdd_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell2")
         self.tableView.backgroundColor = UIColor.clearColor()
@@ -56,22 +65,25 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
 
     override func viewWillAppear(animated: Bool)
     {
-        self.navigationController?.navigationBar.hidden = false
-        let bar : UINavigationBar! =  self.navigationController?.navigationBar
-        
+        self.navigationController?.navigationBar.hidden = true
+//        let bar : UINavigationBar! =  self.navigationController?.navigationBar
+//        
 //        bar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
 //        bar.shadowImage = UIImage()
-        bar.barTintColor = oficialDarkGray
-        bar.tintColor = oficialGreen
-        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        bar.titleTextAttributes = titleDict as? [String : AnyObject]
-        self.title = "Search"
+//        bar.barTintColor = oficialDarkGray
+//        bar.tintColor = oficialGreen
+//        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+//        bar.titleTextAttributes = titleDict as? [String : AnyObject]
+//        self.title = "Search"
 //        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: UIBarButtonItemStyle.Done, target: self, action: "back")
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
+//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         
-        
-
+    }
+    
+    override func viewDidLayoutSubviews()
+    {
+        self.navBar.tittle.font = self.navBar.tittle.font.fontWithSize(22)
     }
 
     override func didReceiveMemoryWarning()
@@ -131,14 +143,19 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
+    
         if(self.results.count == 0)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell2", forIndexPath: indexPath)
             cell.textLabel?.text = "No results."
             cell.textLabel?.textAlignment = .Center
-            cell.textLabel?.textColor = UIColor.whiteColor()
+            cell.textLabel?.textColor = oficialLightGray
             cell.backgroundColor = UIColor.clearColor()
             
+            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 4))
+            separatorLineView.backgroundColor = oficialMediumGray
+            cell.contentView.addSubview(separatorLineView)
+
             return cell
         }
         else
@@ -147,6 +164,9 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             let username = self.results[indexPath.row].username
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.username.text = username
+            
+            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 5))
+            separatorLineView.backgroundColor = oficialMediumGray
             
             DAOFriendRequests.sharedInstance.wasAlreadyRequested(username, callback: { (was) -> Void in
                 if(was == true)
@@ -168,9 +188,11 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             
             DAOParse.getPhotoFromUsername(self.results[indexPath.row].username) { (image) -> Void in
                 cell.photo.image = image
+                
             }
             
-            cell.backgroundColor = UIColor.clearColor()
+            cell.backgroundColor = oficialSemiGray
+            cell.contentView.addSubview(separatorLineView)
             
             return cell
         }

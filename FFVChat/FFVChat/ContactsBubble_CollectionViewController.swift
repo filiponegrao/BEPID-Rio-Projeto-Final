@@ -12,12 +12,11 @@ private let reuseIdentifier = "Cell"
 
 class ContactsBubble_CollectionViewController: UICollectionViewController
 {
-    var names:[String] = ["Fernanda Carvalho", "Filipo Negrao", "Veronica Montezuma", "Joao Brandao", "Gabriel Gomes", "Annalidia Moraes", "Luis Soares", "Joao Garcia", "Fabio Gois"]
-    
     var contacts = [Contact]()
     
     var navigationBar : NavigationContact_View!
-
+    
+    var blurView : UIVisualEffectView!
     
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
@@ -51,7 +50,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
 
         
-        setupNavBar()
+//        setupNavBar()
         
         
         
@@ -61,22 +60,49 @@ class ContactsBubble_CollectionViewController: UICollectionViewController
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: NotificationController.center.friendAdded.name, object: nil)
+        
+        DAOFriendRequests.sharedInstance.friendsAccepted()
+
     }
     
-    func setupNavBar()
+    override func viewDidDisappear(animated: Bool)
     {
-        self.navigationController?.navigationBarHidden = false
-        let navBar = self.navigationController?.navigationBar
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
+    }
+    
+    override func viewDidLayoutSubviews()
+    {
+        self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
+//        self.navigationBar.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
+
+    }
+    
+//    func setupNavBar()
+//    {
+//        self.navigationController?.navigationBarHidden = false
+//        let navBar = self.navigationController?.navigationBar
+//        
+//        navBar?.barTintColor = oficialDarkGray
+//        navBar?.tintColor = oficialGreen
+//        //navBar?.titleTextAttributes = [NSForegroundColorAttributeName: oficialGreen]
+//        
+//        //let favoritBtn = UIButton()
+//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Favourites", style: .Plain, target: self, action: "filterContacts")
+//        
+//        let img = UIImage()
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: img, style: .Plain, target: self, action: "goToMenu")
+//    }
+    
+    func reloadContacts()
+    {
+        self.contacts = DAOContacts.sharedInstance.getAllContacts()
         
-        navBar?.barTintColor = oficialDarkGray
-        navBar?.tintColor = oficialGreen
-        //navBar?.titleTextAttributes = [NSForegroundColorAttributeName: oficialGreen]
+        let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
+
+        self.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
         
-        //let favoritBtn = UIButton()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Favourites", style: .Plain, target: self, action: "filterContacts")
-        
-        let img = UIImage()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: img, style: .Plain, target: self, action: "goToMenu")
     }
     
     func filterContacts()
@@ -130,29 +156,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController
         self.navigationController?.pushViewController(chat, animated: true)
 
     }
-    
-    // MARK: UICollectionViewDelegate
-    
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return true
-    }
-    */
-    
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-    return false
-    }
-    
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-    return false
-    }
-    
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
+   
     
 }

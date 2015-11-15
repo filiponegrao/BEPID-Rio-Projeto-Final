@@ -36,7 +36,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     func labelSetup()
     {
         username.textAlignment = NSTextAlignment.Center
-        username.font          = UIFont ( name: (username.font?.fontName)!, size: 12)
+        username.font          = UIFont ( name: (username.font?.fontName)!, size: 13)
         username.textColor     = oficialGreen
     }
     
@@ -62,7 +62,8 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         username.text = name
         
         profileBtn.setImage(profile, forState: UIControlState.Normal)
-        profileBtn.imageView?.contentMode = .ScaleAspectFill
+        profileBtn.imageView?.contentMode = .ScaleToFill
+        profileBtn.clipsToBounds = true
         
         
         profileBtn.frame = CGRectMake( 0, 0, self.frame.width, self.frame.width )

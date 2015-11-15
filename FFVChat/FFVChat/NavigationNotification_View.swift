@@ -1,22 +1,22 @@
 //
-//  NavigationSettings_View.swift
+//  NavigationNotification_View.swift
 //  FFVChat
 //
-//  Created by Fernanda Carvalho on 07/11/15.
+//  Created by Fernanda Carvalho on 15/11/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
 import UIKit
 
-class NavigationSettings_View: UIView
+class NavigationNotification_View: UIView
 {
-    var viewController : Settings_ViewController!
+    var viewController : Notifications_ViewController!
     
     var backButton : UIButton!
     
     var tittle : UILabel!
     
-    init(requester: Settings_ViewController)
+    init(requester: Notifications_ViewController)
     {
         self.viewController = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 60))
@@ -28,14 +28,14 @@ class NavigationSettings_View: UIView
         self.addSubview(backButton)
         
         self.tittle = UILabel(frame: CGRectMake(0, 20, screenWidth, 35))
-        self.tittle.text = "Settings"
+        self.tittle.text = "Notifications"
         self.tittle.textAlignment = .Center
-        self.tittle.textColor = oficialLightGray
+        self.tittle.textColor = oficialGreen
         self.tittle.font = self.tittle.font
-        .fontWithSize(30)
+            .fontWithSize(30)
         self.addSubview(tittle)
     }
-
+    
     required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
@@ -45,4 +45,7 @@ class NavigationSettings_View: UIView
     {
         self.viewController.navigationController?.popViewControllerAnimated(true)
     }
+
+   
+
 }
