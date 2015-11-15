@@ -32,22 +32,25 @@ class NavigationContact_View: UIView
         self.backgroundColor = oficialDarkGray
 //        self.barTintColor = oficialDarkGray
 
+        
+        self.filterButtons = UIButton(frame: CGRectMake(0, 25, screenWidth, 45))
+//        self.filterButtons.layer.borderWidth = 1
+        self.filterButtons.setTitle("Contacts", forState: .Normal)
+        self.filterButtons.setTitleColor(oficialGreen, forState: .Normal)
+        self.filterButtons.titleLabel?.textAlignment = .Center
+        self.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.addSubview(self.filterButtons)
+        
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
         
-//        self.toolsButton.rippleLocation = .Center
-//        self.toolsButton.rippleLayerColor = UIColor.clearColor()
-//        self.toolsButton.rippleAniDuration = 0.5
-//        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
+        //        self.toolsButton.rippleLocation = .Center
+        //        self.toolsButton.rippleLayerColor = UIColor.clearColor()
+        //        self.toolsButton.rippleAniDuration = 0.5
+        //        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
         self.addSubview(self.toolsButton)
-        
-        self.filterButtons = UIButton(frame: CGRectMake(10, 20, screenWidth/2, 45))
-//        self.filterButtons.layer.borderWidth = 1
-        self.filterButtons.setTitle("Contacts", forState: .Normal)
-        self.filterButtons.setTitleColor(oficialGreen, forState: .Normal)
-        self.filterButtons.titleLabel?.textAlignment = .Left
-        self.addSubview(self.filterButtons)
+
         
         self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
         self.alert.image = UIImage(named: "icon_alert")
