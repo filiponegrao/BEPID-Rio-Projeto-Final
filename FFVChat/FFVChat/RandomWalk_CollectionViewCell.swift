@@ -36,7 +36,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     func labelSetup()
     {
         username.textAlignment = NSTextAlignment.Center
-        username.font          = UIFont ( name: (username.font?.fontName)!, size: 12)
+        username.font          = UIFont ( name: (username.font?.fontName)!, size: 13)
         username.textColor     = oficialGreen
     }
     

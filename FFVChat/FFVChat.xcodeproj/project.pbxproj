@@ -118,6 +118,7 @@
 		F6703D811BEDB132009E57E0 /* NavigationSettings_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */; };
 		F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */; };
 		F6BD6C201BD2F7A000069570 /* CellImage_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD6C1F1BD2F7A000069570 /* CellImage_TableViewCell.swift */; };
+		F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +249,7 @@
 		F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationSettings_View.swift; sourceTree = "<group>"; };
 		F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
 		F6BD6C1F1BD2F7A000069570 /* CellImage_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImage_TableViewCell.swift; sourceTree = "<group>"; };
+		F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationNotification_View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,8 +329,9 @@
 				F66B29F01BAB6FF800BC43EE /* Notification_View.swift */,
 				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
 				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
-				F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */,
 				F648CED71BEEF2880094F3B6 /* CircleView.swift */,
+				F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */,
+				F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
 				80FF18AC1BE5A53400C5F35E /* Contact+CoreDataProperties.swift in Sources */,
+				F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

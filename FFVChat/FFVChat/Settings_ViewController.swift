@@ -43,6 +43,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.navBar = NavigationSettings_View(requester: self)
         self.navBar.layer.zPosition = 5
+        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
         self.view.addSubview(self.navBar)
         
         self.tableView = UITableView(frame: CGRectMake(0,60, screenWidth, screenHeight - 60))
@@ -56,7 +57,6 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         // Do any additional setup after loading the view.
         
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
        
     }
 
@@ -266,12 +266,12 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 
                 cell.textLabel?.text = self.section1[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
+                cell.textLabel?.textColor = oficialLightGray
             }
             else if(indexPath.row == 1)
             {
                 cell.textLabel?.text = self.section1[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
+                cell.textLabel?.textColor = oficialLightGray
             }
         }
         
@@ -285,7 +285,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 
                 cell.textLabel?.text = self.section2[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
+                cell.textLabel?.textColor = oficialLightGray
             }
             else if(indexPath.row == 1)
             {
@@ -294,12 +294,12 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.addSubview(nextButton)
                 
                 cell.textLabel?.text = self.section2[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
+                cell.textLabel?.textColor = oficialLightGray
             }
             else if(indexPath.row == 2)
             {
                 cell.textLabel?.text = self.section2[indexPath.row]
-                cell.textLabel?.textColor = UIColor.grayColor()
+                cell.textLabel?.textColor = oficialLightGray
             }
 
         }
@@ -311,7 +311,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.addSubview(nextButton)
             
             cell.textLabel?.text = self.section3[indexPath.row]
-            cell.textLabel?.textColor = UIColor.grayColor()
+            cell.textLabel?.textColor = oficialLightGray
         }
         
         cell.contentView.addSubview(separatorLineView)

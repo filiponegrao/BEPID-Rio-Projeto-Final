@@ -15,7 +15,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController
     var contacts = [Contact]()
     
     var navigationBar : NavigationContact_View!
-
+    
+    var blurView : UIVisualEffectView!
     
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
