@@ -67,6 +67,7 @@ class ContactManager_View: UIView
         self.deleteButton.layer.cornerRadius = self.deleteButton.frame.size.height/2
         self.deleteButton.clipsToBounds = true
         self.addSubview(self.deleteButton)
+        
 
     }
     
