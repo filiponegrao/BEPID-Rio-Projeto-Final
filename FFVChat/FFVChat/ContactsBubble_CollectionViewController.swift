@@ -171,6 +171,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     {
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         chat.contact = self.contacts[indexPath.item]
+        chat.transitioningDelegate = (self.navigationController as! AppNavigationController)
+        chat.modalPresentationStyle = .Custom
+        
+//        self.presentViewController(chat, animated: true, completion: nil)
+    
+        
         self.navigationController?.pushViewController(chat, animated: true)
 
     }
