@@ -1,5 +1,5 @@
 //
-//  DAOReports.swift
+//  People.swift
 //  FFVChat
 //
 //  Created by Filipo Negrao on 15/11/15.
@@ -7,16 +7,3 @@
 //
 
 import Foundation
-
-
-class DAOReports
-{
-    class func reportUserForContent()
-    {
-        
-    }
-    
-    
-    
-    
-}

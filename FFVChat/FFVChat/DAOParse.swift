@@ -8,6 +8,7 @@
 
 import Foundation
 import Parse
+import UIKit
 
 
 class DAOParse
@@ -135,7 +136,7 @@ class DAOParse
     }
     
     
-    class func getUsersWithString(string: String, callback: (contact: [metaContact]) -> Void) -> Void
+    class func getUsersWithString(string: String, callback: (result: [metaContact]) -> Void) -> Void
     {
         var result = [metaContact]()
         
@@ -150,20 +151,29 @@ class DAOParse
                     let username = object.valueForKey("username") as! String
                     if(!DAOContacts.sharedInstance.isContact(username) && username != DAOUser.sharedInstance.getUsername())
                     {
-                        let id = object.valueForKey("objectId") as! String
+                        let id = object.valueForKey("facebookID") as? String
+                        let photo = object.objectForKey("profileImage") as! PFFile
                         
-                        let mc = metaContact(username: username, facebookId: id)
-                        result.append(mc)
-                    }
-                    if(object.valueForKey("username") as! String == objects.last?.valueForKey("username") as! String)
-                    {
-                        callback(contact: result)
+                        photo.getDataInBackgroundWithBlock({ (data: NSData?, error2: NSError?) -> Void in
+                            
+                            if(data != nil)
+                            {
+                                let mc = metaContact(username: username, facebookId: id, photo: UIImage(data: data!)!)
+                                result.append(mc)
+                                
+                                if(object == objects.last)
+                                {
+                                    callback(result: result)
+                                }
+                            }
+                            
+                        })
                     }
                 }
             }
             else
             {
-                callback(contact: result)
+                callback(result: result)
             }
         })
     }

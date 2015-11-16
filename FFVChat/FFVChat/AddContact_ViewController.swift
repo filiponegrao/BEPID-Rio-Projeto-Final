@@ -19,7 +19,8 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     var searchBar : UISearchBar!
     
     var navBar : NavigationAddContact_View!
-
+    
+    var delay : NSTimer!
     
     override func viewDidLoad()
     {
@@ -95,9 +96,15 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     //** SEARCH BAR FUNCTONS ***//
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if(searchText.characters.count > 1)
+        self.delay?.invalidate()
+        self.delay = NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "reloadResults", userInfo: nil, repeats: false)
+    }
+    
+    func reloadResults()
+    {
+        if(self.searchBar.text?.characters.count > 1)
         {
-            DAOParse.getUsersWithString(searchText) { (contacts) -> Void in
+            DAOParse.getUsersWithString(self.searchBar.text!) { (contacts) -> Void in
                 
                 self.results = contacts
                 self.tableView.reloadData()
@@ -186,10 +193,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             })
             
-            DAOParse.getPhotoFromUsername(self.results[indexPath.row].username) { (image) -> Void in
-                cell.photo.image = image
-                
-            }
+            cell.photo.image = self.results[indexPath.row].photo
             
             cell.backgroundColor = oficialSemiGray
             cell.contentView.addSubview(separatorLineView)

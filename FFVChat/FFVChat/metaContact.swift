@@ -13,12 +13,14 @@ class metaContact
 {
     var username : String!
     
-    var facebookId : String!
+    var facebookId : String?
     
+    var photo : UIImage!
     
-    init(username : String, facebookId : String)
+    init(username : String, facebookId : String?, photo: UIImage)
     {
         self.username = username
         self.facebookId = facebookId
+        self.photo = photo
     }
 }

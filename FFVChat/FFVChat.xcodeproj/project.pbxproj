@@ -48,6 +48,8 @@
 		801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801D929D1BA5177400D05CE7 /* DAOUser.swift */; };
 		801D92A41BA5304A00D05CE7 /* Chat_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */; };
 		80216BAC1BB084B40008F380 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */; };
+		8030E44C1BF9623A0075E798 /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8030E44B1BF9623A0075E798 /* People.swift */; };
+		8030E44E1BF96A350075E798 /* BubbleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8030E44D1BF96A350075E798 /* BubbleTransition.swift */; };
 		80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */; };
 		803657801BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036575F1BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift */; };
 		803657811BF94A97000907BD /* NVActivityIndicatorShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657601BF94A97000907BD /* NVActivityIndicatorShape.swift */; };
@@ -216,6 +218,8 @@
 		801D929D1BA5177400D05CE7 /* DAOUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOUser.swift; sourceTree = "<group>"; };
 		801D92A21BA5304A00D05CE7 /* Chat_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Chat_ViewController.xib; sourceTree = "<group>"; };
 		80216BAB1BB084B40008F380 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
+		8030E44B1BF9623A0075E798 /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
+		8030E44D1BF96A350075E798 /* BubbleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTransition.swift; sourceTree = "<group>"; };
 		80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOFriendRequests.swift; sourceTree = "<group>"; };
 		8036575F1BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationDelegate.swift; sourceTree = "<group>"; };
 		803657601BF94A97000907BD /* NVActivityIndicatorShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorShape.swift; sourceTree = "<group>"; };
@@ -369,6 +373,7 @@
 				8017D37A1BD40394000CB8F0 /* StaticValues.swift */,
 				8000B4DB1BDFFB4800CD00A6 /* Editor.swift */,
 				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
+				8030E44D1BF96A350075E798 /* BubbleTransition.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -512,6 +517,7 @@
 				803D61081BF925AD004EF38F /* User+CoreDataProperties.swift */,
 				803D61091BF925AD004EF38F /* User.swift */,
 				803657A71BF9564E000907BD /* ReportModels.swift */,
+				8030E44B1BF9623A0075E798 /* People.swift */,
 				8017D37C1BD43132000CB8F0 /* DAOs */,
 				8017D3811BD46459000CB8F0 /* Models */,
 				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
@@ -925,6 +931,7 @@
 				80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */,
 				803657811BF94A97000907BD /* NVActivityIndicatorShape.swift in Sources */,
 				803657951BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift in Sources */,
+				8030E44E1BF96A350075E798 /* BubbleTransition.swift in Sources */,
 				8036578B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */,
@@ -941,6 +948,7 @@
 				80E458AA1BE853580066F1B1 /* JudgerAlert_ViewController.swift in Sources */,
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
+				8030E44C1BF9623A0075E798 /* People.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
 				8036579F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				804B3DAD1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift in Sources */,

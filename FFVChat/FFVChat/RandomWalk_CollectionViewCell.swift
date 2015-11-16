@@ -11,12 +11,18 @@ import UIKit
 class RandomWalk_CollectionViewCell: UICollectionViewCell
 {
     var username:UILabel = UILabel()
-    var profileBtn:UIButton = UIButton()
+    
+    var profileBtn: MKButton = MKButton()
+    
+    var indicator : UILabel!
     
     // animate variables
     private var animate = false
     private var paths:[CGPoint] = []
     
+    private var stepDuration : Double!
+    
+    private var duration: Double!
     
     // MARK: - Init and Cell Layout Setup
     override init(frame: CGRect)
@@ -42,6 +48,9 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     func buttonSetup()
     {
+        profileBtn.rippleLocation = .Center
+        profileBtn.rippleLayerColor = UIColor.whiteColor()
+        profileBtn.backgroundLayerCornerRadius = profileBtn.frame.size.width/2
         profileBtn.addTarget(self, action: "profileClicked", forControlEvents: UIControlEvents.TouchUpInside)
     }
     
@@ -75,7 +84,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         username.frame = CGRectMake( 0, profileBtn.frame.maxY, self.frame.width, labelHeight )
     }
     
-    func startAnimation(withDuration:Double)
+    func loadAnimations(withDuration:Double)
     {
         if animate
         {
@@ -85,21 +94,31 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         
         let numberOfSteps = random()%5 + 3
         let numberOfPaths = random()%5 + 3
-        let stepDuration:Double = 1 / (2 * Double(numberOfSteps * numberOfPaths))
+        self.stepDuration = 1 / (2 * Double(numberOfSteps * numberOfPaths))
+        self.duration = withDuration
         
         let xRange = random()%5 + 3
         let yRange = random()%6 + 4
         
         paths = UsefulFunctions.randomWalk(withNumberOfSteps: numberOfSteps, withNumberOfPaths: numberOfPaths, xRange: xRange, yRange: yRange)
         
+        self.startAnimation()
         
-        UIView.animateKeyframesWithDuration(withDuration, delay: 0.0, options: [.Repeat, .BeginFromCurrentState, .CalculationModeCubicPaced, .AllowUserInteraction], animations:
+        
+    }
+    
+    // MARK: - Animation Setup
+    
+    
+    func startAnimation()
+    {
+        UIView.animateKeyframesWithDuration(self.duration, delay: 0.0, options: [.Repeat, .BeginFromCurrentState, .CalculationModeCubicPaced, .AllowUserInteraction], animations:
             {
                 () -> Void in
                 
                 for index in 0..<self.paths.count
                 {
-                    UIView.addKeyframeWithRelativeStartTime(stepDuration * Double(index), relativeDuration: stepDuration, animations:
+                    UIView.addKeyframeWithRelativeStartTime(self.stepDuration * Double(index), relativeDuration: self.stepDuration, animations:
                         {
                             () -> Void in
                             self.profileBtn.center.x += self.paths[index].x
@@ -112,10 +131,8 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
             completion: nil)
         
         animate = true
+
     }
-    
-    // MARK: - Animation Setup
-    
     
     
     

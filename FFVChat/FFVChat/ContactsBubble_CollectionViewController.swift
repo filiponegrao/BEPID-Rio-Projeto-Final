@@ -10,8 +10,10 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ContactsBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
+class ContactsBubble_CollectionViewController: UICollectionViewController, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate
 {
+    let transition = BubbleTransition()
+
     var contacts = [Contact]()
     
     var navigationBar : NavigationContact_View!
@@ -60,9 +62,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.longPress.delegate = self
         self.view.addGestureRecognizer(self.longPress)
         
-//        setupNavBar()
-        
-        
         
         // Do any additional setup after loading the view.
     }
@@ -73,8 +72,26 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: NotificationController.center.friendAdded.name, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         DAOFriendRequests.sharedInstance.friendsAccepted()
-
+        DAOMessages.sharedInstance.receiveMessagesFromContact()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        //self.reloadAnimations()
+    }
+    
+    func reloadAnimations()
+    {
+        print("passa")
+        for i in 0..<self.collectionView!.numberOfItemsInSection(0)
+        {
+            let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as! RandomWalk_CollectionViewCell
+            cell.profileBtn.layer.removeAllAnimations()
+            cell.startAnimation()
+        }
     }
     
     override func viewDidDisappear(animated: Bool)
@@ -88,22 +105,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
 //        self.navigationBar.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
 
     }
-    
-//    func setupNavBar()
-//    {
-//        self.navigationController?.navigationBarHidden = false
-//        let navBar = self.navigationController?.navigationBar
-//        
-//        navBar?.barTintColor = oficialDarkGray
-//        navBar?.tintColor = oficialGreen
-//        //navBar?.titleTextAttributes = [NSForegroundColorAttributeName: oficialGreen]
-//        
-//        //let favoritBtn = UIButton()
-//        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Favourites", style: .Plain, target: self, action: "filterContacts")
-//        
-//        let img = UIImage()
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: img, style: .Plain, target: self, action: "goToMenu")
-//    }
+
     
     func reloadContacts()
     {
@@ -113,6 +115,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
 
         self.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
         
+        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadCollection", userInfo: nil, repeats: false)
+    }
+    
+    func reloadCollection()
+    {
+        self.collectionView?.reloadData()
     }
     
     func filterContacts()
@@ -153,7 +161,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: contacts[indexPath.row].profileImage!)!)
         
-        cell.startAnimation(45)
+        cell.loadAnimations(45)
         // Configure the cell
         
         return cell
@@ -203,4 +211,24 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         }
     }
     
+    //******* TRANSITIONS ********
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    {
+        transition.transitionMode = .Present
+        transition.startingPoint = self.view.center
+        transition.bubbleColor = oficialMediumGray
+        return transition
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    {
+        transition.transitionMode = .Dismiss
+        transition.startingPoint = self.view.center
+        transition.bubbleColor = oficialMediumGray
+        return transition
+    }
+    
 }
+
+
