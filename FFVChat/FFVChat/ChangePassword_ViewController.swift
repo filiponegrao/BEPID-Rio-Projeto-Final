@@ -18,6 +18,12 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     
     var doneButton : UIButton!
     
+    var currentPassword : UITextField!
+    
+    var newPassword : UITextField!
+    
+    var newPasswordAgain : UITextField!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -43,7 +49,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.doneButton.backgroundColor = oficialGreen
         self.doneButton.highlighted = true
-        self.doneButton.addTarget(self, action: "buttonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
+//        self.doneButton.addTarget(self, action: "changePassword", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.doneButton)
 
     }
@@ -64,12 +70,6 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.view.endEditing(true)
         resignFirstResponder()
         
-    }
-    
-    func buttonClicked(sender:UIButton)
-    {
-        sender.selected = !sender.selected
-        sender.highlighted = true
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
@@ -119,45 +119,45 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         
         if(indexPath.row == 0)
         {
-            let currentPassword = UITextField(frame: CGRectMake(15,0,screenWidth - 10, cell.frame.size.height))
-            currentPassword.placeholder = self.section[indexPath.row]
-            currentPassword.attributedPlaceholder = NSAttributedString(string: self.section[indexPath.row], attributes: [NSForegroundColorAttributeName: oficialLightGray])
-            currentPassword.keyboardAppearance = UIKeyboardAppearance.Dark
-            currentPassword.keyboardType = .NumberPad
-            currentPassword.secureTextEntry = true
-            currentPassword.tintColor = oficialGreen
-            currentPassword.textColor = oficialLightGray
+            self.currentPassword = UITextField(frame: CGRectMake(15,0,screenWidth - 10, cell.frame.size.height))
+            self.currentPassword.placeholder = self.section[indexPath.row]
+            self.currentPassword.attributedPlaceholder = NSAttributedString(string: self.section[indexPath.row], attributes: [NSForegroundColorAttributeName: oficialLightGray])
+            self.currentPassword.keyboardAppearance = UIKeyboardAppearance.Dark
+            self.currentPassword.keyboardType = .NumberPad
+            self.currentPassword.secureTextEntry = true
+            self.currentPassword.tintColor = oficialGreen
+            self.currentPassword.textColor = oficialLightGray
             
-            if (currentPassword.text?.characters.count > 6)
+            if (self.currentPassword.text?.characters.count > 6)
             {
-                currentPassword.resignFirstResponder()
+                self.currentPassword.resignFirstResponder()
             }
             
-            cell.addSubview(currentPassword)
+            cell.addSubview(self.currentPassword)
         }
         else if(indexPath.row == 1)
         {
-            let newPassword = UITextField(frame: CGRectMake(15,0,screenWidth - 10, cell.frame.size.height))
-            newPassword.placeholder = self.section[indexPath.row]
-            newPassword.attributedPlaceholder = NSAttributedString(string: self.section[indexPath.row], attributes: [NSForegroundColorAttributeName: oficialLightGray])
-            newPassword.keyboardAppearance = UIKeyboardAppearance.Dark
-            newPassword.keyboardType = .NumberPad
-            newPassword.secureTextEntry = true
-            newPassword.tintColor = oficialGreen
-            newPassword.textColor = oficialLightGray
-            cell.addSubview(newPassword)
+            self.newPassword = UITextField(frame: CGRectMake(15,0,screenWidth - 10, cell.frame.size.height))
+            self.newPassword.placeholder = self.section[indexPath.row]
+            self.newPassword.attributedPlaceholder = NSAttributedString(string: self.section[indexPath.row], attributes: [NSForegroundColorAttributeName: oficialLightGray])
+            self.newPassword.keyboardAppearance = UIKeyboardAppearance.Dark
+            self.newPassword.keyboardType = .NumberPad
+            self.newPassword.secureTextEntry = true
+            self.newPassword.tintColor = oficialGreen
+            self.newPassword.textColor = oficialLightGray
+            cell.addSubview(self.newPassword)
         }
         else if(indexPath.row == 2)
         {
-            let newPasswordAgain = UITextField(frame: CGRectMake(15,0,screenWidth - 10, cell.frame.size.height))
-            newPasswordAgain.placeholder = self.section[indexPath.row]
-            newPasswordAgain.attributedPlaceholder = NSAttributedString(string: self.section[indexPath.row], attributes: [NSForegroundColorAttributeName: oficialLightGray])
-            newPasswordAgain.keyboardAppearance = UIKeyboardAppearance.Dark
-            newPasswordAgain.keyboardType = .NumberPad
-            newPasswordAgain.secureTextEntry = true
-            newPasswordAgain.tintColor = oficialGreen
-            newPasswordAgain.textColor = oficialLightGray
-            cell.addSubview(newPasswordAgain)
+            self.newPasswordAgain = UITextField(frame: CGRectMake(15,0,screenWidth - 10, cell.frame.size.height))
+            self.newPasswordAgain.placeholder = self.section[indexPath.row]
+            self.newPasswordAgain.attributedPlaceholder = NSAttributedString(string: self.section[indexPath.row], attributes: [NSForegroundColorAttributeName: oficialLightGray])
+            self.newPasswordAgain.keyboardAppearance = UIKeyboardAppearance.Dark
+            self.newPasswordAgain.keyboardType = .NumberPad
+            self.newPasswordAgain.secureTextEntry = true
+            self.newPasswordAgain.tintColor = oficialGreen
+            self.newPasswordAgain.textColor = oficialLightGray
+            cell.addSubview(self.newPasswordAgain)
         }
         
         cell.contentView.addSubview(separatorLineView)
@@ -173,5 +173,41 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     }
 
     //FIM TABLEVIEW PROPERTIES
+    
+//    func changePassword(sender:UIButton)
+//    {
+//        
+//        self.doneButton.highlighted = true
+//        
+//        if(self.currentPassword.text != "")
+//        {
+//            DAOUser.sharedInstance.checkPassword(self.currentPassword.text!) { (correct) -> Void in
+//                if(correct == false)
+//                {
+//                    let alert = UIAlertView(title: "Ops!", message: "Your password is wrong", delegate: nil, cancelButtonTitle: "Ok")
+//                    alert.show()
+//                }
+//                else
+//                {
+//                    if(self.newPassword.text == self.newPasswordAgain.text)
+//                    {
+//                        DAOUser.sharedInstance.changePassword()
+//                    }
+//                    else
+//                    {
+//                        let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
+//                        alert.show()
+//                    }
+//                }
+//            }
+//        }
+//        else
+//        {
+//            let alert = UIAlertView(title: "Ops!", message: "Please, enter your password", delegate: nil, cancelButtonTitle: "Ok")
+//            alert.show()
+//        }
+//        
+//       
+//    }
     
 }

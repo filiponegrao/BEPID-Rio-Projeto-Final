@@ -746,7 +746,7 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = M7KY4TXQRJ;
+						DevelopmentTeam = D56YT45BUR;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -865,6 +865,8 @@
 			files = (
 				80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */,
 				F6AC545F1BF9571300CF7918 /* ChangePassword_ViewController.swift in Sources */,
+				803657821BF94A97000907BD /* NVActivityIndicatorView.swift in Sources */,
+				8036579A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */,
 				80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */,
 				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
 				8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,

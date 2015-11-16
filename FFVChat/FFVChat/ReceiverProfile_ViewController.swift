@@ -117,20 +117,20 @@ class ReceiverProfile_ViewController: UIViewController
         
         circleView.center = CGPointMake(self.contactImage.center.x, self.contactImage.center.y)
         
-        circleView.setColor(self.trustLevel)
-        
-        view.addSubview(circleView)
-        
-        // Animate the drawing of the circle over the course of 1 second
-        
-        DAOParse.getTrustLevel(self.contact.username!) { (trustLevel) -> Void in
+        DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
             
             if(trustLevel != nil)
             {
-                circleView.animateCircle(1.0, trustLevel: trustLevel!)
-                self.trustLevelLabel.text = "\(trustLevel!)%"
+                self.trustLevel = trustLevel
+                self.trustLevelLabel.text = "\(self.trustLevel)%"
+                
+                circleView.setColor(self.trustLevel)
+                circleView.animateCircle(1.0, trustLevel: self.trustLevel)
             }
+            
         }
+        
+        view.addSubview(circleView)
         
     }
 
