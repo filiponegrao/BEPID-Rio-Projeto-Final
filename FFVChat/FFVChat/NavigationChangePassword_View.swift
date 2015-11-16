@@ -1,5 +1,5 @@
 //
-//  NavigationAddContact_View.swift
+//  NavigationChangePassword_View.swift
 //  FFVChat
 //
 //  Created by Fernanda Carvalho on 15/11/15.
@@ -8,16 +8,15 @@
 
 import UIKit
 
-class NavigationAddContact_View: UIView
+class NavigationChangePassword_View: UIView
 {
-
-    var viewController : AddContact_ViewController!
+    var viewController : ChangePassword_ViewController!
     
     var backButton : UIButton!
     
     var tittle : UILabel!
     
-    init(requester: AddContact_ViewController)
+    init(requester: ChangePassword_ViewController)
     {
         self.viewController = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 70))
@@ -29,7 +28,7 @@ class NavigationAddContact_View: UIView
         self.addSubview(backButton)
         
         self.tittle = UILabel(frame: CGRectMake(0, 25, screenWidth, 35))
-        self.tittle.text = "Add contact"
+        self.tittle.text = "Password"
         self.tittle.textAlignment = .Center
         self.tittle.textColor = oficialGreen
         self.tittle.font = self.tittle.font
@@ -46,7 +45,5 @@ class NavigationAddContact_View: UIView
     {
         self.viewController.navigationController?.popViewControllerAnimated(true)
     }
-    
-    
 
 }

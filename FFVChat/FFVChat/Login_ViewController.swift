@@ -114,7 +114,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
-
     }
     
 

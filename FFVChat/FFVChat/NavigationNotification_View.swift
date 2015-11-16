@@ -19,20 +19,20 @@ class NavigationNotification_View: UIView
     init(requester: Notifications_ViewController)
     {
         self.viewController = requester
-        super.init(frame: CGRectMake(0, 0, screenWidth, 60))
+        super.init(frame: CGRectMake(0, 0, screenWidth, 70))
         self.backgroundColor = oficialDarkGray
         
-        self.backButton = UIButton(frame: CGRectMake(0, 15, 45, 45))
+        self.backButton = UIButton(frame: CGRectMake(0, 20, 45, 45))
         self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(backButton)
         
-        self.tittle = UILabel(frame: CGRectMake(0, 20, screenWidth, 35))
+        self.tittle = UILabel(frame: CGRectMake(0, 25, screenWidth, 35))
         self.tittle.text = "Notifications"
         self.tittle.textAlignment = .Center
         self.tittle.textColor = oficialGreen
         self.tittle.font = self.tittle.font
-            .fontWithSize(30)
+            .fontWithSize(22)
         self.addSubview(tittle)
     }
     

@@ -20,6 +20,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     var blurView : UIVisualEffectView!
     
+    var longPress : UILongPressGestureRecognizer!
+    
+    var contactManager : ContactManager_View!
+    
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
         super.init(collectionViewLayout: layout)
@@ -170,6 +174,36 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
 
     }
    
+    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
+    {
+        if gestureReconizer.state != UIGestureRecognizerState.Ended
+        {
+            return
+        }
+        
+        let point = gestureReconizer.locationInView(self.collectionView)
+        let indexPath = self.collectionView?.indexPathForItemAtPoint(point)
+        
+        if ((indexPath) != nil)
+        {
+            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
+//            cell?.blur(blurRadius: 0.7)
+            //Dar feedback ao usuário
+
+            
+//            cell?.blur(blurRadius: 0)
+            
+            self.contactManager = ContactManager_View()
+            self.view.addSubview(self.contactManager)
+            //            print(indexPath!.row)
+            
+
+        }
+        else
+        {
+            print("Could not find index path")
+        }
+    }
     
     //******* TRANSITIONS ********
     

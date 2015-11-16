@@ -25,13 +25,15 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationController?.navigationBar.hidden = true
         
         self.navBar = NavigationNotification_View(requester: self)
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
 
         
-        self.tableView = UITableView(frame: CGRectMake(0, 60, screenWidth, screenHeight))
+        self.tableView = UITableView(frame: CGRectMake(0, 70, screenWidth, screenHeight))
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.layer.zPosition = 0
         self.tableView.separatorStyle = .None
         self.tableView.registerClass(Notification_TableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CellPrints")
