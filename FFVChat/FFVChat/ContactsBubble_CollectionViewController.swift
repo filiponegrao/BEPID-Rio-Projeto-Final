@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ContactsBubble_CollectionViewController: UICollectionViewController, UIViewControllerTransitioningDelegate
+class ContactsBubble_CollectionViewController: UICollectionViewController, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate
 {
     let transition = BubbleTransition()
 
@@ -54,6 +54,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         self.collectionView?.backgroundColor = oficialMediumGray
         
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
+
+        self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+        self.longPress.minimumPressDuration = 0.6
+        self.longPress.delaysTouchesBegan = true
+        self.longPress.delegate = self
+        self.view.addGestureRecognizer(self.longPress)
         
         
         // Do any additional setup after loading the view.
