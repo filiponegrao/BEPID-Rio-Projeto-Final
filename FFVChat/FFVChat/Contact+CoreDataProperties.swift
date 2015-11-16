@@ -2,7 +2,7 @@
 //  Contact+CoreDataProperties.swift
 //  FFVChat
 //
-//  Created by Filipo Negrao on 31/10/15.
+//  Created by Filipo Negrao on 15/11/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,10 +14,11 @@ import CoreData
 
 extension Contact {
 
-    @NSManaged var username: String!
+    @NSManaged var createdAt: NSDate?
     @NSManaged var facebookId: String?
+    @NSManaged var profileImage: NSData!
     @NSManaged var trustLevel: NSNumber!
-    @NSManaged var profileImage: NSData?
-    @NSManaged var createdAt: NSDate!
+    @NSManaged var username: String!
+    @NSManaged var isFavorit: NSNumber!
 
 }

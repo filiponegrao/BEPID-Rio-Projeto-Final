@@ -81,6 +81,10 @@
 		8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift */; };
 		8036579E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift */; };
 		8036579F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036577F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */; };
+		803657A31BF9522D000907BD /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657A11BF9522D000907BD /* Contact+CoreDataProperties.swift */; };
+		803657A41BF9522D000907BD /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657A21BF9522D000907BD /* Contact.swift */; };
+		803657A61BF95594000907BD /* DAOReports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657A51BF95594000907BD /* DAOReports.swift */; };
+		803657A81BF9564E000907BD /* ReportModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803657A71BF9564E000907BD /* ReportModels.swift */; };
 		803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */; };
 		803962961BC44AAC00AFFD24 /* Contacts_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */; };
 		803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803962971BC4707400AFFD24 /* BlurEffect.swift */; };
@@ -110,8 +114,6 @@
 		80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A11BE51D7E00C5F35E /* NotificationController.swift */; };
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
 		80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A51BE59BEA00C5F35E /* DataModel.xcdatamodeld */; };
-		80FF18AC1BE5A53400C5F35E /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A81BE5A53400C5F35E /* Contact+CoreDataProperties.swift */; };
-		80FF18AD1BE5A53400C5F35E /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A91BE5A53400C5F35E /* Contact.swift */; };
 		80FF18AE1BE5A53400C5F35E /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18AA1BE5A53400C5F35E /* Message+CoreDataProperties.swift */; };
 		80FF18AF1BE5A53400C5F35E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18AB1BE5A53400C5F35E /* Message.swift */; };
 		8E1A009BFAC1DA509C471F38 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E573196666F24453C1804730 /* Pods.framework */; };
@@ -246,6 +248,10 @@
 		8036577D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationSemiCircleSpin.swift; sourceTree = "<group>"; };
 		8036577E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationSquareSpin.swift; sourceTree = "<group>"; };
 		8036577F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationTriangleSkewSpin.swift; sourceTree = "<group>"; };
+		803657A11BF9522D000907BD /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		803657A21BF9522D000907BD /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		803657A51BF95594000907BD /* DAOReports.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOReports.swift; sourceTree = "<group>"; };
+		803657A71BF9564E000907BD /* ReportModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportModels.swift; sourceTree = "<group>"; };
 		803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contacts_ViewController.swift; sourceTree = "<group>"; };
 		803962941BC44AAC00AFFD24 /* Contacts_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Contacts_ViewController.xib; sourceTree = "<group>"; };
 		803962971BC4707400AFFD24 /* BlurEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffect.swift; sourceTree = "<group>"; };
@@ -275,8 +281,6 @@
 		80FF18A11BE51D7E00C5F35E /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		80FF18A31BE51EA800C5F35E /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		80FF18A61BE59BEA00C5F35E /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		80FF18A81BE5A53400C5F35E /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		80FF18A91BE5A53400C5F35E /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		80FF18AA1BE5A53400C5F35E /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		80FF18AB1BE5A53400C5F35E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		D57DDDFFAC5708EC21EE1901 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -375,6 +379,7 @@
 				80326F441BC5C3C5000CDD6A /* DAOFriendRequests.swift */,
 				8000FBD71BDA7E4700C1680A /* DAOMessages.swift */,
 				804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */,
+				803657A51BF95594000907BD /* DAOReports.swift */,
 			);
 			name = DAOs;
 			sourceTree = "<group>";
@@ -493,14 +498,15 @@
 			children = (
 				80FF185A1BE3B15200C5F35E /* metaContact.swift */,
 				80FF18A51BE59BEA00C5F35E /* DataModel.xcdatamodeld */,
-				80FF18A81BE5A53400C5F35E /* Contact+CoreDataProperties.swift */,
-				80FF18A91BE5A53400C5F35E /* Contact.swift */,
 				80FF18AA1BE5A53400C5F35E /* Message+CoreDataProperties.swift */,
+				803657A11BF9522D000907BD /* Contact+CoreDataProperties.swift */,
+				803657A21BF9522D000907BD /* Contact.swift */,
 				80FF18AB1BE5A53400C5F35E /* Message.swift */,
 				804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */,
 				804B3DAC1BE7296A0021DF4E /* SentMidia.swift */,
 				803D61081BF925AD004EF38F /* User+CoreDataProperties.swift */,
 				803D61091BF925AD004EF38F /* User.swift */,
+				803657A71BF9564E000907BD /* ReportModels.swift */,
 				8017D37C1BD43132000CB8F0 /* DAOs */,
 				8017D3811BD46459000CB8F0 /* Models */,
 				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
@@ -871,7 +877,6 @@
 				803657961BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
 				8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */,
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
-				80FF18AD1BE5A53400C5F35E /* Contact.swift in Sources */,
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
 				8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */,
@@ -903,6 +908,7 @@
 				F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */,
 				809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */,
 				F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */,
+				803657A81BF9564E000907BD /* ReportModels.swift in Sources */,
 				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
 				8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */,
@@ -934,8 +940,11 @@
 				8036578F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				8000FBD81BDA7E4700C1680A /* DAOMessages.swift in Sources */,
+				803657A61BF95594000907BD /* DAOReports.swift in Sources */,
 				804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */,
+				803657A41BF9522D000907BD /* Contact.swift in Sources */,
 				80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */,
+				803657A31BF9522D000907BD /* Contact+CoreDataProperties.swift in Sources */,
 				8017D37B1BD40394000CB8F0 /* StaticValues.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
 				80FF18AF1BE5A53400C5F35E /* Message.swift in Sources */,
@@ -954,7 +963,6 @@
 				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
 				803657921BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
-				80FF18AC1BE5A53400C5F35E /* Contact+CoreDataProperties.swift in Sources */,
 				8036578C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
 				803657871BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
 				F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */,

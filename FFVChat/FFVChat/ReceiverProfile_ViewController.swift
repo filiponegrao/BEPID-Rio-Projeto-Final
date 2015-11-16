@@ -123,7 +123,7 @@ class ReceiverProfile_ViewController: UIViewController
         
         // Animate the drawing of the circle over the course of 1 second
         
-        DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
+        DAOParse.getTrustLevel(self.contact.username!) { (trustLevel) -> Void in
             
             if(trustLevel != nil)
             {

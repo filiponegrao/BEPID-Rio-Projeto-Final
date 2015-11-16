@@ -53,6 +53,32 @@ class DAOContacts
     }
     
     
+    func getFavorites() -> [Contact]
+    {
+        var contacts = [Contact]()
+        
+        let predicate = NSPredicate(format: "isFavorit == %@", true)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        fetchRequest.predicate = predicate
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
+        
+        do { let result = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
+            
+            if result.count > 0
+            {
+                contacts = result
+                return contacts
+            }
+        }
+        catch
+        {
+            return contacts
+        }
+        return contacts
+    }
+    
     func getContact(username: String) -> Contact?
     {
         let predicate = NSPredicate(format: "username == %@", username)
@@ -161,6 +187,19 @@ class DAOContacts
             return false
         }
 
+    }
+    
+    
+    func setFavorite(contact: Contact)
+    {
+        contact.isFavorit = true
+        self.save()
+    }
+    
+    func setNonFavorite(contact: Contact)
+    {
+        contact.isFavorit = false
+        self.save()
     }
     
     func save()

@@ -532,6 +532,33 @@ class DAOUser
         }
     }
     
+    //AJUSTES DO USUARIO
+    
+    func decreaseTrustLevel()
+    {
+        self.user.trustLevel  = Int(self.user.trustLevel) - 1
+        self.save()
+        DAOParse.decreaseTrustLevel()
+    }
+    
+    func changePassword()
+    {
+        
+    }
+    
+    func changeProfilePicture(image: UIImage)
+    {
+        let data = image.highestQualityJPEGNSData
+        
+        PFUser.currentUser()?["profileImage"] = PFFile(data: data)
+        PFUser.currentUser()?.saveEventually()
+        
+        self.user.profileImage = data
+    }
+    
+    
+    //Fim dos ajustes do usuario
+    
     
     
     func isValidEmail(testStr:String) -> Bool
