@@ -12,14 +12,25 @@ class ContactManager_View: UIView
 {
     var viewController : ContactsBubble_CollectionViewController!
     
+    var contact : Contact!
+    
     var blackScreen : UIView!
     
     var backButton : UIButton!
     
-    var title : UILabel!
+    var contactImage : UIImageView!
     
-    init()
+    var circleView : CircleView!
+    
+    var trustLevel : Int!
+    
+    var favouriteButton : UIButton!
+    
+    var deleteButton : UIButton!
+    
+    init(contact: Contact)
     {
+        self.contact = contact
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
         self.backgroundColor = UIColor.clearColor()
@@ -34,12 +45,28 @@ class ContactManager_View: UIView
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview((self.backButton))
         
-        self.title = UILabel(frame: CGRectMake(0,150, screenWidth, 50))
-        self.title.text = "Temporary Contact Manager"
-        self.title.textColor = oficialGreen
-        self.title.textAlignment = .Center
-        self.title.font = UIFont(name: "Helvetica", size: 22)
-        self.addSubview(self.title)
+        self.trustLevel = Int(self.contact.trustLevel)
+        
+        self.contactImage = UIImageView(frame: CGRectMake(screenWidth/5 * 2, screenHeight/5, screenWidth/2, screenWidth/2))
+        self.contactImage.layer.cornerRadius = self.contactImage.frame.size.height/2
+        self.contactImage.clipsToBounds = true
+        self.contactImage.backgroundColor = oficialGreen
+        self.contactImage.image = UIImage(data: self.contact.profileImage)
+        self.addSubview(self.contactImage)
+        
+        addCircleView()
+        
+        self.favouriteButton = UIButton(frame: CGRectMake(screenWidth/8, screenHeight/7 * 3, screenWidth/5, screenWidth/5))
+        self.favouriteButton.backgroundColor = oficialLightGray
+        self.favouriteButton.layer.cornerRadius = self.favouriteButton.frame.size.height/2
+        self.favouriteButton.clipsToBounds = true
+        self.addSubview(self.favouriteButton)
+        
+        self.deleteButton = UIButton(frame: CGRectMake(screenWidth/8 * 3, screenHeight/7 * 4 - 10, screenWidth/5, screenWidth/5))
+        self.deleteButton.backgroundColor = oficialLightGray
+        self.deleteButton.layer.cornerRadius = self.deleteButton.frame.size.height/2
+        self.deleteButton.clipsToBounds = true
+        self.addSubview(self.deleteButton)
 
     }
     
@@ -51,6 +78,21 @@ class ContactManager_View: UIView
     {
         self.removeFromSuperview()
 //        self.viewController.blurView.removeFromSuperview()
+    }
+    
+    func addCircleView()
+    {
+        let circleWidth = screenWidth/1.95
+        let circleHeight = screenWidth/1.95
+
+        self.circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
+        self.circleView.center = CGPointMake(self.contactImage.center.x, self.contactImage.center.y)
+        
+        self.circleView.setColor(self.trustLevel)
+        self.circleView.animateCircle(1.0, trustLevel: self.trustLevel)
+        
+        self.addSubview(self.circleView)
+
     }
     
 }

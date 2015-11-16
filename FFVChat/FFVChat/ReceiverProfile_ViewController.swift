@@ -82,7 +82,6 @@ class ReceiverProfile_ViewController: UIViewController
         self.contactImage = UIImageView(frame: CGRectMake(screenWidth/7 * 2 + 10, screenHeight/5, screenWidth/2, screenWidth/2))
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.height/2
         self.contactImage.clipsToBounds = true
-        self.contactImage.image = DAOUser.sharedInstance.getProfileImage()
         self.contactImage.image = UIImage(data: self.contact.profileImage!)
         self.view.addSubview(self.contactImage)
 

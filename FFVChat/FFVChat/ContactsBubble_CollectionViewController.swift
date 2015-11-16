@@ -22,6 +22,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     var contactManager : ContactManager_View!
     
+    
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
         super.init(collectionViewLayout: layout)
@@ -161,7 +162,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        chat.contact = self.contacts[indexPath.row]
+        chat.contact = self.contacts[indexPath.item]
         self.navigationController?.pushViewController(chat, animated: true)
 
     }
@@ -185,7 +186,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
             
 //            cell?.blur(blurRadius: 0)
             
-            self.contactManager = ContactManager_View()
+            print("ALGUMA COISA ANTES \(indexPath!.item)")
+            print(self.contacts.count)
+            print("INDEX DA CELL \(indexPath)")
+            self.contactManager = ContactManager_View(contact: self.contacts[indexPath!.item])
+            
+            
             self.view.addSubview(self.contactManager)
             //            print(indexPath!.row)
             
