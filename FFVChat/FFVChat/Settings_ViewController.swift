@@ -15,9 +15,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let section1 = ["Change password", "Delete Profile"]
     
-    let section2 = ["Default photos filter", "Default photos time", "Clean all media gallery"]
+    let section2 = ["Media settings"]
     
-    let section3 = ["About us"]
+    let section3 = ["Notifications"]
+    
+    let section4 = ["About us"]
     
     var navBar : NavigationSettings_View!
 
@@ -43,7 +45,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.navBar = NavigationSettings_View(requester: self)
         self.navBar.layer.zPosition = 5
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
         self.view.addSubview(self.navBar)
         
         self.tableView = UITableView(frame: CGRectMake(0,60, screenWidth, screenHeight - 60))
@@ -114,7 +116,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 4
+        return 5
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -129,9 +131,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         else if(section == 2)
         {
-            return 3
+            return 1
         }
         else if(section == 3)
+        {
+            return 1
+        }
+        else if(section == 4)
         {
             return 1
         }
@@ -270,6 +276,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             else if(indexPath.row == 1)
             {
+                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+                cell.addSubview(nextButton)
+
                 cell.textLabel?.text = self.section1[indexPath.row]
                 cell.textLabel?.textColor = oficialLightGray
             }
@@ -277,31 +287,13 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         else if(indexPath.section == 2)
         {
-            if(indexPath.row == 0)
-            {
-                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
-                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
-                cell.addSubview(nextButton)
-                
-                
-                cell.textLabel?.text = self.section2[indexPath.row]
-                cell.textLabel?.textColor = oficialLightGray
-            }
-            else if(indexPath.row == 1)
-            {
-                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
-                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
-                cell.addSubview(nextButton)
-                
-                cell.textLabel?.text = self.section2[indexPath.row]
-                cell.textLabel?.textColor = oficialLightGray
-            }
-            else if(indexPath.row == 2)
-            {
-                cell.textLabel?.text = self.section2[indexPath.row]
-                cell.textLabel?.textColor = oficialLightGray
-            }
-
+            let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+            nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+            cell.addSubview(nextButton)
+            
+            
+            cell.textLabel?.text = self.section2[indexPath.row]
+            cell.textLabel?.textColor = oficialLightGray
         }
         
         else if(indexPath.section == 3)
@@ -311,6 +303,16 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.addSubview(nextButton)
             
             cell.textLabel?.text = self.section3[indexPath.row]
+            cell.textLabel?.textColor = oficialLightGray
+        }
+        
+        else if(indexPath.section == 4)
+        {
+            let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+            nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+            cell.addSubview(nextButton)
+            
+            cell.textLabel?.text = self.section4[indexPath.row]
             cell.textLabel?.textColor = oficialLightGray
         }
         
@@ -326,6 +328,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
       
+        if(indexPath.section == 1 && indexPath.row == 0)
+        {
+            let changePassword = ChangePassword_ViewController()
+            self.navigationController?.pushViewController(changePassword, animated: true)
+        }
         
     }
     

@@ -63,13 +63,13 @@ class NavigationContact_View: UIView
     
     func openTools()
     {
-//        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-//        self.vc.blurView.frame = self.vc.view.bounds
-//        self.vc.blurView.alpha = 0
-//        self.vc.view.addSubview(self.vc.blurView)
+        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.vc.blurView.frame = self.vc.view.bounds
+        self.vc.blurView.alpha = 0
+        self.vc.view.addSubview(self.vc.blurView)
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             
-//            self.vc.blurView.alpha = 0.8
+            self.vc.blurView.alpha = 0.8
             
             }) { (success: Bool) -> Void in
                 
@@ -86,7 +86,7 @@ class NavigationContact_View: UIView
         toolsNavigation.modalInPopover = true
         self.vc.presentViewController(toolsNavigation, animated: true) { () -> Void in
             (toolsNavigation.viewControllers.first as! Tools_ViewController).openTools()
-            
+//            
 //            //blur
 //            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
 //            visualEffectView.frame = self.vc.view.bounds

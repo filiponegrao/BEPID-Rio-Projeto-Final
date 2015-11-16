@@ -38,7 +38,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
 //        self.backButton.addTarget(self, action: "quitSearch", forControlEvents: .TouchUpInside)
 //        self.view.addSubview(self.backButton)
         
-        self.searchBar = UISearchBar(frame: CGRectMake(10, 70, screenWidth - 20, 30))
+        self.searchBar = UISearchBar(frame: CGRectMake(10, 80, screenWidth - 20, 30))
         self.searchBar.delegate = self
         self.searchBar.autocapitalizationType = .None
         self.searchBar.autocorrectionType = .No
@@ -51,7 +51,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.placeholder = "Search for a username"
         self.view.addSubview(self.searchBar)
         
-        self.tableView = UITableView(frame: CGRectMake(0, 110, screenWidth, screenHeight))
+        self.tableView = UITableView(frame: CGRectMake(0, 115, screenWidth, screenHeight))
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .None
