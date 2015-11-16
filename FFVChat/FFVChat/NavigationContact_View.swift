@@ -24,6 +24,8 @@ class NavigationContact_View: UIView
     
     var filterButtons : UIButton!
     
+    var contactManager : ContactManager_View!
+    
     
     init(requester: ContactsBubble_CollectionViewController)
     {
@@ -36,6 +38,7 @@ class NavigationContact_View: UIView
         self.filterButtons = UIButton(frame: CGRectMake(0, 25, screenWidth, 45))
 //        self.filterButtons.layer.borderWidth = 1
         self.filterButtons.setTitle("Contacts", forState: .Normal)
+        self.filterButtons.addTarget(self, action: "managerContact", forControlEvents: .TouchUpInside)
         self.filterButtons.setTitleColor(oficialGreen, forState: .Normal)
         self.filterButtons.titleLabel?.textAlignment = .Center
         self.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
@@ -59,6 +62,24 @@ class NavigationContact_View: UIView
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: requestNotification.requestsLoaded.rawValue, object: nil)
         
+    }
+    
+    func managerContact()
+    {
+//        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+//        self.vc.blurView.frame = self.vc.view.bounds
+//        self.vc.blurView.alpha = 0
+//        self.vc.view.addSubview(self.vc.blurView)
+//        UIView.animateWithDuration(0.5, animations: { () -> Void in
+//            
+//            self.vc.blurView.alpha = 0.8
+//            
+//            }) { (success: Bool) -> Void in
+//                
+//        }
+
+        self.contactManager = ContactManager_View()
+        self.vc.view.addSubview(self.contactManager)
     }
     
     func openTools()
