@@ -38,7 +38,7 @@ class NavigationContact_View: UIView
         self.filterButtons = UIButton(frame: CGRectMake(0, 25, screenWidth, 45))
 //        self.filterButtons.layer.borderWidth = 1
         self.filterButtons.setTitle("Contacts", forState: .Normal)
-        self.filterButtons.addTarget(self, action: "managerContact", forControlEvents: .TouchUpInside)
+//        self.filterButtons.addTarget(self, action: "managerContact", forControlEvents: .TouchUpInside)
         self.filterButtons.setTitleColor(oficialGreen, forState: .Normal)
         self.filterButtons.titleLabel?.textAlignment = .Center
         self.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
@@ -64,8 +64,8 @@ class NavigationContact_View: UIView
         
     }
     
-    func managerContact()
-    {
+//    func managerContact()
+//    {
 //        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
 //        self.vc.blurView.frame = self.vc.view.bounds
 //        self.vc.blurView.alpha = 0
@@ -77,10 +77,10 @@ class NavigationContact_View: UIView
 //            }) { (success: Bool) -> Void in
 //                
 //        }
-
-        self.contactManager = ContactManager_View()
-        self.vc.view.addSubview(self.contactManager)
-    }
+//
+//        self.contactManager = ContactManager_View()
+//        self.vc.view.addSubview(self.contactManager)
+//    }
     
     func openTools()
     {

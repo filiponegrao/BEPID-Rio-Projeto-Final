@@ -10,13 +10,17 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ContactsBubble_CollectionViewController: UICollectionViewController
+class ContactsBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
 {
     var contacts = [Contact]()
     
     var navigationBar : NavigationContact_View!
     
     var blurView : UIVisualEffectView!
+    
+    var longPress : UILongPressGestureRecognizer!
+    
+    var contactManager : ContactManager_View!
     
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
@@ -49,6 +53,11 @@ class ContactsBubble_CollectionViewController: UICollectionViewController
         
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
 
+        self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+        self.longPress.minimumPressDuration = 0.6
+        self.longPress.delaysTouchesBegan = true
+        self.longPress.delegate = self
+        self.view.addGestureRecognizer(self.longPress)
         
 //        setupNavBar()
         
@@ -157,5 +166,35 @@ class ContactsBubble_CollectionViewController: UICollectionViewController
 
     }
    
+    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
+    {
+        if gestureReconizer.state != UIGestureRecognizerState.Ended
+        {
+            return
+        }
+        
+        let point = gestureReconizer.locationInView(self.collectionView)
+        let indexPath = self.collectionView?.indexPathForItemAtPoint(point)
+        
+        if ((indexPath) != nil)
+        {
+            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
+//            cell?.blur(blurRadius: 0.7)
+            //Dar feedback ao usuário
+
+            
+//            cell?.blur(blurRadius: 0)
+            
+            self.contactManager = ContactManager_View()
+            self.view.addSubview(self.contactManager)
+            //            print(indexPath!.row)
+            
+
+        }
+        else
+        {
+            print("Could not find index path")
+        }
+    }
     
 }
