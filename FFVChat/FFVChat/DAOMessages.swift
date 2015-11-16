@@ -39,7 +39,9 @@ class DAOMessages
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 86400, status: "sent")
         self.save()
         
+        print("enviando")
         DAOParse.sendMessage(username, text: text, lifeTime: 86400)
+//        DAOPostgres.sharedInstance.sendTextMessage(username, lifeTime: 34000, text: text)
         
         return message
     }

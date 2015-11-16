@@ -20,6 +20,12 @@ class DAOPostgres
     
     let localUrl = "http://192.168.0.21/sendTextMessage.php"
     
+    //Bepid URLs
+    let sendBepid = "http://172.16.2.230/sendTextMessage.php"
+    let receivedBepid = "http://172.16.2.230/setReceivedMessage.php"
+    let seenBepid = "172.16.2.230/setSeenMessage.php"
+    let messagesBepid = "172.16.2.230/fetchUnreadMessages.php"
+    
     init()
     {
         
@@ -52,17 +58,33 @@ class DAOPostgres
     {
         let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
-        Alamofire.request(.POST, self.localUrl, parameters: parameters, encoding: .URL)
-            .responseString { response in
+        Alamofire.request(.POST, self.sendBepid, parameters: parameters, encoding: .URL)
+            .responseJSON { response in
                 print(response)
         }
-        
     }
     
     
-    class func setMessageRead(message: Message)
+    func setMessageReceived(message: Message)
     {
+        let parameters : [String:AnyObject]! = ["sender": message.sender, "target":DAOUser.sharedInstance.getUsername(), "sentDate": message.sentDate]
         
+        Alamofire.request(.POST, self.localUrl, parameters: parameters, encoding: .URL)
+            .responseJSON { response in
+                print(response)
+        }
     }
+    
+    func setMessageSent(message: Message, callback: (success: Bool) -> Void)
+    {
+        let parameters : [String:AnyObject]! = ["sender": message.sender, "target":DAOUser.sharedInstance.getUsername(), "sentDate": message.sentDate]
+        
+        Alamofire.request(.POST, self.localUrl, parameters: parameters, encoding: .URL)
+            .responseJSON { response in
+                print(response)
+        }
+    }
+    
+    
     
 }

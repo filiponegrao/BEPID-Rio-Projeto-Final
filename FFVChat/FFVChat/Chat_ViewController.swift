@@ -54,7 +54,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
         
-        self.tableViewScrollToBottom(false)
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -93,6 +92,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.layer.zPosition = 0
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        self.tableView.keyboardDismissMode = .Interactive
+
         self.containerView.addSubview(tableView)
         
         self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, messageViewHeigth))
@@ -130,6 +131,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidAppear(animated: Bool)
     {
         self.reloadTrustLevel()
+        self.tableViewScrollToBottom(false)
     }
     
     func reloadTrustLevel()
@@ -194,7 +196,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 let h = self.heightForView(mssg.text!, font: fontCell!, width: cellTextWidth)
                 if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
                 {
-                    self.tableView.contentOffset.y += (cellTextHeigth + margemVertical*4 + h)
+                    self.tableView.contentOffset.y += (margemVertical*4 + h)
                 }
             }
             else
@@ -206,6 +208,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
+    
+    
 
     override func didReceiveMemoryWarning()
     {
@@ -412,10 +416,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         print("clicando")
-        self.messageText.endEditing(true)
         let message = self.messages[indexPath.row]
-        if(message.image != nil)
+        if(message.image != nil && !self.messageText.isFirstResponder())
         {
+            self.messageText.endEditing(true)
             self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
             self.view.addSubview(self.imageZoom)
             
@@ -426,25 +430,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 message.status = "seen"
             }
         }
+        self.messageText.endEditing(true)
         
     }
     
-    func tableViewScrollToBottom(animated: Bool) {
-        
-        let delay = 0.0 * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        
-        dispatch_after(time, dispatch_get_main_queue(), {
-            
-            let numberOfSections = self.tableView.numberOfSections
-            let numberOfRows = self.tableView.numberOfRowsInSection(numberOfSections-1)
-            
-            if numberOfRows > 0 {
-                let indexPath = NSIndexPath(forRow: numberOfRows-1, inSection: (numberOfSections-1))
-                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: animated)
-            }
-            
-        })
+    func tableViewScrollToBottom(animated: Bool)
+    {
+        let numberOfRows = tableView.numberOfRowsInSection(0)
+        if numberOfRows > 0 {
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: numberOfRows-1, inSection: 0), atScrollPosition: .Bottom, animated: animated)
+        }
     }
     
     //****************************************************//
@@ -570,12 +565,37 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func takePhoto()
     {
+        // ******** PARA IMPLEMENTACAO DO GIF ************//
+        
+//        let actionsheet = UIAlertController(title: "Choose media", message: nil, preferredStyle: .ActionSheet)
+//        actionsheet.addAction(UIAlertAction(title: "From Camera", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//            
+//            self.imagePicker = UIImagePickerController()
+//            self.imagePicker.delegate = self
+//            self.imagePicker.sourceType = .Camera
+//            self.imagePicker.cameraDevice = .Front
+//            
+//            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+//            
+//        }))
+//        
+//        actionsheet.addAction(UIAlertAction(title: "Gif Gallery", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//            
+//        }))
+//        
+//        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+//            
+//        }))
+//        
+//        self.presentViewController(actionsheet, animated: true, completion: nil)
+        
         self.imagePicker = UIImagePickerController()
         self.imagePicker.delegate = self
         self.imagePicker.sourceType = .Camera
         self.imagePicker.cameraDevice = .Front
         
-        presentViewController(self.imagePicker, animated: true, completion: nil)
+        self.presentViewController(self.imagePicker, animated: true, completion: nil)
+
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)

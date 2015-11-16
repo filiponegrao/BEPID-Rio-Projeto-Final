@@ -89,7 +89,8 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        
+//        let sentmidia = SelectedMidia_ViewController(image: <#T##UIImage#>, contact: <#T##Contact#>)
+//        self.presen
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int

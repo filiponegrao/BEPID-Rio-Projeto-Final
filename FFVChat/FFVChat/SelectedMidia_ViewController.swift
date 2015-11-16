@@ -117,6 +117,16 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
                     
                 })
             }
+            else if controller!.isKindOfClass(SentMidiaGallery_ViewController)
+            {
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    
+                    let presenter = controller!.presentingViewController as! Chat_ViewController
+                    
+                    controller!.navigationController?.popViewControllerAnimated(true)
+                    presenter.sendImage(self.image, lifetime: time)
+                })
+            }
         }
         else
         {
