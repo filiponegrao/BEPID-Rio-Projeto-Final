@@ -14,7 +14,11 @@ private let data: DAOPostgres = DAOPostgres()
 
 class DAOPostgres
 {
-    let fetchUrl = "http://www.grad.inf.puc-rio.br/~1221846/fetchUnreadMessages.php"
+    let fetchUrl = "http://www.grad.inf.puc-rio.br/~c1221846/fetchUnreadMessages.php"
+    
+    let sendUrl = "http://www.grad.inf.puc-rio.br/~c1221846/sendTextMessage.php"
+    
+    let localUrl = "http://192.168.0.21/sendTextMessage.php"
     
     init()
     {
@@ -27,27 +31,33 @@ class DAOPostgres
     }
     
     
-//    class func getUnreadMessages(conversation: Contact) -> [Message]
+//    func getUnreadMessages(conversation: Contact) -> [Message]
 //    {
 //        
-//        Alamofire.request(.GET, fetchUrl)
+//        Alamofire.request(.GET, self.fetchUrl, parameters: nil)
 //            .responseJSON { response in
-//                debugPrint(response)
+//                print(response.request)  // original URL request
+//                print(response.response) // URL response
+//                print(response.data)     // server data
+//                print(response.result)   // result of response serialization
 //                
-//                var tempImages = [UIImage]()
-//                
-//                let results = response.result.value as! NSArray
-//                
-//                for image in results
-//                {
-//                    tempImages.append(UIImage(data: image as! NSData)!)
+//                if let JSON = response.result.value {
+//                    print("JSON: \(JSON)")
 //                }
-//                
-//                self.images = tempImages
-//                self.tableView.reloadData()
 //        }
-//
+//        
 //    }
+    
+    func sendTextMessage(username: String, lifeTime: Int, text: String)
+    {
+        let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
+        
+        Alamofire.request(.POST, self.localUrl, parameters: parameters, encoding: .URL)
+            .responseString { response in
+                print(response)
+        }
+        
+    }
     
     
     class func setMessageRead(message: Message)

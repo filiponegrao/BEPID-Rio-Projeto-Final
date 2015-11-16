@@ -1,5 +1,5 @@
 //
-//  Contact+CoreDataProperties.swift
+//  User+CoreDataProperties.swift
 //  FFVChat
 //
 //  Created by Filipo Negrao on 15/11/15.
@@ -12,13 +12,12 @@
 import Foundation
 import CoreData
 
-extension Contact {
+extension User {
 
-    @NSManaged var createdAt: NSDate?
-    @NSManaged var facebookId: String?
-    @NSManaged var profileImage: NSData!
-    @NSManaged var trustLevel: NSNumber!
     @NSManaged var username: String!
-    @NSManaged var isFavorit: NSNumber!
+    @NSManaged var trustLevel: NSNumber!
+    @NSManaged var profileImage: NSData?
+    @NSManaged var email: String!
+    @NSManaged var facebookID: String?
 
 }

@@ -2,7 +2,7 @@
 //  Contact.swift
 //  FFVChat
 //
-//  Created by Filipo Negrao on 31/10/15.
+//  Created by Filipo Negrao on 15/11/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
@@ -12,8 +12,6 @@ import CoreData
 
 class Contact: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-
     class func createInManagedObjectContext(moc: NSManagedObjectContext, username: String, facebookId: String?, createdAt: NSDate, trustLevel: Int, profileImage: NSData? ) -> Contact
     {
         let contact = NSEntityDescription.insertNewObjectForEntityForName("Contact", inManagedObjectContext: moc) as! Contact
@@ -22,6 +20,7 @@ class Contact: NSManagedObject {
         contact.createdAt = createdAt
         contact.trustLevel = trustLevel
         contact.profileImage = profileImage
+        contact.isFavorit = false
         
         return contact
     }

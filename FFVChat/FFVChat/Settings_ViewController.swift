@@ -171,7 +171,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         if(indexPath.row == 0 && indexPath.section == 0)
         {
             let image = DAOUser.sharedInstance.getProfileImage()  // imagem do usuário
-            let username = DAOUser.sharedInstance.getUserName()
+            let username = DAOUser.sharedInstance.getUsername()
             
             let usernameLabel : UILabel!
             let trustLabel : UILabel!
@@ -206,43 +206,35 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             trustLabel.textAlignment = .Center
             cell.addSubview(trustLabel)
             
-            DAOParse.getTrustLevel(username, callback: { (trustLevel) -> Void in
-                
-                if(trustLevel != nil)
-                {
-                    self.trustLevel = trustLevel
-                    trustLabel.text = "\(self.trustLevel)%"
-                    
-                    if(self.trustLevel == 100)
-                    {
-                        trustLabel.textColor = oficialGreen
-                        self.navBar.tittle.textColor = oficialGreen
-                    }
-                    else
-                    {
-                        trustLabel.textColor = oficialRed
-                        self.navBar.tittle.textColor = UIColor.whiteColor()
-                    }
-                    
-                    // Create a new CircleView
-                    let circleWidth = screenWidth/2.5 + 4
-                    let circleHeight = screenWidth/2.5
-                    
-                    let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
-                    
-                    circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y)
-                    
-                    circleView.setColor(self.trustLevel)
-                    
-                    cell.addSubview(circleView)
-                    cell.bringSubviewToFront(self.editPhotoButton)
-                    
-                    // Animate the drawing of the circle over the course of 1 second
-                    circleView.animateCircle(1.0, trustLevel: self.trustLevel)
-
-                }
-                
-            })
+            self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
+            trustLabel.text = "\(self.trustLevel)%"
+            
+            if(self.trustLevel == 100)
+            {
+                trustLabel.textColor = oficialGreen
+                self.navBar.tittle.textColor = oficialGreen
+            }
+            else
+            {
+                trustLabel.textColor = oficialRed
+                self.navBar.tittle.textColor = UIColor.whiteColor()
+            }
+            
+            // Create a new CircleView
+            let circleWidth = screenWidth/2.5 + 4
+            let circleHeight = screenWidth/2.5
+            
+            let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
+            
+            circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y)
+            
+            circleView.setColor(self.trustLevel)
+            
+            cell.addSubview(circleView)
+//            cell.bringSubviewToFront(self.editPhotoButton)
+            
+            // Animate the drawing of the circle over the course of 1 second
+            circleView.animateCircle(1.0, trustLevel: self.trustLevel)
 
  
             
@@ -490,24 +482,6 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-//    func addCircleView()
-//    {
-//        let circleWidth = screenWidth/2.3
-//        let circleHeight = screenWidth/2.3
-//        
-//        // Create a new CircleView
-//        let circleView = CircleView(frame: CGRectMake(0, 0, circleWidth, circleHeight))
-//        
-//        circleView.center = CGPointMake(self.profilePicView.center.x, self.profilePicView.center.y + 80)
-//        
-//        circleView.setColor(self.trustLevel)
-//        circleView.layer.zPosition = 0
-//        
-//        view.addSubview(circleView)
-//        
-//        // Animate the drawing of the circle over the course of 1 second
-//        circleView.animateCircle(1.0, trustLevel: self.trustLevel)
-//    }
     
 
 }

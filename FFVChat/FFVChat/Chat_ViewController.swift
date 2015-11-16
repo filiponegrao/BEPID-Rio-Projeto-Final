@@ -183,7 +183,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             print(mssg.status)
             print(mssg.lifeTime)
-            if(mssg.sender != DAOUser.sharedInstance.getUserName() && mssg.status == "unseen")
+            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status == "unseen")
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
                 mssg.status = "seen"
@@ -349,7 +349,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundLabel.layer.masksToBounds = false
             cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
-            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUserName())
+            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
                 cell.backgroundLabel.alpha = 0.2
             }
@@ -395,7 +395,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundLabel.layer.masksToBounds = false
             cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
-            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUserName())
+            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
                 cell.backgroundLabel.alpha = 0.3
             }
@@ -420,7 +420,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.view.addSubview(self.imageZoom)
             
             print(message.status)
-            if(message.sender != DAOUser.sharedInstance.getUserName() && message.status == "unseen")
+            if(message.sender != DAOUser.sharedInstance.getUsername() && message.status == "unseen")
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(message)
                 message.status = "seen"

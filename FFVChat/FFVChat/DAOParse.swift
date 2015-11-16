@@ -148,7 +148,7 @@ class DAOParse
                 for object in objects
                 {
                     let username = object.valueForKey("username") as! String
-                    if(!DAOContacts.sharedInstance.isContact(username) && username != DAOUser.sharedInstance.getUserName())
+                    if(!DAOContacts.sharedInstance.isContact(username) && username != DAOUser.sharedInstance.getUsername())
                     {
                         let id = object.valueForKey("objectId") as! String
                         
@@ -211,14 +211,14 @@ class DAOParse
     {
         var requests = [FriendRequest]()
         let query = PFQuery(className: "FriendRequest")
-        query.whereKey("target", equalTo: DAOUser.sharedInstance.getUserName())
+        query.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
         query.whereKey("status", equalTo: "Pendente")
         query.findObjectsInBackgroundWithBlock { ( objects:[AnyObject]?, error: NSError?) -> Void in
             if let objects = objects as? [PFObject]
             {
                 for object in objects
                 {
-                    requests.append(FriendRequest(sender: object.valueForKey("sender") as! String, target: DAOUser.sharedInstance.getUserName()))
+                    requests.append(FriendRequest(sender: object.valueForKey("sender") as! String, target: DAOUser.sharedInstance.getUsername()))
                     
                     if(object == objects.last)
                     {
@@ -236,7 +236,7 @@ class DAOParse
     {
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: request.sender)
-        query.whereKey("target", equalTo: DAOUser.sharedInstance.getUserName())
+        query.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
             print("Recebidos \(objects?.count) requests")
@@ -298,7 +298,7 @@ class DAOParse
     class func finalizeRequests()
     {
         let query = PFQuery(className: "FriendRequest")
-        query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
+        query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUsername())
         query.whereKey("status", equalTo: "Aceito")
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
@@ -339,7 +339,7 @@ class DAOParse
             if(object != nil)
             {
                 let request = PFObject(className: "FriendRequest")
-                request["sender"] = DAOUser.sharedInstance.getUserName()
+                request["sender"] = DAOUser.sharedInstance.getUsername()
                 request["target"] = username
                 request["status"] = "Pendente"
                 request.saveEventually({ (success : Bool, error: NSError?) -> Void in
@@ -358,7 +358,7 @@ class DAOParse
     
     class func sendPushRequestAccepted(username: String)
     {
-        let message = "\(DAOUser.sharedInstance.getUserName()) lhe aceitou como amigo(a)"
+        let message = "\(DAOUser.sharedInstance.getUsername()) lhe aceitou como amigo(a)"
         
         let data = [ "title": "Convite de amizade no FFVChat",
             "alert": message, "badge": 1, "do": appNotification.requestAccepted.rawValue, "content-avaliable" : 1]
@@ -382,7 +382,7 @@ class DAOParse
     
     class func sendPushFriendRequest(username: String)
     {
-        let message = "\(DAOUser.sharedInstance.getUserName()) quer lhe adicionar como um contato"
+        let message = "\(DAOUser.sharedInstance.getUsername()) quer lhe adicionar como um contato"
         
         let data = [ "title": "Convite de amizade no FFVChat",
             "alert": message, "badge": 1, "do": appNotification.friendRequest.rawValue, "content-avaliable" : 1]
@@ -406,7 +406,7 @@ class DAOParse
     class func checkUserAlreadyRequested(username: String, callback: (was: Bool) -> Void) -> Void
     {
         let query = PFQuery(className: "FriendRequest")
-        query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUserName())
+        query.whereKey("sender", equalTo: DAOUser.sharedInstance.getUsername())
         query.whereKey("target", equalTo: username)
         query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
             
@@ -549,8 +549,8 @@ class DAOParse
     
     class func pushMessageNotification(username: String, text: String)
     {
-        let data = [ "title": "Mensagem de \(DAOUser.sharedInstance.getUserName())",
-            "alert": "Mensagem de \(DAOUser.sharedInstance.getUserName())","badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUserName(), "content-avaliable" : 1]
+        let data = [ "title": "Mensagem de \(DAOUser.sharedInstance.getUsername())",
+            "alert": "Mensagem de \(DAOUser.sharedInstance.getUsername())","badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUsername(), "content-avaliable" : 1]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)
@@ -569,7 +569,7 @@ class DAOParse
     
     class func pushImageNotification(username: String)
     {
-        let data = [ "title": "\(DAOUser.sharedInstance.getUserName()) Enviou-lhe uma imagem",
+        let data = [ "title": "\(DAOUser.sharedInstance.getUsername()) Enviou-lhe uma imagem",
             "alert": "Imagem", "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1]
         
         let userQuery = PFUser.query()

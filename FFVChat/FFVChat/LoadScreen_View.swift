@@ -10,32 +10,26 @@ import UIKit
 
 class LoadScreen_View: UIView
 {
-
-    var activityIndicator : UIActivityIndicatorView!
-//    var boxView : UIView!
-
+    var blackScreen : UIView!
+    
+    var indicator : NVActivityIndicatorView!
     
     init()
     {
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
-        self.backgroundColor = UIColor.blackColor()
-        self.alpha = 0.8
+        self.backgroundColor = UIColor.clearColor()
         
-        self.activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
-        self.activityIndicator.frame = CGRectMake(0, 0, 40, 40)
-        self.activityIndicator.center = self.center
-        self.activityIndicator.tintColor = UIColor.brownColor()
-        self.activityIndicator.startAnimating()
-        self.addSubview(activityIndicator)
+        self.blackScreen = UIView(frame: CGRectMake(0,0,screenWidth,screenHeight))
+        self.blackScreen.backgroundColor = UIColor.blackColor()
+        self.blackScreen.alpha = 0.7
+        self.addSubview(self.blackScreen)
         
-//        self.boxView = UIView()
-//        self.boxView.frame = CGRect(x: self.frame.midX - 90, y: self.frame.midY - 25, width: 59, height: 50)
-//        self.boxView.backgroundColor = UIColor.blueColor()
-//        self.boxView.alpha = 0.6
-//        self.boxView.center = self.center
-//        self.boxView.layer.cornerRadius = 10
-//        self.addSubview(boxView)
+        self.indicator = NVActivityIndicatorView(frame: CGRectMake(0, 0, 60, 60), type: NVActivityIndicatorType.BallPulse, color: UIColor.whiteColor())
+        self.indicator.center = self.center
+        self.indicator.startAnimation()
+        self.addSubview(self.indicator)
+        
     }
 
     required init?(coder aDecoder: NSCoder) {

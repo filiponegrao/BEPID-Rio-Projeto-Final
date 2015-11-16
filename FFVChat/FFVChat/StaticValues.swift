@@ -24,9 +24,6 @@ let badTrust = UIColor(hex: 0x540305) //background chat negativo
 let badTrustNav = UIColor(hex: 0x470204) //nav chat negativo
 
 
-let mySelf = DAOUser.sharedInstance.getUserName()
-
-
 //*** CELL SIZES AND PROPERTIES ******///
 let cellWidth = screenWidth
 let cellHeightDefault : CGFloat = 40

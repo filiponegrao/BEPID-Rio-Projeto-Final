@@ -152,7 +152,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         if component == 0 {
             return String(minutes[row])
