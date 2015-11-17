@@ -74,7 +74,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         DAOFriendRequests.sharedInstance.friendsAccepted()
-        DAOMessages.sharedInstance.receiveMessagesFromContact()
+//        DAOMessages.sharedInstance.receiveMessagesFromContact()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -84,7 +84,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     func reloadAnimations()
     {
-        print("passa")
         for i in 0..<self.collectionView!.numberOfItemsInSection(0)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as! RandomWalk_CollectionViewCell
@@ -112,7 +111,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         
         let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
 
-        self.collectionView?.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+        self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
         
         let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadCollection", userInfo: nil, repeats: false)
     }

@@ -11,24 +11,22 @@ import Alamofire
 
 
 private let data: DAOPostgres = DAOPostgres()
+var baseUrl = "http://54.94.247.156"
 
-class DAOPostgres
+
+class DAOPostgres : NSObject
 {
-    let fetchUrl = "http://www.grad.inf.puc-rio.br/~c1221846/fetchUnreadMessages.php"
-    
-    let sendUrl = "http://www.grad.inf.puc-rio.br/~c1221846/sendTextMessage.php"
-    
-    let localUrl = "http://192.168.0.21/sendTextMessage.php"
+    var timer : NSTimer!
     
     //Bepid URLs
-    let sendBepid = "http://172.16.2.230/sendTextMessage.php"
-    let receivedBepid = "http://172.16.2.230/setReceivedMessage.php"
-    let seenBepid = "172.16.2.230/setSeenMessage.php"
-    let messagesBepid = "172.16.2.230/fetchUnreadMessages.php"
+    let sendURL = "\(baseUrl)/sendTextMessage.php"
+    let receivedURL = "\(baseUrl)/setReceivedMessage.php"
+    let seenURL = "\(baseUrl)/setSeenMessage.php"
+    let fetchURL = "\(baseUrl)/fetchUnreadMessages.php"
     
-    init()
+    override init()
     {
-        
+        super.init()
     }
     
     class var sharedInstance : DAOPostgres
@@ -37,28 +35,39 @@ class DAOPostgres
     }
     
     
-//    func getUnreadMessages(conversation: Contact) -> [Message]
-//    {
-//        
-//        Alamofire.request(.GET, self.fetchUrl, parameters: nil)
-//            .responseJSON { response in
-//                print(response.request)  // original URL request
-//                print(response.response) // URL response
-//                print(response.data)     // server data
-//                print(response.result)   // result of response serialization
-//                
-//                if let JSON = response.result.value {
-//                    print("JSON: \(JSON)")
-//                }
-//        }
-//        
-//    }
+    func getUnreadMessages()
+    {
+        let parameters : [String:AnyObject]!  = ["target":DAOUser.sharedInstance.getUsername()]
+        
+        Alamofire.request(.POST, self.fetchURL, parameters: parameters)
+            .responseJSON { response in
+//                debugPrint(response)
+
+                if let results = response.result.value {
+                    
+                    for result in results as! NSArray
+                    {
+                        let sender = result["sender"] as! String
+                        let text = result["text"] as! String
+                        let lifeTime = (result["lifetime"] as! NSString).integerValue
+                        let date = result["sentdate"] as! String
+                        
+                        let sentDate = self.string2nsdate(date)
+                        
+                        DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime)
+                        self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                    }
+                    
+                }
+        }
+        
+    }
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
     {
         let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
-        Alamofire.request(.POST, self.sendBepid, parameters: parameters, encoding: .URL)
+        Alamofire.request(.POST, self.sendURL, parameters: parameters)
             .responseJSON { response in
                 print(response)
         }
@@ -69,22 +78,40 @@ class DAOPostgres
     {
         let parameters : [String:AnyObject]! = ["sender": message.sender, "target":DAOUser.sharedInstance.getUsername(), "sentDate": message.sentDate]
         
-        Alamofire.request(.POST, self.localUrl, parameters: parameters, encoding: .URL)
+        Alamofire.request(.POST, self.receivedURL, parameters: parameters)
             .responseJSON { response in
                 print(response)
         }
     }
     
-    func setMessageSent(message: Message, callback: (success: Bool) -> Void)
+    func setMessageSeen(message: Message, callback: (success: Bool) -> Void)
     {
         let parameters : [String:AnyObject]! = ["sender": message.sender, "target":DAOUser.sharedInstance.getUsername(), "sentDate": message.sentDate]
         
-        Alamofire.request(.POST, self.localUrl, parameters: parameters, encoding: .URL)
+        Alamofire.request(.POST, self.seenURL, parameters: parameters)
             .responseJSON { response in
                 print(response)
         }
     }
     
     
+    func string2nsdate(str: String) -> NSDate{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+        return dateFormatter.dateFromString(str) as NSDate!
+    }
+    
+    func stopRefreshing()
+    {
+        self.timer.invalidate()
+    }
+    
+    func startRefreshing()
+    {
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
+    }
     
 }
+
+

@@ -33,15 +33,24 @@ class DAOMessages
         return data
     }
 
-
+    
+    func createMessage(sender: String, target: String, text: String?, image: NSData?, lifeTime: Int, sentDate:NSDate, status: String) -> Message
+    {
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: target, text: text, image: image, sentDate: sentDate, lifeTime: lifeTime, status: status)
+        self.save()
+        
+        return message
+    }
+    
+    
     func sendMessage(username: String, text: String) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 86400, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 14400, status: "sent")
         self.save()
         
         print("enviando")
-        DAOParse.sendMessage(username, text: text, lifeTime: 86400)
-//        DAOPostgres.sharedInstance.sendTextMessage(username, lifeTime: 34000, text: text)
+//        DAOParse.sendMessage(username, text: text, lifeTime: 86400)
+        DAOPostgres.sharedInstance.sendTextMessage(username, lifeTime: 34000, text: text)
         
         return message
     }
@@ -76,9 +85,10 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "unseen")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "receveid")
         
         self.lastMessage = message
+
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
         self.save()
@@ -100,7 +110,7 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime,status: "unseen")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime, status: "received")
         
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)

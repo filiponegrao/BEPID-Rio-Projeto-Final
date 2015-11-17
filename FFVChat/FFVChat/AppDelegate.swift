@@ -132,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func applicationDidBecomeActive(application: UIApplication)
     {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        DAOMessages.sharedInstance.receiveMessagesFromContact()
+//        DAOMessages.sharedInstance.receiveMessagesFromContact()
         FBSDKAppEvents.activateApp()
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
@@ -184,7 +184,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
         {
-            DAOMessages.sharedInstance.receiveMessagesFromContact()
+//            DAOMessages.sharedInstance.receiveMessagesFromContact()
         }
     }
     

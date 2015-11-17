@@ -46,11 +46,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: appNotification.messageReceived.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: NotificationController.center.messageReceived.name, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
 
         
-        DAOMessages.sharedInstance.receiveMessagesFromContact()
+//        DAOMessages.sharedInstance.receiveMessagesFromContact()
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
         
@@ -60,9 +60,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: appNotification.messageReceived.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
+        
+        DAOPostgres.sharedInstance.stopRefreshing()
 
     }
     
@@ -132,7 +134,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         self.reloadTrustLevel()
         self.tableViewScrollToBottom(false)
+        DAOPostgres.sharedInstance.startRefreshing()
     }
+
     
     func reloadTrustLevel()
     {
@@ -183,9 +187,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let index = self.messages.indexOf(mssg)!
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
             
-            print(mssg.status)
-            print(mssg.lifeTime)
-            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status == "unseen")
+            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen")
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
                 mssg.status = "seen"
@@ -196,7 +198,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 let h = self.heightForView(mssg.text!, font: fontCell!, width: cellTextWidth)
                 if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
                 {
-                    self.tableView.contentOffset.y += (margemVertical*4 + h)
+                    self.tableView.contentOffset.y -= (margemVertical*4 + h)
                 }
             }
             else
@@ -408,6 +410,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.backgroundLabel.alpha = 0.13
             }
             
+            DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
+            
             return cell
         }
         
@@ -424,7 +428,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.view.addSubview(self.imageZoom)
             
             print(message.status)
-            if(message.sender != DAOUser.sharedInstance.getUsername() && message.status == "unseen")
+            if(message.sender != DAOUser.sharedInstance.getUsername() && message.status == "received")
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(message)
                 message.status = "seen"
