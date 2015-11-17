@@ -241,7 +241,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             // botão ícone câmera por cima da foto de perfil
             self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , self.profilePicView.frame.size.width, self.profilePicView.frame.size.height))
             self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
-            self.editPhotoButton.alpha = 0.5
+            self.editPhotoButton.alpha = 1
             self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
             self.editPhotoButton.center = CGPointMake(self.profilePicView.center.x , self.profilePicView.center.y)
             cell.addSubview(self.editPhotoButton)
