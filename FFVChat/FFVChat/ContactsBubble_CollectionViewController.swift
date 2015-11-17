@@ -200,9 +200,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
             
 //            cell?.blur(blurRadius: 0)
             
-            print("ALGUMA COISA ANTES \(indexPath!.item)")
-            print(self.contacts.count)
-            print("INDEX DA CELL \(indexPath)")
+           
             self.contactManager = ContactManager_View(contact: self.contacts[indexPath!.item])
             
             

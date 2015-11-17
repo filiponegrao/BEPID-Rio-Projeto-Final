@@ -24,6 +24,10 @@ class ContactManager_View: UIView
     
     var trustLevel : Int!
     
+    var usernameLabel : UILabel!
+    
+    var trustLevelLabel : UILabel!
+
     var favouriteButton : UIButton!
     
     var deleteButton : UIButton!
@@ -45,7 +49,28 @@ class ContactManager_View: UIView
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview((self.backButton))
         
+        //VALOR DO TRUST LEVEL DO CONTATO
         self.trustLevel = Int(self.contact.trustLevel)
+        
+        //EXIBE TRUST LEVEL DO CONTATO
+        self.trustLevelLabel = UILabel(frame: CGRectMake(screenWidth/8, screenHeight/6 * 2.5 + 10, screenWidth/2, screenWidth/6))
+        self.trustLevelLabel.text = "\(self.trustLevel)%"
+        self.trustLevelLabel.textColor = UIColor.whiteColor()
+        self.trustLevelLabel.textAlignment = .Left
+        self.trustLevelLabel.font = UIFont(name: "Sukhumvit Set", size: 35)
+        self.trustLevelLabel.font.fontWithSize(35)
+        self.trustLevelLabel.setSizeFont(35)
+        self.addSubview(self.trustLevelLabel)
+        
+        //EXIBE USERNAME DO CONTATO
+        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/8, screenHeight/6 * 2.5 + 10 + self.trustLevelLabel.frame.size.height, screenWidth/2, screenWidth/6))
+        self.usernameLabel.text = self.contact.username
+        self.usernameLabel.textColor = UIColor.whiteColor()
+        self.usernameLabel.textAlignment = .Left
+        self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 20)
+        self.usernameLabel.font.fontWithSize(20)
+        self.usernameLabel.setSizeFont(20)
+        self.addSubview(self.usernameLabel)
         
         self.contactImage = UIImageView(frame: CGRectMake(screenWidth/5 * 2, screenHeight/5, screenWidth/2, screenWidth/2))
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.height/2
@@ -54,15 +79,18 @@ class ContactManager_View: UIView
         self.contactImage.image = UIImage(data: self.contact.profileImage)
         self.addSubview(self.contactImage)
         
+        //ADICIONA CIRCULO DE ACORDO COM TRUST LEVEL
         addCircleView()
         
-        self.favouriteButton = UIButton(frame: CGRectMake(screenWidth/8, screenHeight/7 * 3, screenWidth/5, screenWidth/5))
-        self.favouriteButton.backgroundColor = oficialLightGray
+        //BOTÃO PARA FAVORITAR/DESFAVORITAR CONTATO
+        self.favouriteButton = UIButton(frame: CGRectMake(screenWidth/2 - screenWidth/6 - 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
+        self.favouriteButton.backgroundColor = oficialGreen
         self.favouriteButton.layer.cornerRadius = self.favouriteButton.frame.size.height/2
         self.favouriteButton.clipsToBounds = true
         self.addSubview(self.favouriteButton)
         
-        self.deleteButton = UIButton(frame: CGRectMake(screenWidth/8 * 3, screenHeight/7 * 4 - 10, screenWidth/5, screenWidth/5))
+        //BOTÃO PARA DELETAR CONTATO
+        self.deleteButton = UIButton(frame: CGRectMake(screenWidth/2 + 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
         self.deleteButton.backgroundColor = oficialLightGray
         self.deleteButton.layer.cornerRadius = self.deleteButton.frame.size.height/2
         self.deleteButton.clipsToBounds = true
@@ -71,9 +99,11 @@ class ContactManager_View: UIView
 
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
+
     
     func back()
     {
@@ -96,4 +126,14 @@ class ContactManager_View: UIView
 
     }
     
+}
+
+//PARA AUMENTAR O TAMANHO DA FONTE
+extension UILabel
+{
+    func setSizeFont(sizeFont: CGFloat)
+    {
+        self.font = UIFont(name: self.font.fontName, size: sizeFont)!
+        self.sizeToFit()
+    }
 }

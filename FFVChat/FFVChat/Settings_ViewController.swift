@@ -201,7 +201,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             trustLabel.text = "100%"
             trustLabel.textColor = oficialLightGray
-            trustLabel.font = UIFont(name: "Helvetica", size: 25)
+            trustLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
             trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
             trustLabel.textAlignment = .Center
             cell.addSubview(trustLabel)
