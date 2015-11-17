@@ -181,7 +181,7 @@ class UsefulFunctions
             // gets a random number between 0 and stop
             arc4random_buf(&stop, sizeofValue(check))
             stop = stop%check
-            print(stop)
+//            print(stop)
             
             var vetAuxiliar:[Int] = vet
             

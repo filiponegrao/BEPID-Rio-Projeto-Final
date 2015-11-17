@@ -201,7 +201,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             trustLabel.text = "100%"
             trustLabel.textColor = oficialLightGray
-            trustLabel.font = UIFont(name: "Helvetica", size: 25)
+            trustLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
             trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
             trustLabel.textAlignment = .Center
             cell.addSubview(trustLabel)
@@ -235,13 +235,12 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             // Animate the drawing of the circle over the course of 1 second
             circleView.animateCircle(1.0, trustLevel: self.trustLevel)
-
  
             
             // botão ícone câmera por cima da foto de perfil
             self.editPhotoButton = UIButton(frame: CGRectMake(0, 0 , self.profilePicView.frame.size.width, self.profilePicView.frame.size.height))
             self.editPhotoButton.setImage(UIImage(named: "settingsCameraButton"), forState: .Normal)
-            self.editPhotoButton.alpha = 0.5
+            self.editPhotoButton.alpha = 1
             self.editPhotoButton.addTarget(self, action: "changeProfilePicture", forControlEvents: .TouchUpInside)
             self.editPhotoButton.center = CGPointMake(self.profilePicView.center.x , self.profilePicView.center.y)
             cell.addSubview(self.editPhotoButton)

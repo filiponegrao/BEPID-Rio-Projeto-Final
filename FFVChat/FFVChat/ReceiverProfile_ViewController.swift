@@ -65,7 +65,7 @@ class ReceiverProfile_ViewController: UIViewController
         //mostra o trust level do usuário
         self.trustLevelLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6, screenWidth/2, screenWidth/7))
         self.trustLevelLabel.text = "\(self.trustLevel)%"
-        self.trustLevelLabel.font = UIFont(name: "Helvetica", size: 40)
+        self.trustLevelLabel.font = UIFont(name: "Sukhumvit Set", size: 40)
         self.trustLevelLabel.textAlignment = .Left
         self.trustLevelLabel.textColor = UIColor.whiteColor()
         self.view.addSubview(self.trustLevelLabel)
@@ -73,7 +73,7 @@ class ReceiverProfile_ViewController: UIViewController
         //mostra o nome do usuário
         self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenWidth/3 * 2, self.trustLevelLabel.frame.size.height/2))
         self.usernameLabel.text = self.username
-        self.usernameLabel.font = UIFont(name: "Helvetica", size: 20)
+        self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 20)
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
         self.view.addSubview(self.usernameLabel)
@@ -82,7 +82,6 @@ class ReceiverProfile_ViewController: UIViewController
         self.contactImage = UIImageView(frame: CGRectMake(screenWidth/7 * 2 + 10, screenHeight/5, screenWidth/2, screenWidth/2))
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.height/2
         self.contactImage.clipsToBounds = true
-        self.contactImage.image = DAOUser.sharedInstance.getProfileImage()
         self.contactImage.image = UIImage(data: self.contact.profileImage!)
         self.view.addSubview(self.contactImage)
 

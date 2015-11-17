@@ -70,12 +70,10 @@ class CircleView: UIView
         if(trustLevel == 100)
         {
             circleLayer.strokeColor = oficialGreen.CGColor
-//            circleLayer.fillColor = oficialGreen.CGColor
         }
         else
         {
             circleLayer.strokeColor = oficialRed.CGColor
-//            circleLayer.fillColor = oficialRed.CGColor
         }
     }
 }

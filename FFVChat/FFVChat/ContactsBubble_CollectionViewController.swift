@@ -24,6 +24,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     var contactManager : ContactManager_View!
     
+    
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
         super.init(collectionViewLayout: layout)
@@ -168,7 +169,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        chat.contact = self.contacts[indexPath.row]
+        chat.contact = self.contacts[indexPath.item]
         chat.transitioningDelegate = (self.navigationController as! AppNavigationController)
         chat.modalPresentationStyle = .Custom
         
@@ -198,7 +199,11 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
             
 //            cell?.blur(blurRadius: 0)
             
-            self.contactManager = ContactManager_View()
+           
+            self.contactManager = ContactManager_View(contact: self.contacts[indexPath!.item])
+            
+            
+            
             self.view.addSubview(self.contactManager)
             //            print(indexPath!.row)
             
