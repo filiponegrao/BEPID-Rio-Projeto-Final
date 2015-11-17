@@ -235,7 +235,6 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             // Animate the drawing of the circle over the course of 1 second
             circleView.animateCircle(1.0, trustLevel: self.trustLevel)
-
  
             
             // botão ícone câmera por cima da foto de perfil
