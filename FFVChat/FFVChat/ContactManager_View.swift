@@ -53,7 +53,7 @@ class ContactManager_View: UIView
         self.trustLevel = Int(self.contact.trustLevel)
         
         //EXIBE TRUST LEVEL DO CONTATO
-        self.trustLevelLabel = UILabel(frame: CGRectMake(screenWidth/8, screenHeight/6 * 2.5 + 10, screenWidth/2, screenWidth/6))
+        self.trustLevelLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + 10, screenWidth/2, screenWidth/6))
         self.trustLevelLabel.text = "\(self.trustLevel)%"
         self.trustLevelLabel.textColor = UIColor.whiteColor()
         self.trustLevelLabel.textAlignment = .Left
@@ -63,7 +63,7 @@ class ContactManager_View: UIView
         self.addSubview(self.trustLevelLabel)
         
         //EXIBE USERNAME DO CONTATO
-        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/8, screenHeight/6 * 2.5 + 10 + self.trustLevelLabel.frame.size.height, screenWidth/2, screenWidth/6))
+        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + 10 + self.trustLevelLabel.frame.size.height, screenWidth/2, screenWidth/6))
         self.usernameLabel.text = self.contact.username
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
@@ -84,9 +84,17 @@ class ContactManager_View: UIView
         
         //BOTÃO PARA FAVORITAR/DESFAVORITAR CONTATO
         self.favouriteButton = UIButton(frame: CGRectMake(screenWidth/2 - screenWidth/6 - 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
-        self.favouriteButton.backgroundColor = oficialGreen
+        if(self.contact.isFavorit == true)
+        {
+            self.favouriteButton.backgroundColor = oficialGreen
+        }
+        else
+        {
+            self.favouriteButton.backgroundColor = oficialLightGray
+        }
         self.favouriteButton.layer.cornerRadius = self.favouriteButton.frame.size.height/2
         self.favouriteButton.clipsToBounds = true
+        self.favouriteButton.addTarget(self, action: "addOrRemoveFavourite", forControlEvents: .TouchUpInside)
         self.addSubview(self.favouriteButton)
         
         //BOTÃO PARA DELETAR CONTATO
@@ -94,9 +102,8 @@ class ContactManager_View: UIView
         self.deleteButton.backgroundColor = oficialLightGray
         self.deleteButton.layer.cornerRadius = self.deleteButton.frame.size.height/2
         self.deleteButton.clipsToBounds = true
+        self.deleteButton.addTarget(self, action: "deleteContact", forControlEvents: .TouchUpInside)
         self.addSubview(self.deleteButton)
-        
-
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -104,7 +111,6 @@ class ContactManager_View: UIView
         fatalError("init(coder:) has not been implemented")
     }
 
-    
     func back()
     {
         self.removeFromSuperview()
@@ -124,6 +130,31 @@ class ContactManager_View: UIView
         
         self.addSubview(self.circleView)
 
+    }
+    
+    //ADICIONA OU REMOVE UM CONTATO DA LISTA DE FAVORITOS
+    func addOrRemoveFavourite()
+    {
+        if(self.contact.isFavorit == true)
+        {
+            DAOContacts.sharedInstance.setNonFavorite(self.contact)
+            self.favouriteButton.backgroundColor = oficialLightGray
+        }
+        else
+        {
+            DAOContacts.sharedInstance.setFavorite(self.contact)
+            self.favouriteButton.backgroundColor = oficialGreen
+        }
+    }
+    
+    //DELETA UM CONTATO DA LISTA DE FAVORITOS
+    func deleteContact()
+    {
+        let alert = UIAlertView(title: "Wow", message: "Are you sure you want to remove this contact from your list? You cannot undo this action.", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
+        
+//        DAOContacts.sharedInstance.deleteContact(self.contact.username)
+ 
     }
     
 }

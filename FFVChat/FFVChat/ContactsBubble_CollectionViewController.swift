@@ -204,6 +204,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
             self.contactManager = ContactManager_View(contact: self.contacts[indexPath!.item])
             
             
+            
             self.view.addSubview(self.contactManager)
             //            print(indexPath!.row)
             
