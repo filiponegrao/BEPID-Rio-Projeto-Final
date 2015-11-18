@@ -200,7 +200,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
 //            cell?.blur(blurRadius: 0)
             
            
-            self.contactManager = ContactManager_View(contact: self.contacts[indexPath!.item])
+            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self)
             
             
             

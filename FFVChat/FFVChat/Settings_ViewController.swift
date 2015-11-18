@@ -199,9 +199,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             // label que mostra trust level do usuário
             trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
-            trustLabel.text = "100%"
             trustLabel.textColor = oficialLightGray
             trustLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
+            trustLabel.setSizeFont(25)
+            
             trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
             trustLabel.textAlignment = .Center
             cell.addSubview(trustLabel)
@@ -441,8 +442,8 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.image = image
         self.profilePicView.image = self.image
         self.profilePicView.contentMode = UIViewContentMode.ScaleAspectFill
-//        self.photoButton.setImage(self.profilePicView.image, forState: .Normal)
-//        self.tableView.reloadData()
+        self.tableView.reloadData()
+
         
     }
     

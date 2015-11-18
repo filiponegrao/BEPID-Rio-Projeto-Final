@@ -74,7 +74,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.view.addSubview(self.trustLevelLabel)
         
         //mostra o nome do usuário
-        self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenWidth/3 * 2, self.trustLevelLabel.frame.size.height/2))
+        self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenWidth/3 * 2, self.trustLevelLabel.frame.size.height/2 + 5))
         self.usernameLabel.text = self.username
         self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
         self.usernameLabel.setSizeFont(25)
@@ -100,7 +100,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.view.addSubview(self.userSinceLabel)
         
         //mostra quantos prints o usuário tirou
-        self.screenshotsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + 15, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
+        self.screenshotsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + 10, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
         self.screenshotsLabel.text = "Screenshots: "
         self.screenshotsLabel.textColor = UIColor.whiteColor()
         self.screenshotsLabel.textAlignment = .Left
@@ -109,7 +109,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.view.addSubview(self.screenshotsLabel)
         
         //mostra quantas denúncias o usuário tem
-        self.reportsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + self.screenshotsLabel.frame.size.height + 15, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
+        self.reportsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + self.screenshotsLabel.frame.size.height + 5, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
         self.reportsLabel.text = "Reports: "
         self.reportsLabel.textColor = UIColor.whiteColor()
         self.reportsLabel.textAlignment = .Left
