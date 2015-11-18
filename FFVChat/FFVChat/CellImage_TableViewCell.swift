@@ -48,8 +48,7 @@ class CellImage_TableViewCell: UITableViewCell
         self.sentDate.textAlignment = .Right
         self.sentDate.textColor = UIColor.whiteColor()
         self.cellView.addSubview(self.sentDate)
-
-       
+        
     }
     
     required init?(coder aDecoder: NSCoder)

@@ -104,7 +104,7 @@ class DAOMessages
         catch {}
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: nil, imageKey: imageKey ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
-        DAOParse.uploadImageForMessage(message)
+        DAOParse.sharedInstance.uploadImageForMessage(message)
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
@@ -251,6 +251,7 @@ class DAOMessages
     {
         message.image = image
         self.save()
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "imageLoaded", object: nil, userInfo: ["messageKey" : message.imageKey!]))
     }
     
     func save()

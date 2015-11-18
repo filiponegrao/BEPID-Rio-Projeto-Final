@@ -66,7 +66,6 @@ class DAOPostgres : NSObject
                         //Image
                         else
                         {
-                            print("key da mensagem recebida: \(imageKey)")
                             DAOMessages.sharedInstance.addReceivedMessage(sender, imageKey: imageKey!, sentDate: sentDate, lifeTime: lifeTime)
                             self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
                         }
@@ -81,6 +80,7 @@ class DAOPostgres : NSObject
     {
         let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
+        
         Alamofire.request(.POST, self.sendMessageURL, parameters: parameters)
             .responseJSON { response in
                 print(response)
@@ -89,6 +89,8 @@ class DAOPostgres : NSObject
     
     func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage)
     {
+        DAOParse.sendImageOnKey(imageKey, image: image)
+
         let me = DAOUser.sharedInstance.getUsername()
 
         let parameters : [String:AnyObject]!  = ["sender": me, "target": username, "sentDate": "\(NSDate())", "imagekey": imageKey, "lifeTime": lifeTime]
@@ -98,7 +100,6 @@ class DAOPostgres : NSObject
                 print(response)
         }
         
-        DAOParse.sendImageOnKey(imageKey, image: image)
     }
     
     
@@ -138,7 +139,7 @@ class DAOPostgres : NSObject
     
     func startRefreshing()
     {
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
     }
     
 }
