@@ -673,7 +673,10 @@ class DAOParse
     }
     
     
-   
+    class func getMyId() -> String
+    {
+        return PFUser.currentUser()!.objectId!
+    }
     
     
 }

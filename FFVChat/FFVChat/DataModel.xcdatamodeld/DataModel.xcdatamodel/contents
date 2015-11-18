@@ -8,6 +8,10 @@
         <attribute name="trustLevel" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Image" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="key" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Message" representedClassName=".Message" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="lifeTime" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -35,5 +39,6 @@
         <element name="Message" positionX="36" positionY="117" width="128" height="150"/>
         <element name="SentMidia" positionX="9" positionY="126" width="128" height="105"/>
         <element name="User" positionX="9" positionY="126" width="128" height="120"/>
+        <element name="Image" positionX="9" positionY="126" width="128" height="75"/>
     </elements>
 </model>

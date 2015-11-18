@@ -43,7 +43,9 @@ class DAOPostgres : NSObject
             .responseJSON { response in
 //                debugPrint(response)
 
+                print("refresh...")
                 if let results = response.result.value {
+                    
                     
                     for result in results as! NSArray
                     {
