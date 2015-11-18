@@ -10,13 +10,26 @@ import Foundation
 import Parse
 import UIKit
 
+private let data : DAOParse = DAOParse()
 
 class DAOParse
 {
-    
     //***************************
     //** Funcoes para contatos
     //***************************
+    
+    var tentativas = 0
+    
+    init()
+    {
+        
+    }
+    
+    
+    class var sharedInstance : DAOParse
+    {
+        return data
+    }
     
     class func getContactInfoFromParse(username: String, callback: (contactInfo: NSDictionary, error: NSError?) -> Void) -> Void
     {
@@ -692,24 +705,39 @@ class DAOParse
     }
     
     
-    class func uploadImageForMessage(message: Message)
+    func uploadImageForMessage(message: Message)
     {
-        print("key a procurar no parse: \(message.imageKey)")
-        let query = PFQuery(className: "Images")
-        query.whereKey("imageKey", equalTo: message.imageKey!)
-        query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
-            
-            print(error)
-            if(object != nil)
-            {
-                let file = object!["image"] as! PFFile
-                file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                    
-                    DAOMessages.sharedInstance.setImageForMessage(message, image: data!)
-                    
-                })
+        if(self.tentativas < 10)
+        {
+            let key = "\(message.imageKey!)"
+            let query = PFQuery(className: "Images")
+            query.whereKey("imageKey", equalTo: key)
+            query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
+                
+                print(error)
+                if(object != nil)
+                {
+                    let file = object!["image"] as! PFFile
+                    file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                        
+                        self.tentativas = 0
+                        print("passa aqui")
+                        DAOMessages.sharedInstance.setImageForMessage(message, image: data!)
+                        
+                    })
+                }
+                else
+                {
+                    self.tentativas++
+                    self.uploadImageForMessage(message)
+                }
+                
             }
-            
+
+        }
+        else
+        {
+            self.tentativas = 0
         }
     }
     

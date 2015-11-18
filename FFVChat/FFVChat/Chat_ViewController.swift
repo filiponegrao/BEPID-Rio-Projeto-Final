@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 let navigationBarHeigth : CGFloat = 80
 
@@ -40,6 +41,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var redScreen : UIView!
     
+    var messageSound: AVAudioPlayer!
+
+    
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
@@ -48,6 +52,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: NotificationController.center.messageReceived.name, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
 
         
 //        DAOMessages.sharedInstance.receiveMessagesFromContact()
@@ -63,6 +68,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "imageLoaded", object: nil)
         
         DAOPostgres.sharedInstance.stopRefreshing()
 
@@ -177,6 +183,24 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.imageZoom?.fadeOut()
     }
     
+    func reloadImageCell(notification: NSNotification)
+    {
+        print("loading image")
+        let info : [NSObject : AnyObject] = notification.userInfo!
+        let key = info["imageKey"] as! String
+        
+        for mssg in self.messages
+        {
+            if(mssg.imageKey! == key)
+            {
+                let index = self.messages.indexOf(mssg)!
+                print("Atualizando")
+                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! CellImage_TableViewCell
+                cell.imageCell.image = UIImage(data: mssg.image!)
+            }
+        }
+    }
+    
     
     func reloadMessages()
     {
@@ -187,7 +211,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let index = self.messages.indexOf(mssg)!
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
             
-            print("\(mssg.sender)\(mssg.target)\(mssg.imageKey)")
+            self.playSound()
             
             if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen" && mssg.imageKey == nil)
             {
@@ -357,13 +381,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             cell.sentDate.text = date
             
-            cell.backgroundLabel.layer.cornerRadius = 4
-            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
-            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
-            cell.backgroundLabel.layer.shadowRadius = 3
-            cell.backgroundLabel.layer.shadowOpacity = 1
-            cell.backgroundLabel.layer.masksToBounds = false
-            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
@@ -373,6 +390,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 cell.backgroundLabel.alpha = 0.1
             }
+            
+            cell.backgroundLabel.layer.cornerRadius = 4
+            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
+            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
+            cell.backgroundLabel.layer.shadowRadius = 3
+            cell.backgroundLabel.layer.shadowOpacity = 1
+            cell.backgroundLabel.layer.masksToBounds = false
+            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
             return cell
         }
@@ -682,6 +707,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
         }
     }
+    
+    
+    func playSound()
+    {
+        let path = NSBundle.mainBundle().pathForResource("messageup.mp3", ofType:nil)!
+        let url = NSURL(fileURLWithPath: path)
+        
+        do {
+            let sound = try AVAudioPlayer(contentsOfURL: url)
+            self.messageSound = sound
+            sound.play()
+        } catch {
+            // couldn't load file :(
+        }
+    }
+    
     
     
 }
