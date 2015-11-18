@@ -19,10 +19,12 @@ class DAOPostgres : NSObject
     var timer : NSTimer!
     
     //Bepid URLs
-    let sendURL = "\(baseUrl)/sendTextMessage.php"
+    let sendMessageURL = "\(baseUrl)/sendTextMessage.php"
+    let sendImageMessageURL = "\(baseUrl)/sendImageMessage.php"
     let receivedURL = "\(baseUrl)/setReceivedMessage.php"
     let seenURL = "\(baseUrl)/setSeenMessage.php"
     let fetchURL = "\(baseUrl)/fetchUnreadMessages.php"
+    let sendImageURL = "\(baseUrl)/insertImage.php"
     
     override init()
     {
@@ -49,31 +51,56 @@ class DAOPostgres : NSObject
                     
                     for result in results as! NSArray
                     {
+                        let imageKey = result["imageKey"] as? String
                         let sender = result["sender"] as! String
-                        let text = result["text"] as! String
                         let lifeTime = (result["lifetime"] as! NSString).integerValue
                         let date = result["sentdate"] as! String
-                        
                         let sentDate = self.string2nsdate(date)
-                        
-                        DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime)
-                        self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                        //Texto
+                        if(imageKey == nil)
+                        {
+                            let text = result["text"] as! String
+                            DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime)
+                            self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                        }
+                        //Image
+                        else
+                        {
+                            print("key da mensagem recebida: \(imageKey)")
+                            DAOMessages.sharedInstance.addReceivedMessage(sender, imageKey: imageKey!, sentDate: sentDate, lifeTime: lifeTime)
+                            self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                        }
                     }
                     
                 }
         }
-        
+
     }
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
     {
         let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
-        Alamofire.request(.POST, self.sendURL, parameters: parameters)
+        Alamofire.request(.POST, self.sendMessageURL, parameters: parameters)
             .responseJSON { response in
                 print(response)
         }
     }
+    
+    func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage)
+    {
+        let me = DAOUser.sharedInstance.getUsername()
+
+        let parameters : [String:AnyObject]!  = ["sender": me, "target": username, "sentDate": "\(NSDate())", "imagekey": imageKey, "lifeTime": lifeTime]
+        
+        Alamofire.request(.POST, self.sendImageMessageURL, parameters: parameters)
+            .responseJSON { response in
+                print(response)
+        }
+        
+        DAOParse.sendImageOnKey(imageKey, image: image)
+    }
+    
     
     
     func setMessageReceived(message: Message)

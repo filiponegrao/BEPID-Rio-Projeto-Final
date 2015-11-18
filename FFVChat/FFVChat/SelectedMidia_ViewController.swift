@@ -124,7 +124,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
                     let presenter = controller!.presentingViewController as! Chat_ViewController
                     
                     controller!.navigationController?.popViewControllerAnimated(true)
-                    presenter.sendImage(self.image, lifetime: time)
+//                    presenter.sendImage(self.image, lifetime: time)
                 })
             }
         }

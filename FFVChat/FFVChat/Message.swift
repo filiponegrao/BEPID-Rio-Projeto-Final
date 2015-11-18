@@ -2,7 +2,7 @@
 //  Message.swift
 //  FFVChat
 //
-//  Created by Filipo Negrao on 31/10/15.
+//  Created by Filipo Negrao on 18/11/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
@@ -12,14 +12,13 @@ import CoreData
 
 class Message: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-    
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, sender: String, target: String, text: String?, image: NSData?, sentDate: NSDate, lifeTime: Int, status: String) -> Message
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, sender: String, target: String, text: String?, imageKey: String?, image: NSData?, sentDate: NSDate, lifeTime: Int, status: String) -> Message
     {
         let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as! Message
         message.sender = sender
         message.target = target
         message.text = text
+        message.imageKey = imageKey
         message.image = image
         message.sentDate = sentDate
         message.lifeTime = lifeTime
@@ -27,5 +26,4 @@ class Message: NSManagedObject {
         
         return message
     }
-
 }

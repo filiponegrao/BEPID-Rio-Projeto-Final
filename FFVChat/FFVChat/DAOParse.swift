@@ -599,78 +599,78 @@ class DAOParse
     
     //BIG FECTH FUNCTION HOLY SHIT THIS IS SO MUTCH BIG MODA FOCKR!
     
-    class func checkForContactsMessage()
-    {
-        if(PFUser.currentUser() == nil)
-        {
-            print("Usuario nao logado")
-            return
-        }
-        
-        let contacts = DAOContacts.sharedInstance.getAllContacts()
-        
-        for contact in contacts
-        {
-            let userQuery = PFUser.query()
-            userQuery?.whereKey("username", equalTo: contact.username)
-            userQuery?.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error1: NSError?) -> Void in
-                
-                if(user != nil)
-                {
-                    let query = PFQuery(className: "Message")
-                    query.whereKey("sender", equalTo: user!)
-                    query.whereKey("target", equalTo: PFUser.currentUser()!)
-                    query.whereKey("received", equalTo: false)
-                    
-                    query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-                        
-//                        print("Achou \(objects?.count) mensagens de \(user?.valueForKey("username"))")
-                        
-                        if(objects != nil)
-                        {
-                            for object in objects!
-                            {
-                                let sentDate = object.valueForKey("createdAt") as! NSDate
-                                let lifeTime = object.valueForKey("lifeTime") as! Int
-                                let text = object.valueForKey("text") as? String
-                                
-                                //Texto
-                                if(text != nil)
-                                {
-                                    object.setValue(true, forKey: "received")
-                                    object.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
-                                        
-                                        DAOMessages.sharedInstance.addReceivedMessage(contact.username, text: text!, sentDate: sentDate, lifeTime: lifeTime)
-                                    })
-                                }
-                                    //Image
-                                else
-                                {
-                                    let photo = object.objectForKey("image") as! PFFile
-                                    photo.getDataInBackgroundWithBlock({ (data: NSData?, error2: NSError?) -> Void in
-                                        
-                                        if(data != nil)
-                                        {
-                                            object.setValue(true, forKey: "received")
-                                            object.saveInBackgroundWithBlock({ (success: Bool, error3: NSError?) -> Void in
-                                                
-                                                if(success)
-                                                {
-                                                    DAOMessages.sharedInstance.addReceivedMessage(contact.username, image: data!, sentDate: sentDate, lifeTime: lifeTime)
-                                                }
-                                                
-                                            })
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                    }
-                }
-                
-            })
-        }
-    }
+//    class func checkForContactsMessage()
+//    {
+//        if(PFUser.currentUser() == nil)
+//        {
+//            print("Usuario nao logado")
+//            return
+//        }
+//        
+//        let contacts = DAOContacts.sharedInstance.getAllContacts()
+//        
+//        for contact in contacts
+//        {
+//            let userQuery = PFUser.query()
+//            userQuery?.whereKey("username", equalTo: contact.username)
+//            userQuery?.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error1: NSError?) -> Void in
+//                
+//                if(user != nil)
+//                {
+//                    let query = PFQuery(className: "Message")
+//                    query.whereKey("sender", equalTo: user!)
+//                    query.whereKey("target", equalTo: PFUser.currentUser()!)
+//                    query.whereKey("received", equalTo: false)
+//                    
+//                    query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
+//                        
+////                        print("Achou \(objects?.count) mensagens de \(user?.valueForKey("username"))")
+//                        
+//                        if(objects != nil)
+//                        {
+//                            for object in objects!
+//                            {
+//                                let sentDate = object.valueForKey("createdAt") as! NSDate
+//                                let lifeTime = object.valueForKey("lifeTime") as! Int
+//                                let text = object.valueForKey("text") as? String
+//                                
+//                                //Texto
+//                                if(text != nil)
+//                                {
+//                                    object.setValue(true, forKey: "received")
+//                                    object.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
+//                                        
+//                                        DAOMessages.sharedInstance.addReceivedMessage(contact.username, text: text!, sentDate: sentDate, lifeTime: lifeTime)
+//                                    })
+//                                }
+//                                    //Image
+//                                else
+//                                {
+//                                    let photo = object.objectForKey("image") as! PFFile
+//                                    photo.getDataInBackgroundWithBlock({ (data: NSData?, error2: NSError?) -> Void in
+//                                        
+//                                        if(data != nil)
+//                                        {
+//                                            object.setValue(true, forKey: "received")
+//                                            object.saveInBackgroundWithBlock({ (success: Bool, error3: NSError?) -> Void in
+//                                                
+//                                                if(success)
+//                                                {
+//                                                    DAOMessages.sharedInstance.addReceivedMessage(contact.username, image: data!, sentDate: sentDate, lifeTime: lifeTime)
+//                                                }
+//                                                
+//                                            })
+//                                        }
+//                                    })
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//            })
+//        }
+//    }
     
     
     class func getMyId() -> String
@@ -678,6 +678,40 @@ class DAOParse
         return PFUser.currentUser()!.objectId!
     }
     
+    
+    class func sendImageOnKey(key: String, image: UIImage)
+    {
+        let file = PFFile(data: image.mediumQualityJPEGNSData)
+        
+        let object = PFObject(className: "Images")
+        object["imageKey"] = key
+        object["image"] = file
+        object.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            print(error)
+        }
+    }
+    
+    
+    class func uploadImageForMessage(message: Message)
+    {
+        print("key a procurar no parse: \(message.imageKey)")
+        let query = PFQuery(className: "Images")
+        query.whereKey("imageKey", equalTo: message.imageKey!)
+        query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
+            
+            print(error)
+            if(object != nil)
+            {
+                let file = object!["image"] as! PFFile
+                file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                    
+                    DAOMessages.sharedInstance.setImageForMessage(message, image: data!)
+                    
+                })
+            }
+            
+        }
+    }
     
 }
 

@@ -187,7 +187,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let index = self.messages.indexOf(mssg)!
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
             
-            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen")
+            print("\(mssg.sender)\(mssg.target)\(mssg.imageKey)")
+            
+            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen" && mssg.imageKey == nil)
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
                 mssg.status = "seen"
@@ -289,7 +291,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         //IMAGE
-        if(self.messages[indexPath.row].text == nil && self.messages[indexPath.row].image != nil)
+        if(self.messages[indexPath.row].text == nil && self.messages[indexPath.row].imageKey != nil)
         {
             return cellBackgroundWidth + 10
         }
@@ -325,12 +327,20 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         //IMAGE
-        if(self.messages[indexPath.row].text == nil  && self.messages[indexPath.row].image != nil)
+        if(self.messages[indexPath.row].text == nil  && self.messages[indexPath.row].imageKey != nil)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
+            
+            if(self.messages[indexPath.row].image != nil)
+            {
+                cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
+            }
+            else
+            {
+                cell.imageCell.image = UIImage()
+            }
             
             //blur
             let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
@@ -616,7 +626,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func sendImage(image: UIImage, lifetime: Int)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime)
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username,image: image, lifeTime: lifetime)
+        
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
         

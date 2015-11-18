@@ -32,24 +32,14 @@ class DAOMessages
     {
         return data
     }
-
-    
-    func createMessage(sender: String, target: String, text: String?, image: NSData?, lifeTime: Int, sentDate:NSDate, status: String) -> Message
-    {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: target, text: text, image: image, sentDate: sentDate, lifeTime: lifeTime, status: status)
-        self.save()
-        
-        return message
-    }
     
     
     func sendMessage(username: String, text: String) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, image: nil, sentDate: NSDate(), lifeTime: 14400, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, imageKey: nil, image: nil, sentDate: NSDate(), lifeTime: 14400, status: "sent")
         self.save()
         
         print("enviando")
-//        DAOParse.sendMessage(username, text: text, lifeTime: 86400)
         DAOPostgres.sharedInstance.sendTextMessage(username, lifeTime: 34000, text: text)
         
         return message
@@ -57,12 +47,15 @@ class DAOMessages
     
     func sendMessage(username: String, image: UIImage, lifeTime: Int) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: nil, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
+        let data = NSString(string: "\(NSDate())").substringWithRange(NSMakeRange(0, 19))
+        let key = "\(DAOUser.sharedInstance.getUsername())\(username)\(data)"
+        
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: nil, imageKey: key, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
         self.save()
         
-        DAOParse.sendMessage(username, image: image, lifeTime: lifeTime)
-        //Notificacao so deve chegar quando a imagem for salva no banco
-        //DAOParse.pushImageNotification(username)
+//        DAOParse.sendMessage(username, image: image, lifeTime: lifeTime)
+
+        DAOPostgres.sharedInstance.sendImageMessage(username, lifeTime: lifeTime, imageKey: key, image: image)
         DAOSentMidia.sharedInstance.addSentMidia(message)
         
         return message
@@ -85,7 +78,7 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "receveid")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, imageKey: nil ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "receveid")
         
         self.lastMessage = message
 
@@ -94,7 +87,7 @@ class DAOMessages
         self.save()
     }
     
-    func addReceivedMessage(sender: String, image: NSData, sentDate: NSDate, lifeTime: Int)
+    func addReceivedMessage(sender: String, imageKey: String, sentDate: NSDate, lifeTime: Int)
     {
         //Tratamento de excessao
         let query = NSFetchRequest(entityName: "Message")
@@ -110,8 +103,8 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: nil, image: image, sentDate: sentDate, lifeTime: lifeTime, status: "received")
-        
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: nil, imageKey: imageKey ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
+        DAOParse.uploadImageForMessage(message)
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
@@ -248,9 +241,16 @@ class DAOMessages
         }
     }
     
-    func receiveMessagesFromContact()
+//    func receiveMessagesFromContact()
+//    {
+//        DAOParse.checkForContactsMessage()
+//    }
+    
+    
+    func setImageForMessage(message: Message, image: NSData)
     {
-        DAOParse.checkForContactsMessage()
+        message.image = image
+        self.save()
     }
     
     func save()

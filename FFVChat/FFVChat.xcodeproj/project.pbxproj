@@ -96,6 +96,8 @@
 		804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAC1BE7296A0021DF4E /* SentMidia.swift */; };
 		804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */; };
 		804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */; };
+		809B558B1BFC1885006CD894 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809B55891BFC1885006CD894 /* Message+CoreDataProperties.swift */; };
+		809B558C1BFC1885006CD894 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809B558A1BFC1885006CD894 /* Message.swift */; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; };
 		809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A01BB4A99600CEC425 /* ImageEdition.swift */; };
 		80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135B1BC3038C0035E8B2 /* MKButton.swift */; };
@@ -116,8 +118,6 @@
 		80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A11BE51D7E00C5F35E /* NotificationController.swift */; };
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
 		80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A51BE59BEA00C5F35E /* DataModel.xcdatamodeld */; };
-		80FF18AE1BE5A53400C5F35E /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18AA1BE5A53400C5F35E /* Message+CoreDataProperties.swift */; };
-		80FF18AF1BE5A53400C5F35E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18AB1BE5A53400C5F35E /* Message.swift */; };
 		8E1A009BFAC1DA509C471F38 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E573196666F24453C1804730 /* Pods.framework */; };
 		F6178A581BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */; };
 		F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */; };
@@ -267,6 +267,8 @@
 		804B3DAC1BE7296A0021DF4E /* SentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMidia.swift; sourceTree = "<group>"; };
 		804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOSentMidia.swift; sourceTree = "<group>"; };
 		804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSentMidia_CollectionViewCell.swift; sourceTree = "<group>"; };
+		809B55891BFC1885006CD894 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		809B558A1BFC1885006CD894 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
 		809E75A01BB4A99600CEC425 /* ImageEdition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdition.swift; sourceTree = "<group>"; };
 		80AA135B1BC3038C0035E8B2 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
@@ -287,8 +289,6 @@
 		80FF18A11BE51D7E00C5F35E /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		80FF18A31BE51EA800C5F35E /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		80FF18A61BE59BEA00C5F35E /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		80FF18AA1BE5A53400C5F35E /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		80FF18AB1BE5A53400C5F35E /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		D57DDDFFAC5708EC21EE1901 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E573196666F24453C1804730 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsBubble_CollectionViewController.swift; sourceTree = "<group>"; };
@@ -508,10 +508,10 @@
 			children = (
 				80FF185A1BE3B15200C5F35E /* metaContact.swift */,
 				80FF18A51BE59BEA00C5F35E /* DataModel.xcdatamodeld */,
-				80FF18AA1BE5A53400C5F35E /* Message+CoreDataProperties.swift */,
+				809B55891BFC1885006CD894 /* Message+CoreDataProperties.swift */,
+				809B558A1BFC1885006CD894 /* Message.swift */,
 				803657A11BF9522D000907BD /* Contact+CoreDataProperties.swift */,
 				803657A21BF9522D000907BD /* Contact.swift */,
-				80FF18AB1BE5A53400C5F35E /* Message.swift */,
 				804B3DAB1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift */,
 				804B3DAC1BE7296A0021DF4E /* SentMidia.swift */,
 				803D61081BF925AD004EF38F /* User+CoreDataProperties.swift */,
@@ -877,7 +877,6 @@
 				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
 				8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
-				80FF18AE1BE5A53400C5F35E /* Message+CoreDataProperties.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
 				80F6BB241BF6C2A2003DE8AE /* DAOPostgres.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
@@ -887,6 +886,7 @@
 				803D610A1BF925AD004EF38F /* User+CoreDataProperties.swift in Sources */,
 				800597521BC1E79400327A3D /* CellAdd_TableViewCell.swift in Sources */,
 				F6BD6C201BD2F7A000069570 /* CellImage_TableViewCell.swift in Sources */,
+				809B558C1BFC1885006CD894 /* Message.swift in Sources */,
 				803657961BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
 				8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */,
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
@@ -926,6 +926,7 @@
 				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
 				8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */,
+				809B558B1BFC1885006CD894 /* Message+CoreDataProperties.swift in Sources */,
 				803657851BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
 				F6178A5C1BF6753C0044FBA9 /* UsefulFunctions.swift in Sources */,
 				80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */,
@@ -963,7 +964,6 @@
 				803657A31BF9522D000907BD /* Contact+CoreDataProperties.swift in Sources */,
 				8017D37B1BD40394000CB8F0 /* StaticValues.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
-				80FF18AF1BE5A53400C5F35E /* Message.swift in Sources */,
 				80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
