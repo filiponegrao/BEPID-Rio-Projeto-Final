@@ -116,11 +116,21 @@ extension String {
     }
 }
 
-extension Int{
+extension Int
+{
     
     func mod(mod : Int) -> Int{
         let n = self/mod;
         return self - n*mod;
     }
     
+}
+
+//PARA AUMENTAR O TAMANHO DA FONTE
+extension UILabel
+{
+    func setSizeFont(sizeFont: CGFloat)
+    {
+        self.font = UIFont(name: self.font.fontName, size: sizeFont)!
+    }
 }

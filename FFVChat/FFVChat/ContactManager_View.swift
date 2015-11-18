@@ -32,6 +32,8 @@ class ContactManager_View: UIView
     
     var deleteButton : UIButton!
     
+    var clearChat : UIButton!
+    
     init(contact: Contact)
     {
         self.contact = contact
@@ -57,13 +59,13 @@ class ContactManager_View: UIView
         self.trustLevelLabel.text = "\(self.trustLevel)%"
         self.trustLevelLabel.textColor = UIColor.whiteColor()
         self.trustLevelLabel.textAlignment = .Left
-        self.trustLevelLabel.font = UIFont(name: "Sukhumvit Set", size: 35)
-        self.trustLevelLabel.font.fontWithSize(35)
-        self.trustLevelLabel.setSizeFont(35)
+        self.trustLevelLabel.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.trustLevelLabel.font.fontWithSize(40)
+        self.trustLevelLabel.setSizeFont(40)
         self.addSubview(self.trustLevelLabel)
         
         //EXIBE USERNAME DO CONTATO
-        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + 10 + self.trustLevelLabel.frame.size.height, screenWidth/2, screenWidth/6))
+        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height, screenWidth/2, screenWidth/6))
         self.usernameLabel.text = self.contact.username
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
@@ -95,6 +97,7 @@ class ContactManager_View: UIView
         self.favouriteButton.layer.cornerRadius = self.favouriteButton.frame.size.height/2
         self.favouriteButton.clipsToBounds = true
         self.favouriteButton.addTarget(self, action: "addOrRemoveFavourite", forControlEvents: .TouchUpInside)
+        self.favouriteButton.setImage(UIImage(named: "favouriteButton"), forState: .Normal)
         self.addSubview(self.favouriteButton)
         
         //BOTÃO PARA DELETAR CONTATO
@@ -103,7 +106,16 @@ class ContactManager_View: UIView
         self.deleteButton.layer.cornerRadius = self.deleteButton.frame.size.height/2
         self.deleteButton.clipsToBounds = true
         self.deleteButton.addTarget(self, action: "deleteContact", forControlEvents: .TouchUpInside)
+        self.deleteButton.setImage(UIImage(named: "deleteButton"), forState: .Normal)
         self.addSubview(self.deleteButton)
+        
+        self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height, screenWidth/2, screenWidth/8))
+        self.clearChat.setTitle("Clear chat", forState: .Normal)
+        self.clearChat.setTitleColor(oficialGreen, forState: .Normal)
+        self.clearChat.titleLabel?.textAlignment = NSTextAlignment.Left
+        self.clearChat.backgroundColor = oficialRed
+        self.clearChat.addTarget(self, action: "clearConversation", forControlEvents: .TouchUpInside)
+        self.addSubview(self.clearChat)
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -157,14 +169,11 @@ class ContactManager_View: UIView
  
     }
     
-}
-
-//PARA AUMENTAR O TAMANHO DA FONTE
-extension UILabel
-{
-    func setSizeFont(sizeFont: CGFloat)
+    //LIMPA UMA CONVERSA
+    func clearConversation()
     {
-        self.font = UIFont(name: self.font.fontName, size: sizeFont)!
-        self.sizeToFit()
+        DAOMessages.sharedInstance.clearConversation(self.contact.username)
     }
 }
+
+

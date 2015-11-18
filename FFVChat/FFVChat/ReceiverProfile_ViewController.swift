@@ -63,9 +63,10 @@ class ReceiverProfile_ViewController: UIViewController
         self.trustLevel = 0 // PEGAR DAO PARSE
         
         //mostra o trust level do usuário
-        self.trustLevelLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6, screenWidth/2, screenWidth/7))
+        self.trustLevelLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6, screenWidth/2, screenWidth/6))
         self.trustLevelLabel.text = "\(self.trustLevel)%"
         self.trustLevelLabel.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.trustLevelLabel.setSizeFont(40)
         self.trustLevelLabel.textAlignment = .Left
         self.trustLevelLabel.textColor = UIColor.whiteColor()
         self.view.addSubview(self.trustLevelLabel)
@@ -74,6 +75,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenWidth/3 * 2, self.trustLevelLabel.frame.size.height/2))
         self.usernameLabel.text = self.username
         self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 20)
+        self.usernameLabel.setSizeFont(20)
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
         self.view.addSubview(self.usernameLabel)
@@ -94,6 +96,7 @@ class ReceiverProfile_ViewController: UIViewController
     {
         addCircleView()
     }
+    
 
     override func didReceiveMemoryWarning()
     {
@@ -105,6 +108,7 @@ class ReceiverProfile_ViewController: UIViewController
     {
         self.navigationController?.popViewControllerAnimated(true)
     }
+  
     
     func addCircleView()
     {
