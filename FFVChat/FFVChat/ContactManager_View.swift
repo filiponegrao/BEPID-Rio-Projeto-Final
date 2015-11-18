@@ -34,8 +34,9 @@ class ContactManager_View: UIView
     
     var clearChat : UIButton!
     
-    init(contact: Contact)
+    init(contact: Contact, requester: ContactsBubble_CollectionViewController)
     {
+        self.viewController = requester
         self.contact = contact
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
@@ -111,7 +112,7 @@ class ContactManager_View: UIView
         
         self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height, screenWidth/3, screenWidth/9.5))
         self.clearChat.setTitle("Clear chat", forState: .Normal)
-        self.clearChat.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
+        self.clearChat.setTitleColor(UIColor.blackColor(), forState: .Highlighted)
         self.clearChat.titleLabel?.textAlignment = NSTextAlignment.Left
         self.clearChat.backgroundColor = oficialLightGray
         self.clearChat.layer.cornerRadius = 15
@@ -163,10 +164,23 @@ class ContactManager_View: UIView
     //DELETA UM CONTATO DA LISTA DE FAVORITOS
     func deleteContact()
     {
-        let alert = UIAlertView(title: "Wow", message: "Are you sure you want to remove this contact from your list? You cannot undo this action.", delegate: nil, cancelButtonTitle: "Ok")
-        alert.show()
+        let alert = UIAlertController(title: "Wow", message: "Are you sure you want to remove this contact from your list? You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
         
-//        DAOContacts.sharedInstance.deleteContact(self.contact.username)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
+            
+//            DAOContacts.sharedInstance.deleteContact(self.contact.username)
+  
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+        
+            
+      }))
+        
+        self.viewController.presentViewController(alert, animated: true) { () -> Void in
+            
+        }
  
     }
     
@@ -174,13 +188,7 @@ class ContactManager_View: UIView
     func clearConversation()
     {
         DAOMessages.sharedInstance.clearConversation(self.contact.username)
-        UIView.animateWithDuration(0.3, delay: 0.2, options: UIViewAnimationOptions.ShowHideTransitionViews, animations: { () -> Void in
-            
-            self.clearChat.backgroundColor = oficialGreen
-            
-            }, completion: nil)
         
-        self.clearChat.backgroundColor = oficialLightGray
     }
 }
 

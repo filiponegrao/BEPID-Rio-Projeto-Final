@@ -35,7 +35,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
         self.view.addSubview(self.navBar)
         
-        self.tableView = UITableView(frame: CGRectMake(0,60, screenWidth, screenHeight - 80))
+        self.tableView = UITableView(frame: CGRectMake(0,60, screenWidth, screenHeight/2 - 80))
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.layer.zPosition = 0
         self.tableView.delegate = self
@@ -68,7 +68,6 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.view.endEditing(true)
-        resignFirstResponder()
         
     }
     
@@ -127,12 +126,8 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             self.currentPassword.secureTextEntry = true
             self.currentPassword.tintColor = oficialGreen
             self.currentPassword.textColor = oficialLightGray
-            
-            if (self.currentPassword.text?.characters.count > 6)
-            {
-                self.currentPassword.resignFirstResponder()
-            }
-            
+            self.currentPassword.delegate = self
+       
             cell.addSubview(self.currentPassword)
         }
         else if(indexPath.row == 1)
@@ -145,6 +140,8 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             self.newPassword.secureTextEntry = true
             self.newPassword.tintColor = oficialGreen
             self.newPassword.textColor = oficialLightGray
+            self.newPassword.delegate = self
+            
             cell.addSubview(self.newPassword)
         }
         else if(indexPath.row == 2)
@@ -157,6 +154,8 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             self.newPasswordAgain.secureTextEntry = true
             self.newPasswordAgain.tintColor = oficialGreen
             self.newPasswordAgain.textColor = oficialLightGray
+            self.newPasswordAgain.delegate = self
+            
             cell.addSubview(self.newPasswordAgain)
         }
         
