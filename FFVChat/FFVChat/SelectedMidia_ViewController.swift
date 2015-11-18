@@ -27,6 +27,16 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     var clockImage : UIImageView!
     
+    var sentDate : NSDate!
+    
+    var sentDateLabel : UILabel!
+    
+    var screenshots : Int!
+    
+    var screenshotsLabel : UILabel!
+    
+    var trashButton : UIButton!
+    
     let minutes = Array(0...9)
     let seconds = Array(0...59)
     
@@ -55,7 +65,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.navigationBar)
         
 
-        self.imageView = UIImageView(frame: CGRectMake(20, self.navigationBar.frame.size.height + 10, screenWidth - 40, screenWidth/1.5))
+        self.imageView = UIImageView(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + 15, screenWidth/8 * 6, screenHeight/2 - self.navigationBar.frame.size.height - 10))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.image = image
         self.imageView.backgroundColor = oficialDarkGray
@@ -65,7 +75,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.imageView)
         
         
-        self.pickerView = UIPickerView(frame: CGRectMake(0,self.imageView.frame.origin.y + self.imageView.frame.size.height + 20, screenWidth, screenHeight - self.navigationBar.frame.size.height - self.imageView.frame.size.height - 44 - 20))
+        self.pickerView = UIPickerView(frame: CGRectMake(0, screenHeight - (screenHeight/3 - 50) - 44, screenWidth, screenHeight/3 - 50))
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
         self.pickerView.backgroundColor = oficialDarkGray
@@ -83,10 +93,31 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         
         self.clockImage = UIImageView(frame: CGRectMake(0, 0, screenWidth/8, screenWidth/8))
         self.clockImage.image = UIImage(named: "clockButton")
-        self.clockImage.center = CGPointMake(screenWidth/2, self.imageView.frame.origin.y + self.imageView.frame.size.height + self.clockImage.frame.size.width/2)
+        self.clockImage.center = CGPointMake(screenWidth/2, self.pickerView.frame.origin.y - screenWidth/8 + 10)
         self.view.addSubview(self.clockImage)
 
+        self.sentDateLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + 15 + self.imageView.frame.size.height + 5, screenWidth/8 * 6, 20))
+        self.sentDateLabel.text = "Sent: "
+        self.sentDateLabel.font = UIFont(name: "Sukhumvit Set", size: 15)
+        self.sentDateLabel.setSizeFont(15)
+        self.sentDateLabel.textColor = UIColor.whiteColor()
+        self.sentDateLabel.textAlignment = .Left
+        self.view.addSubview(self.sentDateLabel)
         
+        self.screenshotsLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + self.imageView.frame.size.height + self.sentDateLabel.frame.size.height + 15, screenWidth/8 * 6, 20))
+        self.screenshotsLabel.text = "Screenshots: "
+        self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 15)
+        self.screenshotsLabel.setSizeFont(15)
+        self.screenshotsLabel.textColor = UIColor.whiteColor()
+        self.screenshotsLabel.textAlignment = .Left
+        self.view.addSubview(self.screenshotsLabel)
+        
+        self.trashButton = UIButton(frame: CGRectMake(screenWidth/8 * 6, self.navigationBar.frame.size.height + 15 + self.imageView.frame.size.height + 5, screenWidth/9,screenWidth/9))
+        self.trashButton.setImage(UIImage(named: "trashButton"), forState: .Normal)
+        self.trashButton.backgroundColor = oficialDarkGray
+        self.trashButton.alpha = 0.7
+        self.trashButton.layer.cornerRadius = 8
+        self.view.addSubview(self.trashButton)
         
     }
 

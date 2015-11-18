@@ -109,11 +109,12 @@ class ContactManager_View: UIView
         self.deleteButton.setImage(UIImage(named: "deleteButton"), forState: .Normal)
         self.addSubview(self.deleteButton)
         
-        self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height, screenWidth/2, screenWidth/8))
+        self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height, screenWidth/3, screenWidth/9.5))
         self.clearChat.setTitle("Clear chat", forState: .Normal)
-        self.clearChat.setTitleColor(oficialGreen, forState: .Normal)
+        self.clearChat.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
         self.clearChat.titleLabel?.textAlignment = NSTextAlignment.Left
-        self.clearChat.backgroundColor = oficialRed
+        self.clearChat.backgroundColor = oficialLightGray
+        self.clearChat.layer.cornerRadius = 15
         self.clearChat.addTarget(self, action: "clearConversation", forControlEvents: .TouchUpInside)
         self.addSubview(self.clearChat)
     }
@@ -173,6 +174,13 @@ class ContactManager_View: UIView
     func clearConversation()
     {
         DAOMessages.sharedInstance.clearConversation(self.contact.username)
+        UIView.animateWithDuration(0.3, delay: 0.2, options: UIViewAnimationOptions.ShowHideTransitionViews, animations: { () -> Void in
+            
+            self.clearChat.backgroundColor = oficialGreen
+            
+            }, completion: nil)
+        
+        self.clearChat.backgroundColor = oficialLightGray
     }
 }
 

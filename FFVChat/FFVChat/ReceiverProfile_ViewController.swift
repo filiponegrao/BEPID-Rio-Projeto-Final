@@ -19,7 +19,7 @@ class ReceiverProfile_ViewController: UIViewController
     
     var usernameLabel : UILabel!
     
-    var userSince: String! // MUDAR PARA DATE
+    var userSince: NSDate!
     
     var userSinceLabel : UILabel!
     
@@ -61,6 +61,8 @@ class ReceiverProfile_ViewController: UIViewController
         
         self.username = self.contact.username
         self.trustLevel = 0 // PEGAR DAO PARSE
+        self.userSince = self.contact.createdAt
+        print(self.userSince)
         
         //mostra o trust level do usuário
         self.trustLevelLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6, screenWidth/2, screenWidth/6))
@@ -74,11 +76,46 @@ class ReceiverProfile_ViewController: UIViewController
         //mostra o nome do usuário
         self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenWidth/3 * 2, self.trustLevelLabel.frame.size.height/2))
         self.usernameLabel.text = self.username
-        self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 20)
-        self.usernameLabel.setSizeFont(20)
+        self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
+        self.usernameLabel.setSizeFont(25)
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
         self.view.addSubview(self.usernameLabel)
+        
+        let date = self.userSince
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .LongStyle
+        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let sync = dateFormatter.stringFromDate(date)
+        
+        
+        //mostra desde quando é usuário do app
+        self.userSinceLabel = UILabel(frame: CGRectMake(20,screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + 15, screenWidth/3 * 2, self.usernameLabel.frame.size.height))
+        self.userSinceLabel.text = "User since: " + sync
+        self.userSinceLabel.textColor = UIColor.whiteColor()
+        self.userSinceLabel.textAlignment = .Left
+        self.userSinceLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
+        self.userSinceLabel.setSizeFont(17)
+        self.view.addSubview(self.userSinceLabel)
+        
+        //mostra quantos prints o usuário tirou
+        self.screenshotsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + 15, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
+        self.screenshotsLabel.text = "Screenshots: "
+        self.screenshotsLabel.textColor = UIColor.whiteColor()
+        self.screenshotsLabel.textAlignment = .Left
+        self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
+        self.screenshotsLabel.setSizeFont(17)
+        self.view.addSubview(self.screenshotsLabel)
+        
+        //mostra quantas denúncias o usuário tem
+        self.reportsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + self.screenshotsLabel.frame.size.height + 15, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
+        self.reportsLabel.text = "Reports: "
+        self.reportsLabel.textColor = UIColor.whiteColor()
+        self.reportsLabel.textAlignment = .Left
+        self.reportsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
+        self.reportsLabel.setSizeFont(17)
+        self.view.addSubview(self.reportsLabel)
         
         //mostra a imagem do usuário
         self.contactImage = UIImageView(frame: CGRectMake(screenWidth/7 * 2 + 10, screenHeight/5, screenWidth/2, screenWidth/2))
