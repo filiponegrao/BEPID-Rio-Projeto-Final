@@ -711,7 +711,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func playSound()
     {
-        let path = NSBundle.mainBundle().pathForResource("messageup.mp3", ofType:nil)!
+        let path = NSBundle.mainBundle().pathForResource("messageNotification.mp3", ofType:nil)!
         let url = NSURL(fileURLWithPath: path)
         
         do {
