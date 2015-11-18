@@ -47,7 +47,7 @@ class ImageZoom_View: UIView {
         
         
         self.backButton = UIButton(frame: CGRectMake(0, 10, 44, 44))
-        self.backButton.setImage(UIImage(named: "paperBurn"), forState: .Normal)
+        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
         self.backButton.addTarget(self, action: "fadeOut", forControlEvents: .TouchUpInside)
         self.addSubview(self.backButton)
         
