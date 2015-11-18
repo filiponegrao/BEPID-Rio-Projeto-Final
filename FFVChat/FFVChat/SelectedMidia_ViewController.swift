@@ -115,7 +115,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.trashButton = UIButton(frame: CGRectMake(screenWidth/8 * 6, self.navigationBar.frame.size.height + 15 + self.imageView.frame.size.height + 5, screenWidth/9,screenWidth/9))
         self.trashButton.setImage(UIImage(named: "trashButton"), forState: .Normal)
         self.trashButton.backgroundColor = oficialDarkGray
-        self.trashButton.alpha = 0.7
+        self.trashButton.alpha = 0.9
         self.trashButton.layer.cornerRadius = 8
         self.view.addSubview(self.trashButton)
         
