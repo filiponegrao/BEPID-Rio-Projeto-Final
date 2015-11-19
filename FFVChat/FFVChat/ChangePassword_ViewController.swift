@@ -51,6 +51,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.doneButton.highlighted = true
 //        self.doneButton.addTarget(self, action: "changePassword", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.doneButton)
+        
 
     }
 
