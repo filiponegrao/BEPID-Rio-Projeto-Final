@@ -291,7 +291,9 @@ class DAOUser
                         PFUser.currentUser()?.setValue(100, forKey: "trustLevel")
                         PFUser.currentUser()!.saveEventually()
 
-
+                        let user = User.createInManagedObjectContext(self.managedObjectContext, username: PFUser.currentUser()!.username!, email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id)
+                        self.user = user
+                        
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
                     }
                     else
@@ -496,6 +498,8 @@ class DAOUser
         }
     }
     
+    
+    
     func getProfileImage() -> UIImage
     {
         return UIImage(data: self.user.profileImage!)!
@@ -503,7 +507,7 @@ class DAOUser
     
     func getUsername() -> String
     {
-        return self.user.username
+        return PFUser.currentUser()!.username!
     }
     
     func getEmail() -> String

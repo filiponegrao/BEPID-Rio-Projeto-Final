@@ -10,14 +10,19 @@ import UIKit
 
 class RandomWalk_CollectionViewCell: UICollectionViewCell
 {
-    var username:UILabel = UILabel()
+    var container : UIView!
     
-    var profileBtn: MKButton = MKButton()
+    var username: UILabel!
+    
+    var profileBtn: MKImageView!
+    
+    var numberOfMessages : UILabel!
     
     var indicator : UILabel!
     
     // animate variables
     private var animate = false
+    
     private var paths:[CGPoint] = []
     
     private var stepDuration : Double!
@@ -29,35 +34,44 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     {
         super.init(frame: frame)
         
-        labelSetup()
-        buttonSetup()
+        self.container = UIView(frame: CGRectMake(0, 0, self.frame.width, self.frame.width))
+        self.container.backgroundColor = UIColor.clearColor()
+        self.addSubview(self.container)
         
+        self.username = UILabel(frame: CGRectMake(0,0,frame.size.width,40))
+        self.username.textAlignment = NSTextAlignment.Center
+        self.username.font = UIFont( name: (username.font?.fontName)!, size: 13)
+        self.username.textColor = oficialGreen
+        self.addSubview(self.username)
         
-        self.addSubview(username)
-        self.addSubview(profileBtn)
+        self.profileBtn = MKImageView(frame: CGRectMake(0, 0, self.frame.width, self.frame.width))
+        self.profileBtn.rippleLocation = .Center
+        self.profileBtn.rippleLayerColor = UIColor.whiteColor()
+        self.profileBtn.layer.cornerRadius = profileBtn.frame.width*0.5
+        self.profileBtn.layer.borderWidth = 2.0
+        self.profileBtn.layer.borderColor = UIColor.grayColor().CGColor
+        self.profileBtn.contentMode = .ScaleToFill
+        self.profileBtn.clipsToBounds = true
+        self.container.addSubview(self.profileBtn)
         
-        self.sendSubviewToBack(profileBtn)
+        self.numberOfMessages = UILabel(frame: CGRectMake(self.frame.size.width-20,-5, self.profileBtn.frame.size.width/3, self.profileBtn.frame.size.width/3))
+        self.numberOfMessages.text = "0"
+        self.numberOfMessages.textAlignment = .Center
+        self.numberOfMessages.backgroundColor = oficialRed
+        self.numberOfMessages.textColor = UIColor.whiteColor()
+        self.numberOfMessages.layer.cornerRadius = self.numberOfMessages.frame.size.height/2
+        self.numberOfMessages.clipsToBounds = true
+        self.numberOfMessages.hidden = true
+        self.container.addSubview(self.numberOfMessages)
+        
+
+//        self.sendSubviewToBack(profileBtn)
     }
     
-    func labelSetup()
-    {
-        username.textAlignment = NSTextAlignment.Center
-        username.font          = UIFont ( name: (username.font?.fontName)!, size: 13)
-        username.textColor     = oficialGreen
-    }
-    
-    func buttonSetup()
-    {
-        profileBtn.rippleLocation = .Center
-        profileBtn.rippleLayerColor = UIColor.whiteColor()
-        profileBtn.backgroundLayerCornerRadius = profileBtn.frame.size.width/2
-        profileBtn.addTarget(self, action: "profileClicked", forControlEvents: UIControlEvents.TouchUpInside)
-    }
-    
-    func profileClicked()
-    {
-        print("buttonclicked")
-    }
+//    func profileClicked()
+//    {
+//        print("buttonclicked")
+//    }
     
     required init?(coder aDecoder: NSCoder)
     {
@@ -68,21 +82,13 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     // NAO CONSIDERA NOME COMPOSTO... EXEMPLO: LUIS HAROLDO SOARES
     func setInfo(name:String, profile:UIImage)
     {
-        username.text = name
-        
-        profileBtn.setImage(profile, forState: UIControlState.Normal)
-        profileBtn.imageView?.contentMode = .ScaleToFill
-        profileBtn.clipsToBounds = true
-        
-        
-        profileBtn.frame = CGRectMake( 0, 0, self.frame.width, self.frame.width )
-        profileBtn.layer.cornerRadius = profileBtn.frame.width*0.5
-        profileBtn.layer.borderWidth = 2.0
-        profileBtn.layer.borderColor = UIColor.grayColor().CGColor
+        self.username.text = name
+        self.profileBtn.image = profile
         
         let labelHeight:CGFloat = self.frame.height - self.frame.width
-        username.frame = CGRectMake( 0, profileBtn.frame.maxY, self.frame.width, labelHeight )
+        self.username.frame = CGRectMake( 0, profileBtn.frame.maxY, self.frame.width, labelHeight )
     }
+    
     
     func loadAnimations(withDuration:Double)
     {
@@ -121,12 +127,11 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
                     UIView.addKeyframeWithRelativeStartTime(self.stepDuration * Double(index), relativeDuration: self.stepDuration, animations:
                         {
                             () -> Void in
-                            self.profileBtn.center.x += self.paths[index].x
-                            self.profileBtn.center.y += self.paths[index].y
+                            self.container.center.x += self.paths[index].x
+                            self.container.center.y += self.paths[index].y
+                            
                     })
                 }
-                
-                
             },
             completion: nil)
         
@@ -134,6 +139,12 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
 
     }
     
+    
+    func setUnreadMessages(count: Int)
+    {
+        self.numberOfMessages.text = "\(count)"
+        self.numberOfMessages.hidden = true
+    }
     
     
 }

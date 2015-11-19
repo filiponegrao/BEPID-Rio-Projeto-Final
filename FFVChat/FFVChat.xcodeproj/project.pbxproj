@@ -100,6 +100,7 @@
 		809B558C1BFC1885006CD894 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809B558A1BFC1885006CD894 /* Message.swift */; };
 		809B81F91BFCE6140078F350 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809B81F81BFCE6140078F350 /* AudioManager.swift */; };
 		809B81FB1BFCE6350078F350 /* messageup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 809B81FA1BFCE6350078F350 /* messageup.mp3 */; };
+		809B81FD1BFCFD0B0078F350 /* messageNotification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */; };
 		809E759D1BB49FC100CEC425 /* DAOContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E759C1BB49FC100CEC425 /* DAOContacts.swift */; };
 		809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809E75A01BB4A99600CEC425 /* ImageEdition.swift */; };
 		80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135B1BC3038C0035E8B2 /* MKButton.swift */; };
@@ -273,6 +274,7 @@
 		809B558A1BFC1885006CD894 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		809B81F81BFCE6140078F350 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		809B81FA1BFCE6350078F350 /* messageup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = messageup.mp3; sourceTree = "<group>"; };
+		809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = messageNotification.mp3; sourceTree = "<group>"; };
 		809E759C1BB49FC100CEC425 /* DAOContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOContacts.swift; sourceTree = "<group>"; };
 		809E75A01BB4A99600CEC425 /* ImageEdition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEdition.swift; sourceTree = "<group>"; };
 		80AA135B1BC3038C0035E8B2 /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 				80FF18A31BE51EA800C5F35E /* Errors.swift */,
 				F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */,
 				809B81FA1BFCE6350078F350 /* messageup.mp3 */,
+				809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				801D92761BA492C200D05CE7 /* Login_ViewController.xib in Resources */,
 				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
+				809B81FD1BFCFD0B0078F350 /* messageNotification.mp3 in Resources */,
 				F66B29DF1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib in Resources */,
 				800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */,
 				F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */,

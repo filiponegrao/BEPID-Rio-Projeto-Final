@@ -80,7 +80,7 @@ class DAOPostgres : NSObject
     {
         let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
-        
+        DAOParse.pushMessageNotification(username, text: "Mensagem de \(DAOUser.sharedInstance.getUsername())")
         Alamofire.request(.POST, self.sendMessageURL, parameters: parameters)
             .responseJSON { response in
                 print(response)

@@ -729,7 +729,10 @@ class DAOParse
                 else
                 {
                     self.tentativas++
-                    self.uploadImageForMessage(message)
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2)) * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        self.uploadImageForMessage(message)
+                    }
                 }
                 
             }

@@ -18,6 +18,8 @@ class CellImage_TableViewCell: UITableViewCell
     
     var sentDate : UILabel!
     
+    var indicator : NVActivityIndicatorView!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,6 +50,10 @@ class CellImage_TableViewCell: UITableViewCell
         self.sentDate.textAlignment = .Right
         self.sentDate.textColor = UIColor.whiteColor()
         self.cellView.addSubview(self.sentDate)
+        
+        
+        self.indicator = NVActivityIndicatorView(frame: CGRectMake(0, 0, self.imageCell.frame.size.width/2, self.imageCell.frame.size.height/2), type: NVActivityIndicatorType.BallScale, color: UIColor.redColor())
+        self.indicator.center = self.imageCell.center
         
     }
     

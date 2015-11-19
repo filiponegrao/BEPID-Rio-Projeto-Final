@@ -241,6 +241,25 @@ class DAOMessages
         }
     }
     
+    
+    func numberOfUnreadMessages(contact: Contact) -> Int
+    {
+        var unread = 0
+        
+        let messages = self.conversationWithContact(contact.username)
+        
+        for message in messages
+        {
+            if message.status == "received"
+            {
+                unread++
+            }
+        }
+        
+        return unread
+    }
+    
+    
 //    func receiveMessagesFromContact()
 //    {
 //        DAOParse.checkForContactsMessage()

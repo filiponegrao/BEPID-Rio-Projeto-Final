@@ -74,13 +74,15 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
+        
         DAOFriendRequests.sharedInstance.friendsAccepted()
 //        DAOMessages.sharedInstance.receiveMessagesFromContact()
     }
     
     override func viewDidAppear(animated: Bool) {
         
-        //self.reloadAnimations()
+        self.reloadAnimations()
+        self.checkUnreadMessages()
     }
     
     func reloadAnimations()
@@ -102,7 +104,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     {
         self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
 //        self.navigationBar.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
-
     }
 
     
@@ -114,12 +115,20 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
 
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
         
-        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadCollection", userInfo: nil, repeats: false)
+        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadAnimations", userInfo: nil, repeats: false)
     }
     
-    func reloadCollection()
+    
+    func checkUnreadMessages()
     {
-        self.collectionView?.reloadData()
+        var i = 0
+        for contact in self.contacts
+        {
+            let count = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
+            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? RandomWalk_CollectionViewCell
+            cell?.setUnreadMessages(count)
+            i++
+        }
     }
     
     func filterContacts()

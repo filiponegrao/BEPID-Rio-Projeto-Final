@@ -186,7 +186,6 @@ class DAOContacts
         {
             return false
         }
-
     }
     
     

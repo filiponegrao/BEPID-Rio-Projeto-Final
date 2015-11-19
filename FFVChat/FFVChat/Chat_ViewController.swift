@@ -187,16 +187,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         print("loading image")
         let info : [NSObject : AnyObject] = notification.userInfo!
-        let key = info["imageKey"] as! String
+        let key = info["messageKey"] as! String
         
         for mssg in self.messages
         {
-            if(mssg.imageKey! == key)
+            if(mssg.imageKey == key)
             {
                 let index = self.messages.indexOf(mssg)!
                 print("Atualizando")
-                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! CellImage_TableViewCell
-                cell.imageCell.image = UIImage(data: mssg.image!)
+                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? CellImage_TableViewCell
+                cell?.imageCell.image = UIImage(data: mssg.image!)
             }
         }
     }
@@ -231,7 +231,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 if((self.tableView.contentSize.height + screenWidth) > self.tableView.frame.size.height)
                 {
-                    self.tableView.contentOffset.y += screenWidth
+                    self.tableView.contentOffset.y -= screenWidth
                 }
             }
         }
@@ -364,6 +364,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             else
             {
                 cell.imageCell.image = UIImage()
+                print("indicator: \(cell.indicator)")
+                cell.addSubview(cell.indicator)
             }
             
             //blur
@@ -711,7 +713,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func playSound()
     {
-        let path = NSBundle.mainBundle().pathForResource("messageup.mp3", ofType:nil)!
+        let path = NSBundle.mainBundle().pathForResource("messageNotification.mp3", ofType:nil)!
         let url = NSURL(fileURLWithPath: path)
         
         do {
