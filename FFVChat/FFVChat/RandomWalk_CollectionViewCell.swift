@@ -67,17 +67,33 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
 
 //        self.sendSubviewToBack(profileBtn)
     }
-    
-//    func profileClicked()
-//    {
-//        print("buttonclicked")
-//    }
-    
-    required init?(coder aDecoder: NSCoder)
-    {
+
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    func pressIn()
+    {
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+//            self.profileBtn.center = self.center
+            self.profileBtn.frame.size = CGSizeMake(self.profileBtn.frame.size.width/1.5, self.profileBtn.frame.size.width/1.5)
+            self.profileBtn.layer.cornerRadius = self.profileBtn.frame.size.width/1.5
+            
+            }) { (success: Bool) -> Void in
+                
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                    
+                    //            self.profileBtn.center = self.center
+                    self.profileBtn.frame.size = CGSizeMake(self.frame.size.width, self.frame.size.width)
+                    self.profileBtn.layer.cornerRadius = self.frame.size.width/2
+                    
+                    }) { (success: Bool) -> Void in
+                        
+                }
+        }
+    }
     
     // NAO CONSIDERA NOME COMPOSTO... EXEMPLO: LUIS HAROLDO SOARES
     func setInfo(name:String, profile:UIImage)
@@ -142,8 +158,37 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     func setUnreadMessages(count: Int)
     {
-        self.numberOfMessages.text = "\(count)"
-        self.numberOfMessages.hidden = true
+        if(count > 0)
+        {
+            self.numberOfMessages.text = "\(count)"
+            self.numberOfMessages.hidden = false
+            
+            let originalSize = self.numberOfMessages.frame.size
+            self.numberOfMessages.frame.size = CGSizeMake(1, 1)
+            
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                
+                self.numberOfMessages.frame.size = originalSize
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
+        else
+        {
+            let originalSize = self.numberOfMessages.frame.size
+
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                
+                self.numberOfMessages.frame.size = CGSizeMake(1, 1)
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+                    self.numberOfMessages.hidden = true
+                    self.numberOfMessages.text = "0"
+                    self.numberOfMessages.frame.size = originalSize
+            })
+        }
     }
     
     

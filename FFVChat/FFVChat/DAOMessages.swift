@@ -78,7 +78,7 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, imageKey: nil ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "receveid")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, imageKey: nil ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
         
         self.lastMessage = message
 

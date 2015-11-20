@@ -33,13 +33,13 @@ class CellImage_TableViewCell: UITableViewCell
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundWidth))
         self.backgroundLabel.backgroundColor = UIColor.whiteColor()
         self.backgroundLabel.alpha = 0.1
-        self.backgroundLabel.layer.cornerRadius = 5
+        self.backgroundLabel.layer.cornerRadius = 10
         self.backgroundLabel.layer.zPosition = 0
         self.addSubview(self.backgroundLabel)
         
         self.imageCell = UIImageView(frame: CGRectMake(margemLateral * 2, margemVertical * 4, cellBackgroundWidth - (margemLateral * 2), cellBackgroundWidth - (margemLateral * 2) - dateTextHeigth))
         self.imageCell.clipsToBounds = true
-        self.imageCell.layer.cornerRadius = 5
+        self.imageCell.layer.cornerRadius = 10
         self.imageCell.contentMode = .ScaleAspectFill
         self.imageCell.layer.zPosition = 5
         self.cellView.addSubview(imageCell)

@@ -8,8 +8,6 @@
 
 import UIKit
 
-let fontCell = UIFont(name: "Helvetica", size: 8)
-
 class CellChat_TableViewCell: UITableViewCell
 {
     var cellView : UIView!
@@ -31,7 +29,7 @@ class CellChat_TableViewCell: UITableViewCell
         
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundHeigth))
         self.backgroundLabel.backgroundColor = UIColor.whiteColor()
-        self.backgroundLabel.layer.cornerRadius = 5
+        self.backgroundLabel.layer.cornerRadius = 10
         self.backgroundLabel.alpha = 0.1
         
         self.cellView.addSubview(self.backgroundLabel)
@@ -46,7 +44,7 @@ class CellChat_TableViewCell: UITableViewCell
         
         self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth + margemLateral/2, cellBackgroundHeigth - dateTextHeigth - margemVertical, dateTextWidth, dateTextHeigth))
         self.sentDate.text = "28-09-1992 09:00"
-        self.sentDate.font = fontCell
+        self.sentDate.font = UIFont(name: "Helvetica", size: 8)
         self.sentDate.textAlignment = .Right
         self.sentDate.textColor = UIColor.whiteColor()
         self.cellView.addSubview(self.sentDate)

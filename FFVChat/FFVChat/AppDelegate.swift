@@ -142,6 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.saveContext()
         DAOPostgres.sharedInstance.stopRefreshing()
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     
@@ -185,7 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
         {
-//            DAOMessages.sharedInstance.receiveMessagesFromContact()
+            DAOPostgres.sharedInstance.getUnreadMessages()
         }
     }
     

@@ -74,6 +74,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkUnreadMessages", name: NotificationController.center.messageReceived.name, object: nil)
+        
         
         DAOFriendRequests.sharedInstance.friendsAccepted()
 //        DAOMessages.sharedInstance.receiveMessagesFromContact()
@@ -125,7 +127,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         for contact in self.contacts
         {
             let count = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
-            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)) as? RandomWalk_CollectionViewCell
+            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
             cell?.setUnreadMessages(count)
             i++
         }
@@ -177,6 +179,9 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? RandomWalk_CollectionViewCell
+        cell?.pressIn()
+        
         let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
         chat.contact = self.contacts[indexPath.item]
         chat.transitioningDelegate = (self.navigationController as! AppNavigationController)
@@ -186,7 +191,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
         
         self.navigationController?.pushViewController(chat, animated: true)
-
     }
    
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
@@ -202,21 +206,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         if ((indexPath) != nil)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
-//            cell?.blur(blurRadius: 0.7)
-            //Dar feedback ao usuário
-
-            
-//            cell?.blur(blurRadius: 0)
-            
            
             self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self)
             
-            
-            
             self.view.addSubview(self.contactManager)
-            //            print(indexPath!.row)
-            
-
         }
         else
         {

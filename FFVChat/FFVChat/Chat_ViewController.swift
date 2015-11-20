@@ -101,6 +101,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.keyboardDismissMode = .Interactive
+    
 
         self.containerView.addSubview(tableView)
         
@@ -166,11 +167,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    func messageSent()
-    {
-        
-    }
-    
     
     func messageEvaporated(notification: NSNotification)
     {
@@ -181,6 +177,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a lnha \(index)")
         self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
         self.imageZoom?.fadeOut()
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.tableView.contentOffset.y += screenWidth
+            
+            }) { (success: Bool) -> Void in
+                
+        }
     }
     
     func reloadImageCell(notification: NSNotification)
@@ -219,19 +223,31 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 mssg.status = "seen"
             }
             
-            if(mssg.image == nil && mssg.text != nil)
+            if(mssg.imageKey == nil && mssg.text != nil)
             {
-                let h = self.heightForView(mssg.text!, font: fontCell!, width: cellTextWidth)
+                let h = self.heightForView(mssg.text!, font: textMessageFont!, width: cellTextWidth)
                 if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
                 {
-                    self.tableView.contentOffset.y -= (margemVertical*4 + h)
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical*2) + 20 //+20 de margem, superior e inferiro
+                        
+                        }, completion: { (success: Bool) -> Void in
+                            
+                    })
                 }
             }
             else
             {
                 if((self.tableView.contentSize.height + screenWidth) > self.tableView.frame.size.height)
                 {
-                    self.tableView.contentOffset.y -= screenWidth
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        self.tableView.contentOffset.y += screenWidth + 20 //+20 de margem
+                        
+                        }, completion: { (success: Bool) -> Void in
+                            
+                    })
                 }
             }
         }
@@ -322,19 +338,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //TEXT
         else
         {
-            let necessaryHeigth = self.heightForView(self.messages[indexPath.row].text!, font: textMessageFont!, width: cellTextWidth)
-            let textHeight = cellTextHeigth
-            
-            if(necessaryHeigth > textHeight)
-            {
-                let increase = necessaryHeigth - textHeight
-                return cellHeightDefault + increase
-                
-            }
-            else
-            {
-                return cellHeightDefault
-            }
+            return self.getPerfectCellHeigth(indexPath.row)
         }
     }
     
@@ -393,7 +397,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.backgroundLabel.alpha = 0.1
             }
             
-            cell.backgroundLabel.layer.cornerRadius = 4
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
             cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
             cell.backgroundLabel.layer.shadowRadius = 3
@@ -430,7 +433,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.sentDate.frame.origin.y = cell.textMessage.frame.origin.y + cell.textMessage.frame.size.height + 5
             }
             
-            cell.backgroundLabel.layer.cornerRadius = 4
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
             cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
             cell.backgroundLabel.layer.shadowRadius = 3
@@ -487,6 +489,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //*********** END TABLE VIEW PROPERTIES **************//
     //****************************************************//
     
+    func getPerfectCellHeigth(index: Int) -> CGFloat
+    {
+        let necessaryHeigth = self.heightForView(self.messages[index].text!, font: textMessageFont!, width: cellTextWidth)
+        let textHeight = cellTextHeigth
+        
+        if(necessaryHeigth > textHeight)
+        {
+            let increase = necessaryHeigth - textHeight
+            return cellHeightDefault + increase
+            
+        }
+        else
+        {
+            return cellHeightDefault
+        }
+    }
     
     
     //****************************************************//
@@ -662,9 +680,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if(self.tableView.contentSize.height > self.tableView.frame.size.height)
         {
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
-                self.tableView.contentOffset.y += screenWidth
+                self.tableView.contentOffset.y += screenWidth + 20
                 
                 }, completion: { (success: Bool) -> Void in
                     
@@ -682,7 +700,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let index = self.messages.indexOf(message)
             
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
-            let h = self.heightForView(self.messageText.text!, font: fontCell!, width: cellTextWidth)
+            let h = self.heightForView(self.messageText.text!, font: textMessageFont!, width: cellTextWidth)
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
@@ -694,6 +712,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             self.messageText.text = ""
             self.backToOriginal()
+        }
+        else
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.tableView.contentOffset.y += (40)
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
         }
     }
     
