@@ -212,7 +212,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     func singleTap(gesture: UITapGestureRecognizer)
     {
-        print(gesture.state)
         let point = gesture.locationInView(self.collectionView)
         
         let indexPath = self.collectionView?.indexPathForItemAtPoint(point)

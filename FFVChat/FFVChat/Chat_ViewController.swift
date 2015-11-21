@@ -447,6 +447,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.backgroundLabel.alpha = 0.13
             }
             
+            if((cell.textMessage.text!.lowercaseString.rangeOfString("http://")) != nil)
+            {
+                cell.textMessage.textColor = oficialGreen
+            }
+            else
+            {
+                cell.textMessage.textColor = UIColor.whiteColor()
+            }
+            
             DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
             
             return cell
@@ -458,6 +467,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         print("clicando")
         let message = self.messages[indexPath.row]
+        
+        //Imagem
         if(message.image != nil && !self.messageText.isFirstResponder())
         {
             self.messageText.endEditing(true)
@@ -471,6 +482,25 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 message.status = "seen"
             }
         }
+        //Hiperlynk
+        else if(message.text?.lowercaseString.rangeOfString("http://") != nil)
+        {
+            let text = message.text!.lowercaseString
+            var link = String()
+            if(text.rangeOfString(" ") != nil)
+            {
+                link = text.sliceFrom("http://", to: " ")!
+                link = "Http://" + link
+            }
+            else
+            {
+                link = text
+            }
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: link)!)
+
+        }
+        
         self.messageText.endEditing(true)
         
     }

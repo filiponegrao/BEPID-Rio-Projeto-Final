@@ -71,7 +71,7 @@ class ContactManager_View: UIView
         self.addSubview(self.trustLevelLabel)
         
         //EXIBE USERNAME DO CONTATO
-        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height, screenWidth/2, screenWidth/6))
+        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height, screenWidth, screenWidth/6))
         self.usernameLabel.text = self.contact.username
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
@@ -181,7 +181,7 @@ class ContactManager_View: UIView
             
             self.clearChat.center.x -= screenWidth/2
             self.trustLevelLabel.center.x -= screenWidth/2
-            self.usernameLabel.center.x -= screenWidth/2
+            self.usernameLabel.center.x -= screenWidth
             
             self.contactImage.alpha = 0.1
 

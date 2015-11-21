@@ -38,11 +38,11 @@ class DAOMessages
     
     func sendMessage(username: String, text: String) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, imageKey: nil, image: nil, sentDate: NSDate(), lifeTime: 14400, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, imageKey: nil, image: nil, sentDate: NSDate(), lifeTime: 300, status: "sent")
         self.save()
         
         print("enviando")
-        DAOPostgres.sharedInstance.sendTextMessage(username, lifeTime: 34000, text: text)
+        DAOPostgres.sharedInstance.sendTextMessage(username, lifeTime: 300, text: text)
         
         return message
     }
