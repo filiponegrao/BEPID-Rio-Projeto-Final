@@ -110,18 +110,17 @@ class Tools_ViewController: UIViewController
     
     func openTools()
     {
-        
-        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(0.6, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0.8
             self.closeButton.alpha = 1
             
             self.notificationButton.frame.origin.y = screenHeight*1/4
             self.notificationButton.alpha = 1
-
+            
             self.addButton.frame.origin.y = screenHeight/2
             self.addButton.alpha = 1
-
+            
             self.configButton.frame.origin.y = screenHeight*3/4
             self.configButton.alpha = 1
             
@@ -133,10 +132,16 @@ class Tools_ViewController: UIViewController
             
             self.configLabel.center.y = self.configButton.center.y
             self.configLabel.alpha = 1
+
             
-            }) { (success) -> Void in
-                
-        }
+            }, completion: nil)
+        
+//        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+//            
+//            
+//            }) { (success) -> Void in
+//                
+//        }
     }
     
     func closeTools()
