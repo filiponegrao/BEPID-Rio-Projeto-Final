@@ -134,3 +134,15 @@ extension UILabel
         self.font = UIFont(name: self.font.fontName, size: sizeFont)!
     }
 }
+
+
+//Para pegar strings entre duas strings
+extension String {
+    func sliceFrom(start: String, to: String) -> String? {
+        return (rangeOfString(start)?.endIndex).flatMap { sInd in
+            (rangeOfString(to, range: sInd..<endIndex)?.startIndex).map { eInd in
+                substringWithRange(sInd..<eInd)
+            }
+        }
+    }
+}

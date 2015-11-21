@@ -172,19 +172,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         let info : [NSObject : AnyObject] = notification.userInfo!
         let index = info["index"] as! Int
+        
         print("Meu indicie é \(index) e minha abela tem \(self.messages.count)")
+        
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a lnha \(index)")
+        
+        print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a linha \(index)")
+        
         self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
         self.imageZoom?.fadeOut()
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.tableView.contentOffset.y += screenWidth
-            
-            }) { (success: Bool) -> Void in
-                
-        }
     }
     
     func reloadImageCell(notification: NSNotification)
@@ -201,6 +198,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 print("Atualizando")
                 let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? CellImage_TableViewCell
                 cell?.imageCell.image = UIImage(data: mssg.image!)
+                cell?.setLoadingOff()
             }
         }
     }
@@ -364,20 +362,20 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if(self.messages[indexPath.row].image != nil)
             {
                 cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
+                cell.setLoadingOff()
             }
             else
             {
                 cell.imageCell.image = UIImage()
-                print("indicator: \(cell.indicator)")
-                cell.addSubview(cell.indicator)
+                cell.setLoading()
             }
             
             //blur
-            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-            
-            visualEffectView.frame = cell.imageCell.bounds
-            cell.imageCell.subviews.last?.removeFromSuperview()
-            cell.imageCell.addSubview(visualEffectView)
+            cell.blur?.removeFromSuperview()
+            cell.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+            cell.blur.frame = cell.imageCell.bounds
+            cell.imageCell.addSubview(cell.blur)
+            cell.bringSubviewToFront(cell.indicator)
             
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
@@ -449,6 +447,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.backgroundLabel.alpha = 0.13
             }
             
+            if((cell.textMessage.text!.lowercaseString.rangeOfString("http://")) != nil)
+            {
+                cell.textMessage.textColor = oficialGreen
+            }
+            else
+            {
+                cell.textMessage.textColor = UIColor.whiteColor()
+            }
+            
             DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
             
             return cell
@@ -460,6 +467,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         print("clicando")
         let message = self.messages[indexPath.row]
+        
+        //Imagem
         if(message.image != nil && !self.messageText.isFirstResponder())
         {
             self.messageText.endEditing(true)
@@ -473,6 +482,25 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 message.status = "seen"
             }
         }
+        //Hiperlynk
+        else if(message.text?.lowercaseString.rangeOfString("http://") != nil)
+        {
+            let text = message.text!.lowercaseString
+            var link = String()
+            if(text.rangeOfString(" ") != nil)
+            {
+                link = text.sliceFrom("http://", to: " ")!
+                link = "Http://" + link
+            }
+            else
+            {
+                link = text
+            }
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: link)!)
+
+        }
+        
         self.messageText.endEditing(true)
         
     }
