@@ -27,6 +27,7 @@ class Privacy_ViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
+        
 //        self.topLabel.textColor = oficialGreen
 //        
 //        self.disagreeButton.backgroundColor = oficialGreen
