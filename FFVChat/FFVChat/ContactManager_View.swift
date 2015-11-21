@@ -48,7 +48,7 @@ class ContactManager_View: UIView
         self.addSubview(self.blackScreen)
         
         self.backButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
-        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
+        self.backButton.setImage(UIImage(named: "close"), forState: .Normal)
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview((self.backButton))
         
@@ -110,14 +110,27 @@ class ContactManager_View: UIView
         self.deleteButton.setImage(UIImage(named: "deleteButton"), forState: .Normal)
         self.addSubview(self.deleteButton)
         
+        //BOTÃO PARA LIMPAR CONVERSA
         self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height, screenWidth/3, screenWidth/9.5))
         self.clearChat.setTitle("Clear chat", forState: .Normal)
-        self.clearChat.setTitleColor(UIColor.blackColor(), forState: .Highlighted)
-        self.clearChat.titleLabel?.textAlignment = NSTextAlignment.Left
-        self.clearChat.backgroundColor = oficialLightGray
-        self.clearChat.layer.cornerRadius = 15
+        self.clearChat.setTitleColor(oficialGreen, forState: .Highlighted)
+        self.clearChat.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         self.clearChat.addTarget(self, action: "clearConversation", forControlEvents: .TouchUpInside)
+        
+        // set the attributed title for different states
+        
+        // .Selected
+        let mySelectedAttributedTitle = NSAttributedString(string: "Clear chat",
+            attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.clearChat.setAttributedTitle(mySelectedAttributedTitle, forState: .Selected)
+        
+        // .Normal
+        let myNormalAttributedTitle = NSAttributedString(string: "Clear chat",
+            attributes: [NSForegroundColorAttributeName : oficialGreen])
+        self.clearChat.setAttributedTitle(myNormalAttributedTitle, forState: .Normal)
+        
         self.addSubview(self.clearChat)
+        
     }
     
     required init?(coder aDecoder: NSCoder)

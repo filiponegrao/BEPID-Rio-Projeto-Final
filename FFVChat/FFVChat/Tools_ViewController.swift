@@ -91,9 +91,10 @@ class Tools_ViewController: UIViewController
         self.configLabel.addTarget(self, action: "showSettings", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.configLabel)
         
-        self.closeButton = UIButton(frame: CGRectMake(screenWidth - 64, 25, 45 , 45))
+        self.closeButton = UIButton(frame: CGRectMake(screenWidth - 80, 20, 80 , 80))
         self.closeButton.setImage(UIImage(named: "closeButton"), forState: .Normal)
         self.closeButton.addTarget(self, action: "closeTools", forControlEvents: .TouchUpInside)
+        self.closeButton.frame.origin.y = 6
         self.closeButton.alpha = 0
         self.view.addSubview(self.closeButton)
         
@@ -141,7 +142,6 @@ class Tools_ViewController: UIViewController
     
     func closeTools()
     {
-        self.closeButton.alpha = 0
         self.notificationLabel.alpha = 0
         self.addLabel.alpha = 0
         self.configLabel.alpha = 0
@@ -149,9 +149,12 @@ class Tools_ViewController: UIViewController
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0
+            self.closeButton.alpha = 0
+
             self.notificationButton.frame.origin.y = 6
             self.addButton.frame.origin.y = 6
             self.configButton.frame.origin.y = 6
+            
             self.contacts.blurView.alpha = 0
             
             }) { (success) -> Void in
