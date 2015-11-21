@@ -21,10 +21,19 @@ class Privacy_ViewController: UIViewController {
     @IBOutlet weak var agreeButton: UIButton!
     
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+//        self.topLabel.textColor = oficialGreen
+//        
+//        self.disagreeButton.backgroundColor = oficialGreen
+//        self.disagreeButton.setTitleColor(oficialDarkGray, forState: .Normal)
+//        
+//        self.agreeButton.backgroundColor = oficialGreen
+//        self.agreeButton.setTitleColor(oficialDarkGray, forState: .Normal)
     }
 
     override func didReceiveMemoryWarning() {
