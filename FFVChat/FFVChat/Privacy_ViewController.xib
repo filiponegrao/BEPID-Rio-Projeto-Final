@@ -8,9 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Privacy_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
-                <outlet property="agreeButton" destination="iQ1-Z9-kPN" id="GJ1-T1-tet"/>
                 <outlet property="backView" destination="0nj-Gg-yOa" id="9lY-x3-R3a"/>
-                <outlet property="disagreeButton" destination="hF3-fM-k8l" id="QW4-1K-JVN"/>
                 <outlet property="termsText" destination="b3o-hp-leM" id="kr2-hc-A0i"/>
                 <outlet property="topLabel" destination="C3x-cq-q40" id="EDa-RA-c0g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -24,25 +22,25 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Policy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3x-cq-q40">
                     <rect key="frame" x="235" y="40" width="130" height="26"/>
                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                    <color key="textColor" red="0.13075417780000001" green="0.77556818179999998" blue="0.658255857" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-Gg-yOa">
-                    <rect key="frame" x="16" y="86" width="568" height="414"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-Gg-yOa">
+                    <rect key="frame" x="16" y="86" width="568" height="451"/>
                     <subviews>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="b3o-hp-leM">
-                            <rect key="frame" x="16" y="16" width="536" height="382"/>
-                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3o-hp-leM">
+                            <rect key="frame" x="8" y="16" width="552" height="417"/>
+                            <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="b3o-hp-leM" secondAttribute="bottom" constant="16" id="0fw-W1-nF3"/>
-                        <constraint firstItem="b3o-hp-leM" firstAttribute="leading" secondItem="0nj-Gg-yOa" secondAttribute="leading" constant="16" id="4a6-FG-IV1"/>
-                        <constraint firstAttribute="trailing" secondItem="b3o-hp-leM" secondAttribute="trailing" constant="16" id="TRw-Uj-wVT"/>
+                        <constraint firstAttribute="bottom" secondItem="b3o-hp-leM" secondAttribute="bottom" constant="18" id="0fw-W1-nF3"/>
+                        <constraint firstItem="b3o-hp-leM" firstAttribute="leading" secondItem="0nj-Gg-yOa" secondAttribute="leading" constant="8" id="4a6-FG-IV1"/>
+                        <constraint firstAttribute="trailing" secondItem="b3o-hp-leM" secondAttribute="trailing" constant="8" id="TRw-Uj-wVT"/>
                         <constraint firstItem="b3o-hp-leM" firstAttribute="top" secondItem="0nj-Gg-yOa" secondAttribute="top" constant="16" id="WGk-H2-mPq"/>
                         <constraint firstAttribute="bottom" secondItem="b3o-hp-leM" secondAttribute="bottom" constant="207" id="egv-Ne-UVD"/>
                         <constraint firstItem="b3o-hp-leM" firstAttribute="centerX" secondItem="0nj-Gg-yOa" secondAttribute="centerX" id="uzJ-K7-LqR"/>
@@ -61,85 +59,16 @@
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ky-rn-7Sq" userLabel="ButtonRIghtView">
-                    <rect key="frame" x="300" y="540" width="300" height="60"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQ1-Z9-kPN">
-                            <rect key="frame" x="113" y="13" width="74" height="34"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="74" id="M6z-iy-zK4"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <state key="normal" title="Agree">
-                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <state key="disabled">
-                                <color key="titleColor" red="0.69331991790000003" green="0.69331991790000003" blue="0.69331991790000003" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="userAgreed:" destination="-1" eventType="touchUpInside" id="NTJ-LN-GNj"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.13075417780000001" green="0.77556818179999998" blue="0.658255857" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstItem="iQ1-Z9-kPN" firstAttribute="centerX" secondItem="2Ky-rn-7Sq" secondAttribute="centerX" id="Jty-5a-UP4"/>
-                        <constraint firstItem="iQ1-Z9-kPN" firstAttribute="top" secondItem="2Ky-rn-7Sq" secondAttribute="top" constant="15" id="QaE-we-ArB"/>
-                        <constraint firstItem="iQ1-Z9-kPN" firstAttribute="centerY" secondItem="2Ky-rn-7Sq" secondAttribute="centerY" id="XzO-eq-byZ"/>
-                    </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="QaE-we-ArB"/>
-                        </mask>
-                    </variation>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuX-7b-thc" userLabel="ButtonLeftView">
-                    <rect key="frame" x="0.0" y="540" width="300" height="60"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hF3-fM-k8l">
-                            <rect key="frame" x="109" y="13" width="83" height="34"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="83" id="YdA-OK-vGb"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <state key="normal" title="Disagree">
-                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="userDisagreed:" destination="-1" eventType="touchUpInside" id="IgG-Nw-8eL"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.13075417780000001" green="0.77556818179999998" blue="0.658255857" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstItem="hF3-fM-k8l" firstAttribute="centerX" secondItem="iuX-7b-thc" secondAttribute="centerX" id="Bpi-NK-xty"/>
-                        <constraint firstItem="hF3-fM-k8l" firstAttribute="centerY" secondItem="iuX-7b-thc" secondAttribute="centerY" id="dgM-wC-eLx"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" red="0.1529411765" green="0.15686274510000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="2Ky-rn-7Sq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="301" id="28x-6L-rkG"/>
                 <constraint firstItem="C3x-cq-q40" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" constant="32" id="2yX-ck-Tf0"/>
-                <constraint firstItem="iuX-7b-thc" firstAttribute="width" secondItem="2Ky-rn-7Sq" secondAttribute="width" id="52S-za-JZm"/>
-                <constraint firstAttribute="bottom" secondItem="0nj-Gg-yOa" secondAttribute="bottom" constant="100" id="7lC-wx-Rr3"/>
+                <constraint firstAttribute="bottom" secondItem="0nj-Gg-yOa" secondAttribute="bottom" constant="63" id="7lC-wx-Rr3"/>
                 <constraint firstItem="C3x-cq-q40" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="K0L-z1-SuN"/>
-                <constraint firstItem="iuX-7b-thc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NeK-DU-pNH"/>
-                <constraint firstItem="2Ky-rn-7Sq" firstAttribute="top" secondItem="0nj-Gg-yOa" secondAttribute="bottom" constant="40" id="QcL-DX-VXz"/>
-                <constraint firstAttribute="bottom" secondItem="2Ky-rn-7Sq" secondAttribute="bottom" id="T82-Cf-piY"/>
-                <constraint firstAttribute="trailing" secondItem="2Ky-rn-7Sq" secondAttribute="trailing" id="VBH-iS-P1Q"/>
                 <constraint firstItem="0nj-Gg-yOa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Xnp-kI-Dhb"/>
                 <constraint firstItem="0nj-Gg-yOa" firstAttribute="top" secondItem="C3x-cq-q40" secondAttribute="bottom" constant="20.5" id="ZNc-qd-vQo"/>
-                <constraint firstAttribute="bottom" secondItem="iuX-7b-thc" secondAttribute="bottom" id="cWI-IC-lLn"/>
-                <constraint firstItem="2Ky-rn-7Sq" firstAttribute="leading" secondItem="iuX-7b-thc" secondAttribute="trailing" id="dv1-59-vAH"/>
-                <constraint firstItem="iuX-7b-thc" firstAttribute="top" secondItem="0nj-Gg-yOa" secondAttribute="bottom" constant="40" id="prd-AH-jYr"/>
                 <constraint firstAttribute="trailing" secondItem="0nj-Gg-yOa" secondAttribute="trailing" constant="16" id="vZy-zJ-bfX"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="28x-6L-rkG"/>
-                </mask>
-            </variation>
         </view>
     </objects>
 </document>
