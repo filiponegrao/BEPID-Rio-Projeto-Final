@@ -114,7 +114,7 @@ class Tools_ViewController: UIViewController
         UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0.8
-            self.closeButton.alpha = 0.7
+            self.closeButton.alpha = 1
             
             self.notificationButton.frame.origin.y = screenHeight*1/4
             self.notificationButton.alpha = 1

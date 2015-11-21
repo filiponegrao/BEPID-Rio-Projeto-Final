@@ -219,8 +219,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         if(indexPath != nil)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!) as! RandomWalk_CollectionViewCell
-            cell.pressIn()
-            cell.pressOut()
+//            cell.pressIn()
+//            cell.pressOut()
             
             let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
             chat.contact = self.contacts[indexPath!.item]
