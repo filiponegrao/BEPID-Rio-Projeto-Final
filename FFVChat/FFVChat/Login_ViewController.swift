@@ -111,7 +111,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.loginButton.clipsToBounds = true
         
         self.registerButton.setTitleColor(oficialGreen, forState: .Normal)
-        
     }
     
     
