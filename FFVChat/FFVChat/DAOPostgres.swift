@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import CryptoSwift
 
 
 private let data: DAOPostgres = DAOPostgres()
@@ -78,6 +79,10 @@ class DAOPostgres : NSObject
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
     {
+//        let key = EncryptTools.makeKey(username)
+//        let t: [UInt8] = try! text.encrypt(AES(key: key, iv: "0123456789012345"))
+//        let base64 = NSData(bytes: t).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+    
         let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
         DAOParse.pushMessageNotification(username, text: "Mensagem de \(DAOUser.sharedInstance.getUsername())")

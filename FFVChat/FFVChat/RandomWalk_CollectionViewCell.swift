@@ -64,7 +64,6 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.numberOfMessages.hidden = true
         self.container.addSubview(self.numberOfMessages)
         
-
 //        self.sendSubviewToBack(profileBtn)
     }
 
@@ -75,23 +74,26 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     func pressIn()
     {
+        
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
-//            self.profileBtn.center = self.center
-            self.profileBtn.frame.size = CGSizeMake(self.profileBtn.frame.size.width/1.5, self.profileBtn.frame.size.width/1.5)
-            self.profileBtn.layer.cornerRadius = self.profileBtn.frame.size.width/1.5
+            self.profileBtn.frame.size = CGSizeMake(self.frame.size.width/1.5, self.frame.size.width/1.5)
+            self.profileBtn.layer.cornerRadius = (self.frame.size.width/1.5)/4
             
             }) { (success: Bool) -> Void in
                 
-                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                    
-                    //            self.profileBtn.center = self.center
-                    self.profileBtn.frame.size = CGSizeMake(self.frame.size.width, self.frame.size.width)
-                    self.profileBtn.layer.cornerRadius = self.frame.size.width/2
-                    
-                    }) { (success: Bool) -> Void in
-                        
-                }
+        }
+    }
+    
+    func pressOut()
+    {
+        UIView.animateWithDuration(0.3, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            self.profileBtn.frame.size = CGSizeMake(self.frame.size.width, self.frame.size.width)
+            self.profileBtn.layer.cornerRadius = self.frame.size.width/2
+            
+            }) { (success: Bool) -> Void in
+                
         }
     }
     

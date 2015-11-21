@@ -39,7 +39,7 @@ class TheJudger : NSObject
     func judge()
     {
         DAOUser.sharedInstance.decreaseTrustLevel()
-        let timer = NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "deletePhoto", userInfo: nil, repeats: false)
+        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "deletePhoto", userInfo: nil, repeats: false)
     }
     
     

@@ -34,8 +34,13 @@ class ContactManager_View: UIView
     
     var clearChat : UIButton!
     
-    init(contact: Contact, requester: ContactsBubble_CollectionViewController)
+    var blurView : UIVisualEffectView!
+    
+    var origin : CGRect!
+    
+    init(contact: Contact, requester: ContactsBubble_CollectionViewController, origin: CGRect)
     {
+        self.origin = origin
         self.viewController = requester
         self.contact = contact
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
@@ -44,7 +49,7 @@ class ContactManager_View: UIView
         
         self.blackScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.blackScreen.backgroundColor = UIColor.blackColor()
-        self.blackScreen.alpha = 0.9
+        self.blackScreen.alpha = 0
         self.addSubview(self.blackScreen)
         
         self.backButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
@@ -120,6 +125,73 @@ class ContactManager_View: UIView
         self.addSubview(self.clearChat)
     }
     
+    
+    func insertView()
+    {
+        self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.blurView.frame = self.frame
+        self.blurView.alpha = 0
+        self.addSubview(self.blurView)
+        self.sendSubviewToBack(self.blurView)
+        
+        let posUsername = self.usernameLabel.center
+        let postrustLevel = self.trustLevelLabel.center
+        let posClearchat = self.clearChat.center
+        let posFavorite = self.favouriteButton.center
+        let posDelete = self.deleteButton.center
+        
+        self.trustLevelLabel.center.x -= screenWidth
+        self.usernameLabel.center.x -= screenWidth
+        self.clearChat.center.x -= screenWidth
+        
+        self.favouriteButton.center.y += screenHeight/2
+        self.deleteButton.center.y += screenHeight/2
+        
+        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            self.blackScreen.alpha = 0.7
+            self.blurView.alpha = 0.7
+            self.trustLevelLabel.center = postrustLevel
+            self.usernameLabel.center = posUsername
+            self.clearChat.center = posClearchat
+            self.favouriteButton.center = posFavorite
+            self.deleteButton.center = posDelete
+            
+            }) { (success: Bool) -> Void in
+                
+        }
+        
+    }
+    
+    func removeView()
+    {
+        self.circleView.removeFromSuperview()
+        self.backButton.removeFromSuperview()
+        
+        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            self.contactImage.frame = self.origin
+            self.contactImage.frame.size = CGSizeMake(self.origin.width, self.origin.width)
+            self.contactImage.layer.cornerRadius = self.origin.size.width/2
+            self.blackScreen.alpha = 0
+            self.blurView.alpha = 0
+            
+            self.favouriteButton.center.y += screenHeight/2
+            self.deleteButton.center.y += screenHeight/2
+            
+            self.clearChat.center.x -= screenWidth/2
+            self.trustLevelLabel.center.x -= screenWidth/2
+            self.usernameLabel.center.x -= screenWidth/2
+            
+            self.contactImage.alpha = 0.1
+
+            
+            }) { (success: Bool) -> Void in
+                
+                self.removeFromSuperview()
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
@@ -127,8 +199,7 @@ class ContactManager_View: UIView
 
     func back()
     {
-        self.removeFromSuperview()
-//        self.viewController.blurView.removeFromSuperview()
+        self.removeView()
     }
     
     func addCircleView()

@@ -21,6 +21,8 @@ class DAOMessages
     
     var lastMessage : Message!
     
+    var inExecution: Bool = false
+    
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     init()
@@ -114,8 +116,18 @@ class DAOMessages
     
     func setMessageSeen(message: Message)
     {
+        DAOPostgres.sharedInstance.setMessageSeen(message) { (success) -> Void in
+            
+        }
+        
         message.status = "seen"
         self.save()
+    }
+    
+    
+    func setMessageDeleted(message: Message)
+    {
+        
     }
     
     
@@ -158,10 +170,13 @@ class DAOMessages
         
         do {
             let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
-            if let entityToDelete = fetchedEntities.first {
+            if let entityToDelete = fetchedEntities.first
+            {
                 self.managedObjectContext.deleteObject(entityToDelete)
             }
-        } catch {
+        }
+        catch
+        {
             // Do something in response to error condition
         }
         
@@ -217,26 +232,46 @@ class DAOMessages
     {
         if(message.status != "seen")
         {
+            self.setMessageSeen(message)
             message.status = "seen"
             self.save()
             
             let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)) * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {
-                var contact : String
-                if (message.sender == DAOUser.sharedInstance.getUsername())
-                {
-                    contact = message.target
-                }
-                else
-                {
-                    contact = message.sender
-                }
                 
-                let messages = self.conversationWithContact(contact)
-                let index = messages.indexOf(message)
-                
-                self.deleteMessage(message)
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
+                self.timesUpMessage(message)
+            }
+        }
+    }
+    
+    
+    
+    func timesUpMessage(message: Message)
+    {
+        if(!self.inExecution)
+        {
+            self.inExecution = true
+            var contact : String
+            if (message.sender == DAOUser.sharedInstance.getUsername())
+            {
+                contact = message.target
+            }
+            else
+            {
+                contact = message.sender
+            }
+            
+            let messages = self.conversationWithContact(contact)
+            let index = messages.indexOf(message)
+            self.deleteMessage(message)
+            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
+            self.inExecution = false
+        }
+        else
+        {
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(0.5)) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.timesUpMessage(message)
             }
         }
     }

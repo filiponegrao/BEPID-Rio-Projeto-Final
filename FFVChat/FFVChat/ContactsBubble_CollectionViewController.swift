@@ -22,6 +22,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     var longPress : UILongPressGestureRecognizer!
     
+    var singleTap : UITapGestureRecognizer!
+    
     var contactManager : ContactManager_View!
     
     
@@ -57,11 +59,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
 
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        self.longPress.minimumPressDuration = 0.6
+        self.longPress.minimumPressDuration = 0.5
         self.longPress.delaysTouchesBegan = true
         self.longPress.delegate = self
         self.view.addGestureRecognizer(self.longPress)
         
+        self.singleTap = UITapGestureRecognizer(target: self, action: "singleTap:")
+        self.view.addGestureRecognizer(self.singleTap)
         
         // Do any additional setup after loading the view.
     }
@@ -179,20 +183,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? RandomWalk_CollectionViewCell
-        cell?.pressIn()
         
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        chat.contact = self.contacts[indexPath.item]
-        chat.transitioningDelegate = (self.navigationController as! AppNavigationController)
-        chat.modalPresentationStyle = .Custom
         
-//        self.presentViewController(chat, animated: true, completion: nil)
-    
-        
-        self.navigationController?.pushViewController(chat, animated: true)
     }
    
+    
+    
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
     {
         if gestureReconizer.state != UIGestureRecognizerState.Ended
@@ -206,15 +202,38 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         if ((indexPath) != nil)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
-           
-            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self)
+            let frame = CGRectMake(cell!.frame.origin.x, cell!.frame.origin.y + 70, cell!.frame.size.width, cell!.frame.size.height)
+            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self, origin: frame)
             
             self.view.addSubview(self.contactManager)
+            self.contactManager.insertView()
         }
-        else
+    }
+    
+    func singleTap(gesture: UITapGestureRecognizer)
+    {
+        print(gesture.state)
+        let point = gesture.locationInView(self.collectionView)
+        
+        let indexPath = self.collectionView?.indexPathForItemAtPoint(point)
+        
+        if(indexPath != nil)
         {
-            print("Could not find index path")
+            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!) as! RandomWalk_CollectionViewCell
+            cell.pressIn()
+            cell.pressOut()
+            
+            let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+            chat.contact = self.contacts[indexPath!.item]
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(0.6)) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                
+                self.navigationController?.pushViewController(chat, animated: true)
+            }
         }
+        
+        
     }
     
     //******* TRANSITIONS ********

@@ -96,6 +96,8 @@
 		804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAC1BE7296A0021DF4E /* SentMidia.swift */; };
 		804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */; };
 		804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */; };
+		807A65C01BFFC2CE00A39984 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807A65BF1BFFC2CE00A39984 /* CryptoSwift.framework */; };
+		807A65C21BFFC61D00A39984 /* EncryptTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807A65C11BFFC61D00A39984 /* EncryptTools.swift */; };
 		809B558B1BFC1885006CD894 /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809B55891BFC1885006CD894 /* Message+CoreDataProperties.swift */; };
 		809B558C1BFC1885006CD894 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809B558A1BFC1885006CD894 /* Message.swift */; };
 		809B81F91BFCE6140078F350 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809B81F81BFCE6140078F350 /* AudioManager.swift */; };
@@ -270,6 +272,8 @@
 		804B3DAC1BE7296A0021DF4E /* SentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMidia.swift; sourceTree = "<group>"; };
 		804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOSentMidia.swift; sourceTree = "<group>"; };
 		804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSentMidia_CollectionViewCell.swift; sourceTree = "<group>"; };
+		807A65BF1BFFC2CE00A39984 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = "Pods/../build/Debug-iphoneos/CryptoSwift.framework"; sourceTree = "<group>"; };
+		807A65C11BFFC61D00A39984 /* EncryptTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptTools.swift; sourceTree = "<group>"; };
 		809B55891BFC1885006CD894 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		809B558A1BFC1885006CD894 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		809B81F81BFCE6140078F350 /* AudioManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				807A65C01BFFC2CE00A39984 /* CryptoSwift.framework in Frameworks */,
 				8019CB421BAE1D7A0017CD7A /* libz.tbd in Frameworks */,
 				8019CB401BAE1D6F0017CD7A /* libsqlite3.tbd in Frameworks */,
 				801D928F1BA4985000D05CE7 /* SystemConfiguration.framework in Frameworks */,
@@ -380,6 +385,7 @@
 				8000B4DB1BDFFB4800CD00A6 /* Editor.swift */,
 				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
 				8030E44D1BF96A350075E798 /* BubbleTransition.swift */,
+				807A65C11BFFC61D00A39984 /* EncryptTools.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -704,6 +710,7 @@
 		D0E69B36ABE6B286A1988F83 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				807A65BF1BFFC2CE00A39984 /* CryptoSwift.framework */,
 				E573196666F24453C1804730 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -883,6 +890,7 @@
 				80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */,
 				F6AC545F1BF9571300CF7918 /* ChangePassword_ViewController.swift in Sources */,
 				803657821BF94A97000907BD /* NVActivityIndicatorView.swift in Sources */,
+				807A65C21BFFC61D00A39984 /* EncryptTools.swift in Sources */,
 				8036579A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */,
 				80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */,
 				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
@@ -1124,6 +1132,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1146,6 +1155,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
