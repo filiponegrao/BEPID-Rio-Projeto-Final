@@ -161,6 +161,7 @@
 		F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */; };
 		F6AC545F1BF9571300CF7918 /* ChangePassword_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */; };
 		F6AC54631BF95BD800CF7918 /* NavigationChangePassword_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */; };
+		F6B667141C01606100B1C256 /* AppLoginImport_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B667131C01606000B1C256 /* AppLoginImport_ViewController.swift */; };
 		F6BD6C201BD2F7A000069570 /* CellImage_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD6C1F1BD2F7A000069570 /* CellImage_TableViewCell.swift */; };
 		F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */; };
 		F6EBC8691BF8526F00BD443E /* NavigationAddContact_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EBC8681BF8526F00BD443E /* NavigationAddContact_View.swift */; };
@@ -338,6 +339,7 @@
 		F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
 		F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePassword_ViewController.swift; sourceTree = "<group>"; };
 		F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationChangePassword_View.swift; sourceTree = "<group>"; };
+		F6B667131C01606000B1C256 /* AppLoginImport_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLoginImport_ViewController.swift; sourceTree = "<group>"; };
 		F6BD6C1F1BD2F7A000069570 /* CellImage_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImage_TableViewCell.swift; sourceTree = "<group>"; };
 		F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationNotification_View.swift; sourceTree = "<group>"; };
 		F6EBC8681BF8526F00BD443E /* NavigationAddContact_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationAddContact_View.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 				F62A687A1BBB2A7B007D3DBB /* TutoSecond_ViewController.swift */,
 				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
 				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
+				F6B667131C01606000B1C256 /* AppLoginImport_ViewController.swift */,
 				80B4D8221BBB157500BDA48F /* AppNavigationController.swift */,
 				803962931BC44AAC00AFFD24 /* Contacts_ViewController.swift */,
 				F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */,
@@ -952,6 +955,7 @@
 				80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */,
 				803657811BF94A97000907BD /* NVActivityIndicatorShape.swift in Sources */,
 				803657951BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift in Sources */,
+				F6B667141C01606100B1C256 /* AppLoginImport_ViewController.swift in Sources */,
 				8030E44E1BF96A350075E798 /* BubbleTransition.swift in Sources */,
 				8036578B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
