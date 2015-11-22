@@ -23,7 +23,7 @@
                             <constraint firstAttribute="height" constant="40" id="r3w-KH-cpB"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Nome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJS-Fl-Y8t">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJS-Fl-Y8t">
                         <rect key="frame" x="75" y="4" width="307" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="bHQ-oc-ZaB"/>
@@ -55,7 +55,7 @@
                     <constraint firstItem="oJS-Fl-Y8t" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="22" id="Dov-NL-DaF"/>
                     <constraint firstItem="djy-yK-P2X" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="22" id="KWQ-Zp-Hdo"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Hht-bm-HND" secondAttribute="trailing" constant="4" id="XK5-7V-3v5"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="oJS-Fl-Y8t" secondAttribute="bottom" constant="12" id="c5l-vm-iPU"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="oJS-Fl-Y8t" secondAttribute="bottom" constant="11" id="c5l-vm-iPU"/>
                     <constraint firstItem="hBF-ek-wKk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="iI2-qD-yus"/>
                     <constraint firstAttribute="bottomMargin" secondItem="djy-yK-P2X" secondAttribute="bottom" constant="-4.5" id="kTa-CP-N1l"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hBF-ek-wKk" secondAttribute="bottom" constant="-4.5" id="wIg-tO-JJp"/>
@@ -72,6 +72,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkOff" width="20" height="20"/>
+        <image name="checkOff" width="22" height="22"/>
     </resources>
 </document>
