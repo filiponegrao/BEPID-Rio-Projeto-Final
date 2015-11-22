@@ -135,7 +135,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell.backgroundColor = oficialSemiGray
         
-        let separatorLineView = UIView(frame: CGRectMake(10, cell.frame.size.height - 1, screenWidth - 20, 1))
+        let separatorLineView = UIView(frame: CGRectMake(10, cell.frame.size.height - 1 , screenWidth - 20, 1))
         separatorLineView.backgroundColor = oficialLightGray
         
         if(self.selectedItens[self.metaContacts[indexPath.row].facebookId]!)

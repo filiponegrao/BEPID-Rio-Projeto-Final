@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         {
             if(PFUser.currentUser() != nil)
             {
-                let contacts = Import_ViewController()
+                let contacts = AppNavigationController()
                 self.window?.rootViewController = contacts
             }
             else
