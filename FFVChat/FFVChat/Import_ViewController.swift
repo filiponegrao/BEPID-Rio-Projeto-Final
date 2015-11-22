@@ -43,30 +43,37 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.view.backgroundColor = oficialDarkGray
         
-        //doneButton
-        self.doneButton = UIButton(frame: CGRectMake(screenWidth/2 + 2, self.tableView.frame.origin.y - 65, screenWidth/2-2, 30))
-        self.doneButton.backgroundColor = oficialGreen
-        self.doneButton.setTitle("Done", forState: .Normal)
-        self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
-        self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.doneButton)
+        //title view
+        self.titleView.textColor = oficialGreen
+        self.titleView.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.titleView.setSizeFont(22)
         
+        //text view
+        self.textView.textColor = oficialLightGray
 
         //all contacts button
-        self.allContactsButton = UIButton(frame: CGRectMake(0, self.tableView.frame.origin.y
-            - 80, screenWidth/2 - 2, 40))
+        self.allContactsButton = UIButton(frame: CGRectMake(screenWidth/2, self.tableView.frame.origin.y
+            - 80, screenWidth/2, 40))
         self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
-        self.allContactsButton.setTitle("Todos", forState: .Normal)
+        self.allContactsButton.setTitle("All contacts", forState: .Normal)
+        self.allContactsButton.setTitleColor(oficialGreen, forState: .Normal)
         self.allContactsButton.addTarget(self, action: "selectAllContacts", forControlEvents: .TouchUpInside)
         self.allContactsButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 20)
+        self.allContactsButton.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+        self.allContactsButton.titleLabel!.transform = CGAffineTransformMakeScale(-1.0, 1.0)
+        self.allContactsButton.imageView!.transform = CGAffineTransformMakeScale(-1.0, 1.0)
         self.view.addSubview(self.allContactsButton)
         
         //tableview
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
+        self.tableView.backgroundColor = oficialSemiGray
         self.tableView.registerNib(UINib(nibName: "CellImportContact_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        self.tableView.separatorStyle = .None
+
         
         self.loadingView = LoadScreen_View()
         self.view.addSubview(self.loadingView)
@@ -87,6 +94,14 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
             self.all = true
         }
+        
+        //doneButton
+        self.doneButton = UIButton(frame: CGRectMake(0, screenHeight - 44, screenWidth, 44))
+        self.doneButton.backgroundColor = oficialGreen
+        self.doneButton.setTitle("Done", forState: .Normal)
+        self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.doneButton)
         
     }
     
@@ -118,7 +133,10 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.name.text = self.metaContacts[indexPath.row].facebookName
         cell.username.text = "Carregando..."
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-        cell.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = oficialSemiGray
+        
+        let separatorLineView = UIView(frame: CGRectMake(10, cell.frame.size.height - 1, screenWidth - 20, 1))
+        separatorLineView.backgroundColor = oficialLightGray
         
         if(self.selectedItens[self.metaContacts[indexPath.row].facebookId]!)
         {
@@ -136,6 +154,8 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         DAOParse.getUsernameFromFacebookID(self.metaContacts[indexPath.row].facebookId) { (string: String?) -> Void in
             cell.username.text = string
         }
+        
+        cell.addSubview(separatorLineView)
         
         return cell
     }
@@ -209,6 +229,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         if(self.all)
         {
             self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
+//            self.allContactsButton.imageView?.contentMode = .ScaleAspectFill
             for item in self.metaContacts
             {
                 self.selectedItens[item.facebookId] = true
