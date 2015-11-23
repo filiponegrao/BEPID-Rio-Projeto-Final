@@ -108,7 +108,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! Notification_TableViewCell
             cell.selectionStyle = .None
             cell.backgroundColor = oficialSemiGray
-            cell.notification.text = "\(self.requests[indexPath.row].sender) te adicionou como amigo. Clique para aceitar"
+            cell.notification.text = "\(self.requests[indexPath.row].sender) te adicionou."
+            cell.notification.textColor = oficialLightGray
             cell.request = self.requests[indexPath.row]
             
             DAOParse.getPhotoFromUsername(self.requests[indexPath.row].sender) { (image) -> Void in
@@ -158,7 +159,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
     {
         let footer = UIView(frame: CGRectMake(0, 0, screenWidth, 5))
-        footer.backgroundColor = oficialSemiGray
+        footer.backgroundColor = oficialDarkGray
         
         return footer
     }

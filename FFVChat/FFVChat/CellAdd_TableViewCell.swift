@@ -28,9 +28,14 @@ class CellAdd_TableViewCell: UITableViewCell {
         
         self.photo.clipsToBounds = true
         self.photo.layer.cornerRadius = self.photo.frame.size.width/2
+        
+        self.username.textColor = oficialLightGray
+        
+        self.trustLevel.textColor = oficialLightGray
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(selected: Bool, animated: Bool)
+    {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

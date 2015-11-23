@@ -44,9 +44,9 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.autocapitalizationType = .None
         self.searchBar.autocorrectionType = .No
         self.searchBar.searchBarStyle = .Minimal
-//        self.searchBar.barTintColor = oficialSemiGray
+        self.searchBar.barTintColor = oficialSemiGray
         self.searchBar.tintColor = oficialGreen
-        self.searchBar.barStyle = .Default
+        self.searchBar.barStyle = .BlackTranslucent
         self.searchBar.becomeFirstResponder()
         self.searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         self.searchBar.placeholder = "Search for a username"
