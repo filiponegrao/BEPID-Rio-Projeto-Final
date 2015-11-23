@@ -110,7 +110,8 @@ class Tools_ViewController: UIViewController
     
     func openTools()
     {
-        UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        
+        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0.8
             self.closeButton.alpha = 1

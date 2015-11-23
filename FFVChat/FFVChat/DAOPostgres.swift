@@ -25,7 +25,8 @@ class DAOPostgres : NSObject
     let receivedURL = "\(baseUrl)/setReceivedMessage.php"
     let seenURL = "\(baseUrl)/setSeenMessage.php"
     let fetchURL = "\(baseUrl)/fetchUnreadMessages.php"
-    let sendImageURL = "\(baseUrl)/insertImage.php"
+    let sendImageURL = "\(baseUrl)/insertImage2.php"
+    let fetchImageURL = "\(baseUrl)/fetchImage.php"
     
     override init()
     {
@@ -40,7 +41,7 @@ class DAOPostgres : NSObject
     
     func getUnreadMessages()
     {
-        let parameters : [String:AnyObject]!  = ["target":DAOUser.sharedInstance.getUsername()]
+        let parameters : [String:AnyObject]!  = ["target": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername())]
         
         Alamofire.request(.POST, self.fetchURL, parameters: parameters)
             .responseJSON { response in
@@ -61,6 +62,7 @@ class DAOPostgres : NSObject
                         if(imageKey == nil)
                         {
                             let text = result["text"] as! String
+                            
                             DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime)
                             self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
                         }
@@ -79,11 +81,7 @@ class DAOPostgres : NSObject
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
     {
-//        let key = EncryptTools.makeKey(username)
-//        let t: [UInt8] = try! text.encrypt(AES(key: key, iv: "0123456789012345"))
-//        let base64 = NSData(bytes: t).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
-    
-        let parameters : [String:AnyObject]!  = ["sender": "\(DAOUser.sharedInstance.getUsername())", "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()), "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
         
         DAOParse.pushMessageNotification(username, text: "Mensagem de \(DAOUser.sharedInstance.getUsername())")
         Alamofire.request(.POST, self.sendMessageURL, parameters: parameters)
@@ -94,11 +92,9 @@ class DAOPostgres : NSObject
     
     func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage)
     {
-        DAOParse.sendImageOnKey(imageKey, image: image)
-
         let me = DAOUser.sharedInstance.getUsername()
 
-        let parameters : [String:AnyObject]!  = ["sender": me, "target": username, "sentDate": "\(NSDate())", "imagekey": imageKey, "lifeTime": lifeTime]
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": "\(NSDate())", "imagekey": imageKey, "lifeTime": lifeTime]
         
         Alamofire.request(.POST, self.sendImageMessageURL, parameters: parameters)
             .responseJSON { response in
@@ -107,11 +103,57 @@ class DAOPostgres : NSObject
         
     }
     
+//    func sendImage(username: String, image: UIImage, imageKey: String)
+//    {
+//
+//        let base64String = (image.mediumQualityJPEGNSData).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.init(rawValue: 0))
+//        print(base64String)
+//        
+//        Alamofire.request(.POST, self.sendImageURL, parameters: ["imageKey": imageKey, "image": base64String])
+//            .responseJSON {response in
+//                print(response)
+//        }
+//        
+//        Alamofire.upload(.POST, url, data: image.lowestQualityJPEGNSData)
+//            .progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
+//                print(totalBytesWritten)
+//
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    print("Total bytes written on main queue: \(totalBytesWritten)")
+//                }
+//            }
+//            
+//            .responseJSON { response  in
+//                
+//                print(response)
+//        }
+//    }
+    
+    
+//    func loadImage(message: Message)
+//    {
+//        Alamofire.request(.POST, self.fetchImageURL, parameters: ["imageKey": message.imageKey!])
+//            .responseString { response in
+//                
+//                let string = response.result.value! as String
+//                
+//                let index = string.startIndex.advancedBy(1)
+//                
+//                let newString = string.substringFromIndex(index)
+//                print(newString)
+//                
+//                let data = NSData(base64EncodedString: newString, options: NSDataBase64DecodingOptions.init(rawValue: 0))
+//                
+//                DAOMessages.sharedInstance.setImageForMessage(message, image: data!)
+//        }
+//        
+//        
+//    }
     
     
     func setMessageReceived(message: Message)
     {
-        let parameters : [String:AnyObject]! = ["sender": message.sender, "target":DAOUser.sharedInstance.getUsername(), "sentDate": message.sentDate]
+        let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(message.sender), "target": EncryptTools.encUsername(message.target), "sentDate": message.sentDate]
         
         Alamofire.request(.POST, self.receivedURL, parameters: parameters)
             .responseJSON { response in
@@ -121,7 +163,7 @@ class DAOPostgres : NSObject
     
     func setMessageSeen(message: Message, callback: (success: Bool) -> Void)
     {
-        let parameters : [String:AnyObject]! = ["sender": message.sender, "target":DAOUser.sharedInstance.getUsername(), "sentDate": message.sentDate]
+        let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(message.sender), "target": EncryptTools.encUsername(message.target), "sentDate": message.sentDate]
         
         Alamofire.request(.POST, self.seenURL, parameters: parameters)
             .responseJSON { response in

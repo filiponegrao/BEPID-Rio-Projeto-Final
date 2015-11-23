@@ -692,9 +692,9 @@ class DAOParse
     }
     
     
-    class func sendImageOnKey(key: String, image: UIImage)
+    class func sendImageOnKey(key: String, image: NSData)
     {
-        let file = PFFile(data: image.mediumQualityJPEGNSData)
+        let file = PFFile(data: image)
         
         let object = PFObject(className: "Images")
         object["imageKey"] = key
@@ -705,7 +705,7 @@ class DAOParse
     }
     
     
-    func uploadImageForMessage(message: Message)
+    func downloadImageForMessage(message: Message)
     {
         if(self.tentativas < 10)
         {
@@ -721,8 +721,8 @@ class DAOParse
                     file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
                         self.tentativas = 0
-                        print("passa aqui")
-                        DAOMessages.sharedInstance.setImageForMessage(message, image: data!)
+                        let decData = EncryptTools.decImage(data!)
+                        DAOMessages.sharedInstance.setImageForMessage(message, image: decData)
                         
                     })
                 }
@@ -731,7 +731,7 @@ class DAOParse
                     self.tentativas++
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2)) * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        self.uploadImageForMessage(message)
+                        self.downloadImageForMessage(message)
                     }
                 }
                 
