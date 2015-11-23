@@ -18,6 +18,12 @@ class CellImage_TableViewCell: UITableViewCell
     
     var sentDate : UILabel!
     
+    var loading : UIView!
+    
+    var indicator : NVActivityIndicatorView!
+    
+    var blur : UIVisualEffectView!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,13 +37,13 @@ class CellImage_TableViewCell: UITableViewCell
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundWidth))
         self.backgroundLabel.backgroundColor = UIColor.whiteColor()
         self.backgroundLabel.alpha = 0.1
-        self.backgroundLabel.layer.cornerRadius = 5
+        self.backgroundLabel.layer.cornerRadius = 10
         self.backgroundLabel.layer.zPosition = 0
         self.addSubview(self.backgroundLabel)
         
         self.imageCell = UIImageView(frame: CGRectMake(margemLateral * 2, margemVertical * 4, cellBackgroundWidth - (margemLateral * 2), cellBackgroundWidth - (margemLateral * 2) - dateTextHeigth))
         self.imageCell.clipsToBounds = true
-        self.imageCell.layer.cornerRadius = 5
+        self.imageCell.layer.cornerRadius = 10
         self.imageCell.contentMode = .ScaleAspectFill
         self.imageCell.layer.zPosition = 5
         self.cellView.addSubview(imageCell)
@@ -49,11 +55,40 @@ class CellImage_TableViewCell: UITableViewCell
         self.sentDate.textColor = UIColor.whiteColor()
         self.cellView.addSubview(self.sentDate)
         
+        
+        let black = UIView(frame: CGRectMake(0,0,self.imageCell.frame.size.width/2, self.imageCell.frame.size.width/2))
+        black.backgroundColor = UIColor.blackColor()
+        black.alpha = 0.3
+        black.center = self.imageCell.center
+        black.layer.cornerRadius = black.frame.size.width/2
+        
+        self.loading = UIView(frame: self.frame)
+        self.loading.backgroundColor = UIColor.clearColor()
+        self.loading.addSubview(black)
+        
+        self.indicator = NVActivityIndicatorView(frame: CGRectMake(0, 0, self.imageCell.frame.size.width/1.5, self.imageCell.frame.size.height/1.5), type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen)
+        self.indicator.center = self.imageCell.center
+        self.indicator.startAnimation()
+        self.loading.addSubview(self.indicator)
+        
+        self.addSubview(self.loading)
+        
     }
     
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
+    }
+    
+    
+    func setLoading()
+    {
+        self.loading.hidden = false
+    }
+    
+    func setLoadingOff()
+    {
+        self.loading.hidden = true
     }
 
     override func awakeFromNib()

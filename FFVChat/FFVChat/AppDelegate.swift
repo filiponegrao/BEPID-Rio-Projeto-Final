@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
+        DAOPostgres.sharedInstance.stopRefreshing()
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
     }
@@ -132,8 +132,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func applicationDidBecomeActive(application: UIApplication)
     {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-//        DAOMessages.sharedInstance.receiveMessagesFromContact()
         FBSDKAppEvents.activateApp()
+        DAOPostgres.sharedInstance.getUnreadMessages()
+        DAOPostgres.sharedInstance.stopRefreshing()
+        DAOContacts.sharedInstance.refreshContacts()
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
     }
@@ -141,6 +143,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.saveContext()
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     
@@ -184,7 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
         {
-//            DAOMessages.sharedInstance.receiveMessagesFromContact()
+            DAOPostgres.sharedInstance.getUnreadMessages()
         }
     }
     

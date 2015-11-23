@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="420" height="48"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="420" height="47.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="420" height="47"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hBF-ek-wKk">
@@ -23,43 +23,43 @@
                             <constraint firstAttribute="height" constant="40" id="r3w-KH-cpB"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome Do fulaninho maldito" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJS-Fl-Y8t">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJS-Fl-Y8t">
                         <rect key="frame" x="75" y="4" width="307" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="bHQ-oc-ZaB"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkOff" translatesAutoresizingMaskIntoConstraints="NO" id="Hht-bm-HND">
-                        <rect key="frame" x="387" y="16" width="20" height="20"/>
+                        <rect key="frame" x="386" y="13" width="22" height="22"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="BJu-x6-Ut2"/>
-                            <constraint firstAttribute="width" constant="20" id="dQC-4n-eD2"/>
+                            <constraint firstAttribute="height" constant="22" id="BJu-x6-Ut2"/>
+                            <constraint firstAttribute="width" constant="22" id="dQC-4n-eD2"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Carregando..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djy-yK-P2X">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djy-yK-P2X">
                         <rect key="frame" x="75" y="23" width="304" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="BNb-cq-iaQ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="Hht-bm-HND" secondAttribute="bottom" constant="3.5" id="0Ou-X9-kjU"/>
-                    <constraint firstItem="Hht-bm-HND" firstAttribute="leading" secondItem="oJS-Fl-Y8t" secondAttribute="trailing" constant="5" id="9MW-hC-dQv"/>
+                    <constraint firstItem="Hht-bm-HND" firstAttribute="leading" secondItem="oJS-Fl-Y8t" secondAttribute="trailing" constant="4" id="9MW-hC-dQv"/>
                     <constraint firstItem="oJS-Fl-Y8t" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="22" id="Dov-NL-DaF"/>
                     <constraint firstItem="djy-yK-P2X" firstAttribute="leading" secondItem="hBF-ek-wKk" secondAttribute="trailing" constant="22" id="KWQ-Zp-Hdo"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Hht-bm-HND" secondAttribute="trailing" constant="5" id="XK5-7V-3v5"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="oJS-Fl-Y8t" secondAttribute="bottom" constant="12" id="c5l-vm-iPU"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Hht-bm-HND" secondAttribute="trailing" constant="4" id="XK5-7V-3v5"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="oJS-Fl-Y8t" secondAttribute="bottom" constant="11" id="c5l-vm-iPU"/>
                     <constraint firstItem="hBF-ek-wKk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="iI2-qD-yus"/>
                     <constraint firstAttribute="bottomMargin" secondItem="djy-yK-P2X" secondAttribute="bottom" constant="-4.5" id="kTa-CP-N1l"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hBF-ek-wKk" secondAttribute="bottom" constant="-4.5" id="wIg-tO-JJp"/>
-                    <constraint firstItem="Hht-bm-HND" firstAttribute="leading" secondItem="djy-yK-P2X" secondAttribute="trailing" constant="8" id="yL5-77-rPn"/>
+                    <constraint firstItem="Hht-bm-HND" firstAttribute="leading" secondItem="djy-yK-P2X" secondAttribute="trailing" constant="7" id="yL5-77-rPn"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -72,6 +72,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="checkOff" width="20" height="20"/>
+        <image name="checkOff" width="22" height="22"/>
     </resources>
 </document>

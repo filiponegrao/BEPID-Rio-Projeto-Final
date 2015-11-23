@@ -30,9 +30,9 @@ class Password_View: UIView
         self.requester = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
-        self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
         self.blurView.frame = self.frame
-        self.blurView.alpha = 0.95
+        self.blurView.alpha = 0.8
         self.addSubview(self.blurView)
         
         self.blackScreen = UIView(frame: self.frame)

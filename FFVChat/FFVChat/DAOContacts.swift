@@ -186,7 +186,34 @@ class DAOContacts
         {
             return false
         }
-
+    }
+    
+    
+    func refreshContacts()
+    {
+        let contacts = self.getAllContacts()
+        let cont = contacts.count
+        var i = 0
+        
+        for contact in contacts
+        {
+            DAOParse.refreshContact(contact.username, callback: { (trustLevel, image) -> Void in
+                
+                if(trustLevel != nil)
+                {
+                    contact.trustLevel = trustLevel
+                }
+                if(image != nil)
+                {
+                    contact.profileImage = image
+                }
+                i++
+                if((i+1) == cont)
+                {
+                    NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.contactsRefresheded)
+                }
+            })
+        }
     }
     
     

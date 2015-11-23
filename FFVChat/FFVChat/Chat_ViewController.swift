@@ -101,6 +101,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.keyboardDismissMode = .Interactive
+    
 
         self.containerView.addSubview(tableView)
         
@@ -166,37 +167,38 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    func messageSent()
-    {
-        
-    }
-    
     
     func messageEvaporated(notification: NSNotification)
     {
         let info : [NSObject : AnyObject] = notification.userInfo!
         let index = info["index"] as! Int
+        
         print("Meu indicie é \(index) e minha abela tem \(self.messages.count)")
+        
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a lnha \(index)")
+        
+        print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a linha \(index)")
+        
         self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
         self.imageZoom?.fadeOut()
+        
     }
     
     func reloadImageCell(notification: NSNotification)
     {
         print("loading image")
         let info : [NSObject : AnyObject] = notification.userInfo!
-        let key = info["imageKey"] as! String
+        let key = info["messageKey"] as! String
         
         for mssg in self.messages
         {
-            if(mssg.imageKey! == key)
+            if(mssg.imageKey == key)
             {
                 let index = self.messages.indexOf(mssg)!
                 print("Atualizando")
-                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! CellImage_TableViewCell
-                cell.imageCell.image = UIImage(data: mssg.image!)
+                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? CellImage_TableViewCell
+                cell?.imageCell.image = UIImage(data: mssg.image!)
+                cell?.setLoadingOff()
             }
         }
     }
@@ -219,19 +221,31 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 mssg.status = "seen"
             }
             
-            if(mssg.image == nil && mssg.text != nil)
+            if(mssg.imageKey == nil && mssg.text != nil)
             {
-                let h = self.heightForView(mssg.text!, font: fontCell!, width: cellTextWidth)
+                let h = self.heightForView(mssg.text!, font: textMessageFont!, width: cellTextWidth)
                 if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
                 {
-                    self.tableView.contentOffset.y -= (margemVertical*4 + h)
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical*2) + 20 //+20 de margem, superior e inferiro
+                        
+                        }, completion: { (success: Bool) -> Void in
+                            
+                    })
                 }
             }
             else
             {
                 if((self.tableView.contentSize.height + screenWidth) > self.tableView.frame.size.height)
                 {
-                    self.tableView.contentOffset.y += screenWidth
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        self.tableView.contentOffset.y += screenWidth + 20 //+20 de margem
+                        
+                        }, completion: { (success: Bool) -> Void in
+                            
+                    })
                 }
             }
         }
@@ -322,19 +336,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //TEXT
         else
         {
-            let necessaryHeigth = self.heightForView(self.messages[indexPath.row].text!, font: textMessageFont!, width: cellTextWidth)
-            let textHeight = cellTextHeigth
-            
-            if(necessaryHeigth > textHeight)
-            {
-                let increase = necessaryHeigth - textHeight
-                return cellHeightDefault + increase
-                
-            }
-            else
-            {
-                return cellHeightDefault
-            }
+            return self.getPerfectCellHeigth(indexPath.row)
         }
     }
     
@@ -360,18 +362,20 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if(self.messages[indexPath.row].image != nil)
             {
                 cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
+                cell.setLoadingOff()
             }
             else
             {
                 cell.imageCell.image = UIImage()
+                cell.setLoading()
             }
             
             //blur
-            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-            
-            visualEffectView.frame = cell.imageCell.bounds
-            cell.imageCell.subviews.last?.removeFromSuperview()
-            cell.imageCell.addSubview(visualEffectView)
+            cell.blur?.removeFromSuperview()
+            cell.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+            cell.blur.frame = cell.imageCell.bounds
+            cell.imageCell.addSubview(cell.blur)
+            cell.bringSubviewToFront(cell.indicator)
             
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
@@ -384,14 +388,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.2
+                cell.backgroundLabel.alpha = 0.3
             }
             else
             {
                 cell.backgroundLabel.alpha = 0.1
             }
             
-            cell.backgroundLabel.layer.cornerRadius = 4
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
             cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
             cell.backgroundLabel.layer.shadowRadius = 3
@@ -428,7 +431,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.sentDate.frame.origin.y = cell.textMessage.frame.origin.y + cell.textMessage.frame.size.height + 5
             }
             
-            cell.backgroundLabel.layer.cornerRadius = 4
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
             cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
             cell.backgroundLabel.layer.shadowRadius = 3
@@ -442,7 +444,17 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             else
             {
-                cell.backgroundLabel.alpha = 0.13
+                cell.backgroundLabel.alpha = 0.1
+            }
+            
+            //Se for hyperlink
+            if((cell.textMessage.text!.lowercaseString.rangeOfString("http://")) != nil)
+            {
+                cell.textMessage.textColor = oficialGreen
+            }
+            else
+            {
+                cell.textMessage.textColor = UIColor.whiteColor()
             }
             
             DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
@@ -456,6 +468,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         print("clicando")
         let message = self.messages[indexPath.row]
+        
+        //Imagem
         if(message.image != nil && !self.messageText.isFirstResponder())
         {
             self.messageText.endEditing(true)
@@ -469,6 +483,25 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 message.status = "seen"
             }
         }
+        //Hiperlynk
+        else if(message.text?.lowercaseString.rangeOfString("http://") != nil)
+        {
+            let text = message.text!.lowercaseString
+            var link = String()
+            if(text.rangeOfString(" ") != nil)
+            {
+                link = text.sliceFrom("http://", to: " ")!
+                link = "Http://" + link
+            }
+            else
+            {
+                link = text
+            }
+            
+            UIApplication.sharedApplication().openURL(NSURL(string: link)!)
+
+        }
+        
         self.messageText.endEditing(true)
         
     }
@@ -485,6 +518,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //*********** END TABLE VIEW PROPERTIES **************//
     //****************************************************//
     
+    func getPerfectCellHeigth(index: Int) -> CGFloat
+    {
+        let necessaryHeigth = self.heightForView(self.messages[index].text!, font: textMessageFont!, width: cellTextWidth)
+        let textHeight = cellTextHeigth
+        
+        if(necessaryHeigth > textHeight)
+        {
+            let increase = necessaryHeigth - textHeight
+            return cellHeightDefault + increase
+            
+        }
+        else
+        {
+            return cellHeightDefault
+        }
+    }
     
     
     //****************************************************//
@@ -660,14 +709,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if(self.tableView.contentSize.height > self.tableView.frame.size.height)
         {
-            UIView.animateWithDuration(0.4, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
-                self.tableView.contentOffset.y += screenWidth
+                self.tableView.contentOffset.y += screenWidth + 20
                 
                 }, completion: { (success: Bool) -> Void in
                     
             })
         }
+        
     }
     
     
@@ -680,7 +730,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let index = self.messages.indexOf(message)
             
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
-            let h = self.heightForView(self.messageText.text!, font: fontCell!, width: cellTextWidth)
+            let h = self.heightForView(self.messageText.text!, font: textMessageFont!, width: cellTextWidth)
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
@@ -692,6 +742,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             self.messageText.text = ""
             self.backToOriginal()
+        }
+        else
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.tableView.contentOffset.y += (40)
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
         }
     }
     

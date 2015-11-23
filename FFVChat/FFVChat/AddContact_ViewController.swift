@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate
+class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate, UITextFieldDelegate
 {
     var results : [metaContact] = [metaContact]()
     
@@ -44,13 +44,19 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.autocapitalizationType = .None
         self.searchBar.autocorrectionType = .No
         self.searchBar.searchBarStyle = .Minimal
-//        self.searchBar.barTintColor = oficialSemiGray
+        self.searchBar.barTintColor = oficialSemiGray
         self.searchBar.tintColor = oficialGreen
-        self.searchBar.barStyle = .Default
+        self.searchBar.barStyle = .BlackTranslucent
         self.searchBar.becomeFirstResponder()
         self.searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         self.searchBar.placeholder = "Search for a username"
         self.view.addSubview(self.searchBar)
+        
+        let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = oficialLightGray
+        textFieldInsideSearchBar?.backgroundColor = oficialSemiGray
+
+//        searchSubviewsForTextFieldIn(self.searchBar)
         
         self.tableView = UITableView(frame: CGRectMake(0, 115, screenWidth, screenHeight))
         self.tableView.delegate = self
@@ -62,7 +68,6 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.view.addSubview(self.tableView)
     
     }
-    
 
     override func viewWillAppear(animated: Bool)
     {
@@ -99,6 +104,22 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.delay?.invalidate()
         self.delay = NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "reloadResults", userInfo: nil, repeats: false)
     }
+    
+    //TENTATIVA DE MUDAR COR DE FUNDO
+//    func searchSubviewsForTextFieldIn(view: UIView)
+//    {
+//        for view in searchBar.subviews
+//        {
+//            for subview in view.subviews
+//            {
+//                if subview .isKindOfClass(UITextField)
+//                {
+//                    let textField: UITextField = subview as! UITextField
+//                    textField.backgroundColor = UIColor.lightGrayColor()
+//                }
+//            }
+//        }
+//    }
     
     func reloadResults()
     {

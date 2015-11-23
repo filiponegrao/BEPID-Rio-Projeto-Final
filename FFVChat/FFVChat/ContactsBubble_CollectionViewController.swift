@@ -22,6 +22,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     var longPress : UILongPressGestureRecognizer!
     
+    var singleTap : UITapGestureRecognizer!
+    
     var contactManager : ContactManager_View!
     
     
@@ -57,11 +59,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
 
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        self.longPress.minimumPressDuration = 0.6
+        self.longPress.minimumPressDuration = 0.5
         self.longPress.delaysTouchesBegan = true
         self.longPress.delegate = self
         self.view.addGestureRecognizer(self.longPress)
         
+        self.singleTap = UITapGestureRecognizer(target: self, action: "singleTap:")
+        self.view.addGestureRecognizer(self.singleTap)
         
         // Do any additional setup after loading the view.
     }
@@ -74,13 +78,33 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkUnreadMessages", name: NotificationController.center.messageReceived.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactsRefreshed", name: NotificationController.center.contactsRefresheded.name, object: nil)
+
+        
+        
         DAOFriendRequests.sharedInstance.friendsAccepted()
-//        DAOMessages.sharedInstance.receiveMessagesFromContact()
     }
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.contactsRefresheded.name, object: nil)
+
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         
-        //self.reloadAnimations()
+        self.reloadAnimations()
+        self.checkUnreadMessages()
+        DAOContacts.sharedInstance.refreshContacts()
     }
     
     func reloadAnimations()
@@ -93,16 +117,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         }
     }
     
-    override func viewDidDisappear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
-    }
+    
     
     override func viewDidLayoutSubviews()
     {
         self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
 //        self.navigationBar.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
-
     }
 
     
@@ -114,12 +134,28 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
 
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
         
-        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadCollection", userInfo: nil, repeats: false)
+        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadAnimations", userInfo: nil, repeats: false)
     }
     
-    func reloadCollection()
+    
+    func contactsRefreshed()
     {
-        self.collectionView?.reloadData()
+        self.contacts = DAOContacts.sharedInstance.getAllContacts()
+        
+        self.collectionView!.reloadData()
+    }
+    
+    
+    func checkUnreadMessages()
+    {
+        var i = 0
+        for contact in self.contacts
+        {
+            let count = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
+            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
+            cell?.setUnreadMessages(count)
+            i++
+        }
     }
     
     func filterContacts()
@@ -168,18 +204,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-        chat.contact = self.contacts[indexPath.item]
-        chat.transitioningDelegate = (self.navigationController as! AppNavigationController)
-        chat.modalPresentationStyle = .Custom
         
-//        self.presentViewController(chat, animated: true, completion: nil)
-    
         
-        self.navigationController?.pushViewController(chat, animated: true)
-
     }
    
+    
+    
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
     {
         if gestureReconizer.state != UIGestureRecognizerState.Ended
@@ -193,26 +223,37 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         if ((indexPath) != nil)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
-//            cell?.blur(blurRadius: 0.7)
-            //Dar feedback ao usuário
-
-            
-//            cell?.blur(blurRadius: 0)
-            
-           
-            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self)
-            
-            
+            let frame = CGRectMake(cell!.frame.origin.x, cell!.frame.origin.y + 70, cell!.frame.size.width, cell!.frame.size.height)
+            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self, origin: frame)
             
             self.view.addSubview(self.contactManager)
-            //            print(indexPath!.row)
-            
-
+            self.contactManager.insertView()
         }
-        else
+    }
+    
+    func singleTap(gesture: UITapGestureRecognizer)
+    {
+        let point = gesture.locationInView(self.collectionView)
+        
+        let indexPath = self.collectionView?.indexPathForItemAtPoint(point)
+        
+        if(indexPath != nil)
         {
-            print("Could not find index path")
+            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!) as! RandomWalk_CollectionViewCell
+            cell.pressIn()
+            cell.pressOut()
+            
+            let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
+            chat.contact = self.contacts[indexPath!.item]
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(0.6)) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                
+                self.navigationController?.pushViewController(chat, animated: true)
+            }
         }
+        
+        
     }
     
     //******* TRANSITIONS ********
