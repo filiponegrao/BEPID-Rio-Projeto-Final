@@ -552,7 +552,7 @@ class DAOUser
     
     func changeProfilePicture(image: UIImage)
     {
-        let data = image.highestQualityJPEGNSData
+        let data = image.mediumQualityJPEGNSData
         
         PFUser.currentUser()!["profileImage"] = PFFile(data: data)
         PFUser.currentUser()!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in

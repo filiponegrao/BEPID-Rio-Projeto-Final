@@ -416,6 +416,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         self.picker.delegate = self
+        self.picker.allowsEditing = true
         
         if(UIDevice.currentDevice().userInterfaceIdiom == .Phone)
         {

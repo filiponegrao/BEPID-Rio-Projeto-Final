@@ -21,6 +21,8 @@ class DAOMessages
     
     var inExecution: Bool = false
     
+    var delayForPush : NSTimer!
+    
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     init()
@@ -40,7 +42,9 @@ class DAOMessages
         self.save()
         
         DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 300, text: EncryptTools.enc(text, contact: username))
-        DAOParse.pushMessageNotification(username, text: text)
+        
+        self.delayForPush?.invalidate()
+        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
         
         return message
     }
@@ -63,7 +67,16 @@ class DAOMessages
         DAOSentMidia.sharedInstance.addSentMidia(message)
         
         return message
+    }
+    
+    
+    func sendTextPushNotification(timer: NSTimer)
+    {
+        let info  = timer.userInfo!
+        let username = info["username"] as! String
+        let text = info["text"] as! String
         
+        DAOParse.pushMessageNotification(username, text: text)
     }
     
     

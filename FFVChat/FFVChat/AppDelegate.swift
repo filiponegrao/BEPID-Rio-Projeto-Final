@@ -133,9 +133,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
-        DAOPostgres.sharedInstance.getUnreadMessages()
-        DAOPostgres.sharedInstance.stopRefreshing()
-        DAOContacts.sharedInstance.refreshContacts()
+        if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
+        {
+            DAOPostgres.sharedInstance.getUnreadMessages()
+            DAOPostgres.sharedInstance.stopRefreshing()
+            DAOContacts.sharedInstance.refreshContacts()
+        }
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
     }

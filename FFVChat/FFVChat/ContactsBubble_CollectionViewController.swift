@@ -22,8 +22,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     var longPress : UILongPressGestureRecognizer!
     
-    var singleTap : UITapGestureRecognizer!
-    
     var contactManager : ContactManager_View!
     
     
@@ -64,8 +62,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         self.longPress.delegate = self
         self.view.addGestureRecognizer(self.longPress)
         
-        self.singleTap = UITapGestureRecognizer(target: self, action: "singleTap:")
-        self.view.addGestureRecognizer(self.singleTap)
         
         // Do any additional setup after loading the view.
     }
@@ -82,9 +78,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactsRefreshed", name: NotificationController.center.contactsRefresheded.name, object: nil)
 
-        
-        
-        DAOFriendRequests.sharedInstance.friendsAccepted()
     }
     
     override func viewDidDisappear(animated: Bool)
@@ -103,8 +96,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     override func viewDidAppear(animated: Bool) {
         
         self.reloadAnimations()
-        self.checkUnreadMessages()
         DAOContacts.sharedInstance.refreshContacts()
+        DAOFriendRequests.sharedInstance.friendsAccepted()
+        self.checkUnreadMessages()
+        print("foi")
     }
     
     func reloadAnimations()
@@ -141,8 +136,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     func contactsRefreshed()
     {
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
-        
-        self.collectionView!.reloadData()
+        var i = 0
+        for contact in self.contacts
+        {
+            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
+            cell?.profileBtn.setImage(UIImage(data: self.contacts[i].profileImage), forState: .Normal)
+            i++
+        }
     }
     
     
@@ -231,30 +231,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         }
     }
     
-    func singleTap(gesture: UITapGestureRecognizer)
-    {
-        let point = gesture.locationInView(self.collectionView)
-        
-        let indexPath = self.collectionView?.indexPathForItemAtPoint(point)
-        
-        if(indexPath != nil)
-        {
-            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!) as! RandomWalk_CollectionViewCell
-            cell.pressIn()
-            cell.pressOut()
-            
-            let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
-            chat.contact = self.contacts[indexPath!.item]
-            
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(0.6)) * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                
-                self.navigationController?.pushViewController(chat, animated: true)
-            }
-        }
-        
-        
-    }
+//    func openChat
+    
     
     //******* TRANSITIONS ********
     

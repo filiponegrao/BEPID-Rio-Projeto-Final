@@ -14,7 +14,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     var username: UILabel!
     
-    var profileBtn: MKImageView!
+    var profileBtn: MKButton!
     
     var numberOfMessages : UILabel!
     
@@ -44,9 +44,11 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.username.textColor = oficialGreen
         self.addSubview(self.username)
         
-        self.profileBtn = MKImageView(frame: CGRectMake(0, 0, self.frame.width, self.frame.width))
+        self.profileBtn = MKButton(frame: CGRectMake(0, 0, self.frame.width, self.frame.width))
+        self.profileBtn.backgroundLayerCornerRadius = 300
         self.profileBtn.rippleLocation = .Center
-        self.profileBtn.rippleLayerColor = UIColor.whiteColor()
+        self.profileBtn.ripplePercent = 2
+        self.profileBtn.rippleLayerColor = oficialMediumGray
         self.profileBtn.layer.cornerRadius = profileBtn.frame.width*0.5
         self.profileBtn.layer.borderWidth = 2.0
         self.profileBtn.layer.borderColor = UIColor.grayColor().CGColor
@@ -101,7 +103,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     func setInfo(name:String, profile:UIImage)
     {
         self.username.text = name
-        self.profileBtn.image = profile
+        self.profileBtn.setImage(profile, forState: .Normal)
         
         let labelHeight:CGFloat = self.frame.height - self.frame.width
         self.username.frame = CGRectMake( 0, profileBtn.frame.maxY, self.frame.width, labelHeight )

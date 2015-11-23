@@ -119,6 +119,7 @@
 		80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */; };
 		80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */; };
 		80F6BB241BF6C2A2003DE8AE /* DAOPostgres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */; };
+		80FD13AC1C038CF100729402 /* GMColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD13AB1C038CF100729402 /* GMColor.swift */; };
 		80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF185A1BE3B15200C5F35E /* metaContact.swift */; };
 		80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A11BE51D7E00C5F35E /* NotificationController.swift */; };
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
@@ -296,6 +297,7 @@
 		80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications_ViewController.swift; sourceTree = "<group>"; };
 		80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification_TableViewCell.swift; sourceTree = "<group>"; };
 		80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPostgres.swift; sourceTree = "<group>"; };
+		80FD13AB1C038CF100729402 /* GMColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMColor.swift; sourceTree = "<group>"; };
 		80FF185A1BE3B15200C5F35E /* metaContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = metaContact.swift; sourceTree = "<group>"; };
 		80FF18A11BE51D7E00C5F35E /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		80FF18A31BE51EA800C5F35E /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				809E75A01BB4A99600CEC425 /* ImageEdition.swift */,
 				8030E44D1BF96A350075E798 /* BubbleTransition.swift */,
 				807A65C11BFFC61D00A39984 /* EncryptTools.swift */,
+				80FD13AB1C038CF100729402 /* GMColor.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -933,6 +936,7 @@
 				801CB5C81BC2205E00F51E06 /* LoadingInfo_ViewController.swift in Sources */,
 				803657891BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
+				80FD13AC1C038CF100729402 /* GMColor.swift in Sources */,
 				F6EBC8691BF8526F00BD443E /* NavigationAddContact_View.swift in Sources */,
 				803657971BF94A97000907BD /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
 				F66B29ED1BAB6FAF00BC43EE /* NavigationContact_View.swift in Sources */,

@@ -53,11 +53,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: NotificationController.center.messageReceived.name, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
-
-        
-//        DAOMessages.sharedInstance.receiveMessagesFromContact()
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        self.tableView.reloadData()
         
     }
     
@@ -135,36 +130,27 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.addSubview(self.messageText)
 
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
+        
+        let trustLevel = Int(self.contact.trustLevel)
+        if(trustLevel < 100)
+        {
+            self.redScreen.alpha = 1
+            
+            UIView.animateWithDuration(2, animations: { () -> Void in
+                
+                self.redScreen.alpha = 0
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
     }
     
     override func viewDidAppear(animated: Bool)
     {
-        self.reloadTrustLevel()
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        self.tableView.reloadData()
         self.tableViewScrollToBottom(false)
-        DAOPostgres.sharedInstance.startRefreshing()
-    }
-
-    
-    func reloadTrustLevel()
-    {
-        DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
-            
-            if(trustLevel != nil)
-            {
-                if(trustLevel < 100)
-                {
-                    self.redScreen.alpha = 1
-                    
-                    UIView.animateWithDuration(2, animations: { () -> Void in
-                        
-                        self.redScreen.alpha = 0
-                        
-                        }, completion: { (success: Bool) -> Void in
-                            
-                    })
-                }
-            }
-        }
     }
     
     
@@ -280,6 +266,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func keyboardWillHide(notification: NSNotification)
     {
+        self.containerView.frame.origin.y = navigationBarHeigth
         self.containerView.frame.size.height = screenHeight - navigationBarHeigth
         self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
         self.tableView.frame.size.height = tableViewHeigth
@@ -368,6 +355,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 cell.imageCell.image = UIImage()
                 cell.setLoading()
+                DAOParse.sharedInstance.downloadImageForMessage(self.messages[indexPath.row])
             }
             
             //blur
