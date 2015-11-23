@@ -429,12 +429,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.3
+                cell.backgroundLabel.alpha = 0.38
             }
             else
             {
-                cell.backgroundLabel.backgroundColor = UIColor.yellowColor()
-                cell.backgroundLabel.alpha = 0.2
+                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
+                cell.backgroundLabel.alpha = 0.18
             }
             
             //Se for hyperlink
