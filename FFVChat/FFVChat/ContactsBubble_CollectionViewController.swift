@@ -99,7 +99,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         DAOContacts.sharedInstance.refreshContacts()
         DAOFriendRequests.sharedInstance.friendsAccepted()
         self.checkUnreadMessages()
-        print("foi")
     }
     
     func reloadAnimations()
@@ -194,6 +193,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! RandomWalk_CollectionViewCell
         
+        cell.contactsController = self
+        cell.profileBtn.tag = indexPath.row
         cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: contacts[indexPath.row].profileImage!)!)
         
         cell.loadAnimations(45)
@@ -204,7 +205,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        self.openChat(indexPath.row)
         
     }
    
@@ -231,11 +231,16 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         }
     }
     
-    func openChat(index: Int)
+    func openChat(sender: UIButton)
     {
+        let index = sender.tag
         let chat = Chat_ViewController()
         chat.contact = self.contacts[index]
-        self.navigationController?.pushViewController(chat, animated: true)
+        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(0.5) * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            self.navigationController?.pushViewController(chat, animated: true)
+        }
     }
     
     

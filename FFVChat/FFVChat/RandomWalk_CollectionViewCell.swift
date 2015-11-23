@@ -20,6 +20,10 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     var indicator : UILabel!
     
+    var contactsController : ContactsBubble_CollectionViewController!
+    
+    var index : Int!
+    
     // animate variables
     private var animate = false
     
@@ -54,6 +58,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.profileBtn.layer.borderColor = UIColor.grayColor().CGColor
         self.profileBtn.contentMode = .ScaleToFill
         self.profileBtn.clipsToBounds = true
+        self.profileBtn.addTarget(contactsController, action: "openChat:", forControlEvents: .TouchUpInside)
         self.container.addSubview(self.profileBtn)
         
         self.numberOfMessages = UILabel(frame: CGRectMake(self.frame.size.width-20,-5, self.profileBtn.frame.size.width/3, self.profileBtn.frame.size.width/3))
