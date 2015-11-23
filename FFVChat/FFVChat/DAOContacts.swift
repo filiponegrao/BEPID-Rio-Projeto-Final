@@ -61,7 +61,6 @@ class DAOContacts
         
         let fetchRequest = NSFetchRequest(entityName: "Contact")
         fetchRequest.predicate = predicate
-        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
         
         do { let result = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
