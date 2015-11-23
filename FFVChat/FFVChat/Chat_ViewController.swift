@@ -428,11 +428,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.3
+                cell.backgroundLabel.alpha = 0.4
             }
             else
             {
-                cell.backgroundLabel.backgroundColor = GMColor.yellow50Color()
+                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
                 cell.backgroundLabel.alpha = 0.2
             }
             

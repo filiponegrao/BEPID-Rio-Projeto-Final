@@ -44,9 +44,9 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.searchBar.autocapitalizationType = .None
         self.searchBar.autocorrectionType = .No
         self.searchBar.searchBarStyle = .Minimal
-        self.searchBar.barTintColor = oficialSemiGray
+//        self.searchBar.barTintColor = oficialSemiGray
         self.searchBar.tintColor = oficialGreen
-        self.searchBar.barStyle = .BlackTranslucent
+//        self.searchBar.barStyle = .Default
         self.searchBar.becomeFirstResponder()
         self.searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         self.searchBar.placeholder = "Search for a username"
@@ -54,7 +54,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         
         let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = oficialLightGray
-        textFieldInsideSearchBar?.backgroundColor = oficialSemiGray
+        
 
 //        searchSubviewsForTextFieldIn(self.searchBar)
         
