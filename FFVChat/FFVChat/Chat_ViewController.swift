@@ -137,6 +137,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
         self.tableViewScrollToBottom(false)
+        DAOPostgres.sharedInstance.startRefreshing()
         
         let trustLevel = Int(self.contact.trustLevel)
         if(trustLevel < 100)

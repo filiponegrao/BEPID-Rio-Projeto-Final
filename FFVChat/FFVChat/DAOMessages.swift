@@ -43,7 +43,7 @@ class DAOMessages
         
         DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 300, text: EncryptTools.enc(text, contact: username))
         
-        self.delayForPush?.invalidate()
+//        self.delayForPush?.invalidate()
 //        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
         
         return message

@@ -304,7 +304,6 @@
 		80FF18A61BE59BEA00C5F35E /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		D57DDDFFAC5708EC21EE1901 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E573196666F24453C1804730 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F60A639C1BFCF8D500FBEC2E /* messageNotification.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = messageNotification.mp3; path = "../../../../Downloads/Telegram Desktop/messageNotification.mp3"; sourceTree = "<group>"; };
 		F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsBubble_CollectionViewController.swift; sourceTree = "<group>"; };
 		F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomWalk_CollectionViewCell.swift; sourceTree = "<group>"; };
 		F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsefulFunctions.swift; sourceTree = "<group>"; };
@@ -535,7 +534,6 @@
 				809B81F81BFCE6140078F350 /* AudioManager.swift */,
 				80FF18A31BE51EA800C5F35E /* Errors.swift */,
 				F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */,
-				F60A639C1BFCF8D500FBEC2E /* messageNotification.mp3 */,
 				809B81FA1BFCE6350078F350 /* messageup.mp3 */,
 				809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */,
 			);
@@ -768,7 +766,6 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = M7KY4TXQRJ;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
