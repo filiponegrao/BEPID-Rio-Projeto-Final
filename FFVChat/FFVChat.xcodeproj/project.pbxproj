@@ -124,7 +124,6 @@
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
 		80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A51BE59BEA00C5F35E /* DataModel.xcdatamodeld */; };
 		8E1A009BFAC1DA509C471F38 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E573196666F24453C1804730 /* Pods.framework */; };
-		F60A639D1BFCF8D500FBEC2E /* messageNotification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F60A639C1BFCF8D500FBEC2E /* messageNotification.mp3 */; };
 		F6178A581BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */; };
 		F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */; };
 		F6178A5C1BF6753C0044FBA9 /* UsefulFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */; };
@@ -409,13 +408,6 @@
 			name = DAOs;
 			sourceTree = "<group>";
 		};
-		8017D3811BD46459000CB8F0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		8019CB3B1BAD16280017CD7A /* Elementos */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,7 +527,6 @@
 				803657A71BF9564E000907BD /* ReportModels.swift */,
 				8030E44B1BF9623A0075E798 /* People.swift */,
 				8017D37C1BD43132000CB8F0 /* DAOs */,
-				8017D3811BD46459000CB8F0 /* Models */,
 				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
 				80FF18A11BE51D7E00C5F35E /* NotificationController.swift */,
 				809B81F81BFCE6140078F350 /* AudioManager.swift */,
@@ -809,7 +800,7 @@
 				801D92761BA492C200D05CE7 /* Login_ViewController.xib in Resources */,
 				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
-				F60A639D1BFCF8D500FBEC2E /* messageNotification.mp3 in Resources */,
+				809B81FD1BFCFD0B0078F350 /* messageNotification.mp3 in Resources */,
 				F66B29DF1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib in Resources */,
 				800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */,
 				F66B29CB1BAB6AE700BC43EE /* Privacy_ViewController.xib in Resources */,

@@ -32,7 +32,7 @@ class NavigationChat_View: UIView
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview((self.backButton))
         
-        self.contactImage = UIButton(frame: CGRectMake(screenWidth/2, 25, screenWidth/5, screenWidth/5))
+        self.contactImage = UIButton(frame: CGRectMake(screenWidth/2, 25, screenWidth/5.5, screenWidth/5.5))
         self.contactImage.backgroundColor = UIColor.grayColor()
         self.contactImage.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.contactImage.layer.borderWidth = 2.0

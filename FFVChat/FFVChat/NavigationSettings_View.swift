@@ -30,7 +30,7 @@ class NavigationSettings_View: UIView
         self.tittle = UILabel(frame: CGRectMake(0, 25, screenWidth, 35))
         self.tittle.text = "Settings"
         self.tittle.textAlignment = .Center
-        self.tittle.textColor = oficialLightGray
+        self.tittle.textColor = oficialGreen
         self.tittle.font = self.tittle.font
         .fontWithSize(22)
         self.addSubview(tittle)
