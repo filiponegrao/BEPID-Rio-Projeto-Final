@@ -388,7 +388,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.2
+                cell.backgroundLabel.alpha = 0.3
             }
             else
             {
@@ -444,9 +444,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             else
             {
-                cell.backgroundLabel.alpha = 0.13
+                cell.backgroundLabel.alpha = 0.1
             }
             
+            //Se for hyperlink
             if((cell.textMessage.text!.lowercaseString.rangeOfString("http://")) != nil)
             {
                 cell.textMessage.textColor = oficialGreen
@@ -716,6 +717,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     
             })
         }
+        
     }
     
     

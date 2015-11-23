@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 import CoreData
 
-
-
 private let data = DAOMessages()
 
 
@@ -41,8 +39,7 @@ class DAOMessages
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, imageKey: nil, image: nil, sentDate: NSDate(), lifeTime: 300, status: "sent")
         self.save()
         
-        print("enviando")
-        DAOPostgres.sharedInstance.sendTextMessage(username, lifeTime: 300, text: text)
+        DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 300, text: EncryptTools.enc(text, contact: username))
         
         return message
     }
@@ -50,25 +47,31 @@ class DAOMessages
     func sendMessage(username: String, image: UIImage, lifeTime: Int) -> Message
     {
         let data = NSString(string: "\(NSDate())").substringWithRange(NSMakeRange(0, 19))
-        let key = "\(DAOUser.sharedInstance.getUsername())\(username)\(data)"
+        let keyWithSpaces = "\(DAOUser.sharedInstance.getUsername())\(username)\(data)"
+        let key = EncryptTools.removeWhiteSpaces(keyWithSpaces)
+        print(key)
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: nil, imageKey: key, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
         self.save()
         
-//        DAOParse.sendMessage(username, image: image, lifeTime: lifeTime)
+        DAOPostgres.sharedInstance.sendImageMessage(EncryptTools.encUsername(username), lifeTime: lifeTime, imageKey: key, image: image)
+        DAOParse.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, target: username))
 
-        DAOPostgres.sharedInstance.sendImageMessage(username, lifeTime: lifeTime, imageKey: key, image: image)
         DAOSentMidia.sharedInstance.addSentMidia(message)
         
         return message
+        
     }
     
     
     func addReceivedMessage(sender: String, text: String, sentDate: NSDate, lifeTime: Int)
     {
+        let decSender = EncryptTools.getUsernameFromEncrpted(sender)
+        let decText = EncryptTools.dec(text)
+        
         //Tratamento de excessao
         let query = NSFetchRequest(entityName: "Message")
-        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUsername(), sentDate)
+        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", decSender!, DAOUser.sharedInstance.getUsername(), sentDate)
         query.predicate = predicate
         do
         {
@@ -80,7 +83,7 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: text, imageKey: nil ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: decSender!, target: DAOUser.sharedInstance.getUsername(), text: decText, imageKey: nil ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
         
         self.lastMessage = message
 
@@ -91,9 +94,11 @@ class DAOMessages
     
     func addReceivedMessage(sender: String, imageKey: String, sentDate: NSDate, lifeTime: Int)
     {
+        let decSender = EncryptTools.getUsernameFromEncrpted(sender)
+        
         //Tratamento de excessao
         let query = NSFetchRequest(entityName: "Message")
-        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", sender, DAOUser.sharedInstance.getUsername(), sentDate)
+        let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", decSender!, DAOUser.sharedInstance.getUsername(), sentDate)
         query.predicate = predicate
         do
         {
@@ -105,8 +110,8 @@ class DAOMessages
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: sender, target: DAOUser.sharedInstance.getUsername(), text: nil, imageKey: imageKey ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
-        DAOParse.sharedInstance.uploadImageForMessage(message)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: decSender!, target: DAOUser.sharedInstance.getUsername(), text: nil, imageKey: imageKey ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
+        DAOParse.sharedInstance.downloadImageForMessage(message)
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
@@ -209,7 +214,6 @@ class DAOMessages
         var messages = [Message]()
         
         let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact, contact)
-//        let pred2 = NSPredicate(format: "target == %@", contact)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1])
 
         let fetchRequest = NSFetchRequest(entityName: "Message")
@@ -252,7 +256,7 @@ class DAOMessages
         {
             self.inExecution = true
             var contact : String
-            if (message.sender == DAOUser.sharedInstance.getUsername())
+            if (message.sender == EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()))
             {
                 contact = message.target
             }
