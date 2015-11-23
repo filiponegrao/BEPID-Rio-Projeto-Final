@@ -432,7 +432,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             else
             {
-                cell.backgroundLabel.backgroundColor = UIColor.yellowColor()
+                cell.backgroundLabel.backgroundColor = GMColor.yellow50Color()
                 cell.backgroundLabel.alpha = 0.2
             }
             
