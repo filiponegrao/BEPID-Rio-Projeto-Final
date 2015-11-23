@@ -29,14 +29,14 @@ class Notification_TableViewCell: UITableViewCell
         self.icon.layer.cornerRadius = self.icon.frame.size.width/2
         self.addSubview(self.icon)
         
-        self.notification = UILabel(frame: CGRectMake(70, 10, screenWidth - 70 - 70, 40))
+        self.notification = UILabel(frame: CGRectMake(70, 10, screenWidth - 140, 40))
         self.notification.textColor = oficialGreen
         self.notification.numberOfLines = 3
         self.addSubview(self.notification)
         
         
-        self.acceptButton = UIButton(frame: CGRectMake(screenWidth - 70, 0, 70, 70))
-        self.acceptButton.setImage(UIImage(named: "accept"), forState: .Normal)
+        self.acceptButton = UIButton(frame: CGRectMake(screenWidth/5 * 4, 5, 60, 60))
+        self.acceptButton.setImage(UIImage(named: "aceptInvite"), forState: .Normal)
         self.acceptButton.addTarget(self, action: "acceptRequest", forControlEvents: .TouchUpInside)
         self.addSubview(self.acceptButton)
         
@@ -63,6 +63,7 @@ class Notification_TableViewCell: UITableViewCell
     func acceptRequest()
     {
         DAOFriendRequests.sharedInstance.acceptRequest(self.request!)
+        self.acceptButton.setImage(UIImage(named: "accept"), forState: .Normal)
     }
 }
 
