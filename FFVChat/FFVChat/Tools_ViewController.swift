@@ -91,9 +91,10 @@ class Tools_ViewController: UIViewController
         self.configLabel.addTarget(self, action: "showSettings", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.configLabel)
         
-        self.closeButton = UIButton(frame: CGRectMake(screenWidth - 64, 25, 45 , 45))
+        self.closeButton = UIButton(frame: CGRectMake(screenWidth - 80, 20, 80 , 80))
         self.closeButton.setImage(UIImage(named: "closeButton"), forState: .Normal)
         self.closeButton.addTarget(self, action: "closeTools", forControlEvents: .TouchUpInside)
+        self.closeButton.frame.origin.y = 6
         self.closeButton.alpha = 0
         self.view.addSubview(self.closeButton)
         
@@ -113,14 +114,14 @@ class Tools_ViewController: UIViewController
         UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0.8
-            self.closeButton.alpha = 0.7
+            self.closeButton.alpha = 1
             
             self.notificationButton.frame.origin.y = screenHeight*1/4
             self.notificationButton.alpha = 1
-
+            
             self.addButton.frame.origin.y = screenHeight/2
             self.addButton.alpha = 1
-
+            
             self.configButton.frame.origin.y = screenHeight*3/4
             self.configButton.alpha = 1
             
@@ -132,15 +133,20 @@ class Tools_ViewController: UIViewController
             
             self.configLabel.center.y = self.configButton.center.y
             self.configLabel.alpha = 1
+
             
-            }) { (success) -> Void in
-                
-        }
+            }, completion: nil)
+        
+//        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+//            
+//            
+//            }) { (success) -> Void in
+//                
+//        }
     }
     
     func closeTools()
     {
-        self.closeButton.alpha = 0
         self.notificationLabel.alpha = 0
         self.addLabel.alpha = 0
         self.configLabel.alpha = 0
@@ -148,9 +154,12 @@ class Tools_ViewController: UIViewController
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0
+            self.closeButton.alpha = 0
+
             self.notificationButton.frame.origin.y = 6
             self.addButton.frame.origin.y = 6
             self.configButton.frame.origin.y = 6
+            
             self.contacts.blurView.alpha = 0
             
             }) { (success) -> Void in

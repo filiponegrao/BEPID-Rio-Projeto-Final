@@ -36,6 +36,9 @@ class CellImportContact_TableViewCell: UITableViewCell
         {
             self.checkOff()
         }
+        
+        self.name.textColor = oficialLightGray
+        self.username.textColor = oficialLightGray
     }
 
     override func setSelected(selected: Bool, animated: Bool)

@@ -21,6 +21,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet var registerButton: UIButton!
     
+    @IBOutlet weak var facebookConnect: UIButton!
+    
     var loadingScreen: LoadScreen_View!
     
     var logo : UIImageView!
@@ -56,12 +58,12 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.view.backgroundColor = oficialDarkGray
         
         self.logo = UIImageView(frame: CGRectMake(0,0, screenWidth/2, screenWidth/4))
-        self.logo.center = CGPointMake(screenWidth/2, screenHeight/6)
+        self.logo.center = CGPointMake(screenWidth/2, screenHeight/6 + 15)
         self.logo.image = UIImage(named: "logo")
         self.view.addSubview(self.logo)
-
+        
         self.emailField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
-        self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3)
+        self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3 + 30)
         self.emailField.autocapitalizationType = .None
         self.emailField.autocorrectionType = .No
         self.emailField.textAlignment = .Center
@@ -102,6 +104,13 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.passwordField.delegate = self
         self.view.addSubview(self.passwordField)
         
+        self.loginButton.backgroundColor = oficialDarkGreen
+        self.loginButton.setTitle("Login", forState: .Normal)
+        self.loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.loginButton.layer.cornerRadius = 7
+        self.loginButton.clipsToBounds = true
+        
+        self.registerButton.setTitleColor(oficialGreen, forState: .Normal)
     }
     
     

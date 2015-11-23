@@ -12,6 +12,8 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
 {
     var loadingScreen: LoadScreen_View!
     
+    @IBOutlet weak var registerButton: UIButton!
+    
     @IBOutlet var imageView: UIImageView!
 
     @IBOutlet var labelUsername: MKTextField!
@@ -21,6 +23,8 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     @IBOutlet weak var labelConfirmPassword: MKTextField!
     
     var activeField: UITextField?
+    
+    var backButton : UIButton!
 
     override func viewWillAppear(animated: Bool)
     {
@@ -58,6 +62,14 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.imageView.image = image
         self.imageView.clipsToBounds = true
         self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2
+        self.imageView.layer.borderColor = oficialDarkGreen.CGColor
+        self.imageView.layer.borderWidth = 6
+        
+        self.registerButton.setTitle("Register", forState: .Normal)
+        self.registerButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.registerButton.backgroundColor = oficialDarkGreen
+        self.registerButton.layer.cornerRadius = 7
+        self.registerButton.clipsToBounds = true
         
         let name = DAOUser.sharedInstance.getUsername()
         let trimmedString = name.removeWhitespace()
@@ -114,6 +126,11 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         self.labelConfirmPassword.bottomBorderColor = oficialGreen
         self.labelConfirmPassword.tintColor = oficialGreen
         self.labelConfirmPassword.textColor = oficialLightGray
+        
+        self.backButton = UIButton(frame: CGRectMake(5, 25, 45, 45))
+        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
+        self.backButton.addTarget(self, action: "back", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.backButton)
 
     }
     
@@ -278,6 +295,9 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         }
     }
 
-    
+    func back()
+    {
+          self.dismissViewControllerAnimated(true, completion: nil)
+    }
    
 }

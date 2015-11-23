@@ -21,6 +21,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     var loadingScreen: LoadScreen_View!
     
+    @IBOutlet weak var registerButton: UIButton!
+    
     @IBOutlet weak var cancel: UIButton!
     
     @IBOutlet weak var buttonphoto: UIButton!
@@ -70,7 +72,11 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.picker!.delegate = self
         self.view.backgroundColor = oficialDarkGray
 
-        
+        self.registerButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.registerButton.backgroundColor = oficialDarkGreen
+        self.registerButton.layer.cornerRadius = 7
+        self.registerButton.clipsToBounds = true
+ 
         self.labelEmail.delegate = self
         self.labelEmail.autocapitalizationType = .None
         self.labelEmail.autocorrectionType = .No
