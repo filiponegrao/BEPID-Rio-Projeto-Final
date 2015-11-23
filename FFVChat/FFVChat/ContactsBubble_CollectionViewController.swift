@@ -204,7 +204,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        
+        self.openChat(indexPath.row)
         
     }
    
@@ -231,7 +231,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         }
     }
     
-//    func openChat
+    func openChat(index: Int)
+    {
+        let chat = Chat_ViewController()
+        chat.contact = self.contacts[index]
+        self.navigationController?.pushViewController(chat, animated: true)
+    }
     
     
     //******* TRANSITIONS ********
