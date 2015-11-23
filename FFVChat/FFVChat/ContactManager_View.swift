@@ -85,6 +85,7 @@ class ContactManager_View: UIView
         self.contactImage.clipsToBounds = true
         self.contactImage.backgroundColor = oficialGreen
         self.contactImage.image = UIImage(data: self.contact.profileImage)
+        self.contactImage.contentMode = .ScaleAspectFill
         self.addSubview(self.contactImage)
         
         //ADICIONA CIRCULO DE ACORDO COM TRUST LEVEL

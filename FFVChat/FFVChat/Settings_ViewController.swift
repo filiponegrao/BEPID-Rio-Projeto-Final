@@ -191,7 +191,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             // label que mostra nome do usuário
             usernameLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 20))
             usernameLabel.text = username
-            usernameLabel.textColor = oficialLightGray // verificar trust level
+            usernameLabel.textColor = UIColor.whiteColor()
             usernameLabel.textAlignment = .Center
             usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + 10)
             cell.addSubview(usernameLabel)
@@ -199,7 +199,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             // label que mostra trust level do usuário
             trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
-            trustLabel.textColor = oficialLightGray
+            trustLabel.textColor = UIColor.whiteColor()
             trustLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
             trustLabel.setSizeFont(25)
             
@@ -210,16 +210,6 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             self.trustLevel = DAOUser.sharedInstance.getTrustLevel()
             trustLabel.text = "\(self.trustLevel)%"
             
-            if(self.trustLevel == 100)
-            {
-                trustLabel.textColor = oficialGreen
-                self.navBar.tittle.textColor = oficialGreen
-            }
-            else
-            {
-                trustLabel.textColor = oficialRed
-                self.navBar.tittle.textColor = UIColor.whiteColor()
-            }
             
             // Create a new CircleView
             let circleWidth = screenWidth/2.5 + 4
