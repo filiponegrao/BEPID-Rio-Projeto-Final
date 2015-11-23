@@ -42,7 +42,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var redScreen : UIView!
     
     var messageSound: AVAudioPlayer!
-
     
     override func viewWillAppear(animated: Bool)
     {
@@ -131,6 +130,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
         
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        self.tableView.reloadData()
+        self.tableViewScrollToBottom(false)
+        
         let trustLevel = Int(self.contact.trustLevel)
         if(trustLevel < 100)
         {
@@ -144,13 +151,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     
             })
         }
-    }
-    
-    override func viewDidAppear(animated: Bool)
-    {
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        self.tableView.reloadData()
-        self.tableViewScrollToBottom(false)
     }
     
     
