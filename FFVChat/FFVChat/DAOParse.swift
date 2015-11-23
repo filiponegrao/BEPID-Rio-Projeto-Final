@@ -608,82 +608,35 @@ class DAOParse
         push.setData(data as [NSObject : AnyObject])
         push.sendPushInBackground()
     }
-
     
-    //BIG FECTH FUNCTION HOLY SHIT THIS IS SO MUTCH BIG MODA FOCKR!
     
-//    class func checkForContactsMessage()
-//    {
-//        if(PFUser.currentUser() == nil)
-//        {
-//            print("Usuario nao logado")
-//            return
-//        }
-//        
-//        let contacts = DAOContacts.sharedInstance.getAllContacts()
-//        
-//        for contact in contacts
-//        {
-//            let userQuery = PFUser.query()
-//            userQuery?.whereKey("username", equalTo: contact.username)
-//            userQuery?.getFirstObjectInBackgroundWithBlock({ (user: PFObject?, error1: NSError?) -> Void in
-//                
-//                if(user != nil)
-//                {
-//                    let query = PFQuery(className: "Message")
-//                    query.whereKey("sender", equalTo: user!)
-//                    query.whereKey("target", equalTo: PFUser.currentUser()!)
-//                    query.whereKey("received", equalTo: false)
-//                    
-//                    query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-//                        
-////                        print("Achou \(objects?.count) mensagens de \(user?.valueForKey("username"))")
-//                        
-//                        if(objects != nil)
-//                        {
-//                            for object in objects!
-//                            {
-//                                let sentDate = object.valueForKey("createdAt") as! NSDate
-//                                let lifeTime = object.valueForKey("lifeTime") as! Int
-//                                let text = object.valueForKey("text") as? String
-//                                
-//                                //Texto
-//                                if(text != nil)
-//                                {
-//                                    object.setValue(true, forKey: "received")
-//                                    object.saveInBackgroundWithBlock({ (success: Bool, error2: NSError?) -> Void in
-//                                        
-//                                        DAOMessages.sharedInstance.addReceivedMessage(contact.username, text: text!, sentDate: sentDate, lifeTime: lifeTime)
-//                                    })
-//                                }
-//                                    //Image
-//                                else
-//                                {
-//                                    let photo = object.objectForKey("image") as! PFFile
-//                                    photo.getDataInBackgroundWithBlock({ (data: NSData?, error2: NSError?) -> Void in
-//                                        
-//                                        if(data != nil)
-//                                        {
-//                                            object.setValue(true, forKey: "received")
-//                                            object.saveInBackgroundWithBlock({ (success: Bool, error3: NSError?) -> Void in
-//                                                
-//                                                if(success)
-//                                                {
-//                                                    DAOMessages.sharedInstance.addReceivedMessage(contact.username, image: data!, sentDate: sentDate, lifeTime: lifeTime)
-//                                                }
-//                                                
-//                                            })
-//                                        }
-//                                    })
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                
-//            })
-//        }
-//    }
+    class func refreshContact(username: String, callback: (trustLevel: Int?, image: NSData?) -> Void) -> Void
+    {
+        let query = PFUser.query()!
+        query.whereKey("username", equalTo: username)
+        query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
+            
+            if(object != nil)
+            {
+                let trustLevel = object!["trustLevel"] as! Int
+                let data = object!["profileImage"] as! PFFile
+                data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                    if(data != nil)
+                    {
+                        callback(trustLevel: trustLevel, image: data!)
+                    }
+                    else
+                    {
+                        callback(trustLevel: trustLevel, image: nil)
+                    }
+                })
+            }
+            else
+            {
+                callback(trustLevel: nil, image: nil)
+            }
+        }
+    }
     
     
     class func getMyId() -> String

@@ -80,15 +80,31 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkUnreadMessages", name: NotificationController.center.messageReceived.name, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactsRefreshed", name: NotificationController.center.contactsRefresheded.name, object: nil)
+
+        
         
         DAOFriendRequests.sharedInstance.friendsAccepted()
-//        DAOMessages.sharedInstance.receiveMessagesFromContact()
     }
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.contactsRefresheded.name, object: nil)
+
+    }
+    
     
     override func viewDidAppear(animated: Bool) {
         
         self.reloadAnimations()
         self.checkUnreadMessages()
+        DAOContacts.sharedInstance.refreshContacts()
     }
     
     func reloadAnimations()
@@ -101,10 +117,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         }
     }
     
-    override func viewDidDisappear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
-    }
+    
     
     override func viewDidLayoutSubviews()
     {
@@ -122,6 +135,14 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
         
         let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadAnimations", userInfo: nil, repeats: false)
+    }
+    
+    
+    func contactsRefreshed()
+    {
+        self.contacts = DAOContacts.sharedInstance.getAllContacts()
+        
+        self.collectionView!.reloadData()
     }
     
     
@@ -219,8 +240,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         if(indexPath != nil)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!) as! RandomWalk_CollectionViewCell
-//            cell.pressIn()
-//            cell.pressOut()
+            cell.pressIn()
+            cell.pressOut()
             
             let chat = Chat_ViewController(nibName: "Chat_ViewController", bundle: nil)
             chat.contact = self.contacts[indexPath!.item]

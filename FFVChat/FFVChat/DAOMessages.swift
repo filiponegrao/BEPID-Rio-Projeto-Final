@@ -40,6 +40,7 @@ class DAOMessages
         self.save()
         
         DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 300, text: EncryptTools.enc(text, contact: username))
+        DAOParse.pushMessageNotification(username, text: text)
         
         return message
     }
@@ -48,7 +49,8 @@ class DAOMessages
     {
         let data = NSString(string: "\(NSDate())").substringWithRange(NSMakeRange(0, 19))
         let keyWithSpaces = "\(DAOUser.sharedInstance.getUsername())\(username)\(data)"
-        let key = EncryptTools.removeWhiteSpaces(keyWithSpaces)
+        var key = EncryptTools.removeWhiteSpaces(keyWithSpaces)
+        key = EncryptTools.encKey(key)
         print(key)
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: nil, imageKey: key, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
@@ -56,6 +58,7 @@ class DAOMessages
         
         DAOPostgres.sharedInstance.sendImageMessage(EncryptTools.encUsername(username), lifeTime: lifeTime, imageKey: key, image: image)
         DAOParse.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, target: username))
+        DAOParse.pushImageNotification(username)
 
         DAOSentMidia.sharedInstance.addSentMidia(message)
         

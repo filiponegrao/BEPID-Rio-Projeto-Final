@@ -31,6 +31,8 @@ class NotificationController: NSObject
     
     var trustLevelRefresehd : NSNotification!
     
+    var contactsRefresheded : NSNotification!
+    
     override init()
     {
         self.friendRequest = NSNotification(name: "friendRequest", object: NSMutableDictionary())
@@ -42,7 +44,7 @@ class NotificationController: NSObject
         self.friendRequested = NSNotification(name: "friendRequested", object: nil)
         self.messageEvaporated = NSNotification(name: "messageEvaporated", object: nil, userInfo: nil)
         self.trustLevelRefresehd = NSNotification(name: "trustLevelRefresehd", object: nil)
-        
+        self.contactsRefresheded = NSNotification(name: "contactsRefresheded", object: nil)
     }
     
     class var center : NotificationController

@@ -29,16 +29,18 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var editPhotoButton : UIButton! // botão para mudar foto de perfil
     
-    var image : UIImage!
-    
     var profilePicView : UIImageView! // onde fica a foto de perfil
     
     var circleView : CircleView!
     
     var trustLevel : Int!
     
+    var profileImage : UIImage!
+    
     override func viewDidLoad()
     {
+        self.profileImage = DAOUser.sharedInstance.getProfileImage()
+        
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialMediumGray
@@ -170,17 +172,15 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if(indexPath.row == 0 && indexPath.section == 0)
         {
-            let image = DAOUser.sharedInstance.getProfileImage()  // imagem do usuário
             let username = DAOUser.sharedInstance.getUsername()
             
             let usernameLabel : UILabel!
             let trustLabel : UILabel!
             
             
-            
             // image view que mostra a foto do usuário
             self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
-            self.profilePicView.image = image
+            self.profilePicView.image = self.profileImage
             self.profilePicView.clipsToBounds = true
             self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.width/2
             self.profilePicView.contentMode = .ScaleAspectFill
@@ -413,6 +413,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             self.picker.sourceType = UIImagePickerControllerSourceType.Camera
             self.picker.cameraDevice = .Front
             self.picker.allowsEditing = true
+            self.picker.delegate = self
             self.presentViewController(self.picker, animated: true, completion: nil)
         }
         else
@@ -424,6 +425,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     func openGallery()
     {
         self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.delegate = self
         
         if(UIDevice.currentDevice().userInterfaceIdiom == .Phone)
         {
@@ -439,12 +441,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
         picker.dismissViewControllerAnimated(true, completion: nil)
-        self.image = image
-        self.profilePicView.image = self.image
-        self.profilePicView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.tableView.reloadData()
 
-        
+        self.profilePicView.image = image
+        DAOUser.sharedInstance.changeProfilePicture(image)
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController)

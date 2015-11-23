@@ -181,7 +181,7 @@ class DAOPostgres : NSObject
     
     func stopRefreshing()
     {
-        self.timer.invalidate()
+        self.timer?.invalidate()
     }
     
     func startRefreshing()

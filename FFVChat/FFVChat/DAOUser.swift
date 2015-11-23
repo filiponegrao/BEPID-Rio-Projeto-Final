@@ -554,10 +554,13 @@ class DAOUser
     {
         let data = image.highestQualityJPEGNSData
         
-        PFUser.currentUser()?["profileImage"] = PFFile(data: data)
-        PFUser.currentUser()?.saveEventually()
+        PFUser.currentUser()!["profileImage"] = PFFile(data: data)
+        PFUser.currentUser()!.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            print("Imagem salva com \(success) e erro: \(error)")
+        }
         
         self.user.profileImage = data
+        self.save()
     }
     
     
