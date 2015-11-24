@@ -17,7 +17,9 @@ var baseUrl = "http://54.94.247.156"
 
 class DAOPostgres : NSObject
 {
-    var timer : NSTimer!
+    var refresherChat : NSTimer!
+    
+    var refresherContact : NSTimer!
     
     //Bepid URLs
     let sendMessageURL = "\(baseUrl)/sendTextMessage.php"
@@ -41,13 +43,12 @@ class DAOPostgres : NSObject
     
     func getUnreadMessages()
     {
+        print("refreshing messages...")
         let parameters : [String:AnyObject]!  = ["target": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername())]
         
         Alamofire.request(.POST, self.fetchURL, parameters: parameters)
             .responseJSON { response in
-//                debugPrint(response)
 
-                print("refresh...")
                 if let results = response.result.value {
                     
                     
@@ -63,14 +64,18 @@ class DAOPostgres : NSObject
                         {
                             let text = result["text"] as! String
                             
-                            DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime)
-                            self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                            if(DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime))
+                            {
+                                self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                            }
                         }
                         //Image
                         else
                         {
-                            DAOMessages.sharedInstance.addReceivedMessage(sender, imageKey: imageKey!, sentDate: sentDate, lifeTime: lifeTime)
-                            self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                            if(DAOMessages.sharedInstance.addReceivedMessage(sender, imageKey: imageKey!, sentDate: sentDate, lifeTime: lifeTime))
+                            {
+                                self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                            }
                         }
                     }
                     
@@ -157,7 +162,7 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.receivedURL, parameters: parameters)
             .responseJSON { response in
-                print(response)
+                print(response.result.value)
         }
     }
     
@@ -167,7 +172,7 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.seenURL, parameters: parameters)
             .responseJSON { response in
-                print(response)
+                print(response.result.value)
         }
     }
     
@@ -181,14 +186,26 @@ class DAOPostgres : NSObject
     
     func stopRefreshing()
     {
-        self.timer?.invalidate()
+        self.refresherChat?.invalidate()
     }
     
     func startRefreshing()
     {
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
+        self.stopObserve()
+        self.refresherChat?.invalidate()
+        self.refresherChat = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
     }
     
+    func startObserve()
+    {
+        self.refresherContact?.invalidate()
+        self.refresherContact = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
+    }
+    
+    func stopObserve()
+    {
+        self.refresherContact?.invalidate()
+    }
 }
 
 

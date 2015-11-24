@@ -13,7 +13,7 @@ import CoreData
 private let data = DAOMessages()
 
 
-class DAOMessages
+class DAOMessages : NSObject
 {
     var currentMessage : Message?
     
@@ -25,8 +25,9 @@ class DAOMessages
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    init()
+    override init()
     {
+        super.init()
         self.currentMessage = nil
     }
     
@@ -43,8 +44,8 @@ class DAOMessages
         
         DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 300, text: EncryptTools.enc(text, contact: username))
         
-//        self.delayForPush?.invalidate()
-//        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
+        self.delayForPush?.invalidate()
+        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
         
         return message
     }
@@ -80,10 +81,15 @@ class DAOMessages
     }
     
     
-    func addReceivedMessage(sender: String, text: String, sentDate: NSDate, lifeTime: Int)
+    func addReceivedMessage(sender: String, text: String, sentDate: NSDate, lifeTime: Int) -> Bool
     {
         let decSender = EncryptTools.getUsernameFromEncrpted(sender)
         let decText = EncryptTools.dec(text)
+        
+        if(decSender == nil)
+        {
+            return false
+        }
         
         //Tratamento de excessao
         let query = NSFetchRequest(entityName: "Message")
@@ -94,7 +100,7 @@ class DAOMessages
             let results = try self.managedObjectContext.executeFetchRequest(query) as! [Message]
             if(results.count > 0)
             {
-                return
+                return false
             }
         }
         catch {}
@@ -106,12 +112,17 @@ class DAOMessages
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
         self.save()
+        return true
     }
     
-    func addReceivedMessage(sender: String, imageKey: String, sentDate: NSDate, lifeTime: Int)
+    func addReceivedMessage(sender: String, imageKey: String, sentDate: NSDate, lifeTime: Int) -> Bool
     {
         let decSender = EncryptTools.getUsernameFromEncrpted(sender)
         
+        if(decSender == nil)
+        {
+            return false
+        }
         //Tratamento de excessao
         let query = NSFetchRequest(entityName: "Message")
         let predicate = NSPredicate(format: "sender == %@ AND target == %@ AND sentDate == %@", decSender!, DAOUser.sharedInstance.getUsername(), sentDate)
@@ -121,7 +132,7 @@ class DAOMessages
             let results = try self.managedObjectContext.executeFetchRequest(query) as! [Message]
             if(results.count > 0)
             {
-                return
+                return false
             }
         }
         catch {}
@@ -132,6 +143,7 @@ class DAOMessages
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
         self.save()
+        return true
     }
     
     

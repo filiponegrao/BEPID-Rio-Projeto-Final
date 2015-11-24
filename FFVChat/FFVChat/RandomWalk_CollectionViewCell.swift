@@ -185,18 +185,26 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         }
         else
         {
-            let originalSize = self.numberOfMessages.frame.size
-
-            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            if(self.numberOfMessages.hidden)
+            {
+                //redundante, eu sei. Desnecessario na verdade, mas eu quero.
+                self.numberOfMessages.hidden = true
+            }
+            else
+            {
+                let originalSize = self.numberOfMessages.frame.size
                 
-                self.numberOfMessages.frame.size = CGSizeMake(1, 1)
-                
-                }, completion: { (success: Bool) -> Void in
+                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                     
-                    self.numberOfMessages.hidden = true
-                    self.numberOfMessages.text = "0"
-                    self.numberOfMessages.frame.size = originalSize
-            })
+                    self.numberOfMessages.frame.size = CGSizeMake(1, 1)
+                    
+                    }, completion: { (success: Bool) -> Void in
+                        
+                        self.numberOfMessages.hidden = true
+                        self.numberOfMessages.text = "0"
+                        self.numberOfMessages.frame.size = originalSize
+                })
+            }
         }
     }
     

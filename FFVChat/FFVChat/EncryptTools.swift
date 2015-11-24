@@ -120,12 +120,12 @@ class EncryptTools
         return decrypted
     }
     
-    class func encKey(key: String) -> String
+    class func encKey(myKey: String) -> String
     {
         let key = self.makeKey("queroserrico")
         let iv = "nudesnudesnudess"
         
-        let enc : String = try! key.encrypt(AES(key: key, iv: iv))
+        let enc : String = try! myKey.encrypt(AES(key: key, iv: iv))
         
         return enc
     }

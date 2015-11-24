@@ -43,36 +43,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var messageSound: AVAudioPlayer!
     
-    override func viewWillAppear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadMessages", name: NotificationController.center.messageReceived.name, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
-        
-    }
-    
-    override func viewWillDisappear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "imageLoaded", object: nil)
-        
-        DAOPostgres.sharedInstance.stopRefreshing()
-
-    }
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         self.view.backgroundColor = oficialMediumGray
-//        badTrustNav
+        
         self.navBar = NavigationChat_View(requester: self)
         self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
@@ -95,7 +70,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.keyboardDismissMode = .Interactive
-    
 
         self.containerView.addSubview(tableView)
         
@@ -106,7 +80,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.cameraButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
         self.cameraButton.setImage(UIImage(named: "chatCameraButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
-//        self.cameraButton.backgroundColor = UIColor.grayColor()
         self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(cameraButton)
         
@@ -126,9 +99,24 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.backgroundColor = UIColor.clearColor()
         self.messageText.delegate = self
         self.messageText.keyboardAppearance = .Dark
+        self.messageText.keyboardDismissMode = .None
         self.messageView.addSubview(self.messageText)
 
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
+        
+    }
+    
+    //** FUNCOES DE APARICAO DA TELA E DESAPARECIMENTO DA MESMA **//
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewMessage", name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
         
     }
     
@@ -138,7 +126,30 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.reloadData()
         self.tableViewScrollToBottom(false)
         DAOPostgres.sharedInstance.startRefreshing()
+        self.redAlertScreen()
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "imageLoaded", object: nil)
         
+    }
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        DAOPostgres.sharedInstance.stopRefreshing()
+    }
+    
+    //** FIM DAS FUNCOES DE APARICAO DA TELA E DESAPARECIMENTO DA MESMA **//
+
+    
+    func redAlertScreen()
+    {
         let trustLevel = Int(self.contact.trustLevel)
         if(trustLevel < 100)
         {
@@ -154,7 +165,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
-    
     func messageEvaporated(notification: NSNotification)
     {
         let info : [NSObject : AnyObject] = notification.userInfo!
@@ -165,6 +175,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         
         print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a linha \(index)")
+        
+        if(index > self.messages.count)
+        {
+            self.tableView.reloadData()
+            return
+        }
         
         self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
         self.imageZoom?.fadeOut()
@@ -191,7 +207,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    func reloadMessages()
+    func addNewMessage()
     {
         if(DAOMessages.sharedInstance.lastMessage.sender == self.contact.username)
         {
@@ -207,6 +223,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
                 mssg.status = "seen"
             }
+            
             
             if(mssg.imageKey == nil && mssg.text != nil)
             {
@@ -456,7 +473,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        print("clicando")
         let message = self.messages[indexPath.row]
         
         //Imagem
@@ -489,7 +505,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             
             UIApplication.sharedApplication().openURL(NSURL(string: link)!)
-
         }
         
         self.messageText.endEditing(true)
@@ -727,7 +742,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical*2)
                 
                 }, completion: { (success: Bool) -> Void in
-                    
             })
             
             self.messageText.text = ""

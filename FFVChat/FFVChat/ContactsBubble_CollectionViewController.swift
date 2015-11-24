@@ -37,125 +37,109 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func viewDidLoad()
     {
-        self.collectionView?.frame = CGRectMake(0, 40, self.view.frame.width, self.view.frame.height - 40)
+        self.collectionView!.frame = CGRectMake(0, 40, self.view.frame.width, self.view.frame.height - 40)
         
         super.viewDidLoad()
 
-        
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
         self.view.addSubview(self.navigationBar)
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
+   
         // Register cell classes
         self.collectionView!.registerClass(RandomWalk_CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
         self.collectionView?.backgroundColor = oficialMediumGray
         
-        self.contacts = DAOContacts.sharedInstance.getAllContacts()
-
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
         self.longPress.minimumPressDuration = 0.5
         self.longPress.delaysTouchesBegan = true
         self.longPress.delegate = self
         self.view.addGestureRecognizer(self.longPress)
         
+        self.contacts = DAOContacts.sharedInstance.getAllContacts()
+        self.collectionView!.reloadData()
         
         // Do any additional setup after loading the view.
     }
+    
+    //** FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
     
     override func viewWillAppear(animated: Bool)
     {
         super.viewWillAppear(animated)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadContacts", name: NotificationController.center.friendAdded.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkUnreadMessages", name: NotificationController.center.messageReceived.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "contactsRefreshed", name: NotificationController.center.contactsRefresheded.name, object: nil)
-
     }
     
-    override func viewDidDisappear(animated: Bool)
+    override func viewDidAppear(animated: Bool)
+    {
+        DAOContacts.sharedInstance.refreshContacts()
+        DAOFriendRequests.sharedInstance.friendsAccepted()
+        DAOPostgres.sharedInstance.startObserve()
+        self.checkUnreadMessages()
+    }
+    
+    override func viewWillDisappear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.contactsRefresheded.name, object: nil)
-
     }
     
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        self.reloadAnimations()
-        DAOContacts.sharedInstance.refreshContacts()
-        DAOFriendRequests.sharedInstance.friendsAccepted()
-        self.checkUnreadMessages()
-    }
-    
-    func reloadAnimations()
+    override func viewDidDisappear(animated: Bool)
     {
-        for i in 0..<self.collectionView!.numberOfItemsInSection(0)
-        {
-            let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as! RandomWalk_CollectionViewCell
-            cell.profileBtn.layer.removeAllAnimations()
-            cell.startAnimation()
-        }
+        DAOPostgres.sharedInstance.stopObserve()
     }
     
-    
+    //** FIM FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
+
     
     override func viewDidLayoutSubviews()
     {
         self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
-//        self.navigationBar.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
     }
 
     
-    func reloadContacts()
+    //** FUNCOES DE ATUALIZACAO DA TELA ***//
+    
+    func addNewContact()
     {
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
         
         let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
 
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-        
-        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "reloadAnimations", userInfo: nil, repeats: false)
     }
-    
-    
-    func contactsRefreshed()
-    {
-        self.contacts = DAOContacts.sharedInstance.getAllContacts()
-        var i = 0
-        for contact in self.contacts
-        {
-            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
-            cell?.profileBtn.setImage(UIImage(data: self.contacts[i].profileImage), forState: .Normal)
-            i++
-        }
-    }
-    
     
     func checkUnreadMessages()
     {
-        var i = 0
-        for contact in self.contacts
+        for i in 0..<self.collectionView!.numberOfItemsInSection(0)
         {
-            let count = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
-            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
-            cell?.setUnreadMessages(count)
-            i++
+            let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
+            let contact = self.contacts[i]
+            let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
+            cell?.setUnreadMessages(cont)
         }
     }
+    
+    func reloadAnimations()
+    {
+        for i in 0..<self.collectionView!.numberOfItemsInSection(0)
+        {
+            let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
+            cell?.profileBtn.layer.removeAllAnimations()
+            cell?.startAnimation()
+        }
+    }
+    
+    //** FIM DAS FUNCOES DE ATUALIZACAO DA TELA **//
+    
     
     func filterContacts()
     {

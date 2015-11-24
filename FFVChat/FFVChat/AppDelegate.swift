@@ -135,9 +135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         FBSDKAppEvents.activateApp()
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
-            DAOPostgres.sharedInstance.getUnreadMessages()
-            DAOPostgres.sharedInstance.stopRefreshing()
             DAOContacts.sharedInstance.refreshContacts()
+            DAOFriendRequests.sharedInstance.friendsAccepted()
         }
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
