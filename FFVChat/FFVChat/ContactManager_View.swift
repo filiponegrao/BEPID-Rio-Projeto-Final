@@ -119,7 +119,8 @@ class ContactManager_View: UIView
         //BOTÃO PARA LIMPAR CONVERSA
         self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height, screenWidth/3, screenWidth/9.5))
         self.clearChat.setTitle("Clear chat", forState: .Normal)
-        self.clearChat.setTitleColor(oficialGreen, forState: .Highlighted)
+        self.clearChat.setTitleColor(oficialGreen, forState: .Normal)
+        self.clearChat.setTitleColor(oficialLightGray, forState: .Selected)
         self.clearChat.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         self.clearChat.addTarget(self, action: "clearConversation", forControlEvents: .TouchUpInside)
         

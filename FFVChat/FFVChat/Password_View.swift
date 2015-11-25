@@ -37,7 +37,7 @@ class Password_View: UIView
         
         self.blackScreen = UIView(frame: self.frame)
         self.blackScreen.backgroundColor = oficialDarkGray
-        self.blackScreen.alpha = 0.9
+        self.blackScreen.alpha = 1
         self.addSubview(self.blackScreen)
         
         let text = UILabel(frame: CGRectMake(10, 50,screenWidth - 20,50))
