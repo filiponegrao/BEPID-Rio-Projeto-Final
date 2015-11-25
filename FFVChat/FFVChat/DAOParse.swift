@@ -662,12 +662,10 @@ class DAOParse
     {
         if(self.tentativas < 10)
         {
-            let key = "\(message.imageKey!)"
             let query = PFQuery(className: "Images")
-            query.whereKey("imageKey", equalTo: key)
+            query.whereKey("imageKey", equalTo: message.imageKey!)
             query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
                 
-                print(error)
                 if(object != nil)
                 {
                     let file = object!["image"] as! PFFile

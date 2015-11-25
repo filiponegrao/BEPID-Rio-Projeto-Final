@@ -43,6 +43,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var messageSound: AVAudioPlayer!
     
+    init(contact: Contact)
+    {
+        self.contact = contact
+        super.init(nibName: "Chat_ViewController", bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -101,8 +111,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.keyboardAppearance = .Dark
         self.messageText.keyboardDismissMode = .None
         self.messageView.addSubview(self.messageText)
-
+        
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
+
         
     }
     
@@ -394,7 +405,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.3
+                cell.backgroundLabel.alpha = 0.35
             }
             else
             {
@@ -446,12 +457,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.38
+                cell.backgroundLabel.alpha = 0.35
             }
             else
             {
                 cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
-                cell.backgroundLabel.alpha = 0.18
+                cell.backgroundLabel.alpha = 0.1
             }
             
             //Se for hyperlink

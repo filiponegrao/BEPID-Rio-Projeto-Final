@@ -17,17 +17,19 @@ class AppNavigationController : UINavigationController, UIViewControllerTransiti
     init()
     {
         super.init(nibName: "AppNavigationController", bundle: nil)
-        
     
         let flow = flowLayoutSetup()
+        
         let collectView = ContactsBubble_CollectionViewController(collectionViewLayout: flow)
-        //self.viewControllers = [collectView]
-        self.pushViewController(collectView, animated: false)
+        
+        self.viewControllers = [collectView]
+//        self.pushViewController(collectView, animated: false)
         self.navigationBar.hidden = true
         self.navigationBar.barStyle = .Default
         self.navigationBar.barTintColor = oficialDarkGray
         self.navigationBar.translucent = true
         self.navigationBar.hideBottomHairline()
+        
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ContactsBubble_CollectionViewController: UICollectionViewController, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate
+class ContactsBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
 {
     let transition = BubbleTransition()
 
@@ -65,7 +65,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func viewWillAppear(animated: Bool)
     {
-        super.viewWillAppear(animated)
+//        super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
@@ -80,6 +80,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
         DAOContacts.sharedInstance.refreshContacts()
         DAOFriendRequests.sharedInstance.friendsAccepted()
         DAOPostgres.sharedInstance.startObserve()
+        self.reloadAnimations()
         self.checkUnreadMessages()
     }
     
@@ -102,7 +103,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     override func viewDidLayoutSubviews()
     {
-        self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
+//        self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
     }
 
     
@@ -218,14 +219,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
     
     func openChat(sender: UIButton)
     {
-        let index = sender.tag
-        let chat = Chat_ViewController()
-        chat.contact = self.contacts[index]
-        
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(0.5) * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            self.navigationController?.pushViewController(chat, animated: true)
-        }
+        //NAO ESTA SENDO USADA
+        //(por enquanto)
     }
     
     
