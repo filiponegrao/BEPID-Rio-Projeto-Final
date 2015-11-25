@@ -11,8 +11,7 @@ import Parse
 
 class NavigationContact_View: UIView
 {
-    
-    weak var vc : ContactsBubble_CollectionViewController!
+    var vc : ContactsBubble_CollectionViewController!
     
     var fundo : UIView!
     
@@ -29,6 +28,7 @@ class NavigationContact_View: UIView
         self.vc = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 80))
         self.backgroundColor = oficialDarkGray
+
         
         self.filterButtons = UIButton(frame: CGRectMake(0, 25, screenWidth, 45))
 //        self.filterButtons.layer.borderWidth = 1
@@ -37,14 +37,14 @@ class NavigationContact_View: UIView
         self.filterButtons.setTitleColor(oficialGreen, forState: .Normal)
         self.filterButtons.titleLabel?.textAlignment = .Center
         self.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
-        self.addSubview(self.filterButtons)
+//        self.addSubview(self.filterButtons)
         
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
-        
+        self.toolsButton.userInteractionEnabled = true
+        self.toolsButton.backgroundColor = UIColor.redColor()
         self.addSubview(self.toolsButton)
-
         
         self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
         self.alert.image = UIImage(named: "icon_alert")
@@ -52,16 +52,18 @@ class NavigationContact_View: UIView
         self.toolsButton.addSubview(self.alert)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: requestNotification.requestsLoaded.rawValue, object: nil)
-        
+     
+        self.userInteractionEnabled = true
+
     }
     
     func openTools()
     {
+        print("aqui")
         self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
         self.vc.blurView.frame = self.vc.view.bounds
         self.vc.blurView.alpha = 0
         self.vc.view.addSubview(self.vc.blurView)
-        print("aqui")
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             
             self.vc.blurView.alpha = 0.8
@@ -74,11 +76,13 @@ class NavigationContact_View: UIView
         self.alertOff()
         let toolscontroller = Tools_ViewController()
         toolscontroller.contacts = self.vc
+        
         let toolsNavigation = UINavigationController(nibName: "AppNavigation2", bundle: nil)
         toolsNavigation.viewControllers = [toolscontroller]
         toolsNavigation.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         toolsNavigation.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         toolsNavigation.modalInPopover = true
+        
         self.vc.presentViewController(toolsNavigation, animated: true) { () -> Void in
             (toolsNavigation.viewControllers.first as! Tools_ViewController).openTools()
 
@@ -94,6 +98,7 @@ class NavigationContact_View: UIView
     func alertOn()
     {
         let r = DAOFriendRequests.sharedInstance.getRequests()
+        
         if(r.count > 0)
         {
             self.alert.hidden = false

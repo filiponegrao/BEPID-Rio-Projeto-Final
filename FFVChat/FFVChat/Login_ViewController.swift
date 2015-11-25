@@ -182,10 +182,12 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userLogged()
     {
         self.loadingScreen?.removeFromSuperview()
+        
         let contacts = AppNavigationController()
+        
+        
         self.presentViewController(contacts, animated: true, completion: nil)
     }
-    
     
     
     func userNotFound()
@@ -195,6 +197,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         alert.show()
     }
     
+    
     func incompleteRegister()
     {
         self.loadingScreen.removeFromSuperview()
@@ -202,12 +205,14 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.presentViewController(fbregister, animated: true, completion: nil)
     }
     
+    
     func loginCanceled()
     {
         self.loadingScreen.removeFromSuperview()
         let alert = UIAlertView(title: "Login failed", message: "Please, try again", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
+    
     
     func wrongPassword()
     {

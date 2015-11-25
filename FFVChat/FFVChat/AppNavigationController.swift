@@ -20,13 +20,10 @@ class AppNavigationController : UINavigationController, UIViewControllerTransiti
         
         let collectView = ContactsBubble_CollectionViewController(collectionViewLayout: flow)
         
-        self.viewControllers = [collectView]
 //        self.pushViewController(collectView, animated: false)
+        self.viewControllers = [collectView]
+        
         self.navigationBar.hidden = true
-        self.navigationBar.barStyle = .Default
-        self.navigationBar.barTintColor = oficialDarkGray
-        self.navigationBar.translucent = true
-        self.navigationBar.hideBottomHairline()
         
     }
 
