@@ -32,12 +32,12 @@ class Password_View: UIView
         
         self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark)) as UIVisualEffectView
         self.blurView.frame = self.frame
-        self.blurView.alpha = 0.8
+        self.blurView.alpha = 1
         self.addSubview(self.blurView)
         
         self.blackScreen = UIView(frame: self.frame)
         self.blackScreen.backgroundColor = oficialDarkGray
-        self.blackScreen.alpha = 0.8
+        self.blackScreen.alpha = 0.9
         self.addSubview(self.blackScreen)
         
         let text = UILabel(frame: CGRectMake(10, 50,screenWidth - 20,50))

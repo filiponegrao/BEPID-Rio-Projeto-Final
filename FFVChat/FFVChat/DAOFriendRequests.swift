@@ -83,7 +83,10 @@ class DAOFriendRequests
         DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
             
             DAOParse.sendPushRequestAccepted(request.sender)
-            self.loadRequests()
+            if(success)
+            {
+                self.loadRequests()
+            }
         }
     }
     

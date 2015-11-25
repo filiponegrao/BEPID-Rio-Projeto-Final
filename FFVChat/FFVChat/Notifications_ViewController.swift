@@ -10,7 +10,6 @@ import UIKit
 
 class Notifications_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
-
     var tableView : UITableView!
     
     var requests = [FriendRequest]()
@@ -62,8 +61,9 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
 //        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
         
         self.requests = DAOFriendRequests.sharedInstance.getRequests()
-    }
+        self.tableView.reloadData()
 
+    }
     
     override func viewWillDisappear(animated: Bool)
     {
@@ -99,6 +99,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+        
+        
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cellPrints : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("CellPrints", forIndexPath: indexPath)
@@ -108,11 +110,20 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         if(indexPath.section == 0)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! Notification_TableViewCell
+            
+            let separatorView = UIView(frame: CGRectMake(0, cell.frame.size.height - 1, screenWidth, 1))
+            separatorView.backgroundColor = oficialDarkGray
+            cell.addSubview(separatorView)
+            
             cell.selectionStyle = .None
             cell.backgroundColor = oficialSemiGray
-            cell.notification.text = "\(self.requests[indexPath.row].sender) te adicionou."
+            cell.username.text = "\(self.requests[indexPath.row].sender)"
+            cell.username.textColor = oficialLightGray
+            cell.notification.text = "quer te adicionar"
             cell.notification.textColor = oficialLightGray
             cell.request = self.requests[indexPath.row]
+            
+            
             
             DAOParse.getPhotoFromUsername(self.requests[indexPath.row].sender) { (image) -> Void in
                 cell.icon.image = image
