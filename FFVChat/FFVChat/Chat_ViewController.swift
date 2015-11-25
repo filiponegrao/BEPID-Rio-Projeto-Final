@@ -484,7 +484,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             else
             {
                 cell.backgroundLabel.backgroundColor = oficialDarkGray
-                cell.backgroundLabel.alpha = 0.4
+                cell.backgroundLabel.alpha = 0.6
             }
             
             //Se for hyperlink

@@ -12,7 +12,6 @@ private let reuseIdentifier = "Cell"
 
 class ContactsBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
 {
-    let transition = BubbleTransition()
 
     var contacts = [Contact]()
     
@@ -23,7 +22,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     var longPress : UILongPressGestureRecognizer!
     
     var contactManager : ContactManager_View!
-    
     
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
@@ -43,11 +41,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
 
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
-        self.view.addSubview(self.navigationBar)
    
         // Register cell classes
         self.collectionView!.registerClass(RandomWalk_CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView?.backgroundColor = oficialMediumGray
+        self.collectionView!.backgroundColor = oficialMediumGray
         
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
         self.longPress.minimumPressDuration = 0.5
@@ -58,14 +55,15 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
         self.collectionView!.reloadData()
         
-        // Do any additional setup after loading the view.
+        self.view.addSubview(self.navigationBar)
+        
     }
     
     //** FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
     
     override func viewWillAppear(animated: Bool)
     {
-//        super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
@@ -226,21 +224,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     //******* TRANSITIONS ********
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
-    {
-        transition.transitionMode = .Present
-        transition.startingPoint = self.view.center
-        transition.bubbleColor = oficialMediumGray
-        return transition
-    }
-    
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning?
-    {
-        transition.transitionMode = .Dismiss
-        transition.startingPoint = self.view.center
-        transition.bubbleColor = oficialMediumGray
-        return transition
-    }
     
 }
 
