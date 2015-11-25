@@ -21,6 +21,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var tableView: UITableView!
     
+    var backgorundImage : UIImageView!
+    
     var messages = [Message]()
     
     var contact : Contact!
@@ -43,6 +45,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var messageSound: AVAudioPlayer!
     
+    let fundos = ["fundoTeste0","fundoTeste1","fundoTeste2","fundoTeste3","fundoTeste4"]
+    
+    var fundosIndex = 0
+    
+    var isViewing : Bool = false
+    
+    init(contact: Contact)
+    {
+        self.contact = contact
+        super.init(nibName: "Chat_ViewController", bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -56,10 +74,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
         
-        self.redScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
-        self.redScreen.backgroundColor = badTrust
-        self.redScreen.alpha = 0
-        self.containerView.addSubview(self.redScreen)
+        //Só pro filipo que tem isso
+        self.backgorundImage = UIImageView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
+        self.backgorundImage.image = UIImage(named: self.fundos[self.fundosIndex])
+        self.backgorundImage.contentMode = .ScaleAspectFill
+        self.backgorundImage.alpha = 0.7
+        self.containerView.addSubview(self.backgorundImage)
+
         
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -70,7 +91,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.keyboardDismissMode = .Interactive
-
+        
+        let gesture = UISwipeGestureRecognizer(target: self, action: "changeBackground")
+        gesture.direction = .Right
+        self.view.addGestureRecognizer(gesture)
+        
+        self.redScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.redScreen.backgroundColor = badTrust
+        self.redScreen.alpha = 0
+        self.containerView.addSubview(self.redScreen)
         self.containerView.addSubview(tableView)
         
         self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, messageViewHeigth))
@@ -101,8 +130,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.keyboardAppearance = .Dark
         self.messageText.keyboardDismissMode = .None
         self.messageView.addSubview(self.messageText)
-
+        
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
+
         
     }
     
@@ -272,6 +302,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 self.containerView.frame.size.height = screenHeight - navigationBarHeigth - keyboardSize.height
                 self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
+                self.backgorundImage.frame.size.height = tableViewHeigth - keyboardSize.height
                 self.tableView.frame.size.height = tableViewHeigth - keyboardSize.height
 
                 if(self.tableView.contentSize.height > self.tableView.frame.size.height)
@@ -288,6 +319,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.frame.size.height = screenHeight - navigationBarHeigth
         self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
         self.tableView.frame.size.height = tableViewHeigth
+        self.backgorundImage.frame.size.height = tableViewHeigth
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
@@ -394,7 +426,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.3
+                cell.backgroundLabel.alpha = 0.35
             }
             else
             {
@@ -446,12 +478,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.38
+                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
+                cell.backgroundLabel.alpha = 0.3
             }
             else
             {
-                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
-                cell.backgroundLabel.alpha = 0.18
+                cell.backgroundLabel.backgroundColor = oficialDarkGray
+                cell.backgroundLabel.alpha = 0.4
             }
             
             //Se for hyperlink
@@ -480,6 +513,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         {
             self.messageText.endEditing(true)
             self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
+            self.imageZoom.chatController = self
+            self.isViewing = true
             self.view.addSubview(self.imageZoom)
             
             print(message.status)
@@ -787,6 +822,24 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    
+    func changeBackground()
+    {
+        if(!isViewing)
+        {
+            if(self.fundosIndex == 4)
+            {
+                self.fundosIndex = 0
+            }
+            else
+            {
+                self.fundosIndex++
+            }
+            
+            let imageName = "fundoTeste\(self.fundosIndex)"
+            self.backgorundImage.image = UIImage(named: imageName)
+        }
+    }
     
     
 }

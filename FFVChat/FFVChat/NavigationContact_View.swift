@@ -12,7 +12,7 @@ import Parse
 class NavigationContact_View: UIView
 {
     
-    var vc : ContactsBubble_CollectionViewController!
+    weak var vc : ContactsBubble_CollectionViewController!
     
     var fundo : UIView!
     
@@ -24,16 +24,11 @@ class NavigationContact_View: UIView
     
     var filterButtons : UIButton!
     
-    var contactManager : ContactManager_View!
-    
-    
     init(requester: ContactsBubble_CollectionViewController)
     {
         self.vc = requester
         super.init(frame: CGRectMake(0, 0, screenWidth, 80))
         self.backgroundColor = oficialDarkGray
-//        self.barTintColor = oficialDarkGray
-
         
         self.filterButtons = UIButton(frame: CGRectMake(0, 25, screenWidth, 45))
 //        self.filterButtons.layer.borderWidth = 1
@@ -48,10 +43,6 @@ class NavigationContact_View: UIView
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
         
-        //        self.toolsButton.rippleLocation = .Center
-        //        self.toolsButton.rippleLayerColor = UIColor.clearColor()
-        //        self.toolsButton.rippleAniDuration = 0.5
-        //        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
         self.addSubview(self.toolsButton)
 
         
@@ -64,30 +55,13 @@ class NavigationContact_View: UIView
         
     }
     
-//    func managerContact()
-//    {
-//        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-//        self.vc.blurView.frame = self.vc.view.bounds
-//        self.vc.blurView.alpha = 0
-//        self.vc.view.addSubview(self.vc.blurView)
-//        UIView.animateWithDuration(0.5, animations: { () -> Void in
-//            
-//            self.vc.blurView.alpha = 0.8
-//            
-//            }) { (success: Bool) -> Void in
-//                
-//        }
-//
-//        self.contactManager = ContactManager_View()
-//        self.vc.view.addSubview(self.contactManager)
-//    }
-    
     func openTools()
     {
         self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
         self.vc.blurView.frame = self.vc.view.bounds
         self.vc.blurView.alpha = 0
         self.vc.view.addSubview(self.vc.blurView)
+        print("aqui")
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             
             self.vc.blurView.alpha = 0.8
@@ -107,11 +81,7 @@ class NavigationContact_View: UIView
         toolsNavigation.modalInPopover = true
         self.vc.presentViewController(toolsNavigation, animated: true) { () -> Void in
             (toolsNavigation.viewControllers.first as! Tools_ViewController).openTools()
-//            
-//            //blur
-//            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-//            visualEffectView.frame = self.vc.view.bounds
-//            self.vc.view.addSubview(visualEffectView)
+
         }
 
     }
@@ -123,7 +93,11 @@ class NavigationContact_View: UIView
     
     func alertOn()
     {
-        self.alert.hidden = false
+        let r = DAOFriendRequests.sharedInstance.getRequests()
+        if(r.count > 0)
+        {
+            self.alert.hidden = false
+        }
     }
     
     func alertOff()

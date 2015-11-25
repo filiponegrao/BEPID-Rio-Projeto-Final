@@ -216,6 +216,29 @@ class DAOContacts
     }
     
     
+    func getContactByUsername(username: String) -> Contact?
+    {
+        let predicate = NSPredicate(format: "username == %@", username)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        fetchRequest.predicate = predicate
+        
+        do { let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
+            
+            if(results.count > 0)
+            {
+                return results.first
+            }
+        }
+        catch
+        {
+            return nil
+        }
+
+        return nil
+    }
+    
+    
     func setFavorite(contact: Contact)
     {
         contact.isFavorit = true

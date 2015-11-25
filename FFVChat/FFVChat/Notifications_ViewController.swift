@@ -39,6 +39,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CellPrints")
         self.tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.tableView)
+        
+        
  
     }
 
@@ -63,6 +65,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.reloadData()
 
     }
+
     
     override func viewWillDisappear(animated: Bool)
     {

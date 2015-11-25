@@ -80,6 +80,7 @@ class DAOFriendRequests
     func acceptRequest(request: FriendRequest)
     {
         DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
+            
             DAOParse.sendPushRequestAccepted(request.sender)
             if(success)
             {

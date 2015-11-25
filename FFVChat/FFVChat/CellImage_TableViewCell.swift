@@ -41,7 +41,7 @@ class CellImage_TableViewCell: UITableViewCell
         self.backgroundLabel.layer.zPosition = 0
         self.addSubview(self.backgroundLabel)
         
-        self.imageCell = UIImageView(frame: CGRectMake(margemLateral * 2, margemVertical * 4, cellBackgroundWidth - (margemLateral * 2), cellBackgroundWidth - (margemLateral * 2) - dateTextHeigth))
+        self.imageCell = UIImageView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
         self.imageCell.clipsToBounds = true
         self.imageCell.layer.cornerRadius = 10
         self.imageCell.contentMode = .ScaleAspectFill

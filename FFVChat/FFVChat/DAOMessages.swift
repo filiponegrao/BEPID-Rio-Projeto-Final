@@ -45,7 +45,7 @@ class DAOMessages : NSObject
         DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 300, text: EncryptTools.enc(text, contact: username))
         
         self.delayForPush?.invalidate()
-        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
+        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
         
         return message
     }
@@ -56,7 +56,6 @@ class DAOMessages : NSObject
         let keyWithSpaces = "\(DAOUser.sharedInstance.getUsername())\(username)\(data)"
         var key = EncryptTools.removeWhiteSpaces(keyWithSpaces)
         key = EncryptTools.encKey(key)
-        print(key)
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: nil, imageKey: key, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
         self.save()
