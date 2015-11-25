@@ -39,6 +39,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CellPrints")
         self.tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.tableView)
+        
+        
  
     }
 
@@ -60,8 +62,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
 //        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
         
         self.requests = DAOFriendRequests.sharedInstance.getRequests()
-
     }
+
     
     override func viewWillDisappear(animated: Bool)
     {

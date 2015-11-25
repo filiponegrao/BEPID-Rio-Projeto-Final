@@ -124,6 +124,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIVie
             let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
             let contact = self.contacts[i]
             let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
+            cell?.profileBtn.setImage(UIImage(data: self.contacts[i].profileImage!) , forState: .Normal)
             cell?.setUnreadMessages(cont)
         }
     }
