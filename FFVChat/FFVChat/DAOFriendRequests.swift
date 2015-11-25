@@ -71,12 +71,8 @@ class DAOFriendRequests
     {
         DAOParse.getRequests { (requests) -> Void in
             
-            if(requests.count > 0)
-            {
-                self.requests = requests
-                NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
-            }
-            
+            self.requests = requests
+            NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
         }
     }
     
@@ -85,6 +81,10 @@ class DAOFriendRequests
     {
         DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
             DAOParse.sendPushRequestAccepted(request.sender)
+            if(success)
+            {
+                self.loadRequests()
+            }
         }
     }
     
