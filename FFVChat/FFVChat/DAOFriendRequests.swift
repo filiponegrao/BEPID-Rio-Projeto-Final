@@ -73,6 +73,7 @@ class DAOFriendRequests
             
             self.requests = requests
             NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
+            
         }
     }
     

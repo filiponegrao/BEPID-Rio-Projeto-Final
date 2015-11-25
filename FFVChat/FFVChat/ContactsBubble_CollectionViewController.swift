@@ -103,7 +103,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     override func viewDidLayoutSubviews()
     {
-//        self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
+        self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
     }
 
     

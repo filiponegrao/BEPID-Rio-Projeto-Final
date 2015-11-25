@@ -10,7 +10,6 @@ import UIKit
 
 class Notifications_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
 {
-
     var tableView : UITableView!
     
     var requests = [FriendRequest]()
@@ -65,7 +64,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.reloadData()
 
     }
-
     
     override func viewWillDisappear(animated: Bool)
     {
@@ -101,6 +99,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+        
+        
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cellPrints : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("CellPrints", forIndexPath: indexPath)
