@@ -28,6 +28,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         
         self.view.backgroundColor = oficialMediumGray
         
+        //CRIAR NAV VIEW
         self.navBarView = UIView(frame: CGRectMake(0, 0, screenWidth, 80))
         self.navBarView.backgroundColor = oficialDarkGray
         let backButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
@@ -35,12 +36,13 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         backButton.addTarget(self, action: "back", forControlEvents: .TouchUpInside)
         self.navBarView.addSubview(backButton)
         self.view.addSubview(self.navBarView)
+        //CRIAR NAV VIEW
         
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8)
-        layout.itemSize = CGSize(width: screenWidth/2-13, height: screenWidth/2-13)
+        layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 0, right: 1)
+        layout.itemSize = CGSize(width: screenWidth/3 - 1, height: screenWidth/3 - 1)
         layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 8 //espaçamento entre uma celula de baixo com a de cima
+        layout.minimumLineSpacing = 1 //espaçamento entre uma celula de baixo com a de cima
         layout.headerReferenceSize = CGSizeMake(0, 0)
 
         self.collectionView = UICollectionView(frame: CGRectMake(0, 80, screenWidth, screenHeight - 80) , collectionViewLayout: layout)
