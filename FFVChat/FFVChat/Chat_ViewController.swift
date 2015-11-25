@@ -56,7 +56,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.contact = contact
         super.init(nibName: "Chat_ViewController", bundle: nil)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -80,7 +80,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.backgorundImage.contentMode = .ScaleAspectFill
         self.backgorundImage.alpha = 0.7
         self.containerView.addSubview(self.backgorundImage)
-
+        
         
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -132,7 +132,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.addSubview(self.messageText)
         
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
-
+        
         
     }
     
@@ -176,7 +176,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     //** FIM DAS FUNCOES DE APARICAO DA TELA E DESAPARECIMENTO DA MESMA **//
-
+    
     
     func redAlertScreen()
     {
@@ -286,12 +286,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
     }
-
+    
     
     //Sobe a view e desce a view
     func keyboardWillShow(notification: NSNotification)
@@ -304,7 +304,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
                 self.backgorundImage.frame.size.height = tableViewHeigth - keyboardSize.height
                 self.tableView.frame.size.height = tableViewHeigth - keyboardSize.height
-
+                
                 if(self.tableView.contentSize.height > self.tableView.frame.size.height)
                 {
                     self.tableView.contentOffset.y += keyboardSize.height
@@ -370,7 +370,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         {
             return cellBackgroundWidth + 10
         }
-        //TEXT
+            //TEXT
         else
         {
             return self.getPerfectCellHeigth(indexPath.row)
@@ -418,7 +418,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
-//            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
             dateFormatter.dateFormat = "HH:mm"
             let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             cell.sentDate.text = date
@@ -442,18 +442,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             return cell
         }
-        //TEXT
+            //TEXT
         else
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             //adiciona mensagens do array
-                        
+            
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateStyle = .LongStyle
             dateFormatter.timeZone = NSTimeZone.localTimeZone()
-//            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
             dateFormatter.dateFormat = "HH:mm"
             let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
             
@@ -524,7 +524,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 message.status = "seen"
             }
         }
-        //Hiperlynk
+            //Hiperlynk
         else if(message.text?.lowercaseString.rangeOfString("http://") != nil)
         {
             let text = message.text!.lowercaseString
@@ -669,7 +669,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         self.messageText.endEditing(true)
     }
-
+    
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat
     {
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
@@ -686,7 +686,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //****************************************************//
     
     
-
+    
     //****************************************************//
     //*********** MESSAGE FUNCTIONS AND HANDLES  *********//
     //****************************************************//
@@ -695,27 +695,27 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         // ******** PARA IMPLEMENTACAO DO GIF ************//
         
-//        let actionsheet = UIAlertController(title: "Choose media", message: nil, preferredStyle: .ActionSheet)
-//        actionsheet.addAction(UIAlertAction(title: "From Camera", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//            
-//            self.imagePicker = UIImagePickerController()
-//            self.imagePicker.delegate = self
-//            self.imagePicker.sourceType = .Camera
-//            self.imagePicker.cameraDevice = .Front
-//            
-//            self.presentViewController(self.imagePicker, animated: true, completion: nil)
-//            
-//        }))
-//        
-//        actionsheet.addAction(UIAlertAction(title: "Gif Gallery", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//            
-//        }))
-//        
-//        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
-//            
-//        }))
-//        
-//        self.presentViewController(actionsheet, animated: true, completion: nil)
+        //        let actionsheet = UIAlertController(title: "Choose media", message: nil, preferredStyle: .ActionSheet)
+        //        actionsheet.addAction(UIAlertAction(title: "From Camera", style: .Default, handler: { (action: UIAlertAction) -> Void in
+        //
+        //            self.imagePicker = UIImagePickerController()
+        //            self.imagePicker.delegate = self
+        //            self.imagePicker.sourceType = .Camera
+        //            self.imagePicker.cameraDevice = .Front
+        //
+        //            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+        //
+        //        }))
+        //
+        //        actionsheet.addAction(UIAlertAction(title: "Gif Gallery", style: .Default, handler: { (action: UIAlertAction) -> Void in
+        //
+        //        }))
+        //
+        //        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+        //
+        //        }))
+        //
+        //        self.presentViewController(actionsheet, animated: true, completion: nil)
         
         self.imagePicker = UIImagePickerController()
         self.imagePicker.delegate = self
@@ -723,7 +723,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.imagePicker.cameraDevice = .Front
         
         self.presentViewController(self.imagePicker, animated: true, completion: nil)
-
+        
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)

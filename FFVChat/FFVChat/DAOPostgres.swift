@@ -43,12 +43,12 @@ class DAOPostgres : NSObject
     
     func getUnreadMessages()
     {
-//        print("refreshing messages...")
+        //        print("refreshing messages...")
         let parameters : [String:AnyObject]!  = ["target": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername())]
         
         Alamofire.request(.POST, self.fetchURL, parameters: parameters)
             .responseJSON { response in
-
+                
                 if let results = response.result.value {
                     
                     
@@ -69,7 +69,7 @@ class DAOPostgres : NSObject
                                 self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
                             }
                         }
-                        //Image
+                            //Image
                         else
                         {
                             if(DAOMessages.sharedInstance.addReceivedMessage(sender, imageKey: imageKey!, sentDate: sentDate, lifeTime: lifeTime))
@@ -81,7 +81,7 @@ class DAOPostgres : NSObject
                     
                 }
         }
-
+        
     }
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
@@ -98,7 +98,7 @@ class DAOPostgres : NSObject
     func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage)
     {
         let me = DAOUser.sharedInstance.getUsername()
-
+        
         let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": "\(NSDate())", "imagekey": imageKey, "lifeTime": lifeTime]
         
         Alamofire.request(.POST, self.sendImageMessageURL, parameters: parameters)
@@ -108,52 +108,52 @@ class DAOPostgres : NSObject
         
     }
     
-//    func sendImage(username: String, image: UIImage, imageKey: String)
-//    {
-//
-//        let base64String = (image.mediumQualityJPEGNSData).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.init(rawValue: 0))
-//        print(base64String)
-//        
-//        Alamofire.request(.POST, self.sendImageURL, parameters: ["imageKey": imageKey, "image": base64String])
-//            .responseJSON {response in
-//                print(response)
-//        }
-//        
-//        Alamofire.upload(.POST, url, data: image.lowestQualityJPEGNSData)
-//            .progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
-//                print(totalBytesWritten)
-//
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    print("Total bytes written on main queue: \(totalBytesWritten)")
-//                }
-//            }
-//            
-//            .responseJSON { response  in
-//                
-//                print(response)
-//        }
-//    }
+    //    func sendImage(username: String, image: UIImage, imageKey: String)
+    //    {
+    //
+    //        let base64String = (image.mediumQualityJPEGNSData).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.init(rawValue: 0))
+    //        print(base64String)
+    //
+    //        Alamofire.request(.POST, self.sendImageURL, parameters: ["imageKey": imageKey, "image": base64String])
+    //            .responseJSON {response in
+    //                print(response)
+    //        }
+    //
+    //        Alamofire.upload(.POST, url, data: image.lowestQualityJPEGNSData)
+    //            .progress { bytesWritten, totalBytesWritten, totalBytesExpectedToWrite in
+    //                print(totalBytesWritten)
+    //
+    //                dispatch_async(dispatch_get_main_queue()) {
+    //                    print("Total bytes written on main queue: \(totalBytesWritten)")
+    //                }
+    //            }
+    //
+    //            .responseJSON { response  in
+    //
+    //                print(response)
+    //        }
+    //    }
     
     
-//    func loadImage(message: Message)
-//    {
-//        Alamofire.request(.POST, self.fetchImageURL, parameters: ["imageKey": message.imageKey!])
-//            .responseString { response in
-//                
-//                let string = response.result.value! as String
-//                
-//                let index = string.startIndex.advancedBy(1)
-//                
-//                let newString = string.substringFromIndex(index)
-//                print(newString)
-//                
-//                let data = NSData(base64EncodedString: newString, options: NSDataBase64DecodingOptions.init(rawValue: 0))
-//                
-//                DAOMessages.sharedInstance.setImageForMessage(message, image: data!)
-//        }
-//        
-//        
-//    }
+    //    func loadImage(message: Message)
+    //    {
+    //        Alamofire.request(.POST, self.fetchImageURL, parameters: ["imageKey": message.imageKey!])
+    //            .responseString { response in
+    //
+    //                let string = response.result.value! as String
+    //
+    //                let index = string.startIndex.advancedBy(1)
+    //
+    //                let newString = string.substringFromIndex(index)
+    //                print(newString)
+    //
+    //                let data = NSData(base64EncodedString: newString, options: NSDataBase64DecodingOptions.init(rawValue: 0))
+    //
+    //                DAOMessages.sharedInstance.setImageForMessage(message, image: data!)
+    //        }
+    //
+    //
+    //    }
     
     
     func setMessageReceived(message: Message)

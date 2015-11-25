@@ -12,19 +12,22 @@ import UIKit
 
 class AppNavigationController : UINavigationController, UIViewControllerTransitioningDelegate
 {
+    let transition = BubbleTransition()
+
     init()
     {
         super.init(nibName: "AppNavigationController", bundle: nil)
+        
     
         let flow = flowLayoutSetup()
-        
         let collectView = ContactsBubble_CollectionViewController(collectionViewLayout: flow)
-        
-//        self.pushViewController(collectView, animated: false)
-        self.viewControllers = [collectView]
-        
+        //self.viewControllers = [collectView]
+        self.pushViewController(collectView, animated: false)
         self.navigationBar.hidden = true
-        
+        self.navigationBar.barStyle = .Default
+        self.navigationBar.barTintColor = oficialDarkGray
+        self.navigationBar.translucent = true
+        self.navigationBar.hideBottomHairline()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,6 +52,23 @@ class AppNavigationController : UINavigationController, UIViewControllerTransiti
     }
     
     //******* TRANSITIONS ********
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    {
+        transition.transitionMode = .Present
+        transition.startingPoint = self.view.center
+        transition.bubbleColor = oficialMediumGray
+        return transition
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning?
+    {
+        transition.transitionMode = .Dismiss
+        transition.startingPoint = self.view.center
+        transition.bubbleColor = oficialMediumGray
+        return transition
+    }
+
 }
 
 extension UINavigationBar {

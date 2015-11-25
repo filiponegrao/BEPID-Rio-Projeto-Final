@@ -71,9 +71,9 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.numberOfMessages.hidden = true
         self.container.addSubview(self.numberOfMessages)
         
-//        self.sendSubviewToBack(profileBtn)
+        //        self.sendSubviewToBack(profileBtn)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -161,7 +161,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
             completion: nil)
         
         animate = true
-
+        
     }
     
     

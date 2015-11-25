@@ -55,11 +55,11 @@ class CellChat_TableViewCell: UITableViewCell
     {
         super.init(coder: aDecoder)
     }
-
+    
     override func awakeFromNib()
     {        super.awakeFromNib()
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool)
     {
         super.setSelected(selected, animated: animated)
@@ -67,5 +67,5 @@ class CellChat_TableViewCell: UITableViewCell
     }
     
     
-
+    
 }

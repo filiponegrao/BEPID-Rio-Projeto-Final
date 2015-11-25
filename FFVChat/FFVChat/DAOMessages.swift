@@ -63,7 +63,7 @@ class DAOMessages : NSObject
         DAOPostgres.sharedInstance.sendImageMessage(EncryptTools.encUsername(username), lifeTime: lifeTime, imageKey: key, image: image)
         DAOParse.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, target: username))
         DAOParse.pushImageNotification(username)
-
+        
         DAOSentMidia.sharedInstance.addSentMidia(message)
         
         return message
@@ -107,7 +107,7 @@ class DAOMessages : NSObject
         let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: decSender!, target: DAOUser.sharedInstance.getUsername(), text: decText, imageKey: nil ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
         
         self.lastMessage = message
-
+        
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
         
         self.save()
@@ -242,7 +242,7 @@ class DAOMessages : NSObject
         
         let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact, contact)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1])
-
+        
         let fetchRequest = NSFetchRequest(entityName: "Message")
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sentDate", ascending: true)]
@@ -326,10 +326,10 @@ class DAOMessages : NSObject
     }
     
     
-//    func receiveMessagesFromContact()
-//    {
-//        DAOParse.checkForContactsMessage()
-//    }
+    //    func receiveMessagesFromContact()
+    //    {
+    //        DAOParse.checkForContactsMessage()
+    //    }
     
     
     func setImageForMessage(message: Message, image: NSData)

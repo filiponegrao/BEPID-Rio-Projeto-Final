@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationChat_View: UIView
 {
-    weak var viewController : Chat_ViewController!
+    var viewController : Chat_ViewController!
     
     var backButton : UIButton!
     
@@ -62,13 +62,6 @@ class NavigationChat_View: UIView
     
     func back()
     {
-        
-        //Limpando memoria:
-        self.viewController.tableView.delegate = nil
-        self.viewController.tableView.dataSource = nil
-        self.viewController.messageText.delegate = nil
-        self.viewController.imagePicker?.delegate = nil
-        
         self.viewController.navigationController?.popViewControllerAnimated(true)
     }
     

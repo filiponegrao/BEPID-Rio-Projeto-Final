@@ -91,7 +91,7 @@ class DAOContacts
             {
                 return results[0]
             }
-            //Tratamento de inconsistencia de contatos
+                //Tratamento de inconsistencia de contatos
             else if results.count > 1
             {
                 for(var i = 1; i < results.count; i++)
@@ -100,7 +100,7 @@ class DAOContacts
                 }
                 return results[0]
             }
-            //Vazio
+                //Vazio
             else
             {
                 return nil
@@ -111,7 +111,7 @@ class DAOContacts
             return nil
         }
     }
-
+    
     
     func deleteContact(username: String) -> Bool
     {
@@ -145,7 +145,7 @@ class DAOContacts
             self.lastContactAdded = contact
             
             NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendAdded)
-
+            
         }
     }
     
@@ -234,7 +234,7 @@ class DAOContacts
         {
             return nil
         }
-
+        
         return nil
     }
     
