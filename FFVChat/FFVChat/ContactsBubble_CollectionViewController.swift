@@ -37,7 +37,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     override func viewDidLoad()
     {
-        self.collectionView!.frame = CGRectMake(0, 40, self.view.frame.width, self.view.frame.height - 40)
+        self.collectionView!.frame = CGRectMake(0, 60, self.view.frame.width, self.view.frame.height - 40)
         
         super.viewDidLoad()
 
