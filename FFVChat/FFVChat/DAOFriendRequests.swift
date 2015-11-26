@@ -92,14 +92,14 @@ class DAOFriendRequests : NSObject
     
     func acceptRequest(request: FriendRequest)
     {
-        let index = Int(self.requests.indexOf({$0 === request})!)
-
-        self.requests.removeAtIndex(index)
-        
         DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
             DAOParse.sendPushRequestAccepted(request.sender)
             self.loadRequests()
         }
+        
+        let index = Int(self.requests.indexOf({$0 === request})!)
+        
+        self.requests.removeAtIndex(index)
     }
     
     /**
