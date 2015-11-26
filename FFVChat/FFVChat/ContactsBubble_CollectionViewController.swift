@@ -12,7 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class ContactsBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
 {
-
+    
     var contacts = [Contact]()
     
     var navigationBar : NavigationContact_View!
@@ -22,6 +22,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     var longPress : UILongPressGestureRecognizer!
     
     var contactManager : ContactManager_View!
+    
+    var background : UIImageView!
+    
+    weak var chatController : Chat_ViewController!
     
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
@@ -35,16 +39,24 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     override func viewDidLoad()
     {
-        self.collectionView!.frame = CGRectMake(0, 60, self.view.frame.width, self.view.frame.height - 40)
+        self.collectionView!.frame = CGRectMake(0, 40, self.view.frame.width, self.view.frame.height - 40)
         
+        self.view.backgroundColor = oficialMediumGray
         super.viewDidLoad()
-
-        //Nav Bar
-        self.navigationBar = NavigationContact_View(requester: self)
-   
+        
         // Register cell classes
         self.collectionView!.registerClass(RandomWalk_CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView!.backgroundColor = oficialMediumGray
+        self.collectionView!.backgroundColor = UIColor.clearColor()
+        
+        self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.background.image = UIImage(named: "ContactBackground")
+        self.background.alpha = 0.1
+        self.view.addSubview(self.background)
+        self.view.sendSubviewToBack(self.background)
+        
+        //Nav Bar
+        self.navigationBar = NavigationContact_View(requester: self)
+        self.view.addSubview(self.navigationBar)
         
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
         self.longPress.minimumPressDuration = 0.5
@@ -55,7 +67,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
         self.collectionView!.reloadData()
         
-        self.view.addSubview(self.navigationBar)
         
     }
     
@@ -75,7 +86,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     override func viewDidAppear(animated: Bool)
     {
-        DAOContacts.sharedInstance.refreshContacts()
         DAOFriendRequests.sharedInstance.friendsAccepted()
         DAOPostgres.sharedInstance.startObserve()
         self.reloadAnimations()
@@ -97,13 +107,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     }
     
     //** FIM FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
-
+    
     
     override func viewDidLayoutSubviews()
     {
         self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
     }
-
+    
     
     //** FUNCOES DE ATUALIZACAO DA TELA ***//
     
@@ -112,7 +122,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
         
         let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
-
+        
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
     }
     
@@ -191,7 +201,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     {
         
     }
-   
+    
     
     
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)

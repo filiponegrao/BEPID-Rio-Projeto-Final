@@ -23,7 +23,7 @@ class ImageZoom_View: UIView {
     var unblurVision : UIImageView!
     
     weak var chatController : Chat_ViewController!
-
+    
     init(image: UIImage)
     {
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
@@ -62,12 +62,12 @@ class ImageZoom_View: UIView {
         self.unblurVision.layer.zPosition = 5
         self.addSubview(self.unblurVision)
     }
-
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func fadeIn()
     {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -86,7 +86,7 @@ class ImageZoom_View: UIView {
             
             }) { (success: Bool) -> Void in
                 self.chatController.isViewing = false
-               self.removeFromSuperview()
+                self.removeFromSuperview()
         }
     }
     
@@ -101,7 +101,7 @@ class ImageZoom_View: UIView {
             let y = touch.locationInView(self).y - raio
             self.unblurVision.alpha = 1
             self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y, imageFrame: self.imageView.frame)
-
+            
             self.unblurVision.frame.origin = CGPointMake(x, y)
         }
     }

@@ -10,7 +10,7 @@ import UIKit
 
 class Tools_ViewController: UIViewController
 {
-    weak var contacts : ContactsBubble_CollectionViewController!
+    var contacts : ContactsBubble_CollectionViewController!
     
     var blackScreen : UIView!
     

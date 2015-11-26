@@ -36,14 +36,16 @@ class FriendRequest
 private let data = DAOFriendRequests()
 
 
-class DAOFriendRequests
+class DAOFriendRequests : NSObject
 {
     var tried = 0
     
     var requests : [FriendRequest] = [FriendRequest]()
     
-    init()
+    override init()
     {
+        super.init()
+        
         self.loadRequests()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadInfos", name: requestNotification.reloadRequest.rawValue, object: nil)
     }
@@ -71,8 +73,11 @@ class DAOFriendRequests
     {
         DAOParse.getRequests { (requests) -> Void in
             
-            self.requests = requests
-            NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
+            if(requests.count > 0)
+            {
+                self.requests = requests
+                NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
+            }
             
         }
     }
@@ -80,13 +85,15 @@ class DAOFriendRequests
     
     func acceptRequest(request: FriendRequest)
     {
-        DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
+        self.requests.removeAtIndex(self.requests.indexOf({ (request) -> Bool in
             
+            return true
+            
+        })!)
+        
+        DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
             DAOParse.sendPushRequestAccepted(request.sender)
-            if(success)
-            {
-                self.loadRequests()
-            }
+            self.loadRequests()
         }
     }
     

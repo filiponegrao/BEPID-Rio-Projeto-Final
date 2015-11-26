@@ -71,9 +71,9 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.numberOfMessages.hidden = true
         self.container.addSubview(self.numberOfMessages)
         
-//        self.sendSubviewToBack(profileBtn)
+        //        self.sendSubviewToBack(profileBtn)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -161,7 +161,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
             completion: nil)
         
         animate = true
-
+        
     }
     
     
@@ -211,8 +211,19 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     func openChat()
     {
         let contact = DAOContacts.sharedInstance.getContactByUsername(self.username.text!)
-        let chat = Chat_ViewController(contact: contact!)
-        self.contactsController.navigationController?.pushViewController(chat, animated: true)
+//        let chat = Chat_ViewController(contact: contact!)
+        
+        var chat : Chat_ViewController!
+        if(self.contactsController.chatController == nil)
+        {
+            chat = Chat_ViewController(contact: contact!)
+            self.contactsController.chatController = chat
+        }
+        else
+        {
+            self.contactsController.chatController.contact = contact
+        }
+        self.contactsController.navigationController?.pushViewController(self.contactsController.chatController, animated: true)
     }
     
     

@@ -297,7 +297,7 @@ class DAOParse
                 callback(success: false, error: error_RequestInexistent)
             }
         }
-
+        
     }
     
     
@@ -399,7 +399,7 @@ class DAOParse
         push.setQuery(pushQuery) // Set our Installation query
         push.setData(data as [NSObject : AnyObject])
         push.sendPushInBackground()
-
+        
     }
     
     
@@ -491,7 +491,7 @@ class DAOParse
             }
         })
     }
-
+    
     //***************************
     //** Funcoes para MENSAGEM
     //***************************
@@ -521,7 +521,7 @@ class DAOParse
                         else
                         {
                         }
-    
+                        
                     })
                 }
                 else
@@ -588,7 +588,7 @@ class DAOParse
         push.setData(data as [NSObject : AnyObject])
         push.sendPushInBackground()
     }
-
+    
     
     class func pushImageNotification(username: String)
     {
@@ -687,7 +687,7 @@ class DAOParse
                 }
                 
             }
-
+            
         }
         else
         {
