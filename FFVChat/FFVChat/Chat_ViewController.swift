@@ -74,11 +74,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
         
-        //Só pro filipo que tem isso
         self.backgorundImage = UIImageView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
         self.backgorundImage.image = UIImage(named: self.fundos[self.fundosIndex])
         self.backgorundImage.contentMode = .ScaleAspectFill
-        self.backgorundImage.alpha = 0.7
+        self.backgorundImage.alpha = 0.4
+        self.backgorundImage.clipsToBounds = true
         self.containerView.addSubview(self.backgorundImage)
         
         
@@ -102,7 +102,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.addSubview(self.redScreen)
         self.containerView.addSubview(tableView)
         
-        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - 50, screenWidth, messageViewHeigth))
+        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - messageViewHeigth, screenWidth, messageViewHeigth))
         self.messageView.backgroundColor = oficialDarkGray
         self.containerView.addSubview(messageView)
         
@@ -131,9 +131,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.keyboardDismissMode = .None
         self.messageView.addSubview(self.messageText)
         
-        self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
-        
-        
     }
     
     //** FUNCOES DE APARICAO DA TELA E DESAPARECIMENTO DA MESMA **//
@@ -143,17 +140,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewMessage", name: NotificationController.center.messageReceived.name, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
+        
+        self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        self.tableView.reloadData()
         
     }
     
     override func viewDidAppear(animated: Bool)
     {
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        self.tableView.reloadData()
         self.tableViewScrollToBottom(false)
         DAOPostgres.sharedInstance.startRefreshing()
         self.redAlertScreen()
@@ -301,8 +299,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
             {
                 self.containerView.frame.size.height = screenHeight - navigationBarHeigth - keyboardSize.height
-                self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
-                self.backgorundImage.frame.size.height = tableViewHeigth - keyboardSize.height
+                self.messageView.frame.origin.y = self.containerView.frame.size.height - messageViewHeigth
+                self.backgorundImage.frame.size.height = tableViewHeigth - (keyboardSize.height)
                 self.tableView.frame.size.height = tableViewHeigth - keyboardSize.height
                 
                 if(self.tableView.contentSize.height > self.tableView.frame.size.height)

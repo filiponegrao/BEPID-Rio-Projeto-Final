@@ -211,8 +211,19 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     func openChat()
     {
         let contact = DAOContacts.sharedInstance.getContactByUsername(self.username.text!)
-        let chat = Chat_ViewController(contact: contact!)
-        self.contactsController.navigationController?.pushViewController(chat, animated: true)
+//        let chat = Chat_ViewController(contact: contact!)
+        
+        var chat : Chat_ViewController!
+        if(self.contactsController.chatController == nil)
+        {
+            chat = Chat_ViewController(contact: contact!)
+            self.contactsController.chatController = chat
+        }
+        else
+        {
+            self.contactsController.chatController.contact = contact
+        }
+        self.contactsController.navigationController?.pushViewController(self.contactsController.chatController, animated: true)
     }
     
     

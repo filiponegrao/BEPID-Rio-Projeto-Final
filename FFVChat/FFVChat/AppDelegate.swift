@@ -136,7 +136,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
             DAOContacts.sharedInstance.refreshContacts()
-            DAOFriendRequests.sharedInstance.friendsAccepted()
         }
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
