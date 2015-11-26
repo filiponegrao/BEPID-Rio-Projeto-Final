@@ -43,6 +43,15 @@ class ImageManager_View: UIView
         self.selectedPhoto.contentMode = .ScaleAspectFit
         self.selectedPhoto.backgroundColor = UIColor.clearColor()
         self.addSubview(selectedPhoto)
+        
+        self.sendButton = UIButton(frame: CGRectMake(screenWidth/2 - screenWidth/6 - 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
+        self.sendButton.backgroundColor = oficialGreen
+        self.addSubview(self.sendButton)
+        
+        self.deleteButton = UIButton(frame: CGRectMake(screenWidth/2 + 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
+        self.deleteButton.backgroundColor = oficialLightGray
+        self.addSubview(self.deleteButton)
+
     }
     
     required init?(coder aDecoder: NSCoder)
