@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+
 
 private let reuseIdentifier = "Cell"
 
@@ -26,6 +28,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     var background : UIImageView!
     
     weak var chatController : Chat_ViewController!
+    
+    var messageSound: AVAudioPlayer!
     
     override init(collectionViewLayout layout: UICollectionViewLayout)
     {
@@ -133,6 +137,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
             let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
             let contact = self.contacts[i]
             let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
+            if(cont > 0)
+            {
+                self.playSound()
+            }
             cell?.profileBtn.setImage(UIImage(data: self.contacts[i].profileImage!) , forState: .Normal)
             cell?.setUnreadMessages(cont)
         }
@@ -232,7 +240,20 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     }
     
     
-    //******* TRANSITIONS ********
+    func playSound()
+    {
+        let path = NSBundle.mainBundle().pathForResource("messageNotification.mp3", ofType:nil)!
+        let url = NSURL(fileURLWithPath: path)
+        
+        do {
+            let sound = try AVAudioPlayer(contentsOfURL: url)
+            self.messageSound = sound
+            sound.play()
+        } catch {
+            // couldn't load file :(
+        }
+    }
+    
     
     
 }

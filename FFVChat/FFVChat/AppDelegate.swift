@@ -11,6 +11,7 @@ import CoreData
 import Parse
 import FBSDKCoreKit
 import ParseFacebookUtilsV4
+import AVFoundation
 
 
 @UIApplicationMain
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
+        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        try! AVAudioSession.sharedInstance().setActive(true)
+        
         Parse.setApplicationId("nxY5lzIPinULd8EmSTxb09vxmVx08tyC1Y2Rt2HK",
             clientKey: "ULiq579xkqwfJF3OKjMJeSLYX42UQ54jvEydaB8s")
         

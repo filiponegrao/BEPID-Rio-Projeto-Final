@@ -76,20 +76,25 @@ class DAOFriendRequests : NSObject
             if(requests.count > 0)
             {
                 self.requests = requests
+                for r in self.requests
+                {
+                    if(DAOContacts.sharedInstance.isContact(r.sender))
+                    {
+                        self.acceptRequest(r)
+                    }
+                }
+                
                 NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
             }
-            
         }
     }
     
     
     func acceptRequest(request: FriendRequest)
     {
-        self.requests.removeAtIndex(self.requests.indexOf({ (request) -> Bool in
-            
-            return true
-            
-        })!)
+        let index = Int(self.requests.indexOf({$0 === request})!)
+
+        self.requests.removeAtIndex(index)
         
         DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
             DAOParse.sendPushRequestAccepted(request.sender)
@@ -134,5 +139,5 @@ class DAOFriendRequests : NSObject
             callback(was: was)
         }
     }
-        
+    
 }

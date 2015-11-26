@@ -260,6 +260,7 @@ class DAOParse
         let query = PFQuery(className: "FriendRequest")
         query.whereKey("sender", equalTo: request.sender)
         query.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
+        query.whereKey("status", equalTo: "Pendente")
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             
             print("Recebidos \(objects?.count) requests")
@@ -361,20 +362,39 @@ class DAOParse
         query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
             if(object != nil)
             {
-                let request = PFObject(className: "FriendRequest")
-                request["sender"] = DAOUser.sharedInstance.getUsername()
-                request["target"] = username
-                request["status"] = "Pendente"
-                request.saveEventually({ (success : Bool, error: NSError?) -> Void in
-                    if(success == true)
+                let query2 = PFQuery(className: "FriendRequest")
+                query2.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
+                query2.whereKey("sender", equalTo: username)
+                query2.whereKey("status", equalTo: "Pendente")
+                query2.findObjectsInBackgroundWithBlock({ (objects2: [AnyObject]?, error2: NSError?) -> Void in
+                    
+                    if(objects2?.count > 0)
                     {
-                        print("Convite de amizade enviado para \(username)")
-                        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequested)
+                        let request = FriendRequest(sender: username, target: DAOUser.sharedInstance.getUsername())
+                        self.acceptRequestOnParse(request, callback: { (success, error) -> Void in
+                            
+                            if(success)
+                            {
+                                
+                            }
+                        })
+                    }
+                    else
+                    {
+                        let request = PFObject(className: "FriendRequest")
+                        request["sender"] = DAOUser.sharedInstance.getUsername()
+                        request["target"] = username
+                        request["status"] = "Pendente"
+                        request.saveEventually({ (success : Bool, error: NSError?) -> Void in
+                            if(success == true)
+                            {
+                                print("Convite de amizade enviado para \(username)")
+                                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequested)
+                            }
+                        })
                     }
                 })
-                
             }
-            
         })
     }
     
