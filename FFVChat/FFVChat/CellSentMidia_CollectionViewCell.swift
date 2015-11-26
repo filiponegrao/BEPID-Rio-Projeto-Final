@@ -17,9 +17,9 @@ class CellSentMidia_CollectionViewCell: UICollectionViewCell
     {
         super.init(frame: frame)
         
-        self.image = UIImageView(frame: CGRectMake(10, 10, frame.size.width - 20, frame.size.height - 20))
-        self.image.layer.cornerRadius = 8
-        self.image.layer.borderWidth = 0.5
+        self.image = UIImageView(frame: CGRectMake(0, 0, frame.size.width, frame.size.height))
+//        self.image.layer.cornerRadius = 8
+//        self.image.layer.borderWidth = 0.5
         self.image.layer.borderColor = UIColor.grayColor().CGColor
         self.image.contentMode = .ScaleAspectFill
         self.image.clipsToBounds = true

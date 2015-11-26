@@ -132,6 +132,8 @@
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; };
 		F648CED81BEEF2880094F3B6 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F648CED71BEEF2880094F3B6 /* CircleView.swift */; };
 		F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */; };
+		F65A4F411C076A790092C403 /* NavigationGallery_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F401C076A790092C403 /* NavigationGallery_View.swift */; };
+		F65A4F431C077AAF0092C403 /* ImageManager_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F421C077AAF0092C403 /* ImageManager_View.swift */; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
 		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
@@ -311,6 +313,8 @@
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
 		F648CED71BEEF2880094F3B6 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
+		F65A4F401C076A790092C403 /* NavigationGallery_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationGallery_View.swift; sourceTree = "<group>"; };
+		F65A4F421C077AAF0092C403 /* ImageManager_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager_View.swift; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
@@ -427,6 +431,8 @@
 				F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */,
 				F6EBC8681BF8526F00BD443E /* NavigationAddContact_View.swift */,
 				F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */,
+				F65A4F401C076A790092C403 /* NavigationGallery_View.swift */,
+				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -766,7 +772,7 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = M7KY4TXQRJ;
+						DevelopmentTeam = D56YT45BUR;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -918,6 +924,7 @@
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
 				80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */,
 				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
+				F65A4F411C076A790092C403 /* NavigationGallery_View.swift in Sources */,
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
 				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,
@@ -927,6 +934,7 @@
 				803657841BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
 				803657981BF94A97000907BD /* NVActivityIndicatorAnimationLineScaleParty.swift in Sources */,
 				803657881BF94A97000907BD /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */,
+				F65A4F431C077AAF0092C403 /* ImageManager_View.swift in Sources */,
 				F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */,
 				F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */,
 				F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */,
