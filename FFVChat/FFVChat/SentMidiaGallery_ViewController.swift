@@ -15,11 +15,13 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     var passwordView : UIView!
                 
-    var navBarView : UIView!
+    var navBar : NavigationGallery_View!
     
     var contact : Contact!
     
     var sentMidias  = [SentMidia]()
+    
+    var imageManagerScreeen : ImageManager_View!
     
     
     override func viewDidLoad()
@@ -28,35 +30,30 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         
         self.view.backgroundColor = oficialMediumGray
         
-        //CRIAR NAV VIEW
-        self.navBarView = UIView(frame: CGRectMake(0, 0, screenWidth, 80))
-        self.navBarView.backgroundColor = oficialDarkGray
-        let backButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
-        backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
-        backButton.addTarget(self, action: "back", forControlEvents: .TouchUpInside)
-        self.navBarView.addSubview(backButton)
-        self.view.addSubview(self.navBarView)
-        //CRIAR NAV VIEW
+        self.navBar = NavigationGallery_View(requester: self)
+        self.view.addSubview(self.navBar)
+
         
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 0, right: 1)
-        layout.itemSize = CGSize(width: screenWidth/3 - 1, height: screenWidth/3 - 1)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 1 //espaçamento entre uma celula de baixo com a de cima
+        layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+        layout.itemSize = CGSize(width: screenWidth/3 - 5, height: screenWidth/3 - 5)
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 5 //espaçamento entre uma celula de baixo com a de cima
         layout.headerReferenceSize = CGSizeMake(0, 0)
 
-        self.collectionView = UICollectionView(frame: CGRectMake(0, 80, screenWidth, screenHeight - 80) , collectionViewLayout: layout)
+        self.collectionView = UICollectionView(frame: CGRectMake(0, 70, screenWidth, screenHeight - 70) , collectionViewLayout: layout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.collectionView.registerClass(CellSentMidia_CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        self.collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(self.collectionView)
         
         
         //PasswordView
         self.passwordView = Password_View(requester:self)
         self.view.addSubview(self.passwordView)
-
+        
     }
     
     override func viewWillAppear(animated: Bool)
@@ -83,6 +80,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CellSentMidia_CollectionViewCell
         
+        cell.backgroundColor = UIColor.redColor()
         let img = UIImage(data: self.sentMidias[indexPath.item].image!)
         cell.image.image = img
         
@@ -91,8 +89,12 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-//        let sentmidia = SelectedMidia_ViewController(image: <#T##UIImage#>, contact: <#T##Contact#>)
-//        self.presen
+        self.imageManagerScreeen = ImageManager_View(image: UIImage(data: self.sentMidias[indexPath.item].image!)!)
+
+        self.view.addSubview(self.imageManagerScreeen)
+        
+//        let sentMidia = SelectedMidia_ViewController(image: UIImage(data: self.sentMidias[indexPath.item].image!)!, contact: self.contact)
+//        self.presentViewController(sentMidia, animated: true, completion: nil)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -102,11 +104,5 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     //** END COLLECTION VIEW PROPERTIES **//
 
-    
-    func back()
-    {
-        self.navigationController?.popViewControllerAnimated(true)
-    }
-    
     
 }

@@ -43,7 +43,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     override func viewDidLoad()
     {
-        self.collectionView!.frame = CGRectMake(0, 40, self.view.frame.width, self.view.frame.height - 40)
+        self.collectionView!.frame = CGRectMake(0, 30, self.view.frame.width, self.view.frame.height - 30)
         
         self.view.backgroundColor = oficialMediumGray
         super.viewDidLoad()

@@ -10,7 +10,7 @@ import UIKit
 
 class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate
 {
-
+    
     var navigationBar : NavigationMidia_View!
     
     var imageView : UIImageView!
@@ -27,6 +27,8 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     var clockImage : UIImageView!
     
+    var clockLabel : UILabel!
+    
     var sentDate : NSDate!
     
     var sentDateLabel : UILabel!
@@ -34,8 +36,6 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     var screenshots : Int!
     
     var screenshotsLabel : UILabel!
-    
-    var trashButton : UIButton!
     
     let minutes = Array(0...9)
     let seconds = Array(0...59)
@@ -49,9 +49,14 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.lifeTime = 60
         
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.navigationBar.title.setSizeFont(22)
+        
     }
     
     override func viewDidLoad()
@@ -61,21 +66,20 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.backgroundColor = oficialMediumGray
         
         self.navigationBar = NavigationMidia_View(requester: self)
-        self.navigationBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: .Normal)
         self.view.addSubview(self.navigationBar)
         
-
-        self.imageView = UIImageView(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + 15, screenWidth/8 * 6, screenHeight/2 - self.navigationBar.frame.size.height - 10))
+        
+        self.imageView = UIImageView(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + 10, screenWidth/8 * 6, screenHeight/2 - self.navigationBar.frame.size.height - 10))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.image = image
         self.imageView.backgroundColor = oficialDarkGray
         self.imageView.layer.cornerRadius = 4
-//        self.imageView.layer.borderColor = UIColor.grayColor().CGColor
-//        self.imageView.layer.borderWidth = 1
+        //        self.imageView.layer.borderColor = UIColor.grayColor().CGColor
+        //        self.imageView.layer.borderWidth = 1
         self.view.addSubview(self.imageView)
         
         
-        self.pickerView = UIPickerView(frame: CGRectMake(0, screenHeight - (screenHeight/3 - 50) - 44, screenWidth, screenHeight/3 - 50))
+        self.pickerView = UIPickerView(frame: CGRectMake(0, screenHeight - (screenHeight/3 - 70) - 44, screenWidth, screenHeight/3 - 70))
         self.pickerView.delegate = self
         self.pickerView.dataSource = self
         self.pickerView.backgroundColor = oficialDarkGray
@@ -89,14 +93,22 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.sendButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.sendButton.titleLabel!.tintColor = oficialDarkGray
         self.view.addSubview(self.sendButton)
-    
+        
         
         self.clockImage = UIImageView(frame: CGRectMake(0, 0, screenWidth/8, screenWidth/8))
         self.clockImage.image = UIImage(named: "clockButton")
-        self.clockImage.center = CGPointMake(screenWidth/2, self.pickerView.frame.origin.y - screenWidth/8 + 10)
+        self.clockImage.center = CGPointMake(screenWidth/2, self.pickerView.frame.origin.y - screenWidth/8 - 10)
         self.view.addSubview(self.clockImage)
-
-        self.sentDateLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + 15 + self.imageView.frame.size.height + 5, screenWidth/8 * 6, 20))
+        
+        self.clockLabel = UILabel(frame: CGRectMake(0, 0,screenWidth/3, screenWidth/8))
+        self.clockLabel.text = "Choose time:"
+        self.clockLabel.textAlignment = .Center
+        self.clockLabel.setSizeFont(15)
+        self.clockLabel.textColor = oficialLightGray
+        self.clockLabel.center = CGPointMake(screenWidth/2, self.pickerView.frame.origin.y - 20)
+        self.view.addSubview(self.clockLabel)
+        
+        self.sentDateLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + 10 + self.imageView.frame.size.height + 5, screenWidth/8 * 6, 20))
         self.sentDateLabel.text = "Sent: "
         self.sentDateLabel.font = UIFont(name: "Sukhumvit Set", size: 15)
         self.sentDateLabel.setSizeFont(15)
@@ -104,7 +116,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.sentDateLabel.textAlignment = .Left
         self.view.addSubview(self.sentDateLabel)
         
-        self.screenshotsLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + self.imageView.frame.size.height + self.sentDateLabel.frame.size.height + 15, screenWidth/8 * 6, 20))
+        self.screenshotsLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + self.imageView.frame.size.height + self.sentDateLabel.frame.size.height + 10, screenWidth/8 * 6, 20))
         self.screenshotsLabel.text = "Screenshots: "
         self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 15)
         self.screenshotsLabel.setSizeFont(15)
@@ -112,21 +124,14 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.screenshotsLabel.textAlignment = .Left
         self.view.addSubview(self.screenshotsLabel)
         
-        self.trashButton = UIButton(frame: CGRectMake(screenWidth/8 * 6, self.navigationBar.frame.size.height + 15 + self.imageView.frame.size.height + 5, screenWidth/9,screenWidth/9))
-        self.trashButton.setImage(UIImage(named: "trashButton"), forState: .Normal)
-        self.trashButton.backgroundColor = oficialDarkGray
-        self.trashButton.alpha = 0.9
-        self.trashButton.layer.cornerRadius = 8
-        self.view.addSubview(self.trashButton)
-        
     }
-
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     
     func sendPhoto()
     {
@@ -155,7 +160,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
                     let presenter = controller!.presentingViewController as! Chat_ViewController
                     
                     controller!.navigationController?.popViewControllerAnimated(true)
-//                    presenter.sendImage(self.image, lifetime: time)
+                    //                    presenter.sendImage(self.image, lifetime: time)
                 })
             }
         }
@@ -182,7 +187,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
-//        let row = pickerView.selectedRowInComponent(0)
+        //        let row = pickerView.selectedRowInComponent(0)
         
         if component == 0 {
             return minutes.count
@@ -236,5 +241,5 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         }
     }
     
-
+    
 }
