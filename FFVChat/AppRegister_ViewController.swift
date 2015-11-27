@@ -13,19 +13,17 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
 {
     var image : UIImage!
     
-    var buttonView : UIImageView!
-    
     var picker : UIImagePickerController? = UIImagePickerController()
     
     var popover : UIPopoverController? = nil
     
     var loadingScreen: LoadScreen_View!
     
-    @IBOutlet weak var registerButton: UIButton!
+    var registerButton: UIButton!
     
     @IBOutlet weak var cancel: UIButton!
     
-    @IBOutlet weak var buttonphoto: UIButton!
+    var buttonphoto: UIButton!
 
     @IBOutlet var labelEmail: MKTextField!
     
@@ -71,11 +69,16 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         
         self.picker!.delegate = self
         self.view.backgroundColor = oficialDarkGray
-
-        self.registerButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        self.registerButton.backgroundColor = oficialDarkGreen
-        self.registerButton.layer.cornerRadius = 7
-        self.registerButton.clipsToBounds = true
+        
+        self.buttonphoto = UIButton(frame: CGRectMake(0,0,screenWidth/1.5,screenWidth/1.5))
+        self.buttonphoto.center = CGPointMake(screenWidth/2, 30 + (screenWidth/1.5)/2)
+        self.buttonphoto.layer.cornerRadius = self.buttonphoto.frame.size.width/2
+        self.buttonphoto.addTarget(self, action: "photoButtonClicked", forControlEvents: .TouchUpInside)
+        self.buttonphoto.clipsToBounds = true
+        self.buttonphoto.setImage(UIImage(named: "cameraButton"), forState: .Normal)
+        self.buttonphoto.imageView?.contentMode = .ScaleAspectFill
+        self.view.addSubview(self.buttonphoto)
+        
  
         self.labelEmail.delegate = self
         self.labelEmail.autocapitalizationType = .None
@@ -139,12 +142,15 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.labelConfirmPassword.bottomBorderEnabled = true
         self.labelConfirmPassword.bottomBorderColor = oficialGreen
         
-
-        self.buttonphoto.clipsToBounds = true
-        
-        self.buttonView = UIImageView(frame: CGRectMake(0, 0, self.buttonphoto.frame.width, self.buttonphoto.frame.height))
-        self.buttonphoto.addSubview(self.buttonView)
-        self.buttonphoto.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
+        self.registerButton = UIButton(frame: CGRectMake(0,0,screenWidth/2,screenWidth/8))
+        self.registerButton.center = CGPointMake(screenWidth/2, screenHeight - screenWidth/4)
+        self.registerButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.registerButton.backgroundColor = oficialDarkGreen
+        self.registerButton.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
+        self.registerButton.setTitle("Register", forState: .Normal)
+        self.registerButton.layer.cornerRadius = 7
+        self.registerButton.clipsToBounds = true
+        self.view.addSubview(self.registerButton)
     }
     
     
@@ -184,7 +190,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     }
     
     
-    @IBAction func photoButtonClicked(sender: AnyObject)
+    func photoButtonClicked()
     {
         let alert: UIAlertController = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
@@ -256,8 +262,9 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     {
         picker.dismissViewControllerAnimated(true, completion: nil)
         self.image = image
-        self.buttonView.image = self.image
-        self.buttonView.contentMode = UIViewContentMode.ScaleAspectFill
+        self.buttonphoto.setImage(image, forState: .Normal)
+        self.buttonphoto.imageView?.clipsToBounds = true
+        self.buttonphoto.clipsToBounds = true
     }
     
     

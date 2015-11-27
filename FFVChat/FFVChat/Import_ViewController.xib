@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Import_ViewController" customModule="FFVChat" customModuleProvider="target">
@@ -19,30 +19,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contatos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qu8-s4-95e">
-                    <rect key="frame" x="250" y="44" width="101" height="24"/>
+                    <rect key="frame" x="249" y="30" width="101" height="24"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="24" id="4p8-GS-Xl9"/>
-                        <constraint firstAttribute="width" constant="101" id="boZ-uc-Deb"/>
+                        <constraint firstAttribute="height" constant="24" id="W6G-Dv-ghN"/>
+                        <constraint firstAttribute="width" constant="101" id="lyU-g6-Ao7"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <color key="textColor" red="0.1215686275" green="0.8980392157" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="guR-1f-Kc8">
-                    <rect key="frame" x="0.0" y="263" width="600" height="337"/>
+                    <rect key="frame" x="0.0" y="201" width="600" height="349"/>
                     <animations/>
                     <color key="backgroundColor" red="0.51764705879999995" green="0.51372549020000002" blue="0.51372549020000002" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="337" id="DFb-xA-iqK"/>
-                    </constraints>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFk-nb-BLk">
-                    <rect key="frame" x="166" y="85" width="269" height="87"/>
+                    <rect key="frame" x="166" y="64" width="269" height="87"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="87" id="1fb-4P-9oY"/>
-                        <constraint firstAttribute="width" constant="269" id="Wqp-Sd-UJA"/>
+                        <constraint firstAttribute="height" constant="87" id="kYF-xw-3ea"/>
+                        <constraint firstAttribute="width" constant="269" id="ykK-mk-4vn"/>
                     </constraints>
                     <string key="text">Do you want to import your contacts from Facebook? Choosing this option you will become visible and other contacts can import you also.</string>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
@@ -53,14 +50,14 @@
             <animations/>
             <color key="backgroundColor" red="0.1529411765" green="0.15686274510000001" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="guR-1f-Kc8" secondAttribute="bottom" id="24F-aA-bpH"/>
-                <constraint firstItem="DFk-nb-BLk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="2uL-nh-PIT"/>
-                <constraint firstItem="DFk-nb-BLk" firstAttribute="top" secondItem="qu8-s4-95e" secondAttribute="bottom" constant="17" id="Pwc-2q-P4F"/>
-                <constraint firstItem="guR-1f-Kc8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QQy-DK-XqK"/>
-                <constraint firstItem="qu8-s4-95e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="b5h-Lp-Ve6"/>
-                <constraint firstAttribute="trailing" secondItem="guR-1f-Kc8" secondAttribute="trailing" id="iNY-7M-hI2"/>
-                <constraint firstItem="DFk-nb-BLk" firstAttribute="centerX" secondItem="qu8-s4-95e" secondAttribute="centerX" id="lwm-M1-an0"/>
-                <constraint firstItem="qu8-s4-95e" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yWI-RX-cuH"/>
+                <constraint firstAttribute="trailing" secondItem="guR-1f-Kc8" secondAttribute="trailing" id="Ez3-n2-YcW"/>
+                <constraint firstItem="qu8-s4-95e" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="30" id="Fsg-ZN-kMT"/>
+                <constraint firstAttribute="bottom" secondItem="guR-1f-Kc8" secondAttribute="bottom" constant="50" id="LGW-ap-AfS"/>
+                <constraint firstItem="DFk-nb-BLk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="N3E-I2-jR4"/>
+                <constraint firstItem="DFk-nb-BLk" firstAttribute="top" secondItem="qu8-s4-95e" secondAttribute="bottom" constant="10" id="OOh-hL-FGO"/>
+                <constraint firstItem="guR-1f-Kc8" firstAttribute="top" secondItem="DFk-nb-BLk" secondAttribute="bottom" constant="50" id="lF7-MZ-YYK"/>
+                <constraint firstItem="guR-1f-Kc8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="tLr-ha-5E8"/>
+                <constraint firstItem="qu8-s4-95e" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xZ9-ki-Zf8"/>
             </constraints>
         </view>
     </objects>

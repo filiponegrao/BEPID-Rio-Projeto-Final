@@ -14,7 +14,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     
     @IBOutlet weak var registerButton: UIButton!
     
-    @IBOutlet var imageView: UIImageView!
+    var imageView: UIImageView!
 
     @IBOutlet var labelUsername: MKTextField!
     
@@ -59,11 +59,15 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         
         let image = DAOUser.sharedInstance.getProfileImage()
         
+        self.imageView = UIImageView(frame: CGRectMake(0, 0, screenHeight/2.5, screenHeight/2.5))
+        self.imageView.center = CGPointMake(screenWidth/2, 20 + screenHeight/4)
         self.imageView.image = image
         self.imageView.clipsToBounds = true
         self.imageView.layer.cornerRadius = self.imageView.frame.size.width/2
         self.imageView.layer.borderColor = oficialDarkGreen.CGColor
-        self.imageView.layer.borderWidth = 6
+        self.imageView.layer.borderWidth = 4
+        self.imageView.contentMode = .ScaleAspectFill
+        self.view.addSubview(self.imageView)
         
         self.registerButton.setTitle("Register", forState: .Normal)
         self.registerButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -134,6 +138,13 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
 
     }
     
+    
+    override func viewDidAppear(animated: Bool)
+     {
+        let image = DAOUser.sharedInstance.getProfileImage()
+        self.imageView.image = image
+    }
+    
     //Sobe a view e desce a view
     //Sobe a view e desce a view
     func keyboardWillShow(notification: NSNotification)
@@ -178,23 +189,21 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
     
     func userAlreadyExist()
     {
-        self.loadingScreen.removeFromSuperview()
+        self.loadingScreen?.removeFromSuperview()
         let alert = UIAlertView(title: "Ops!", message: "This username already exists", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
     func userLogged()
     {
-        
-        self.loadingScreen.removeFromSuperview()
-//        let tutorial = TutoFirst_ViewController(nibName: "TutoFirst_ViewController", bundle: nil)
-        let importa = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
-        self.presentViewController(importa, animated: true, completion: nil)
+        self.loadingScreen?.removeFromSuperview()
+        let tutorial = Tutorial_PageViewController()
+        self.presentViewController(tutorial, animated: true, completion: nil)
     }
     
     func loginCanceled()
     {
-        self.loadingScreen.removeFromSuperview()
+        self.loadingScreen?.removeFromSuperview()
         let alert = UIAlertView(title: "Login failed", message: "Please, try again", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }

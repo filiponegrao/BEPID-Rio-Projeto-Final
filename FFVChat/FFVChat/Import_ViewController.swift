@@ -55,7 +55,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         //all contacts button
         self.allContactsButton = UIButton(frame: CGRectMake(screenWidth/2, self.tableView.frame.origin.y
-            - 80, screenWidth/2, 40))
+            - 60, screenWidth/2, 40))
         self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
         self.allContactsButton.setTitle("All contacts", forState: .Normal)
         self.allContactsButton.setTitleColor(oficialGreen, forState: .Normal)
@@ -78,6 +78,18 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.loadingView = LoadScreen_View()
         self.view.addSubview(self.loadingView)
         
+        //doneButton
+        self.doneButton = UIButton(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
+        self.doneButton.backgroundColor = oficialGreen
+        self.doneButton.setTitle("Done", forState: .Normal)
+        self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.doneButton)
+        
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
         //carregando info...
         DAOUser.sharedInstance.getFaceContacts { (metaContacts) -> Void in
             
@@ -94,15 +106,6 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
             self.all = true
         }
-        
-        //doneButton
-        self.doneButton = UIButton(frame: CGRectMake(0, screenHeight - 44, screenWidth, 44))
-        self.doneButton.backgroundColor = oficialGreen
-        self.doneButton.setTitle("Done", forState: .Normal)
-        self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
-        self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
-        self.view.addSubview(self.doneButton)
-        
     }
     
     override func viewWillAppear(animated: Bool)
@@ -188,6 +191,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func done()
     {
+        AppStateData.sharedInstance.importContacts()
         self.loadingView = LoadScreen_View()
         self.view.addSubview(self.loadingView)
         
@@ -201,6 +205,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
                 DAOFriendRequests.sharedInstance.sendRequest(facebookID: item.facebookId)
             }
         }
+        
         if(self.contactsShouldAdd == 0)
         {
             let contacts = AppNavigationController()
