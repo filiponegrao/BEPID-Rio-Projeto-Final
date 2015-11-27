@@ -29,6 +29,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialMediumGray
+        self.navigationController!.interactivePopGestureRecognizer!.enabled = false
         
         self.navBar = NavigationGallery_View(requester: self)
         self.view.addSubview(self.navBar)
