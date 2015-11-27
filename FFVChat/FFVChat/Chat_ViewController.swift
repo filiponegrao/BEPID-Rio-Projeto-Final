@@ -51,6 +51,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var isViewing : Bool = false
     
+    var passwordView : UIView!
+    
     init(contact: Contact)
     {
         self.contact = contact
@@ -125,6 +127,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageText.text = "Message..."
         self.messageText.textAlignment = .Left
         self.messageText.textColor = oficialLightGray
+        self.messageText.tintColor = oficialGreen
         self.messageText.backgroundColor = UIColor.clearColor()
         self.messageText.delegate = self
         self.messageText.keyboardAppearance = .Dark

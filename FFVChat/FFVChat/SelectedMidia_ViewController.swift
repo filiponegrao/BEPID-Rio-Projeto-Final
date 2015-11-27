@@ -17,7 +17,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
     
     var image : UIImage!
     
-    var sendButton : UIButton!
+    var sendButton : MKButton!
     
     var lifeTime : Int!
     
@@ -86,12 +86,16 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.pickerView)
         
         
-        self.sendButton = UIButton(frame: CGRectMake(0,screenHeight - 44,screenWidth,44))
+        self.sendButton = MKButton(frame: CGRectMake(0,screenHeight - 44,screenWidth,44))
         self.sendButton.backgroundColor = oficialGreen
         self.sendButton.setTitle("Send", forState: .Normal)
         self.sendButton.addTarget(self, action: "sendPhoto", forControlEvents: .TouchUpInside)
         self.sendButton.setTitleColor(oficialDarkGray, forState: .Normal)
-        self.sendButton.titleLabel!.tintColor = oficialDarkGray
+//        self.sendButton.titleLabel!.tintColor = oficialDarkGray
+        self.sendButton.backgroundLayerCornerRadius = 900
+        self.sendButton.rippleLocation = .Center
+        self.sendButton.ripplePercent = 4
+        self.sendButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.sendButton)
         
         

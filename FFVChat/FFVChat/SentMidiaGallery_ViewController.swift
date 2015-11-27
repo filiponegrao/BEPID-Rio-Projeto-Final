@@ -29,6 +29,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialMediumGray
+        self.navigationController!.interactivePopGestureRecognizer!.enabled = false
         
         self.navBar = NavigationGallery_View(requester: self)
         self.view.addSubview(self.navBar)
@@ -89,12 +90,9 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        self.imageManagerScreeen = ImageManager_View(image: UIImage(data: self.sentMidias[indexPath.item].image!)!)
+        self.imageManagerScreeen = ImageManager_View(image: UIImage(data: self.sentMidias[indexPath.item].image!)!, requester: self)
 
         self.view.addSubview(self.imageManagerScreeen)
-        
-//        let sentMidia = SelectedMidia_ViewController(image: UIImage(data: self.sentMidias[indexPath.item].image!)!, contact: self.contact)
-//        self.presentViewController(sentMidia, animated: true, completion: nil)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
