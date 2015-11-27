@@ -84,7 +84,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "checkUnreadMessages", name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
     }
     
@@ -130,6 +130,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
     }
     
+    func mesageReceived()
+    {
+        self.playSound()
+        self.checkUnreadMessages()
+    }
+    
+    
     func checkUnreadMessages()
     {
         for i in 0..<self.collectionView!.numberOfItemsInSection(0)
@@ -137,10 +144,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
             let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
             let contact = self.contacts[i]
             let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
-            if(cont > 0)
-            {
-                self.playSound()
-            }
             cell?.profileBtn.setImage(UIImage(data: self.contacts[i].profileImage!) , forState: .Normal)
             cell?.setUnreadMessages(cont)
         }

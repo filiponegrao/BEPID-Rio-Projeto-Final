@@ -33,6 +33,7 @@ class NotificationController: NSObject
     
     var contactsRefresheded : NSNotification!
     
+    
     override init()
     {
         self.friendRequest = NSNotification(name: "friendRequest", object: NSMutableDictionary())

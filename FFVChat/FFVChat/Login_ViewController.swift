@@ -48,8 +48,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "userNotFound", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "incompleteRegister", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "wrongPassword", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
-            }
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+    }
     
     override func viewDidLoad()
     {
@@ -57,13 +57,19 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         self.view.backgroundColor = oficialDarkGray
         
+        let background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        background.image = UIImage(named: "ContactBackground")
+        background.alpha = 0.1
+        background.contentMode = .ScaleAspectFill
+        self.view.addSubview(background)
+        
         self.logo = UIImageView(frame: CGRectMake(0,0, screenWidth/2, screenWidth/4))
-        self.logo.center = CGPointMake(screenWidth/2, screenHeight/6 + 15)
+        self.logo.center = CGPointMake(screenWidth/2, screenHeight/6)
         self.logo.image = UIImage(named: "logo")
         self.view.addSubview(self.logo)
         
         self.emailField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
-        self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3 + 30)
+        self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3 + screenHeight/10)
         self.emailField.autocapitalizationType = .None
         self.emailField.autocorrectionType = .No
         self.emailField.textAlignment = .Center
@@ -83,7 +89,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.view.addSubview(self.emailField)
         
         self.passwordField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
-        self.passwordField.center = CGPointMake(screenWidth/2, self.emailField.center.y + 60)
+        self.passwordField.center = CGPointMake(screenWidth/2, self.emailField.center.y + 50)
         self.passwordField.autocapitalizationType = .None
         self.passwordField.autocorrectionType = .No
         self.passwordField.textAlignment = .Center
@@ -104,13 +110,20 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.passwordField.delegate = self
         self.view.addSubview(self.passwordField)
         
+        self.loginButton = UIButton(frame: CGRectMake(0,0,screenWidth/2.5, screenWidth/10))
+        self.loginButton.addTarget(self, action: "loginParse", forControlEvents: .TouchUpInside)
         self.loginButton.backgroundColor = oficialDarkGreen
+        self.loginButton.center = CGPointMake(screenWidth/2, self.passwordField.frame.origin.y + self.passwordField.frame.size.height + screenHeight/20)
         self.loginButton.setTitle("Login", forState: .Normal)
         self.loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.loginButton.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
         self.loginButton.layer.cornerRadius = 7
         self.loginButton.clipsToBounds = true
+        self.view.addSubview(self.loginButton)
         
         self.registerButton.setTitleColor(oficialGreen, forState: .Normal)
+        
+        self.view.sendSubviewToBack(background)
     }
     
     
@@ -132,7 +145,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
     }
 
-    @IBAction func loginParse(sender: UIButton)
+    func loginParse()
     {
         if(self.emailField.text != "" && self.passwordField != "")
         {

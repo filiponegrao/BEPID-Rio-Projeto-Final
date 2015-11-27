@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="Login_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
                 <outlet property="facebookConnect" destination="90f-hV-mAa" id="S9X-bM-2PX"/>
-                <outlet property="loginButton" destination="QHQ-N0-Fri" id="pHL-oF-HPk"/>
                 <outlet property="registerButton" destination="JgA-1j-iaR" id="zA6-CR-WOB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -18,28 +17,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHQ-N0-Fri">
-                    <rect key="frame" x="239" y="366" width="121" height="41"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="121" id="O6O-9u-d0N"/>
-                        <constraint firstAttribute="height" constant="41" id="hhE-c7-qiY"/>
-                    </constraints>
-                    <state key="normal" title="Login">
-                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="5"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="loginParse:" destination="-1" eventType="touchUpInside" id="W3e-ii-ed3"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="90f-hV-mAa">
                     <rect key="frame" x="205" y="509" width="190" height="40"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="190" id="DzW-xA-jT7"/>
                         <constraint firstAttribute="height" constant="40" id="KPB-zS-bDo"/>
@@ -52,10 +32,11 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JgA-1j-iaR">
-                    <rect key="frame" x="245" y="465" width="110" height="30"/>
+                    <rect key="frame" x="245" y="451" width="110" height="43"/>
+                    <animations/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="aDM-Ia-HPU"/>
-                        <constraint firstAttribute="width" constant="110" id="hyn-ZX-Fu3"/>
+                        <constraint firstAttribute="height" constant="43" id="UVs-Rl-Jdc"/>
+                        <constraint firstAttribute="width" constant="110" id="nvY-uW-dJZ"/>
                     </constraints>
                     <state key="normal" title="Register">
                         <color key="titleColor" red="0.13075417780000001" green="0.77556818179999998" blue="0.658255857" alpha="1" colorSpace="calibratedRGB"/>
@@ -66,16 +47,13 @@
                     </connections>
                 </button>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="QHQ-N0-Fri" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="G8l-lW-IQS"/>
-                <constraint firstItem="JgA-1j-iaR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="HOW-2S-Rd6"/>
-                <constraint firstItem="JgA-1j-iaR" firstAttribute="centerX" secondItem="90f-hV-mAa" secondAttribute="centerX" id="HqW-Qx-plp"/>
-                <constraint firstItem="JgA-1j-iaR" firstAttribute="top" secondItem="QHQ-N0-Fri" secondAttribute="bottom" constant="58" id="O9R-0I-TgP"/>
-                <constraint firstItem="QHQ-N0-Fri" firstAttribute="centerX" secondItem="JgA-1j-iaR" secondAttribute="centerX" id="YX1-te-Iha"/>
                 <constraint firstItem="90f-hV-mAa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aIK-Il-3mD"/>
                 <constraint firstAttribute="bottom" secondItem="90f-hV-mAa" secondAttribute="bottom" constant="51" id="dAR-yp-Cpr"/>
-                <constraint firstItem="90f-hV-mAa" firstAttribute="top" secondItem="JgA-1j-iaR" secondAttribute="bottom" constant="14" id="vwq-ZO-6ag"/>
+                <constraint firstItem="90f-hV-mAa" firstAttribute="top" secondItem="JgA-1j-iaR" secondAttribute="bottom" constant="15" id="hLG-2k-weh"/>
+                <constraint firstItem="JgA-1j-iaR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="zrG-Na-ktx"/>
             </constraints>
             <point key="canvasLocation" x="779" y="685"/>
         </view>

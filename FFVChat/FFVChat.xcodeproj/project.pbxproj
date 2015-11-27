@@ -112,6 +112,9 @@
 		80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA13601BC3038C0035E8B2 /* MKTableViewCell.swift */; };
 		80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA13611BC3038C0035E8B2 /* MKTextField.swift */; };
 		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; };
+		80C91A4E1C07E06300E5B712 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 80C91A4D1C07E06300E5B712 /* Settings.bundle */; };
+		80C91A541C07E79600E5B712 /* AppState.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80C91A531C07E79600E5B712 /* AppState.plist */; };
+		80C91A561C07E81D00E5B712 /* AppStateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C91A551C07E81D00E5B712 /* AppStateData.swift */; };
 		80DAE5541C07756500D431C1 /* bip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 80DAE5531C07756500D431C1 /* bip.mp3 */; };
 		80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */; };
 		80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */; };
@@ -292,6 +295,9 @@
 		80AA13601BC3038C0035E8B2 /* MKTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTableViewCell.swift; sourceTree = "<group>"; };
 		80AA13611BC3038C0035E8B2 /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
 		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		80C91A4D1C07E06300E5B712 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		80C91A531C07E79600E5B712 /* AppState.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppState.plist; sourceTree = "<group>"; };
+		80C91A551C07E81D00E5B712 /* AppStateData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateData.swift; sourceTree = "<group>"; };
 		80DAE5531C07756500D431C1 /* bip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bip.mp3; sourceTree = "<group>"; };
 		80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools_ViewController.swift; sourceTree = "<group>"; };
 		80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContact_ViewController.swift; sourceTree = "<group>"; };
@@ -483,6 +489,9 @@
 			isa = PBXGroup;
 			children = (
 				801D92531BA4928800D05CE7 /* AppDelegate.swift */,
+				80C91A531C07E79600E5B712 /* AppState.plist */,
+				80C91A551C07E81D00E5B712 /* AppStateData.swift */,
+				80C91A4D1C07E06300E5B712 /* Settings.bundle */,
 				8000B4DD1BDFFB5200CD00A6 /* Tools */,
 				801D92791BA492E100D05CE7 /* Model */,
 				801D927A1BA492EC00D05CE7 /* View */,
@@ -772,7 +781,7 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = D56YT45BUR;
+						DevelopmentTeam = M7KY4TXQRJ;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -806,7 +815,9 @@
 			files = (
 				801D92761BA492C200D05CE7 /* Login_ViewController.xib in Resources */,
 				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
+				80C91A541C07E79600E5B712 /* AppState.plist in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
+				80C91A4E1C07E06300E5B712 /* Settings.bundle in Resources */,
 				809B81FD1BFCFD0B0078F350 /* messageNotification.mp3 in Resources */,
 				80DAE5541C07756500D431C1 /* bip.mp3 in Resources */,
 				F66B29DF1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.xib in Resources */,
@@ -996,6 +1007,7 @@
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
+				80C91A561C07E81D00E5B712 /* AppStateData.swift in Sources */,
 				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,
 				80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */,
 				80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */,

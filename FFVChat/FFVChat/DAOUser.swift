@@ -61,6 +61,10 @@ enum UserCondition : String
      * foram carregados com sucesso */
     case contactsLoaded = "contactsLoaded"
     
+    case termsUnaccepted = "termsUnaccepted"
+    
+    case contactsNotImported = "contactsNotImported"
+    
     case unknowError = "unknowError"
 }
 
@@ -77,7 +81,10 @@ class DAOUser
         if(PFUser.currentUser() != nil && self.user == nil)
         {
             self.loginInApp(PFUser.currentUser()!.username!)
-            if(self.user == nil) { print("Registro do usuario incompleto") }
+            if(self.user == nil)
+            {
+                print("Registro do usuario incompleto")
+            }
         }
     }
     
@@ -249,6 +256,7 @@ class DAOUser
             }
             else
             {
+                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.loginCanceled.rawValue, object: nil)
                 print("Uh oh. The user cancelled the Facebook login.")
             }
         }
@@ -289,12 +297,25 @@ class DAOUser
                         PFUser.currentUser()?.setValue(id, forKey: "facebookID")
                         PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()?.setValue(100, forKey: "trustLevel")
-                        PFUser.currentUser()!.saveEventually()
-
-                        let user = User.createInManagedObjectContext(self.managedObjectContext, username: PFUser.currentUser()!.username!, email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id)
-                        self.user = user
-                        
-                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
+                        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                            
+                            if(success)
+                            {
+                                print("informacoes atualizadas no parse")
+                                let user = User.createInManagedObjectContext(self.managedObjectContext, username: "tempUser", email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id)
+                                self.save()
+                                self.user = user
+                                
+                                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
+                            }
+                            else
+                            {
+                                NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.unknowError.rawValue, object: nil)
+                            }
+                            
+                            
+                            
+                        })
                     }
                     else
                     {
@@ -330,6 +351,7 @@ class DAOUser
                     {
                         let localUser = self.createUser(username, email: email, trustLevel: 100, profileImage: data!, facebookID: facebookID)
                         self.user = localUser
+                        self.save()
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
 
                     }
@@ -347,26 +369,21 @@ class DAOUser
     func getFaceContacts( callback : (metaContacts: [facebookContact]!) -> Void) -> Void {
         
         var contacts = [facebookContact]()
-        var i = 0
         
         self.getFaceFriends { (friends:[facebookContact]!) -> Void in
             
             for friend in friends
             {
-                let busca = PFUser.query()
+                let busca = PFUser.query()!
                 let id = friend.facebookId
-                busca!.whereKey("facebookID", equalTo: id)
-                busca!.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-                    print(objects?.count)
-                    i++
-                    if let objects = objects as? [PFObject]
+                busca.whereKey("facebookID", equalTo: id)
+                busca.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+                    
+                    if(object != nil)
                     {
-                        if(objects.count > 0)
-                        {
-                            print("Amigo \(friend.facebookName) esta no app")
-                            let contact = facebookContact(facebookId: friend.facebookId, facebookName: friend.facebookName)
-                            contacts.append(contact)
-                        }
+                        print("Amigo \(friend.facebookName) esta no app")
+                        let contact = facebookContact(facebookId: friend.facebookId, facebookName: friend.facebookName)
+                        contacts.append(contact)
                     }
                     
                     if(friend.facebookId == friends.last?.facebookId)
@@ -374,7 +391,7 @@ class DAOUser
                         print("retornando \(contacts.count) amigos")
                         callback(metaContacts: contacts)
                     }
-                }
+                })
             }
             
             callback(metaContacts: contacts)
@@ -398,10 +415,10 @@ class DAOUser
                 let results = result as! NSDictionary
                 let data = results.objectForKey("data") as! [NSDictionary]
                 
-                for(var j = 0; j < data.count; j++)
+                for amigo in data
                 {
-                    let name = data[j].valueForKey("name") as! String
-                    let id = data[j].valueForKey("id") as! String
+                    let name = amigo.valueForKey("name") as! String
+                    let id = amigo.valueForKey("id") as! String
                     let c = facebookContact(facebookId: id, facebookName: name)
                     print("Amigo \(name)")
                     meta.append(c)
@@ -456,6 +473,20 @@ class DAOUser
         }
     }
     
+    
+    func getTempUser() -> User
+    {
+        let request = NSFetchRequest(entityName: "User")
+        
+        let predicate = NSPredicate(format: "username == %@", "tempUser")
+        
+        request.predicate = predicate
+        
+        let result = try! self.managedObjectContext.executeFetchRequest(request) as! [User]
+    
+        return result.first!
+    }
+    
     /** Funcao efetua o logout de um usuario!
       * Sua condicao de retorno é um par : booleano
       * e string, onde o primeiro indica se o logout
@@ -484,17 +515,33 @@ class DAOUser
      **/
     func isLoged() -> UserCondition
     {
+        print(self.user?.username)
         if(PFUser.currentUser() == nil)
         {
             return UserCondition.userLoggedOut
         }
         else if(PFUser.currentUser() != nil && self.user == nil)
         {
+            self.user = self.getTempUser()
             return UserCondition.incompleteRegister
         }
         else
         {
-            return UserCondition.userLogged
+            if(AppStateData.sharedInstance.termsOfUseAccepted())
+            {
+                if(AppStateData.sharedInstance.contactsImported())
+                {
+                    return UserCondition.userLogged
+                }
+                else
+                {
+                    return UserCondition.contactsNotImported
+                }
+            }
+            else
+            {
+                return UserCondition.termsUnaccepted
+            }
         }
     }
     
@@ -549,6 +596,7 @@ class DAOUser
     {
         
     }
+    
     
     func changeProfilePicture(image: UIImage)
     {

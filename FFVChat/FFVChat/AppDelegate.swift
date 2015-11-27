@@ -33,7 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
-        if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
+        let usercondition = DAOUser.sharedInstance.isLoged()
+        
+        if(usercondition == UserCondition.userLogged)
         {
             if(PFUser.currentUser() != nil)
             {
@@ -47,15 +49,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 
             }
         }
-        else if(DAOUser.sharedInstance.isLoged() == UserCondition.userLoggedOut)
+        else if(usercondition == UserCondition.userLoggedOut)
         {
             let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
             self.window?.rootViewController = login
         }
-        else if(DAOUser.sharedInstance.isLoged() == UserCondition.incompleteRegister)
+        else if(usercondition == UserCondition.incompleteRegister)
         {
             let validate = FacebookRegister_ViewController(nibName: "FacebookRegister_ViewController", bundle: nil)
             self.window?.rootViewController = validate
+        }
+        else if(usercondition == UserCondition.termsUnaccepted)
+        {
+            let terms = Privacy_ViewController(nibName: "Privacy_ViewController", bundle: nil)
+            self.window?.rootViewController = terms
+        }
+        else if(usercondition == UserCondition.contactsNotImported)
+        {
+            let contacts = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
+            self.window?.rootViewController = contacts
         }
         
 //        self.window?.rootViewController = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
