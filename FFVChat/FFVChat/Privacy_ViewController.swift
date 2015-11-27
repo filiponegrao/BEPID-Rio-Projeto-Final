@@ -85,8 +85,8 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
     
     func userDisagreed()
     {
-//        let alert = UIAlertView(title: "Sorry", message: "You must agree to the terms for using this app", delegate: nil, cancelButtonTitle: "Ok")
-//        alert.show()
+        let alert = UIAlertView(title: "Sorry", message: "You must agree to the terms for using this app", delegate: nil, cancelButtonTitle: "Ok")
+        alert.show()
         
         
         
