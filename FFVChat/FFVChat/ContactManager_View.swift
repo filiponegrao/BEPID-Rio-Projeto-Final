@@ -30,7 +30,7 @@ class ContactManager_View: UIView
 
     var favouriteButton : UIButton!
     
-    var deleteButton : UIButton!
+    var deleteButton : MKButton!
     
     var clearChat : UIButton!
     
@@ -83,10 +83,11 @@ class ContactManager_View: UIView
         self.contactImage = UIImageView(frame: CGRectMake(screenWidth/5 * 2, screenHeight/5, screenWidth/2, screenWidth/2))
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.height/2
         self.contactImage.clipsToBounds = true
-        self.contactImage.backgroundColor = oficialGreen
+//        self.contactImage.backgroundColor = oficialGreen
         self.contactImage.image = UIImage(data: self.contact.profileImage)
-        self.contactImage.contentMode = .ScaleAspectFill
+//        self.contactImage.contentMode = .ScaleAspectFill
         self.addSubview(self.contactImage)
+        
         
         //ADICIONA CIRCULO DE ACORDO COM TRUST LEVEL
         addCircleView()
@@ -108,12 +109,16 @@ class ContactManager_View: UIView
         self.addSubview(self.favouriteButton)
         
         //BOTÃO PARA DELETAR CONTATO
-        self.deleteButton = UIButton(frame: CGRectMake(screenWidth/2 + 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
+        self.deleteButton = MKButton(frame: CGRectMake(screenWidth/2 + 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
         self.deleteButton.backgroundColor = oficialLightGray
         self.deleteButton.layer.cornerRadius = self.deleteButton.frame.size.height/2
         self.deleteButton.clipsToBounds = true
         self.deleteButton.addTarget(self, action: "deleteContact", forControlEvents: .TouchUpInside)
-        self.deleteButton.setImage(UIImage(named: "deleteButton"), forState: .Normal)
+        self.deleteButton.setImage(UIImage(named: "removeContact"), forState: .Normal)
+        self.deleteButton.backgroundLayerCornerRadius = 600
+        self.deleteButton.rippleLocation = .Center
+        self.deleteButton.ripplePercent = 4
+        self.deleteButton.rippleLayerColor = UIColor.blackColor()
         self.addSubview(self.deleteButton)
         
         //BOTÃO PARA LIMPAR CONVERSA

@@ -329,12 +329,3 @@ class Password_View: UIView
 
 }
 
-////PARA AUMENTAR O TAMANHO DA FONTE
-//extension UILabel
-//{
-//    func setButtonSizeFont(sizeFont: CGFloat)
-//    {
-//        self.font = UIFont(name: self.font.fontName, size: sizeFont)!
-//        self.sizeToFit()
-//    }
-//}
