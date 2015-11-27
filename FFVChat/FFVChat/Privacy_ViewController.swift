@@ -95,7 +95,18 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
     func userAgreed()
     {
         AppStateData.sharedInstance.acceptTermsOfUse()
-        let importContact = Import_ViewController()
-        self.presentViewController(importContact, animated: true, completion: nil)
+        
+        let id = DAOUser.sharedInstance.getFacebookId()
+        
+        if(id == nil)
+        {
+            let linkFace = AppLoginImport_ViewController()
+            self.presentViewController(linkFace, animated: true, completion: nil)
+        }
+        else
+        {
+            let importContact = Import_ViewController()
+            self.presentViewController(importContact, animated: true, completion: nil)
+        }
     }
 }

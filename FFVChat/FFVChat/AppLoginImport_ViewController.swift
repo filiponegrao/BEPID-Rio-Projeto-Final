@@ -45,7 +45,7 @@ class AppLoginImport_ViewController: UIViewController
         self.view.addSubview(self.titleLabel2)
         
         self.backView = UIView(frame: CGRectMake(20, 55 + self.titleLabel.frame.size.height + self.titleLabel2.frame.size.height + 20, screenWidth - 40, screenHeight/4 - 10))
-        self.backView.backgroundColor = oficialMediumGray
+        self.backView.backgroundColor = UIColor.clearColor()
         self.backView.layer.cornerRadius = 7
         self.backView.clipsToBounds = true
         self.view.addSubview(self.backView)
@@ -80,12 +80,14 @@ class AppLoginImport_ViewController: UIViewController
     
     func linkFacebook()
     {
-        
+        let faceimport = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
+        self.presentViewController(faceimport, animated: true, completion: nil)
     }
     
     func skip()
     {
-        
+        let contacts = AppNavigationController()
+        self.presentViewController(contacts, animated: true, completion: nil)
     }
 
 }

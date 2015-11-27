@@ -39,10 +39,10 @@ class DAOMessages : NSObject
     
     func sendMessage(username: String, text: String) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, imageKey: nil, image: nil, sentDate: NSDate(), lifeTime: 300, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, imageKey: nil, image: nil, sentDate: NSDate(), lifeTime: 86400, status: "sent")
         self.save()
         
-        DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 300, text: EncryptTools.enc(text, contact: username))
+        DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 86400, text: EncryptTools.enc(text, contact: username))
         
         self.delayForPush?.invalidate()
         self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
