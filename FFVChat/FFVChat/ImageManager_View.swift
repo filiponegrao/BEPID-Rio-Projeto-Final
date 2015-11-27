@@ -14,17 +14,21 @@ class ImageManager_View: UIView
     
     var selectedPhoto : UIImageView!
     
-    var deleteButton : UIButton!
+    var deleteButton : MKButton!
     
-    var sendButton : UIButton!
+    var sendButton : MKButton!
     
     var blackScreen : UIView!
     
     var closeButton : UIButton!
+    
+    var closeView : UIView!
 
-    init(image: UIImage)
+    init(image: UIImage, requester: SentMidiaGallery_ViewController)
     {
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        
+        self.viewController = requester
 
         self.backgroundColor = UIColor.clearColor()
 
@@ -44,13 +48,34 @@ class ImageManager_View: UIView
         self.selectedPhoto.backgroundColor = UIColor.clearColor()
         self.addSubview(selectedPhoto)
         
-        self.sendButton = UIButton(frame: CGRectMake(screenWidth/2 - screenWidth/6 - 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
-        self.sendButton.backgroundColor = oficialGreen
+        self.sendButton = MKButton(frame: CGRectMake(screenWidth/2 - screenWidth/6 - 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
+        self.sendButton.layer.cornerRadius = self.sendButton.frame.size.height/2
+        self.sendButton.clipsToBounds = true
+        self.sendButton.setImage(UIImage(named: "send"), forState: .Normal)
+        self.sendButton.backgroundLayerCornerRadius = 600
+        self.sendButton.rippleLocation = .Center
+        self.sendButton.ripplePercent = 2
+        self.sendButton.rippleLayerColor = UIColor.blackColor()
+        self.sendButton.contentMode = .ScaleAspectFill
+        self.sendButton.addTarget(self, action: "sendPhoto", forControlEvents: .TouchUpInside)
         self.addSubview(self.sendButton)
         
-        self.deleteButton = UIButton(frame: CGRectMake(screenWidth/2 + 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
-        self.deleteButton.backgroundColor = oficialLightGray
+        self.deleteButton = MKButton(frame: CGRectMake(screenWidth/2 + 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
+        self.deleteButton.layer.cornerRadius = self.deleteButton.frame.size.height/2
+        self.deleteButton.clipsToBounds = true
+        self.deleteButton.setImage(UIImage(named: "trash"), forState: .Normal)
+        self.deleteButton.backgroundLayerCornerRadius = 600
+        self.deleteButton.rippleLocation = .Center
+        self.deleteButton.ripplePercent = 2
+        self.deleteButton.rippleLayerColor = UIColor.blackColor()
+        self.deleteButton.contentMode = .ScaleAspectFill
+        self.deleteButton.addTarget(self, action: "deletePhoto", forControlEvents: .TouchUpInside)
         self.addSubview(self.deleteButton)
+        
+        self.closeView = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight/6))
+        self.closeView.backgroundColor = UIColor.clearColor()
+        self.closeView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "back"))
+        self.addSubview(self.closeView)
 
     }
     
@@ -62,5 +87,18 @@ class ImageManager_View: UIView
     func back()
     {
         self.removeFromSuperview()
+    }
+    
+    func sendPhoto()
+    {
+        //APRESENTA SELECTEDMIDIA_VC
+//        let sentMidia = SelectedMidia_ViewController(image: self.selectedPhoto.image!, contact: self.viewController.contact)
+//        back()
+//        self.viewController.presentViewController(sentMidia, animated: true, completion: nil)
+    }
+    
+    func deletePhoto()
+    {
+        
     }
 }

@@ -60,9 +60,10 @@ class Password_View: UIView
         self.passwordLabel.textAlignment = .Center
         self.addSubview(self.passwordLabel)
         
-        let b1 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
+        let b1 = MKButton(frame: CGRectMake(0, 0, bWidth, bWidth))
         b1.center = CGPointMake(screenWidth/4 - bMargem, screenHeight*2/5 - 10)
         b1.layer.cornerRadius = bWidth/2
+        b1.clipsToBounds = true
         b1.layer.borderColor = oficialGreen.CGColor
         b1.setTitle("1", forState: .Normal)
         b1.tag = 1
@@ -71,11 +72,16 @@ class Password_View: UIView
         b1.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b1.titleLabel?.font.fontWithSize(30)
         b1.titleLabel?.setSizeFont(30)
+        b1.rippleLayerColor = oficialDarkGreen
+        b1.rippleLocation = .Center
+        b1.backgroundLayerCornerRadius = 400
+        b1.ripplePercent = 3
         self.addSubview(b1)
         
-        let b2 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
+        let b2 = MKButton(frame: CGRectMake(0, 0, bWidth, bWidth))
         b2.center = CGPointMake(screenWidth/2, screenHeight*2/5 - 10)
         b2.layer.cornerRadius = bWidth/2
+        b2.clipsToBounds = true
         b2.layer.borderColor = oficialGreen.CGColor
         b2.setTitle("2", forState: .Normal)
         b2.layer.borderWidth = 1
@@ -83,11 +89,16 @@ class Password_View: UIView
         b2.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b2.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b2.titleLabel?.setSizeFont(30)
+        b2.rippleLayerColor = oficialDarkGreen
+        b2.rippleLocation = .Center
+        b2.backgroundLayerCornerRadius = 400
+        b2.ripplePercent = 3
         self.addSubview(b2)
         
-        let b3 = UIButton(frame: CGRectMake(0, 0, bWidth, bWidth))
+        let b3 = MKButton(frame: CGRectMake(0, 0, bWidth, bWidth))
         b3.center = CGPointMake(screenWidth*3/4 + bMargem, screenHeight*2/5 - 10)
         b3.layer.cornerRadius = bWidth/2
+        b3.clipsToBounds = true
         b3.layer.borderColor = oficialGreen.CGColor
         b3.setTitle("3", forState: .Normal)
         b3.layer.borderWidth = 1
@@ -95,10 +106,15 @@ class Password_View: UIView
         b3.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b3.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b3.titleLabel?.setSizeFont(30)
+        b3.rippleLayerColor = oficialDarkGreen
+        b3.rippleLocation = .Center
+        b3.backgroundLayerCornerRadius = 400
+        b3.ripplePercent = 3
         self.addSubview(b3)
         
-        let b4 = UIButton(frame: CGRectMake(b1.frame.origin.x, b1.frame.origin.y + b1.frame.size.height + bMargem, bWidth, bWidth))
+        let b4 = MKButton(frame: CGRectMake(b1.frame.origin.x, b1.frame.origin.y + b1.frame.size.height + bMargem, bWidth, bWidth))
         b4.layer.cornerRadius = bWidth/2
+        b4.clipsToBounds = true
         b4.layer.borderColor = oficialGreen.CGColor
         b4.setTitle("4", forState: .Normal)
         b4.layer.borderWidth = 1
@@ -106,10 +122,15 @@ class Password_View: UIView
         b4.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b4.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b4.titleLabel?.setSizeFont(30)
+        b4.rippleLayerColor = oficialMediumGray
+        b4.rippleLocation = .Center
+        b4.backgroundLayerCornerRadius = 400
+        b4.ripplePercent = 3
         self.addSubview(b4)
         
-        let b5 = UIButton(frame: CGRectMake(b2.frame.origin.x, b2.frame.origin.y + b2.frame.size.height + bMargem, bWidth, bWidth))
+        let b5 = MKButton(frame: CGRectMake(b2.frame.origin.x, b2.frame.origin.y + b2.frame.size.height + bMargem, bWidth, bWidth))
         b5.layer.cornerRadius = bWidth/2
+        b5.clipsToBounds = true
         b5.layer.borderColor = oficialGreen.CGColor
         b5.setTitle("5", forState: .Normal)
         b5.layer.borderWidth = 1
@@ -117,10 +138,15 @@ class Password_View: UIView
         b5.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b5.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b5.titleLabel?.setSizeFont(30)
+        b5.rippleLayerColor = oficialDarkGreen
+        b5.rippleLocation = .Center
+        b5.backgroundLayerCornerRadius = 400
+        b5.ripplePercent = 3
         self.addSubview(b5)
         
-        let b6 = UIButton(frame: CGRectMake(b3.frame.origin.x, b3.frame.origin.y + b3.frame.size.height + bMargem, bWidth, bWidth))
+        let b6 = MKButton(frame: CGRectMake(b3.frame.origin.x, b3.frame.origin.y + b3.frame.size.height + bMargem, bWidth, bWidth))
         b6.layer.cornerRadius = bWidth/2
+        b6.clipsToBounds = true
         b6.layer.borderColor = oficialGreen.CGColor
         b6.setTitle("6", forState: .Normal)
         b6.layer.borderWidth = 1
@@ -128,10 +154,15 @@ class Password_View: UIView
         b6.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b6.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b6.titleLabel?.setSizeFont(30)
+        b6.rippleLayerColor = oficialDarkGreen
+        b6.rippleLocation = .Center
+        b6.backgroundLayerCornerRadius = 400
+        b6.ripplePercent = 3
         self.addSubview(b6)
         
-        let b7 = UIButton(frame: CGRectMake(b4.frame.origin.x, b4.frame.origin.y + b4.frame.size.height + bMargem, bWidth, bWidth))
+        let b7 = MKButton(frame: CGRectMake(b4.frame.origin.x, b4.frame.origin.y + b4.frame.size.height + bMargem, bWidth, bWidth))
         b7.layer.cornerRadius = bWidth/2
+        b7.clipsToBounds = true
         b7.layer.borderColor = oficialGreen.CGColor
         b7.setTitle("7", forState: .Normal)
         b7.layer.borderWidth = 1
@@ -139,10 +170,15 @@ class Password_View: UIView
         b7.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b7.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b7.titleLabel?.setSizeFont(30)
+        b7.rippleLayerColor = oficialDarkGreen
+        b7.rippleLocation = .Center
+        b7.backgroundLayerCornerRadius = 400
+        b7.ripplePercent = 3
         self.addSubview(b7)
         
-        let b8 = UIButton(frame: CGRectMake(b5.frame.origin.x, b5.frame.origin.y + b5.frame.size.height + bMargem, bWidth, bWidth))
+        let b8 = MKButton(frame: CGRectMake(b5.frame.origin.x, b5.frame.origin.y + b5.frame.size.height + bMargem, bWidth, bWidth))
         b8.layer.cornerRadius = bWidth/2
+        b8.clipsToBounds = true
         b8.layer.borderColor = oficialGreen.CGColor
         b8.setTitle("8", forState: .Normal)
         b8.layer.borderWidth = 1
@@ -150,10 +186,15 @@ class Password_View: UIView
         b8.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b8.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b8.titleLabel?.setSizeFont(30)
+        b8.rippleLayerColor = oficialDarkGreen
+        b8.rippleLocation = .Center
+        b8.backgroundLayerCornerRadius = 400
+        b8.ripplePercent = 3
         self.addSubview(b8)
         
-        let b9 = UIButton(frame: CGRectMake(b6.frame.origin.x, b6.frame.origin.y + b6.frame.size.height + bMargem, bWidth, bWidth))
+        let b9 = MKButton(frame: CGRectMake(b6.frame.origin.x, b6.frame.origin.y + b6.frame.size.height + bMargem, bWidth, bWidth))
         b9.layer.cornerRadius = bWidth/2
+        b9.clipsToBounds = true
         b9.layer.borderColor = oficialGreen.CGColor
         b9.setTitle("9", forState: .Normal)
         b9.layer.borderWidth = 1
@@ -161,10 +202,15 @@ class Password_View: UIView
         b9.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b9.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b9.titleLabel?.setSizeFont(30)
+        b9.rippleLayerColor = oficialDarkGreen
+        b9.rippleLocation = .Center
+        b9.backgroundLayerCornerRadius = 400
+        b9.ripplePercent = 3
         self.addSubview(b9)
         
-        let b0 = UIButton(frame: CGRectMake(b8.frame.origin.x, b8.frame.origin.y + b5.frame.size.height + bMargem, bWidth, bWidth))
+        let b0 = MKButton(frame: CGRectMake(b8.frame.origin.x, b8.frame.origin.y + b5.frame.size.height + bMargem, bWidth, bWidth))
         b0.layer.cornerRadius = bWidth/2
+        b0.clipsToBounds = true
         b0.layer.borderColor = oficialGreen.CGColor
         b0.setTitle("0", forState: .Normal)
         b0.layer.borderWidth = 1
@@ -172,6 +218,10 @@ class Password_View: UIView
         b0.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b0.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b0.titleLabel?.setSizeFont(30)
+        b0.rippleLayerColor = oficialDarkGreen
+        b0.rippleLocation = .Center
+        b0.backgroundLayerCornerRadius = 400
+        b0.ripplePercent = 3
         self.addSubview(b0)
         
         let limpar = UIButton(frame: CGRectMake(b9.frame.origin.x,b0.frame.origin.y, bWidth, bWidth))
