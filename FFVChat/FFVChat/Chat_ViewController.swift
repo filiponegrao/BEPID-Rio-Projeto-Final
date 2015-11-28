@@ -427,11 +427,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
-                cell.backgroundLabel.alpha = 0.4
+                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
+                cell.backgroundLabel.alpha = 0.3
             }
             else
             {
-                cell.backgroundLabel.alpha = 0.1
+                cell.backgroundLabel.backgroundColor = oficialDarkGray
+                cell.backgroundLabel.alpha = 0.6
             }
             
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
@@ -838,7 +840,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             
             let imageName = "fundoTeste\(self.fundosIndex)"
-            self.backgorundImage.image = UIImage(named: imageName)
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.backgorundImage.image = UIImage(named: imageName)
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
         }
     }
     

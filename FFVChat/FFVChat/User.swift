@@ -12,7 +12,7 @@ import CoreData
 
 class User: NSManagedObject
 {
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, username: String, email: String, profileImage: NSData, trustLevel: Int, facebookID: String?) -> User
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, username: String, email: String, profileImage: NSData, trustLevel: Int, facebookID: String?, gender: String?) -> User
     {
         let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! User
         
@@ -21,6 +21,7 @@ class User: NSManagedObject
         user.profileImage = profileImage
         user.facebookID = facebookID
         user.trustLevel = trustLevel
+        user.gender = gender
         
         return user
     }

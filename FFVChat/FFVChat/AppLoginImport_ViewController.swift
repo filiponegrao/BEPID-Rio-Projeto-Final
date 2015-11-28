@@ -80,12 +80,14 @@ class AppLoginImport_ViewController: UIViewController
     
     func linkFacebook()
     {
+        AppStateData.sharedInstance.importContacts()
         let faceimport = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.presentViewController(faceimport, animated: true, completion: nil)
     }
     
     func skip()
     {
+        AppStateData.sharedInstance.importContacts()
         let contacts = AppNavigationController()
         self.presentViewController(contacts, animated: true, completion: nil)
     }
