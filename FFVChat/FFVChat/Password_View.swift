@@ -24,7 +24,6 @@ class Password_View: UIView
     
     var blackScreen : UIView!
     
-    
     init(requester: UIViewController)
     {
         self.requester = requester
