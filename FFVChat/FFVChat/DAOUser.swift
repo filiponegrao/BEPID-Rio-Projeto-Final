@@ -566,6 +566,11 @@ class DAOUser
     {
         return Int(self.user.trustLevel!)
     }
+    
+    func getFacebookId() -> String?
+    {
+        return self.user.facebookID
+    }
 
     func checkPassword(password: String, callback: (correct: Bool) -> Void ) -> Void
     {

@@ -195,8 +195,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userLogged()
     {
         self.loadingScreen?.removeFromSuperview()
-        let contacts = AppNavigationController()
-        self.presentViewController(contacts, animated: true, completion: nil)
+        let privacy = Privacy_ViewController(nibName: "Privacy_ViewController", bundle: nil)
+        self.presentViewController(privacy, animated: true, completion: nil)
     }
     
     
