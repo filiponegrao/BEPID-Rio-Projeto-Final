@@ -70,13 +70,13 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.picker!.delegate = self
         self.view.backgroundColor = oficialDarkGray
         
-        self.buttonphoto = UIButton(frame: CGRectMake(0,0,screenWidth/1.5,screenWidth/1.5))
+        self.buttonphoto = UIButton(frame: CGRectMake(0,0,screenWidth/2,screenWidth/2))
         self.buttonphoto.center = CGPointMake(screenWidth/2, 30 + (screenWidth/1.5)/2)
         self.buttonphoto.layer.cornerRadius = self.buttonphoto.frame.size.width/2
         self.buttonphoto.addTarget(self, action: "photoButtonClicked", forControlEvents: .TouchUpInside)
         self.buttonphoto.clipsToBounds = true
         self.buttonphoto.setImage(UIImage(named: "cameraButton"), forState: .Normal)
-        self.buttonphoto.imageView?.contentMode = .ScaleAspectFill
+        self.buttonphoto.contentMode = .ScaleAspectFill
         self.view.addSubview(self.buttonphoto)
         
  
@@ -142,14 +142,16 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.labelConfirmPassword.bottomBorderEnabled = true
         self.labelConfirmPassword.bottomBorderColor = oficialGreen
         
-        self.registerButton = UIButton(frame: CGRectMake(0,0,screenWidth/2,screenWidth/8))
-        self.registerButton.center = CGPointMake(screenWidth/2, screenHeight - screenWidth/4)
+        self.registerButton = UIButton(frame: CGRectMake(0,0,screenWidth/2.5, screenWidth/10))
+        self.registerButton.center = CGPointMake(screenWidth/2, screenHeight - screenWidth/8 - screenWidth/10 - 10)
         self.registerButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.registerButton.backgroundColor = oficialDarkGreen
         self.registerButton.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
         self.registerButton.setTitle("Register", forState: .Normal)
+        self.registerButton.titleLabel?.setSizeFont(15)
         self.registerButton.layer.cornerRadius = 7
         self.registerButton.clipsToBounds = true
+        self.registerButton.addTarget(self, action: "register", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.registerButton)
     }
     
@@ -234,7 +236,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             self.picker!.sourceType = UIImagePickerControllerSourceType.Camera
             self.picker?.cameraDevice = .Front
             self.picker?.cameraCaptureMode = .Photo
-            self.picker?.allowsEditing = true 
+            self.picker?.allowsEditing = true
+            self.picker?.showsCameraControls = true
             self.presentViewController(self.picker!, animated: true, completion: nil)
         }
         else
@@ -247,6 +250,8 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     func openGallery()
     {
         self.picker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker?.allowsEditing = true
+        
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone
         {
             self.presentViewController(self.picker!, animated: true, completion: nil)
@@ -275,10 +280,10 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     }
     
     
-    @IBAction func register(sender: UIButton)
+    func register()
     {
         //todos os campos preenchidos
-        if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "" && self.image != nil)
+        if (self.labelEmail.text != "" && self.labelUsername.text != "" && self.labelPassword.text != "" && self.labelConfirmPassword.text != "")
         {
             //verifica se e-mail é válido
             if (!(DAOUser.sharedInstance.isValidEmail(self.labelEmail.text!)))
@@ -319,6 +324,13 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             else if (self.labelPassword.text != self.labelConfirmPassword.text)
             {
                 let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            //verifica se tem foto
+            else if(self.image == nil)
+            {
+                let alert = UIAlertView(title: "Ops!", message: "Please, take a photo", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             

@@ -122,7 +122,7 @@ class Password_View: UIView
         b4.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
         b4.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 30)
         b4.titleLabel?.setSizeFont(30)
-        b4.rippleLayerColor = oficialMediumGray
+        b4.rippleLayerColor = oficialDarkGreen
         b4.rippleLocation = .Center
         b4.backgroundLayerCornerRadius = 400
         b4.ripplePercent = 3
