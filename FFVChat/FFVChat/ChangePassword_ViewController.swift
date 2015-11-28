@@ -36,7 +36,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.view.addSubview(self.navBar)
         
         self.tableView = UITableView(frame: CGRectMake(0,50, screenWidth, screenHeight/5 * 2 - 10))
-        self.tableView.backgroundColor = UIColor.blueColor()
+        self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.layer.zPosition = 0
         self.tableView.delegate = self
         self.tableView.dataSource = self
