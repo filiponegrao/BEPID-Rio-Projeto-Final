@@ -74,10 +74,10 @@ class ReceiverProfile_ViewController: UIViewController
         self.view.addSubview(self.trustLevelLabel)
         
         //mostra o nome do usuário
-        self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenWidth/3 * 2, self.trustLevelLabel.frame.size.height/2 + 5))
+        self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenHeight/1.5, self.trustLevelLabel.frame.size.height/2 + 5))
         self.usernameLabel.text = self.username
         self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
-        self.usernameLabel.setSizeFont(25)
+        self.usernameLabel.setSizeFont(22)
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
         self.view.addSubview(self.usernameLabel)
