@@ -11,6 +11,8 @@ import UIKit
 class TutoFirst_ViewController: UIViewController
 {
     var index = 0
+    
+    var iphoneShape : UIImageView!
 
     override func viewDidLoad()
     {
@@ -18,7 +20,10 @@ class TutoFirst_ViewController: UIViewController
         
         self.view.backgroundColor = oficialDarkGray
         
-        // Do any additional setup after loading the view.
+        self.iphoneShape = UIImageView(frame: CGRectMake(screenWidth/5, screenHeight/4, screenWidth/5 * 3, screenHeight/6 * 4))
+        self.iphoneShape.image = UIImage(named: "tutorialSoon")
+        self.view.addSubview(self.iphoneShape)
+        
     }
 
     override func didReceiveMemoryWarning() {
