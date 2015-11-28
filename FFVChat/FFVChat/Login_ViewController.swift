@@ -59,17 +59,17 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         let background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         background.image = UIImage(named: "ContactBackground")
-        background.alpha = 0.1
+        background.alpha = 0.04
         background.contentMode = .ScaleAspectFill
         self.view.addSubview(background)
         
         self.logo = UIImageView(frame: CGRectMake(0,0, screenWidth/2, screenWidth/4))
-        self.logo.center = CGPointMake(screenWidth/2, screenHeight/6)
+        self.logo.center = CGPointMake(screenWidth/2, screenHeight/5)
         self.logo.image = UIImage(named: "logo")
         self.view.addSubview(self.logo)
         
         self.emailField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))
-        self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3 + screenHeight/10)
+        self.emailField.center = CGPointMake(screenWidth/2, screenHeight/3 + screenHeight/12)
         self.emailField.autocapitalizationType = .None
         self.emailField.autocorrectionType = .No
         self.emailField.textAlignment = .Center
@@ -113,10 +113,11 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         self.loginButton = UIButton(frame: CGRectMake(0,0,screenWidth/2.5, screenWidth/10))
         self.loginButton.addTarget(self, action: "loginParse", forControlEvents: .TouchUpInside)
         self.loginButton.backgroundColor = oficialDarkGreen
-        self.loginButton.center = CGPointMake(screenWidth/2, self.passwordField.frame.origin.y + self.passwordField.frame.size.height + screenHeight/20)
+        self.loginButton.center = CGPointMake(screenWidth/2, self.passwordField.frame.origin.y + self.passwordField.frame.size.height + screenHeight/18)
         self.loginButton.setTitle("Login", forState: .Normal)
         self.loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.loginButton.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
+        self.loginButton.titleLabel?.setSizeFont(15)
         self.loginButton.layer.cornerRadius = 7
         self.loginButton.clipsToBounds = true
         self.view.addSubview(self.loginButton)
