@@ -196,8 +196,9 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userLogged()
     {
         self.loadingScreen?.removeFromSuperview()
-        let privacy = Privacy_ViewController(nibName: "Privacy_ViewController", bundle: nil)
-        self.presentViewController(privacy, animated: true, completion: nil)
+        let tutorial = Tutorial_PageViewController() //CONFERIR O QUE É MELHOR VIR PRIMEIRO!!!
+//        let privacy = Privacy_ViewController(nibName: "Privacy_ViewController", bundle: nil)
+        self.presentViewController(tutorial, animated: true, completion: nil)
     }
     
     
