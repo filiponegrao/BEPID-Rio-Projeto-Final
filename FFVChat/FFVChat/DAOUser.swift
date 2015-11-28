@@ -65,6 +65,8 @@ enum UserCondition : String
     
     case contactsNotImported = "contactsNotImported"
     
+    case notLinkedFacebook = "notLinkedFacebook"
+    
     case unknowError = "unknowError"
 }
 
@@ -175,12 +177,13 @@ class DAOUser
                     let trustLevel = user!["trustLevel"] as! Int
                     let photo = user!["profileImage"] as! PFFile
                     let facebookID = user!["facebookID"] as? String
+                    let gender = user!["gender"] as? String
                     
                     photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
                         if(data != nil)
                         {
-                            let localUser = self.createUser(username!, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookID)
+                            let localUser = self.createUser(username!, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookID, gender: gender)
                             
                             self.user = localUser
                             NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
@@ -232,6 +235,7 @@ class DAOUser
                     let facebookId = user.valueForKey("facebookID") as? String
                     let email = user.valueForKey("email") as! String
                     let trustLevel = user.valueForKey("trustLevel") as! Int
+                    let gender = user.valueForKey("gender") as? String
                     
                     let data = user.objectForKey("profileImage") as! PFFile
                     data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
@@ -240,7 +244,7 @@ class DAOUser
                         {
                             if(!self.loginInApp(username))
                             {
-                                let localUser = self.createUser(username, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookId)
+                                let localUser = self.createUser(username, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookId, gender: gender)
                                 self.user = localUser
                             }
                             
@@ -250,7 +254,14 @@ class DAOUser
                             
                         }
                         self.setInstallation()
-                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+                        if(self.isValidUsername(username))
+                        {
+                            NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+                        }
+                        else
+                        {
+                            NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
+                        }
                     })
                 }
             }
@@ -269,7 +280,7 @@ class DAOUser
       */
     func loadFaceInfo()
     {
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"])
+        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name,gender,hometown,relationship_status,work,birthday,education"])
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
 
             if ((error) != nil)
@@ -279,9 +290,11 @@ class DAOUser
             }
             else
             {
+                print(result)
                 let username : NSString = result.valueForKey("name") as! NSString
                 let email : NSString = result.valueForKey("email") as! NSString
                 let id = result.valueForKey("id") as! String
+                let gender = result.valueForKey("gender") as! String
 
                 let pictureURL = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
 
@@ -297,12 +310,13 @@ class DAOUser
                         PFUser.currentUser()?.setValue(id, forKey: "facebookID")
                         PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
                         PFUser.currentUser()?.setValue(100, forKey: "trustLevel")
+                        PFUser.currentUser()?.setValue(gender, forKey: "gender")
                         PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                             
                             if(success)
                             {
                                 print("informacoes atualizadas no parse")
-                                let user = User.createInManagedObjectContext(self.managedObjectContext, username: "tempUser", email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id)
+                                let user = User.createInManagedObjectContext(self.managedObjectContext, username: "tempUser", email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id, gender: gender)
                                 self.save()
                                 self.user = user
                                 
@@ -342,6 +356,7 @@ class DAOUser
             let email = user?.valueForKey("email") as! String
             let facebookID = user?.valueForKey("facebookID") as! String
             let photo = user?.objectForKey("profileImage") as! PFFile
+            let gender = user?.valueForKey("gender") as? String
             
             photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                 
@@ -349,7 +364,7 @@ class DAOUser
                 {
                     if(data != nil)
                     {
-                        let localUser = self.createUser(username, email: email, trustLevel: 100, profileImage: data!, facebookID: facebookID)
+                        let localUser = self.createUser(username, email: email, trustLevel: 100, profileImage: data!, facebookID: facebookID, gender: gender)
                         self.user = localUser
                         self.save()
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
@@ -433,9 +448,9 @@ class DAOUser
         }
     }
     
-    func createUser(username: String, email: String, trustLevel: Int, profileImage: NSData, facebookID: String?) -> User
+    func createUser(username: String, email: String, trustLevel: Int, profileImage: NSData, facebookID: String?, gender: String?) -> User
     {
-        let user = User.createInManagedObjectContext(self.managedObjectContext, username: username, email: email, profileImage: profileImage, trustLevel: trustLevel, facebookID: facebookID)
+        let user = User.createInManagedObjectContext(self.managedObjectContext, username: username, email: email, profileImage: profileImage, trustLevel: trustLevel, facebookID: facebookID, gender: gender)
         
         self.save()
         
@@ -456,6 +471,7 @@ class DAOUser
         
             if(result.count > 0)
             {
+                
                 print("logando como \(result.first)")
                 self.user = result.first!
                 return true
@@ -515,7 +531,6 @@ class DAOUser
      **/
     func isLoged() -> UserCondition
     {
-        print(self.user?.username)
         if(PFUser.currentUser() == nil)
         {
             return UserCondition.userLoggedOut
@@ -535,7 +550,14 @@ class DAOUser
                 }
                 else
                 {
-                    return UserCondition.contactsNotImported
+                    if(DAOUser.sharedInstance.getFacebookId() != nil)
+                    {
+                        return UserCondition.contactsNotImported
+                    }
+                    else
+                    {
+                        return UserCondition.notLinkedFacebook
+                    }
                 }
             }
             else
@@ -570,6 +592,11 @@ class DAOUser
     func getFacebookId() -> String?
     {
         return self.user.facebookID
+    }
+    
+    func getGender() -> String?
+    {
+        return self.user.gender
     }
 
     func checkPassword(password: String, callback: (correct: Bool) -> Void ) -> Void
@@ -628,6 +655,20 @@ class DAOUser
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(testStr)
+    }
+    
+    
+    func isValidUsername(username: String) -> Bool
+    {
+        let regex = try! NSRegularExpression(pattern: ".*[^A-Za-z0-9].*", options: NSRegularExpressionOptions())
+        if regex.firstMatchInString(username, options: NSMatchingOptions(), range:NSMakeRange(0, username.characters.count)) != nil {
+            print("could not handle special characters")
+            return false
+        }
+        else
+        {
+            return true
+        }
     }
     
 

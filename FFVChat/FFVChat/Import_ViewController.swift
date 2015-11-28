@@ -91,9 +91,9 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidAppear(animated: Bool)
     {
         //carregando info...
-        DAOUser.sharedInstance.getFaceContacts { (metaContacts) -> Void in
+        DAOUser.sharedInstance.getFaceFriends { (friends) -> Void in
             
-            self.metaContacts = metaContacts
+            self.metaContacts = friends
             self.selectedItens = [:]
             //iniciando o dicionario
             for meta in self.metaContacts
@@ -106,6 +106,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.allContactsButton.setImage(UIImage(named: "checkOn"), forState: .Normal)
             self.all = true
         }
+        
     }
     
     override func viewWillAppear(animated: Bool)

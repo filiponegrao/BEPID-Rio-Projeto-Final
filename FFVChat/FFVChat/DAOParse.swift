@@ -401,9 +401,22 @@ class DAOParse
     
     class func sendPushRequestAccepted(username: String)
     {
-        let message = "\(DAOUser.sharedInstance.getUsername()) lhe aceitou como amigo(a)"
-        
-        let data = [ "title": "Convite de amizade no FFVChat",
+        let gender = DAOUser.sharedInstance.getGender()
+        var message : String!
+        if(gender == "male")
+        {
+            message = "😎 \(DAOUser.sharedInstance.getUsername()) lhe aceitou como amigo"
+        }
+        else if(gender == "female")
+        {
+            message = "🙋 \(DAOUser.sharedInstance.getUsername()) lhe aceitou como amiga"
+        }
+        else
+        {
+            message = "🤗 \(DAOUser.sharedInstance.getUsername()) lhe aceitou como amigo(a)"
+        }
+
+        let data = [ "title": message,
             "alert": message, "badge": 1, "do": appNotification.requestAccepted.rawValue, "content-avaliable" : 1]
         
         print("enviando notificacao")
@@ -425,10 +438,22 @@ class DAOParse
     
     class func sendPushFriendRequest(username: String)
     {
-        let message = "\(DAOUser.sharedInstance.getUsername()) quer lhe adicionar como um contato"
+        let gender = DAOUser.sharedInstance.getGender()
+        var message : String!
+        if(gender == "male")
+        {
+            message = "😎 \(DAOUser.sharedInstance.getUsername()) quer lhe adicionar como um contato"
+        }
+        else if(gender == "female")
+        {
+            message = "🙋 \(DAOUser.sharedInstance.getUsername()) quer lhe adicionar como um contato"
+        }
+        else
+        {
+            message = "🤗 \(DAOUser.sharedInstance.getUsername()) quer lhe adicionar como um contato"
+        }
         
-        let data = [ "title": "Convite de amizade no FFVChat",
-            "alert": message, "badge": 1, "do": appNotification.friendRequest.rawValue, "content-avaliable" : 1]
+        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.friendRequest.rawValue, "content-avaliable" : 1]
         
         print("enviando notificacao")
         let userQuery = PFUser.query()
@@ -593,7 +618,7 @@ class DAOParse
     class func pushMessageNotification(username: String, text: String)
     {
         let data = [ "title": "Mensagem de \(DAOUser.sharedInstance.getUsername())",
-            "alert": "Mensagem de \(DAOUser.sharedInstance.getUsername())","badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUsername(), "content-avaliable" : 1]
+            "alert": "🔒 Mensagem de \(DAOUser.sharedInstance.getUsername())","badge": 1, "do": appNotification.messageReceived.rawValue, "sender" : DAOUser.sharedInstance.getUsername(), "content-avaliable" : 1, "sound": "bip.mp3"]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)
@@ -612,8 +637,8 @@ class DAOParse
     
     class func pushImageNotification(username: String)
     {
-        let data = [ "title": "\(DAOUser.sharedInstance.getUsername()) Enviou-lhe uma imagem",
-            "alert": "Imagem", "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1]
+        let message = "📷 Imagem de \(DAOUser.sharedInstance.getUsername())"
+        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)

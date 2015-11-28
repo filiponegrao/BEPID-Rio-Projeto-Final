@@ -38,6 +38,7 @@
                         <constraint firstAttribute="height" constant="43" id="UVs-Rl-Jdc"/>
                         <constraint firstAttribute="width" constant="110" id="nvY-uW-dJZ"/>
                     </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                     <state key="normal" title="Register">
                         <color key="titleColor" red="0.13075417780000001" green="0.77556818179999998" blue="0.658255857" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

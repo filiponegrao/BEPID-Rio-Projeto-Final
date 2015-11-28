@@ -69,6 +69,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             let contacts = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
             self.window?.rootViewController = contacts
         }
+        else if(usercondition == UserCondition.notLinkedFacebook)
+        {
+            let contacts = AppLoginImport_ViewController()
+            self.window?.rootViewController = contacts
+        }
         
 //        self.window?.rootViewController = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.window?.makeKeyAndVisible()
@@ -186,12 +191,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         //Isso causava o alerta no meio da porra da aplicação
 //        PFPush.handlePush(userInfo)
         
-        if application.applicationState == UIApplicationState.Background
+        if (application.applicationState == UIApplicationState.Background || application.applicationState == UIApplicationState.Inactive)
         {
             UIApplication.sharedApplication().applicationIconBadgeNumber += 1
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
+            
+//            self.window?.rootViewController
         }
-     
         if(notification.valueForKey("do") as! String == appNotification.friendRequest.rawValue)
         {
             print("carregando friend requests ordenado por notifiacao")
@@ -207,6 +213,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             DAOPostgres.sharedInstance.getUnreadMessages()
         }
     }
+    
+    
     
     
     // MARK: - Core Data stack
