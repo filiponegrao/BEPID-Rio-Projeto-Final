@@ -86,6 +86,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
+        
     }
     
     override func viewDidAppear(animated: Bool)
@@ -103,6 +105,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
     }
     
     override func viewDidDisappear(animated: Bool)

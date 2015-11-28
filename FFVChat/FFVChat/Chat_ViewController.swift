@@ -512,10 +512,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let message = self.messages[indexPath.row]
         
         //Imagem
-        if(message.image != nil && !self.messageText.isFirstResponder())
+        if(message.imageKey != nil && !self.messageText.isFirstResponder())
         {
             self.messageText.endEditing(true)
             self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
+            self.imageZoom.imageKey = self.messages[indexPath.item].imageKey!
             self.imageZoom.chatController = self
             self.isViewing = true
             self.view.addSubview(self.imageZoom)
@@ -803,6 +804,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func didTakeScreenShot()
     {
+        if(self.imageZoom != nil)
+        {
+            DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.image, imageKey: self.imageZoom.imageKey, sender: self.contact.username)
+        }
+        
         let alert = JudgerAlert_ViewController()
         alert.modalPresentationStyle = .OverFullScreen
         self.presentViewController(alert, animated: true) { () -> Void in

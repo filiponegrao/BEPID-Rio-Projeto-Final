@@ -49,6 +49,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: requestNotification.requestsLoaded.rawValue, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: NotificationController.center.printScreenReceived.name, object: nil)
+        
         self.navigationController?.navigationBar.hidden = true
 //        let bar : UINavigationBar! =  self.navigationController?.navigationBar
 //        
@@ -66,6 +68,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillDisappear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: requestNotification.requestsLoaded.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
     }
     
     override func didReceiveMemoryWarning()

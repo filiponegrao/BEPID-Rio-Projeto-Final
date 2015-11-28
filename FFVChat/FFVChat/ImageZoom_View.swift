@@ -16,6 +16,8 @@ class ImageZoom_View: UIView {
     
     var image : UIImage!
     
+    var imageKey: String!
+    
     var imageView : UIImageView!
     
     var backButton : UIButton!
