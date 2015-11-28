@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationChat_View: UIView
 {
-    var viewController : Chat_ViewController!
+    weak var viewController : Chat_ViewController!
     
     var backButton : UIButton!
     

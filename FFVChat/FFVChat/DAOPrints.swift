@@ -30,16 +30,13 @@ class DAOPrints
     }
     
     
-    func sendPrintscreenNotification(image: UIImage, imageKey: String, sender: String)
+    func sendPrintscreenNotification(imageKey: String, sender: String)
     {
         let date = NSDate()
-        let data = image.lowestQualityJPEGNSData
-        let file = PFFile(data: data)
         
         let printS = PFObject(className: "Printscreens")
         printS["sender"] = sender
         printS["printer"] = DAOUser.sharedInstance.getUsername()
-        printS["image"] = file
         printS["printDate"] = date
         printS["status"] = "sent"
         printS["imageKey"] = imageKey
@@ -73,21 +70,15 @@ class DAOPrints
                     let printer = object.valueForKey("printer") as! String
                     let imageKey = object.valueForKey("imageKey") as! String
                     let printDate = object.valueForKey("printDate") as! NSDate
-                    let file = object.objectForKey("image") as! PFFile
-                    file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                        
-                        if(data != nil)
-                        {
-                            let print = self.addPrintscreenNotification(printer, image: data!, imageKey: imageKey, printDate: printDate)
-                            if(print != nil)
-                            {
-                                self.prints.append(print!)
-                                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.printScreenReceived)
-                            }
-                            object["status"] = "received"
-                            object.saveEventually()
-                        }
-                    })
+                    
+                    let print = self.addPrintscreenNotification(printer, imageKey: imageKey, printDate: printDate)
+                    if(print != nil)
+                    {
+                        self.prints.append(print!)
+                        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.printScreenReceived)
+                    }
+                    object["status"] = "received"
+                    object.saveEventually()
                 }
             }
         }
@@ -116,7 +107,7 @@ class DAOPrints
     }
     
     
-    private func addPrintscreenNotification(printer: String, image: NSData, imageKey: String, printDate: NSDate) -> PrintscreenNotification?
+    private func addPrintscreenNotification(printer: String, imageKey: String, printDate: NSDate) -> PrintscreenNotification?
     {
         let fetchRequest = NSFetchRequest(entityName: "PrintscreenNotification")
         fetchRequest.predicate = NSPredicate(format: "imageKey == %@", imageKey)
@@ -125,7 +116,8 @@ class DAOPrints
             let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [PrintscreenNotification]
             if(results.count == 0)
             {
-                let print = PrintscreenNotification.createInManagedObjectContext(self.managedObjectContext, printer: printer, image: image, imageKey: imageKey, printDate: printDate)
+                let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(imageKey)
+                let print = PrintscreenNotification.createInManagedObjectContext(self.managedObjectContext, printer: printer, image: image?.highestQualityJPEGNSData, imageKey: imageKey, printDate: printDate)
                 self.save()
                 return print
             }

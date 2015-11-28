@@ -12,8 +12,6 @@ import UIKit
 
 class AppNavigationController : UINavigationController, UIViewControllerTransitioningDelegate
 {
-    let transition = BubbleTransition()
-
     init()
     {
         super.init(nibName: "AppNavigationController", bundle: nil)
@@ -52,22 +50,6 @@ class AppNavigationController : UINavigationController, UIViewControllerTransiti
     }
     
     //******* TRANSITIONS ********
-    
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning?
-    {
-        transition.transitionMode = .Present
-        transition.startingPoint = self.view.center
-        transition.bubbleColor = oficialMediumGray
-        return transition
-    }
-    
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning?
-    {
-        transition.transitionMode = .Dismiss
-        transition.startingPoint = self.view.center
-        transition.bubbleColor = oficialMediumGray
-        return transition
-    }
 
 }
 

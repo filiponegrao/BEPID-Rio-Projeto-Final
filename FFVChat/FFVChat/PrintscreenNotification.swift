@@ -12,7 +12,7 @@ import CoreData
 
 class PrintscreenNotification: NSManagedObject {
 
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, printer: String, image: NSData, imageKey: String, printDate: NSDate) -> PrintscreenNotification
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, printer: String, image: NSData?, imageKey: String, printDate: NSDate) -> PrintscreenNotification
     {
         let print = NSEntityDescription.insertNewObjectForEntityForName("PrintscreenNotification", inManagedObjectContext: moc) as! PrintscreenNotification
         

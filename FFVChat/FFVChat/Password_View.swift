@@ -20,7 +20,7 @@ class Password_View: UIView
     
     var blurView : UIVisualEffectView!
     
-    var requester : UIViewController!
+    weak var requester : UIViewController!
     
     var blackScreen : UIView!
     

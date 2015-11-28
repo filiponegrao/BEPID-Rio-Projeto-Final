@@ -13,7 +13,7 @@ import CoreData
 class SentMidia: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, sentDate: NSDate, target: String, image: NSData, lastSent: NSDate) -> SentMidia
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, sentDate: NSDate, target: String, image: NSData, lastSent: NSDate, imageKey: String) -> SentMidia
     {
         let midia = NSEntityDescription.insertNewObjectForEntityForName("SentMidia", inManagedObjectContext: moc) as! SentMidia
         
@@ -21,6 +21,7 @@ class SentMidia: NSManagedObject {
         midia.target = target
         midia.image = image
         midia.lastSent = lastSent
+        midia.imageKey = imageKey
         
         return midia
     }

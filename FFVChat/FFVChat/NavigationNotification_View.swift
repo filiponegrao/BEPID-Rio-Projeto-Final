@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationNotification_View: UIView
 {
-    var viewController : Notifications_ViewController!
+    weak var viewController : Notifications_ViewController!
     
     var backButton : UIButton!
     

@@ -10,7 +10,7 @@ import UIKit
 
 class ImageManager_View: UIView
 {
-    var viewController : SentMidiaGallery_ViewController!
+    weak var viewController : SentMidiaGallery_ViewController!
     
     var selectedPhoto : UIImageView!
     

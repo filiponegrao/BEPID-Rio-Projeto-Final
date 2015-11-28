@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationChangePassword_View: UIView
 {
-    var viewController : ChangePassword_ViewController!
+    weak var viewController : ChangePassword_ViewController!
     
     var backButton : UIButton!
     

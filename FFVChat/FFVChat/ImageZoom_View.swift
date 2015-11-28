@@ -24,6 +24,8 @@ class ImageZoom_View: UIView {
     
     var unblurVision : UIImageView!
     
+    var sender: String!
+    
     weak var chatController : Chat_ViewController!
     
     init(image: UIImage)

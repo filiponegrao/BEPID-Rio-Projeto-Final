@@ -469,7 +469,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 let increase = necessaryHeigth - cellTextHeigth
                 cell.backgroundLabel.frame.size.height = cellBackgroundHeigth + increase
                 cell.textMessage.frame.size.height = cellTextHeigth + increase
-                cell.sentDate.frame.origin.y = cell.textMessage.frame.origin.y + cell.textMessage.frame.size.height + 5
+                cell.sentDate.frame.origin.y = cell.textMessage.frame.origin.y + cell.textMessage.frame.size.height
             }
             
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
@@ -518,6 +518,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
             self.imageZoom.imageKey = self.messages[indexPath.item].imageKey!
             self.imageZoom.chatController = self
+            self.imageZoom.sender = self.messages[indexPath.item].sender
             self.isViewing = true
             self.view.addSubview(self.imageZoom)
             
@@ -804,9 +805,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func didTakeScreenShot()
     {
-        if(self.imageZoom != nil)
+        if(self.imageZoom != nil && self.imageZoom?.sender != DAOUser.sharedInstance.getUsername())
         {
-            DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.image, imageKey: self.imageZoom.imageKey, sender: self.contact.username)
+            DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.imageKey, sender: self.contact.username)
         }
         
         let alert = JudgerAlert_ViewController()
@@ -848,11 +849,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let imageName = "fundoTeste\(self.fundosIndex)"
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
-                self.backgorundImage.image = UIImage(named: imageName)
+                self.backgorundImage.alpha = 0
                 
                 }, completion: { (success: Bool) -> Void in
                     
+                    self.backgorundImage.image = UIImage(named: imageName)
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        self.backgorundImage.alpha = 0.4
+                        
+                        }, completion: { (success: Bool) -> Void in
+                            
+                            
+                    })
             })
+            
+
         }
     }
     

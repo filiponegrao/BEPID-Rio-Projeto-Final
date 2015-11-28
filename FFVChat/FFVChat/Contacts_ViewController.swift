@@ -14,7 +14,7 @@ class Contacts_ViewController: UIViewController, UITableViewDataSource, UITableV
     
     var contacts = [Contact]()
     
-    var navigationBar : NavigationContact_View!
+    weak var navigationBar : NavigationContact_View!
     
     var blurView : UIVisualEffectView!
     

@@ -15,7 +15,7 @@ import CoreData
 extension PrintscreenNotification {
 
     @NSManaged var printer: String!
-    @NSManaged var image: NSData!
+    @NSManaged var image: NSData?
     @NSManaged var imageKey: String!
     @NSManaged var printDate: NSDate!
 

@@ -10,7 +10,7 @@ import UIKit
 
 class NavigationSettings_View: UIView
 {
-    var viewController : Settings_ViewController!
+    weak var viewController : Settings_ViewController!
     
     var backButton : UIButton!
     

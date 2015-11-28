@@ -14,9 +14,11 @@ import CoreData
 
 extension SentMidia {
 
-    @NSManaged var sentDate: NSDate?
-    @NSManaged var image: NSData?
-    @NSManaged var lastSent: NSDate?
-    @NSManaged var target: String?
+    @NSManaged var sentDate: NSDate!
+    @NSManaged var image: NSData!
+    @NSManaged var lastSent: NSDate!
+    @NSManaged var target: String!
+    @NSManaged var imageKey: String!
+
 
 }

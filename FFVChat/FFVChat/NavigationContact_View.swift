@@ -12,7 +12,7 @@ import Parse
 class NavigationContact_View: UIView
 {
     
-    var vc : ContactsBubble_CollectionViewController!
+    weak var vc : ContactsBubble_CollectionViewController!
     
     var fundo : UIView!
     
@@ -24,7 +24,7 @@ class NavigationContact_View: UIView
     
     var filterButtons : UIButton!
     
-    var contactManager : ContactManager_View!
+    weak var contactManager : ContactManager_View!
     
     
     init(requester: ContactsBubble_CollectionViewController)

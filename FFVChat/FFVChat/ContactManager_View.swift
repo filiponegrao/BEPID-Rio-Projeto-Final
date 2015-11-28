@@ -10,7 +10,7 @@ import UIKit
 
 class ContactManager_View: UIView
 {
-    var viewController : ContactsBubble_CollectionViewController!
+    weak var viewController : ContactsBubble_CollectionViewController!
     
     var contact : Contact!
     

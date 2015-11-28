@@ -15,9 +15,10 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     
     var requests = [FriendRequest]()
     
+    var printscreens = [PrintscreenNotification]()
+    
     var navBar : NavigationNotification_View!
 
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -36,7 +37,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.tableView.layer.zPosition = 0
         self.tableView.separatorStyle = .None
         self.tableView.registerClass(Notification_TableViewCell.self, forCellReuseIdentifier: "Cell")
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CellPrints")
+        self.tableView.registerClass(CellPrintscreen_TableViewCell.self, forCellReuseIdentifier: "CellPrints")
         self.tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.tableView)
  
@@ -52,16 +53,14 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: NotificationController.center.printScreenReceived.name, object: nil)
         
         self.navigationController?.navigationBar.hidden = true
-//        let bar : UINavigationBar! =  self.navigationController?.navigationBar
-//        
-//        bar.barTintColor = oficialDarkGray
-//        bar.tintColor = oficialGreen
-//        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-//        bar.titleTextAttributes = titleDict as? [String : AnyObject]
-//        self.title = "Notifications"
-//        bar.titleTextAttributes = [NSForegroundColorAttributeName : oficialGreen]
         
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
         self.requests = DAOFriendRequests.sharedInstance.getRequests()
+        self.printscreens = DAOPrints.sharedInstance.getPrintscreenNotficiations()
+        self.tableView.reloadData()
 
     }
     
@@ -96,16 +95,12 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         }
         else
         {
-            return 0
+            return self.printscreens.count
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cellPrints : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("CellPrints", forIndexPath: indexPath)
-        cellPrints.backgroundColor = oficialSemiGray
-        cellPrints.selectionStyle = .Default
-        
         if(indexPath.section == 0)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! Notification_TableViewCell
@@ -118,17 +113,59 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             DAOParse.getPhotoFromUsername(self.requests[indexPath.row].sender) { (image) -> Void in
                 cell.icon.image = image
             }
+            
+            return cell
 
         }
-        else if(indexPath.section == 1)
+        else //if(indexPath.section == 1)
         {
-            cellPrints.selectionStyle = .None
-            cellPrints.backgroundColor = oficialSemiGray
-            cellPrints.textLabel?.text = "A screenshot was detected"
-            cellPrints.textLabel?.textColor = oficialGreen
+            let cell = tableView.dequeueReusableCellWithIdentifier("CellPrints") as! CellPrintscreen_TableViewCell
+            
+            
+            cell.selectionStyle = .None
+            cell.backgroundColor = oficialSemiGray
+            
+            let printer = self.printscreens[indexPath.row].printer
+            let cont = printer.characters.count
+            var myMutableString = NSMutableAttributedString(string: "\(printer) tirou um screenshot de uma imagem sua")
+            myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location:0,length:cont))
+            
+            cell.title.attributedText = myMutableString
+            
+            let date = self.printscreens[indexPath.row].printDate
+            
+            let horas = NSDateFormatter()
+            horas.dateFormat = "HH:mm"
+            horas.timeZone = NSTimeZone.localTimeZone()
+            
+            let meses = NSDateFormatter()
+            meses.dateFormat = "MMMM"
+            meses.timeZone = NSTimeZone.localTimeZone()
+            
+            let anos = NSDateFormatter()
+            anos.dateFormat = "y"
+            anos.timeZone = NSTimeZone.localTimeZone()
+            
+            let hora = horas.stringFromDate(date)
+            
+            let mes = meses.stringFromDate(date)
+            
+            let ano = anos.stringFromDate(date)
+            
+            cell.details.text = "O print foi feito às \(hora) em \(mes) de \(ano)"
+            
+            let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(self.printscreens[indexPath.row].imageKey)
+            if(image == nil)
+            {
+                cell.photo.image = UIImage(named: "robber.png")
+            }
+            else
+            {
+                cell.photo.image = image
+            }
+            
+            return cell
         }
-        
-        return cellPrints
     }
     
     
@@ -141,7 +178,14 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
-        return 70
+        if(indexPath.section == 0)
+        {
+            return 70
+        }
+        else
+        {
+            return 100
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int

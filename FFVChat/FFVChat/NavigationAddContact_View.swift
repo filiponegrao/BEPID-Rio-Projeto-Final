@@ -11,7 +11,7 @@ import UIKit
 class NavigationAddContact_View: UIView
 {
 
-    var viewController : AddContact_ViewController!
+    weak var viewController : AddContact_ViewController!
     
     var backButton : UIButton!
     

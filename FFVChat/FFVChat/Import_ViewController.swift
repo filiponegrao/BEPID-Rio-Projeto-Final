@@ -176,7 +176,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         if(cell.checked)
         {
             let id = self.metaContacts[indexPath.row].facebookId
-            self.selectedItens[id] = true
+            self.selectedItens[id] = false
             cell.checkOff()
             self.all = false
             self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
@@ -184,7 +184,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         else
         {
             let id = self.metaContacts[indexPath.row].facebookId
-            self.selectedItens[id] = false
+            self.selectedItens[id] = true
             cell.checkOn()
         }
     }

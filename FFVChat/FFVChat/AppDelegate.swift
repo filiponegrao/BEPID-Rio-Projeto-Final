@@ -157,6 +157,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
             DAOContacts.sharedInstance.refreshContacts()
+            //De teste, ou seja tirar depois de arrumar direitinho:
+            DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
         }
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
