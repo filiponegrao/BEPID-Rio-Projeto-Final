@@ -28,7 +28,7 @@ class EncryptTools
         {
             for i in 1...(32-username.characters.count)
             {
-                result += "0"
+                result += "f"
             }
             
             result += username

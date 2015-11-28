@@ -212,6 +212,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         {
             DAOPostgres.sharedInstance.getUnreadMessages()
         }
+        else if(notification.valueForKey("do") as! String == appNotification.printscreen.rawValue)
+        {
+            DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
+        }
     }
     
     

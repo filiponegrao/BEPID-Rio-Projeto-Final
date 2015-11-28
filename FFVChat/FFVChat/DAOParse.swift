@@ -638,7 +638,27 @@ class DAOParse
     class func pushImageNotification(username: String)
     {
         let message = "📷 Imagem de \(DAOUser.sharedInstance.getUsername())"
-        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1]
+        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1, "sound": "bip.mp3"]
+        
+        let userQuery = PFUser.query()
+        userQuery?.whereKey("username", equalTo: username)
+        
+        // Find devices associated with these users
+        let pushQuery = PFInstallation.query()
+        pushQuery!.whereKey("user", matchesQuery: userQuery!)
+        
+        // Send push notification to query
+        let push = PFPush()
+        push.setQuery(pushQuery) // Set our Installation query
+        push.setData(data as [NSObject : AnyObject])
+        push.sendPushInBackground()
+    }
+    
+    
+    class func pushPrintscreenNotification(username: String)
+    {
+        let message = "⚠️ \(DAOUser.sharedInstance.getUsername()) printou um conteúdo seu!"
+        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.printscreen.rawValue, "content-avaliable" : 1, "sound": "bip.mp3"]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)

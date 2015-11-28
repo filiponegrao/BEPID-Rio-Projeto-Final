@@ -33,6 +33,7 @@ class NotificationController: NSObject
     
     var contactsRefresheded : NSNotification!
     
+    var printScreenReceived : NSNotification!
     
     override init()
     {
@@ -46,6 +47,7 @@ class NotificationController: NSObject
         self.messageEvaporated = NSNotification(name: "messageEvaporated", object: nil, userInfo: nil)
         self.trustLevelRefresehd = NSNotification(name: "trustLevelRefresehd", object: nil)
         self.contactsRefresheded = NSNotification(name: "contactsRefresheded", object: nil)
+        self.printScreenReceived = NSNotification(name: "printScreenReceived", object: nil)
     }
     
     class var center : NotificationController
@@ -66,6 +68,8 @@ public enum appNotification : String
     case requestAccepted
     
     case messageReceived
+    
+    case printscreen
 }
 
 
