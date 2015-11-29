@@ -23,9 +23,12 @@ class ImageManager_View: UIView
     var closeButton : UIButton!
     
     var closeView : UIView!
+    
+    var photoOrigin : CGRect!
 
-    init(image: UIImage, requester: SentMidiaGallery_ViewController)
+    init(image: UIImage, requester: SentMidiaGallery_ViewController, photoOrigin: CGRect)
     {
+        self.photoOrigin = photoOrigin
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
         self.viewController = requester
@@ -34,18 +37,21 @@ class ImageManager_View: UIView
 
         self.blackScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.blackScreen.backgroundColor = UIColor.blackColor()
-        self.blackScreen.alpha = 0.9
+        self.blackScreen.alpha = 0
         self.addSubview(self.blackScreen)
         
         self.closeButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
         self.closeButton.setImage(UIImage(named: "close"), forState: .Normal)
         self.closeButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        self.closeButton.alpha = 0
         self.addSubview(self.closeButton)
         
         self.selectedPhoto = UIImageView(frame: CGRectMake(screenWidth/14, screenHeight/6, screenWidth - (screenWidth/14 * 2), screenHeight/8 * 5))
         self.selectedPhoto.image = image
         self.selectedPhoto.contentMode = .ScaleAspectFit
         self.selectedPhoto.backgroundColor = UIColor.clearColor()
+        self.selectedPhoto.layer.cornerRadius = 5
+        self.selectedPhoto.clipsToBounds = true
         self.addSubview(selectedPhoto)
         
         self.sendButton = MKButton(frame: CGRectMake(screenWidth/2 - screenWidth/6 - 10, screenHeight - screenWidth/6 - 20, screenWidth/6, screenWidth/6))
@@ -79,6 +85,52 @@ class ImageManager_View: UIView
 
     }
     
+    func animateOn()
+    {
+        let imageFinalFrame = self.selectedPhoto.frame
+//        let shareFinalFrame = self.sendButton.frame
+//        let deleteFinalFrame = self.deleteButton.frame
+        
+        self.selectedPhoto.frame = self.photoOrigin
+        self.sendButton.center.y += 200
+        self.deleteButton.center.y += 200
+        
+        self.blackScreen.alpha = 0
+        self.closeButton.alpha = 0
+        
+        
+        
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            self.selectedPhoto.frame = imageFinalFrame
+            self.sendButton.center.y -= 200
+            self.deleteButton.center.y -= 200
+            self.blackScreen.alpha = 0.8
+            self.closeButton.alpha = 1
+            
+            }) { (success: Bool) -> Void in
+        }
+    }
+    
+    
+    func removeView()
+    {
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            self.selectedPhoto.frame = self.photoOrigin
+            self.sendButton.center.y += 200
+            self.deleteButton.center.y += 200
+            self.blackScreen.alpha = 0
+            self.closeButton.alpha = 0
+            
+            }) { (success: Bool) -> Void in
+                
+                self.removeFromSuperview()
+        }
+
+    }
+    
+    
     required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
@@ -86,15 +138,12 @@ class ImageManager_View: UIView
     
     func back()
     {
-        self.removeFromSuperview()
+        self.removeView()
     }
     
     func sendPhoto()
     {
-        //APRESENTA SELECTEDMIDIA_VC
-//        let sentMidia = SelectedMidia_ViewController(image: self.selectedPhoto.image!, contact: self.viewController.contact)
-//        back()
-//        self.viewController.presentViewController(sentMidia, animated: true, completion: nil)
+//        let sentMidia = SelectedMidia_ViewController(image: <#T##UIImage#>, contact: <#T##Contact#>)
     }
     
     func deletePhoto()

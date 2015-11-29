@@ -200,23 +200,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             
 //            self.window?.rootViewController
         }
-        if(notification.valueForKey("do") as! String == appNotification.friendRequest.rawValue)
+        
+        if(PFUser.currentUser() != nil)
         {
-            print("carregando friend requests ordenado por notifiacao")
-            DAOFriendRequests.sharedInstance.loadRequests()
-        }
-        else if(notification.valueForKey("do") as! String == appNotification.requestAccepted.rawValue)
-        {
-            print("Adicionando amigo ordenado por notifiacao")
-            DAOFriendRequests.sharedInstance.friendsAccepted()
-        }
-        else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
-        {
-            DAOPostgres.sharedInstance.getUnreadMessages()
-        }
-        else if(notification.valueForKey("do") as! String == appNotification.printscreen.rawValue)
-        {
-            DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
+            if(notification.valueForKey("do") as! String == appNotification.friendRequest.rawValue)
+            {
+                print("carregando friend requests ordenado por notifiacao")
+                DAOFriendRequests.sharedInstance.loadRequests()
+            }
+            else if(notification.valueForKey("do") as! String == appNotification.requestAccepted.rawValue)
+            {
+                print("Adicionando amigo ordenado por notifiacao")
+                DAOFriendRequests.sharedInstance.friendsAccepted()
+            }
+            else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
+            {
+                DAOPostgres.sharedInstance.getUnreadMessages()
+            }
+            else if(notification.valueForKey("do") as! String == appNotification.printscreen.rawValue)
+            {
+                DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
+            }
         }
     }
     

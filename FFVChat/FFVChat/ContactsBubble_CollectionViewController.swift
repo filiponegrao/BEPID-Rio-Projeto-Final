@@ -23,7 +23,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     var longPress : UILongPressGestureRecognizer!
     
-    weak var contactManager : ContactManager_View!
+    var contactManager : ContactManager_View!
     
     var background : UIImageView!
     

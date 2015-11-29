@@ -90,9 +90,15 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        self.imageManagerScreeen = ImageManager_View(image: UIImage(data: self.sentMidias[indexPath.item].image!)!, requester: self)
-
+        let attributes : UICollectionViewLayoutAttributes = self.collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
+        let frame = attributes.frame
+        
+        let origin = self.collectionView.convertRect(frame, toView: self.collectionView.superview)
+        
+        self.imageManagerScreeen = ImageManager_View(image: UIImage(data: self.sentMidias[indexPath.item].image!)!, requester: self, photoOrigin: origin)
+        
         self.view.addSubview(self.imageManagerScreeen)
+        self.imageManagerScreeen.animateOn()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
