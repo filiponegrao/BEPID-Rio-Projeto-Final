@@ -231,9 +231,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         if ((indexPath) != nil)
         {
-            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
-            let frame = CGRectMake(cell!.frame.origin.x, cell!.frame.origin.y + 70, cell!.frame.size.width, cell!.frame.size.height)
-            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self, origin: frame)
+//            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
+            let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath!)!
+            let frame = attributes.frame
+            
+            let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
+
+            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self, origin: origin)
             
             self.view.addSubview(self.contactManager)
             self.contactManager.insertView()

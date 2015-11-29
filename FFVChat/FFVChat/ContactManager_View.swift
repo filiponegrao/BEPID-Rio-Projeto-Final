@@ -155,6 +155,9 @@ class ContactManager_View: UIView
         self.addSubview(self.blurView)
         self.sendSubviewToBack(self.blurView)
         
+        let finalFrame = self.contactImage.frame
+        self.contactImage.frame = self.origin
+        
         let posUsername = self.usernameLabel.center
         let postrustLevel = self.trustLevelLabel.center
         let posClearchat = self.clearChat.center
@@ -177,6 +180,7 @@ class ContactManager_View: UIView
             self.clearChat.center = posClearchat
             self.favouriteButton.center = posFavorite
             self.deleteButton.center = posDelete
+            self.contactImage.frame = finalFrame
             
             }) { (success: Bool) -> Void in
                 
@@ -207,7 +211,7 @@ class ContactManager_View: UIView
             self.trustLevelLabel.center.x -= screenWidth/2
             self.usernameLabel.center.x -= screenWidth
             
-            self.contactImage.alpha = 0.1
+            self.contactImage.alpha = 0.05
 
             
             }) { (success: Bool) -> Void in

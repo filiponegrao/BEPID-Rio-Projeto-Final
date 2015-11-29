@@ -59,6 +59,11 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     override func viewWillAppear(animated: Bool)
     {
+    
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
         self.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.contact)
         self.collectionView.reloadData()
     }
@@ -95,7 +100,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         
         let origin = self.collectionView.convertRect(frame, toView: self.collectionView.superview)
         
-        self.imageManagerScreeen = ImageManager_View(image: UIImage(data: self.sentMidias[indexPath.item].image!)!, requester: self, photoOrigin: origin)
+        self.imageManagerScreeen = ImageManager_View(sentMidia: self.sentMidias[indexPath.row], requester: self, photoOrigin: origin)
         
         self.view.addSubview(self.imageManagerScreeen)
         self.imageManagerScreeen.animateOn()

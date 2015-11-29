@@ -37,6 +37,8 @@ class DAOSentMidia
         let predicate = NSPredicate(format: "target == %@", contact.username)
         
         fetch.predicate = predicate
+        fetch.sortDescriptors = [NSSortDescriptor(key: "sentDate", ascending: true)]
+
         
         do { let results = try self.managedObjectContext.executeFetchRequest(fetch) as! [SentMidia]
         
@@ -101,8 +103,42 @@ class DAOSentMidia
             
             return
         }
+    }
+    
+    
+    func deleteSentMidia(sentMidia: SentMidia)
+    {
+        self.managedObjectContext.deleteObject(sentMidia)
+        self.save()
+    }
+    
+    func deleteAllSentMidiaFrom(contact: String)
+    {
+        let fetch = NSFetchRequest(entityName: "SentMidia")
         
+        let predicate = NSPredicate(format: "target == %@", contact)
         
+        fetch.predicate = predicate
+        
+        do { let results = try self.managedObjectContext.executeFetchRequest(fetch) as! [SentMidia]
+            
+            if(results.count > 0)
+            {
+                for result in results
+                {
+                    self.managedObjectContext.deleteObject(result)
+                    self.save()
+                }
+            }
+            else
+            {
+                return
+            }
+        }
+        catch {
+            
+            return
+        }
     }
     
     func save()

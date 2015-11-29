@@ -25,9 +25,12 @@ class ImageManager_View: UIView
     var closeView : UIView!
     
     var photoOrigin : CGRect!
+    
+    var sentMidia : SentMidia!
 
-    init(image: UIImage, requester: SentMidiaGallery_ViewController, photoOrigin: CGRect)
+    init(sentMidia: SentMidia, requester: SentMidiaGallery_ViewController, photoOrigin: CGRect)
     {
+        self.sentMidia = sentMidia
         self.photoOrigin = photoOrigin
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
@@ -47,7 +50,7 @@ class ImageManager_View: UIView
         self.addSubview(self.closeButton)
         
         self.selectedPhoto = UIImageView(frame: CGRectMake(screenWidth/14, screenHeight/6, screenWidth - (screenWidth/14 * 2), screenHeight/8 * 5))
-        self.selectedPhoto.image = image
+        self.selectedPhoto.image = UIImage(data: self.sentMidia.image)
         self.selectedPhoto.contentMode = .ScaleAspectFit
         self.selectedPhoto.backgroundColor = UIColor.clearColor()
         self.selectedPhoto.layer.cornerRadius = 5
@@ -143,11 +146,31 @@ class ImageManager_View: UIView
     
     func sendPhoto()
     {
-//        let sentMidia = SelectedMidia_ViewController(image: <#T##UIImage#>, contact: <#T##Contact#>)
+        let sentMidia = SelectedMidia_ViewController(image: self.selectedPhoto.image!, contact: self.viewController!.contact)
+        self.viewController!.presentViewController(sentMidia, animated: true) { () -> Void in
+            self.removeFromSuperview()
+        }
     }
     
     func deletePhoto()
     {
+        let alert = UIAlertController(title: "Are you shure?", message: "Deleting this message is irreversible", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            DAOSentMidia.sharedInstance.deleteSentMidia(self.sentMidia)
+            self.viewController.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.viewController.contact)
+            self.viewController.collectionView.reloadData()
+            self.removeFromSuperview()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+            
+        }))
+        
+        self.viewController.presentViewController(alert, animated: true, completion: nil)
+        
         
     }
 }

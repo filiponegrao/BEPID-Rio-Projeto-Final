@@ -146,7 +146,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         {
             let time = (min * 60) + sec
             
-            let nav = presentingViewController as! AppNavigationController
+            let nav = self.presentingViewController as! AppNavigationController
             let controller = nav.viewControllers.last
             
             if controller!.isKindOfClass(Chat_ViewController)
@@ -159,12 +159,13 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
             }
             else if controller!.isKindOfClass(SentMidiaGallery_ViewController)
             {
+                let chat = nav.viewControllers[1] as! Chat_ViewController
+                
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                     
-                    let presenter = controller!.presentingViewController as! Chat_ViewController
-                    
                     controller!.navigationController?.popViewControllerAnimated(true)
-                    //                    presenter.sendImage(self.image, lifetime: time)
+                    
+                    chat.sendImage(self.image, lifetime: time)
                 })
             }
         }

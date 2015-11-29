@@ -47,6 +47,28 @@ class NavigationGallery_View: UIView
     
     func deleteAllPictures()
     {
+        let alert = UIAlertController(title: "Are you shure?", message: "Deleting all messages sent for \(self.viewController.contact.username) is irreversible! Are you shure?", preferredStyle: .Alert)
         
+        alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            DAOSentMidia.sharedInstance.deleteAllSentMidiaFrom(self.viewController.contact.username)
+            self.viewController.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.viewController.contact)
+            self.viewController.collectionView.reloadData()
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+            
+        }))
+        
+        self.viewController.presentViewController(alert, animated: true, completion: nil)
     }
 }
+
+
+
+
+
+
+
