@@ -26,6 +26,12 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     
     var loadingView : LoadScreen_View!
     
+    var forgotPassword : UIButton!
+    
+    var changePasswordAlert : UIAlertController!
+    
+    var newPasswordAlert : UIAlertController!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -53,6 +59,16 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.doneButton.highlighted = true
         self.doneButton.addTarget(self, action: "changePassword", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.doneButton)
+        
+        
+        self.forgotPassword = UIButton(frame: CGRectMake(40,self.tableView.frame.origin.y + self.tableView.frame.size.height + 40, screenWidth - 80, 50))
+        self.forgotPassword.backgroundColor = UIColor.clearColor()
+        self.forgotPassword.setTitle("I forgot my password", forState: .Normal)
+        self.forgotPassword.setTitleColor(oficialGreen, forState: .Normal)
+        self.forgotPassword.setTitleColor(oficialDarkGreen, forState: .Highlighted)
+        self.forgotPassword.titleLabel?.textAlignment = .Left
+        self.forgotPassword.addTarget(self, action: "setForgotPassword", forControlEvents: .TouchUpInside)
+        self.view.addSubview(self.forgotPassword)
         
     }
     
@@ -234,6 +250,44 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func setForgotPassword()
+    {
+        self.changePasswordAlert = UIAlertController(title: "Who are you?", message: "To confirm the action, insert your email", preferredStyle: .Alert)
+        self.changePasswordAlert.addTextFieldWithConfigurationHandler { (textfield: UITextField) -> Void in
+            
+            textfield.placeholder = "Insert your email registered on myne"
+            
+        }
+        
+        self.changePasswordAlert.addAction(UIAlertAction(title: "Confirm", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            if(DAOUser.sharedInstance.checkCorrectEmail(self.changePasswordAlert.textFields!.first!.text!))
+            {
+                
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Email incorrect!", message: "Your email entered is incorrect, please insert the correct!", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+                    
+                    
+                    
+                }))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            
+        }))
+        
+        self.changePasswordAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+            
+            
+        }))
+        
+        self.presentViewController(self.changePasswordAlert, animated: true, completion: nil)
     }
 }
 
