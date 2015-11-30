@@ -14,9 +14,9 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     
     var pageIndex = 0
     
-    weak var tutoFirst : TutoFirst_ViewController!
+    var tutoFirst : TutoFirst_ViewController!
     
-    weak var tutoSecond : TutoSecond_ViewController!
+    var tutoSecond : TutoSecond_ViewController!
     
     var pageControl : UIPageControl!
 

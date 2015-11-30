@@ -24,6 +24,8 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     
     var newPasswordAgain : UITextField!
     
+    var loadingView : LoadScreen_View!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -49,10 +51,15 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.doneButton.backgroundColor = oficialGreen
         self.doneButton.highlighted = true
-//        self.doneButton.addTarget(self, action: "changePassword", forControlEvents: UIControlEvents.TouchUpInside)
+        self.doneButton.addTarget(self, action: "changePassword", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.doneButton)
         
-
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "passwordChanged", name: "passwordChanged", object: nil)
     }
 
     override func didReceiveMemoryWarning()
@@ -174,40 +181,61 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
 
     //FIM TABLEVIEW PROPERTIES
     
-//    func changePassword(sender:UIButton)
-//    {
-//        
-//        self.doneButton.highlighted = true
-//        
-//        if(self.currentPassword.text != "")
-//        {
-//            DAOUser.sharedInstance.checkPassword(self.currentPassword.text!) { (correct) -> Void in
-//                if(correct == false)
-//                {
-//                    let alert = UIAlertView(title: "Ops!", message: "Your password is wrong", delegate: nil, cancelButtonTitle: "Ok")
-//                    alert.show()
-//                }
-//                else
-//                {
-//                    if(self.newPassword.text == self.newPasswordAgain.text)
-//                    {
-//                        DAOUser.sharedInstance.changePassword()
-//                    }
-//                    else
-//                    {
-//                        let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
-//                        alert.show()
-//                    }
-//                }
-//            }
-//        }
-//        else
-//        {
-//            let alert = UIAlertView(title: "Ops!", message: "Please, enter your password", delegate: nil, cancelButtonTitle: "Ok")
-//            alert.show()
-//        }
-//        
-//       
-//    }
+    func changePassword()
+    {
+        
+        self.doneButton.highlighted = true
+        
+        if(self.currentPassword.text != "" && self.newPassword != "" && self.newPasswordAgain != "")
+        {
+            self.loadingView = LoadScreen_View()
+            self.view.addSubview(self.loadingView)
+            DAOUser.sharedInstance.checkPassword(self.currentPassword.text!) { (correct) -> Void in
+                if(!correct)
+                {
+                    self.loadingView?.removeFromSuperview()
+                    let alert = UIAlertView(title: "Ops!", message: "Your password is wrong", delegate: nil, cancelButtonTitle: "Ok")
+                    alert.show()
+                }
+                else
+                {
+                    if(self.newPassword.text == self.newPasswordAgain.text)
+                    {
+                        DAOUser.sharedInstance.changePassword(self.newPassword.text!)
+                    }
+                    else
+                    {
+                        let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
+                        alert.show()
+                        self.loadingView?.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        else
+        {
+            let alert = UIAlertView(title: "Ops!", message: "Please, fill the fields correctly", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+            self.loadingView?.removeFromSuperview()
+
+        }
+        
+       
+    }
     
+    func passwordChanged()
+    {
+        self.loadingView?.removeFromSuperview()
+        let alert = UIAlertController(title: "Succeful!", message: "Your password have been changed succefully!", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 }
+
+
+

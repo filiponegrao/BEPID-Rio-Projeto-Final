@@ -68,6 +68,8 @@ enum UserCondition : String
     case notLinkedFacebook = "notLinkedFacebook"
     
     case unknowError = "unknowError"
+    
+    case password = "passwordChanged"
 }
 
 private let data : DAOUser = DAOUser()
@@ -624,9 +626,19 @@ class DAOUser
         DAOParse.decreaseTrustLevel()
     }
     
-    func changePassword()
+    func changePassword(password: String)
     {
-        
+        PFUser.currentUser()?.setValue(password, forKey: "password")
+        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+            if(success)
+            {
+                NSNotificationCenter.defaultCenter().postNotificationName("passwordChanged", object: nil)
+            }
+            else
+            {
+                NSNotificationCenter.defaultCenter().postNotificationName("wrongPassword", object: nil)
+            }
+        })
     }
     
     
