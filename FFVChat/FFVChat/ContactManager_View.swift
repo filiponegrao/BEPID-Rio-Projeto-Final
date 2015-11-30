@@ -240,7 +240,6 @@ class ContactManager_View: UIView
         
         self.circleView.setColor(self.trustLevel)
         self.circleView.animateCircle(1.0, trustLevel: self.trustLevel)
-        
         self.addSubview(self.circleView)
 
     }
@@ -263,11 +262,15 @@ class ContactManager_View: UIView
     //DELETA UM CONTATO DA LISTA DE FAVORITOS
     func deleteContact()
     {
-        let alert = UIAlertController(title: "Wow", message: "Are you sure you want to remove this contact from your list? You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Are you sure?", message: "Do you want to remove this contact from your list? You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
             
-//            DAOContacts.sharedInstance.deleteContact(self.contact.username)
+            DAOContacts.sharedInstance.deleteContact(self.contact.username)
+            self.viewController.contacts = DAOContacts.sharedInstance.getAllContacts()
+            self.viewController.collectionView?.reloadData()
+            self.viewController.reloadAnimations()
+            self.removeView()
   
             
         }))
