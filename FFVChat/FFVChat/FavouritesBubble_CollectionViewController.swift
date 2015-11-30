@@ -1,18 +1,16 @@
 //
-//  ContactsBubble_CollectionViewController.swift
+//  FavouritesBubble_CollectionViewController.swift
 //  FFVChat
 //
-//  Created by Fernanda Carvalho on 11/13/15.
+//  Created by Fernanda Carvalho on 11/30/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
 import UIKit
-import AVFoundation
-
 
 private let reuseIdentifier = "Cell"
 
-class ContactsBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
+class FavouritesBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
 {
     weak var home : Home_ViewController!
     
@@ -25,8 +23,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     var contactManager : ContactManager_View!
     
     var background : UIImageView!
-        
-    var messageSound: AVAudioPlayer!
+    
+    weak var chatController : Chat_ViewController!
     
     var collectionSize : CGSize!
     
@@ -52,7 +50,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         // Register cell classes
         self.collectionView!.registerClass(RandomWalk_CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView!.backgroundColor = UIColor.clearColor()
-    
         
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
         self.longPress.minimumPressDuration = 0.5
@@ -60,7 +57,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.longPress.delegate = self
         self.view.addGestureRecognizer(self.longPress)
         
-        self.contacts = DAOContacts.sharedInstance.getAllContacts()
+        self.contacts = DAOContacts.sharedInstance.getFavorites()
         self.collectionView!.reloadData()
         
         
@@ -109,7 +106,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     //** FIM FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
     
     
-
+    
     
     //** FUNCOES DE ATUALIZACAO DA TELA ***//
     
@@ -120,12 +117,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
         
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-    }
-    
-    func mesageReceived()
-    {
-        self.playSound()
-        self.checkUnreadMessages()
     }
     
     
@@ -219,12 +210,12 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         if ((indexPath) != nil)
         {
-//            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
+            //            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
             let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath!)!
             let frame = attributes.frame
             
             let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
-
+            
             self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self.home, origin: origin)
             
             self.home.view.addSubview(self.contactManager)
@@ -238,23 +229,4 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         //(por enquanto)
     }
     
-    
-    func playSound()
-    {
-        let path = NSBundle.mainBundle().pathForResource("messageNotification.mp3", ofType:nil)!
-        let url = NSURL(fileURLWithPath: path)
-        
-        do {
-            let sound = try AVAudioPlayer(contentsOfURL: url)
-            self.messageSound = sound
-            sound.play()
-        } catch {
-            // couldn't load file :(
-        }
-    }
-    
-    
-    
 }
-
-
