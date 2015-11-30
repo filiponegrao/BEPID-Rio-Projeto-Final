@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
+        BlackList.initBlackList()
         TheJudger.Singleton.inicializandoJudger()
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

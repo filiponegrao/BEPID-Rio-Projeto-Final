@@ -78,7 +78,7 @@ class DAOFriendRequests : NSObject
                 self.requests = requests
                 for r in self.requests
                 {
-                    if(DAOContacts.sharedInstance.isContact(r.sender))
+                    if(DAOContacts.sharedInstance.isContact(r.sender) && !BlackList.isOnBlackList(r.sender))
                     {
                         self.acceptRequest(r)
                     }

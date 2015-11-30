@@ -17,6 +17,8 @@
 		800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */; };
 		800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */; };
 		8005975B1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */; };
+		8010FFF51C0CD46E00A4DBD6 /* BlackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */; };
+		8010FFF71C0CD5FE00A4DBD6 /* BlackList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */; };
 		801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */; };
 		8017D37B1BD40394000CB8F0 /* StaticValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8017D37A1BD40394000CB8F0 /* StaticValues.swift */; };
 		8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8017D37D1BD43155000CB8F0 /* DAOParse.swift */; };
@@ -201,6 +203,8 @@
 		800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellAdd_TableViewCell.xib; sourceTree = "<group>"; };
 		800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImportContact_TableViewCell.swift; sourceTree = "<group>"; };
 		8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellImportContact_TableViewCell.xib; sourceTree = "<group>"; };
+		8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackList.swift; sourceTree = "<group>"; };
+		8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BlackList.plist; sourceTree = "<group>"; };
 		801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellPrintscreen_TableViewCell.swift; sourceTree = "<group>"; };
 		8017D37A1BD40394000CB8F0 /* StaticValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticValues.swift; sourceTree = "<group>"; };
 		8017D37D1BD43155000CB8F0 /* DAOParse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOParse.swift; sourceTree = "<group>"; };
@@ -522,6 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				801D92521BA4928800D05CE7 /* Info.plist */,
+				8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -566,6 +571,7 @@
 				809B81F81BFCE6140078F350 /* AudioManager.swift */,
 				80FF18A31BE51EA800C5F35E /* Errors.swift */,
 				F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */,
+				8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */,
 				809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */,
 				80DAE5531C07756500D431C1 /* bip.mp3 */,
 			);
@@ -799,7 +805,7 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = D56YT45BUR;
+						DevelopmentTeam = M7KY4TXQRJ;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -834,6 +840,7 @@
 				801D92761BA492C200D05CE7 /* Login_ViewController.xib in Resources */,
 				801D929C1BA4FC8800D05CE7 /* FacebookRegister_ViewController.xib in Resources */,
 				80C91A541C07E79600E5B712 /* AppState.plist in Resources */,
+				8010FFF71C0CD5FE00A4DBD6 /* BlackList.plist in Resources */,
 				801D925E1BA4928800D05CE7 /* LaunchScreen.xib in Resources */,
 				80C91A4E1C07E06300E5B712 /* Settings.bundle in Resources */,
 				809B81FD1BFCFD0B0078F350 /* messageNotification.mp3 in Resources */,
@@ -1027,6 +1034,7 @@
 				803657A31BF9522D000907BD /* Contact+CoreDataProperties.swift in Sources */,
 				8017D37B1BD40394000CB8F0 /* StaticValues.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
+				8010FFF51C0CD46E00A4DBD6 /* BlackList.swift in Sources */,
 				80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
