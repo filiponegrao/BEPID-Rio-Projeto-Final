@@ -31,9 +31,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     var messageSound: AVAudioPlayer!
     
-    override init(collectionViewLayout layout: UICollectionViewLayout)
+    var collectionSize : CGSize!
+    
+    init(collectionViewLayout layout: UICollectionViewLayout, size: CGSize)
     {
+        self.collectionSize = size
         super.init(collectionViewLayout: layout)
+        
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -43,7 +47,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     override func viewDidLoad()
     {
-        self.collectionView!.frame = CGRectMake(0, 30, self.view.frame.width, self.view.frame.height - 30)
+        self.collectionView!.frame = CGRectMake(0, -10, self.collectionSize.width , self.collectionSize.height + 10)
         
         self.view.backgroundColor = oficialMediumGray
         super.viewDidLoad()
@@ -58,9 +62,9 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.view.addSubview(self.background)
         self.view.sendSubviewToBack(self.background)
         
-        //Nav Bar
-        self.navigationBar = NavigationContact_View(requester: self)
-        self.view.addSubview(self.navigationBar)
+//        //Nav Bar
+//        self.navigationBar = NavigationContact_View(requester: self)
+//        self.view.addSubview(self.navigationBar)
         
         self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
         self.longPress.minimumPressDuration = 0.5
@@ -117,11 +121,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     //** FIM FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
     
     
-    override func viewDidLayoutSubviews()
-    {
-        self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
-    }
-    
+
     
     //** FUNCOES DE ATUALIZACAO DA TELA ***//
     

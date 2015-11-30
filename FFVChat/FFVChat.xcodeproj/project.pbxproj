@@ -142,7 +142,7 @@
 		F65A4F411C076A790092C403 /* NavigationGallery_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F401C076A790092C403 /* NavigationGallery_View.swift */; };
 		F65A4F431C077AAF0092C403 /* ImageManager_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F421C077AAF0092C403 /* ImageManager_View.swift */; };
 		F65A4F451C0CB7670092C403 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */; };
-		F65A4F471C0CB79E0092C403 /* Teste_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F461C0CB79E0092C403 /* Teste_ViewController.swift */; };
+		F65A4F4B1C0CCDFD0092C403 /* Home_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F4A1C0CCDFD0092C403 /* Home_ViewController.swift */; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
 		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
@@ -332,7 +332,7 @@
 		F65A4F401C076A790092C403 /* NavigationGallery_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationGallery_View.swift; sourceTree = "<group>"; };
 		F65A4F421C077AAF0092C403 /* ImageManager_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager_View.swift; sourceTree = "<group>"; };
 		F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
-		F65A4F461C0CB79E0092C403 /* Teste_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teste_ViewController.swift; sourceTree = "<group>"; };
+		F65A4F4A1C0CCDFD0092C403 /* Home_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
@@ -453,7 +453,6 @@
 				F65A4F401C076A790092C403 /* NavigationGallery_View.swift */,
 				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
 				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
-				F65A4F461C0CB79E0092C403 /* Teste_ViewController.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -611,6 +610,7 @@
 				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
 				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
 				F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */,
+				F65A4F4A1C0CCDFD0092C403 /* Home_ViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -944,10 +944,10 @@
 				803657961BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
 				8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */,
 				801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */,
-				F65A4F471C0CB79E0092C403 /* Teste_ViewController.swift in Sources */,
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
+				F65A4F4B1C0CCDFD0092C403 /* Home_ViewController.swift in Sources */,
 				804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */,
 				8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
