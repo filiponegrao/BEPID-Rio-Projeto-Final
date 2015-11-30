@@ -10,7 +10,7 @@ import UIKit
 
 class ContactManager_View: UIView
 {
-    weak var viewController : ContactsBubble_CollectionViewController!
+    weak var viewController : Home_ViewController!
     
     var contact : Contact!
     
@@ -38,7 +38,7 @@ class ContactManager_View: UIView
     
     var origin : CGRect!
     
-    init(contact: Contact, requester: ContactsBubble_CollectionViewController, origin: CGRect)
+    init(contact: Contact, requester: Home_ViewController, origin: CGRect)
     {
         self.origin = origin
         self.viewController = requester
@@ -251,15 +251,21 @@ class ContactManager_View: UIView
         {
             DAOContacts.sharedInstance.setNonFavorite(self.contact)
             self.favouriteButton.backgroundColor = oficialLightGray
+            
+            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getFavorites()
+            self.viewController.favourites.collectionView?.reloadData()
         }
         else
         {
             DAOContacts.sharedInstance.setFavorite(self.contact)
             self.favouriteButton.backgroundColor = oficialGreen
+            
+            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getFavorites()
+            self.viewController.favourites.collectionView?.reloadData()
         }
     }
     
-    //DELETA UM CONTATO DA LISTA DE FAVORITOS
+    //DELETA UM CONTATO DA LISTA
     func deleteContact()
     {
         let alert = UIAlertController(title: "Are you sure?", message: "Do you want to remove this contact from your list? You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -267,12 +273,17 @@ class ContactManager_View: UIView
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
             
             DAOContacts.sharedInstance.deleteContact(self.contact.username)
-            self.viewController.contacts = DAOContacts.sharedInstance.getAllContacts()
-            self.viewController.collectionView?.reloadData()
-            self.viewController.reloadAnimations()
+            
+            self.viewController.allContacts.contacts = DAOContacts.sharedInstance.getAllContacts()
+            self.viewController.allContacts.collectionView?.reloadData()
+            self.viewController.allContacts.reloadAnimations()
+            self.removeView()
+            
+            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getAllContacts()
+            self.viewController.favourites.collectionView?.reloadData()
+            self.viewController.favourites.reloadAnimations()
             self.removeView()
   
-            
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in

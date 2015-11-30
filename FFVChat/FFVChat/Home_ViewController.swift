@@ -14,7 +14,11 @@ class Home_ViewController: UIViewController
     
     var pageMenu : CAPSPageMenu!
     
+    var favourites : FavouritesBubble_CollectionViewController!
+    
     var allContacts : ContactsBubble_CollectionViewController!
+    
+    var chatController : Chat_ViewController!
     
     var controllerArray : [UIViewController]!
     
@@ -24,12 +28,14 @@ class Home_ViewController: UIViewController
     
     override func viewDidLoad()
     {
-    
+        
         super.viewDidLoad()
+        
+        self.view.backgroundColor = oficialDarkGray
         
         self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.background.image = UIImage(named: "ContactBackground")
-        self.background.alpha = 0.1
+        self.background.alpha =  0.2
         self.view.addSubview(self.background)
         
         //Nav Bar
@@ -42,10 +48,33 @@ class Home_ViewController: UIViewController
         let flow = flowLayoutSetup()
         
         self.allContacts = ContactsBubble_CollectionViewController(collectionViewLayout: flow, size: CGSize(width: screenWidth, height: self.contentSize.height))
+        self.allContacts.home = self
+        self.allContacts.title = "All Contacts"
         
-        self.controllerArray = [self.allContacts]
+        self.favourites = FavouritesBubble_CollectionViewController(collectionViewLayout: flow, size: CGSize(width: screenWidth, height: self.contentSize.height))
+        self.favourites.home = self
+        self.favourites.title = "Favourites"
         
-        self.pageMenu = CAPSPageMenu(viewControllers: self.controllerArray, frame: CGRectMake(0, 80, self.contentSize.width, self.contentSize.height), pageMenuOptions: nil)
+        self.controllerArray = [self.allContacts, self.favourites]
+        
+        
+        // Customize menu (Optional)
+        let parameters: [CAPSPageMenuOption] = [
+            .ScrollMenuBackgroundColor(oficialSemiGray),
+            .ViewBackgroundColor(oficialDarkGray),
+            .SelectionIndicatorColor(oficialGreen),
+            .BottomMenuHairlineColor(oficialLightGray),
+            .MenuItemFont(UIFont(name: "Helvetica", size: 15.0)!),
+            .MenuHeight(40.0),
+            .MenuItemWidth(screenWidth/2),
+            .CenterMenuItems(true),
+            .SelectedMenuItemLabelColor(oficialGreen),
+            .UnselectedMenuItemLabelColor(oficialLightGray),
+            .MenuMargin(0)
+        ]
+        
+        self.pageMenu = CAPSPageMenu(viewControllers: self.controllerArray, frame: CGRectMake(0, 80, self.contentSize.width, self.contentSize.height), pageMenuOptions: parameters)
+        self.pageMenu.view.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.pageMenu.view)
         
     }
