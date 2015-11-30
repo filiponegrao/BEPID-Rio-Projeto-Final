@@ -19,8 +19,12 @@ class AppNavigationController : UINavigationController, UIViewControllerTransiti
     
         let flow = flowLayoutSetup()
         let collectView = ContactsBubble_CollectionViewController(collectionViewLayout: flow)
+        
+        let pageMenu = CAPSPageMenu(viewControllers: [collectView], frame: collectView.view.frame, pageMenuOptions: nil)
+        
+        
         //self.viewControllers = [collectView]
-        self.pushViewController(collectView, animated: false)
+        self.pushViewController(pageMenu, animated: false)
         self.navigationBar.hidden = true
         self.navigationBar.barStyle = .Default
         self.navigationBar.barTintColor = oficialDarkGray

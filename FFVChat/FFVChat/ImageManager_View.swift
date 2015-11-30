@@ -108,7 +108,7 @@ class ImageManager_View: UIView
             self.selectedPhoto.frame = imageFinalFrame
             self.sendButton.center.y -= 200
             self.deleteButton.center.y -= 200
-            self.blackScreen.alpha = 0.8
+            self.blackScreen.alpha = 0.9
             self.closeButton.alpha = 1
             
             }) { (success: Bool) -> Void in
@@ -154,7 +154,7 @@ class ImageManager_View: UIView
     
     func deletePhoto()
     {
-        let alert = UIAlertController(title: "Are you shure?", message: "Deleting this message is irreversible", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
             
             DAOSentMidia.sharedInstance.deleteSentMidia(self.sentMidia)

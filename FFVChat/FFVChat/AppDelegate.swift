@@ -75,7 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             self.window?.rootViewController = contacts
         }
         
-//        self.window?.rootViewController = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.window?.makeKeyAndVisible()
         
         //Status bar color

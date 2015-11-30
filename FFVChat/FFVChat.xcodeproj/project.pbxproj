@@ -141,6 +141,8 @@
 		F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */; };
 		F65A4F411C076A790092C403 /* NavigationGallery_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F401C076A790092C403 /* NavigationGallery_View.swift */; };
 		F65A4F431C077AAF0092C403 /* ImageManager_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F421C077AAF0092C403 /* ImageManager_View.swift */; };
+		F65A4F451C0CB7670092C403 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */; };
+		F65A4F471C0CB79E0092C403 /* Teste_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F461C0CB79E0092C403 /* Teste_ViewController.swift */; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
 		F66B29C21BAB6A0600BC43EE /* TutoFirst_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */; };
@@ -329,6 +331,8 @@
 		F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
 		F65A4F401C076A790092C403 /* NavigationGallery_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationGallery_View.swift; sourceTree = "<group>"; };
 		F65A4F421C077AAF0092C403 /* ImageManager_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager_View.swift; sourceTree = "<group>"; };
+		F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
+		F65A4F461C0CB79E0092C403 /* Teste_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Teste_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
 		F66B29C01BAB6A0600BC43EE /* TutoFirst_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFirst_ViewController.swift; sourceTree = "<group>"; };
@@ -448,6 +452,8 @@
 				F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */,
 				F65A4F401C076A790092C403 /* NavigationGallery_View.swift */,
 				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
+				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
+				F65A4F461C0CB79E0092C403 /* Teste_ViewController.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -793,7 +799,7 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = M7KY4TXQRJ;
+						DevelopmentTeam = D56YT45BUR;
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -938,6 +944,7 @@
 				803657961BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
 				8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */,
 				801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */,
+				F65A4F471C0CB79E0092C403 /* Teste_ViewController.swift in Sources */,
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
@@ -988,6 +995,7 @@
 				803657951BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift in Sources */,
 				F6B667141C01606100B1C256 /* AppLoginImport_ViewController.swift in Sources */,
 				8030E44E1BF96A350075E798 /* BubbleTransition.swift in Sources */,
+				F65A4F451C0CB7670092C403 /* CAPSPageMenu.swift in Sources */,
 				8036578B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */,
