@@ -683,6 +683,19 @@ class DAOUser
         }
     }
     
+    
+    func checkCorrectEmail(email: String) -> Bool
+    {
+        if(email == PFUser.currentUser()?.email)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
 
     func save()
     {
