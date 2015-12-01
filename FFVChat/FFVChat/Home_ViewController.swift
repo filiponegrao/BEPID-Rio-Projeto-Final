@@ -41,7 +41,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.background.image = UIImage(named: "ContactBackground")
-        self.background.alpha =  0.5
+        self.background.alpha =  0.60
         self.view.addSubview(self.background)
         
         //Hidden search bar

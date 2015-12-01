@@ -56,7 +56,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .None
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        self.tableView.registerClass(MKTableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
         // Do any additional setup after loading the view.
@@ -162,9 +162,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell : MKTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MKTableViewCell
+        cell.rippleLocation = .Center
+    
         cell.backgroundColor = oficialSemiGray
-        cell.selectionStyle = .Default
+//        cell.selectionStyle = .Default
         
         let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 4))
         separatorLineView.backgroundColor = oficialMediumGray

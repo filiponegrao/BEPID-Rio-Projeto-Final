@@ -10,7 +10,7 @@ import UIKit
 
 class ContactManager_View: UIView
 {
-    weak var viewController : Home_ViewController!
+    weak var homeController : Home_ViewController!
     
     var contact : Contact!
     
@@ -41,7 +41,7 @@ class ContactManager_View: UIView
     init(contact: Contact, requester: Home_ViewController, origin: CGRect)
     {
         self.origin = origin
-        self.viewController = requester
+        self.homeController = requester
         self.contact = contact
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
@@ -172,7 +172,7 @@ class ContactManager_View: UIView
         UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
             self.blackScreen.alpha = 0.8
-            self.viewController.blurView.alpha = 0.8
+            self.homeController.blurView.alpha = 0.8
             self.trustLevelLabel.center = postrustLevel
             self.usernameLabel.center = posUsername
             self.clearChat.center = posClearchat
@@ -200,7 +200,7 @@ class ContactManager_View: UIView
             self.contactImage.frame.size = CGSizeMake(self.origin.width, self.origin.width)
             self.contactImage.layer.cornerRadius = self.origin.size.width/2
             self.blackScreen.alpha = 0
-            self.viewController.blurView.alpha = 0
+            self.homeController.blurView.alpha = 0
             
             self.favouriteButton.center.y += screenHeight/2
             self.deleteButton.center.y += screenHeight/2
@@ -250,16 +250,16 @@ class ContactManager_View: UIView
             DAOContacts.sharedInstance.setNonFavorite(self.contact)
             self.favouriteButton.backgroundColor = oficialLightGray
             
-            self.viewController.favourites.favourites = DAOContacts.sharedInstance.getFavorites()
-            self.viewController.favourites.collectionView?.reloadData()
+            self.homeController.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
+            self.homeController.favouritesController.collectionView?.reloadData()
         }
         else
         {
             DAOContacts.sharedInstance.setFavorite(self.contact)
             self.favouriteButton.backgroundColor = oficialGreen
             
-            self.viewController.favourites.favourites = DAOContacts.sharedInstance.getFavorites()
-            self.viewController.favourites.collectionView?.reloadData()
+            self.homeController.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
+            self.homeController.favouritesController.collectionView?.reloadData()
         }
     }
     
@@ -272,14 +272,14 @@ class ContactManager_View: UIView
             
             DAOContacts.sharedInstance.deleteContact(self.contact.username)
             
-            self.viewController.allContacts.contacts = DAOContacts.sharedInstance.getAllContacts()
-            self.viewController.allContacts.collectionView?.reloadData()
-            self.viewController.allContacts.reloadAnimations()
+            self.homeController.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
+            self.homeController.contactsController.collectionView?.reloadData()
+            self.homeController.contactsController.reloadAnimations()
             self.removeView()
             
-            self.viewController.favourites.favourites = DAOContacts.sharedInstance.getFavorites()
-            self.viewController.favourites.collectionView?.reloadData()
-            self.viewController.favourites.reloadAnimations()
+            self.homeController.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
+            self.homeController.favouritesController.collectionView?.reloadData()
+            self.homeController.favouritesController.reloadAnimations()
             self.removeView()
   
         }))
@@ -289,7 +289,7 @@ class ContactManager_View: UIView
             
       }))
         
-        self.viewController.presentViewController(alert, animated: true) { () -> Void in
+        self.homeController.presentViewController(alert, animated: true) { () -> Void in
             
         }
  
