@@ -67,7 +67,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.view.addSubview(self.doneButton)
         
         
-        self.forgotPassword = UIButton(frame: CGRectMake(20, self.tableView.frame.origin.y + self.tableView.frame.size.height - 20, screenWidth/3 * 2, 50))
+        self.forgotPassword = UIButton(frame: CGRectMake(15, self.tableView.frame.origin.y + self.tableView.frame.size.height - 20, screenWidth/3 * 2, 50))
         self.forgotPassword.backgroundColor = UIColor.clearColor()
         self.forgotPassword.setTitle("I forgot my password", forState: .Normal)
         self.forgotPassword.setTitleColor(oficialGreen, forState: .Normal)
@@ -76,11 +76,11 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.forgotPassword.addTarget(self, action: "setForgotPassword", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.forgotPassword)
         
-        self.forgotText = UITextView(frame: CGRectMake(10, self.forgotPassword.frame.origin.y + self.forgotPassword.frame.size.height - 10, screenWidth - 20, screenHeight/8))
+        self.forgotText = UITextView(frame: CGRectMake(10, self.forgotPassword.frame.origin.y + self.forgotPassword.frame.size.height - 15, screenWidth - 20, screenHeight/8))
         self.forgotText.text = "If you have forgot your password you will receive a new one on your registered email"
         self.forgotText.textColor = oficialLightGray
         self.forgotText.backgroundColor = UIColor.clearColor()
-        self.forgotText.font = UIFont(name: "Helvetica", size: 16)
+        self.forgotText.font = UIFont(name: "Helvetica", size: 15)
         self.forgotText.textAlignment = .Left
         self.view.addSubview(self.forgotText)
     }
