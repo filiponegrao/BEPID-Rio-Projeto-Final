@@ -10,7 +10,7 @@ import UIKit
 
 class Tools_ViewController: UIViewController
 {
-    var contacts : ContactsBubble_CollectionViewController!
+    var contacts : Home_ViewController!
     
     var blackScreen : UIView!
     

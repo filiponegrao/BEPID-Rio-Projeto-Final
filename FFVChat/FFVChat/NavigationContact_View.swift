@@ -22,7 +22,7 @@ class NavigationContact_View: UIView
     
     var alert : UIImageView!
     
-    var filterButtons : UIButton!
+    var searchButton : UIButton!
     
     weak var contactManager : ContactManager_View!
     
@@ -35,14 +35,9 @@ class NavigationContact_View: UIView
 //        self.barTintColor = oficialDarkGray
 
         
-        self.filterButtons = UIButton(frame: CGRectMake(0, 25, screenWidth, 45))
-//        self.filterButtons.layer.borderWidth = 1
-        self.filterButtons.setTitle("Contacts", forState: .Normal)
-//        self.filterButtons.addTarget(self, action: "managerContact", forControlEvents: .TouchUpInside)
-        self.filterButtons.setTitleColor(oficialGreen, forState: .Normal)
-        self.filterButtons.titleLabel?.textAlignment = .Center
-        self.filterButtons.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 40)
-        self.addSubview(self.filterButtons)
+        self.searchButton = UIButton(frame: CGRectMake(10, 25, 50, 50))
+        self.searchButton.setImage(UIImage(named: "searchButton"), forState: .Normal)
+        self.addSubview(self.searchButton)
         
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
@@ -84,13 +79,14 @@ class NavigationContact_View: UIView
     
     func openTools()
     {
-        self.vc.allContacts.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        self.vc.allContacts.blurView.frame = self.vc.view.bounds
-        self.vc.allContacts.blurView.alpha = 0
-        self.vc.allContacts.view.addSubview(self.vc.allContacts.blurView)
+        self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.vc.blurView.frame = self.vc.view.bounds
+        self.vc.blurView.alpha = 0
+        self.vc.view.addSubview(self.vc.blurView)
+        
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             
-            self.vc.allContacts.blurView.alpha = 0.8
+            self.vc.blurView.alpha = 0.8
             
             }) { (success: Bool) -> Void in
                 
@@ -99,7 +95,7 @@ class NavigationContact_View: UIView
         
         self.alertOff()
         let toolscontroller = Tools_ViewController()
-        toolscontroller.contacts = self.vc.allContacts
+        toolscontroller.contacts = self.vc
         let toolsNavigation = UINavigationController(nibName: "AppNavigation2", bundle: nil)
         toolsNavigation.viewControllers = [toolscontroller]
         toolsNavigation.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen

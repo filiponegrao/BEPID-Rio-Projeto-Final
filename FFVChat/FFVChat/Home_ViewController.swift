@@ -26,6 +26,8 @@ class Home_ViewController: UIViewController
     
     var background : UIImageView!
     
+    var blurView : UIVisualEffectView!
+    
     override func viewDidLoad()
     {
         
@@ -61,10 +63,10 @@ class Home_ViewController: UIViewController
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
             .ScrollMenuBackgroundColor(oficialMediumGray),
-            .ViewBackgroundColor(oficialDarkGray),
+            .ViewBackgroundColor(oficialMediumGray),
             .SelectionIndicatorColor(oficialGreen),
             .BottomMenuHairlineColor(oficialLightGray),
-            .MenuItemFont(UIFont(name: "Helvetica", size: 15.0)!),
+            .MenuItemFont(UIFont(name: "Helvetica", size: 16.0)!),
             .MenuHeight(40.0),
             .MenuItemWidth(screenWidth/2),
             .CenterMenuItems(true),
@@ -87,7 +89,7 @@ class Home_ViewController: UIViewController
     
     override func viewDidLayoutSubviews()
     {
-        self.navigationBar.filterButtons.titleLabel?.font = self.navigationBar.filterButtons.titleLabel?.font.fontWithSize(22)
+        
     }
     
 

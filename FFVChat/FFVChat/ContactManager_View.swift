@@ -149,11 +149,9 @@ class ContactManager_View: UIView
     func insertView()
     {
         self.blackScreen.alpha = 0.9
-        self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        self.blurView.frame = self.frame
-        self.blurView.alpha = 0
-        self.addSubview(self.blurView)
-        self.sendSubviewToBack(self.blurView)
+       
+        
+//        self.sendSubviewToBack(self.viewController.blurView)
         
         let finalFrame = self.contactImage.frame
         self.contactImage.frame = self.origin
@@ -173,8 +171,8 @@ class ContactManager_View: UIView
         
         UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
-            self.blackScreen.alpha = 0.7
-            self.blurView.alpha = 0.7
+            self.blackScreen.alpha = 0.8
+            self.viewController.blurView.alpha = 0.8
             self.trustLevelLabel.center = postrustLevel
             self.usernameLabel.center = posUsername
             self.clearChat.center = posClearchat
@@ -202,7 +200,7 @@ class ContactManager_View: UIView
             self.contactImage.frame.size = CGSizeMake(self.origin.width, self.origin.width)
             self.contactImage.layer.cornerRadius = self.origin.size.width/2
             self.blackScreen.alpha = 0
-            self.blurView.alpha = 0
+            self.viewController.blurView.alpha = 0
             
             self.favouriteButton.center.y += screenHeight/2
             self.deleteButton.center.y += screenHeight/2
@@ -279,7 +277,7 @@ class ContactManager_View: UIView
             self.viewController.allContacts.reloadAnimations()
             self.removeView()
             
-            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getAllContacts()
+            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getFavorites()
             self.viewController.favourites.collectionView?.reloadData()
             self.viewController.favourites.reloadAnimations()
             self.removeView()
