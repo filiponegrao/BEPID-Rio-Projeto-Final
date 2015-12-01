@@ -61,12 +61,12 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.view.addSubview(self.doneButton)
         
         
-        self.forgotPassword = UIButton(frame: CGRectMake(40,self.tableView.frame.origin.y + self.tableView.frame.size.height + 40, screenWidth - 80, 50))
+        self.forgotPassword = UIButton(frame: CGRectMake(20, self.tableView.frame.origin.y + self.tableView.frame.size.height + 10, screenWidth - 80, 50))
         self.forgotPassword.backgroundColor = UIColor.clearColor()
         self.forgotPassword.setTitle("I forgot my password", forState: .Normal)
         self.forgotPassword.setTitleColor(oficialGreen, forState: .Normal)
         self.forgotPassword.setTitleColor(oficialDarkGreen, forState: .Highlighted)
-        self.forgotPassword.titleLabel?.textAlignment = .Left
+        self.forgotPassword.contentHorizontalAlignment = .Left
         self.forgotPassword.addTarget(self, action: "setForgotPassword", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.forgotPassword)
         
@@ -254,24 +254,50 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     
     func setForgotPassword()
     {
-        self.changePasswordAlert = UIAlertController(title: "Who are you?", message: "To confirm the action, insert your email", preferredStyle: .Alert)
+        self.loadingView = LoadScreen_View()
+        self.view.addSubview(self.loadingView)
+        
+        self.changePasswordAlert = UIAlertController(title: "Insert your email", message: "To confirm the action, insert your email", preferredStyle: .Alert)
+        
         self.changePasswordAlert.addTextFieldWithConfigurationHandler { (textfield: UITextField) -> Void in
             
             textfield.placeholder = "Insert your email registered on myne"
-            
+            textfield.keyboardAppearance = .Dark
         }
         
         self.changePasswordAlert.addAction(UIAlertAction(title: "Confirm", style: .Default, handler: { (action: UIAlertAction) -> Void in
             
             if(DAOUser.sharedInstance.checkCorrectEmail(self.changePasswordAlert.textFields!.first!.text!))
             {
+                self.newPasswordAlert = UIAlertController(title: "New password", message: "Inserti your new password", preferredStyle: .Alert)
                 
+                self.newPasswordAlert.addTextFieldWithConfigurationHandler({ (textfield: UITextField) -> Void in
+                    
+                    textfield.placeholder = "6 numbers"
+                    textfield.delegate = self
+                    textfield.keyboardType = .NumberPad
+                    textfield.keyboardAppearance = .Dark
+                })
+                
+                
+                self.newPasswordAlert.addAction(UIAlertAction(title: "Change", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                    
+                    self.loadingView = LoadScreen_View()
+                    self.view.addSubview(self.loadingView)
+                    DAOUser.sharedInstance.changePassword(self.newPasswordAlert.textFields!.last!.text!)
+                    
+                }))
+                
+                self.newPasswordAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+                    
+                }))
+                
+                self.presentViewController(self.newPasswordAlert, animated: true, completion: nil)
             }
             else
             {
                 let alert = UIAlertController(title: "Email incorrect!", message: "Your email entered is incorrect, please insert the correct!", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
-                    
                     
                     
                 }))
@@ -284,9 +310,8 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.changePasswordAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
             
             
-            
         }))
-        
+        self.loadingView.removeFromSuperview()
         self.presentViewController(self.changePasswordAlert, animated: true, completion: nil)
     }
 }
