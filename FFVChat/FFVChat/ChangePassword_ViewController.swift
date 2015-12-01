@@ -16,7 +16,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     
     var section = ["Current password", "New password", "Confirm new password"]
     
-    var doneButton : UIButton!
+    var doneButton : MKButton!
     
     var currentPassword : UITextField!
     
@@ -27,6 +27,8 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     var loadingView : LoadScreen_View!
     
     var forgotPassword : UIButton!
+    
+    var forgotText : UITextView!
     
     var changePasswordAlert : UIAlertController!
     
@@ -52,16 +54,20 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
-        self.doneButton = UIButton(frame: CGRectMake(0, screenHeight - 45, screenWidth, 45))
+        self.doneButton = MKButton(frame: CGRectMake(0, screenHeight - 45, screenWidth, 45))
         self.doneButton.setTitle("Done", forState: .Normal)
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.doneButton.backgroundColor = oficialGreen
-        self.doneButton.highlighted = true
+//        self.doneButton.highlighted = true
         self.doneButton.addTarget(self, action: "changePassword", forControlEvents: UIControlEvents.TouchUpInside)
+        self.doneButton.backgroundLayerCornerRadius = 900
+        self.doneButton.rippleLocation = .Center
+        self.doneButton.ripplePercent = 4
+        self.doneButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.doneButton)
         
         
-        self.forgotPassword = UIButton(frame: CGRectMake(20, self.tableView.frame.origin.y + self.tableView.frame.size.height + 10, screenWidth - 80, 50))
+        self.forgotPassword = UIButton(frame: CGRectMake(15, self.tableView.frame.origin.y + self.tableView.frame.size.height - 20, screenWidth/3 * 2, 50))
         self.forgotPassword.backgroundColor = UIColor.clearColor()
         self.forgotPassword.setTitle("I forgot my password", forState: .Normal)
         self.forgotPassword.setTitleColor(oficialGreen, forState: .Normal)
@@ -70,6 +76,13 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.forgotPassword.addTarget(self, action: "setForgotPassword", forControlEvents: .TouchUpInside)
         self.view.addSubview(self.forgotPassword)
         
+        self.forgotText = UITextView(frame: CGRectMake(10, self.forgotPassword.frame.origin.y + self.forgotPassword.frame.size.height - 15, screenWidth - 20, screenHeight/8))
+        self.forgotText.text = "If you have forgot your password you will receive a new one on your registered email"
+        self.forgotText.textColor = oficialLightGray
+        self.forgotText.backgroundColor = UIColor.clearColor()
+        self.forgotText.font = UIFont(name: "Helvetica", size: 15)
+        self.forgotText.textAlignment = .Left
+        self.view.addSubview(self.forgotText)
     }
     
     

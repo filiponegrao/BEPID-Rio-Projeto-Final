@@ -17,9 +17,9 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
 
     @IBOutlet weak var backView: UIView!
     
-    var disagreeButton: UIButton!
+    var disagreeButton: MKButton!
     
-    var agreeButton: UIButton!
+    var agreeButton: MKButton!
     
     
     override func viewDidLoad()
@@ -40,20 +40,28 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
         self.topLabel.font = UIFont(name: "Sukhumvit Set", size: 22)
         self.topLabel.setSizeFont(22)
 
-        self.disagreeButton = UIButton(frame: CGRectMake(0,screenHeight - 44, screenWidth/2 - 2, 44))
+        self.disagreeButton = MKButton(frame: CGRectMake(0,screenHeight - 44, screenWidth/2 - 2, 44))
         self.disagreeButton.backgroundColor = oficialLightGray
         self.disagreeButton.setTitle("Disagree", forState: .Normal)
         self.disagreeButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.disagreeButton.addTarget(self, action: "userDisagreed", forControlEvents: UIControlEvents.TouchUpInside)
         self.disagreeButton.enabled = false
+        self.disagreeButton.backgroundLayerCornerRadius = 300
+        self.disagreeButton.rippleLocation = .Center
+        self.disagreeButton.ripplePercent = 4
+        self.disagreeButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.disagreeButton)
         
-        self.agreeButton = UIButton(frame: CGRectMake(screenWidth/2 + 2, screenHeight - 44, screenWidth/2 - 2.5, 44))
+        self.agreeButton = MKButton(frame: CGRectMake(screenWidth/2 + 2, screenHeight - 44, screenWidth/2 - 2.5, 44))
         self.agreeButton.backgroundColor = oficialLightGray
         self.agreeButton.setTitle("Agree", forState: .Normal)
         self.agreeButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.agreeButton.addTarget(self, action: "userAgreed", forControlEvents: UIControlEvents.TouchUpInside)
         self.agreeButton.enabled = false
+        self.agreeButton.backgroundLayerCornerRadius = 300
+        self.agreeButton.rippleLocation = .Center
+        self.agreeButton.ripplePercent = 4
+        self.agreeButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.agreeButton)
     }
 

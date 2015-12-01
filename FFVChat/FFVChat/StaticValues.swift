@@ -15,9 +15,9 @@ let screenHeight = screenSize.height
 
 let oficialGreen = UIColor(hex: 0x5ebdb1) //verde padrão
 let oficialDarkGreen = UIColor(hex: 0x436b69) //detalhes telas de login
-let oficialDarkGray = UIColor(hex: 0x313235) //navs e alguns backgrounds
-let oficialMediumGray = UIColor(hex: 0x3a3b3e) //background contatos e chat
-let oficialSemiGray = UIColor(hex: 0x454548) //usado na tela de importação e config
+let oficialDarkGray = UIColor(hex: 0x2e2f32) //navs e alguns backgrounds
+let oficialMediumGray = UIColor(hex: 0x37373a) //background contatos e chat
+let oficialSemiGray = UIColor(hex: 0x444447) //usado na tela de importação e config
 let oficialLightGray = UIColor(hex: 0xa0a4a5) //textos e ícones
 let oficialRed = UIColor(hex: 0xc70040) //círculo trust level negativo tela destinatário
 let badTrust = UIColor(hex: 0x540305) //background chat negativo

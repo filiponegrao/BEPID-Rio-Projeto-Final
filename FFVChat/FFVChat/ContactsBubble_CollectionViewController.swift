@@ -184,6 +184,17 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
 
             self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self.home, origin: origin)
             
+            self.home.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+            self.home.blurView.frame = self.home.view.bounds
+            self.home.blurView.alpha = 0
+            self.home.view.addSubview(self.home.blurView)
+            
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                
+                self.home.blurView.alpha = 0.8
+                
+                }, completion: nil)
+            
             self.home.view.addSubview(self.contactManager)
             self.contactManager.insertView()
         }

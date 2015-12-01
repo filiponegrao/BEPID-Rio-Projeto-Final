@@ -14,7 +14,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     @IBOutlet var textView: UILabel!
     
-    var doneButton: UIButton!
+    var doneButton: MKButton!
     
     var allContactsView : UIView!
     
@@ -79,11 +79,15 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.view.addSubview(self.loadingView)
         
         //doneButton
-        self.doneButton = UIButton(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
+        self.doneButton = MKButton(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
         self.doneButton.backgroundColor = oficialGreen
         self.doneButton.setTitle("Done", forState: .Normal)
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
+        self.doneButton.backgroundLayerCornerRadius = 900
+        self.doneButton.rippleLocation = .Center
+        self.doneButton.ripplePercent = 4
+        self.doneButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.doneButton)
         
     }
