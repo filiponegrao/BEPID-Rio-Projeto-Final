@@ -39,6 +39,18 @@ class NavigationContact_View: UIView
         self.searchButton.setImage(UIImage(named: "searchButton"), forState: .Normal)
         self.addSubview(self.searchButton)
         
+        
+        //TESTANTO PULSE ANIMATION
+        let pulseAnimation = CABasicAnimation(keyPath: "opacity")
+        pulseAnimation.duration = 1
+        pulseAnimation.fromValue = 0.1
+        pulseAnimation.toValue = 1
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        pulseAnimation.autoreverses = true
+        pulseAnimation.repeatCount = FLT_MAX
+        self.searchButton.layer.addAnimation(pulseAnimation, forKey: nil)
+
+        
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
@@ -49,7 +61,6 @@ class NavigationContact_View: UIView
         //        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
         self.addSubview(self.toolsButton)
 
-        
         self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
         self.alert.image = UIImage(named: "icon_alert")
         self.alert.hidden = true
