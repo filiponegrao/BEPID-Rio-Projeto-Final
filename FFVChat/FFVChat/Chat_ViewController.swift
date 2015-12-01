@@ -59,7 +59,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         self.contact = contact
         super.init(nibName: "Chat_ViewController", bundle: nil)
+        print("alocando chat...")
     }
+    
+    deinit{ print("Desalocando chat...") }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

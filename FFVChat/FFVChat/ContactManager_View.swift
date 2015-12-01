@@ -250,7 +250,7 @@ class ContactManager_View: UIView
             DAOContacts.sharedInstance.setNonFavorite(self.contact)
             self.favouriteButton.backgroundColor = oficialLightGray
             
-            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getFavorites()
+            self.viewController.favourites.favourites = DAOContacts.sharedInstance.getFavorites()
             self.viewController.favourites.collectionView?.reloadData()
         }
         else
@@ -258,7 +258,7 @@ class ContactManager_View: UIView
             DAOContacts.sharedInstance.setFavorite(self.contact)
             self.favouriteButton.backgroundColor = oficialGreen
             
-            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getFavorites()
+            self.viewController.favourites.favourites = DAOContacts.sharedInstance.getFavorites()
             self.viewController.favourites.collectionView?.reloadData()
         }
     }
@@ -277,7 +277,7 @@ class ContactManager_View: UIView
             self.viewController.allContacts.reloadAnimations()
             self.removeView()
             
-            self.viewController.favourites.contacts = DAOContacts.sharedInstance.getFavorites()
+            self.viewController.favourites.favourites = DAOContacts.sharedInstance.getFavorites()
             self.viewController.favourites.collectionView?.reloadData()
             self.viewController.favourites.reloadAnimations()
             self.removeView()

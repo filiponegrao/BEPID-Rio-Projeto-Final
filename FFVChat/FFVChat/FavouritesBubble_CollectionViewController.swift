@@ -8,13 +8,13 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "CellFavourites"
 
 class FavouritesBubble_CollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate
 {
     weak var home : Home_ViewController!
     
-    var contacts = [Contact]()
+    var favourites = [Contact]()
     
     var blurView : UIVisualEffectView!
     
@@ -57,7 +57,7 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
         self.longPress.delegate = self
         self.view.addGestureRecognizer(self.longPress)
         
-        self.contacts = DAOContacts.sharedInstance.getFavorites()
+        self.favourites = DAOContacts.sharedInstance.getFavorites()
         self.collectionView!.reloadData()
         
         
@@ -68,9 +68,9 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
     
     func addNewContact()
     {
-        self.contacts = DAOContacts.sharedInstance.getAllContacts()
+        self.favourites = DAOContacts.sharedInstance.getAllContacts()
         
-        let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
+        let index = self.favourites.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
         
         self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
     }
@@ -81,9 +81,9 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
         for i in 0..<self.collectionView!.numberOfItemsInSection(0)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
-            let contact = self.contacts[i]
+            let contact = self.favourites[i]
             let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
-            cell?.profileBtn.setImage(UIImage(data: self.contacts[i].profileImage!) , forState: .Normal)
+            cell?.profileBtn.setImage(UIImage(data: self.favourites[i].profileImage!) , forState: .Normal)
             cell?.setUnreadMessages(cont)
         }
     }
@@ -130,7 +130,7 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         // #warning Incomplete implementation, return the number of items
-        return contacts.count
+        return self.favourites.count
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
@@ -139,7 +139,7 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
         
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
-        cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: contacts[indexPath.row].profileImage!)!)
+        cell.setInfo(self.favourites[indexPath.row].username, profile: UIImage(data: self.favourites[indexPath.row].profileImage!)!)
         
         cell.loadAnimations(45)
         // Configure the cell
@@ -172,7 +172,7 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
             
             let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
             
-            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self.home, origin: origin)
+            self.contactManager = ContactManager_View(contact: self.favourites[(indexPath?.item)!], requester: self.home, origin: origin)
             
             self.home.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
             self.home.blurView.frame = self.home.view.bounds

@@ -15,23 +15,12 @@ class AppNavigationController : UINavigationController, UIViewControllerTransiti
     init()
     {
         super.init(nibName: "AppNavigationController", bundle: nil)
-        
-//    
-//        let flow = flowLayoutSetup()
-//        let collectView = ContactsBubble_CollectionViewController(collectionViewLayout: flow)
-//        
-//        let pageMenu = CAPSPageMenu(viewControllers: [collectView], frame: collectView.view.frame, pageMenuOptions: nil)
-        
-        
+
         let home = Home_ViewController()
         
-        //self.viewControllers = [collectView]
-        self.pushViewController(home, animated: false)
+        self.viewControllers = [home]
         self.navigationBar.hidden = true
-        self.navigationBar.barStyle = .Default
-        self.navigationBar.barTintColor = oficialDarkGray
-        self.navigationBar.translucent = true
-        self.navigationBar.hideBottomHairline()
+
     }
 
     required init?(coder aDecoder: NSCoder) {

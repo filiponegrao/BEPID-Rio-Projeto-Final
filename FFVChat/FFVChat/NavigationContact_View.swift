@@ -37,6 +37,7 @@ class NavigationContact_View: UIView
         
         self.searchButton = UIButton(frame: CGRectMake(10, 25, 50, 50))
         self.searchButton.setImage(UIImage(named: "searchButton"), forState: .Normal)
+        self.searchButton.addTarget(self.vc, action: "clickOnSearch", forControlEvents: .TouchUpInside)
         self.addSubview(self.searchButton)
         
         

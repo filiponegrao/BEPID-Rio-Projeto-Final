@@ -8,15 +8,15 @@
 
 import UIKit
 
-class Home_ViewController: UIViewController
+class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate
 {
     var navigationBar : NavigationContact_View!
     
     var pageMenu : CAPSPageMenu!
     
-    var favourites : FavouritesBubble_CollectionViewController!
+    var favouritesController : FavouritesBubble_CollectionViewController!
     
-    var allContacts : ContactsBubble_CollectionViewController!
+    var contactsController : ContactsBubble_CollectionViewController!
     
     var chatController : Chat_ViewController!
     
@@ -27,6 +27,10 @@ class Home_ViewController: UIViewController
     var background : UIImageView!
     
     var blurView : UIVisualEffectView!
+    
+    var searchBar : UISearchBar!
+    
+    let searchBarHeight : CGFloat = 40
     
     override func viewDidLoad()
     {
@@ -40,6 +44,13 @@ class Home_ViewController: UIViewController
         self.background.alpha =  0.5
         self.view.addSubview(self.background)
         
+        //Hidden search bar
+        self.searchBar = UISearchBar(frame: CGRectMake(0, 0, screenWidth, self.searchBarHeight))
+        self.searchBar.searchBarStyle = .Minimal
+        self.searchBar.delegate = self
+        self.searchBar.keyboardAppearance = .Dark
+        self.view.addSubview(self.searchBar)
+        
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
         self.view.addSubview(self.navigationBar)
@@ -47,17 +58,18 @@ class Home_ViewController: UIViewController
         
         self.contentSize = CGSizeMake(screenWidth, screenHeight - self.navigationBar.frame.size.height)
         
-        let flow = flowLayoutSetup()
+        let flowContacts = flowLayoutSetup()
+        let flowFavourites = flowLayoutSetup()
         
-        self.allContacts = ContactsBubble_CollectionViewController(collectionViewLayout: flow, size: CGSize(width: screenWidth, height: self.contentSize.height))
-        self.allContacts.home = self
-        self.allContacts.title = "All Contacts"
+        self.contactsController = ContactsBubble_CollectionViewController(collectionViewLayout: flowContacts, size: CGSize(width: screenWidth, height: self.contentSize.height))
+        self.contactsController.home = self
+        self.contactsController.title = "All Contacts"
         
-        self.favourites = FavouritesBubble_CollectionViewController(collectionViewLayout: flow, size: CGSize(width: screenWidth, height: self.contentSize.height))
-        self.favourites.home = self
-        self.favourites.title = "Favourites"
+        self.favouritesController = FavouritesBubble_CollectionViewController(collectionViewLayout: flowFavourites, size: CGSize(width: screenWidth, height: self.contentSize.height))
+        self.favouritesController.home = self
+        self.favouritesController.title = "Favourites"
         
-        self.controllerArray = [self.allContacts, self.favourites]
+        self.controllerArray = [self.contactsController, self.favouritesController]
         
         
         // Customize menu (Optional)
@@ -75,7 +87,7 @@ class Home_ViewController: UIViewController
             .MenuMargin(0)
         ]
         
-        self.pageMenu = CAPSPageMenu(viewControllers: self.controllerArray, frame: CGRectMake(0, 80, self.contentSize.width, self.contentSize.height), pageMenuOptions: parameters)
+        self.pageMenu = CAPSPageMenu(viewControllers: self.controllerArray, frame: CGRectMake(0, self.navigationBar.frame.size.height, self.contentSize.width, self.contentSize.height), pageMenuOptions: parameters)
         self.pageMenu.view.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.pageMenu.view)
         
@@ -88,11 +100,11 @@ class Home_ViewController: UIViewController
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self.allContacts, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self.favourites, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
         
@@ -101,8 +113,8 @@ class Home_ViewController: UIViewController
     
     func reloadCellAnimations()
     {
-        self.allContacts.reloadAnimations()
-        self.favourites.reloadAnimations()
+//        self.allContacts.reloadAnimations()
+//        self.favourites.reloadAnimations()
     }
     
     
@@ -111,19 +123,19 @@ class Home_ViewController: UIViewController
         DAOFriendRequests.sharedInstance.friendsAccepted()
         DAOPostgres.sharedInstance.startObserve()
         
-        self.favourites.reloadAnimations()
-        self.favourites.checkUnreadMessages()
-        self.allContacts.reloadAnimations()
-        self.allContacts.checkUnreadMessages()
+        self.favouritesController.reloadAnimations()
+        self.favouritesController.checkUnreadMessages()
+        self.contactsController.reloadAnimations()
+        self.contactsController.checkUnreadMessages()
     }
     
     override func viewWillDisappear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().removeObserver(self.allContacts, name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self.contactsController, name: NotificationController.center.messageReceived.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().removeObserver(self.favourites, name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self.favouritesController, name: NotificationController.center.messageReceived.name, object: nil)
         
 //        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
     }
@@ -160,6 +172,70 @@ class Home_ViewController: UIViewController
         
         return flowLayout
     }
+    
+    func clickOnSearch()
+    {
+        if(self.searchBar.isFirstResponder())
+        {
+            self.closeSearch()
+        }
+        else
+        {
+            self.openSearch()
+        }
+    }
+    
 
-
+    func openSearch()
+    {
+        self.searchBar.text = nil
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.searchBar.frame.origin.y = self.navigationBar.frame.size.height
+            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height + self.searchBar.frame.size.height
+            
+            }) { (success: Bool) -> Void in
+                
+                self.searchBar.becomeFirstResponder()
+        }
+    }
+    
+    func closeSearch()
+    {
+        self.searchBar.resignFirstResponder()
+        self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
+        self.contactsController.resultContacts = self.contactsController.contacts
+        self.contactsController.collectionView?.reloadData()
+        self.contactsController.reloadAnimations()
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.searchBar.frame.origin.y = self.navigationBar.frame.size.height - self.searchBarHeight
+            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height
+            
+            }) { (success: Bool) -> Void in
+        }
+    }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar)
+    {
+        self.contactsController.resultContacts = self.contactsController.contacts
+        self.contactsController.collectionView?.reloadData()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String)
+    {
+        self.contactsController.resultContacts = DAOContacts.sharedInstance.getContactsWithString(searchText)
+        print(self.contactsController.resultContacts.count)
+        self.contactsController.collectionView?.reloadData()
+        
+    }
 }
+
+
+
+
