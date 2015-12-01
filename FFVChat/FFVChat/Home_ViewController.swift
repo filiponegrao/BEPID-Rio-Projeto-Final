@@ -88,7 +88,7 @@ class Home_ViewController: UIViewController
         
         NSNotificationCenter.defaultCenter().addObserver(self.allContacts, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self.allContacts, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
 
         NSNotificationCenter.defaultCenter().addObserver(self.favourites, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
