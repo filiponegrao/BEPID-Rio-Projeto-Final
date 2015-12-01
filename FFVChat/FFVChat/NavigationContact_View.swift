@@ -55,6 +55,8 @@ class NavigationContact_View: UIView
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
         
+        
+        
         //        self.toolsButton.rippleLocation = .Center
         //        self.toolsButton.rippleLayerColor = UIColor.clearColor()
         //        self.toolsButton.rippleAniDuration = 0.5
