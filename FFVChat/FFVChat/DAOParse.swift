@@ -728,7 +728,7 @@ class DAOParse
         if(self.tentativas < 10)
         {
             let query = PFQuery(className: "Images")
-            query.whereKey("imageKey", equalTo: message.imageKey!)
+            query.whereKey("imageKey", equalTo: message.contentKey!)
             query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
                 
                 if(object != nil)

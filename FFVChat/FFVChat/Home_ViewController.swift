@@ -98,7 +98,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     {
         super.viewWillAppear(animated)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         

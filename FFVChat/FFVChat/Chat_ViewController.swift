@@ -237,7 +237,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         for mssg in self.messages
         {
-            if(mssg.imageKey == key)
+            if(mssg.contentKey == key)
             {
                 let index = self.messages.indexOf(mssg)!
                 print("Atualizando")
@@ -260,14 +260,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             self.playSound()
             
-            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen" && mssg.imageKey == nil)
+            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen" && mssg.contentKey == nil)
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
                 mssg.status = "seen"
             }
             
             
-            if(mssg.imageKey == nil && mssg.text != nil)
+            if(mssg.contentKey == nil && mssg.text != nil)
             {
                 let h = self.heightForView(mssg.text!, font: textMessageFont!, width: cellTextWidth)
                 if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
@@ -378,7 +378,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         //IMAGE
-        if(self.messages[indexPath.row].text == nil && self.messages[indexPath.row].imageKey != nil)
+        if(self.messages[indexPath.row].text == nil && self.messages[indexPath.row].contentKey != nil)
         {
             return cellBackgroundWidth + 10
         }
@@ -402,7 +402,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         //IMAGE
-        if(self.messages[indexPath.row].text == nil  && self.messages[indexPath.row].imageKey != nil)
+        if(self.messages[indexPath.row].text == nil  && self.messages[indexPath.row].contentKey != nil)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
@@ -523,11 +523,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let message = self.messages[indexPath.row]
         
         //Imagem
-        if(message.imageKey != nil && !self.messageText.isFirstResponder())
+        if(message.contentKey != nil && !self.messageText.isFirstResponder())
         {
             self.messageText.endEditing(true)
             self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
-            self.imageZoom.imageKey = self.messages[indexPath.item].imageKey!
+            self.imageZoom.imageKey = self.messages[indexPath.item].contentKey!
             self.imageZoom.chatController = self
             self.imageZoom.sender = self.messages[indexPath.item].sender
             self.isViewing = true
@@ -754,9 +754,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    func sendImage(image: UIImage, lifetime: Int)
+    func sendImage(image: UIImage, lifetime: Int, filter: ImageFilter)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username,image: image, lifeTime: lifetime)
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime, filter: ImageFilter.Circle)
         
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)

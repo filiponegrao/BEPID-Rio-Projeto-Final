@@ -29,6 +29,7 @@ class DAOPostgres : NSObject
     let fetchURL = "\(baseUrl)/fetchUnreadMessages.php"
     let sendImageURL = "\(baseUrl)/insertImage2.php"
     let fetchImageURL = "\(baseUrl)/fetchImage.php"
+    let sendURL = "\(baseUrl)/sendMessage.php"
     
     override init()
     {
@@ -51,32 +52,46 @@ class DAOPostgres : NSObject
                 
                 if let results = response.result.value {
                     
-                    
                     for result in results as! NSArray
                     {
-                        let imageKey = result["imageKey"] as? String
+                        let typeString = result["type"] as! String
+                        let type = ContentType(rawValue: typeString)!
                         let sender = result["sender"] as! String
+                        let key = result["contentkey"] as? String
                         let lifeTime = (result["lifetime"] as! NSString).integerValue
                         let date = result["sentdate"] as! String
                         let sentDate = self.string2nsdate(date)
-                        //Texto
-                        if(imageKey == nil)
+
+                        switch type
                         {
-                            let text = result["text"] as! String
                             
+                        case .Text:
+                            
+                            let text = result["text"] as! String
                             if(DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime))
                             {
                                 self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
                             }
-                        }
-                            //Image
-                        else
-                        {
-                            if(DAOMessages.sharedInstance.addReceivedMessage(sender, imageKey: imageKey!, sentDate: sentDate, lifeTime: lifeTime))
+                            
+                        case .Image:
+                            let filterString = result["filter"] as! String
+                            let filter = ImageFilter(rawValue: filterString)!
+                            if(DAOMessages.sharedInstance.addReceivedMessage(sender, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, filter: filter))
                             {
                                 self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
                             }
+                            
+                        case .Audio:
+                            print("recebeu audio")
+                            
+                        case .Gif:
+                            print("recebeu gif")
+                            
+                        default:
+                            print("Erro ao encontrar tipo do arquivo recebido!")
+                            
                         }
+                        
                     }
                     
                 }
@@ -86,21 +101,21 @@ class DAOPostgres : NSObject
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
     {
-        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()), "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime]
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()), "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime, "type": ContentType.Text.rawValue]
         
-        Alamofire.request(.POST, self.sendMessageURL, parameters: parameters)
+        Alamofire.request(.POST, self.sendURL, parameters: parameters)
             .responseJSON { response in
                 print(response)
         }
     }
     
-    func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage)
+    func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage, filter: ImageFilter)
     {
         let me = DAOUser.sharedInstance.getUsername()
         
-        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": "\(NSDate())", "imagekey": imageKey, "lifeTime": lifeTime]
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": "\(NSDate())", "contentKey": imageKey, "lifeTime": lifeTime, "type": ContentType.Image.rawValue, "filter": filter.rawValue]
         
-        Alamofire.request(.POST, self.sendImageMessageURL, parameters: parameters)
+        Alamofire.request(.POST, self.sendURL, parameters: parameters)
             .responseJSON { response in
                 print(response)
         }
@@ -157,6 +172,10 @@ class DAOPostgres : NSObject
     
     func setMessageReceived(message: Message)
     {
+        print(EncryptTools.encUsername(message.sender))
+        print(EncryptTools.encUsername(message.target))
+        print(message.sentDate)
+        
         let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(message.sender), "target": EncryptTools.encUsername(message.target), "sentDate": message.sentDate]
         
         Alamofire.request(.POST, self.receivedURL, parameters: parameters)

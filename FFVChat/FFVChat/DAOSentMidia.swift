@@ -95,7 +95,7 @@ class DAOSentMidia
             }
             else
             {
-                let sent = SentMidia.createInManagedObjectContext(self.managedObjectContext, sentDate: message.sentDate, target: message.target, image: message.image!, lastSent: NSDate(), imageKey: message.imageKey!)
+                let sent = SentMidia.createInManagedObjectContext(self.managedObjectContext, sentDate: message.sentDate, target: message.target, image: message.image!, lastSent: NSDate(), imageKey: message.contentKey!)
                 self.save()
             }
         }

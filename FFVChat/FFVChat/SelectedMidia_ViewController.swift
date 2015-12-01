@@ -153,7 +153,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
             {
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                     
-                    (controller as! Chat_ViewController).sendImage(self.image, lifetime: time)
+                    (controller as! Chat_ViewController).sendImage(self.image, lifetime: time, filter: ImageFilter.Circle)
                     
                 })
             }
@@ -165,7 +165,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
                     
                     controller!.navigationController?.popViewControllerAnimated(true)
                     
-                    chat.sendImage(self.image, lifetime: time)
+                    chat.sendImage(self.image, lifetime: time, filter: ImageFilter.Circle)
                 })
             }
         }

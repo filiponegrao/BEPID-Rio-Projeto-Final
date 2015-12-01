@@ -39,29 +39,31 @@ class DAOMessages : NSObject
     
     func sendMessage(username: String, text: String) -> Message
     {
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: text, imageKey: nil, image: nil, sentDate: NSDate(), lifeTime: 86400, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: NSDate(), lifeTime: 900, type: .Text, contentKey: nil, text: text, image: nil, filter: nil, audio: nil, gif: nil, status: "sent")
+        
         self.save()
         
-        DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 86400, text: EncryptTools.enc(text, contact: username))
+        DAOPostgres.sharedInstance.sendTextMessage(EncryptTools.encUsername(username), lifeTime: 900, text: EncryptTools.enc(text, contact: username))
         
         self.delayForPush?.invalidate()
-        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
+        self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "sendTextPushNotification:", userInfo: ["username":username, "text":text], repeats: false)
         
         return message
     }
     
-    func sendMessage(username: String, image: UIImage, lifeTime: Int) -> Message
+    func sendMessage(username: String, image: UIImage, lifeTime: Int, filter: ImageFilter) -> Message
     {
         let data = NSString(string: "\(NSDate())").substringWithRange(NSMakeRange(0, 19))
         let keyWithSpaces = "\(DAOUser.sharedInstance.getUsername())\(username)\(data)"
         var key = EncryptTools.removeWhiteSpaces(keyWithSpaces)
         key = EncryptTools.encKey(key)
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, text: nil, imageKey: key, image: image.lowQualityJPEGNSData, sentDate: NSDate(), lifeTime: lifeTime, status: "sent")
-        self.save()
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: NSDate(), lifeTime: lifeTime, type: .Image, contentKey: key, text: nil, image: image.mediumQualityJPEGNSData, filter: filter, audio: nil, gif: nil, status: "sent")
         
-        DAOPostgres.sharedInstance.sendImageMessage(EncryptTools.encUsername(username), lifeTime: lifeTime, imageKey: key, image: image)
+        DAOPostgres.sharedInstance.sendImageMessage(EncryptTools.encUsername(username), lifeTime: lifeTime, imageKey: key, image: image, filter: filter)
+        
         DAOParse.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, target: username))
+        
         DAOParse.pushImageNotification(username)
         
         DAOSentMidia.sharedInstance.addSentMidia(message)
@@ -104,7 +106,7 @@ class DAOMessages : NSObject
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: decSender!, target: DAOUser.sharedInstance.getUsername(), text: decText, imageKey: nil ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: decSender!, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: .Text, contentKey: nil, text: decText, image: nil, filter: nil, audio: nil, gif: nil, status: "received")
         
         self.lastMessage = message
         
@@ -114,7 +116,7 @@ class DAOMessages : NSObject
         return true
     }
     
-    func addReceivedMessage(sender: String, imageKey: String, sentDate: NSDate, lifeTime: Int) -> Bool
+    func addReceivedMessage(sender: String, contentKey: String, sentDate: NSDate, lifeTime: Int, filter: ImageFilter) -> Bool
     {
         let decSender = EncryptTools.getUsernameFromEncrpted(sender)
         
@@ -136,7 +138,8 @@ class DAOMessages : NSObject
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: decSender!, target: DAOUser.sharedInstance.getUsername(), text: nil, imageKey: imageKey ,image: nil, sentDate: sentDate, lifeTime: lifeTime, status: "received")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, sender: decSender!, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: .Image, contentKey: contentKey, text: nil, image: nil, filter: filter, audio: nil, gif: nil, status: "received")
+        
         DAOParse.sharedInstance.downloadImageForMessage(message)
         self.lastMessage = message
         NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
@@ -336,7 +339,7 @@ class DAOMessages : NSObject
     {
         message.image = image
         self.save()
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "imageLoaded", object: nil, userInfo: ["messageKey" : message.imageKey!]))
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "imageLoaded", object: nil, userInfo: ["messageKey" : message.contentKey!]))
     }
     
     func save()
