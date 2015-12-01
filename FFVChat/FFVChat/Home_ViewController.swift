@@ -35,7 +35,7 @@ class Home_ViewController: UIViewController
         
         self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         self.background.image = UIImage(named: "ContactBackground")
-        self.background.alpha =  0.2
+        self.background.alpha =  0.5
         self.view.addSubview(self.background)
         
         //Nav Bar
@@ -60,7 +60,7 @@ class Home_ViewController: UIViewController
         
         // Customize menu (Optional)
         let parameters: [CAPSPageMenuOption] = [
-            .ScrollMenuBackgroundColor(oficialSemiGray),
+            .ScrollMenuBackgroundColor(oficialMediumGray),
             .ViewBackgroundColor(oficialDarkGray),
             .SelectionIndicatorColor(oficialGreen),
             .BottomMenuHairlineColor(oficialLightGray),
