@@ -43,7 +43,7 @@ class DAOPostgres : NSObject
     
     func getUnreadMessages()
     {
-        //        print("refreshing messages...")
+        print("refreshing messages...")
         let parameters : [String:AnyObject]!  = ["target": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername())]
         
         Alamofire.request(.POST, self.fetchURL, parameters: parameters)

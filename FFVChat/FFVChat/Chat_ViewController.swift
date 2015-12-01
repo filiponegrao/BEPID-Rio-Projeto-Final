@@ -53,6 +53,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var passwordView : UIView!
     
+    var gifButton : UIButton!
+    
     init(contact: Contact)
     {
         self.contact = contact
@@ -108,7 +110,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.messageView.backgroundColor = oficialDarkGray
         self.containerView.addSubview(messageView)
         
-        self.cameraButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
+        self.gifButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
+        self.gifButton.setImage(UIImage(named: "gifButton"), forState: UIControlState.Normal)
+        self.gifButton.alpha = 0.7
+        self.gifButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
+        self.messageView.addSubview(gifButton)
+        
+        self.cameraButton = UIButton(frame: CGRectMake(self.gifButton.frame.origin.x + self.gifButton.frame.size.width + 5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
         self.cameraButton.setImage(UIImage(named: "chatCameraButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
         self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
@@ -120,7 +128,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(sendButton)
         
-        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
+        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.origin.x + self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width + self.gifButton.frame.size.width), self.messageView.frame.size.height - 20))
         self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
         self.messageText.font = UIFont(name: "Helvetica", size: 16)
         self.messageText.textContainer.lineFragmentPadding = 10;
