@@ -66,49 +66,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
     }
     
-    //** FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
-    
-    override func viewWillAppear(animated: Bool)
-    {
-        super.viewWillAppear(animated)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAnimations", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
-        
-    }
-    
-    override func viewDidAppear(animated: Bool)
-    {
-        DAOFriendRequests.sharedInstance.friendsAccepted()
-        DAOPostgres.sharedInstance.startObserve()
-        self.reloadAnimations()
-        self.checkUnreadMessages()
-    }
-    
-    override func viewWillDisappear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
-    }
-    
-    override func viewDidDisappear(animated: Bool)
-    {
-        DAOPostgres.sharedInstance.stopObserve()
-    }
-    
-    //** FIM FUNCOES DE INTRDOUCAO À TELA, E DESAPARECIMENTO DA MESMA **//
-    
-    
 
     
     //** FUNCOES DE ATUALIZACAO DA TELA ***//

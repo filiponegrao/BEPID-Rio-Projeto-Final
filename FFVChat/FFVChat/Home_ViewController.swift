@@ -80,7 +80,60 @@ class Home_ViewController: UIViewController
         self.view.addSubview(self.pageMenu.view)
         
     }
+    
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self.allContacts, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self.allContacts, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
 
+        NSNotificationCenter.defaultCenter().addObserver(self.favourites, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
+        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
+        
+    }
+    
+    
+    func reloadCellAnimations()
+    {
+        self.allContacts.reloadAnimations()
+        self.favourites.reloadAnimations()
+    }
+    
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        DAOFriendRequests.sharedInstance.friendsAccepted()
+        DAOPostgres.sharedInstance.startObserve()
+        
+        self.favourites.reloadAnimations()
+        self.favourites.checkUnreadMessages()
+        self.allContacts.reloadAnimations()
+        self.allContacts.checkUnreadMessages()
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self.allContacts, name: NotificationController.center.messageReceived.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self.favourites, name: NotificationController.center.messageReceived.name, object: nil)
+        
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
+    }
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        DAOPostgres.sharedInstance.stopObserve()
+    }
+    
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
