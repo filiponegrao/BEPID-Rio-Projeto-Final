@@ -14,11 +14,11 @@ let raio = diametro/2
 
 class ImageZoom_View: UIView {
     
-    var image : UIImage!
-    
-    var imageKey: String!
+    var message : Message!
     
     var imageView : UIImageView!
+    
+    var blurFilter : UIVisualEffectView!
     
     var backButton : UIButton!
     
@@ -26,45 +26,102 @@ class ImageZoom_View: UIView {
     
     var sender: String!
     
+    var image : UIImage!
+    
+    var sparkTimer : NSTimer!
+    
+    var warningTimer : NSTimer!
+    
     weak var chatController : Chat_ViewController!
     
-    init(image: UIImage)
+    var origin : CGRect!
+    
+    init(message: Message, origin: CGRect)
     {
+        self.origin = origin
+        self.message = message
+        self.image = UIImage(data: self.message.image!)!
+        
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        
+        self.clipsToBounds = true
         self.backgroundColor = UIColor.blackColor()
         self.layer.zPosition = 10
         self.alpha = 0
         
-        self.image = image
-        
-        self.imageView = UIImageView(frame: CGRectMake(0, 200, screenWidth, screenWidth*1.5))
-        self.imageView.center = self.center
+        self.imageView = UIImageView(frame: CGRectMake(0, 70, screenWidth, screenHeight - 70))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.clipsToBounds = true
-        self.imageView.image = image
+        self.imageView.image = self.image
         self.imageView.layer.zPosition = 0
         self.addSubview(self.imageView)
         
-        //blur
-        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        visualEffectView.frame = self.imageView.frame
-        visualEffectView.alpha = 1
-        self.addSubview(visualEffectView)
-        
-        
-        self.backButton = UIButton(frame: CGRectMake(0, 10, 44, 44))
+        self.backButton = UIButton(frame: CGRectMake(0, 20, 50, 50))
         self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
         self.backButton.addTarget(self, action: "fadeOut", forControlEvents: .TouchUpInside)
         self.addSubview(self.backButton)
+
+        //Blur
+        self.blurFilter = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.blurFilter.frame = self.imageView.frame
+        self.blurFilter.alpha = 1
+        self.addSubview(self.blurFilter)
         
-        let delay = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "fadeIn", userInfo: nil, repeats: false)
+        let type = ImageFilter(rawValue: self.message.filter!)!
+        print(type)
         
-        self.unblurVision = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
-        self.unblurVision.image = Editor.circleUnblur(self.image!, x: 0, y: 0, imageFrame: self.imageView.frame)
-        self.unblurVision.layer.cornerRadius = raio
-        self.unblurVision.alpha = 0
-        self.unblurVision.layer.zPosition = 5
-        self.addSubview(self.unblurVision)
+        switch type
+        {
+        case .None:
+            
+            self.blurFilter.alpha = 0
+            
+        case .Circle:
+
+            self.unblurVision = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
+            self.unblurVision.image = Editor.circleUnblur(self.image, x: 0, y: 0, imageFrame: self.imageView.frame)
+            self.unblurVision.layer.cornerRadius = raio
+            self.unblurVision.alpha = 0
+            self.unblurVision.layer.zPosition = 5
+            self.addSubview(self.unblurVision)
+            
+            
+        case .Spark:
+            
+            self.sparkTimer?.invalidate()
+            self.warningTimer?.invalidate()
+            self.sparkTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "sparkEffect", userInfo: nil, repeats: true)
+            self.warningTimer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "sparkWarning", userInfo: nil, repeats: false)
+            
+        default:
+            
+            print("invalide filter")
+        }
+        
+        
+    }
+    
+    func sparkEffect()
+    {
+        if(self.blurFilter.alpha == 0)
+        {
+            self.blurFilter.alpha = 1
+        }
+        else
+        {
+            self.blurFilter.alpha = 0
+        }
+    }
+
+    func sparkWarning()
+    {
+        let alert = UIAlertController(title: "Warning!", message: "Spark filter when used for a long time can be harmful for your health. Avoid stay looking for the image for a long and continuos time!", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+        }))
+        
+        self.chatController.presentViewController(alert, animated: true, completion: nil)
+        self.fadeOut()
     }
     
     
@@ -90,6 +147,8 @@ class ImageZoom_View: UIView {
             
             }) { (success: Bool) -> Void in
                 self.chatController.isViewing = false
+                self.sparkTimer?.invalidate()
+                self.warningTimer?.invalidate()
                 self.removeFromSuperview()
         }
     }
@@ -99,31 +158,41 @@ class ImageZoom_View: UIView {
     //*** UNBLUR FUNCTIONS ****///
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if let touch = touches.first
+        if(self.message.filter == ImageFilter.Circle.rawValue)
         {
-            let x = touch.locationInView(self).x - raio
-            let y = touch.locationInView(self).y - raio
-            self.unblurVision.alpha = 1
-            self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y, imageFrame: self.imageView.frame)
-            
-            self.unblurVision.frame.origin = CGPointMake(x, y)
+            if let touch = touches.first
+            {
+                let x = touch.locationInView(self).x - raio
+                let y = touch.locationInView(self).y - raio
+                self.unblurVision.alpha = 1
+                self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y, imageFrame: self.imageView.frame)
+                
+                self.unblurVision.frame.origin = CGPointMake(x, y)
+            }
         }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if let touch = touches.first
+        if(self.message.filter == ImageFilter.Circle.rawValue)
         {
-            let x = touch.locationInView(self).x - raio
-            let y = touch.locationInView(self).y - raio
-            self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y, imageFrame: self.imageView.frame)
-            self.unblurVision.frame.origin = CGPointMake(x, y)
+            if let touch = touches.first
+            {
+                let x = touch.locationInView(self).x - raio
+                let y = touch.locationInView(self).y - raio
+                self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y, imageFrame: self.imageView.frame)
+                self.unblurVision.frame.origin = CGPointMake(x, y)
+            }
+
         }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        self.unblurVision.alpha = 0
+        if(self.message.filter == ImageFilter.Circle.rawValue)
+        {
+            self.unblurVision.alpha = 0
+        }
     }
     
     

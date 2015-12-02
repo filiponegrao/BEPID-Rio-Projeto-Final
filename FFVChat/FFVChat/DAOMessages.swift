@@ -151,9 +151,7 @@ class DAOMessages : NSObject
     
     func setMessageSeen(message: Message)
     {
-        DAOPostgres.sharedInstance.setMessageSeen(message) { (success) -> Void in
-            
-        }
+        DAOPostgres.sharedInstance.setMessageSeen(message)
         
         message.status = "seen"
         self.save()
@@ -207,6 +205,7 @@ class DAOMessages : NSObject
             let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
             if let entityToDelete = fetchedEntities.first
             {
+                DAOPostgres.sharedInstance.setDeletedMessage(message)
                 self.managedObjectContext.deleteObject(entityToDelete)
             }
         }
@@ -220,22 +219,12 @@ class DAOMessages : NSObject
     
     func clearConversation(username: String)
     {
-        let predicate = NSPredicate(format: "sender == %@ OR target == %@", username,username)
+        let messages = self.conversationWithContact(username)
         
-        let fetchRequest = NSFetchRequest(entityName: "Message")
-        fetchRequest.predicate = predicate
-        
-        do {
-            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
-            
-            for entity in fetchedEntities {
-                self.managedObjectContext.deleteObject(entity)
-            }
-        } catch {
-            // Do something in response to error condition
+        for message in messages
+        {
+            self.deleteMessage(message)
         }
-        
-        self.save()
     }
     
     
@@ -262,6 +251,7 @@ class DAOMessages : NSObject
         return messages
     }
     
+    
     func deleteMessageAfterTime(message: Message)
     {
         if(message.status != "seen")
@@ -286,6 +276,8 @@ class DAOMessages : NSObject
         {
             self.inExecution = true
             var contact : String
+            print("sender: \(message.sender)")
+            print("critp: \(EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()))")
             if (message.sender == EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()))
             {
                 contact = message.target

@@ -153,7 +153,11 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
             {
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                     
-                    (controller as! Chat_ViewController).sendImage(self.image, lifetime: time, filter: ImageFilter.Circle)
+                    let filters = Filters_ViewController(image: self.image, lifeTime: time, contact: self.contact.username)
+                    controller?.presentViewController(filters, animated: true, completion: { () -> Void in
+                        
+                    })
+//                    (controller as! Chat_ViewController).sendImage(self.image, lifetime: time, filter: ImageFilter.Circle)
                     
                 })
             }

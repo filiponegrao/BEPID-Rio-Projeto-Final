@@ -155,6 +155,7 @@ class ContactManager_View: UIView
         
         let finalFrame = self.contactImage.frame
         self.contactImage.frame = self.origin
+        self.contactImage.layer.cornerRadius = self.contactImage.frame.size.width/2
         
         let posUsername = self.usernameLabel.center
         let postrustLevel = self.trustLevelLabel.center
@@ -179,6 +180,8 @@ class ContactManager_View: UIView
             self.favouriteButton.center = posFavorite
             self.deleteButton.center = posDelete
             self.contactImage.frame = finalFrame
+            self.contactImage.layer.cornerRadius = finalFrame.size.width/2
+
             
             }) { (success: Bool) -> Void in
                 
@@ -209,7 +212,7 @@ class ContactManager_View: UIView
             self.trustLevelLabel.center.x -= screenWidth/2
             self.usernameLabel.center.x -= screenWidth
             
-            self.contactImage.alpha = 0.05
+            self.contactImage.alpha = 0
 
             
             }) { (success: Bool) -> Void in

@@ -117,9 +117,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.gifButton.setImage(UIImage(named: "gifButton"), forState: UIControlState.Normal)
         self.gifButton.alpha = 0.7
         self.gifButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
-        self.messageView.addSubview(gifButton)
+//        self.messageView.addSubview(gifButton)
         
-        self.cameraButton = UIButton(frame: CGRectMake(self.gifButton.frame.origin.x + self.gifButton.frame.size.width + 5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
+        self.cameraButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
         self.cameraButton.setImage(UIImage(named: "chatCameraButton"), forState: UIControlState.Normal)
         self.cameraButton.alpha = 0.7
         self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
@@ -131,7 +131,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
         self.messageView.addSubview(sendButton)
         
-        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.origin.x + self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width + self.gifButton.frame.size.width), self.messageView.frame.size.height - 20))
+        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.origin.x + self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
         self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
         self.messageText.font = UIFont(name: "Helvetica", size: 16)
         self.messageText.textContainer.lineFragmentPadding = 10;
@@ -260,14 +260,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             self.playSound()
             
-            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen" && mssg.contentKey == nil)
+            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen" && mssg.type == ContentType.Text.rawValue)
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+                DAOPostgres.sharedInstance.setMessageSeen(mssg)
                 mssg.status = "seen"
             }
             
-            
-            if(mssg.contentKey == nil && mssg.text != nil)
+            //Texto
+            if(mssg.type == ContentType.Text.rawValue)
             {
                 let h = self.heightForView(mssg.text!, font: textMessageFont!, width: cellTextWidth)
                 if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
@@ -281,7 +282,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     })
                 }
             }
-            else
+            //Imagem
+            else if(mssg.type == ContentType.Image.rawValue)
             {
                 if((self.tableView.contentSize.height + screenWidth) > self.tableView.frame.size.height)
                 {
@@ -401,64 +403,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        //IMAGE
-        if(self.messages[indexPath.row].text == nil  && self.messages[indexPath.row].contentKey != nil)
+        
+        let type = ContentType(rawValue: self.messages[indexPath.row].type)!
+        
+        switch type
         {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
-            cell.backgroundColor = UIColor.clearColor()
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-            if(self.messages[indexPath.row].image != nil)
-            {
-                cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
-                cell.setLoadingOff()
-            }
-            else
-            {
-                cell.imageCell.image = UIImage()
-                cell.setLoading()
-                DAOParse.sharedInstance.downloadImageForMessage(self.messages[indexPath.row])
-            }
+        case .Text:
             
-            //blur
-            cell.blur?.removeFromSuperview()
-            cell.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-            cell.blur.frame = cell.imageCell.bounds
-            cell.imageCell.addSubview(cell.blur)
-            cell.bringSubviewToFront(cell.indicator)
-            
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .LongStyle
-            dateFormatter.timeZone = NSTimeZone.localTimeZone()
-            //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            dateFormatter.dateFormat = "HH:mm"
-            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
-            cell.sentDate.text = date
-            
-            
-            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
-            {
-                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
-                cell.backgroundLabel.alpha = 0.3
-            }
-            else
-            {
-                cell.backgroundLabel.backgroundColor = oficialDarkGray
-                cell.backgroundLabel.alpha = 0.6
-            }
-            
-            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
-            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
-            cell.backgroundLabel.layer.shadowRadius = 3
-            cell.backgroundLabel.layer.shadowOpacity = 1
-            cell.backgroundLabel.layer.masksToBounds = false
-            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
-            
-            return cell
-        }
-            //TEXT
-        else
-        {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellChat_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -512,6 +464,71 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             
             DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
+            DAOPostgres.sharedInstance.setMessageSeen(self.messages[indexPath.row])
+            
+            return cell
+            
+            
+        case .Image:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
+            cell.backgroundColor = UIColor.clearColor()
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            if(self.messages[indexPath.row].image != nil)
+            {
+                cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
+                cell.setLoadingOff()
+            }
+            else
+            {
+                cell.imageCell.image = UIImage()
+                cell.setLoading()
+                DAOParse.sharedInstance.downloadImageForMessage(self.messages[indexPath.row])
+            }
+            
+            //blur
+            cell.blur?.removeFromSuperview()
+            cell.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+            cell.blur.frame = cell.imageCell.bounds
+            cell.imageCell.addSubview(cell.blur)
+            cell.bringSubviewToFront(cell.indicator)
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = .LongStyle
+            dateFormatter.timeZone = NSTimeZone.localTimeZone()
+            //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            dateFormatter.dateFormat = "HH:mm"
+            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
+            cell.sentDate.text = date
+            
+            
+            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
+            {
+                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
+                cell.backgroundLabel.alpha = 0.3
+            }
+            else
+            {
+                cell.backgroundLabel.backgroundColor = oficialDarkGray
+                cell.backgroundLabel.alpha = 0.6
+            }
+            
+            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
+            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
+            cell.backgroundLabel.layer.shadowRadius = 3
+            cell.backgroundLabel.layer.shadowOpacity = 1
+            cell.backgroundLabel.layer.masksToBounds = false
+            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
+            
+            return cell
+            
+            
+        default:
+            
+            print("modo ainda nao suportado")
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("", forIndexPath: indexPath)
             
             return cell
         }
@@ -525,13 +542,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //Imagem
         if(message.contentKey != nil && !self.messageText.isFirstResponder())
         {
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImage_TableViewCell
+            let frameOnTable = cell.imageCell.frame
+            
+            let frame = self.tableView.convertRect(frameOnTable, toView: self.tableView.superview)
+
             self.messageText.endEditing(true)
-            self.imageZoom = ImageZoom_View(image: UIImage(data: message.image!)!)
-            self.imageZoom.imageKey = self.messages[indexPath.item].contentKey!
+            self.imageZoom = ImageZoom_View(message: message, origin: frame)
             self.imageZoom.chatController = self
             self.imageZoom.sender = self.messages[indexPath.item].sender
             self.isViewing = true
             self.view.addSubview(self.imageZoom)
+            self.imageZoom.fadeIn()
             
             print(message.status)
             if(message.sender != DAOUser.sharedInstance.getUsername() && message.status == "received")
@@ -711,34 +733,34 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         // ******** PARA IMPLEMENTACAO DO GIF ************//
         
-        //        let actionsheet = UIAlertController(title: "Choose media", message: nil, preferredStyle: .ActionSheet)
-        //        actionsheet.addAction(UIAlertAction(title: "From Camera", style: .Default, handler: { (action: UIAlertAction) -> Void in
-        //
-        //            self.imagePicker = UIImagePickerController()
-        //            self.imagePicker.delegate = self
-        //            self.imagePicker.sourceType = .Camera
-        //            self.imagePicker.cameraDevice = .Front
-        //
-        //            self.presentViewController(self.imagePicker, animated: true, completion: nil)
-        //
-        //        }))
-        //
-        //        actionsheet.addAction(UIAlertAction(title: "Gif Gallery", style: .Default, handler: { (action: UIAlertAction) -> Void in
-        //
-        //        }))
-        //
-        //        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
-        //
-        //        }))
-        //
-        //        self.presentViewController(actionsheet, animated: true, completion: nil)
+        let actionsheet = UIAlertController(title: "Choose media", message: nil, preferredStyle: .ActionSheet)
+        actionsheet.addAction(UIAlertAction(title: "From Camera", style: .Default, handler: { (action: UIAlertAction) -> Void in
+
+            self.imagePicker = UIImagePickerController()
+            self.imagePicker.delegate = self
+            self.imagePicker.sourceType = .Camera
+            self.imagePicker.cameraDevice = .Front
+
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+
+        }))
+
+        actionsheet.addAction(UIAlertAction(title: "Gif Gallery", style: .Default, handler: { (action: UIAlertAction) -> Void in
+
+        }))
+
+        actionsheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+
+        }))
+
+        self.presentViewController(actionsheet, animated: true, completion: nil)
         
-        self.imagePicker = UIImagePickerController()
-        self.imagePicker.delegate = self
-        self.imagePicker.sourceType = .Camera
-        self.imagePicker.cameraDevice = .Front
-        
-        self.presentViewController(self.imagePicker, animated: true, completion: nil)
+//        self.imagePicker = UIImagePickerController()
+//        self.imagePicker.delegate = self
+//        self.imagePicker.sourceType = .Camera
+//        self.imagePicker.cameraDevice = .Front
+//        
+//        self.presentViewController(self.imagePicker, animated: true, completion: nil)
         
     }
     
@@ -756,7 +778,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func sendImage(image: UIImage, lifetime: Int, filter: ImageFilter)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime, filter: ImageFilter.Circle)
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime, filter: filter)
         
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
@@ -818,7 +840,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         if(self.imageZoom != nil && self.imageZoom?.sender != DAOUser.sharedInstance.getUsername())
         {
-            DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.imageKey, sender: self.contact.username)
+            DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.message.contentKey!, sender: self.contact.username)
         }
         
         let alert = JudgerAlert_ViewController()

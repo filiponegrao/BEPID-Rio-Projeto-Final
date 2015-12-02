@@ -102,10 +102,10 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
-
         NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
+
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
         
     }

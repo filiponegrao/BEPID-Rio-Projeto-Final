@@ -66,15 +66,6 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
     
     //** FUNCOES DE ATUALIZACAO DA TELA ***//
     
-    func addNewContact()
-    {
-        self.favourites = DAOContacts.sharedInstance.getAllContacts()
-        
-        let index = self.favourites.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
-        
-        self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
-    }
-    
     
     func checkUnreadMessages()
     {
@@ -170,7 +161,8 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
             let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath!)!
             let frame = attributes.frame
             
-            let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
+            var origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
+            origin = CGRectMake(origin.origin.x, origin.origin.y + 80 + self.collectionView!.frame.origin.y + 40, origin.size.width, origin.size.height)
             
             self.contactManager = ContactManager_View(contact: self.favourites[(indexPath?.item)!], requester: self.home, origin: origin)
             

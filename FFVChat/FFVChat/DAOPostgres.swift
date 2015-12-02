@@ -26,10 +26,12 @@ class DAOPostgres : NSObject
     let sendImageMessageURL = "\(baseUrl)/sendImageMessage.php"
     let receivedURL = "\(baseUrl)/setReceivedMessage.php"
     let seenURL = "\(baseUrl)/setSeenMessage.php"
+    let deletedURL = "\(baseUrl)/setDeletedMessage.php"
     let fetchURL = "\(baseUrl)/fetchUnreadMessages.php"
     let sendImageURL = "\(baseUrl)/insertImage2.php"
     let fetchImageURL = "\(baseUrl)/fetchImage.php"
     let sendURL = "\(baseUrl)/sendMessage.php"
+    
     
     override init()
     {
@@ -172,10 +174,6 @@ class DAOPostgres : NSObject
     
     func setMessageReceived(message: Message)
     {
-        print(EncryptTools.encUsername(message.sender))
-        print(EncryptTools.encUsername(message.target))
-        print(message.sentDate)
-        
         let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(message.sender), "target": EncryptTools.encUsername(message.target), "sentDate": message.sentDate]
         
         Alamofire.request(.POST, self.receivedURL, parameters: parameters)
@@ -184,7 +182,7 @@ class DAOPostgres : NSObject
         }
     }
     
-    func setMessageSeen(message: Message, callback: (success: Bool) -> Void)
+    func setMessageSeen(message: Message)
     {
         let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(message.sender), "target": EncryptTools.encUsername(message.target), "sentDate": message.sentDate]
         
@@ -194,6 +192,15 @@ class DAOPostgres : NSObject
         }
     }
     
+    func setDeletedMessage(message: Message)
+    {
+        let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(message.sender), "target": EncryptTools.encUsername(message.target), "sentDate": message.sentDate]
+        
+        Alamofire.request(.POST, self.seenURL, parameters: parameters)
+            .responseJSON { response in
+                print(response.result.value)
+        }
+    }
     
     func string2nsdate(str: String) -> NSDate{
         let dateFormatter = NSDateFormatter()
