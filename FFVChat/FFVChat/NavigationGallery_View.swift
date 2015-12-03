@@ -47,7 +47,7 @@ class NavigationGallery_View: UIView
     
     func deleteAllPictures()
     {
-        let alert = UIAlertController(title: "Are you shure?", message: "Deleting all messages sent for \(self.viewController.contact.username) is irreversible! Are you shure?", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: .Alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
             

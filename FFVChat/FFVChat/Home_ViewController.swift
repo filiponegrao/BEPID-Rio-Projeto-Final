@@ -61,7 +61,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         self.favouritesController = FavouritesBubble_CollectionViewController(collectionViewLayout: flowFavourites, size: CGSize(width: screenWidth, height: self.contentSize.height))
         self.favouritesController.home = self
-        self.favouritesController.title = "Favourites"
+        self.favouritesController.title = "Favorites"
         
         self.controllerArray = [self.contactsController, self.favouritesController]
         

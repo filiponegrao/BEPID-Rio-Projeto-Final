@@ -288,49 +288,49 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             //verifica se e-mail é válido
             if (!(DAOUser.sharedInstance.isValidEmail(self.labelEmail.text!)))
             {
-                let alert = UIAlertView(title: "Ops!", message: "Please, enter a valid email", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "Please, enter a valid email", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
             //verifica se há espaço em branco no username
             else if (self.verifyWhiteSpace(self.labelUsername.text!))
             {
-                let alert = UIAlertView(title: "Ops!", message: "A username can't have white spaces", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "A username can't have white spaces", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
             //verifica se há caracter especial no username
             else if (self.verifySpecialCharacter(self.labelUsername.text!))
             {
-                let alert = UIAlertView(title: "Ops!", message: "A username can't have special characters", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "A username can't have special characters", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
             //verifica se username contém menos de 4 caracteres
             else if (self.labelUsername.text?.characters.count < 4)
             {
-                let alert = UIAlertView(title: "Ops!", message: "A username must have, at least, 4 characters", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "A username must have, at least, 4 characters", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
             //verifica se senha é válida
             else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
             {
-                let alert = UIAlertView(title: "Ops!", message: "Your password must have, exactly, 6 numbers", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "Your password must have, exactly, 6 numbers", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
             //verifica se campos de senha e confirmação de senha são iguais
             else if (self.labelPassword.text != self.labelConfirmPassword.text)
             {
-                let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "Passwords don't match!", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
             //verifica se tem foto
             else if(self.image == nil)
             {
-                let alert = UIAlertView(title: "Ops!", message: "Please, take a photo", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "Please, take a photo", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
             
@@ -348,7 +348,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         //não preencheu todos os campos
         else
         {
-            let alert = UIAlertView(title: "Ops!", message: "Please, fill out all fields correctly", delegate: nil, cancelButtonTitle: "Ok")
+            let alert = UIAlertView(title: "Oops!", message: "Please, fill in the fields correctly", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
         }
         
@@ -358,14 +358,14 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     func emailInUse()
     {
         self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Ops!", message: "This email is already used", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Oops!", message: "This email is already used", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     
     func userAlreadyExist()
     {
         self.loadingScreen.removeFromSuperview()
-        let alert = UIAlertView(title: "Ops!", message: "This username already exists", delegate: nil, cancelButtonTitle: "Ok")
+        let alert = UIAlertView(title: "Oops!", message: "This username already exists", delegate: nil, cancelButtonTitle: "Ok")
         alert.show()
     }
     

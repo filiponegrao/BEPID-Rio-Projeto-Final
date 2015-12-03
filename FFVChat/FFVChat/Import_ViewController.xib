@@ -41,7 +41,7 @@
                         <constraint firstAttribute="height" constant="87" id="kYF-xw-3ea"/>
                         <constraint firstAttribute="width" constant="269" id="ykK-mk-4vn"/>
                     </constraints>
-                    <string key="text">Do you want to import your contacts from Facebook? Choosing this option you will become visible and other contacts can import you also.</string>
+                    <string key="text">Do you want to import your contacts from Facebook? By choosing this option you will become visible and others can also import you.</string>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                     <color key="textColor" red="0.56470588239999997" green="0.58039215690000001" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>

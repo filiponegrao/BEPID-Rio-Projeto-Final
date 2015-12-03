@@ -260,31 +260,31 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
         {
             if(self.verifyWhiteSpace(self.labelUsername.text!))
             {
-                let alert = UIAlertView(title: "Ops!", message: "A username can't have white spaces", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "A username can't have white spaces", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
                 
             else if (self.verifySpecialCharacter(self.labelUsername.text!))
             {
-                let alert = UIAlertView(title: "Ops!", message: "A username can't have special characters", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "A username can't have special characters", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
                 
             else if (self.labelUsername.text?.characters.count < 4)
             {
-                let alert = UIAlertView(title: "Ops!", message: "A username must have, at least, 4 characters", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "A username must have, at least, 4 characters", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
                 
             else if ((self.verifyInvalidPassword(labelPassword.text!)) || (self.verifyInvalidPassword(labelConfirmPassword.text!)))
             {
-                let alert = UIAlertView(title: "Ops!", message: "Your password must have, exactly, 6 numbers", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "Your password must have, exactly, 6 numbers", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
                 
             else if (self.labelPassword.text != self.labelConfirmPassword.text)
             {
-                let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
+                let alert = UIAlertView(title: "Oops!", message: "Passwords don't match!", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
                 
@@ -299,7 +299,7 @@ class FacebookRegister_ViewController: UIViewController, UITextFieldDelegate, UI
             
         else
         {
-            let alert = UIAlertView(title: "Ops!", message: "Please, fill out all fields correctly", delegate: nil, cancelButtonTitle: "Ok")
+            let alert = UIAlertView(title: "Oops!", message: "Please, fill in the fields correctly", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
         }
     }

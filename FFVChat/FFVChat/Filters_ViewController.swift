@@ -20,11 +20,11 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     
     var selectionBar : UIView!
     
-    var doneButton : UIButton!
+    var doneButton : MKButton!
     
     //Dados a enviar
     
-    var contact: String!
+    var contact: Contact!
     
     var lifeTime : Int!
     
@@ -48,7 +48,9 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     
     var warning : NSTimer!
     
-    init(image: UIImage, lifeTime: Int, contact: String)
+    var lifespan : SelectedMidia_ViewController!
+    
+    init(image: UIImage, lifeTime: Int, contact: Contact)
     {
         self.image = image
         self.lifeTime = lifeTime
@@ -84,12 +86,16 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
         self.view.addSubview(self.backButton)
         
         
-        self.doneButton = UIButton(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
+        self.doneButton = MKButton(frame: CGRectMake(0, screenHeight - 50, screenWidth, 50))
         self.doneButton.backgroundColor = oficialGreen
         self.doneButton.setTitle("Done", forState: .Normal)
-        self.doneButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.doneButton.setTitleColor(oficialMediumGray, forState: .Highlighted)
         self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
+        self.doneButton.backgroundLayerCornerRadius = 900
+        self.doneButton.rippleLocation = .Center
+        self.doneButton.ripplePercent = 4
+        self.doneButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.doneButton)
         
         let margem : CGFloat = 20
@@ -277,9 +283,36 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func cancel()
     {
-        self.dismissViewControllerAnimated(true) { () -> Void in
-            
+        
+        let nav = self.presentingViewController as! AppNavigationController
+        let controller = nav.viewControllers.last
+        
+        if controller!.isKindOfClass(Chat_ViewController)
+        {
+            self.dismissViewControllerAnimated(true) { () -> Void in
+                
+                let lifespan = SelectedMidia_ViewController(image: self.image, contact: self.contact)
+                
+                controller?.presentViewController(lifespan, animated: true, completion: { () -> Void in
+                    
+                })
+                
+            }
         }
+        else if controller!.isKindOfClass(SentMidiaGallery_ViewController)
+        {
+            self.dismissViewControllerAnimated(true) { () -> Void in
+                
+                let lifespan = SelectedMidia_ViewController(image: self.image, contact: self.contact)
+                
+                controller?.presentViewController(lifespan, animated: true, completion: { () -> Void in
+                    
+                })
+                
+            }
+
+        }
+
     }
     
     func done()

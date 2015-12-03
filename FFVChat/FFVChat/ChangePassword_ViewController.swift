@@ -77,11 +77,13 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.view.addSubview(self.forgotPassword)
         
         self.forgotText = UITextView(frame: CGRectMake(10, self.forgotPassword.frame.origin.y + self.forgotPassword.frame.size.height - 15, screenWidth - 20, screenHeight/8))
-        self.forgotText.text = "If you have forgot your password you will receive a new one on your registered email"
+        self.forgotText.text = "If you have forgotten your password you can retrieve it by informing the registered email."
         self.forgotText.textColor = oficialLightGray
         self.forgotText.backgroundColor = UIColor.clearColor()
         self.forgotText.font = UIFont(name: "Helvetica", size: 15)
         self.forgotText.textAlignment = .Left
+//        self.forgotText.editable = false
+        self.forgotText.userInteractionEnabled = false
         self.view.addSubview(self.forgotText)
     }
     
@@ -241,7 +243,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         }
         else
         {
-            let alert = UIAlertView(title: "Ops!", message: "Please, fill the fields correctly", delegate: nil, cancelButtonTitle: "Ok")
+            let alert = UIAlertView(title: "Oops!", message: "Please, fill in the fields correctly", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
             self.loadingView?.removeFromSuperview()
 
@@ -253,7 +255,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     func passwordChanged()
     {
         self.loadingView?.removeFromSuperview()
-        let alert = UIAlertController(title: "Succeful!", message: "Your password have been changed succefully!", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Successful!", message: "Your password has been saved successfully!", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
             
             self.navigationController?.popViewControllerAnimated(true)
@@ -280,7 +282,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             
             if(DAOUser.sharedInstance.checkCorrectEmail(self.changePasswordAlert.textFields!.first!.text!))
             {
-                self.newPasswordAlert = UIAlertController(title: "New password", message: "Inserti your new password", preferredStyle: .Alert)
+                self.newPasswordAlert = UIAlertController(title: "New password", message: "Insert your new password", preferredStyle: .Alert)
                 
                 self.newPasswordAlert.addTextFieldWithConfigurationHandler({ (textfield: UITextField) -> Void in
                     
@@ -307,7 +309,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             }
             else
             {
-                let alert = UIAlertController(title: "Email incorrect!", message: "Your email entered is incorrect, please insert the correct!", preferredStyle: .Alert)
+                let alert = UIAlertController(title: "Incorrect email!", message: "The email you entered is incorrect, please insert the correct one!", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
                     
                     
