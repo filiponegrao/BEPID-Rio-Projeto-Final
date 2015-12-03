@@ -59,7 +59,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         let background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         background.image = UIImage(named: "ContactBackground")
-        background.alpha = 0.04
+        background.alpha = 0.3
         background.contentMode = .ScaleAspectFill
         self.view.addSubview(background)
         
@@ -156,7 +156,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         }
         else
         {
-            let alert = UIAlertView(title: "Please, fill out all fields correctly", message: "", delegate: nil, cancelButtonTitle: "Ok")
+            let alert = UIAlertView(title: "Please, fill in the fields correctly", message: "", delegate: nil, cancelButtonTitle: "Ok")
             alert.show()
         }
     }

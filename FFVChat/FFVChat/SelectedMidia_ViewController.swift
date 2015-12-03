@@ -153,7 +153,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
             {
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                     
-                    let filters = Filters_ViewController(image: self.image, lifeTime: time, contact: self.contact.username)
+                    let filters = Filters_ViewController(image: self.image, lifeTime: time, contact: self.contact)
                     controller?.presentViewController(filters, animated: true, completion: { () -> Void in
                         
                     })
@@ -175,7 +175,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         }
         else
         {
-            let alert = UIAlertController(title: "Ops!", message: "It's not possible send an image for been visible for 0 minutes and 0 seconds", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Oops!", message: "It's not possible send an image for been visible for 0 minutes and 0 seconds", preferredStyle: UIAlertControllerStyle.Alert)
             
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
                 

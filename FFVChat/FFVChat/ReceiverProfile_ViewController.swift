@@ -86,7 +86,7 @@ class ReceiverProfile_ViewController: UIViewController
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .LongStyle
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        dateFormatter.dateFormat = "yyyy/MM/dd"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         let sync = dateFormatter.stringFromDate(date)
         
         
