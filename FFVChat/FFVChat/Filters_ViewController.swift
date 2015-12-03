@@ -272,6 +272,7 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func cancel()
     {
+        
         let nav = self.presentingViewController as! AppNavigationController
         let controller = nav.viewControllers.last
         
