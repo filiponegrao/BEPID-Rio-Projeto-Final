@@ -337,6 +337,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
             //está tudo ok com o preenchimento dos campos de registro
             else
             {
+                self.view.endEditing(true)
                 self.loadingScreen = LoadScreen_View()
                 self.view.addSubview(loadingScreen)
                 DAOUser.sharedInstance.registerUser(labelUsername.text!, email: labelEmail.text!, password: labelPassword.text!, photo: self.image!)

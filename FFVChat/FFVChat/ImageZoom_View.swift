@@ -72,6 +72,7 @@ class ImageZoom_View: UIView {
         
         switch type
         {
+            
         case .None:
             
             self.blurFilter.alpha = 0
@@ -84,7 +85,6 @@ class ImageZoom_View: UIView {
             self.unblurVision.alpha = 0
             self.unblurVision.layer.zPosition = 5
             self.addSubview(self.unblurVision)
-            
             
         case .Spark:
             

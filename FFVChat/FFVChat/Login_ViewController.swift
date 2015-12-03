@@ -150,6 +150,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         if(self.emailField.text != "" && self.passwordField != "")
         {
+            self.view.endEditing(true)
             self.loadingScreen = LoadScreen_View()
             self.view.addSubview(self.loadingScreen)
             DAOUser.sharedInstance.loginParse(self.emailField.text!, password: self.passwordField.text!)

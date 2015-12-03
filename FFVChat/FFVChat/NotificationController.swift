@@ -35,6 +35,8 @@ class NotificationController: NSObject
     
     var printScreenReceived : NSNotification!
     
+    var gifDownloaded : NSNotification!
+    
     override init()
     {
         self.friendRequest = NSNotification(name: "friendRequest", object: NSMutableDictionary())
@@ -48,6 +50,7 @@ class NotificationController: NSObject
         self.trustLevelRefresehd = NSNotification(name: "trustLevelRefresehd", object: nil)
         self.contactsRefresheded = NSNotification(name: "contactsRefresheded", object: nil)
         self.printScreenReceived = NSNotification(name: "printScreenReceived", object: nil)
+        self.gifDownloaded = NSNotification(name: "gifDownloaded", object: nil)
     }
     
     class var center : NotificationController

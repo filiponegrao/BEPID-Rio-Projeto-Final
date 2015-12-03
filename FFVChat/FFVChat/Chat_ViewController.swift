@@ -746,7 +746,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }))
 
         actionsheet.addAction(UIAlertAction(title: "Gif Gallery", style: .Default, handler: { (action: UIAlertAction) -> Void in
-
+            
+            let gifGallery = GifGallery_UIViewController()
+            self.presentViewController(gifGallery, animated: true, completion: nil)
         }))
 
         actionsheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in

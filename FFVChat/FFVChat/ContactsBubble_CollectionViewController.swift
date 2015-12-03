@@ -16,8 +16,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
 {
     weak var home : Home_ViewController!
     
-    var resultContacts = [Contact]()
-    
     var contacts = [Contact]()
     
     var blurView : UIVisualEffectView!
@@ -63,7 +61,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.view.addGestureRecognizer(self.longPress)
         
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
-        self.resultContacts = self.contacts
         self.collectionView!.reloadData()
         
     }
@@ -75,11 +72,16 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     func addNewContact()
     {
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
-        if(self.contacts.count == self.resultContacts.count)
+        
+        //Checa se o usuario esta buscando alguem
+        if(!self.home.searchBar.isFirstResponder())
         {
             let index = self.contacts.indexOf(DAOContacts.sharedInstance.lastContactAdded)!
             
             self.collectionView!.insertItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
+            
+            let cell = self.collectionView?.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) as? RandomWalk_CollectionViewCell
+            cell?.startAnimation()
         }
     }
     
@@ -95,9 +97,9 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         for i in 0..<self.collectionView!.numberOfItemsInSection(0)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
-            let contact = self.resultContacts[i]
+            let contact = self.contacts[i]
             let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(contact)
-            cell?.profileBtn.setImage(UIImage(data: self.resultContacts[i].profileImage!) , forState: .Normal)
+            cell?.profileBtn.setImage(UIImage(data: self.contacts[i].profileImage!) , forState: .Normal)
             cell?.setUnreadMessages(cont)
         }
     }
@@ -144,9 +146,9 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
         // #warning Incomplete implementation, return the number of items
-        print(self.resultContacts.count)
-        return self.resultContacts.count
+        return self.contacts.count
     }
+    
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
@@ -154,7 +156,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
-        cell.setInfo(self.resultContacts[indexPath.row].username, profile: UIImage(data: self.resultContacts[indexPath.row].profileImage!)!)
+        cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: self.contacts[indexPath.row].profileImage!)!)
         
         cell.loadAnimations(45)
         // Configure the cell
@@ -162,11 +164,11 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         return cell
     }
     
+    
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         
     }
-    
     
     
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
@@ -188,7 +190,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
             var origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
             origin = CGRectMake(origin.origin.x, origin.origin.y + 80 + self.collectionView!.frame.origin.y + 40, origin.size.width, origin.size.height)
 
-            self.contactManager = ContactManager_View(contact: self.resultContacts[(indexPath?.item)!], requester: self.home, origin: origin)
+            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self.home, origin: origin)
             
             self.home.closeSearch()
             self.home.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
@@ -207,6 +209,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         }
     }
     
+    
     func openChat(sender: UIButton)
     {
         //NAO ESTA SENDO USADA
@@ -219,7 +222,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         let path = NSBundle.mainBundle().pathForResource("messageNotification.mp3", ofType:nil)!
         let url = NSURL(fileURLWithPath: path)
         
-        do {
+        do
+        {
             let sound = try AVAudioPlayer(contentsOfURL: url)
             self.messageSound = sound
             sound.play()

@@ -96,6 +96,7 @@ class NavigationContact_View: UIView
         self.vc.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
         self.vc.blurView.frame = self.vc.view.bounds
         self.vc.blurView.alpha = 0
+        self.vc.closeSearch()
         self.vc.view.addSubview(self.vc.blurView)
         
         UIView.animateWithDuration(0.5, animations: { () -> Void in

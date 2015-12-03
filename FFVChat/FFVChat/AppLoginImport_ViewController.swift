@@ -21,6 +21,8 @@ class AppLoginImport_ViewController: UIViewController
     var facebookConnect : UIButton!
     
     var skipButton : UIButton!
+    
+    var loadingView : LoadScreen_View!
 
     override func viewDidLoad()
     {
@@ -69,7 +71,14 @@ class AppLoginImport_ViewController: UIViewController
         self.skipButton.addTarget(self, action: "skip", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.skipButton)
 
-
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "linkedWithFacebook", name: UserCondition.userLogged.rawValue, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UserCondition.userLogged.rawValue, object: nil)
     }
 
     override func didReceiveMemoryWarning()
@@ -80,6 +89,13 @@ class AppLoginImport_ViewController: UIViewController
     
     func linkFacebook()
     {
+        self.loadingView = LoadScreen_View()
+        self.view.addSubview(self.loadingView)
+        DAOUser.sharedInstance.linkParseAccountWithFacebook()
+    }
+    
+    func linkedWithFacebook()
+    {
         AppStateData.sharedInstance.importContacts()
         let faceimport = Import_ViewController(nibName: "Import_ViewController", bundle: nil)
         self.presentViewController(faceimport, animated: true, completion: nil)
@@ -89,6 +105,7 @@ class AppLoginImport_ViewController: UIViewController
     {
         AppStateData.sharedInstance.importContacts()
         let contacts = AppNavigationController()
+        DAOGifs.sharedInstance.checkNewGifsFromServer()
         self.presentViewController(contacts, animated: true, completion: nil)
     }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate
+class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDisplayDelegate, CAPSPageMenuDelegate
 {
     var navigationBar : NavigationContact_View!
     
@@ -30,11 +30,12 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     var searchBar : UISearchBar!
     
+    var searchBarView : UIView!
+    
     let searchBarHeight : CGFloat = 40
     
     override func viewDidLoad()
     {
-        
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialDarkGray
@@ -43,13 +44,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.background.image = UIImage(named: "ContactBackground")
         self.background.alpha =  0.60
         self.view.addSubview(self.background)
-        
-        //Hidden search bar
-        self.searchBar = UISearchBar(frame: CGRectMake(0, 0, screenWidth, self.searchBarHeight))
-        self.searchBar.searchBarStyle = .Minimal
-        self.searchBar.delegate = self
-        self.searchBar.keyboardAppearance = .Dark
-        self.view.addSubview(self.searchBar)
         
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
@@ -89,8 +83,24 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         self.pageMenu = CAPSPageMenu(viewControllers: self.controllerArray, frame: CGRectMake(0, self.navigationBar.frame.size.height, self.contentSize.width, self.contentSize.height), pageMenuOptions: parameters)
         self.pageMenu.view.backgroundColor = UIColor.clearColor()
+        self.pageMenu.delegate = self
         self.view.addSubview(self.pageMenu.view)
         
+        
+        //Hidden search bar
+        self.searchBar = UISearchBar(frame: CGRectMake(10, 0, screenWidth - 20, self.searchBarHeight))
+        self.searchBar.searchBarStyle = .Minimal
+        self.searchBar.delegate = self
+        self.searchBar.keyboardAppearance = .Dark
+        self.searchBar.placeholder = "Search for a username"
+        
+        self.searchBarView = UIView(frame: CGRectMake(0,0,screenWidth, self.searchBarHeight))
+        self.searchBarView.frame.size.height += 2
+        self.searchBarView.backgroundColor = oficialMediumGray
+        self.view.addSubview(self.searchBarView)
+        self.view.addSubview(self.searchBar)
+        
+        self.view.bringSubviewToFront(self.navigationBar)
     }
     
     
@@ -191,8 +201,10 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.searchBar.text = nil
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
+            self.searchBarView.frame.origin.y = self.navigationBar.frame.size.height
+
             self.searchBar.frame.origin.y = self.navigationBar.frame.size.height
-            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height + self.searchBar.frame.size.height
+//            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height + self.searchBar.frame.size.height
             
             }) { (success: Bool) -> Void in
                 
@@ -204,14 +216,15 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     {
         self.searchBar.resignFirstResponder()
         self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
-        self.contactsController.resultContacts = self.contactsController.contacts
         self.contactsController.collectionView?.reloadData()
         self.contactsController.reloadAnimations()
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
             self.searchBar.frame.origin.y = self.navigationBar.frame.size.height - self.searchBarHeight
-            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height
+            self.searchBarView.frame.origin.y = self.navigationBar.frame.size.height - self.searchBarHeight
+
+//            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height
             
             }) { (success: Bool) -> Void in
         }
@@ -223,17 +236,35 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar)
     {
-        self.contactsController.resultContacts = self.contactsController.contacts
+        self.contactsController.contacts = self.contactsController.contacts
         self.contactsController.collectionView?.reloadData()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String)
     {
-        self.contactsController.resultContacts = DAOContacts.sharedInstance.getContactsWithString(searchText)
-        print(self.contactsController.resultContacts.count)
-        self.contactsController.collectionView?.reloadData()
+        if(searchText == "")
+        {
+            self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
+            self.contactsController.collectionView?.reloadData()
+        }
+        else
+        {
+            self.contactsController.contacts = DAOContacts.sharedInstance.getContactsWithString(searchText)
+            self.contactsController.collectionView?.reloadData()
+        }
         
     }
+    
+    /******************************************/
+    /******** Page Menu Delegate **************/
+    /******************************************/
+    
+    func didMoveToPage(controller: UIViewController, index: Int)
+    {
+        self.closeSearch()
+    }
+
+
 }
 
 

@@ -16,6 +16,7 @@ extension User {
 
     @NSManaged var username: String!
     @NSManaged var trustLevel: NSNumber!
+    @NSManaged var password: String!
     @NSManaged var profileImage: NSData?
     @NSManaged var email: String!
     @NSManaged var facebookID: String?

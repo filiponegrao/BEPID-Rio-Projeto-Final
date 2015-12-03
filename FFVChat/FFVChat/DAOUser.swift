@@ -181,19 +181,19 @@ class DAOUser
                     let facebookID = user!["facebookID"] as? String
                     let gender = user!["gender"] as? String
                     
+                    //TODO: verificar password em usuario
                     photo.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
                         if(data != nil)
                         {
-                            let localUser = self.createUser(username!, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookID, gender: gender)
+                            let localUser = self.createUser(username!, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookID, gender: gender, password: password)
                             
                             self.user = localUser
+                            self.setInstallation()
                             NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
-
                         }
                     })
                 }
-                self.setInstallation()
             }
             else
             {
@@ -228,7 +228,6 @@ class DAOUser
                 else
                 {
                     print("usuario logado pelo Facebook")
-                    
                     let current = PFUser.currentUser()
                     print("current user: \(current)")
                     print("password from current user \(current?.password)")
@@ -246,7 +245,7 @@ class DAOUser
                         {
                             if(!self.loginInApp(username))
                             {
-                                let localUser = self.createUser(username, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookId, gender: gender)
+                                let localUser = self.createUser(username, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookId, gender: gender, password: "000000")
                                 self.user = localUser
                             }
                             
@@ -274,6 +273,142 @@ class DAOUser
             }
         }
     }
+    
+    
+    
+    func linkParseAccountWithFacebook()
+    {
+        if(self.user != nil)
+        {
+            let username = self.user.username
+            let password = self.user.password
+            
+            PFUser.currentUser()?.deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                if(success)
+                {
+                    PFFacebookUtils.logInInBackgroundWithReadPermissions(["public_profile", "email", "user_friends"]) {
+                        (user: PFUser?, error: NSError?) -> Void in
+                        
+                        if let user = user
+                        {
+                            //Se o usuario for novo, carrega as informacoes
+                            //do facebook, é atribui como username e senha
+                            //os mesmos salvos a cima.
+                            if user.isNew
+                            {
+                                let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name,gender,hometown,relationship_status,work,birthday,education"])
+                                graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
+                                    
+                                    if ((error) != nil)
+                                    {
+                                        // Process error
+                                        print("Error: \(error)")
+                                    }
+                                    else
+                                    {
+                                        print("resultado de logar-se pelo face: \(result)")
+                                        let email : NSString = result.valueForKey("email") as! NSString
+                                        let id = result.valueForKey("id") as! String
+                                        let gender = result.valueForKey("gender") as! String
+                                        
+                                        let pictureURL = "https://graph.facebook.com/\(id)/picture?type=large&return_ssl_resources=1"
+                                        
+                                        let URLRequest = NSURL(string: pictureURL)
+                                        let URLRequestNeeded = NSURLRequest(URL: URLRequest!)
+                                        
+                                        NSURLConnection.sendAsynchronousRequest(URLRequestNeeded, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse? ,data: NSData?, error: NSError?) -> Void in
+                                            if error == nil
+                                            {
+                                                let picture = PFFile(data: data!)
+                                                PFUser.currentUser()?.setValue(username, forKey: "username")
+                                                PFUser.currentUser()?.setValue(email, forKey: "email")
+                                                PFUser.currentUser()?.setValue(id, forKey: "facebookID")
+                                                PFUser.currentUser()!.setObject(picture, forKey: "profileImage")
+                                                PFUser.currentUser()?.setValue(100, forKey: "trustLevel")
+                                                PFUser.currentUser()?.setValue(gender, forKey: "gender")
+                                                PFUser.currentUser()?.setValue(password, forKey: "password")
+                                                PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                                                    
+                                                    if(success)
+                                                    {
+                                                        print("informacoes atualizadas no parse")
+                                                        let user = User.createInManagedObjectContext(self.managedObjectContext, username: username, email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id, gender: gender, password: password)
+                                                        self.save()
+                                                        self.user = user
+                                                        
+                                                        self.setInstallation()
+                                                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+                                                    }
+                                                    else
+                                                    {
+                                                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.unknowError.rawValue, object: nil)
+                                                    }
+                                                })
+                                            }
+                                            else
+                                            {
+                                                print("Error: \(error!.localizedDescription)")
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                            //Caso nao seja novo, apaga o usuario novo criado
+                            //e simplesmente loga com o antigo.
+                            else
+                            {
+                                print("usuario logado pelo Facebook")
+                                let current = PFUser.currentUser()
+                                print("current user: \(current)")
+                                
+                                let username = user.valueForKey("username") as! String
+                                let facebookId = user.valueForKey("facebookID") as? String
+                                let email = user.valueForKey("email") as! String
+                                let trustLevel = user.valueForKey("trustLevel") as! Int
+                                let gender = user.valueForKey("gender") as? String
+                                
+                                let data = user.objectForKey("profileImage") as! PFFile
+                                data.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                                    
+                                    if(data != nil)
+                                    {
+                                        if(!self.loginInApp(username))
+                                        {
+                                            let localUser = self.createUser(username, email: email, trustLevel: trustLevel, profileImage: data!, facebookID: facebookId, gender: gender, password: password)
+                                            self.user = localUser
+                                        }
+                                        
+                                        self.user.trustLevel = trustLevel
+                                        self.user.facebookID = facebookId
+                                        self.save()
+                                        
+                                    }
+                                    self.setInstallation()
+                                    if(self.isValidUsername(username))
+                                    {
+                                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
+                                    }
+                                    else
+                                    {
+                                        NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.incompleteRegister.rawValue, object: nil)
+                                    }
+                                })
+                            }
+                        }
+                        else
+                        {
+                            NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.unknowError.rawValue, object: nil)
+                        }
+                    }
+                }
+                else
+                {
+                    NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.unknowError.rawValue, object: nil)
+                }
+            })
+        }
+    }
+    
 
     /** Funcao que é chamada logo apos o cliente efetuar
       * o login com o parse via Facebook, busca as
@@ -292,7 +427,7 @@ class DAOUser
             }
             else
             {
-                print(result)
+                print("resultado de logar-se pelo face: \(result)")
                 let username : NSString = result.valueForKey("name") as! NSString
                 let email : NSString = result.valueForKey("email") as! NSString
                 let id = result.valueForKey("id") as! String
@@ -318,7 +453,7 @@ class DAOUser
                             if(success)
                             {
                                 print("informacoes atualizadas no parse")
-                                let user = User.createInManagedObjectContext(self.managedObjectContext, username: "tempUser", email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id, gender: gender)
+                                let user = User.createInManagedObjectContext(self.managedObjectContext, username: "tempUser", email: PFUser.currentUser()!.email!, profileImage: data!, trustLevel: 100, facebookID: id, gender: gender, password: "000000")
                                 self.save()
                                 self.user = user
                                 
@@ -366,7 +501,7 @@ class DAOUser
                 {
                     if(data != nil)
                     {
-                        let localUser = self.createUser(username, email: email, trustLevel: 100, profileImage: data!, facebookID: facebookID, gender: gender)
+                        let localUser = self.createUser(username, email: email, trustLevel: 100, profileImage: data!, facebookID: facebookID, gender: gender, password: password)
                         self.user = localUser
                         self.save()
                         NSNotificationCenter.defaultCenter().postNotificationName(UserCondition.userLogged.rawValue, object: nil)
@@ -383,39 +518,6 @@ class DAOUser
     }
     
     
-    func getFaceContacts( callback : (metaContacts: [facebookContact]!) -> Void) -> Void {
-        
-        var contacts = [facebookContact]()
-        
-        self.getFaceFriends { (friends:[facebookContact]!) -> Void in
-            
-            for friend in friends
-            {
-                let busca = PFUser.query()!
-                let id = friend.facebookId
-                busca.whereKey("facebookID", equalTo: id)
-                busca.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
-                    
-                    if(object != nil)
-                    {
-                        print("Amigo \(friend.facebookName) esta no app")
-                        let contact = facebookContact(facebookId: friend.facebookId, facebookName: friend.facebookName)
-                        contacts.append(contact)
-                    }
-                    
-                    if(friend.facebookId == friends.last?.facebookId)
-                    {
-                        print("retornando \(contacts.count) amigos")
-                        callback(metaContacts: contacts)
-                    }
-                })
-            }
-            
-            callback(metaContacts: contacts)
-        }
-    }
-    
-    
     /**
      * Funcao que cata os amigos no facebook
      * e retorna os mesmos em forma de metaContact
@@ -429,6 +531,7 @@ class DAOUser
         
             if error == nil
             {
+//                print(result)
                 let results = result as! NSDictionary
                 let data = results.objectForKey("data") as! [NSDictionary]
                 
@@ -450,9 +553,9 @@ class DAOUser
         }
     }
     
-    func createUser(username: String, email: String, trustLevel: Int, profileImage: NSData, facebookID: String?, gender: String?) -> User
+    func createUser(username: String, email: String, trustLevel: Int, profileImage: NSData, facebookID: String?, gender: String?, password: String) -> User
     {
-        let user = User.createInManagedObjectContext(self.managedObjectContext, username: username, email: email, profileImage: profileImage, trustLevel: trustLevel, facebookID: facebookID, gender: gender)
+        let user = User.createInManagedObjectContext(self.managedObjectContext, username: username, email: email, profileImage: profileImage, trustLevel: trustLevel, facebookID: facebookID, gender: gender, password: password)
         
         self.save()
         
@@ -460,7 +563,24 @@ class DAOUser
         
     }
 
-    
+    /**
+     * Atribui ao self.user do DAOUser um usuario, ou seja
+     * efetua o login de uma conta de usuario previamente cadastrada
+     * no app, dado um username. 
+     * Retorna :
+     *
+     * true - caso o usuario ja exista no app e o login
+     *              tenha se dado com sucessp
+     *              
+     * false - caso o usuario passado como paramentro
+     *              nao exista.
+     *
+     * Obs: Essa funcao serve apenas para parear o usuario corrente
+     * logado no servidor, é apenas um registro local e constante
+     * do mesmo, para que as informacoes necessarias do mesmo sejam
+     * acessadas de forma instantenea sem a ncessidade de uma conexão
+     * com o banco de dados
+     */
     func loginInApp(username: String) -> Bool
     {
         let request = NSFetchRequest(entityName: "User")
@@ -601,20 +721,9 @@ class DAOUser
         return self.user.gender
     }
 
-    func checkPassword(password: String, callback: (correct: Bool) -> Void ) -> Void
+    func checkPassword(password: String) -> Bool
     {
-        PFUser.logInWithUsernameInBackground(PFUser.currentUser()!.username!, password: password) { (user: PFUser?, error: NSError?) -> Void in
-            
-            if(error?.code == 101)
-            {
-                callback(correct: false)
-            }
-            else
-            {
-                callback(correct: true)
-            }
-            
-        }
+        return (password == self.user.password)
     }
     
     //AJUSTES DO USUARIO

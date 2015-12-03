@@ -34,11 +34,13 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     
     var filtros = ["No Filter", "Circle", "Spark"]
     
-    var selectedFilter : ImageFilter!
+    var selectedFilter : ImageFilter = ImageFilter.None
     
     //Efeitos
     
-    var circleBlur : UIImageView!
+    var circleBlur : UIVisualEffectView!
+    
+    var circleUnblur : UIImageView!
     
     var sparkBlur : UIVisualEffectView!
     
@@ -192,11 +194,18 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     func preVisualizacaoCircle()
     {
         self.circleBlur?.removeFromSuperview()
-        self.circleBlur = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight*2/3))
-        self.circleBlur.image = UIImage(named: "filterCircle")
-        self.circleBlur.contentMode = .ScaleAspectFill
-        self.circleBlur.alpha = 0
+        self.circleBlur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.circleBlur.frame = self.imageView.bounds
         self.imageView.addSubview(self.circleBlur)
+        
+        self.circleUnblur?.removeFromSuperview()
+        self.circleUnblur = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
+        self.circleUnblur.center = self.imageView.center
+        self.circleUnblur.layer.cornerRadius = raio
+//        self.circleUnblur.contentMode = .ScaleAspectFill
+        self.circleUnblur.clipsToBounds = true
+        self.circleUnblur.image = Editor.circleUnblur(self.image, x: self.circleUnblur.frame.origin.x, y: self.circleUnblur.frame.origin.y, imageFrame: self.imageView.frame)
+        self.imageView.addSubview(self.circleUnblur)
         
         UIView.animateWithDuration(0.3) { () -> Void in
             
@@ -208,9 +217,11 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     {
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.circleUnblur?.alpha = 0
             self.circleBlur?.alpha = 0
             }) { (success: Bool) -> Void in
                 self.circleBlur?.removeFromSuperview()
+                self.circleUnblur?.removeFromSuperview()
         }
     }
     
@@ -225,7 +236,7 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
         
         self.contador?.invalidate()
         self.contador = nil
-        self.contador = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "changeAlpha", userInfo: nil, repeats: true)
+        self.contador = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "changeAlpha", userInfo: nil, repeats: true)
         
         self.warning?.invalidate()
         self.warning = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "sparkWarning", userInfo: nil, repeats: false)

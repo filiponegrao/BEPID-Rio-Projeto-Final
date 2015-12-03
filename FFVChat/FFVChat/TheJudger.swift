@@ -38,8 +38,12 @@ class TheJudger : NSObject
 
     func judge()
     {
-        DAOUser.sharedInstance.decreaseTrustLevel()
-        let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "deletePhoto", userInfo: nil, repeats: false)
+        if(PFUser.currentUser() != nil)
+        {
+            DAOUser.sharedInstance.decreaseTrustLevel()
+//            let controller = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController
+            let timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "deletePhoto", userInfo: nil, repeats: false)
+        }
     }
     
     

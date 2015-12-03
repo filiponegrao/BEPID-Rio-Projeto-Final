@@ -17,6 +17,11 @@
 		800597531BC1E79400327A3D /* CellAdd_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */; };
 		800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */; };
 		8005975B1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */; };
+		8009D72C1C10D0A300F88C01 /* GifGallery_UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */; };
+		8009D72E1C10D0C500F88C01 /* DAOGifs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D72D1C10D0C500F88C01 /* DAOGifs.swift */; };
+		8009D7311C10D43900F88C01 /* Gif+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D72F1C10D43900F88C01 /* Gif+CoreDataProperties.swift */; };
+		8009D7321C10D43900F88C01 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7301C10D43900F88C01 /* Gif.swift */; };
+		8009D7341C11007300F88C01 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7331C11007300F88C01 /* UIImage+Gif.swift */; };
 		8010FFF51C0CD46E00A4DBD6 /* BlackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */; };
 		8010FFF71C0CD5FE00A4DBD6 /* BlackList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */; };
 		801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */; };
@@ -206,6 +211,11 @@
 		800597511BC1E79400327A3D /* CellAdd_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellAdd_TableViewCell.xib; sourceTree = "<group>"; };
 		800597581BC1F8C700327A3D /* CellImportContact_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellImportContact_TableViewCell.swift; sourceTree = "<group>"; };
 		8005975A1BC1F8CF00327A3D /* CellImportContact_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CellImportContact_TableViewCell.xib; sourceTree = "<group>"; };
+		8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifGallery_UIViewController.swift; sourceTree = "<group>"; };
+		8009D72D1C10D0C500F88C01 /* DAOGifs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOGifs.swift; sourceTree = "<group>"; };
+		8009D72F1C10D43900F88C01 /* Gif+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gif+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		8009D7301C10D43900F88C01 /* Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
+		8009D7331C11007300F88C01 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackList.swift; sourceTree = "<group>"; };
 		8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BlackList.plist; sourceTree = "<group>"; };
 		801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellPrintscreen_TableViewCell.swift; sourceTree = "<group>"; };
@@ -423,6 +433,7 @@
 				8030E44D1BF96A350075E798 /* BubbleTransition.swift */,
 				807A65C11BFFC61D00A39984 /* EncryptTools.swift */,
 				80FD13AB1C038CF100729402 /* GMColor.swift */,
+				8009D7331C11007300F88C01 /* UIImage+Gif.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -439,6 +450,7 @@
 				804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */,
 				803657A51BF95594000907BD /* DAOReports.swift */,
 				804FB40B1C09490100512425 /* DAOPrints.swift */,
+				8009D72D1C10D0C500F88C01 /* DAOGifs.swift */,
 			);
 			name = DAOs;
 			sourceTree = "<group>";
@@ -557,6 +569,8 @@
 			isa = PBXGroup;
 			children = (
 				80FF18A51BE59BEA00C5F35E /* DataModel.xcdatamodeld */,
+				8009D72F1C10D43900F88C01 /* Gif+CoreDataProperties.swift */,
+				8009D7301C10D43900F88C01 /* Gif.swift */,
 				806D161E1C0E367B00650E9D /* Message+CoreDataProperties.swift */,
 				806D161F1C0E367B00650E9D /* Message.swift */,
 				80FF185A1BE3B15200C5F35E /* metaContact.swift */,
@@ -625,6 +639,7 @@
 				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
 				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
 				F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */,
+				8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -958,8 +973,10 @@
 				803657961BF94A97000907BD /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
 				8017D37E1BD43155000CB8F0 /* DAOParse.swift in Sources */,
 				801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */,
+				8009D7311C10D43900F88C01 /* Gif+CoreDataProperties.swift in Sources */,
 				80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */,
 				8005974A1BC1E76100327A3D /* CellAll_TableViewCell.swift in Sources */,
+				8009D7321C10D43900F88C01 /* Gif.swift in Sources */,
 				80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */,
 				F65A4F4B1C0CCDFD0092C403 /* Home_ViewController.swift in Sources */,
 				804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */,
@@ -976,6 +993,7 @@
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
 				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
+				8009D72E1C10D0C500F88C01 /* DAOGifs.swift in Sources */,
 				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
 				80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */,
 				803657841BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
@@ -1041,9 +1059,11 @@
 				803657A41BF9522D000907BD /* Contact.swift in Sources */,
 				80AA13641BC3038C0035E8B2 /* MKImageView.swift in Sources */,
 				803657A31BF9522D000907BD /* Contact+CoreDataProperties.swift in Sources */,
+				8009D7341C11007300F88C01 /* UIImage+Gif.swift in Sources */,
 				8017D37B1BD40394000CB8F0 /* StaticValues.swift in Sources */,
 				80AA13651BC3038C0035E8B2 /* MKLabel.swift in Sources */,
 				8010FFF51C0CD46E00A4DBD6 /* BlackList.swift in Sources */,
+				8009D72C1C10D0A300F88C01 /* GifGallery_UIViewController.swift in Sources */,
 				80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,

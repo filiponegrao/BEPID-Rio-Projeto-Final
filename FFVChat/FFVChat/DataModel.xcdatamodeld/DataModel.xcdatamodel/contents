@@ -8,6 +8,10 @@
         <attribute name="trustLevel" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Gif" representedClassName=".Gif" syncable="YES">
+        <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Message" representedClassName=".Message" syncable="YES">
         <attribute name="audio" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="contentKey" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,15 +43,17 @@
         <attribute name="email" attributeType="String" syncable="YES"/>
         <attribute name="facebookID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" attributeType="String" syncable="YES"/>
         <attribute name="profileImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="trustLevel" attributeType="Integer 32" defaultValueString="100" syncable="YES"/>
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Contact" positionX="-18" positionY="27" width="128" height="135"/>
+        <element name="Message" positionX="9" positionY="135" width="128" height="225"/>
         <element name="PrintscreenNotification" positionX="9" positionY="135" width="128" height="105"/>
         <element name="SentMidia" positionX="9" positionY="126" width="128" height="120"/>
-        <element name="User" positionX="9" positionY="126" width="128" height="135"/>
-        <element name="Message" positionX="9" positionY="135" width="128" height="225"/>
+        <element name="User" positionX="9" positionY="126" width="128" height="150"/>
+        <element name="Gif" positionX="0" positionY="171" width="128" height="75"/>
     </elements>
 </model>

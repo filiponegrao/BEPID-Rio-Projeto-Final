@@ -219,25 +219,23 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         {
             self.loadingView = LoadScreen_View()
             self.view.addSubview(self.loadingView)
-            DAOUser.sharedInstance.checkPassword(self.currentPassword.text!) { (correct) -> Void in
-                if(!correct)
+            if(DAOUser.sharedInstance.checkPassword(self.currentPassword.text!))
+            {
+                self.loadingView?.removeFromSuperview()
+                let alert = UIAlertView(title: "Ops!", message: "Your password is wrong", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            else
+            {
+                if(self.newPassword.text == self.newPasswordAgain.text)
                 {
-                    self.loadingView?.removeFromSuperview()
-                    let alert = UIAlertView(title: "Ops!", message: "Your password is wrong", delegate: nil, cancelButtonTitle: "Ok")
-                    alert.show()
+                    DAOUser.sharedInstance.changePassword(self.newPassword.text!)
                 }
                 else
                 {
-                    if(self.newPassword.text == self.newPasswordAgain.text)
-                    {
-                        DAOUser.sharedInstance.changePassword(self.newPassword.text!)
-                    }
-                    else
-                    {
-                        let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
-                        alert.show()
-                        self.loadingView?.removeFromSuperview()
-                    }
+                    let alert = UIAlertView(title: "Ops!", message: "Passwords are different", delegate: nil, cancelButtonTitle: "Ok")
+                    alert.show()
+                    self.loadingView?.removeFromSuperview()
                 }
             }
         }
