@@ -18,6 +18,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     var printscreens = [PrintscreenNotification]()
     
     var navBar : NavigationNotification_View!
+        
+    var midiaViewer : MidiaViewer_View!
 
     override func viewDidLoad()
     {
@@ -27,14 +29,14 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navBar = NavigationNotification_View(requester: self)
         self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
-        self.navBar.layer.zPosition = 5
+//        self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
 
         
         self.tableView = UITableView(frame: CGRectMake(0, 70, screenWidth, screenHeight))
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.layer.zPosition = 0
+//        self.tableView.layer.zPosition = 0
         self.tableView.separatorStyle = .None
         self.tableView.registerClass(Notification_TableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.registerClass(CellPrintscreen_TableViewCell.self, forCellReuseIdentifier: "CellPrints")
@@ -101,11 +103,17 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
+        
         if(indexPath.section == 0)
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! Notification_TableViewCell
             cell.selectionStyle = .None
             cell.backgroundColor = oficialSemiGray
+            
+            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 1))
+            separatorLineView.backgroundColor = oficialMediumGray
+
+            
             cell.notification.text = "\(self.requests[indexPath.row].sender) te adicionou."
             cell.notification.textColor = oficialLightGray
             cell.request = self.requests[indexPath.row]
@@ -114,6 +122,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
                 cell.icon.image = image
             }
             
+            cell.contentView.addSubview(separatorLineView)
+
             return cell
 
         }
@@ -121,14 +131,17 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("CellPrints") as! CellPrintscreen_TableViewCell
             
-            
             cell.selectionStyle = .None
             cell.backgroundColor = oficialSemiGray
             
+            
+            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 1))
+            separatorLineView.backgroundColor = oficialMediumGray
+            
             let printer = self.printscreens[indexPath.row].printer
             let cont = printer.characters.count
-            var myMutableString = NSMutableAttributedString(string: "\(printer) tirou um screenshot de uma imagem sua")
-            myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSRange(location:0,length:cont))
+            var myMutableString = NSMutableAttributedString(string: "\(printer) has taken a screenshot of your picture")
+            myMutableString.addAttribute(NSForegroundColorAttributeName, value: oficialGreen, range: NSRange(location:0,length:cont))
             
             cell.title.attributedText = myMutableString
             
@@ -139,12 +152,16 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             horas.timeZone = NSTimeZone.localTimeZone()
             
             let meses = NSDateFormatter()
-            meses.dateFormat = "MMMM"
+            meses.dateFormat = "MM"
             meses.timeZone = NSTimeZone.localTimeZone()
             
             let anos = NSDateFormatter()
             anos.dateFormat = "y"
             anos.timeZone = NSTimeZone.localTimeZone()
+            
+            let dias = NSDateFormatter()
+            dias.dateFormat = "dd"
+            dias.timeZone = NSTimeZone.localTimeZone()
             
             let hora = horas.stringFromDate(date)
             
@@ -152,7 +169,11 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             
             let ano = anos.stringFromDate(date)
             
-            cell.details.text = "O print foi feito às \(hora) em \(mes) de \(ano)"
+            let dia = dias.stringFromDate(date)
+//            
+//            cell.details.text = "The screenshot was taken at \(hora) on \(mes)/\(ano)"
+            
+             cell.details.text = "The screenshot was taken at \(hora) on \(mes)/\(dia)/\(ano)"
             
             let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(self.printscreens[indexPath.row].imageKey)
             if(image == nil)
@@ -164,6 +185,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
                 cell.photo.image = image
             }
             
+            cell.contentView.addSubview(separatorLineView)
+            
             return cell
         }
     }
@@ -171,6 +194,18 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
+        //CELL PRINT
+        if(indexPath.section == 1)
+        {
+            let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(self.printscreens[indexPath.row].imageKey)
+            
+            self.midiaViewer = MidiaViewer_View(image: image!, requester: self)
+            self.view.addSubview(self.midiaViewer)
+        }
+        
+        
+        //QUE TRETA?
+        
         //aqui que contece a treta 
         indexPath.section == 0
         

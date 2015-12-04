@@ -171,6 +171,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     }
     
     
+    
     func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
     {
         if gestureReconizer.state != UIGestureRecognizerState.Ended

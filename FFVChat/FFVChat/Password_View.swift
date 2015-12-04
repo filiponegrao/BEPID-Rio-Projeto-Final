@@ -264,16 +264,16 @@ class Password_View: UIView
             let inserted = "\(self.passwordNumbers[0])\(self.passwordNumbers[1])\(self.passwordNumbers[2])\(self.passwordNumbers[3])\(self.passwordNumbers[4])\(self.passwordNumbers[5])"
             
             if(DAOUser.sharedInstance.checkPassword(inserted))
-            {
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.alpha = 0
-                    }, completion: { (success:Bool) -> Void in
-                        self.removeFromSuperview()
-                })
+            {                
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.alpha = 0
+                        }, completion: { (success:Bool) -> Void in
+                            self.removeFromSuperview()
+                    })
             }
             else
             {
-                let alert = UIAlertController(title: "Password Incorrect", message: "Your entered password is incorrect. It's worth remembering that this password is the Myne password you used to singin, not your iPhone password", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Incorrect password", message: "The password you entered is incorrect. It's worth remembering that this password is the Myne password you used to singin, not your iPhone password", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
                     
                     self.passwordNumbers = [Int]()

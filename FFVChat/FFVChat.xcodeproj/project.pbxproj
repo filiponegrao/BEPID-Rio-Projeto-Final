@@ -484,6 +484,7 @@
 				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
 				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
 				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
+				8009D7371C11108400F88C01 /* GifSharing_View.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
