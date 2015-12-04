@@ -26,9 +26,6 @@ class NavigationContact_View: UIView
     
     weak var contactManager : ContactManager_View!
     
-    weak var toolsViewController : Tools_ViewController!
-    
-    
     init(requester: Home_ViewController)
     {
         self.vc = requester
@@ -66,10 +63,12 @@ class NavigationContact_View: UIView
         //        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
         self.addSubview(self.toolsButton)
 
+        let toolsViewController = Tools_ViewController()
+        
         self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
         self.alert.backgroundColor = oficialRed
         self.alert.hidden = true
-        self.toolsViewController.notificationButton.addSubview(self.alert)
+//        toolsViewController.notificationButton.addSubview(self.alert)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: requestNotification.requestsLoaded.rawValue, object: nil)
         
