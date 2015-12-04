@@ -102,15 +102,29 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         
         cell.subviews.last?.removeFromSuperview()
         
-        let imageview = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height))
+        let imageview = MKImageView(frame: CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height))
         imageview.backgroundColor = UIColor.blackColor()
         imageview.image = UIImage.animatedImageWithData(self.gifs[indexPath.item].data)
         imageview.clipsToBounds = true
-        imageview.contentMode = .ScaleAspectFit
+        imageview.contentMode = .ScaleAspectFill
         
         cell.addSubview(imageview)
         
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath)!
+        let frame = attributes.frame
+        
+        let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
+        
+        let sharing = GifSharing_View(imageOrigin: origin)
+        self.view.addSubview(sharing)
+        sharing.imageView.image = UIImage.animatedImageWithData(self.gifs[indexPath.item].data)
+        sharing.animateOn()
+        
     }
 
 }

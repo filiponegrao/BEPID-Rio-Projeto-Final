@@ -22,6 +22,8 @@
 		8009D7311C10D43900F88C01 /* Gif+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D72F1C10D43900F88C01 /* Gif+CoreDataProperties.swift */; };
 		8009D7321C10D43900F88C01 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7301C10D43900F88C01 /* Gif.swift */; };
 		8009D7341C11007300F88C01 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7331C11007300F88C01 /* UIImage+Gif.swift */; };
+		8009D7361C110E5500F88C01 /* CellGif_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */; };
+		8009D7381C11108400F88C01 /* GifSharing_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7371C11108400F88C01 /* GifSharing_View.swift */; };
 		8010FFF51C0CD46E00A4DBD6 /* BlackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */; };
 		8010FFF71C0CD5FE00A4DBD6 /* BlackList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */; };
 		801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */; };
@@ -216,6 +218,8 @@
 		8009D72F1C10D43900F88C01 /* Gif+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gif+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		8009D7301C10D43900F88C01 /* Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		8009D7331C11007300F88C01 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
+		8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellGif_TableViewCell.swift; sourceTree = "<group>"; };
+		8009D7371C11108400F88C01 /* GifSharing_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifSharing_View.swift; sourceTree = "<group>"; };
 		8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackList.swift; sourceTree = "<group>"; };
 		8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BlackList.plist; sourceTree = "<group>"; };
 		801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellPrintscreen_TableViewCell.swift; sourceTree = "<group>"; };
@@ -475,6 +479,7 @@
 				F65A4F401C076A790092C403 /* NavigationGallery_View.swift */,
 				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
 				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
+				8009D7371C11108400F88C01 /* GifSharing_View.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -733,6 +738,7 @@
 				F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */,
 				801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */,
 				806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */,
+				8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1033,6 +1039,7 @@
 				803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */,
 				803657901BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
+				8009D7381C11108400F88C01 /* GifSharing_View.swift in Sources */,
 				803657831BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
 				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,
 				804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */,
@@ -1050,6 +1057,7 @@
 				8036579F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				804B3DAD1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift in Sources */,
 				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
+				8009D7361C110E5500F88C01 /* CellGif_TableViewCell.swift in Sources */,
 				806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */,
 				8036578F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
