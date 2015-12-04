@@ -317,6 +317,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             let changePassword = ChangePassword_ViewController()
             self.navigationController?.pushViewController(changePassword, animated: true)
         }
+        else if(indexPath.section == 1 && indexPath.row == 1)
+        {
+            let deleteProfile = DeleteProfile_ViewController()
+            self.navigationController?.pushViewController(deleteProfile, animated: true)
+        }
         
     }
     

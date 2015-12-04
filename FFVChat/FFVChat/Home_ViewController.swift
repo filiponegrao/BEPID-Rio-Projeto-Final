@@ -93,10 +93,12 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.searchBar.delegate = self
         self.searchBar.keyboardAppearance = .Dark
         self.searchBar.placeholder = "Search for a username"
+        self.searchBar.tintColor = oficialGreen
         
         //cor do texto
         let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = oficialLightGray
+        textFieldInsideSearchBar?.tintColor = oficialGreen
         
         self.searchBarView = UIView(frame: CGRectMake(0,0,screenWidth, self.searchBarHeight))
         self.searchBarView.frame.size.height += 2

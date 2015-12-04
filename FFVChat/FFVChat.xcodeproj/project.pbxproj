@@ -179,6 +179,8 @@
 		F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */; };
 		F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */; };
 		F6703D811BEDB132009E57E0 /* NavigationSettings_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */; };
+		F68ABEF51C11D7F2009670A7 /* DeleteProfile_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68ABEF41C11D7F2009670A7 /* DeleteProfile_ViewController.swift */; };
+		F68ABEF71C11D978009670A7 /* NavigationDeleteProfile_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */; };
 		F68F2E461BB8DB900092A981 /* Tutorial_PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */; };
 		F6AC545F1BF9571300CF7918 /* ChangePassword_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */; };
 		F6AC54631BF95BD800CF7918 /* NavigationChangePassword_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */; };
@@ -379,6 +381,8 @@
 		F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoom_View.swift; sourceTree = "<group>"; };
 		F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScreen_View.swift; sourceTree = "<group>"; };
 		F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationSettings_View.swift; sourceTree = "<group>"; };
+		F68ABEF41C11D7F2009670A7 /* DeleteProfile_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteProfile_ViewController.swift; sourceTree = "<group>"; };
+		F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationDeleteProfile_View.swift; sourceTree = "<group>"; };
 		F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_PageViewController.swift; sourceTree = "<group>"; };
 		F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePassword_ViewController.swift; sourceTree = "<group>"; };
 		F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationChangePassword_View.swift; sourceTree = "<group>"; };
@@ -475,6 +479,7 @@
 				F65A4F401C076A790092C403 /* NavigationGallery_View.swift */,
 				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
 				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
+				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -639,6 +644,7 @@
 				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
 				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
 				F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */,
+				F68ABEF41C11D7F2009670A7 /* DeleteProfile_ViewController.swift */,
 				8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */,
 			);
 			name = Controller;
@@ -957,6 +963,7 @@
 				8036579A1BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOutRapid.swift in Sources */,
 				80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */,
 				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
+				F68ABEF51C11D7F2009670A7 /* DeleteProfile_ViewController.swift in Sources */,
 				8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
@@ -1080,6 +1087,7 @@
 				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
 				F6BD49AD1C0CE70300DEA86B /* FavouritesBubble_CollectionViewController.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
+				F68ABEF71C11D978009670A7 /* NavigationDeleteProfile_View.swift in Sources */,
 				806D16201C0E367B00650E9D /* Message+CoreDataProperties.swift in Sources */,
 				803657921BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
 				8036578C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,

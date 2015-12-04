@@ -200,12 +200,12 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat
     {
-        return 5
+        return 3
     }
     
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView?
     {
-        let footer = UIView(frame: CGRectMake(0, 0, screenWidth, 5))
+        let footer = UIView(frame: CGRectMake(0, 0, screenWidth, 3))
         footer.backgroundColor = oficialDarkGray
         
         return footer
