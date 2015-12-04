@@ -86,7 +86,7 @@ class GifSharing_View : UIView
     
     func animateOff()
     {
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
             
             self.imageView.frame = self.imageOrigin
             self.imageView.contentMode = .ScaleAspectFill
