@@ -87,7 +87,15 @@ class DAOPostgres : NSObject
                             print("recebeu audio")
                             
                         case .Gif:
-                            print("recebeu gif")
+                            
+                            let data = DAOGifs.sharedInstance.getGifFromName(key!)
+                            if(data != nil)
+                            {
+                                if(DAOMessages.sharedInstance.addReceivedMessage(sender, gifKey: key!, gifData: data!, sentDate: sentDate, lifeTime: lifeTime))
+                                {
+                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                                }
+                            }
                             
                         default:
                             print("Erro ao encontrar tipo do arquivo recebido!")
@@ -121,8 +129,20 @@ class DAOPostgres : NSObject
             .responseJSON { response in
                 print(response)
         }
-        
     }
+    
+    func sendGifMessage(username: String, lifeTime: Int, gifKey: String)
+    {
+        let me = DAOUser.sharedInstance.getUsername()
+        
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": "\(NSDate())", "contentKey": gifKey, "lifeTime": lifeTime, "type": ContentType.Gif.rawValue]
+        
+        Alamofire.request(.POST, self.sendURL, parameters: parameters)
+            .responseJSON { response in
+                print(response)
+        }
+    }
+    
     
     //    func sendImage(username: String, image: UIImage, imageKey: String)
     //    {

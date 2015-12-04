@@ -156,6 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         FBSDKAppEvents.activateApp()
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
+            DAOGifs.sharedInstance.checkNewGifsFromServer()
             DAOFriendRequests.sharedInstance.friendsAccepted()
             DAOContacts.sharedInstance.refreshContacts()
             //De teste, ou seja tirar depois de arrumar direitinho:

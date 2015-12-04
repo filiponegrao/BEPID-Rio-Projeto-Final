@@ -92,6 +92,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.registerClass(CellImage_TableViewCell.self, forCellReuseIdentifier: "ImageCell")
+        self.tableView.registerClass(CellGif_TableViewCell.self, forCellReuseIdentifier: "CellGif")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
@@ -523,6 +524,37 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             return cell
             
+        case .Gif:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("CellGif", forIndexPath: indexPath) as! CellGif_TableViewCell
+            cell.selectionStyle = .None
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateStyle = .LongStyle
+            dateFormatter.timeZone = NSTimeZone.localTimeZone()
+            dateFormatter.dateFormat = "HH:mm"
+            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
+            cell.sentDate.text = date
+            cell.backgroundColor = UIColor.clearColor()
+            cell.imageCell.image = UIImage.animatedImageWithData(self.messages[indexPath.row].gif!)
+            
+            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
+            {
+                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
+                cell.backgroundLabel.alpha = 0.3
+            }
+            else
+            {
+                cell.backgroundLabel.backgroundColor = oficialDarkGray
+                cell.backgroundLabel.alpha = 0.6
+            }
+            
+            cell.bringSubviewToFront(cell.imageCell)
+            
+            DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
+            DAOPostgres.sharedInstance.setMessageSeen(self.messages[indexPath.row])
+            
+            return cell
             
         default:
             
@@ -540,13 +572,17 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let message = self.messages[indexPath.row]
         
         //Imagem
-        if(message.contentKey != nil && !self.messageText.isFirstResponder())
+        let type = ContentType(rawValue: message.type)!
+
+        switch type
         {
+        case .Image:
+            
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImage_TableViewCell
             let frameOnTable = cell.imageCell.frame
             
             let frame = self.tableView.convertRect(frameOnTable, toView: self.tableView.superview)
-
+            
             self.messageText.endEditing(true)
             self.imageZoom = ImageZoom_View(message: message, origin: frame)
             self.imageZoom.chatController = self
@@ -561,25 +597,34 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 DAOMessages.sharedInstance.deleteMessageAfterTime(message)
                 message.status = "seen"
             }
-        }
-            //Hiperlynk
-        else if(message.text?.lowercaseString.rangeOfString("http://") != nil)
-        {
-            let text = message.text!.lowercaseString
-            var link = String()
-            if(text.rangeOfString(" ") != nil)
+            
+        case .Text:
+            
+            if(message.text?.lowercaseString.rangeOfString("http://") != nil)
             {
-                link = text.sliceFrom("http://", to: " ")!
-                link = "Http://" + link
-            }
-            else
-            {
-                link = text
+                let text = message.text!.lowercaseString
+                var link = String()
+                if(text.rangeOfString(" ") != nil)
+                {
+                    link = text.sliceFrom("http://", to: " ")!
+                    link = "Http://" + link
+                }
+                else
+                {
+                    link = text
+                }
+                
+                UIApplication.sharedApplication().openURL(NSURL(string: link)!)
             }
             
-            UIApplication.sharedApplication().openURL(NSURL(string: link)!)
+        case .Gif:
+            print("gif")
+            
+        default:
+            
+            print("nothing")
         }
-        
+
         self.messageText.endEditing(true)
         
     }
@@ -747,7 +792,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         actionsheet.addAction(UIAlertAction(title: "Gif Gallery", style: .Default, handler: { (action: UIAlertAction) -> Void in
             
-            let gifGallery = GifGallery_UIViewController()
+            let gifGallery = GifGallery_UIViewController(chatViewController: self)
             self.presentViewController(gifGallery, animated: true, completion: nil)
         }))
 
@@ -781,6 +826,29 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func sendImage(image: UIImage, lifetime: Int, filter: ImageFilter)
     {
         let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime, filter: filter)
+        
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        let index = self.messages.indexOf(message)
+        
+        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
+        
+        if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.tableView.contentOffset.y += screenWidth + 20
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
+        
+    }
+    
+    
+    func sendGif(gifName: String, gifData: NSData)
+    {
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, gifName: gifName, gifData: gifData)
         
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)

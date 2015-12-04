@@ -24,10 +24,6 @@ class CellGif_TableViewCell: UITableViewCell
         
         self.frame.size.height = screenWidth/6 * 2
         
-        self.cellView = UIView(frame: CGRectMake(0, 0, self.frame.size.height , self.frame.size.height))
-        self.cellView.backgroundColor = UIColor.clearColor()
-        self.contentView.addSubview(cellView)
-        
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundWidth))
         self.backgroundLabel.backgroundColor = UIColor.whiteColor()
         self.backgroundLabel.alpha = 0.1
@@ -35,12 +31,18 @@ class CellGif_TableViewCell: UITableViewCell
         self.backgroundLabel.layer.zPosition = 0
         self.addSubview(self.backgroundLabel)
         
+        self.cellView = UIView(frame: CGRectMake(0, 0, self.frame.size.height , self.frame.size.height))
+        self.cellView.backgroundColor = UIColor.clearColor()
+        self.addSubview(cellView)
+        
         self.imageCell = UIImageView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
         self.imageCell.clipsToBounds = true
         self.imageCell.layer.cornerRadius = 10
         self.imageCell.contentMode = .ScaleAspectFill
         self.imageCell.layer.zPosition = 5
         self.cellView.addSubview(imageCell)
+        
+        self.bringSubviewToFront(self.imageCell)
         
         let h = Editor.heightForView("09:00", font: UIFont(name: "Gill Sans", size: 10)!, width: dateTextWidth)
         self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth + margemLateral - 5, cellBackgroundWidth - dateTextHeigth - margemVertical, dateTextWidth, h))

@@ -19,6 +19,19 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
     var gifs : [Gif]!
     
     var progress : NVActivityIndicatorView!
+    
+    weak var chatViewController : Chat_ViewController!
+    
+    
+    init(chatViewController : Chat_ViewController)
+    {
+        self.chatViewController = chatViewController
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad()
     {
@@ -119,8 +132,11 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         let frame = attributes.frame
         
         let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
+        let gif = self.gifs[indexPath.row]
         
-        let sharing = GifSharing_View(imageOrigin: origin)
+        let sharing = GifSharing_View(imageOrigin: origin, gifData: gif.data, gifName: gif.name)
+        sharing.chatViewController = self.chatViewController
+        sharing.gifGalleryController = self
         self.view.addSubview(sharing)
         sharing.imageView.image = UIImage.animatedImageWithData(self.gifs[indexPath.item].data)
         sharing.animateOn()
