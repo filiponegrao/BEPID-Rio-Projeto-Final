@@ -10,13 +10,13 @@ import UIKit
 
 class CellAdd_TableViewCell: UITableViewCell {
 
-    @IBOutlet var photo: UIImageView!
+    var photo: UIImageView!
     
-    @IBOutlet var username: UILabel!
+    var username: UILabel!
     
-    @IBOutlet var trustLevel: UILabel!
+    var trustLevel: UILabel!
     
-    @IBOutlet var addButton: MKButton!
+    var addButton: MKButton!
     
     var invited : UIImageView!
     
@@ -26,12 +26,38 @@ class CellAdd_TableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        self.photo = UIImageView(frame: CGRectMake(0, 0, screenWidth/6, screenWidth/6))
         self.photo.clipsToBounds = true
         self.photo.layer.cornerRadius = self.photo.frame.size.width/2
+        self.addSubview(self.photo)
         
-        self.username.textColor = oficialLightGray
+        self.username = UILabel(frame: CGRectMake(20 + self.photo.frame.size.width, 15, screenWidth/3 * 2, 20))
+        self.username.textColor = oficialGreen
+        self.addSubview(self.username)
         
+        self.trustLevel = UILabel(frame: CGRectMake(15 + self.photo.frame.size.width, self.username.frame.size.height + 15, screenWidth/3 * 2, 20))
         self.trustLevel.textColor = oficialLightGray
+        self.addSubview(self.trustLevel)
+        
+        self.addButton = MKButton(frame: CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8))
+        self.addButton.setImage(UIImage(named: "addContactButton"), forState: .Normal)
+        self.addButton.addTarget(self, action: "addContact", forControlEvents: .TouchUpInside)
+        self.addSubview(self.addButton)
+        
+        self.invited = UIImageView(frame: CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8))
+        self.invited.image = UIImage(named: "accept")
+//        self.invited.contentMode = .ScaleAspectFit
+        self.invited.hidden = true
+        self.addSubview(self.invited)
+        
+        self.invitedLabel = UILabel(frame: CGRectMake(self.username.frame.origin.x, self.username.frame.origin.y + self.username.frame.size.height, screenWidth/3 * 2, 20))
+        self.invitedLabel.text = "Invited"
+        self.invitedLabel.textColor = oficialLightGray
+        self.invitedLabel.adjustsFontSizeToFitWidth = true
+        self.invitedLabel.hidden = true
+        self.addSubview(self.invitedLabel)
+
+
     }
 
     override func setSelected(selected: Bool, animated: Bool)
@@ -41,21 +67,14 @@ class CellAdd_TableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func addContact(sender: UIButton)
+    func addContact()
     {
         let username = self.username.text!
         self.addButton.hidden = true
         
-        self.invited = UIImageView(frame: CGRectMake(addButton.frame.origin.x, addButton.frame.origin.y + 10, addButton.frame.size.width/2, addButton.frame.size.height/2))
-        self.invited.image = UIImage(named: "accept")
-        self.invited.center = CGPointMake(self.addButton.center.x, self.addButton.center.y/2)
-        self.addSubview(self.invited)
-        
-        self.invitedLabel = UILabel(frame: CGRectMake(self.invited.frame.origin.x, self.invited.frame.origin.y + self.invited.frame.size.height, self.addButton.frame.size.width, self.addButton.frame.size.height/2))
-        self.invitedLabel.text = "Invited"
-        self.invitedLabel.textColor = oficialGreen
-        self.invitedLabel.adjustsFontSizeToFitWidth = true
-        self.addSubview(self.invitedLabel)
+        self.invited.hidden = false
+        self.invitedLabel.hidden = false
+    
         
         DAOFriendRequests.sharedInstance.sendRequest(username)
     }

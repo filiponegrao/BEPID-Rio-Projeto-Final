@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,72 +13,9 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="462" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6xG-kW-VTx">
-                        <rect key="frame" x="11" y="10" width="50" height="50"/>
-                        <animations/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="NS3-oa-t7i"/>
-                            <constraint firstAttribute="width" constant="50" id="xTw-NG-0Tl"/>
-                        </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TrustLevel : 100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIX-fU-foM">
-                        <rect key="frame" x="69" y="36" width="315" height="21"/>
-                        <animations/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="HkJ-Jr-4vh"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDq-x6-6LT" customClass="MKButton" customModule="FFVChat" customModuleProvider="target">
-                        <rect key="frame" x="401" y="10" width="50" height="50"/>
-                        <animations/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="9k6-Hb-48n"/>
-                            <constraint firstAttribute="height" constant="50" id="k4H-ni-LHa"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="47"/>
-                        <state key="normal" title="+">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="addContact:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YAq-JC-i0q"/>
-                        </connections>
-                    </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KJ6-xt-5vS">
-                        <rect key="frame" x="69" y="13" width="315" height="21"/>
-                        <animations/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="pBA-Vc-acE"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="0.1215686275" green="0.8980392157" blue="0.72156862749999995" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                </subviews>
                 <animations/>
-                <constraints>
-                    <constraint firstItem="gDq-x6-6LT" firstAttribute="leading" secondItem="KJ6-xt-5vS" secondAttribute="trailing" constant="17" id="5MY-XZ-Hjp"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="gDq-x6-6LT" secondAttribute="trailing" constant="3" id="7sc-kj-5v2"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="sIX-fU-foM" secondAttribute="bottom" constant="4" id="M73-MJ-ffc"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="gDq-x6-6LT" secondAttribute="bottom" constant="1" id="OQf-0i-v0l"/>
-                    <constraint firstItem="gDq-x6-6LT" firstAttribute="leading" secondItem="sIX-fU-foM" secondAttribute="trailing" constant="17" id="U3V-ua-iEW"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="6xG-kW-VTx" secondAttribute="bottom" constant="1.5" id="eEX-yU-ssO"/>
-                    <constraint firstItem="6xG-kW-VTx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="3" id="g6Z-9Y-joI"/>
-                    <constraint firstItem="sIX-fU-foM" firstAttribute="leading" secondItem="6xG-kW-VTx" secondAttribute="trailing" constant="8" id="jWi-dw-Khs"/>
-                    <constraint firstItem="sIX-fU-foM" firstAttribute="top" secondItem="KJ6-xt-5vS" secondAttribute="bottom" constant="2" id="m1W-ev-g6m"/>
-                    <constraint firstItem="KJ6-xt-5vS" firstAttribute="leading" secondItem="6xG-kW-VTx" secondAttribute="trailing" constant="8" id="sDn-t3-aye"/>
-                </constraints>
             </tableViewCellContentView>
             <animations/>
-            <connections>
-                <outlet property="addButton" destination="gDq-x6-6LT" id="GpW-7u-yEx"/>
-                <outlet property="photo" destination="6xG-kW-VTx" id="N7j-lF-Xgh"/>
-                <outlet property="trustLevel" destination="sIX-fU-foM" id="hxy-Wl-iLC"/>
-                <outlet property="username" destination="KJ6-xt-5vS" id="hc8-mY-Cuh"/>
-            </connections>
             <point key="canvasLocation" x="342" y="263"/>
         </tableViewCell>
     </objects>
