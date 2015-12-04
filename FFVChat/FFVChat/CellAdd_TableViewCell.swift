@@ -26,7 +26,7 @@ class CellAdd_TableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.photo = UIImageView(frame: CGRectMake(0, 0, screenWidth/6, screenWidth/6))
+        self.photo = UIImageView(frame: CGRectMake(10, 0, screenWidth/6, screenWidth/6))
         self.photo.clipsToBounds = true
         self.photo.layer.cornerRadius = self.photo.frame.size.width/2
         self.addSubview(self.photo)

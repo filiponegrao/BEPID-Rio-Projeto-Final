@@ -192,9 +192,9 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             let username = self.results[indexPath.row].username
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.username.text = username
-            cell.photo.center = CGPointMake(10 + cell.photo.frame.size.width/2, cell.center.y + 2)
+            cell.photo.center.y = cell.frame.origin.y + cell.frame.size.height/2
             
-            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 5))
+            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 3))
             separatorLineView.backgroundColor = oficialMediumGray
             
             DAOFriendRequests.sharedInstance.wasAlreadyRequested(username, callback: { (was) -> Void in
