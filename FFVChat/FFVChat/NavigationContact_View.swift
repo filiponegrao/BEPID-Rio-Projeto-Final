@@ -26,7 +26,6 @@ class NavigationContact_View: UIView
     
     weak var contactManager : ContactManager_View!
     
-    
     init(requester: Home_ViewController)
     {
         self.vc = requester
@@ -41,15 +40,15 @@ class NavigationContact_View: UIView
         self.addSubview(self.searchButton)
         
         
-        //TESTANTO PULSE ANIMATION
-        let pulseAnimation = CABasicAnimation(keyPath: "opacity")
-        pulseAnimation.duration = 1
-        pulseAnimation.fromValue = 0.1
-        pulseAnimation.toValue = 1
-        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        pulseAnimation.autoreverses = true
-        pulseAnimation.repeatCount = FLT_MAX
-        self.searchButton.layer.addAnimation(pulseAnimation, forKey: nil)
+        //TESTANDO PULSE ANIMATION
+//        let pulseAnimation = CABasicAnimation(keyPath: "opacity")
+//        pulseAnimation.duration = 1
+//        pulseAnimation.fromValue = 0.1
+//        pulseAnimation.toValue = 1
+//        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//        pulseAnimation.autoreverses = true
+//        pulseAnimation.repeatCount = FLT_MAX
+//        self.searchButton.layer.addAnimation(pulseAnimation, forKey: nil)
 
         
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
@@ -64,10 +63,12 @@ class NavigationContact_View: UIView
         //        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
         self.addSubview(self.toolsButton)
 
+        let toolsViewController = Tools_ViewController()
+        
         self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
-        self.alert.image = UIImage(named: "icon_alert")
+        self.alert.backgroundColor = oficialRed
         self.alert.hidden = true
-        self.toolsButton.addSubview(self.alert)
+//        toolsViewController.notificationButton.addSubview(self.alert)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: requestNotification.requestsLoaded.rawValue, object: nil)
         
@@ -139,12 +140,23 @@ class NavigationContact_View: UIView
         if(r.count > 0)
         {
             self.alert.hidden = false
+            
+            let pulseAnimation = CABasicAnimation(keyPath: "opacity")
+            pulseAnimation.duration = 1
+            pulseAnimation.fromValue = 0.1
+            pulseAnimation.toValue = 1
+            pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            pulseAnimation.autoreverses = true
+            pulseAnimation.repeatCount = FLT_MAX
+            self.toolsButton.layer.addAnimation(pulseAnimation, forKey: "myAnimation")
         }
     }
     
     func alertOff()
     {
         self.alert.hidden = true
+
+        self.toolsButton.layer.removeAnimationForKey("myAnimation")
     }
 
 }

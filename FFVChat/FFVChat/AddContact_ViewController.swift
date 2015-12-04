@@ -154,7 +154,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
     //** END SEARCH BAR FUNCTIONS **//
     
     
-    //** TABLE VIEW PROPRIETS *********//
+    //** TABLE VIEW PROPERTIES *********//
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -192,25 +192,17 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             let username = self.results[indexPath.row].username
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.username.text = username
+            cell.photo.center.y = cell.frame.origin.y + cell.frame.size.height/2
             
-            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 5))
+            let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 3))
             separatorLineView.backgroundColor = oficialMediumGray
             
             DAOFriendRequests.sharedInstance.wasAlreadyRequested(username, callback: { (was) -> Void in
                 if(was == true)
                 {
                     cell.addButton.hidden = true
-                    
-                    cell.invited = UIImageView(frame: CGRectMake(cell.addButton.frame.origin.x, cell.addButton.frame.origin.y + 10, cell.addButton.frame.size.width/2, cell.addButton.frame.size.height/2))
-                    cell.invited.center = CGPointMake(cell.addButton.center.x, cell.addButton.center.y/2)
-                    cell.invited.image = UIImage(named: "accept")
-                    cell.addSubview(cell.invited)
-                    
-                    cell.invitedLabel = UILabel(frame: CGRectMake(cell.invited.frame.origin.x, cell.invited.frame.origin.y + cell.invited.frame.size.height, cell.invited.frame.size.width, cell.addButton.frame.size.height/2))
-                    cell.invitedLabel.text = "Invited"
-                    cell.invitedLabel.textColor = oficialGreen
-                    cell.invitedLabel.adjustsFontSizeToFitWidth = true
-                    cell.addSubview(cell.invitedLabel)
+                    cell.invited.hidden = false
+                    cell.invitedLabel.hidden = false
                 }
             })
             
