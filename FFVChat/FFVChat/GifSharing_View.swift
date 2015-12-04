@@ -23,9 +23,21 @@ class GifSharing_View : UIView
     
     var blurView : UIVisualEffectView!
     
-    init(imageOrigin: CGRect)
+    weak var chatViewController : Chat_ViewController!
+    
+    weak var gifGalleryController : GifGallery_UIViewController!
+    
+    //Gif information
+    
+    var gifData : NSData!
+    
+    var gifName : String!
+    
+    init(imageOrigin: CGRect, gifData: NSData, gifName: String)
     {
         self.imageOrigin = imageOrigin
+        self.gifData = gifData
+        self.gifName = gifName
         
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
@@ -48,6 +60,7 @@ class GifSharing_View : UIView
         self.shareButton = UIButton(frame: CGRectMake(0,0,screenWidth/2.5, screenWidth/2.5))
         self.shareButton.setImage(UIImage(named: "send"), forState: .Normal)
         self.shareButton.center = CGPointMake(screenWidth*4/6, self.imageView.frame.origin.y + self.imageView.frame.size.height + (screenWidth*3/5)/2 + 20)
+        self.shareButton.addTarget(self, action: "sendGif", forControlEvents: .TouchUpInside)
         self.shareButton.imageView?.contentMode = .ScaleAspectFit
         self.addSubview(self.shareButton)
         
@@ -103,6 +116,29 @@ class GifSharing_View : UIView
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func sendGif()
+    {
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
+            
+            self.imageView.frame = self.imageOrigin
+            self.imageView.contentMode = .ScaleAspectFill
+            self.shareButton.center.y += screenWidth/2
+            self.cancelButton.center.y += screenWidth/2
+            self.blackScreen.alpha = 0
+            self.blurView.alpha = 0
+            
+            }) { (success: Bool) -> Void in
+                
+            
+                self.chatViewController.sendGif(self.gifName, gifData: self.gifData)
+                self.removeFromSuperview()
+                self.gifGalleryController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    
+                })
+        }
+
     }
     
     
