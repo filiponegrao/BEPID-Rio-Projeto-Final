@@ -23,7 +23,6 @@
 		8009D7321C10D43900F88C01 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7301C10D43900F88C01 /* Gif.swift */; };
 		8009D7341C11007300F88C01 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7331C11007300F88C01 /* UIImage+Gif.swift */; };
 		8009D7361C110E5500F88C01 /* CellGif_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */; };
-		8009D7381C11108400F88C01 /* GifSharing_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7371C11108400F88C01 /* GifSharing_View.swift */; };
 		8010FFF51C0CD46E00A4DBD6 /* BlackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */; };
 		8010FFF71C0CD5FE00A4DBD6 /* BlackList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */; };
 		801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */; };
@@ -131,6 +130,8 @@
 		80C91A541C07E79600E5B712 /* AppState.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80C91A531C07E79600E5B712 /* AppState.plist */; };
 		80C91A561C07E81D00E5B712 /* AppStateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C91A551C07E81D00E5B712 /* AppStateData.swift */; };
 		80DAE5541C07756500D431C1 /* bip.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 80DAE5531C07756500D431C1 /* bip.mp3 */; };
+		80E126A21C1257E100DC0755 /* GifSharing_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E126A11C1257E100DC0755 /* GifSharing_View.swift */; };
+		80E126A41C125B1300DC0755 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E126A31C125B1300DC0755 /* Optimization.swift */; };
 		80E2FC801BC4B9CB005F2DFB /* Tools_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */; };
 		80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */; };
 		80E458AA1BE853580066F1B1 /* JudgerAlert_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E458A91BE853580066F1B1 /* JudgerAlert_ViewController.swift */; };
@@ -221,7 +222,6 @@
 		8009D7301C10D43900F88C01 /* Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		8009D7331C11007300F88C01 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellGif_TableViewCell.swift; sourceTree = "<group>"; };
-		8009D7371C11108400F88C01 /* GifSharing_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifSharing_View.swift; sourceTree = "<group>"; };
 		8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackList.swift; sourceTree = "<group>"; };
 		8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BlackList.plist; sourceTree = "<group>"; };
 		801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellPrintscreen_TableViewCell.swift; sourceTree = "<group>"; };
@@ -334,6 +334,8 @@
 		80C91A531C07E79600E5B712 /* AppState.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AppState.plist; sourceTree = "<group>"; };
 		80C91A551C07E81D00E5B712 /* AppStateData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateData.swift; sourceTree = "<group>"; };
 		80DAE5531C07756500D431C1 /* bip.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bip.mp3; sourceTree = "<group>"; };
+		80E126A11C1257E100DC0755 /* GifSharing_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifSharing_View.swift; sourceTree = "<group>"; };
+		80E126A31C125B1300DC0755 /* Optimization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optimization.swift; sourceTree = "<group>"; };
 		80E2FC7F1BC4B9CB005F2DFB /* Tools_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tools_ViewController.swift; sourceTree = "<group>"; };
 		80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContact_ViewController.swift; sourceTree = "<group>"; };
 		80E458A91BE853580066F1B1 /* JudgerAlert_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JudgerAlert_ViewController.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				807A65C11BFFC61D00A39984 /* EncryptTools.swift */,
 				80FD13AB1C038CF100729402 /* GMColor.swift */,
 				8009D7331C11007300F88C01 /* UIImage+Gif.swift */,
+				80E126A31C125B1300DC0755 /* Optimization.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
 				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
 				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
+				80E126A11C1257E100DC0755 /* GifSharing_View.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -1031,6 +1035,7 @@
 				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
 				8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */,
+				80E126A21C1257E100DC0755 /* GifSharing_View.swift in Sources */,
 				803657851BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
 				F6178A5C1BF6753C0044FBA9 /* UsefulFunctions.swift in Sources */,
 				80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */,
@@ -1045,7 +1050,6 @@
 				803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */,
 				803657901BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
-				8009D7381C11108400F88C01 /* GifSharing_View.swift in Sources */,
 				803657831BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
 				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,
 				804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */,
@@ -1081,6 +1085,7 @@
 				80E8BD761BC58B8300B49C31 /* Notifications_ViewController.swift in Sources */,
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
+				80E126A41C125B1300DC0755 /* Optimization.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
 				80C91A561C07E81D00E5B712 /* AppStateData.swift in Sources */,
 				F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */,

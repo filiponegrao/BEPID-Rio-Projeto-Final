@@ -172,12 +172,27 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
             self.numberOfMessages.text = "\(count)"
             self.numberOfMessages.hidden = false
             
-            let originalSize = self.numberOfMessages.frame.size
+            let width = self.profileBtn.frame.size.width/3
             self.numberOfMessages.frame.size = CGSizeMake(1, 1)
+            
+            var size : CGSize!
+            
+            if(count > 9 && count < 99)
+            {
+                size = CGSizeMake(width*2, width)
+            }
+            else if(count < 10)
+            {
+                size = CGSizeMake(width, width)
+            }
+            else
+            {
+                size = CGSizeMake(width*3, width)
+            }
             
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
                 
-                self.numberOfMessages.frame.size = originalSize
+                self.numberOfMessages.frame.size = size
                 
                 }, completion: { (success: Bool) -> Void in
                     

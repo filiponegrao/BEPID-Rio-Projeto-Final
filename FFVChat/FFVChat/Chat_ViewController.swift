@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 FilipoNegrao. All rights reserved.
 //
 
+
 import UIKit
 import AVFoundation
 
@@ -157,12 +158,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "addNewMessage", name: NotificationController.center.messageReceived.name, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
         
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
-        
+                
     }
     
     override func viewDidAppear(animated: Bool)
@@ -226,7 +228,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
-        self.imageZoom?.fadeOut()
+        
+        if( self.imageZoom != nil )
+        {
+            if( self.messages.indexOf(self.imageZoom!.message) == nil )
+            {
+                self.imageZoom?.fadeOut()
+            }
+        }
         
     }
     
@@ -259,13 +268,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let index = self.messages.indexOf(mssg)!
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
             
-            self.playSound()
-            
-            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.status != "seen" && mssg.type == ContentType.Text.rawValue)
+            //Verifica se a mensagem é minha
+            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.type != ContentType.Image.rawValue)
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
-                DAOPostgres.sharedInstance.setMessageSeen(mssg)
-                mssg.status = "seen"
             }
             
             //Texto
@@ -274,6 +280,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 let h = self.heightForView(mssg.text!, font: textMessageFont!, width: cellTextWidth)
                 if((self.tableView.contentSize.height + h) > self.tableView.frame.size.height)
                 {
+                    
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         
                         self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical*2) + 20 //+20 de margem, superior e inferiro
@@ -284,7 +291,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
             }
             //Imagem
-            else if(mssg.type == ContentType.Image.rawValue)
+            else if(mssg.type == ContentType.Image.rawValue || mssg.type == ContentType.Gif.rawValue)
             {
                 if((self.tableView.contentSize.height + screenWidth) > self.tableView.frame.size.height)
                 {
@@ -297,6 +304,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     })
                 }
             }
+            self.playSound()
         }
     }
     
@@ -417,15 +425,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             //adiciona mensagens do array
             
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .LongStyle
-            dateFormatter.timeZone = NSTimeZone.localTimeZone()
-            //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            dateFormatter.dateFormat = "HH:mm"
-            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
-            
             cell.textMessage.text = self.messages[indexPath.row].text
-            cell.sentDate.text = date
+            cell.sentDate.text = Optimization.getStringDateFromDate(self.messages[indexPath.row].sentDate)
+            
             //Verificando o tamanho
             let necessaryHeigth = self.heightForView(self.messages[indexPath.row].text!, font: textMessageFont!, width: cellTextWidth)
             if(necessaryHeigth > cellTextHeigth)
@@ -436,12 +438,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.sentDate.frame.origin.y = cell.textMessage.frame.origin.y + cell.textMessage.frame.size.height
             }
             
-            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
-            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
-            cell.backgroundLabel.layer.shadowRadius = 3
-            cell.backgroundLabel.layer.shadowOpacity = 1
-            cell.backgroundLabel.layer.masksToBounds = false
-            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
@@ -464,8 +460,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.textMessage.textColor = UIColor.whiteColor()
             }
             
-            DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
-            DAOPostgres.sharedInstance.setMessageSeen(self.messages[indexPath.row])
+            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
+            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
+            cell.backgroundLabel.layer.shadowRadius = 3
+            cell.backgroundLabel.layer.shadowOpacity = 1
+            cell.backgroundLabel.layer.masksToBounds = false
+            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
+            let mssg = self.messages[indexPath.row]
+            
+            if(mssg.sender != DAOUser.sharedInstance.getUsername())
+            {
+                DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+            }
             
             return cell
             
@@ -475,6 +481,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! CellImage_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            cell.sentDate.text = Optimization.getStringDateFromDate(self.messages[indexPath.row].sentDate)
+            //blur
+            cell.blur?.removeFromSuperview()
+            cell.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+            cell.blur.frame = cell.imageCell.bounds
+            cell.imageCell.addSubview(cell.blur)
+            cell.bringSubviewToFront(cell.indicator)
             
             if(self.messages[indexPath.row].image != nil)
             {
@@ -488,22 +502,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 DAOParse.sharedInstance.downloadImageForMessage(self.messages[indexPath.row])
             }
             
-            //blur
-            cell.blur?.removeFromSuperview()
-            cell.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-            cell.blur.frame = cell.imageCell.bounds
-            cell.imageCell.addSubview(cell.blur)
-            cell.bringSubviewToFront(cell.indicator)
-            
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .LongStyle
-            dateFormatter.timeZone = NSTimeZone.localTimeZone()
-            //            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
-            dateFormatter.dateFormat = "HH:mm"
-            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
-            cell.sentDate.text = date
-            
-            
+
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
                 cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
@@ -529,12 +528,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let cell = tableView.dequeueReusableCellWithIdentifier("CellGif", forIndexPath: indexPath) as! CellGif_TableViewCell
             cell.selectionStyle = .None
             
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateStyle = .LongStyle
-            dateFormatter.timeZone = NSTimeZone.localTimeZone()
-            dateFormatter.dateFormat = "HH:mm"
-            let date = dateFormatter.stringFromDate(self.messages[indexPath.row].sentDate)
-            cell.sentDate.text = date
+            cell.sentDate.text = Optimization.getStringDateFromDate(self.messages[indexPath.row].sentDate)
             cell.backgroundColor = UIColor.clearColor()
             cell.imageCell.image = UIImage.animatedImageWithData(self.messages[indexPath.row].gif!)
             
@@ -549,10 +543,18 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 cell.backgroundLabel.alpha = 0.6
             }
             
-            cell.bringSubviewToFront(cell.imageCell)
+            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
+            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
+            cell.backgroundLabel.layer.shadowRadius = 3
+            cell.backgroundLabel.layer.shadowOpacity = 1
+            cell.backgroundLabel.layer.masksToBounds = false
+            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
-            DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[indexPath.row])
-            DAOPostgres.sharedInstance.setMessageSeen(self.messages[indexPath.row])
+            let mssg = self.messages[indexPath.item]
+            if(mssg.sender != DAOUser.sharedInstance.getUsername())
+            {
+                DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+            }
             
             return cell
             
@@ -584,18 +586,19 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let frame = self.tableView.convertRect(frameOnTable, toView: self.tableView.superview)
             
             self.messageText.endEditing(true)
-            self.imageZoom = ImageZoom_View(message: message, origin: frame)
-            self.imageZoom.chatController = self
-            self.imageZoom.sender = self.messages[indexPath.item].sender
-            self.isViewing = true
-            self.view.addSubview(self.imageZoom)
-            self.imageZoom.fadeIn()
-            
-            print(message.status)
-            if(message.sender != DAOUser.sharedInstance.getUsername() && message.status == "received")
+            if(self.messages[indexPath.row].image != nil)
             {
-                DAOMessages.sharedInstance.deleteMessageAfterTime(message)
-                message.status = "seen"
+                self.imageZoom = ImageZoom_View(message: message, origin: frame)
+                self.imageZoom.chatController = self
+                self.imageZoom.sender = self.messages[indexPath.item].sender
+                self.isViewing = true
+                self.view.addSubview(self.imageZoom)
+                self.imageZoom.fadeIn()
+                
+                if(message.sender != DAOUser.sharedInstance.getUsername())
+                {
+                    DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+                }
             }
             
         case .Text:

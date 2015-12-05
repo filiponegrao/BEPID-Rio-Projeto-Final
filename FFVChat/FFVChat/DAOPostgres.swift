@@ -76,6 +76,7 @@ class DAOPostgres : NSObject
                             }
                             
                         case .Image:
+                            
                             let filterString = result["filter"] as! String
                             let filter = ImageFilter(rawValue: filterString)!
                             if(DAOMessages.sharedInstance.addReceivedMessage(sender, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, filter: filter))
@@ -84,6 +85,7 @@ class DAOPostgres : NSObject
                             }
                             
                         case .Audio:
+                            
                             print("recebeu audio")
                             
                         case .Gif:
@@ -98,15 +100,13 @@ class DAOPostgres : NSObject
                             }
                             
                         default:
+                            
                             print("Erro ao encontrar tipo do arquivo recebido!")
                             
                         }
-                        
                     }
-                    
                 }
         }
-        
     }
     
     func sendTextMessage(username: String, lifeTime: Int, text: String)
@@ -216,7 +216,7 @@ class DAOPostgres : NSObject
     {
         let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(message.sender), "target": EncryptTools.encUsername(message.target), "sentDate": message.sentDate]
         
-        Alamofire.request(.POST, self.seenURL, parameters: parameters)
+        Alamofire.request(.POST, self.deletedURL, parameters: parameters)
             .responseJSON { response in
                 print(response.result.value)
         }

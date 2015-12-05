@@ -204,18 +204,102 @@ class DAOMessages : NSObject
     
     func setMessageSeen(message: Message)
     {
-        DAOPostgres.sharedInstance.setMessageSeen(message)
-        
-        message.status = "seen"
-        self.save()
+        if(message.status != "seen")
+        {
+            DAOPostgres.sharedInstance.setMessageSeen(message)
+            
+            message.status = "seen"
+            self.save()
+        }
     }
     
     
     func setMessageDeleted(message: Message)
     {
-        
+        DAOPostgres.sharedInstance.setDeletedMessage(message)
     }
     
+    
+    func deleteMessage(message: Message)
+    {
+        let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@",message.sentDate,message.target,message.sender)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Message")
+        fetchRequest.predicate = predicate
+        
+        do {
+            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
+            if let entityToDelete = fetchedEntities.first
+            {
+                DAOPostgres.sharedInstance.setDeletedMessage(message)
+                self.managedObjectContext.deleteObject(entityToDelete)
+            }
+        }
+        catch
+        {
+            // Do something in response to error condition
+        }
+        
+        self.save()
+    }
+    
+    
+    /** Funcao que verifica se uma mensagem possui o status
+     *  seen. Caso possuir nao faz nada pois ja foi jurada
+     * de morte, ops, para deletar. Caso o status seja "received",
+     * seta o valor "seen" para a mensagem, modifica no banco
+     * e inicia o contador para apagar a mesma apos o fim do tempo.
+     */
+    func deleteMessageAfterTime(message: Message)
+    {
+        print(message.status)
+        if(message.status != "seen")
+        {
+            self.setMessageSeen(message)
+            
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                
+                self.timesUpMessage(message)
+            }
+        }
+    }
+    
+    /**
+     * Funcao que verifica se ha alguma exclusao em andamento,
+     * caso nao haja, inicia uma exclusao. Caso contrario,
+     * inicia um delay para que a acao seja tentada novamente.
+     */
+    func timesUpMessage(message: Message)
+    {
+        if(!self.inExecution)
+        {
+            self.inExecution = true
+            var contact : String
+            if (message.sender == EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()))
+            {
+                contact = message.target
+            }
+            else
+            {
+                contact = message.sender
+            }
+            
+            let messages = self.conversationWithContact(contact)
+            let index = messages.indexOf(message)
+            self.deleteMessage(message)
+            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
+            self.inExecution = false
+        }
+        else
+        {
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(0.5)) * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.timesUpMessage(message)
+            }
+        }
+    }
+
     
     func contactMessageExist(message: Message) -> Bool
     {
@@ -247,28 +331,7 @@ class DAOMessages : NSObject
     }
     
     
-    func deleteMessage(message: Message)
-    {
-        let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@",message.sentDate,message.target,message.sender)
-        
-        let fetchRequest = NSFetchRequest(entityName: "Message")
-        fetchRequest.predicate = predicate
-        
-        do {
-            let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
-            if let entityToDelete = fetchedEntities.first
-            {
-                DAOPostgres.sharedInstance.setDeletedMessage(message)
-                self.managedObjectContext.deleteObject(entityToDelete)
-            }
-        }
-        catch
-        {
-            // Do something in response to error condition
-        }
-        
-        self.save()
-    }
+    
     
     func clearConversation(username: String)
     {
@@ -303,58 +366,7 @@ class DAOMessages : NSObject
         }
         return messages
     }
-    
-    
-    func deleteMessageAfterTime(message: Message)
-    {
-        if(message.status != "seen")
-        {
-            self.setMessageSeen(message)
-            message.status = "seen"
-            self.save()
-            
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)) * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                
-                self.timesUpMessage(message)
-            }
-        }
-    }
-    
-    
-    
-    func timesUpMessage(message: Message)
-    {
-        if(!self.inExecution)
-        {
-            self.inExecution = true
-            var contact : String
-            print("sender: \(message.sender)")
-            print("critp: \(EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()))")
-            if (message.sender == EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()))
-            {
-                contact = message.target
-            }
-            else
-            {
-                contact = message.sender
-            }
-            
-            let messages = self.conversationWithContact(contact)
-            let index = messages.indexOf(message)
-            self.deleteMessage(message)
-            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!]))
-            self.inExecution = false
-        }
-        else
-        {
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(0.5)) * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                self.timesUpMessage(message)
-            }
-        }
-    }
-    
+
     
     func numberOfUnreadMessages(contact: Contact) -> Int
     {
@@ -372,12 +384,6 @@ class DAOMessages : NSObject
         
         return unread
     }
-    
-    
-    //    func receiveMessagesFromContact()
-    //    {
-    //        DAOParse.checkForContactsMessage()
-    //    }
     
     
     func setImageForMessage(message: Message, image: NSData)
