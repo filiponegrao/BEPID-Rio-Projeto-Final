@@ -26,6 +26,8 @@ class NavigationContact_View: UIView
     
     weak var contactManager : ContactManager_View!
     
+    var toolsViewController : Tools_ViewController!
+    
     init(requester: Home_ViewController)
     {
         self.vc = requester
@@ -54,21 +56,14 @@ class NavigationContact_View: UIView
         self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
-        
-        
-        
-        //        self.toolsButton.rippleLocation = .Center
-        //        self.toolsButton.rippleLayerColor = UIColor.clearColor()
-        //        self.toolsButton.rippleAniDuration = 0.5
-        //        self.toolsButton.rippleLayerColor = UIColor.whiteColor()
+     
         self.addSubview(self.toolsButton)
 
-        let toolsViewController = Tools_ViewController()
+        self.toolsViewController = Tools_ViewController()
         
         self.alert = UIImageView(frame: CGRectMake(0, 0, 30, 30))
         self.alert.backgroundColor = oficialRed
         self.alert.hidden = true
-//        toolsViewController.notificationButton.addSubview(self.alert)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: requestNotification.requestsLoaded.rawValue, object: nil)
         
@@ -139,6 +134,8 @@ class NavigationContact_View: UIView
         
         if(r.count > 0)
         {
+//            self.toolsViewController.notificationButton.addSubview(self.alert)
+
             self.alert.hidden = false
             
             let pulseAnimation = CABasicAnimation(keyPath: "opacity")

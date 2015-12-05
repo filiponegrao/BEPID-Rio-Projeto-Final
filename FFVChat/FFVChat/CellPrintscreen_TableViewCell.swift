@@ -27,8 +27,8 @@ class CellPrintscreen_TableViewCell: UITableViewCell
         self.photo.clipsToBounds = true
         self.addSubview(self.photo)
         
-        self.title = UILabel(frame: CGRectMake(self.photo.frame.origin.x + self.photo.frame.size.width + 10, 10, screenWidth - 110, 60))
-        self.title.text = "testando um texto grande pra ficar escirto em duas linhas e tal"
+        self.title = UILabel(frame: CGRectMake(self.photo.frame.origin.x + self.photo.frame.size.width + 10, 10, screenWidth - 110, 50))
+        self.title.text = "testando um texto grande pra ficar escrito em duas linhas e tal"
         self.title.numberOfLines = 3
         self.title.font = UIFont(name: "Helvetica", size: 16)
         self.title.textColor = oficialLightGray
