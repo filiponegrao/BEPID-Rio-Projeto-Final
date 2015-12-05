@@ -178,7 +178,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(self.printscreens[indexPath.row].imageKey)
             if(image == nil)
             {
-                cell.photo.image = UIImage(named: "robber.png")
+                cell.photo.image = UIImage(named: "spy")
             }
             else
             {
@@ -199,8 +199,18 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         {
             let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(self.printscreens[indexPath.row].imageKey)
             
-            self.midiaViewer = MidiaViewer_View(image: image!, requester: self)
-            self.view.addSubview(self.midiaViewer)
+            if(image != nil)
+            {
+                self.midiaViewer = MidiaViewer_View(image: image!, requester: self)
+                self.view.addSubview(self.midiaViewer)
+            }
+            else
+            {
+                let alert = UIAlertView(title: "Oops!", message: "This picture is no longer available", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            
         }
         
         
