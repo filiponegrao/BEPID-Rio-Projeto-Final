@@ -44,7 +44,7 @@ class MidiaViewer_View: UIView
         
         self.passwordView = Password_View(requester: requester)
         self.addSubview(self.passwordView)
-    }
+}
     
     required init?(coder aDecoder: NSCoder)
     {

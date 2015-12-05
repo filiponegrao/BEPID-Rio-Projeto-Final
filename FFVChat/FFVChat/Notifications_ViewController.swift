@@ -21,6 +21,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         
     var midiaViewer : MidiaViewer_View!
 
+    var blurView : UIVisualEffectView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -134,7 +136,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             cell.selectionStyle = .None
             cell.backgroundColor = oficialSemiGray
             
-            
             let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 1))
             separatorLineView.backgroundColor = oficialMediumGray
             
@@ -183,6 +184,10 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             else
             {
                 cell.photo.image = image
+                
+                //NAO SEI COLOCAR O BLUR :/
+                self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+                cell.photo.addSubview(self.blurView)
             }
             
             cell.contentView.addSubview(separatorLineView)
