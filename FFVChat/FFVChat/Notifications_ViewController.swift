@@ -21,6 +21,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         
     var midiaViewer : MidiaViewer_View!
 
+    var blurView : UIVisualEffectView!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -134,7 +136,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             cell.selectionStyle = .None
             cell.backgroundColor = oficialSemiGray
             
-            
             let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 1))
             separatorLineView.backgroundColor = oficialMediumGray
             
@@ -178,11 +179,15 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(self.printscreens[indexPath.row].imageKey)
             if(image == nil)
             {
-                cell.photo.image = UIImage(named: "robber.png")
+                cell.photo.image = UIImage(named: "spy")
             }
             else
             {
                 cell.photo.image = image
+                
+                //NAO SEI COLOCAR O BLUR :/
+                self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+                cell.photo.addSubview(self.blurView)
             }
             
             cell.contentView.addSubview(separatorLineView)
@@ -199,8 +204,18 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         {
             let image = DAOSentMidia.sharedInstance.sentMidiaImageForKey(self.printscreens[indexPath.row].imageKey)
             
-            self.midiaViewer = MidiaViewer_View(image: image!, requester: self)
-            self.view.addSubview(self.midiaViewer)
+            if(image != nil)
+            {
+                self.midiaViewer = MidiaViewer_View(image: image!, requester: self)
+                self.view.addSubview(self.midiaViewer)
+            }
+            else
+            {
+                let alert = UIAlertView(title: "Oops!", message: "This picture is no longer available", delegate: nil, cancelButtonTitle: "Ok")
+                alert.show()
+            }
+            
+            
         }
         
         

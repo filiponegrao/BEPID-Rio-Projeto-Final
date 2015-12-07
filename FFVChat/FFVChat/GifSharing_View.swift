@@ -51,24 +51,21 @@ class GifSharing_View : UIView
         self.blurView.alpha = 0
         self.addSubview(self.blurView)
         
-        self.imageView = UIImageView(frame: CGRectMake(10, 70, screenWidth - 20, screenWidth - 20))
+        self.imageView = UIImageView(frame: CGRectMake(10, screenHeight/5, screenWidth - 20, screenWidth - 20))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.layer.cornerRadius = 4
         self.imageView.clipsToBounds = true
         self.addSubview(self.imageView)
         
-        self.shareButton = UIButton(frame: CGRectMake(0,0,screenWidth/2.5, screenWidth/2.5))
+        self.shareButton = UIButton(frame: CGRectMake(0, 0,screenWidth/2.5, screenWidth/2.5))
         self.shareButton.setImage(UIImage(named: "send"), forState: .Normal)
-        self.shareButton.center = CGPointMake(screenWidth*4/6, self.imageView.frame.origin.y + self.imageView.frame.size.height + (screenWidth*3/5)/2 + 20)
+        self.shareButton.center = CGPointMake(screenWidth/2, screenHeight - screenWidth/6 - 20)
         self.shareButton.addTarget(self, action: "sendGif", forControlEvents: .TouchUpInside)
         self.shareButton.imageView?.contentMode = .ScaleAspectFit
         self.addSubview(self.shareButton)
         
-        self.cancelButton = UIButton(frame: CGRectMake(0,0,screenWidth/2.5, screenWidth/2.5))
-        self.cancelButton.setImage(UIImage(named: "cancelButton"), forState: .Normal)
-//        self.cancelButton.setTitle("X", forState: .Normal)
-        self.cancelButton.imageView?.contentMode = .ScaleAspectFit
-        self.cancelButton.center = CGPointMake(screenWidth*2/6, self.imageView.frame.origin.y + self.imageView.frame.size.height + (screenWidth*3/5)/2 + 20)
+        self.cancelButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
+        self.cancelButton.setImage(UIImage(named: "close"), forState: .Normal)
         self.cancelButton.addTarget(self, action: "animateOff", forControlEvents: .TouchUpInside)
         self.addSubview(self.cancelButton)
     }
@@ -91,6 +88,7 @@ class GifSharing_View : UIView
             self.imageView.frame = finalFrame
             self.shareButton.center = shareFinalCenter
             self.cancelButton.center = cancelFinalCenter
+            self.cancelButton.alpha = 1
             
             }) { (success: Bool) -> Void in
                 
@@ -104,6 +102,7 @@ class GifSharing_View : UIView
             self.imageView.frame = self.imageOrigin
             self.imageView.contentMode = .ScaleAspectFill
             self.shareButton.center.y += screenWidth/2
+            self.cancelButton.alpha = 0
             self.cancelButton.center.y += screenWidth/2
             self.blackScreen.alpha = 0
             self.blurView.alpha = 0
