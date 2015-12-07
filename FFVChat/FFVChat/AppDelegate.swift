@@ -159,10 +159,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             DAOPostgres.sharedInstance.startObserve()
             DAOGifs.sharedInstance.checkNewGifsFromServer()
             DAOFriendRequests.sharedInstance.friendsAccepted()
+            DAOFriendRequests.sharedInstance.loadRequests()
             DAOContacts.sharedInstance.refreshContacts()
+            
             //De teste, ou seja tirar depois de arrumar direitinho:
             DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
         }
+        
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
     }

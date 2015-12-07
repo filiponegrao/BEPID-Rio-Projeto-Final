@@ -34,6 +34,8 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
     
     var filtros = ["No Filter", "Circle", "Spark"]
     
+    var imageFilters = [UIImage(named: "NoFilter"), UIImage(named: "CircleFilter"), UIImage(named: "NoFilter")]
+    
     var selectedFilter : ImageFilter = ImageFilter.None
     
     //Efeitos
@@ -138,7 +140,7 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CellFilter_CollectionViewCell
         
-        cell.imageView.image = self.image
+        cell.imageView.image = self.imageFilters[indexPath.item]
         cell.title.text = self.filtros[indexPath.item]
         
         return cell
@@ -208,7 +210,7 @@ class Filters_ViewController: UIViewController, UICollectionViewDataSource, UICo
         self.circleUnblur = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
         self.circleUnblur.center = self.imageView.center
         self.circleUnblur.layer.cornerRadius = raio
-//        self.circleUnblur.contentMode = .ScaleAspectFill
+        self.circleUnblur.contentMode = .ScaleAspectFill
         self.circleUnblur.clipsToBounds = true
         self.circleUnblur.image = Editor.circleUnblur(self.image, x: self.circleUnblur.frame.origin.x, y: self.circleUnblur.frame.origin.y, imageFrame: self.imageView.frame)
         self.imageView.addSubview(self.circleUnblur)

@@ -12,7 +12,7 @@ import CryptoSwift
 
 
 private let data: DAOPostgres = DAOPostgres()
-var baseUrl = "http://54.94.247.156/phps"
+var baseUrl = "http://54.233.109.25/phps"
 
 
 class DAOPostgres : NSObject
