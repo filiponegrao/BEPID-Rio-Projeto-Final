@@ -16,8 +16,6 @@ private let data = DAOGifs()
 
 class DAOGifs : NSObject
 {
-    let defaultGifs = ["dimitri","putz","aff"]
-    
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
     
@@ -35,32 +33,38 @@ class DAOGifs : NSObject
     
     func checkNewGifsFromServer()
     {
-        for gifName in self.defaultGifs
+        
+        if(PFUser.currentUser() != nil)
         {
-            if(!self.gifAlreadyExist(gifName))
-            {
-                if(PFUser.currentUser() != nil)
+            let query = PFQuery(className: "Gifs")
+            query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]?, error: NSError?) -> Void in
+                
+                if let objects = objects as? [PFObject]
                 {
-                    let query = PFQuery(className: "Gifs")
-                    query.whereKey("name", equalTo: gifName)
-                    query.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
-                        
-                        if(object != nil)
+                    for object in objects
+                    {
+                        let name = object["name"] as! String
+                        if(!self.gifAlreadyExist(name))
                         {
-                            let file = object!["gif"] as! PFFile
+                            let launchedDate = object.valueForKey("createdAt") as! NSDate
+                            let text = object.valueForKey("hashtags") as! NSMutableArray
+                            let hashtags = NSKeyedArchiver.archivedDataWithRootObject(text)
+                            let file = object.objectForKey("gif") as! PFFile
                             file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                                 
                                 if(data != nil)
                                 {
-                                    self.addGif(gifName, data: data!)
+                                    self.addGif(name, data: data!, launchedDate: launchedDate, hashtags: hashtags)
                                     NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.gifDownloaded)
                                 }
                             })
                         }
-                    })
+                    }
                 }
-            }
+                
+            })
         }
+      
     }
     
     
@@ -77,10 +81,9 @@ class DAOGifs : NSObject
             return [Gif]()
         }
         
-        return [Gif]()
     }
     
-    func addGif(name: String, data: NSData)
+    func addGif(name: String, data: NSData, launchedDate: NSDate, hashtags: NSData)
     {
         let fetchRequest = NSFetchRequest(entityName: "Gif")
         let predicate = NSPredicate(format: "name == %@", name)
@@ -91,7 +94,7 @@ class DAOGifs : NSObject
             let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Gif]
             if(results.count == 0)
             {
-                let gif = Gif.createInManagedObjectContext(self.managedObjectContext, name: name, data: data)
+                let gif = Gif.createInManagedObjectContext(self.managedObjectContext, name: name, data: data, launchedDate: launchedDate, hashtags: hashtags)
                 self.save()
             }
         }

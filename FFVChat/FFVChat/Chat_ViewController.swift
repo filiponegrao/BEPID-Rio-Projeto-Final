@@ -214,29 +214,32 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         let info : [NSObject : AnyObject] = notification.userInfo!
         let index = info["index"] as! Int
+        let contact = info["contact"] as! String
         
-        print("Meu indicie é \(index) e minha abela tem \(self.messages.count)")
-        
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        
-        print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a linha \(index)")
-        
-        if(index > self.messages.count)
+        if(contact == self.contact.username)
         {
-            self.tableView.reloadData()
-            return
-        }
-        
-        self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
-        
-        if( self.imageZoom != nil )
-        {
-            if( self.messages.indexOf(self.imageZoom!.message) == nil )
+            print("Meu indicie é \(index) e minha abela tem \(self.messages.count)")
+            
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            
+            print("agora minha tabela tem \(self.messages.count) linhas e eu vou apagar a linha \(index)")
+            
+            if(index > self.messages.count)
             {
-                self.imageZoom?.fadeOut()
+                self.tableView.reloadData()
+                return
+            }
+            
+            self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
+            
+            if( self.imageZoom != nil )
+            {
+                if( self.messages.indexOf(self.imageZoom!.message) == nil )
+                {
+                    self.imageZoom?.fadeOut()
+                }
             }
         }
-        
     }
     
     func reloadImageCell(notification: NSNotification)
@@ -520,7 +523,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundLabel.layer.shadowOpacity = 1
             cell.backgroundLabel.layer.masksToBounds = false
             cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
-            
+            let mssg = self.messages[indexPath.row]
+
             return cell
             
         case .Gif:
@@ -590,7 +594,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 self.imageZoom = ImageZoom_View(message: message, origin: frame)
                 self.imageZoom.chatController = self
-                self.imageZoom.sender = self.messages[indexPath.item].sender
+                self.imageZoom.message = self.messages[indexPath.row]
                 self.isViewing = true
                 self.view.addSubview(self.imageZoom)
                 self.imageZoom.fadeIn()
@@ -911,9 +915,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func didTakeScreenShot()
     {
-        if(self.imageZoom != nil && self.imageZoom?.sender != DAOUser.sharedInstance.getUsername())
+        if(self.imageZoom != nil)
         {
-            DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.message.contentKey!, sender: self.contact.username)
+            if(self.imageZoom.message.sender != DAOUser.sharedInstance.getUsername())
+            {
+                DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.message.contentKey!, sender: self.contact.username)
+                DAOMessages.sharedInstance.timesUpMessage(self.imageZoom.message)
+            }
         }
         
         let alert = JudgerAlert_ViewController()

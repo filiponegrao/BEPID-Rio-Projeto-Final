@@ -21,6 +21,8 @@ class DAOPostgres : NSObject
     
     var refresherContact : NSTimer!
     
+    var deleteOldMessages : NSTimer!
+    
     //Bepid URLs
     let sendMessageURL = "\(baseUrl)/sendTextMessage.php"
     let sendImageMessageURL = "\(baseUrl)/sendImageMessage.php"
@@ -31,6 +33,8 @@ class DAOPostgres : NSObject
     let sendImageURL = "\(baseUrl)/insertImage2.php"
     let fetchImageURL = "\(baseUrl)/fetchImage.php"
     let sendURL = "\(baseUrl)/sendMessage.php"
+    let deleteMessageURL = "\(baseUrl)/deleteMessage.php"
+    let checkDeletedMessages = "\(baseUrl)/checkDeletedMessages.php"
     
     
     override init()
@@ -44,6 +48,11 @@ class DAOPostgres : NSObject
     }
     
     
+    /**
+     * Funcao gostosinha que carrega as mensagens nao lidas do banco
+     * e retorna para o usuario. A cada mensagem carregada com sucesso
+     * o registro é mudado para "recebido" no banco.
+     */
     func getUnreadMessages()
     {
         print("refreshing messages...")
@@ -63,55 +72,99 @@ class DAOPostgres : NSObject
                         let lifeTime = (result["lifetime"] as! NSString).integerValue
                         let date = result["sentdate"] as! String
                         let sentDate = self.string2nsdate(date)
+                        
+                        let decSender = EncryptTools.getUsernameFromEncrpted(sender)
 
-                        switch type
+                        if(decSender != nil)
                         {
-                            
-                        case .Text:
-                            
-                            let text = result["text"] as! String
-                            if(DAOMessages.sharedInstance.addReceivedMessage(sender, text: text, sentDate: sentDate, lifeTime: lifeTime))
+                            switch type
                             {
-                                self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
-                            }
-                            
-                        case .Image:
-                            
-                            let filterString = result["filter"] as! String
-                            let filter = ImageFilter(rawValue: filterString)!
-                            if(DAOMessages.sharedInstance.addReceivedMessage(sender, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, filter: filter))
-                            {
-                                self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
-                            }
-                            
-                        case .Audio:
-                            
-                            print("recebeu audio")
-                            
-                        case .Gif:
-                            
-                            let data = DAOGifs.sharedInstance.getGifFromName(key!)
-                            if(data != nil)
-                            {
-                                if(DAOMessages.sharedInstance.addReceivedMessage(sender, gifKey: key!, gifData: data!, sentDate: sentDate, lifeTime: lifeTime))
+                                
+                            case .Text:
+                                
+                                let text = result["text"] as! String
+                                
+                                let decText = EncryptTools.dec(text)
+                                
+                                if(DAOMessages.sharedInstance.addReceivedMessage(decSender!, text: decText, sentDate: sentDate, lifeTime: lifeTime))
                                 {
                                     self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
                                 }
+                                
+                            case .Image:
+                                
+                                let filterString = result["filter"] as! String
+                                let filter = ImageFilter(rawValue: filterString)!
+                                if(DAOMessages.sharedInstance.addReceivedMessage(decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, filter: filter))
+                                {
+                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                                }
+                                
+                            case .Audio:
+                                
+                                print("recebeu audio")
+                                
+                            case .Gif:
+                                
+                                let data = DAOGifs.sharedInstance.getGifFromName(key!)
+                                if(data != nil)
+                                {
+                                    if(DAOMessages.sharedInstance.addReceivedMessage(decSender!, gifKey: key!, gifData: data!, sentDate: sentDate, lifeTime: lifeTime))
+                                    {
+                                        self.setMessageReceived(DAOMessages.sharedInstance.lastMessage)
+                                    }
+                                }
+                                
+                            default:
+                                
+                                print("Erro ao encontrar tipo do arquivo recebido!")
+                                
                             }
-                            
-                        default:
-                            
-                            print("Erro ao encontrar tipo do arquivo recebido!")
-                            
                         }
                     }
                 }
         }
     }
     
-    func sendTextMessage(username: String, lifeTime: Int, text: String)
+    
+    func checkForDeletedMessages()
     {
-        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()), "target": username, "sentDate": "\(NSDate())", "text": text, "lifeTime": lifeTime, "type": ContentType.Text.rawValue]
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername())]
+        
+        Alamofire.request(.POST, self.checkDeletedMessages, parameters: parameters)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
+                    
+                    for result in results as! NSArray
+                    {
+                        let sender = DAOUser.sharedInstance.getUsername()
+                        let encTarget = result["target"] as! String
+                        let target = EncryptTools.getUsernameFromEncrpted(encTarget)
+                        if(target != nil)
+                        {
+                            let date = result["sentdate"] as! String
+                            let sentDate = self.string2nsdate(date)
+                            
+                            let mssg = DAOMessages.sharedInstance.getMessageFromConversation(sender, target: target!, sentDate: sentDate)
+                            
+                            if(mssg != nil)
+                            {
+                                DAOMessages.sharedInstance.timesUpMessage(mssg!)
+                            }
+                            
+                            DAOPostgres.sharedInstance.deleteDeletedMessage(DAOUser.sharedInstance.getUsername(),target: target!, sentDate: sentDate)
+
+                        }
+                    }
+                }
+        }
+
+    }
+    
+    func sendTextMessage(username: String, lifeTime: Int, text: String, sentDate: NSDate)
+    {
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(DAOUser.sharedInstance.getUsername()), "target": username, "sentDate": sentDate, "text": text, "lifeTime": lifeTime, "type": ContentType.Text.rawValue]
         
         Alamofire.request(.POST, self.sendURL, parameters: parameters)
             .responseJSON { response in
@@ -119,11 +172,11 @@ class DAOPostgres : NSObject
         }
     }
     
-    func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage, filter: ImageFilter)
+    func sendImageMessage(username: String, lifeTime: Int, imageKey: String ,image: UIImage, filter: ImageFilter, sentDate: NSDate)
     {
         let me = DAOUser.sharedInstance.getUsername()
         
-        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": "\(NSDate())", "contentKey": imageKey, "lifeTime": lifeTime, "type": ContentType.Image.rawValue, "filter": filter.rawValue]
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": sentDate, "contentKey": imageKey, "lifeTime": lifeTime, "type": ContentType.Image.rawValue, "filter": filter.rawValue]
         
         Alamofire.request(.POST, self.sendURL, parameters: parameters)
             .responseJSON { response in
@@ -131,11 +184,11 @@ class DAOPostgres : NSObject
         }
     }
     
-    func sendGifMessage(username: String, lifeTime: Int, gifKey: String)
+    func sendGifMessage(username: String, lifeTime: Int, gifKey: String, sentDate: NSDate)
     {
         let me = DAOUser.sharedInstance.getUsername()
         
-        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": "\(NSDate())", "contentKey": gifKey, "lifeTime": lifeTime, "type": ContentType.Gif.rawValue]
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encUsername(me), "target": username, "sentDate": sentDate, "contentKey": gifKey, "lifeTime": lifeTime, "type": ContentType.Gif.rawValue]
         
         Alamofire.request(.POST, self.sendURL, parameters: parameters)
             .responseJSON { response in
@@ -222,6 +275,16 @@ class DAOPostgres : NSObject
         }
     }
     
+    func deleteDeletedMessage(sender: String, target: String, sentDate: NSDate)
+    {
+        let parameters : [String:AnyObject]! = ["sender": EncryptTools.encUsername(sender), "target": EncryptTools.encUsername(target), "sentDate":sentDate]
+        
+        Alamofire.request(.POST, self.deleteMessageURL, parameters: parameters)
+            .responseJSON { response in
+                print(response.result.value)
+        }
+    }
+    
     func string2nsdate(str: String) -> NSDate{
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -232,24 +295,32 @@ class DAOPostgres : NSObject
     func stopRefreshing()
     {
         self.refresherChat?.invalidate()
+        self.deleteOldMessages?.invalidate()
     }
     
     func startRefreshing()
     {
         self.stopObserve()
+        self.deleteOldMessages?.invalidate()
         self.refresherChat?.invalidate()
+        
         self.refresherChat = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
+        self.deleteOldMessages = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "checkForDeletedMessages", userInfo: nil, repeats: true)
     }
     
     func startObserve()
     {
+        self.stopRefreshing()
         self.refresherContact?.invalidate()
+        self.deleteOldMessages?.invalidate()
+        self.deleteOldMessages = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: "checkForDeletedMessages", userInfo: nil, repeats: true)
         self.refresherContact = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
     }
     
     func stopObserve()
     {
         self.refresherContact?.invalidate()
+        self.deleteOldMessages?.invalidate()
     }
 }
 

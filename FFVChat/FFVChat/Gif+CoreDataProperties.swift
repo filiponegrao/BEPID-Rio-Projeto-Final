@@ -16,5 +16,7 @@ extension Gif {
 
     @NSManaged var name: String!
     @NSManaged var data: NSData!
+    @NSManaged var launchedDate: NSDate!
+    @NSManaged var hashtags: NSData!
 
 }

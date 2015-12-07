@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        DAOPostgres.sharedInstance.stopRefreshing()
+        DAOPostgres.sharedInstance.stopObserve()
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
 
     }
@@ -156,6 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         FBSDKAppEvents.activateApp()
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
+            DAOPostgres.sharedInstance.startObserve()
             DAOGifs.sharedInstance.checkNewGifsFromServer()
             DAOFriendRequests.sharedInstance.friendsAccepted()
             DAOContacts.sharedInstance.refreshContacts()
@@ -166,7 +167,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(application: UIApplication)
+    {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.saveContext()
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
@@ -175,13 +177,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     //PARSE NOTIFICATION ***********
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData)
+    {
         let installation = PFInstallation.currentInstallation()
         installation.setDeviceTokenFromData(deviceToken)
         installation.saveInBackground()
     }
     
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError)
+    {
         if error.code == 3010 {
             print("Push notifications are not supported in the iOS Simulator.")
         } else {
@@ -189,7 +193,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject])
+    {
         print("didReceiveRemoteNotification \(userInfo)")
         let notification = userInfo as NSDictionary
         //Isso causava o alerta no meio da porra da aplicação

@@ -12,12 +12,14 @@ import CoreData
 
 class Gif: NSManagedObject
 {
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, name: String, data: NSData) -> Gif
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, name: String, data: NSData, launchedDate: NSDate, hashtags: NSData) -> Gif
     {
         let gif = NSEntityDescription.insertNewObjectForEntityForName("Gif", inManagedObjectContext: moc) as! Gif
         
         gif.data = data
         gif.name = name
+        gif.launchedDate = launchedDate
+        gif.hashtags = hashtags
         
         return gif
     }

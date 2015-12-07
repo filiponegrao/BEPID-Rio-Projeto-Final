@@ -23,9 +23,7 @@ class ImageZoom_View: UIView {
     var backButton : UIButton!
     
     var unblurVision : UIImageView!
-    
-    var sender: String!
-    
+        
     var image : UIImage!
     
     var sparkTimer : NSTimer!
