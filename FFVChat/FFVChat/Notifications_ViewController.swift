@@ -20,8 +20,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     var navBar : NavigationNotification_View!
         
     var midiaViewer : MidiaViewer_View!
-
-    var blurView : UIVisualEffectView!
     
     override func viewDidLoad()
     {
@@ -184,10 +182,10 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             else
             {
                 cell.photo.image = image
-                
-                //NAO SEI COLOCAR O BLUR :/
-                self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-                cell.photo.addSubview(self.blurView)
+                cell.blur?.removeFromSuperview()
+                cell.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+                cell.blur.frame = cell.photo.bounds
+                cell.photo.addSubview(cell.blur)
             }
             
             cell.contentView.addSubview(separatorLineView)
