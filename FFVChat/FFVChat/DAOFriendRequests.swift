@@ -95,11 +95,11 @@ class DAOFriendRequests : NSObject
         DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
             DAOParse.sendPushRequestAccepted(request.sender)
             self.loadRequests()
+            
+            let index = Int(self.requests.indexOf({$0 === request})!)
+            
+            self.requests.removeAtIndex(index)
         }
-        
-        let index = Int(self.requests.indexOf({$0 === request})!)
-        
-        self.requests.removeAtIndex(index)
     }
     
     /**

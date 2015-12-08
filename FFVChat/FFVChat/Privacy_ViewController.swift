@@ -63,6 +63,14 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
         self.agreeButton.ripplePercent = 4
         self.agreeButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.agreeButton)
+        
+        if(screenHeight > self.termsText.contentSize.height)
+        {
+            self.agreeButton.backgroundColor = oficialGreen
+            self.disagreeButton.backgroundColor = oficialGreen
+            self.disagreeButton.enabled = true
+            self.agreeButton.enabled = true
+        }
     }
 
     override func didReceiveMemoryWarning()

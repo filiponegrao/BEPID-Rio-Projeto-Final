@@ -224,7 +224,7 @@ class DAOMessages : NSObject
     }
     
     
-    func deleteMessage(message: Message)
+    func deleteMessage(message: Message) -> Bool
     {
         
         let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@", message.sentDate, message.target, message.sender)
@@ -236,16 +236,17 @@ class DAOMessages : NSObject
             let fetchedEntities = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
             if let entityToDelete = fetchedEntities.first
             {
-                DAOPostgres.sharedInstance.setDeletedMessage(message)
                 self.managedObjectContext.deleteObject(entityToDelete)
+                self.save()
+                return true
             }
         }
         catch
         {
-            // Do something in response to error condition
+            return false
         }
         
-        self.save()
+        return false
     }
     
     
@@ -270,6 +271,7 @@ class DAOMessages : NSObject
     
     func receiveTimesUpNotification(timer: NSTimer)
     {
+        print("tempo de execucao finalizado para exclusao")
         let message = timer.userInfo?.objectForKey("message") as! Message
         self.timesUpMessage(message)
     }
@@ -287,9 +289,18 @@ class DAOMessages : NSObject
      */
     func timesUpMessage(message: Message?)
     {
+        print("excluindo mensagem...")
         if(!self.inExecution)
         {
             self.inExecution = true
+            
+            //Apaga um possivel timer para essa mensagem
+            if(message == nil) { return }
+            let timer = self.timeBomb.objectForKey(message!.sentDate) as? NSTimer
+            timer?.invalidate()
+            self.timeBomb.removeObjectForKey(message!.sentDate)
+            //Fim da remocao de um possivel timer
+            
             var contact : String?
             if (message?.sender == DAOUser.sharedInstance.getUsername())
             {
@@ -304,16 +315,13 @@ class DAOMessages : NSObject
             if(message == nil) { return }
             let index = messages.indexOf(message!)
             
-            //Apaga um possivel timer para essa mensagem
             if(message == nil) { return }
-            let timer = self.timeBomb.objectForKey(message!.sentDate) as? NSTimer
-            timer?.invalidate()
-            self.timeBomb.removeObjectForKey(message!.sentDate)
-            //Fim da remocao de um possivel timer
-            
-            if(message == nil) { return }
-            self.deleteMessage(message!)
-            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!, "contact": contact!]))
+            DAOPostgres.sharedInstance.setDeletedMessage(message!)
+
+            if(self.deleteMessage(message!))
+            {
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!, "contact": contact!]))
+            }
             self.inExecution = false
         }
         else
@@ -331,18 +339,18 @@ class DAOMessages : NSObject
         let conversation = self.conversationWithContact(target)
         
         let dateCompare = Optimization.getBigStringFromDate(sentDate)
+        print(conversation.count)
         
         for message in conversation
         {
             let messageDate = Optimization.getBigStringFromDate(message.sentDate)
-            
+                        
             if(messageDate == dateCompare)
             {
                 return message
             }
             else
             {
-                return nil
             }
         }
         

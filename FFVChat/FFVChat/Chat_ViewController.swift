@@ -161,6 +161,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
+        
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
@@ -182,6 +184,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "imageLoaded", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
         
     }
     
@@ -921,6 +924,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.message.contentKey!, sender: self.contact.username)
                 DAOMessages.sharedInstance.timesUpMessage(self.imageZoom.message)
+                self.imageZoom?.removeFromSuperview()
+                self.imageZoom = nil
             }
         }
         
@@ -974,12 +979,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         
                         }, completion: { (success: Bool) -> Void in
                             
-                            
                     })
             })
-            
-
         }
+    }
+    
+    
+    func printScreenReceived()
+    {
+        let alert = SweetAlert().showAlert("PrintScreen!", subTitle: "Someone took a screenshot of your screen", style: AlertStyle.Warning)
     }
     
     

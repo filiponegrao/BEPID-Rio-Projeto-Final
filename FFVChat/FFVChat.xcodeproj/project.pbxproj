@@ -108,6 +108,7 @@
 		804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */; };
 		804FB40A1C09466B00512425 /* PrintscreenNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4081C09466B00512425 /* PrintscreenNotification.swift */; };
 		804FB40C1C09490100512425 /* DAOPrints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB40B1C09490100512425 /* DAOPrints.swift */; };
+		805172B91C1756A900687770 /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805172B81C1756A900687770 /* SweetAlert.swift */; };
 		806D16201C0E367B00650E9D /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D161E1C0E367B00650E9D /* Message+CoreDataProperties.swift */; };
 		806D16211C0E367B00650E9D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D161F1C0E367B00650E9D /* Message.swift */; };
 		806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16221C0E70C800650E9D /* Filters_ViewController.swift */; };
@@ -312,6 +313,7 @@
 		804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrintscreenNotification+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		804FB4081C09466B00512425 /* PrintscreenNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintscreenNotification.swift; sourceTree = "<group>"; };
 		804FB40B1C09490100512425 /* DAOPrints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPrints.swift; sourceTree = "<group>"; };
+		805172B81C1756A900687770 /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
 		806D161E1C0E367B00650E9D /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		806D161F1C0E367B00650E9D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		806D16221C0E70C800650E9D /* Filters_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters_ViewController.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
 				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
 				80E126A11C1257E100DC0755 /* GifSharing_View.swift */,
+				805172B81C1756A900687770 /* SweetAlert.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -1033,6 +1036,7 @@
 				F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */,
 				803657A81BF9564E000907BD /* ReportModels.swift in Sources */,
 				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
+				805172B91C1756A900687770 /* SweetAlert.swift in Sources */,
 				8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */,
 				80E126A21C1257E100DC0755 /* GifSharing_View.swift in Sources */,
@@ -1238,12 +1242,12 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1261,12 +1265,12 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = FFVChat/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

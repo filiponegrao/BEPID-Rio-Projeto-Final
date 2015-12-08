@@ -229,6 +229,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             }
             else if(notification.valueForKey("do") as! String == appNotification.printscreen.rawValue)
             {
+//                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.printScreenReceived)
                 DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
             }
         }

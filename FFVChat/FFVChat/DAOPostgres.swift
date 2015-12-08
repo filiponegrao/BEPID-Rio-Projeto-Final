@@ -148,13 +148,14 @@ class DAOPostgres : NSObject
                             
                             let mssg = DAOMessages.sharedInstance.getMessageFromConversation(sender, target: target!, sentDate: sentDate)
                             
+                            print(mssg)
+                            
                             if(mssg != nil)
                             {
                                 DAOMessages.sharedInstance.timesUpMessage(mssg!)
-                            }
-                            
-                            DAOPostgres.sharedInstance.deleteDeletedMessage(DAOUser.sharedInstance.getUsername(),target: target!, sentDate: sentDate)
+                                DAOPostgres.sharedInstance.deleteDeletedMessage(DAOUser.sharedInstance.getUsername(),target: target!, sentDate: sentDate)
 
+                            }
                         }
                     }
                 }
