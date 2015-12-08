@@ -18,7 +18,9 @@ class DAOParse
     //** Funcoes para contatos
     //***************************
     
-    var tentativas = 0
+    var tentativasDownload = 0
+    
+    var tentativasUpload = 0
     
     init()
     {
@@ -710,7 +712,7 @@ class DAOParse
     }
     
     
-    class func sendImageOnKey(key: String, image: NSData)
+    func sendImageOnKey(key: String, image: NSData)
     {
         let file = PFFile(data: image)
         
@@ -718,14 +720,24 @@ class DAOParse
         object["imageKey"] = key
         object["image"] = file
         object.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            print(error)
+            if(error != nil && self.tentativasUpload < 30)
+            {
+                self.tentativasUpload++
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasUpload) * Double(NSEC_PER_SEC)))
+                dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    
+                    self.sendImageOnKey(key, image: image)
+                }
+
+            }
+            else { self.tentativasUpload = 0 }
         }
     }
     
     
     func downloadImageForMessage(message: Message)
     {
-        if(self.tentativas < 10)
+        if(self.tentativasDownload < 30)
         {
             let query = PFQuery(className: "Images")
             query.whereKey("imageKey", equalTo: message.contentKey!)
@@ -736,7 +748,7 @@ class DAOParse
                     let file = object!["image"] as! PFFile
                     file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
-                        self.tentativas = 0
+                        self.tentativasDownload = 0
                         let decData = EncryptTools.decImage(data!)
                         DAOMessages.sharedInstance.setImageForMessage(message, image: decData)
                         
@@ -744,8 +756,8 @@ class DAOParse
                 }
                 else
                 {
-                    self.tentativas++
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2)) * Double(NSEC_PER_SEC)))
+                    self.tentativasDownload++
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasDownload) * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
                         self.downloadImageForMessage(message)
                     }
@@ -756,7 +768,7 @@ class DAOParse
         }
         else
         {
-            self.tentativas = 0
+            self.tentativasDownload = 0
         }
     }
     

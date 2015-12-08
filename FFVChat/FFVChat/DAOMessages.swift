@@ -71,7 +71,7 @@ class DAOMessages : NSObject
         
         DAOPostgres.sharedInstance.sendImageMessage(EncryptTools.encUsername(username), lifeTime: lifeTime, imageKey: key, image: image, filter: filter, sentDate: now)
         
-        DAOParse.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, target: username))
+        DAOParse.sharedInstance.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, target: username))
         
         DAOParse.pushImageNotification(username)
         
@@ -208,7 +208,15 @@ class DAOMessages : NSObject
     
     func deleteMessage(message: Message)
     {
-        let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@",message.sentDate,message.target,message.sender)
+//        if(message == nil) { return }
+//        
+//        let date = message?.sentDate
+//        
+//        let target = message?.target
+//        
+//        let sender = message?.sender
+        
+        let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@", message.sentDate, message.target, message.sender)
         
         let fetchRequest = NSFetchRequest(entityName: "Message")
         fetchRequest.predicate = predicate
@@ -256,25 +264,31 @@ class DAOMessages : NSObject
      * caso nao haja, inicia uma exclusao. Caso contrario,
      * inicia um delay para que a acao seja tentada novamente.
      */
-    func timesUpMessage(message: Message)
+    func timesUpMessage(message: Message?)
     {
         if(!self.inExecution)
         {
             self.inExecution = true
-            var contact : String
-            if (message.sender == DAOUser.sharedInstance.getUsername())
+            var contact : String?
+            if(message == nil) { return }
+            if (message?.sender == DAOUser.sharedInstance.getUsername())
             {
-                contact = message.target
+                if(message == nil) { return }
+                contact = message?.target
             }
             else
             {
-                contact = message.sender
+                if(message == nil) { return }
+                contact = message?.sender
             }
             
             let messages = self.conversationWithContact(contact)
-            let index = messages.indexOf(message)
-            self.deleteMessage(message)
-            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!, "contact": contact]))
+            if(message == nil) { return }
+            let index = messages.indexOf(message!)
+            if(message == nil) { return }
+            self.deleteMessage(message!)
+            if(contact == nil) { return }
+            NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!, "contact": contact!]))
             self.inExecution = false
         }
         else
@@ -374,11 +388,13 @@ class DAOMessages : NSObject
     }
     
     
-    func conversationWithContact(contact: String) -> [Message]
+    func conversationWithContact(contact: String?) -> [Message]
     {
         var messages = [Message]()
         
-        let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact, contact)
+        if(contact == nil) { return messages }
+        
+        let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact!, contact!)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1])
         
         let fetchRequest = NSFetchRequest(entityName: "Message")
