@@ -55,13 +55,22 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         let flowContacts = flowLayoutSetup()
         let flowFavourites = flowLayoutSetup()
         
+        //Contacts
         self.contactsController = ContactsBubble_CollectionViewController(collectionViewLayout: flowContacts, size: CGSize(width: screenWidth, height: self.contentSize.height))
         self.contactsController.home = self
         self.contactsController.title = "All Contacts"
         
+        let tap = UITapGestureRecognizer(target: self, action: "closeSearch")
+        self.contactsController.collectionView?.addGestureRecognizer(tap)
+        
+        
+        //Favourites
         self.favouritesController = FavouritesBubble_CollectionViewController(collectionViewLayout: flowFavourites, size: CGSize(width: screenWidth, height: self.contentSize.height))
         self.favouritesController.home = self
         self.favouritesController.title = "Favorites"
+        
+        let tap2 = UITapGestureRecognizer(target: self, action: "closeSearch")
+        self.favouritesController.collectionView?.addGestureRecognizer(tap2)
         
         self.controllerArray = [self.contactsController, self.favouritesController]
         
@@ -210,7 +219,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
             self.searchBarView.frame.origin.y = self.navigationBar.frame.size.height
 
             self.searchBar.frame.origin.y = self.navigationBar.frame.size.height
-//            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height + self.searchBar.frame.size.height
             
             }) { (success: Bool) -> Void in
                 
@@ -224,6 +232,9 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
         self.contactsController.collectionView?.reloadData()
         self.contactsController.reloadAnimations()
+        self.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
+        self.favouritesController.collectionView?.reloadData()
+        self.favouritesController.reloadAnimations()
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
@@ -237,7 +248,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        self.searchBar.resignFirstResponder()
+        self.closeSearch()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar)
@@ -252,11 +263,15 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         {
             self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
             self.contactsController.collectionView?.reloadData()
+            self.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
+            self.favouritesController.collectionView?.reloadData()
         }
         else
         {
             self.contactsController.contacts = DAOContacts.sharedInstance.getContactsWithString(searchText)
             self.contactsController.collectionView?.reloadData()
+            self.favouritesController.favourites = DAOContacts.sharedInstance.getFavouritesWithString(searchText)
+            self.favouritesController.collectionView?.reloadData()
         }
         
     }
@@ -267,7 +282,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     func didMoveToPage(controller: UIViewController, index: Int)
     {
-        self.closeSearch()
+//        self.closeSearch()
     }
 
 

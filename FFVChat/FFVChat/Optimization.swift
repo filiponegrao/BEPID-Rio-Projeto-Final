@@ -33,7 +33,18 @@ class Optimization
         view.layer.shadowOpacity = 1
         view.layer.masksToBounds = false
         view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds, cornerRadius: view.layer.cornerRadius).CGPath
-
+    }
+    
+    class func getBigStringFromDate(date: NSDate) -> String
+    {
+        var string = "\(date)" as NSString
+        
+        string = string.substringWithRange(NSMakeRange(0, 19))
+        
+        return string as String
     }
 }
+
+
+
 

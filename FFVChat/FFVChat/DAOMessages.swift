@@ -27,6 +27,24 @@ class DAOMessages : NSObject
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
+    
+    /** 
+     * Variavel responsavel por armazenar todas as ordens
+     * de exclusao de mensagens apos algum tempo.
+     * É um dictionary, onde:
+     * 
+     * - Chave: [message sentDate] obtido pela funcao
+     *          Optimization.getBigStringFromDate()
+     *          passando como parametro a sentDate de uma
+     *          mensagem.
+     *
+     * - Conteudo: [NSTimer] um timer para deletar a mensagem
+     *              com a sentDate igual a passada como parametro
+     *              na chave. A funcao chamada apos o termino
+     *              da contagem é a timesUpMessage.
+     */
+    var timeBomb = NSMutableDictionary()
+    
     override init()
     {
         super.init()
@@ -208,13 +226,6 @@ class DAOMessages : NSObject
     
     func deleteMessage(message: Message)
     {
-//        if(message == nil) { return }
-//        
-//        let date = message?.sentDate
-//        
-//        let target = message?.target
-//        
-//        let sender = message?.sender
         
         let predicate = NSPredicate(format: "sentDate == %@ AND target == %@ AND sender == %@", message.sentDate, message.target, message.sender)
         
@@ -251,18 +262,28 @@ class DAOMessages : NSObject
         {
             self.setMessageSeen(message)
             
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(message.lifeTime)) * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                
-                self.timesUpMessage(message)
-            }
+            let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(message.lifeTime), target: self, selector: "receiveTimesUpNotification:", userInfo: ["message":message], repeats: false)
+            self.timeBomb.setObject(timer, forKey: message.sentDate)
         }
+    }
+    
+    
+    func receiveTimesUpNotification(timer: NSTimer)
+    {
+        let message = timer.userInfo?.objectForKey("message") as! Message
+        self.timesUpMessage(message)
     }
     
     /**
      * Funcao que verifica se ha alguma exclusao em andamento,
      * caso nao haja, inicia uma exclusao. Caso contrario,
      * inicia um delay para que a acao seja tentada novamente.
+     * OBS: Essa funcao por alguns motivos como os timers de exlcusao
+     * de mensagens, possui um layout um tanto alternativo.
+     * Pela razão dos timers serem assincronos, uma funcao de timer
+     * pode executar essa mesma funcao junto com a thread principal
+     * passando a mesma mensagem como parametro. Nesse caso algimas
+     * verificacoes sao necessarias.
      */
     func timesUpMessage(message: Message?)
     {
@@ -270,24 +291,28 @@ class DAOMessages : NSObject
         {
             self.inExecution = true
             var contact : String?
-            if(message == nil) { return }
             if (message?.sender == DAOUser.sharedInstance.getUsername())
             {
-                if(message == nil) { return }
                 contact = message?.target
             }
             else
             {
-                if(message == nil) { return }
                 contact = message?.sender
             }
             
             let messages = self.conversationWithContact(contact)
             if(message == nil) { return }
             let index = messages.indexOf(message!)
+            
+            //Apaga um possivel timer para essa mensagem
+            if(message == nil) { return }
+            let timer = self.timeBomb.objectForKey(message!.sentDate) as? NSTimer
+            timer?.invalidate()
+            self.timeBomb.removeObjectForKey(message!.sentDate)
+            //Fim da remocao de um possivel timer
+            
             if(message == nil) { return }
             self.deleteMessage(message!)
-            if(contact == nil) { return }
             NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!, "contact": contact!]))
             self.inExecution = false
         }
@@ -305,24 +330,19 @@ class DAOMessages : NSObject
     {
         let conversation = self.conversationWithContact(target)
         
-        var dateCompare = "\(sentDate)" as NSString
-        dateCompare = dateCompare.substringWithRange(NSMakeRange(0, 16))
+        let dateCompare = Optimization.getBigStringFromDate(sentDate)
         
         for message in conversation
         {
-            var messageDate = "\(sentDate)" as NSString
-            messageDate = messageDate.substringWithRange(NSMakeRange(0, 16))
-            
-            print("message sentDate: \(messageDate) e minha date: \(dateCompare)")
+            let messageDate = Optimization.getBigStringFromDate(message.sentDate)
             
             if(messageDate == dateCompare)
             {
-                print("passa")
                 return message
             }
             else
             {
-                print("nao e igual")
+                return nil
             }
         }
         

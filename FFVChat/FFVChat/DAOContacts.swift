@@ -254,6 +254,22 @@ class DAOContacts
         return result
     }
     
+    func getFavouritesWithString(string: String) -> [Contact]
+    {
+        var result = [Contact]()
+        
+        let contacts = self.getAllContacts()
+        for contact in contacts
+        {
+            if ((contact.username.lowercaseString.rangeOfString(string.lowercaseString) != nil) && contact.isFavorit == true)
+            {
+                result.append(contact)
+            }
+        }
+        
+        return result
+    }
+    
     
     func setFavorite(contact: Contact)
     {
