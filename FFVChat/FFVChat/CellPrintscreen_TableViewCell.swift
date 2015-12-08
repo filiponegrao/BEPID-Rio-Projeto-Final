@@ -17,6 +17,8 @@ class CellPrintscreen_TableViewCell: UITableViewCell
     
     var details : UILabel!
     
+    var blur : UIVisualEffectView!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
