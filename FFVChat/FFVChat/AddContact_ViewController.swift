@@ -131,6 +131,11 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
                 self.tableView.reloadData()
             }
         }
+        else if(self.searchBar.text?.characters.count == 0)
+        {
+            self.results = [metaContact]()
+            self.tableView.reloadData()
+        }
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {

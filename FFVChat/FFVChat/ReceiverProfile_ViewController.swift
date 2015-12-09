@@ -106,6 +106,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.screenshotsLabel.textAlignment = .Left
         self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
         self.screenshotsLabel.setSizeFont(17)
+        self.screenshotsLabel.hidden = true
         self.view.addSubview(self.screenshotsLabel)
         
         //mostra quantas denúncias o usuário tem
@@ -115,6 +116,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.reportsLabel.textAlignment = .Left
         self.reportsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
         self.reportsLabel.setSizeFont(17)
+        self.reportsLabel.hidden = true
         self.view.addSubview(self.reportsLabel)
         
         //mostra a imagem do usuário

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
@@ -11,12 +10,12 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="pht-qC-9cE">
+                <imageView userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ContactBackground" translatesAutoresizingMaskIntoConstraints="NO" id="pht-qC-9cE">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                     <animations/>
                     <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="wR2-AI-eTZ">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_" translatesAutoresizingMaskIntoConstraints="NO" id="wR2-AI-eTZ">
                     <rect key="frame" x="152" y="94" width="177" height="161"/>
                     <animations/>
                     <constraints>
@@ -41,7 +40,7 @@
         </view>
     </objects>
     <resources>
-        <image name="background" width="1149" height="2048"/>
-        <image name="icon" width="1024" height="1024"/>
+        <image name="ContactBackground" width="1028" height="1920"/>
+        <image name="logo_" width="300" height="155"/>
     </resources>
 </document>
