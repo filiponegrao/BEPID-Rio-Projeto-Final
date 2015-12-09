@@ -54,7 +54,6 @@ class DAOPrints
             }
         }
     }
-
     
     func getPrintscreenNotificationsFromParse()
     {
