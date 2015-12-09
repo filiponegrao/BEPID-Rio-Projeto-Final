@@ -730,7 +730,7 @@ class DAOUser
     
     func decreaseTrustLevel()
     {
-        self.user.trustLevel  = Int(self.user.trustLevel) - 1
+        self.user.trustLevel  = Int(self.user.trustLevel) - 5
         self.save()
         DAOParse.decreaseTrustLevel()
     }
