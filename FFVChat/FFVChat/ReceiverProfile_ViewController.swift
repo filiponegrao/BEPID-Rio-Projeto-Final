@@ -106,6 +106,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.screenshotsLabel.textAlignment = .Left
         self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
         self.screenshotsLabel.setSizeFont(17)
+        self.screenshotsLabel.hidden = true
         self.view.addSubview(self.screenshotsLabel)
         
         //mostra quantas denúncias o usuário tem
