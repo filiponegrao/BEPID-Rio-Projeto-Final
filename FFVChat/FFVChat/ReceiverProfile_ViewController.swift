@@ -115,6 +115,7 @@ class ReceiverProfile_ViewController: UIViewController
         self.reportsLabel.textAlignment = .Left
         self.reportsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
         self.reportsLabel.setSizeFont(17)
+        self.reportsLabel.hidden = true
         self.view.addSubview(self.reportsLabel)
         
         //mostra a imagem do usuário
