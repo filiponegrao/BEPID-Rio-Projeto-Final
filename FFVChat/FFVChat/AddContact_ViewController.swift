@@ -203,7 +203,13 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             separatorLineView.backgroundColor = oficialMediumGray
             
             DAOFriendRequests.sharedInstance.wasAlreadyRequested(username, callback: { (was) -> Void in
-                if(was == true)
+                if(was)
+                {
+                    cell.addButton.hidden = false
+                    cell.invited.hidden = true
+                    cell.invitedLabel.hidden = true
+                }
+                else
                 {
                     cell.addButton.hidden = true
                     cell.invited.hidden = false

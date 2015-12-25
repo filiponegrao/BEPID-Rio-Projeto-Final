@@ -46,18 +46,22 @@ class AppLoginImport_ViewController: UIViewController
         self.titleLabel2.setSizeFont(22)
         self.view.addSubview(self.titleLabel2)
         
-        self.backView = UIView(frame: CGRectMake(20, 55 + self.titleLabel.frame.size.height + self.titleLabel2.frame.size.height + 20, screenWidth - 40, screenHeight/4 - 10))
-        self.backView.backgroundColor = UIColor.clearColor()
-        self.backView.layer.cornerRadius = 7
-        self.backView.clipsToBounds = true
-        self.view.addSubview(self.backView)
+//        self.backView = UIView(frame: CGRectMake(20, 55 + self.titleLabel.frame.size.height + self.titleLabel2.frame.size.height + 20, screenWidth - 40, screenHeight/4 - 10))
+//        self.backView.backgroundColor = UIColor.clearColor()
+//        self.backView.layer.cornerRadius = 7
+//        self.backView.clipsToBounds = true
+//        self.view.addSubview(self.backView)
+        let text = "Do you want to import your contacts from Facebook? Choosing this option you will become visible and other contacts can import you also. If you want, please allow Myne to link with your Facebook."
+        let font = UIFont(name: "Helvetica", size: 16)!
+        let heigth = Optimization.heightForView(text, font: font, width: screenWidth-20)+10
         
-        self.textView = UITextView(frame: CGRectMake(10, 5, self.backView.frame.size.width - 20, self.backView.frame.size.height - 10))
-        self.textView.text = "Do you want to import your contacts from Facebook? Choosing this option you will become visible and other contacts can import you also. If you want, please allow Myne to link with your Facebook."
+        self.textView = UITextView(frame: CGRectMake(20, self.titleLabel2.frame.origin.y + self.titleLabel2.frame.size.height + 30, screenWidth - 30, heigth))
+        self.textView.text = text
+        self.textView.font = font
+        self.textView.userInteractionEnabled = false
         self.textView.textColor = oficialLightGray
-        self.textView.font = UIFont(name: "Helvetica", size: 15)
         self.textView.backgroundColor = UIColor.clearColor()
-        self.backView.addSubview(self.textView)
+        self.view.addSubview(self.textView)
         
         self.facebookConnect = UIButton(frame: CGRectMake(screenWidth/3 - 10, screenHeight/2 + 20, screenWidth/3 + 20, 55))
         self.facebookConnect.setImage(UIImage(named: "facebookConnect"), forState: .Normal)
@@ -105,7 +109,7 @@ class AppLoginImport_ViewController: UIViewController
     {
         AppStateData.sharedInstance.importContacts()
         let contacts = AppNavigationController()
-        DAOGifs.sharedInstance.checkNewGifsFromServer()
+//        DAOGifs.sharedInstance.checkNewGifsFromServer()
         self.presentViewController(contacts, animated: true, completion: nil)
     }
 

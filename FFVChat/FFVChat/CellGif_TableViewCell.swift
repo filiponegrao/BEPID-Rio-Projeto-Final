@@ -14,7 +14,7 @@ class CellGif_TableViewCell: UITableViewCell
     
     var backgroundLabel : UIView!
     
-    var imageCell : UIImageView!
+    var webView : UIWebView!
 
     var sentDate : UILabel!
     
@@ -35,14 +35,14 @@ class CellGif_TableViewCell: UITableViewCell
         self.cellView.backgroundColor = UIColor.clearColor()
         self.addSubview(cellView)
         
-        self.imageCell = UIImageView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
-        self.imageCell.clipsToBounds = true
-        self.imageCell.layer.cornerRadius = 10
-        self.imageCell.contentMode = .ScaleAspectFill
-        self.imageCell.layer.zPosition = 5
-        self.cellView.addSubview(imageCell)
+        self.webView = UIWebView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
+        self.webView.clipsToBounds = true
+        self.webView.layer.cornerRadius = 10
+        self.webView.contentMode = .ScaleAspectFill
+        self.webView.layer.zPosition = 5
+        self.cellView.addSubview(webView)
         
-        self.bringSubviewToFront(self.imageCell)
+        self.bringSubviewToFront(self.webView)
         
         let h = Editor.heightForView("09:00", font: UIFont(name: "Gill Sans", size: 10)!, width: dateTextWidth)
         self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth + margemLateral - 5, cellBackgroundWidth - dateTextHeigth - margemVertical, dateTextWidth, h))

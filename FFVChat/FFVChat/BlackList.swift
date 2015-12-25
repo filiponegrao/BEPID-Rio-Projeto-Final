@@ -9,6 +9,7 @@
 import Foundation
 
 
+
 class BlackList
 {
     class func initBlackList()

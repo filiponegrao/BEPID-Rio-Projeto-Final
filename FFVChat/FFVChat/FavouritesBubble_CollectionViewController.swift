@@ -42,7 +42,7 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
     
     override func viewDidLoad()
     {
-        self.collectionView!.frame = CGRectMake(0, -10, self.collectionSize.width , self.collectionSize.height + 10)
+        self.collectionView!.frame = CGRectMake(0, 0, self.collectionSize.width , screenHeight)
         
         self.view.backgroundColor = UIColor.clearColor()
         super.viewDidLoad()

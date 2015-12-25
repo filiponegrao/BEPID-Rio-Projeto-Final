@@ -16,6 +16,8 @@ class ImageZoom_View: UIView {
     
     var message : Message!
     
+    var image : Image!
+    
     var imageView : UIImageView!
     
     var blurFilter : UIVisualEffectView!
@@ -23,8 +25,6 @@ class ImageZoom_View: UIView {
     var backButton : UIButton!
     
     var unblurVision : UIImageView!
-        
-    var image : UIImage!
     
     var sparkTimer : NSTimer!
     
@@ -34,11 +34,11 @@ class ImageZoom_View: UIView {
     
     var origin : CGRect!
     
-    init(message: Message, origin: CGRect)
+    init(image: Image, message: Message, origin: CGRect)
     {
-        self.origin = origin
         self.message = message
-        self.image = UIImage(data: self.message.image!)!
+        self.origin = origin
+        self.image = image
         
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
@@ -50,7 +50,7 @@ class ImageZoom_View: UIView {
         self.imageView = UIImageView(frame: CGRectMake(0, 70, screenWidth, screenHeight - 70))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.clipsToBounds = true
-        self.imageView.image = self.image
+        self.imageView.image = UIImage(data: self.image.data)!
         self.imageView.layer.zPosition = 0
         self.addSubview(self.imageView)
         
@@ -65,7 +65,7 @@ class ImageZoom_View: UIView {
         self.blurFilter.alpha = 1
         self.addSubview(self.blurFilter)
         
-        let type = ImageFilter(rawValue: self.message.filter!)!
+        let type = ImageFilter(rawValue: self.image.filter)!
         print(type)
         
         switch type
@@ -76,9 +76,9 @@ class ImageZoom_View: UIView {
             self.blurFilter.alpha = 0
             
         case .Circle:
-
+            let img = UIImage(data: self.image.data)!
             self.unblurVision = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
-            self.unblurVision.image = Editor.circleUnblur(self.image, x: 0, y: 0, imageFrame: self.imageView.frame)
+            self.unblurVision.image = Editor.circleUnblur(img, x: 0, y: 0, imageFrame: self.imageView.frame)
             self.unblurVision.layer.cornerRadius = raio
             self.unblurVision.alpha = 0
             self.unblurVision.layer.zPosition = 5
@@ -156,14 +156,15 @@ class ImageZoom_View: UIView {
     //*** UNBLUR FUNCTIONS ****///
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if(self.message.filter == ImageFilter.Circle.rawValue)
+        if(self.image.filter == ImageFilter.Circle.rawValue)
         {
             if let touch = touches.first
             {
+                let img = UIImage(data: self.image.data)!
                 let x = touch.locationInView(self).x - raio
                 let y = touch.locationInView(self).y - raio
                 self.unblurVision.alpha = 1
-                self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y, imageFrame: self.imageView.frame)
+                self.unblurVision.image = Editor.circleUnblur(img, x: x, y: y, imageFrame: self.imageView.frame)
                 
                 self.unblurVision.frame.origin = CGPointMake(x, y)
             }
@@ -172,13 +173,14 @@ class ImageZoom_View: UIView {
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if(self.message.filter == ImageFilter.Circle.rawValue)
+        if(self.image.filter == ImageFilter.Circle.rawValue)
         {
             if let touch = touches.first
             {
+                let img = UIImage(data: self.image.data)!
                 let x = touch.locationInView(self).x - raio
                 let y = touch.locationInView(self).y - raio
-                self.unblurVision.image = Editor.circleUnblur(self.image!, x: x, y: y, imageFrame: self.imageView.frame)
+                self.unblurVision.image = Editor.circleUnblur(img, x: x, y: y, imageFrame: self.imageView.frame)
                 self.unblurVision.frame.origin = CGPointMake(x, y)
             }
 
@@ -187,7 +189,7 @@ class ImageZoom_View: UIView {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if(self.message.filter == ImageFilter.Circle.rawValue)
+        if(self.image.filter == ImageFilter.Circle.rawValue)
         {
             self.unblurVision.alpha = 0
         }

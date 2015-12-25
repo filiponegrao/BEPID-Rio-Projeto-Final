@@ -10,9 +10,21 @@ import Foundation
 import CryptoSwift
 
 
-
+/**
+ * Classe responsavel pela criptografia de dados.
+ * - Criada em: 18/10/2015
+ * - Ultima atualizacao: 18/12/2015
+ *
+ * Obs: Utiliza o framewrok CryptoSwift, encontrado
+ * na pagina awesome swift no github.
+ *
+ */
 class EncryptTools
 {
+    /**
+     * Cria uma chave de criptografia baseado no username
+     * passado como parametro.
+     */
     class func makeKey(username: String) -> String
     {
         var result = String()
@@ -37,7 +49,12 @@ class EncryptTools
         return result
     }
     
-    class func enc(string: String, contact: String) -> String
+    /**
+     * Criptografa um texto passado como parametro, utilizando
+     * o contato tambem passado como parametro como parte da chave
+     * para tal criptografia.
+     */
+    class func encryptText(string: String, contact: String) -> String
     {
         let key = self.makeKey(contact)
         let iv = "forjaeofuturocar"
@@ -47,7 +64,12 @@ class EncryptTools
         return enc
     }
     
-    class func dec(string: String) -> String
+    /**
+     * Descriptografa um texto passado como parametro.
+     * Utilizada o nome de usuario corrente como chave para
+     * tal descriptografia.
+     */
+    class func decryptText(string: String) -> String
     {
         let key = self.makeKey(DAOUser.sharedInstance.getUsername())
         let iv = "forjaeofuturocar"
@@ -57,7 +79,11 @@ class EncryptTools
         return dec
     }
     
-    class func encUsername(username: String) -> String
+    /**
+     * Criptografa um nome de usuario. Utiliza o proprio
+     * nome como chave da criptografia do mesmo.
+     */
+    class func encryptUsername(username: String) -> String
     {
         let key = self.makeKey(username)
         let iv = "forjaeofuturocar"
@@ -67,23 +93,19 @@ class EncryptTools
         return enc
     }
     
-    class func decUsername(username: String) -> String
-    {
-        let key = self.makeKey(username)
-        let iv = "forjaeofuturocar"
-        
-        let dec = try! username.aesDecrypt(key, iv: iv)
-        
-        return dec
-    }
-    
+    /**
+     * Recebe como parmetro um nume de usuario ja criptografado,
+     * e retorna um nome de usuario descriptografado se o mesmo exisitir.
+     * Vale ressaltar que a funcao retornará um nome, apenas se o mesmo
+     * estiver presente nos contatos.
+     */
     class func getUsernameFromEncrpted(username: String) -> String?
     {
         let contacts = DAOContacts.sharedInstance.getAllContacts()
         
         for contact in contacts
         {
-            if(self.encUsername(contact.username) == username)
+            if(self.encryptUsername(contact.username) == username)
             {
                 return contact.username
             }
@@ -93,23 +115,25 @@ class EncryptTools
     }
     
     
-    class func removeWhiteSpaces(string: String) -> String
+    /**
+     * Recebe uma imagem em forma de daados e um nome de usuario como parametro.
+     * retorna um conjunto de dados ja criptografados referente aos passados.
+     * O nome de usuario é parte da chave de criptografia.
+     */
+    class func encImage(data: NSData, targetUsername: String) -> NSData
     {
-        let replaced = string.stringByReplacingOccurrencesOfString(" ", withString: "")
-
-        return replaced
-    }
-    
-    
-    class func encImage(data: NSData, target: String) -> NSData
-    {
-        let key = self.makeKey(target)
+        let key = self.makeKey(targetUsername)
         let iv = "forjaeofuturocar"
         let encrypted: NSData = try! data.encrypt(ChaCha20(key: key, iv: iv)!)
 
         return encrypted
     }
     
+    /**
+     * Recebe um conjunto de dados referentes a uma imagem,
+     * e utilizando o nome de usuario atual como parte da chave
+     * de descriptografia, descriptografa os bytes e retorna.
+     */
     class func decImage(data: NSData) -> NSData
     {
         let key = self.makeKey(DAOUser.sharedInstance.getUsername())
@@ -120,6 +144,11 @@ class EncryptTools
         return decrypted
     }
     
+    /**
+     * Cria uma chave ilegível.
+     * Deve receber uma chave, única e concisa.
+     * e retorna a mesma, de forma ilegível.
+     */
     class func encKey(myKey: String) -> String
     {
         let key = self.makeKey("queroserrico")

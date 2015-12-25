@@ -76,33 +76,43 @@ class DAOSentMidia
     
     func addSentMidia(message: Message)
     {
-        if(message.image == nil)
-        {
-            return
-        }
-        
-        let fetch = NSFetchRequest(entityName: "SentMidia")
-        
-        let predicate = NSPredicate(format: "sentDate == %@", message.sentDate)
-        
-        fetch.predicate = predicate
-        
-        do { let results = try self.managedObjectContext.executeFetchRequest(fetch) as! [SentMidia]
+        //Encontra o mídia
+        let request = NSFetchRequest(entityName: "Image")
+        request.predicate = NSPredicate(format: "imageKey == %@", message.contentKey!)
+        do { let images = try self.managedObjectContext.executeFetchRequest(request) as! [Image]
             
-            if(results.first != nil)
+            if(images.count > 0)
             {
-                results.first?.lastSent = NSDate()
+                let image = images.first!
+                
+                let fetch = NSFetchRequest(entityName: "SentMidia")
+                
+                let predicate = NSPredicate(format: "sentDate == %@", message.sentDate)
+                
+                fetch.predicate = predicate
+                
+                do { let results = try self.managedObjectContext.executeFetchRequest(fetch) as! [SentMidia]
+                    
+                    if(results.first != nil)
+                    {
+                        results.first?.lastSent = NSDate()
+                    }
+                    else
+                    {
+                        let sent = SentMidia.createInManagedObjectContext(self.managedObjectContext, sentDate: message.sentDate, target: message.target, image: image.data, lastSent: NSDate(), imageKey: message.contentKey!)
+                        self.save()
+                    }
+                }
+                catch {
+                    
+                    return
+                }
+                
             }
-            else
-            {
-                let sent = SentMidia.createInManagedObjectContext(self.managedObjectContext, sentDate: message.sentDate, target: message.target, image: message.image!, lastSent: NSDate(), imageKey: message.contentKey!)
-                self.save()
-            }
+ 
+        
         }
-        catch {
-            
-            return
-        }
+        catch { return }
     }
     
     

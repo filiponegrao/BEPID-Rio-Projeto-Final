@@ -2,26 +2,34 @@
 //  Gif.swift
 //  FFVChat
 //
-//  Created by Filipo Negrao on 03/12/15.
+//  Created by Filipo Negrao on 18/12/15.
 //  Copyright © 2015 FilipoNegrao. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
+extension Gif {
+    
+    @NSManaged var url: String!
+    @NSManaged var hashtags: NSData!
+    @NSManaged var launchedDate: NSDate!
+    @NSManaged var name: String!
+    
+}
 
 class Gif: NSManagedObject
 {
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, name: String, data: NSData, launchedDate: NSDate, hashtags: NSData) -> Gif
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, url: String, hashtags: NSData, name: String, launchedDate: NSDate) -> Gif
     {
         let gif = NSEntityDescription.insertNewObjectForEntityForName("Gif", inManagedObjectContext: moc) as! Gif
         
-        gif.data = data
         gif.name = name
-        gif.launchedDate = launchedDate
+        gif.url = url
         gif.hashtags = hashtags
+        gif.launchedDate = launchedDate
         
         return gif
     }
-
+    
 }

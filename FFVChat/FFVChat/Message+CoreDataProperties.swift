@@ -18,13 +18,12 @@ extension Message {
     @NSManaged var sender: String!
     @NSManaged var status: String!
     @NSManaged var contentKey: String?
-    @NSManaged var image: NSData?
     @NSManaged var type: String!
     @NSManaged var lifeTime: NSNumber!
-    @NSManaged var filter: String?
     @NSManaged var text: String?
-    @NSManaged var audio: NSData?
     @NSManaged var sentDate: NSDate!
-    @NSManaged var gif: NSData?
+    @NSManaged var id: String!
+
+    
 
 }

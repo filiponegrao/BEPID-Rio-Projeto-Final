@@ -227,7 +227,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         {
             let contacts = AppNavigationController()
             self.presentViewController(contacts, animated: true, completion: nil)
-            DAOGifs.sharedInstance.checkNewGifsFromServer()
+//            DAOGifs.sharedInstance.checkNewGifsFromServer()
         }
         
     }

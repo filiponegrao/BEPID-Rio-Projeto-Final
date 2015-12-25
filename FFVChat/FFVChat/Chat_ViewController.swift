@@ -258,8 +258,12 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 let index = self.messages.indexOf(mssg)!
                 print("Atualizando")
                 let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? CellImage_TableViewCell
-                cell?.imageCell.image = UIImage(data: mssg.image!)
-                cell?.setLoadingOff()
+                let img = DAOContents.sharedInstance.getImageFromKey(key)
+                if(img != nil)
+                {
+                    cell?.imageCell.image = img
+                    cell?.setLoadingOff()
+                }
             }
         }
     }
@@ -418,8 +422,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        
-        let type = ContentType(rawValue: self.messages[indexPath.row].type)!
+        let mssg = self.messages[indexPath.row]
+        let type = ContentType(rawValue: mssg.type)!
         
         switch type
         {
@@ -472,7 +476,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundLabel.layer.shadowOpacity = 1
             cell.backgroundLabel.layer.masksToBounds = false
             cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
-            let mssg = self.messages[indexPath.row]
             
             if(mssg.sender != DAOUser.sharedInstance.getUsername())
             {
@@ -496,9 +499,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.imageCell.addSubview(cell.blur)
             cell.bringSubviewToFront(cell.indicator)
             
-            if(self.messages[indexPath.row].image != nil)
+            let key = mssg.contentKey!
+            
+            let img = DAOContents.sharedInstance.getImageFromKey(key)
+            if(img != nil)
             {
-                cell.imageCell.image = UIImage(data: self.messages[indexPath.row].image!)
+                let img = DAOContents.sharedInstance.getImageFromKey(self.messages[indexPath.row].contentKey!)
+                cell.imageCell.image = img
                 cell.setLoadingOff()
             }
             else
@@ -526,7 +533,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.backgroundLabel.layer.shadowOpacity = 1
             cell.backgroundLabel.layer.masksToBounds = false
             cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
-            let mssg = self.messages[indexPath.row]
 
             return cell
             
@@ -537,7 +543,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             cell.sentDate.text = Optimization.getStringDateFromDate(self.messages[indexPath.row].sentDate)
             cell.backgroundColor = UIColor.clearColor()
-            cell.imageCell.image = UIImage.animatedImageWithData(self.messages[indexPath.row].gif!)
+            
+            let gifname = mssg.contentKey!
+            let url = DAOContents.sharedInstance.urlFromGifName(gifname)
+            let request = NSURLRequest(URL: NSURL(string: url!)!)
+            cell.webView.loadRequest(request)
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
@@ -593,9 +603,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let frame = self.tableView.convertRect(frameOnTable, toView: self.tableView.superview)
             
             self.messageText.endEditing(true)
-            if(self.messages[indexPath.row].image != nil)
+            let img = DAOContents.sharedInstance.getImageInfoFromKey(message.contentKey!)
+            if(img != nil)
             {
-                self.imageZoom = ImageZoom_View(message: message, origin: frame)
+                self.imageZoom = ImageZoom_View(image: img!, message: message, origin: frame)
                 self.imageZoom.chatController = self
                 self.imageZoom.message = self.messages[indexPath.row]
                 self.isViewing = true
@@ -856,9 +867,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    func sendGif(gifName: String, gifData: NSData)
+    func sendGif(gifName: String)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, gifName: gifName, gifData: gifData)
+        
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, gifName: gifName)
         
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
@@ -910,6 +922,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     
             })
         }
+        
+        self.playSound()
+
     }
     
     //****************************************************//
@@ -923,7 +938,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if(self.imageZoom.message.sender != DAOUser.sharedInstance.getUsername())
             {
                 DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.message.contentKey!, sender: self.contact.username)
-                DAOMessages.sharedInstance.timesUpMessage(self.imageZoom.message)
                 self.imageZoom?.removeFromSuperview()
                 self.imageZoom = nil
             }

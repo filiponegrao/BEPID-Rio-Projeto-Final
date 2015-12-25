@@ -21,22 +21,10 @@ enum ContentType : String
     case Text = "Text"
 }
 
-
-enum ImageFilter : String
-{
-    case None = "None"
-    
-    case Circle = "Circle"
-    
-    case Rect = "Rect"
-    
-    case Spark = "Spark"
-}
-
 class Message: NSManagedObject
 {
     
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, sender: String, target: String, sentDate: NSDate, lifeTime: Int, type: ContentType, contentKey: String?, text: String?, image: NSData?, filter: ImageFilter?, audio: NSData?, gif: NSData?, status: String) -> Message
+    class func createInManagedObjectContext(moc: NSManagedObjectContext,id: String, sender: String, target: String, sentDate: NSDate, lifeTime: Int, type: ContentType, contentKey: String?, text: String?, status: String) -> Message
     {
         let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as! Message
         
@@ -47,13 +35,16 @@ class Message: NSManagedObject
         message.type = type.rawValue
         message.text = text
         message.contentKey = contentKey
-        message.image = image
         message.status = status
-        message.filter = filter?.rawValue
-        message.audio = audio
-        message.gif = gif
+        message.id = id
         
         return message
     }
 
 }
+
+
+
+
+
+

@@ -157,7 +157,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
             DAOPostgres.sharedInstance.startObserve()
-            DAOGifs.sharedInstance.checkNewGifsFromServer()
             DAOFriendRequests.sharedInstance.friendsAccepted()
             DAOFriendRequests.sharedInstance.loadRequests()
             DAOContacts.sharedInstance.refreshContacts()

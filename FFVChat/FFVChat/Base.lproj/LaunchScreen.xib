@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,23 +13,20 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ContactBackground" translatesAutoresizingMaskIntoConstraints="NO" id="pht-qC-9cE">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_" translatesAutoresizingMaskIntoConstraints="NO" id="wR2-AI-eTZ">
-                    <rect key="frame" x="152" y="94" width="177" height="161"/>
-                    <animations/>
+                    <rect key="frame" x="178" y="117" width="125" height="113"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="177" id="uOK-yz-vfq"/>
-                        <constraint firstAttribute="height" constant="161" id="zCR-2N-4Ub"/>
+                        <constraint firstAttribute="width" constant="125" id="uOK-yz-vfq"/>
+                        <constraint firstAttribute="height" constant="113" id="zCR-2N-4Ub"/>
                     </constraints>
                 </imageView>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="wR2-AI-eTZ" firstAttribute="centerX" secondItem="pht-qC-9cE" secondAttribute="centerX" id="2D8-YZ-Hp9"/>
-                <constraint firstItem="wR2-AI-eTZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-65.5" id="A0J-zu-WVZ"/>
+                <constraint firstItem="wR2-AI-eTZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-66" id="A0J-zu-WVZ"/>
                 <constraint firstAttribute="bottom" secondItem="pht-qC-9cE" secondAttribute="bottom" id="IkJ-zm-PbZ"/>
                 <constraint firstAttribute="trailing" secondItem="pht-qC-9cE" secondAttribute="trailing" id="cA3-DJ-RTU"/>
                 <constraint firstItem="pht-qC-9cE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="lzm-PZ-64q"/>

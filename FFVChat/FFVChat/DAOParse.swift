@@ -482,13 +482,12 @@ class DAOParse
             
             if(object != nil)
             {
-                callback(was: true)
+                callback(was: false)
             }
             else
             {
-                callback(was: false)
+                callback(was: true)
             }
-            
         }
     }
     
@@ -750,7 +749,7 @@ class DAOParse
                         
                         self.tentativasDownload = 0
                         let decData = EncryptTools.decImage(data!)
-                        DAOMessages.sharedInstance.setImageForMessage(message, image: decData)
+//                        DAOMessages.sharedInstance.setImageForMessage(message, image: decData)
                         
                     })
                 }

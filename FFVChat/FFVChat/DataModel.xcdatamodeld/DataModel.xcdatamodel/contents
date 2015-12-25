@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
+    <entity name="Audio" representedClassName=".Audio" syncable="YES">
+        <attribute name="audioKey" attributeType="String" syncable="YES"/>
+        <attribute name="data" attributeType="Binary" syncable="YES"/>
+        <attribute name="filter" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Contact" representedClassName=".Contact" syncable="YES">
         <attribute name="createdAt" attributeType="Date" syncable="YES"/>
         <attribute name="facebookId" optional="YES" attributeType="String" syncable="YES"/>
@@ -9,17 +14,20 @@
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Gif" representedClassName=".Gif" syncable="YES">
-        <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
-        <attribute name="hashtags" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="hashtags" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="launchedDate" attributeType="Date" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="url" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName=".Image" syncable="YES">
+        <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="filter" attributeType="String" syncable="YES"/>
+        <attribute name="imageKey" attributeType="String" syncable="YES"/>
+        <attribute name="preview" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName=".Message" syncable="YES">
-        <attribute name="audio" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="contentKey" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="gif" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="lifeTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="sender" attributeType="String" syncable="YES"/>
         <attribute name="sentDate" attributeType="Date" syncable="YES"/>
@@ -50,12 +58,21 @@
         <attribute name="trustLevel" attributeType="Integer 32" defaultValueString="100" syncable="YES"/>
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Video" representedClassName=".Video" syncable="YES">
+        <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preview" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="videoKey" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Contact" positionX="-18" positionY="27" width="128" height="135"/>
         <element name="Gif" positionX="0" positionY="171" width="128" height="105"/>
-        <element name="Message" positionX="9" positionY="135" width="128" height="225"/>
+        <element name="Message" positionX="9" positionY="135" width="128" height="180"/>
         <element name="PrintscreenNotification" positionX="9" positionY="135" width="128" height="105"/>
         <element name="SentMidia" positionX="9" positionY="126" width="128" height="120"/>
         <element name="User" positionX="9" positionY="126" width="128" height="150"/>
+        <element name="Image" positionX="0" positionY="153" width="128" height="105"/>
+        <element name="Audio" positionX="9" positionY="162" width="128" height="90"/>
+        <element name="Video" positionX="18" positionY="171" width="128" height="105"/>
     </elements>
 </model>

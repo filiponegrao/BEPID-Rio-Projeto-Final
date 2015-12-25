@@ -13,7 +13,7 @@ class GifSharing_View : UIView
 {
     var blackScreen : UIView!
     
-    var imageView : UIImageView!
+    var webView : UIWebView!
     
     var shareButton : UIButton!
     
@@ -29,15 +29,15 @@ class GifSharing_View : UIView
     
     //Gif information
     
-    var gifData : NSData!
+    var gifUrl: String?
     
-    var gifName : String!
+    var gifName: String!
     
-    init(imageOrigin: CGRect, gifData: NSData, gifName: String)
+    init(imageOrigin: CGRect, gifName: String)
     {
         self.imageOrigin = imageOrigin
-        self.gifData = gifData
         self.gifName = gifName
+        self.gifUrl = DAOContents.sharedInstance.urlFromGifName(gifName)
         
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
@@ -51,11 +51,18 @@ class GifSharing_View : UIView
         self.blurView.alpha = 0
         self.addSubview(self.blurView)
         
-        self.imageView = UIImageView(frame: CGRectMake(10, screenHeight/5, screenWidth - 20, screenWidth - 20))
-        self.imageView.contentMode = .ScaleAspectFit
-        self.imageView.layer.cornerRadius = 4
-        self.imageView.clipsToBounds = true
-        self.addSubview(self.imageView)
+        self.webView = UIWebView(frame: CGRectMake(10, screenHeight/5, screenWidth - 20, screenWidth - 20))
+        self.webView.contentMode = .ScaleAspectFit
+        self.webView.layer.cornerRadius = 4
+        self.webView.clipsToBounds = true
+        
+        if(self.gifUrl != nil)
+        {
+            let request = NSURLRequest(URL: NSURL(string: self.gifUrl!)!)
+            self.webView.loadRequest(request)
+        }
+        
+        self.addSubview(self.webView)
         
         self.shareButton = UIButton(frame: CGRectMake(0, 0,screenWidth/2.5, screenWidth/2.5))
         self.shareButton.setImage(UIImage(named: "send"), forState: .Normal)
@@ -73,11 +80,11 @@ class GifSharing_View : UIView
     
     func animateOn()
     {
-        let finalFrame = self.imageView.frame
+        let finalFrame = self.webView.frame
         let shareFinalCenter = self.shareButton.center
         let cancelFinalCenter = self.cancelButton.center
         
-        self.imageView.frame = self.imageOrigin
+        self.webView.frame = self.imageOrigin
         self.shareButton.center.y += screenWidth/2
         self.cancelButton.center.y += screenWidth/2
 
@@ -85,7 +92,7 @@ class GifSharing_View : UIView
             
             self.blackScreen.alpha = 0.7
             self.blurView.alpha = 0.7
-            self.imageView.frame = finalFrame
+            self.webView.frame = finalFrame
             self.shareButton.center = shareFinalCenter
             self.cancelButton.center = cancelFinalCenter
             self.cancelButton.alpha = 1
@@ -99,8 +106,8 @@ class GifSharing_View : UIView
     {
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
             
-            self.imageView.frame = self.imageOrigin
-            self.imageView.contentMode = .ScaleAspectFill
+            self.webView.frame = self.imageOrigin
+            self.webView.contentMode = .ScaleAspectFill
             self.shareButton.center.y += screenWidth/2
             self.cancelButton.alpha = 0
             self.cancelButton.center.y += screenWidth/2
@@ -121,17 +128,18 @@ class GifSharing_View : UIView
     {
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
             
-            self.imageView.frame = self.imageOrigin
-            self.imageView.contentMode = .ScaleAspectFill
+            self.webView.frame = self.imageOrigin
+            self.webView.contentMode = .ScaleAspectFill
             self.shareButton.center.y += screenWidth/2
             self.cancelButton.center.y += screenWidth/2
+            self.cancelButton.alpha = 0
             self.blackScreen.alpha = 0
             self.blurView.alpha = 0
             
             }) { (success: Bool) -> Void in
                 
             
-                self.chatViewController.sendGif(self.gifName, gifData: self.gifData)
+                self.chatViewController.sendGif(self.gifName)
                 self.removeFromSuperview()
                 self.gifGalleryController.dismissViewControllerAnimated(true, completion: { () -> Void in
                     

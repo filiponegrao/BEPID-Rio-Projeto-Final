@@ -52,7 +52,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
-        layout.itemSize = CGSize(width: screenWidth/2 - 5, height: screenWidth/2 - 5)
+        layout.itemSize = CGSize(width: screenWidth/3 - 5, height: screenWidth/3 - 5)
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 5 //espaçamento entre uma celula de baixo com a de cima
         layout.headerReferenceSize = CGSizeMake(0, 0)
@@ -65,11 +65,11 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         self.collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(self.collectionView)
         
-        self.progress = NVActivityIndicatorView(frame: CGRectMake(0, 0, 60, 60), type: NVActivityIndicatorType.Pacman, color: oficialLightGray)
-        self.progress.center = self.collectionView.center
+        self.progress = NVActivityIndicatorView(frame: CGRectMake(0, 0, 100, 100), type: NVActivityIndicatorType.BallPulse, color: oficialLightGray)
+        self.progress.center = CGPointMake(screenWidth/2, screenHeight/2 - 100)
         self.progress.startAnimation()
         
-        self.gifs = DAOGifs.sharedInstance.getGifs()
+        self.gifs = DAOContents.sharedInstance.getNewestGifs()
         self.collectionView.reloadData()
         
         if(self.gifs.count == 0)
@@ -115,13 +115,16 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         
         cell.subviews.last?.removeFromSuperview()
         
-        let imageview = MKImageView(frame: CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height))
-        imageview.backgroundColor = UIColor.blackColor()
-        imageview.image = UIImage.animatedImageWithData(self.gifs[indexPath.item].data)
-        imageview.clipsToBounds = true
-        imageview.contentMode = .ScaleAspectFill
+        let webview = UIWebView(frame: CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height))
+        webview.backgroundColor = UIColor.blackColor()
+        webview.clipsToBounds = true
+        webview.contentMode = .ScaleAspectFill
         
-        cell.addSubview(imageview)
+        let request = NSURLRequest(URL: NSURL(string: "\(self.gifs[indexPath.row].url)\(self.gifs[indexPath.item]).gif")!)
+        
+        webview.loadRequest(request)
+        
+        cell.addSubview(webview)
         
         return cell
     }
@@ -134,12 +137,10 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
         let gif = self.gifs[indexPath.row]
         
-        let sharing = GifSharing_View(imageOrigin: origin, gifData: gif.data, gifName: gif.name)
+        let sharing = GifSharing_View(imageOrigin: origin, gifName: gif.name)
         sharing.chatViewController = self.chatViewController
         sharing.gifGalleryController = self
         self.view.addSubview(sharing)
-        sharing.imageView.image = UIImage.animatedImageWithData(self.gifs[indexPath.item].data)
-        sharing.animateOn()
         
     }
 
