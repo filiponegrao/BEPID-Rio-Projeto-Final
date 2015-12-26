@@ -52,9 +52,12 @@ class GifSharing_View : UIView
         self.addSubview(self.blurView)
         
         self.webView = UIWebView(frame: CGRectMake(10, screenHeight/5, screenWidth - 20, screenWidth - 20))
-        self.webView.contentMode = .ScaleAspectFit
         self.webView.layer.cornerRadius = 4
-        self.webView.clipsToBounds = true
+        self.webView.userInteractionEnabled = false
+        self.webView.backgroundColor = UIColor.clearColor()
+        self.webView.scrollView.backgroundColor = UIColor.clearColor()
+        self.webView.scalesPageToFit = true
+        self.webView.scrollView.zoomScale += 0.5
         
         if(self.gifUrl != nil)
         {

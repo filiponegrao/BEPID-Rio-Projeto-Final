@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         BlackList.initBlackList()
         TheJudger.Singleton.inicializandoJudger()
+        DAOPostgres.sharedInstance.addAllGifs()
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         

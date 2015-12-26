@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate
+class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIWebViewDelegate
 {
     var collectionView : UICollectionView!
     
@@ -112,15 +112,21 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+        cell.backgroundColor = oficialDarkGray
+        cell.clipsToBounds = true
         
         cell.subviews.last?.removeFromSuperview()
         
         let webview = UIWebView(frame: CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height))
         webview.backgroundColor = UIColor.blackColor()
         webview.clipsToBounds = true
-        webview.contentMode = .ScaleAspectFill
+        webview.contentMode = .ScaleAspectFit
+        webview.backgroundColor = UIColor.clearColor()
+        webview.delegate = self
+        webview.userInteractionEnabled = false
+        webview.scalesPageToFit = true
         
-        let request = NSURLRequest(URL: NSURL(string: "\(self.gifs[indexPath.row].url)\(self.gifs[indexPath.item]).gif")!)
+        let request = NSURLRequest(URL: NSURL(string: self.gifs[indexPath.item].url)!)
         
         webview.loadRequest(request)
         
@@ -142,6 +148,34 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         sharing.gifGalleryController = self
         self.view.addSubview(sharing)
         
+        sharing.animateOn()
+        
     }
+    
+    func webViewDidFinishLoad(webView: UIWebView)
+    {
+        webView.scrollView.zoomScale += 0.5
+    }
+    
+//    func webViewResizeToContent(webView: UIWebView) {
+//        webView.layoutSubviews()
+//        
+//        // Set to smallest rect value
+//        var frame:CGRect = webView.frame
+//        frame.size.height = 1.0
+//        webView.frame = frame
+//        
+//        var height:CGFloat = webView.scrollView.contentSize.height
+//        print("UIWebView.height: \(height)")
+//        
+//        
+////        webView.setHeight(height: height)
+//        let heightConstraint = NSLayoutConstraint(item: webView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.Height, multiplier: 1.0, constant: height)
+//        webView.addConstraint(heightConstraint)
+//        
+//        // Set layout flag
+//        webView.window?.setNeedsUpdateConstraints()
+//        webView.window?.setNeedsLayout()
+//    }
 
 }

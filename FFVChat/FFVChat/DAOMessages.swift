@@ -169,13 +169,12 @@ class DAOMessages : NSObject
         let now = NSDate()
         
         let id = self.createMessageKey(username, date: now)
-        let key = self.createContentKey(id)
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: self.defaultTime, type: .Gif, contentKey: gifName, text: nil, status: "sent")
         
         self.save()
         
-//        DAOPostgres.sharedInstance.sendGifMessage(EncryptTools.encUsername(username), lifeTime: self.defaultTime, gifKey: gifName, sentDate: now)
+        DAOPostgres.sharedInstance.sendGifMessage(id, username: username, lifeTime: self.defaultTime, gifName: gifName, sentDate: now)
         
         DAOParse.pushImageNotification(username)
         

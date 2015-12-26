@@ -51,6 +51,9 @@ class DAOPostgres : NSObject
     /** Busca uma imagem ao banco de dados*/
     let imageUrl_download = "\(baseUrl)/Images_download.php"
     
+    /** Busca todos os gifs disponiveis no banco de dados */
+    let gifsUrl_getAll = "\(baseUrl)/Gifs_getAll.php"
+    
     
     
     override init()
@@ -195,7 +198,7 @@ class DAOPostgres : NSObject
         }
         
         
-        let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(me), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "lifeTime": lifeTime, "type": ContentType.Text.rawValue, "contentKey": contentKey]
+        let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(me), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "lifeTime": lifeTime, "type": ContentType.Image.rawValue, "contentKey": contentKey]
         
         Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
             .responseJSON { response in
@@ -203,6 +206,17 @@ class DAOPostgres : NSObject
         }
     }
     
+    func sendGifMessage(id: String, username: String, lifeTime: Int, gifName: String, sentDate: NSDate)
+    {
+        let me = DAOUser.sharedInstance.getUsername()
+        
+        let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(me), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "lifeTime": lifeTime, "type": ContentType.Gif.rawValue, "contentKey": gifName]
+        
+        Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
+            .responseJSON { response in
+                print(response)
+        }
+    }
     
     
     func setMessageReceived(messageID: String)
@@ -252,6 +266,13 @@ class DAOPostgres : NSObject
         return dateFormatter.dateFromString(str) as NSDate!
     }
     
+    func string2nsdateMini(str: String) -> NSDate{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = NSTimeZone(abbreviation: "UTC");
+        return dateFormatter.dateFromString(str) as NSDate!
+    }
+    
     func stopRefreshing()
     {
         self.refresherChat?.invalidate()
@@ -281,6 +302,34 @@ class DAOPostgres : NSObject
     {
         self.refresherContact?.invalidate()
         self.deleteOldMessages?.invalidate()
+    }
+    
+    
+    //Gifs
+    func addAllGifs()
+    {
+        Alamofire.request(.POST, self.gifsUrl_getAll, parameters: nil)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
+                    
+                    for result in results as! NSArray
+                    {
+                        print(result)
+                        
+                        let name = result["name"] as! String
+                        let hashtags = result["hashtags"] as! String
+                        let launcheddate = result["launcheddate"] as! String
+                        let url = result["url"] as! String
+                        
+                        let hash = self.separateStringArray(hashtags)
+                        let date = self.string2nsdateMini(launcheddate)
+                        
+                        DAOContents.sharedInstance.addGif(name, url: url, hashtags: hash, launchedDate: date)
+                    }
+                }
+        }
+        
     }
     
     
@@ -316,6 +365,26 @@ class DAOPostgres : NSObject
         
         // return URLRequestConvertible and NSData
         return (Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)
+    }
+    
+    func separateStringArray(string: String) -> [String]
+    {
+        var array = [String]()
+        
+        let stringLenght = string.characters.count
+        
+        let hashtags = (string as NSString).substringWithRange(NSMakeRange(1, stringLenght-2))
+        
+        print(hashtags)
+        
+        let parts = hashtags.componentsSeparatedByString(",").count
+        
+        for i in 0...(parts-1)
+        {
+            array.append(hashtags.componentsSeparatedByString(",")[i])
+        }
+        
+        return array
     }
 }
 

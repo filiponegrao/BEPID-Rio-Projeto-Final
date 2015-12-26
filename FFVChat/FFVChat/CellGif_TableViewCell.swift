@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CellGif_TableViewCell: UITableViewCell
+class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
 {
     var cellView : UIView!
     
@@ -38,8 +38,11 @@ class CellGif_TableViewCell: UITableViewCell
         self.webView = UIWebView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
         self.webView.clipsToBounds = true
         self.webView.layer.cornerRadius = 10
-        self.webView.contentMode = .ScaleAspectFill
+//        self.webView.contentMode = .ScaleAspectFill
         self.webView.layer.zPosition = 5
+        self.webView.userInteractionEnabled = false
+        self.webView.scalesPageToFit = true
+        self.webView.delegate = self
         self.cellView.addSubview(webView)
         
         self.bringSubviewToFront(self.webView)
@@ -67,6 +70,12 @@ class CellGif_TableViewCell: UITableViewCell
     {
         super.setSelected(selected, animated: animated)
 
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView)
+    {
+        webView.scalesPageToFit = true
+        webView.scrollView.zoomScale = 2
     }
 
 }

@@ -19,9 +19,10 @@ class DAOContents : NSObject
 {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
+    
     override init()
     {
-        
+        DAOPostgres.sharedInstance.addAllGifs()
     }
     
     class var sharedInstance : DAOContents
@@ -84,7 +85,7 @@ class DAOContents : NSObject
             return false
         }
     }
-
+    
     func getImageFromKey(imageKey: String) -> UIImage?
     {
         let request = NSFetchRequest(entityName: "Image")
@@ -135,12 +136,14 @@ class DAOContents : NSObject
         }
     }
     
+    
     /*************************************************
      *                                               *
      *                 GIF SECTION                   *
      *                                               *
      *************************************************/
     
+    /** Adiciona os gifs */
     func addGif(name: String, url: String, hashtags: [String], launchedDate: NSDate) -> Bool
     {
         let data = Optimization.stringArrayToData(hashtags)
@@ -159,7 +162,13 @@ class DAOContents : NSObject
             }
             else
             {
-                return false
+                let existent = result.first
+                existent?.url = url
+                existent?.hashtags = data
+                existent?.launchedDate = launchedDate
+                self.save()
+                
+                return true
             }
         }
         catch
@@ -220,6 +229,8 @@ class DAOContents : NSObject
     
     func getNewestGifs() -> [Gif]
     {
+        DAOPostgres.sharedInstance.addAllGifs()
+
         var newGifs = [Gif]()
         let calendar = NSCalendar.currentCalendar()
         let pastMonth = calendar.dateByAddingUnit(.Month, value: -1, toDate: NSDate(), options: [])
@@ -248,6 +259,8 @@ class DAOContents : NSObject
     
     func getOldestGifs() -> [Gif]
     {
+        DAOPostgres.sharedInstance.addAllGifs()
+
         var newGifs = [Gif]()
         let calendar = NSCalendar.currentCalendar()
         let pastMonth = calendar.dateByAddingUnit(.Month, value: -1, toDate: NSDate(), options: [])
