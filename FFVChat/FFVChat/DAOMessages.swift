@@ -144,9 +144,9 @@ class DAOMessages : NSObject
         
         self.save()
         
-//        DAOPostgres.sharedInstance.sendImageMessage(EncryptTools.encUsername(username), lifeTime: lifeTime, imageKey: key, image: image, filter: filter, sentDate: now)
+        DAOPostgres.sharedInstance.sendImageMessage(id, username: username, lifeTime: lifeTime, contentKey: key, sentDate: now)
         
-//        DAOParse.sharedInstance.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, target: username))
+        DAOParse.sharedInstance.sendImageOnKey(key, image: EncryptTools.encImage(image.mediumQualityJPEGNSData, targetUsername: username), filter: filter)
         
         DAOParse.pushImageNotification(username)
         
@@ -330,6 +330,8 @@ class DAOMessages : NSObject
         
         return false
     }
+    
+    
     
     
     /** Funcao que verifica se uma mensagem possui o status

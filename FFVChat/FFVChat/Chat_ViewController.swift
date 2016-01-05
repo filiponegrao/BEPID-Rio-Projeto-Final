@@ -12,12 +12,14 @@ import AVFoundation
 
 let navigationBarHeigth : CGFloat = 80
 
-let messageViewHeigth : CGFloat = 50
+let messageViewHeigth : CGFloat = 80
 
 let tableViewHeigth : CGFloat = screenHeight - navigationBarHeigth - messageViewHeigth
 
-class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MessageBarDelegate
 {
+    var messageBar: MessageBar!
+    
     var imageZoom : ImageZoom_View!
     
     var tableView: UITableView!
@@ -41,6 +43,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var sendButton : UIButton!
     
     var imagePicker : UIImagePickerController!
+    
+    var backgroundPicker : UIImagePickerController!
     
     var redScreen : UIView!
     
@@ -68,6 +72,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     override func viewDidLoad()
     {
@@ -101,7 +106,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.keyboardDismissMode = .Interactive
         
-        let gesture = UISwipeGestureRecognizer(target: self, action: "changeBackground")
+        let gesture = UISwipeGestureRecognizer(target: self, action: "changeToNextBackground")
         gesture.direction = .Right
         self.view.addGestureRecognizer(gesture)
         
@@ -111,41 +116,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.addSubview(self.redScreen)
         self.containerView.addSubview(tableView)
         
-        self.messageView = UIView(frame: CGRectMake(0, self.containerView.frame.height - messageViewHeigth, screenWidth, messageViewHeigth))
-        self.messageView.backgroundColor = oficialDarkGray
-        self.containerView.addSubview(messageView)
         
-        self.gifButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
-        self.gifButton.setImage(UIImage(named: "gifButton"), forState: UIControlState.Normal)
-        self.gifButton.alpha = 0.7
-        self.gifButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
-//        self.messageView.addSubview(gifButton)
-        
-        self.cameraButton = UIButton(frame: CGRectMake(5, 5 , self.messageView.frame.size.height - 10, self.messageView.frame.size.height - 10))
-        self.cameraButton.setImage(UIImage(named: "chatCameraButton"), forState: UIControlState.Normal)
-        self.cameraButton.alpha = 0.7
-        self.cameraButton.addTarget(self, action: "takePhoto", forControlEvents: UIControlEvents.TouchUpInside)
-        self.messageView.addSubview(cameraButton)
-        
-        self.sendButton = UIButton(frame: CGRectMake(screenWidth - screenWidth/4, 0, screenWidth/4, self.messageView.frame.size.height))
-        self.sendButton.setTitle("Send", forState: UIControlState.Normal)
-        self.sendButton.setTitleColor(oficialGreen, forState: UIControlState.Normal)
-        self.sendButton.addTarget(self, action: "sendMessage", forControlEvents: UIControlEvents.TouchUpInside)
-        self.messageView.addSubview(sendButton)
-        
-        self.messageText = UITextView(frame: CGRectMake(self.cameraButton.frame.origin.x + self.cameraButton.frame.width + 5, 10, screenWidth - (self.cameraButton.frame.size.width + self.sendButton.frame.size.width), self.messageView.frame.size.height - 20))
-        self.messageText.autocorrectionType = UITextAutocorrectionType.Yes
-        self.messageText.font = UIFont(name: "Helvetica", size: 16)
-        self.messageText.textContainer.lineFragmentPadding = 10;
-        self.messageText.text = "Message..."
-        self.messageText.textAlignment = .Left
-        self.messageText.textColor = oficialLightGray
-        self.messageText.tintColor = oficialGreen
-        self.messageText.backgroundColor = UIColor.clearColor()
-        self.messageText.delegate = self
-        self.messageText.keyboardAppearance = .Dark
-        self.messageText.keyboardDismissMode = .None
-        self.messageView.addSubview(self.messageText)
+        self.messageBar = MessageBar(position: CGPointMake(0, self.tableView.frame.origin.y + self.tableView.frame.size.height))
+        self.messageBar.addActionForSenderButton(self, action: "sendMessage", forControlEvents: .TouchUpInside)
+        self.messageBar.addActionForCameraButton(self, action: "takePhoto", forControlEvents: .TouchUpInside)
+        self.messageBar.addActionForConfigButton(self, action: "layoutOptions", forControlEvents: .TouchUpInside)
+        self.messageBar.delegate = self
+        self.containerView.addSubview(messageBar)
+//        self.messageBar.frame.origin.y = self.tableView.frame.origin.y + self.tableView.frame.size.height
         
     }
     
@@ -249,7 +227,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         print("loading image")
         let info : [NSObject : AnyObject] = notification.userInfo!
-        let key = info["messageKey"] as! String
+        let key = info["imageKey"] as! String
         
         for mssg in self.messages
         {
@@ -334,7 +312,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
             {
                 self.containerView.frame.size.height = screenHeight - navigationBarHeigth - keyboardSize.height
-                self.messageView.frame.origin.y = self.containerView.frame.size.height - messageViewHeigth
+                self.messageBar.frame.origin.y =  screenHeight - self.messageBar.frame.size.height - navigationBarHeigth - (keyboardSize.height)
                 self.backgorundImage.frame.size.height = tableViewHeigth - (keyboardSize.height)
                 self.tableView.frame.size.height = tableViewHeigth - keyboardSize.height
                 
@@ -350,15 +328,56 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         self.containerView.frame.origin.y = navigationBarHeigth
         self.containerView.frame.size.height = screenHeight - navigationBarHeigth
-        self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
+        self.messageBar.frame.origin.y = self.containerView.frame.size.height - self.messageBar.frame.size.height
         self.tableView.frame.size.height = tableViewHeigth
         self.backgorundImage.frame.size.height = tableViewHeigth
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        self.messageText.endEditing(true)
+        self.messageBar.endEditing(true)
     }
+    
+    
+    //*** Message Bar properties ***/
+    func messageBarExpanded(height: CGFloat)
+    {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+//            self.containerView.frame.size.height = screenHeight - navigationBarHeigth - height
+//            self.messageBar.frame.origin.y =  screenHeight - self.messageBar.frame.size.height - navigationBarHeigth - (height)
+            self.backgorundImage.frame.size.height = self.backgorundImage.frame.size.height - (height)
+            self.tableView.frame.size.height = self.tableView.frame.size.height - height
+            
+            if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+            {
+                self.tableView.contentOffset.y += height
+            }
+            
+            }) { (success: Bool) -> Void in
+                
+        }
+    }
+    
+    func messageBarReturnedToOriginal(excededHeight: CGFloat)
+    {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+//            self.containerView.frame.origin.y = navigationBarHeigth
+//            self.containerView.frame.size.height = screenHeight - navigationBarHeigth
+//            self.messageBar.frame.origin.y = self.containerView.frame.size.height - self.messageBar.frame.size.height
+            self.tableView.frame.size.height += excededHeight
+            self.backgorundImage.frame.size.height += excededHeight
+            
+            }) { (success: Bool) -> Void in
+                
+        }
+    }
+    
+    //*** End Message Bar properties ***/
+
+    
+    
     //****************************************************//
     //*********** TABLE VIEW PROPERTIES ******************//
     //****************************************************//
@@ -512,7 +531,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 cell.imageCell.image = UIImage()
                 cell.setLoading()
-                DAOParse.sharedInstance.downloadImageForMessage(self.messages[indexPath.row])
+                DAOParse.sharedInstance.downloadImageForMessage(mssg.contentKey!, id: mssg.id)
             }
             
 
@@ -602,9 +621,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             let frame = self.tableView.convertRect(frameOnTable, toView: self.tableView.superview)
             
-            self.messageText.endEditing(true)
             let img = DAOContents.sharedInstance.getImageInfoFromKey(message.contentKey!)
-            if(img != nil)
+            if(img != nil && !self.messageBar.isEditing())
             {
                 self.imageZoom = ImageZoom_View(image: img!, message: message, origin: frame)
                 self.imageZoom.chatController = self
@@ -618,6 +636,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     DAOMessages.sharedInstance.deleteMessageAfterTime(message)
                 }
             }
+            self.messageBar.endEditing(true)
             
         case .Text:
             
@@ -646,7 +665,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             print("nothing")
         }
 
-        self.messageText.endEditing(true)
+        self.messageBar.endEditing(true)
         
     }
     
@@ -680,100 +699,100 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    //****************************************************//
-    //*********** TEXT VIEW DELEGATES ********************//
-    //****************************************************//
-    func textViewDidBeginEditing(textView: UITextView)
-    {
-        if(textView.text == "Message...")
-        {
-            textView.text = ""
-        }
-    }
-    
-    func textViewDidEndEditing(textView: UITextView)
-    {
-        if(textView.text == "")
-        {
-            textView.text = "Message..."
-        }
-    }
-    
-    func textViewDidChange(textView: UITextView)
-    {
-        let frame = self.messageText.frame
-        
-        let h = self.messageText.contentSize.height
-        
-        if(h > frame.size.height)
-        {
-            self.expandTextField()
-        }
-        else if(h < frame.size.height)
-        {
-            self.reduceTextField()
-        }
-    }
-    
-    func expandTextField()
-    {
-        let frame = self.messageText.frame
-        
-        let h = self.messageText.contentSize.height
-        
-        let plus = h - frame.size.height
-        
-        if(self.messageText.frame.size.height < screenHeight/5)
-        {
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
-                self.messageView.frame.origin.y -= plus
-                self.messageView.frame.size.height += plus
-                self.tableView.frame.size.height -= plus
-                self.messageText.frame.size.height += plus
-                
-                }) { (success: Bool) -> Void in
-            }
-        }
-    }
-    
-    func reduceTextField()
-    {
-        let frame = self.messageText.frame
-        
-        let h = self.messageText.contentSize.height
-        
-        let plus = frame.size.height - h
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.messageView.frame.origin.y += plus
-            self.messageView.frame.size.height -= plus
-            self.tableView.frame.size.height += plus
-            self.messageText.frame.size.height -= plus
-            
-            }) { (success: Bool) -> Void in
-        }
-    }
-    
-    func backToOriginal()
-    {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.messageView.frame.origin.y = self.containerView.frame.size.height - 50
-            self.messageView.frame.size.height = 50
-            self.tableView.frame.size.height = self.containerView.frame.size.height - 50
-            self.messageText.frame.size.height = self.messageView.frame.size.height - 20
-            
-            }) { (success: Bool) -> Void in
-        }
-    }
-    
-    func endEditing()
-    {
-        self.messageText.endEditing(true)
-    }
-    
+//    //****************************************************//
+//    //*********** TEXT VIEW DELEGATES ********************//
+//    //****************************************************//
+//    func textViewDidBeginEditing(textView: UITextView)
+//    {
+//        if(textView.text == "Message...")
+//        {
+//            textView.text = ""
+//        }
+//    }
+//    
+//    func textViewDidEndEditing(textView: UITextView)
+//    {
+//        if(textView.text == "")
+//        {
+//            textView.text = "Message..."
+//        }
+//    }
+//    
+//    func textViewDidChange(textView: UITextView)
+//    {
+//        let frame = self.messageBar.textView.frame
+//        
+//        let h = self.messageBar.textView.contentSize.height
+//        
+//        if(h > frame.size.height)
+//        {
+//            self.expandTextField()
+//        }
+//        else if(h < frame.size.height)
+//        {
+//            self.reduceTextField()
+//        }
+//    }
+//    
+//    func expandTextField()
+//    {
+//        let frame = self.messageBar.textView.frame
+//        
+//        let h = self.messageBar.textView.contentSize.height
+//        
+//        let plus = h - frame.size.height
+//        
+//        if(self.messageBar.textView.frame.size.height < screenHeight/5)
+//        {
+//            UIView.animateWithDuration(0.3, animations: { () -> Void in
+//                
+//                self.messageBar.frame.origin.y -= plus
+//                self.messageBar.frame.size.height += plus
+//                self.tableView.frame.size.height -= plus
+//                self.messageBar.textView.frame.size.height += plus
+//                
+//                }) { (success: Bool) -> Void in
+//            }
+//        }
+//    }
+//    
+//    func reduceTextField()
+//    {
+//        let frame = self.messageBar.textView.frame
+//        
+//        let h = self.messageBar.textView.contentSize.height
+//        
+//        let plus = frame.size.height - h
+//        
+//        UIView.animateWithDuration(0.3, animations: { () -> Void in
+//            
+//            self.messageBar.frame.origin.y += plus
+//            self.messageBar.frame.size.height -= plus
+//            self.tableView.frame.size.height += plus
+//            self.messageBar.textView.frame.size.height -= plus
+//            
+//            }) { (success: Bool) -> Void in
+//        }
+//    }
+//    
+//    func backToOriginal()
+//    {
+//        UIView.animateWithDuration(0.3, animations: { () -> Void in
+//            
+//            self.messageBar.frame.origin.y = self.containerView.frame.size.height - 50
+//            self.messageBar.frame.size.height = 50
+//            self.tableView.frame.size.height = self.containerView.frame.size.height - 50
+//            self.messageBar.textView.frame.size.height = self.messageBar.frame.size.height - 20
+//            
+//            }) { (success: Bool) -> Void in
+//        }
+//    }
+//    
+//    func endEditing()
+//    {
+//        self.messageBar.textView.endEditing(true)
+//    }
+//    
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat
     {
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
@@ -785,6 +804,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         label.sizeToFit()
         return label.frame.height
     }
+    
     //****************************************************//
     //***********  END TEXT VIEW DELEGATES ***************//
     //****************************************************//
@@ -816,6 +836,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let gifGallery = GifGallery_UIViewController(chatViewController: self)
             self.presentViewController(gifGallery, animated: true, completion: nil)
         }))
+        
+        actionsheet.addAction(UIAlertAction(title: "From Photo Album", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            self.imagePicker = UIImagePickerController()
+            self.imagePicker.delegate = self
+            self.imagePicker.sourceType = .PhotoLibrary
+            
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+            
+        }))
 
         actionsheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
 
@@ -823,23 +853,32 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         self.presentViewController(actionsheet, animated: true, completion: nil)
         
-//        self.imagePicker = UIImagePickerController()
-//        self.imagePicker.delegate = self
-//        self.imagePicker.sourceType = .Camera
-//        self.imagePicker.cameraDevice = .Front
-//        
-//        self.presentViewController(self.imagePicker, animated: true, completion: nil)
-        
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
-        self.imagePicker.dismissViewControllerAnimated(false) { () -> Void in
-            
-            self.presentViewController(SelectedMidia_ViewController(image: image,contact: self.contact), animated: true, completion: { () -> Void in
-                
-            })
-            
+        if(self.imagePicker != nil)
+        {
+            if(picker == self.imagePicker)
+            {
+                self.imagePicker.dismissViewControllerAnimated(false) { () -> Void in
+                    
+                    self.presentViewController(SelectedMidia_ViewController(image: image,contact: self.contact), animated: true, completion: { () -> Void in
+                        
+                    })
+                }
+            }
+        }
+        if(self.backgroundPicker != nil)
+        {
+            if (picker == self.backgroundPicker)
+            {
+                self.backgroundPicker.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    
+                    self.backgorundImage.image = image
+                    
+                })
+            }
         }
     }
     
@@ -893,24 +932,25 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func sendMessage()
     {
-        if (self.messageText.text?.characters.count > 0 && self.messageText.text != "Message...")
+        if (self.messageBar.textView.text?.characters.count > 0 && self.messageBar.textView.text != "Message...")
         {
-            let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageText.text!)
+            let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageBar.textView.text!)
             self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            self.messageBar.textView.text = ""
+            self.messageBar.returnMessageBarToOriginalSize()
+
             let index = self.messages.indexOf(message)
             
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
-            let h = self.heightForView(self.messageText.text!, font: textMessageFont!, width: cellTextWidth)
+            let h = self.heightForView(self.messageBar.textView.text!, font: textMessageFont!, width: cellTextWidth)
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
                 self.tableView.contentOffset.y += (h + cellBackgroundHeigth + margemVertical*2)
                 
                 }, completion: { (success: Bool) -> Void in
+                    
             })
-            
-            self.messageText.text = ""
-            self.backToOriginal()
         }
         else
         {
@@ -966,7 +1006,40 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    func changeBackground()
+    func layoutOptions()
+    {
+        let alert = UIAlertController(title: "Layout Options", message: nil, preferredStyle: .ActionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Choose background image", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            self.backgroundPicker = UIImagePickerController()
+            self.backgroundPicker.sourceType = .PhotoLibrary
+            self.backgroundPicker.delegate = self
+            
+            self.presentViewController(self.backgroundPicker, animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Choose style", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+            
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+//    func changeBackgroundImage()
+//    {
+//        
+//    }
+    
+    
+    func changeToNextBackground()
     {
         if(!isViewing)
         {

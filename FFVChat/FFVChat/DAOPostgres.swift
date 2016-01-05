@@ -176,26 +176,26 @@ class DAOPostgres : NSObject
         }
     }
     
-    func sendImageMessage(id: String, username: String, lifeTime: Int, contentKey: String ,image: UIImage, filter: ImageFilter, sentDate: NSDate)
+    func sendImageMessage(id: String, username: String, lifeTime: Int, contentKey: String, sentDate: NSDate)
     {
         let me = DAOUser.sharedInstance.getUsername()
-        
-        let params = ["imageKey": contentKey, "filter": filter.rawValue]
-
-        // example image data
-        let imageData = image.mediumQualityJPEGNSData
-        
-        // CREATE AND SEND REQUEST ----------
-        
-        let urlRequest = urlRequestWithComponents(self.imageUrl_upload, parameters: params, imageData: imageData)
-        
-        Alamofire.upload(urlRequest.0, data: urlRequest.1)
-            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-                print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
-            }
-            .responseString { response in
-                print("RESPONSE \(response)")
-        }
+//        
+//        let params = ["imageKey": contentKey, "filter": filter.rawValue]
+//
+//        // example image data
+//        let imageData = image.mediumQualityJPEGNSData
+//        
+//        // CREATE AND SEND REQUEST ----------
+//        
+//        let urlRequest = urlRequestWithComponents(self.imageUrl_upload, parameters: params, imageData: imageData)
+//        
+//        Alamofire.upload(urlRequest.0, data: urlRequest.1)
+//            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+//                print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+//            }
+//            .responseString { response in
+//                print("RESPONSE \(response)")
+//        }
         
         
         let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(me), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "lifeTime": lifeTime, "type": ContentType.Image.rawValue, "contentKey": contentKey]

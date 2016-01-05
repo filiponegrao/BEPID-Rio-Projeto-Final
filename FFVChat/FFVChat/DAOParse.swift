@@ -711,46 +711,57 @@ class DAOParse
     }
     
     
-    func sendImageOnKey(key: String, image: NSData)
+    func sendImageOnKey(key: String, image: NSData, filter: ImageFilter)
     {
-        let file = PFFile(data: image)
-        
-        let object = PFObject(className: "Images")
-        object["imageKey"] = key
-        object["image"] = file
-        object.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            if(error != nil && self.tentativasUpload < 30)
+        //Do in background
+
+        backgroundThread(background: {
+            
+            let file = PFFile(data: image)
+            
+            let object = PFObject(className: "Images")
+            object["imageKey"] = key
+            object["image"] = file
+            object["filter"] = filter.rawValue
+            
+            let error = NSErrorPointer()
+            object.save(error)
+            
+            if(error != nil)
             {
-                self.tentativasUpload++
                 let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasUpload) * Double(NSEC_PER_SEC)))
                 dispatch_after(delayTime, dispatch_get_main_queue()) {
-                    
-                    self.sendImageOnKey(key, image: image)
-                }
 
+                    self.sendImageOnKey(key, image: image, filter: filter)
+                }
             }
-            else { self.tentativasUpload = 0 }
-        }
+            
+            },
+            completion: {
+                print("imagem salva, pela thread em background")
+        })
     }
     
     
-    func downloadImageForMessage(message: Message)
+    func downloadImageForMessage(imageKey: String, id: String)
     {
         if(self.tentativasDownload < 30)
         {
             let query = PFQuery(className: "Images")
-            query.whereKey("imageKey", equalTo: message.contentKey!)
+            query.whereKey("imageKey", equalTo: imageKey)
             query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
                 
                 if(object != nil)
                 {
+                    let filterString = object!["filter"] as! String
+                    
                     let file = object!["image"] as! PFFile
                     file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         
+                        let filter = ImageFilter(rawValue: filterString)!
                         self.tentativasDownload = 0
                         let decData = EncryptTools.decImage(data!)
-//                        DAOMessages.sharedInstance.setImageForMessage(message, image: decData)
-                        
+                        DAOContents.sharedInstance.addImage(imageKey, data: decData, filter: filter, preview: decData)
                     })
                 }
                 else
@@ -758,12 +769,10 @@ class DAOParse
                     self.tentativasDownload++
                     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasDownload) * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        self.downloadImageForMessage(message)
+                        self.downloadImageForMessage(imageKey, id: id)
                     }
                 }
-                
             }
-            
         }
         else
         {
@@ -771,6 +780,16 @@ class DAOParse
         }
     }
     
+    func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
+        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+            if(background != nil){ background!(); }
+            
+            let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
+            dispatch_after(popTime, dispatch_get_main_queue()) {
+                if(completion != nil){ completion!(); }
+            }
+        }
+    }
 }
 
 

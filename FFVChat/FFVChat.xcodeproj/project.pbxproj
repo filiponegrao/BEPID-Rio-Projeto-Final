@@ -140,6 +140,7 @@
 		80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */; };
 		80F6BB241BF6C2A2003DE8AE /* DAOPostgres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */; };
 		80FD13AC1C038CF100729402 /* GMColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD13AB1C038CF100729402 /* GMColor.swift */; };
+		80FEA2201C39EEFA00DAA984 /* MessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */; };
 		80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF185A1BE3B15200C5F35E /* metaContact.swift */; };
 		80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A11BE51D7E00C5F35E /* NotificationController.swift */; };
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
@@ -345,6 +346,7 @@
 		80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification_TableViewCell.swift; sourceTree = "<group>"; };
 		80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPostgres.swift; sourceTree = "<group>"; };
 		80FD13AB1C038CF100729402 /* GMColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMColor.swift; sourceTree = "<group>"; };
+		80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBar.swift; sourceTree = "<group>"; };
 		80FF185A1BE3B15200C5F35E /* metaContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = metaContact.swift; sourceTree = "<group>"; };
 		80FF18A11BE51D7E00C5F35E /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		80FF18A31BE51EA800C5F35E /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -486,6 +488,7 @@
 				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
 				80E126A11C1257E100DC0755 /* GifSharing_View.swift */,
 				805172B81C1756A900687770 /* SweetAlert.swift */,
+				80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -1154,6 +1157,7 @@
 				F68ABEF71C11D978009670A7 /* NavigationDeleteProfile_View.swift in Sources */,
 				806D16201C0E367B00650E9D /* Message+CoreDataProperties.swift in Sources */,
 				803657921BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
+				80FEA2201C39EEFA00DAA984 /* MessageBar.swift in Sources */,
 				8036578C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
 				803657871BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
 				F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */,
