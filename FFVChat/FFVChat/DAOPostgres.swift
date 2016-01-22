@@ -315,8 +315,6 @@ class DAOPostgres : NSObject
                     
                     for result in results as! NSArray
                     {
-                        print(result)
-                        
                         let name = result["name"] as! String
                         let hashtags = result["hashtags"] as! String
                         let launcheddate = result["launcheddate"] as! String

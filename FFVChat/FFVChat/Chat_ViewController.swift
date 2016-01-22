@@ -117,7 +117,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.addSubview(tableView)
         
         
-        self.messageBar = MessageBar(position: CGPointMake(0, self.tableView.frame.origin.y + self.tableView.frame.size.height))
+        self.messageBar = MessageBar(position: CGPointMake(0, self.tableView.frame.origin.y + self.tableView.frame.size.height), controller: self)
         self.messageBar.addActionForSenderButton(self, action: "sendMessage", forControlEvents: .TouchUpInside)
         self.messageBar.addActionForCameraButton(self, action: "takePhoto", forControlEvents: .TouchUpInside)
         self.messageBar.addActionForConfigButton(self, action: "layoutOptions", forControlEvents: .TouchUpInside)
@@ -336,6 +336,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.messageBar.endEditing(true)
+        self.messageBar.closeAudioRecorder()
+        self.messageBar.closeGifGallery()
     }
     
     
@@ -361,16 +363,19 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func messageBarReturnedToOriginal(excededHeight: CGFloat)
     {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-//            self.containerView.frame.origin.y = navigationBarHeigth
-//            self.containerView.frame.size.height = screenHeight - navigationBarHeigth
-//            self.messageBar.frame.origin.y = self.containerView.frame.size.height - self.messageBar.frame.size.height
-            self.tableView.frame.size.height += excededHeight
-            self.backgorundImage.frame.size.height += excededHeight
-            
-            }) { (success: Bool) -> Void in
+        if(self.tableView.frame.size.height < tableViewHeigth && self.backgorundImage.frame.size.height < tableViewHeigth)
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
+                //            self.containerView.frame.origin.y = navigationBarHeigth
+                //            self.containerView.frame.size.height = screenHeight - navigationBarHeigth
+                //            self.messageBar.frame.origin.y = self.containerView.frame.size.height - self.messageBar.frame.size.height
+                self.tableView.frame.size.height += excededHeight
+                self.backgorundImage.frame.size.height += excededHeight
+                
+                }) { (success: Bool) -> Void in
+                    
+            }
         }
     }
     
@@ -699,100 +704,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-//    //****************************************************//
-//    //*********** TEXT VIEW DELEGATES ********************//
-//    //****************************************************//
-//    func textViewDidBeginEditing(textView: UITextView)
-//    {
-//        if(textView.text == "Message...")
-//        {
-//            textView.text = ""
-//        }
-//    }
-//    
-//    func textViewDidEndEditing(textView: UITextView)
-//    {
-//        if(textView.text == "")
-//        {
-//            textView.text = "Message..."
-//        }
-//    }
-//    
-//    func textViewDidChange(textView: UITextView)
-//    {
-//        let frame = self.messageBar.textView.frame
-//        
-//        let h = self.messageBar.textView.contentSize.height
-//        
-//        if(h > frame.size.height)
-//        {
-//            self.expandTextField()
-//        }
-//        else if(h < frame.size.height)
-//        {
-//            self.reduceTextField()
-//        }
-//    }
-//    
-//    func expandTextField()
-//    {
-//        let frame = self.messageBar.textView.frame
-//        
-//        let h = self.messageBar.textView.contentSize.height
-//        
-//        let plus = h - frame.size.height
-//        
-//        if(self.messageBar.textView.frame.size.height < screenHeight/5)
-//        {
-//            UIView.animateWithDuration(0.3, animations: { () -> Void in
-//                
-//                self.messageBar.frame.origin.y -= plus
-//                self.messageBar.frame.size.height += plus
-//                self.tableView.frame.size.height -= plus
-//                self.messageBar.textView.frame.size.height += plus
-//                
-//                }) { (success: Bool) -> Void in
-//            }
-//        }
-//    }
-//    
-//    func reduceTextField()
-//    {
-//        let frame = self.messageBar.textView.frame
-//        
-//        let h = self.messageBar.textView.contentSize.height
-//        
-//        let plus = frame.size.height - h
-//        
-//        UIView.animateWithDuration(0.3, animations: { () -> Void in
-//            
-//            self.messageBar.frame.origin.y += plus
-//            self.messageBar.frame.size.height -= plus
-//            self.tableView.frame.size.height += plus
-//            self.messageBar.textView.frame.size.height -= plus
-//            
-//            }) { (success: Bool) -> Void in
-//        }
-//    }
-//    
-//    func backToOriginal()
-//    {
-//        UIView.animateWithDuration(0.3, animations: { () -> Void in
-//            
-//            self.messageBar.frame.origin.y = self.containerView.frame.size.height - 50
-//            self.messageBar.frame.size.height = 50
-//            self.tableView.frame.size.height = self.containerView.frame.size.height - 50
-//            self.messageBar.textView.frame.size.height = self.messageBar.frame.size.height - 20
-//            
-//            }) { (success: Bool) -> Void in
-//        }
-//    }
-//    
-//    func endEditing()
-//    {
-//        self.messageBar.textView.endEditing(true)
-//    }
-//    
     func heightForView(text:String, font:UIFont, width:CGFloat) -> CGFloat
     {
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
@@ -851,6 +762,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         }))
 
+        self.messageBar.closeGifGallery()
+        self.messageBar.closeAudioRecorder()
         self.presentViewController(actionsheet, animated: true, completion: nil)
         
     }
@@ -902,7 +815,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     
             })
         }
-        
     }
     
     
@@ -926,7 +838,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     
             })
         }
-        
     }
     
     
@@ -936,8 +847,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         {
             let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, text: self.messageBar.textView.text!)
             self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-            self.messageBar.textView.text = ""
+            if(self.messageBar.textView.isFirstResponder())
+            {
+                self.messageBar.textView.text = ""
+            }
+            else
+            {
+                self.messageBar.textView.text = "Message..."
+            }
             self.messageBar.returnMessageBarToOriginalSize()
+            self.playSound()
 
             let index = self.messages.indexOf(message)
             
@@ -954,18 +873,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         else
         {
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
-                self.tableView.contentOffset.y += (40)
-                
-                }, completion: { (success: Bool) -> Void in
-                    
-            })
+//            UIView.animateWithDuration(0.3, animations: { () -> Void in
+//                
+//                self.tableView.contentOffset.y += (40)
+//                
+//                }, completion: { (success: Bool) -> Void in
+//                    
+//            })
         }
-        
-        self.playSound()
-
     }
+    
     
     //****************************************************//
     //******* END MESSAGE FUNCTIONS AND HANDLES  *********//
@@ -1029,14 +946,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
         }))
         
+        self.messageBar.closeGifGallery()
+        self.messageBar.closeAudioRecorder()
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
-    
-//    func changeBackgroundImage()
-//    {
-//        
-//    }
     
     
     func changeToNextBackground()
@@ -1075,6 +988,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func printScreenReceived()
     {
         let alert = SweetAlert().showAlert("PrintScreen!", subTitle: "Someone took a screenshot of your screen", style: AlertStyle.Warning)
+        
     }
     
     

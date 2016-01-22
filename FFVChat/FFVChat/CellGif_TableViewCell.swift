@@ -56,7 +56,11 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
         self.cellView.addSubview(self.sentDate)
 
     }
+    
 
+    deinit{ self.webView.delegate = nil }
+    
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

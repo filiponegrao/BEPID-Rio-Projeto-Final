@@ -14,7 +14,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     var username: UILabel!
     
-    var profileBtn: MKButton!
+    var profileBtn: BubbleButton!
     
     var numberOfMessages : UILabel!
     
@@ -48,17 +48,12 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.username.textColor = oficialGreen
         self.addSubview(self.username)
         
-        self.profileBtn = MKButton(frame: CGRectMake(0, 0, self.frame.width, self.frame.width))
-        self.profileBtn.backgroundLayerCornerRadius = 300
-        self.profileBtn.rippleLocation = .Center
-        self.profileBtn.ripplePercent = 2
-        self.profileBtn.rippleLayerColor = oficialMediumGray
-        self.profileBtn.layer.cornerRadius = profileBtn.frame.width*0.5
+        self.profileBtn = BubbleButton(radius: self.frame.width)
         self.profileBtn.layer.borderWidth = 2.0
         self.profileBtn.layer.borderColor = UIColor.grayColor().CGColor
         self.profileBtn.contentMode = .ScaleToFill
         self.profileBtn.clipsToBounds = true
-        self.profileBtn.addTarget(self, action: "openChat", forControlEvents: .TouchUpInside)
+        self.profileBtn.addClickEndActions("openChat", target: self)
         self.container.addSubview(self.profileBtn)
         
         self.numberOfMessages = UILabel(frame: CGRectMake(self.frame.size.width-20,-5, self.profileBtn.frame.size.width/3, self.profileBtn.frame.size.width/3))
@@ -76,32 +71,6 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    func pressIn()
-    {
-        
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            
-            self.profileBtn.frame.size = CGSizeMake(self.frame.size.width/1.5, self.frame.size.width/1.5)
-            self.profileBtn.layer.cornerRadius = (self.frame.size.width/1.5)/4
-            
-            }) { (success: Bool) -> Void in
-                
-        }
-    }
-    
-    func pressOut()
-    {
-        UIView.animateWithDuration(0.3, delay: 0.1, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-            
-            self.profileBtn.frame.size = CGSizeMake(self.frame.size.width, self.frame.size.width)
-            self.profileBtn.layer.cornerRadius = self.frame.size.width/2
-            
-            }) { (success: Bool) -> Void in
-                
-        }
     }
     
     // NAO CONSIDERA NOME COMPOSTO... EXEMPLO: LUIS HAROLDO SOARES

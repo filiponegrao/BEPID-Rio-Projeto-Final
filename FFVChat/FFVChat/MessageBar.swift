@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 @objc public protocol MessageBarDelegate
 {
@@ -20,6 +21,8 @@ import UIKit
 
 public class MessageBar : UIView, UITextViewDelegate
 {
+    weak var controller : Chat_ViewController!
+    
     let textViewHeigth : CGFloat = 40
     
     var originalPosition : CGPoint!
@@ -42,8 +45,19 @@ public class MessageBar : UIView, UITextViewDelegate
     
     public weak var delegate : MessageBarDelegate?
     
-    init(position: CGPoint)
+    var barExpandedGif : Bool = false
+    
+    var barExpandedAudio : Bool = false
+    
+    //Keyboards
+    
+    var gifKeyboard : GifKeyboard!
+    
+    var audioKeyboard : AudioKeyboard!
+    
+    init(position: CGPoint, controller: Chat_ViewController)
     {
+        self.controller = controller
         self.originalPosition = position
         super.init(frame: CGRectMake(0, self.originalPosition.y, screenWidth, self.originalHeigth))
         
@@ -53,7 +67,7 @@ public class MessageBar : UIView, UITextViewDelegate
         
         self.backgroundColor = oficialDarkGray //UIColor.whiteColor()
 
-        self.textView = UITextView(frame: CGRectMake(10, 5, screenWidth-80, self.textViewHeigth))
+        self.textView = UITextView(frame: CGRectMake(10, 5, screenWidth-20, self.textViewHeigth))
         self.textView.autocorrectionType = UITextAutocorrectionType.Yes
         self.textView.font = UIFont(name: "Helvetica", size: 16)
         self.textView.textContainer.lineFragmentPadding = 10;
@@ -68,7 +82,7 @@ public class MessageBar : UIView, UITextViewDelegate
         self.addSubview(self.textView)
         
         
-        self.sendButton = UIButton(frame: CGRectMake(screenWidth-80, 5, 70, 40))
+        self.sendButton = UIButton(frame: CGRectMake(screenWidth-80, 40, 70, 40))
         self.sendButton.setTitle("Send", forState: .Normal)
         self.sendButton.setTitleColor(oficialGreen, forState: .Normal)
         self.addSubview(self.sendButton)
@@ -87,7 +101,7 @@ public class MessageBar : UIView, UITextViewDelegate
         
         self.audioButton = UIButton(frame: CGRectMake(self.gifButton.frame.origin.x + self.gifButton.frame.size.width + 20, self.gifButton.frame.origin.y , 35, 35))
         self.audioButton.setImage(UIImage(named: "micButton"), forState: UIControlState.Normal)
-        self.audioButton.addTarget(self, action: "openGifGallery", forControlEvents: .TouchUpInside)
+        self.audioButton.addTarget(self, action: "openAudioRecorder", forControlEvents: .TouchUpInside)
         self.audioButton.alpha = 0.7
         self.addSubview(audioButton)
         
@@ -108,10 +122,106 @@ public class MessageBar : UIView, UITextViewDelegate
     //Functions
     func openGifGallery()
     {
-        self.textView.endEditing(true)
-        self.delegate?.messageBarExpanded(200)
+        if(!self.barExpandedGif)
+        {
+            if(self.barExpandedAudio) { self.closeAudioRecorder() }
+            self.barExpandedGif = true
+            self.textView.endEditing(true)
+            self.delegate?.messageBarExpanded(140)
+            
+            self.gifKeyboard = GifKeyboard(controller: self.controller)
+            self.gifKeyboard.frame.origin.y = screenHeight
+            self.gifKeyboard.closeButton.addTarget(self, action: "closeGifGallery", forControlEvents: .TouchUpInside)
+            self.controller.view.addSubview(self.gifKeyboard)
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.gifKeyboard.frame.origin.y = screenHeight - 220
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+            
+        }
+        else
+        {
+            self.closeGifGallery()
+        }
     }
     
+    func closeGifGallery()
+    {
+        self.barExpandedGif = false
+        self.textView.endEditing(true)
+        self.delegate?.messageBarReturnedToOriginal(140)
+        if(self.gifKeyboard != nil)
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.gifKeyboard.frame.origin.y = screenHeight
+                
+                }) { (success: Bool) -> Void in
+                    
+                    self.gifKeyboard.collectionView.delegate = nil
+                    self.gifKeyboard.collectionView.dataSource = nil
+                    self.gifKeyboard.removeFromSuperview()
+                    self.gifKeyboard = nil
+            }
+        }
+    }
+    
+    
+    func openAudioRecorder()
+    {
+        if(!self.barExpandedAudio)
+        {
+            if(self.barExpandedGif) { self.closeGifGallery() }
+            self.barExpandedAudio = true
+            self.textView.endEditing(true)
+            self.delegate?.messageBarExpanded(140)
+            
+            self.audioKeyboard = AudioKeyboard(controller: self.controller)
+            self.audioKeyboard.frame.origin.y = screenHeight - 40
+            self.audioKeyboard.frame.size.height = 1
+            self.audioKeyboard.closeButton.addTarget(self, action: "closeAudioRecorder", forControlEvents: .TouchUpInside)
+            self.controller.view.addSubview(self.audioKeyboard)
+            
+            
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                
+                self.audioKeyboard.frame.size.height = 180
+                self.audioKeyboard.frame.origin.y = screenHeight - 220
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
+        else
+        {
+            self.closeAudioRecorder()
+        }
+    }
+    
+    func closeAudioRecorder()
+    {
+        self.barExpandedAudio = false
+        self.textView.endEditing(true)
+        self.delegate?.messageBarReturnedToOriginal(140)
+        
+        if(self.audioKeyboard != nil)
+        {
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                
+                self.audioKeyboard.frame.size.height = 0
+                self.audioKeyboard.frame.origin.y = screenHeight - 40
+                
+                }) { (success: Bool) -> Void in
+                    
+                    self.audioKeyboard.removeFromSuperview()
+                    self.audioKeyboard = nil
+            }
+        }
+    }
     
     //Definicoes visuais
     func changeBackgroundColor(color: UIColor)
@@ -146,10 +256,10 @@ public class MessageBar : UIView, UITextViewDelegate
         self.configButton.addTarget(target, action: action, forControlEvents: forControlEvents)
     }
     
-    func addActionForAudioButton(target: AnyObject?, action: Selector, forControlEvents: UIControlEvents)
-    {
-        self.audioButton.addTarget(target, action: action, forControlEvents: forControlEvents)
-    }
+//    func addActionForAudioButton(target: AnyObject?, action: Selector, forControlEvents: UIControlEvents)
+//    {
+//        self.audioButton.addTarget(target, action: action, forControlEvents: forControlEvents)
+//    }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -212,6 +322,7 @@ public class MessageBar : UIView, UITextViewDelegate
                 self.audioButton.frame.origin.y += plus
 //                self.videoButton.frame.origin.y += plus
                 self.configButton.frame.origin.y += plus
+                self.sendButton.frame.origin.y += plus
                 
                 self.delegate?.messageBarExpanded(plus)
 
@@ -252,6 +363,7 @@ public class MessageBar : UIView, UITextViewDelegate
             self.audioButton.frame.origin.y -= diference
 //            self.videoButton.frame.origin.y -= diference
             self.configButton.frame.origin.y -= diference
+            self.sendButton.frame.origin.y -= diference
             
             self.delegate?.messageBarReturnedToOriginal(diference)
             

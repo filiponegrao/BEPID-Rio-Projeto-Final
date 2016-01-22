@@ -15,25 +15,44 @@ public enum AlertStyle {
     case CustomImag(imageFile:String)
 }
 
-public class SweetAlert: UIViewController {
+public class SweetAlert: UIViewController
+{
     let kBakcgroundTansperancy: CGFloat = 0.7
+    
     let kHeightMargin: CGFloat = 10.0
+    
     let KTopMargin: CGFloat = 20.0
+    
     let kWidthMargin: CGFloat = 10.0
+    
     let kAnimatedViewHeight: CGFloat = 70.0
+    
     let kMaxHeight: CGFloat = 300.0
+    
     var kContentWidth: CGFloat = 300.0
+    
     let kButtonHeight: CGFloat = 35.0
+    
     var textViewHeight: CGFloat = 90.0
+    
     let kTitleHeight:CGFloat = 30.0
+    
     var strongSelf:SweetAlert?
+    
     var contentView = UIView()
+    
     var titleLabel: UILabel = UILabel()
+    
     var buttons: [UIButton] = []
+    
     var animatedView: AnimatableView?
+    
     var imageView:UIImageView?
+    
     var subTitleTextView = UITextView()
+    
     var userAction:((isOtherButton: Bool) -> Void)? = nil
+    
     let kFont = "Helvetica"
     
     init() {

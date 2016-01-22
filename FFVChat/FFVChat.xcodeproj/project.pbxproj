@@ -119,6 +119,7 @@
 		80AA13661BC3038C0035E8B2 /* MKLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA135F1BC3038C0035E8B2 /* MKLayer.swift */; };
 		80AA13671BC3038C0035E8B2 /* MKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA13601BC3038C0035E8B2 /* MKTableViewCell.swift */; };
 		80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AA13611BC3038C0035E8B2 /* MKTextField.swift */; };
+		80AB6B791C3DFCA100F2EEC4 /* BubbleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB6B781C3DFCA100F2EEC4 /* BubbleButton.swift */; };
 		80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B4D8221BBB157500BDA48F /* AppNavigationController.swift */; };
 		80B8DFC31C24C83800668E26 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8DFC11C24C83800668E26 /* Image.swift */; };
 		80B8DFC71C24CAAD00668E26 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8DFC51C24CAAD00668E26 /* Gif.swift */; };
@@ -141,6 +142,9 @@
 		80F6BB241BF6C2A2003DE8AE /* DAOPostgres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */; };
 		80FD13AC1C038CF100729402 /* GMColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD13AB1C038CF100729402 /* GMColor.swift */; };
 		80FEA2201C39EEFA00DAA984 /* MessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */; };
+		80FEA2221C3C681F00DAA984 /* GifKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */; };
+		80FEA2241C3CAE5A00DAA984 /* CellWebGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2231C3CAE5A00DAA984 /* CellWebGifView.swift */; };
+		80FEA2261C3DC75400DAA984 /* AudioKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */; };
 		80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF185A1BE3B15200C5F35E /* metaContact.swift */; };
 		80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A11BE51D7E00C5F35E /* NotificationController.swift */; };
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
@@ -325,6 +329,7 @@
 		80AA135F1BC3038C0035E8B2 /* MKLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLayer.swift; sourceTree = "<group>"; };
 		80AA13601BC3038C0035E8B2 /* MKTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTableViewCell.swift; sourceTree = "<group>"; };
 		80AA13611BC3038C0035E8B2 /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
+		80AB6B781C3DFCA100F2EEC4 /* BubbleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleButton.swift; sourceTree = "<group>"; };
 		80B4D8221BBB157500BDA48F /* AppNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		80B8DFC11C24C83800668E26 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		80B8DFC51C24CAAD00668E26 /* Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
@@ -347,6 +352,9 @@
 		80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPostgres.swift; sourceTree = "<group>"; };
 		80FD13AB1C038CF100729402 /* GMColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMColor.swift; sourceTree = "<group>"; };
 		80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBar.swift; sourceTree = "<group>"; };
+		80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifKeyboard.swift; sourceTree = "<group>"; };
+		80FEA2231C3CAE5A00DAA984 /* CellWebGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWebGifView.swift; sourceTree = "<group>"; };
+		80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioKeyboard.swift; sourceTree = "<group>"; };
 		80FF185A1BE3B15200C5F35E /* metaContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = metaContact.swift; sourceTree = "<group>"; };
 		80FF18A11BE51D7E00C5F35E /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		80FF18A31BE51EA800C5F35E /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -468,6 +476,7 @@
 		8019CB3B1BAD16280017CD7A /* Elementos */ = {
 			isa = PBXGroup;
 			children = (
+				80AB6B781C3DFCA100F2EEC4 /* BubbleButton.swift */,
 				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
 				F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */,
 				F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */,
@@ -489,6 +498,8 @@
 				80E126A11C1257E100DC0755 /* GifSharing_View.swift */,
 				805172B81C1756A900687770 /* SweetAlert.swift */,
 				80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */,
+				80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */,
+				80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -739,6 +750,7 @@
 				801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */,
 				806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */,
 				8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */,
+				80FEA2231C3CAE5A00DAA984 /* CellWebGifView.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1049,6 +1061,7 @@
 				F65A4F4B1C0CCDFD0092C403 /* Home_ViewController.swift in Sources */,
 				804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */,
 				8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */,
+				80FEA2261C3DC75400DAA984 /* AudioKeyboard.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				803657941BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
@@ -1087,6 +1100,7 @@
 				F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */,
 				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
 				805172B91C1756A900687770 /* SweetAlert.swift in Sources */,
+				80FEA2221C3C681F00DAA984 /* GifKeyboard.swift in Sources */,
 				8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */,
 				80E126A21C1257E100DC0755 /* GifSharing_View.swift in Sources */,
@@ -1099,6 +1113,7 @@
 				F6B667141C01606100B1C256 /* AppLoginImport_ViewController.swift in Sources */,
 				8030E44E1BF96A350075E798 /* BubbleTransition.swift in Sources */,
 				F65A4F451C0CB7670092C403 /* CAPSPageMenu.swift in Sources */,
+				80AB6B791C3DFCA100F2EEC4 /* BubbleButton.swift in Sources */,
 				8036578B1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				80B8DFD61C259F1E00668E26 /* TimeBomb.swift in Sources */,
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
@@ -1163,6 +1178,7 @@
 				F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */,
 				803D610B1BF925AD004EF38F /* User.swift in Sources */,
 				8036578A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,
+				80FEA2241C3CAE5A00DAA984 /* CellWebGifView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

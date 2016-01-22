@@ -103,7 +103,7 @@ class ImageManager_View: UIView
         
         
         
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
             self.selectedPhoto.frame = imageFinalFrame
             self.sendButton.center.y -= 200
@@ -116,7 +116,7 @@ class ImageManager_View: UIView
     }
     
     
-    func removeView()
+    func removeView(function:(()->())?)
     {
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
@@ -125,10 +125,12 @@ class ImageManager_View: UIView
             self.deleteButton.center.y += 200
             self.blackScreen.alpha = 0
             self.closeButton.alpha = 0
+            self.selectedPhoto.contentMode = .ScaleAspectFill
             
             }) { (success: Bool) -> Void in
                 
                 self.removeFromSuperview()
+                function?()
         }
 
     }
@@ -141,7 +143,7 @@ class ImageManager_View: UIView
     
     func back()
     {
-        self.removeView()
+        self.removeView(nil)
     }
     
     func sendPhoto()
@@ -157,10 +159,7 @@ class ImageManager_View: UIView
         let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Yes", style: .Default, handler: { (action: UIAlertAction) -> Void in
             
-            DAOSentMidia.sharedInstance.deleteSentMidia(self.sentMidia)
-            self.viewController.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.viewController.contact)
-            self.viewController.collectionView.reloadData()
-            self.removeFromSuperview()
+            self.removeView(self.deleteSelectedMidia)
             
         }))
         
@@ -171,6 +170,12 @@ class ImageManager_View: UIView
         
         self.viewController.presentViewController(alert, animated: true, completion: nil)
         
-        
+    }
+    
+    func deleteSelectedMidia()
+    {
+        DAOSentMidia.sharedInstance.deleteSentMidia(self.sentMidia)
+        self.viewController.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.viewController.contact)
+        self.viewController.collectionView.reloadData()
     }
 }

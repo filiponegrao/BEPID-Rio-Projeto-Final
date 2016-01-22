@@ -30,6 +30,9 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     var collectionSize : CGSize!
     
+    //Aux
+    var celulaClicada : Int = -1
+    
     init(collectionViewLayout layout: UICollectionViewLayout, size: CGSize)
     {
         self.collectionSize = size
@@ -58,7 +61,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.longPress.minimumPressDuration = 0.5
         self.longPress.delaysTouchesBegan = true
         self.longPress.delegate = self
-        self.view.addGestureRecognizer(self.longPress)
+//        self.view.addGestureRecognizer(self.longPress)
         
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
         self.collectionView!.reloadData()
@@ -156,6 +159,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
+        cell.profileBtn.addLongClickAction("handleLongPress:", target: self, time: 1)
         cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: self.contacts[indexPath.row].profileImage!)!)
         
         cell.loadAnimations(45)
@@ -172,42 +176,32 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     
     
-    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
+    
+    func handleLongPress(button: UIButton)
     {
-        if gestureReconizer.state != UIGestureRecognizerState.Ended
-        {
-            return
-        }
+//        let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath!)!
+//        let frame = attributes.frame
         
-        let point = gestureReconizer.locationInView(self.collectionView)
-        let indexPath = self.collectionView?.indexPathForItemAtPoint(point)
-        
-        if ((indexPath) != nil)
-        {
-//            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
-            let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath!)!
-            let frame = attributes.frame
-            
-            var origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
-            origin = CGRectMake(origin.origin.x, origin.origin.y + 80 + self.collectionView!.frame.origin.y + 40, origin.size.width, origin.size.height)
+        var origin = self.collectionView!.convertRect(button.frame, toView: self.collectionView!.superview)
+        origin = CGRectMake(origin.origin.x, origin.origin.y + 80 + self.collectionView!.frame.origin.y + 40, origin.size.width, origin.size.height)
 
-            self.contactManager = ContactManager_View(contact: self.contacts[(indexPath?.item)!], requester: self.home, origin: origin)
+        self.contactManager = ContactManager_View(contact: self.contacts[(button.tag)], requester: self.home, origin: origin)
+        
+        self.home.closeSearch()
+        self.home.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.home.blurView.frame = self.home.view.bounds
+        self.home.blurView.alpha = 0
+        self.home.view.addSubview(self.home.blurView)
+        
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
             
-            self.home.closeSearch()
-            self.home.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-            self.home.blurView.frame = self.home.view.bounds
-            self.home.blurView.alpha = 0
-            self.home.view.addSubview(self.home.blurView)
+            self.home.blurView.alpha = 0.8
             
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                
-                self.home.blurView.alpha = 0.8
-                
-                }, completion: nil)
-            
-            self.home.view.addSubview(self.contactManager)
-            self.contactManager.insertView()
-        }
+            }, completion: nil)
+        
+        self.home.view.addSubview(self.contactManager)
+        self.contactManager.insertView()
+        
     }
     
     

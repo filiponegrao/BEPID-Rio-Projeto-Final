@@ -22,6 +22,16 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
     
     weak var chatViewController : Chat_ViewController!
     
+    deinit
+    {
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
+        self.collectionView = nil
+        self.navBar = nil
+        self.backButton = nil
+        self.gifs = nil
+        self.progress = nil
+    }
     
     init(chatViewController : Chat_ViewController)
     {
@@ -78,14 +88,21 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         }
     }
     
+    
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: NotificationController.center.gifDownloaded.name, object: nil)
+        self.gifs = DAOContents.sharedInstance.getNewestGifs()
+        self.collectionView.reloadData()
+        
     }
     
     override func viewWillDisappear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().removeObserver(NotificationController.center.gifDownloaded)
+        self.collectionView.delegate = nil
+        self.collectionView.dataSource = nil
+        
     }
 
     override func didReceiveMemoryWarning()
@@ -122,7 +139,6 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         webview.clipsToBounds = true
         webview.contentMode = .ScaleAspectFit
         webview.backgroundColor = UIColor.clearColor()
-        webview.delegate = self
         webview.userInteractionEnabled = false
         webview.scalesPageToFit = true
         
@@ -151,11 +167,11 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         sharing.animateOn()
         
     }
-    
-    func webViewDidFinishLoad(webView: UIWebView)
-    {
-        webView.scrollView.zoomScale += 0.5
-    }
+//    
+//    func webViewDidFinishLoad(webView: UIWebView)
+//    {
+//        webView.scrollView.zoomScale += 0.5
+//    }
     
 //    func webViewResizeToContent(webView: UIWebView) {
 //        webView.layoutSubviews()
