@@ -15,7 +15,7 @@ private let data = DAOMessages()
 
 class DAOMessages : NSObject
 {
-    let defaultTime = 900
+    let defaultTime = 60
     
     var currentMessage : Message?
     
@@ -45,7 +45,7 @@ class DAOMessages : NSObject
      *              na chave. A funcao chamada apos o termino
      *              da contagem é a timesUpMessage.
      */
-    var timeBomb = NSMutableDictionary()
+//    var timeBomb = NSMutableDictionary()
     
     override init()
     {
@@ -88,7 +88,33 @@ class DAOMessages : NSObject
         
         return contentKey
     }
-     
+    
+    
+    func checkForOldMessages()
+    {
+        let doneMessages = TimeBomb.sharedInstance.doneTimers()
+        for message in doneMessages
+        {
+            self.deleteMessage(message)
+        }
+        
+        let oldMessages = TimeBomb.sharedInstance.checkForOldTimers()
+        
+        print(oldMessages)
+        
+        for oldmessage in oldMessages
+        {
+            let message = self.messageForId(oldmessage)
+            if(message != nil)
+            {
+                let seenDate = TimeBomb.sharedInstance.getSeenDateById(oldmessage)
+                let calendar = NSCalendar.currentCalendar()
+                let timeElapsed = calendar.components(.Second, fromDate: seenDate!, toDate: NSDate(), options: [])
+                
+                let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(Int(message!.lifeTime) - timeElapsed.second), target: self, selector: "receiveTimesUpNotification:", userInfo: ["id":oldmessage], repeats: false)
+            }
+        }
+    }
     
     /**
      * Sending message function.
@@ -280,9 +306,9 @@ class DAOMessages : NSObject
      * de uma mensagem. A mesma marca no banco de dados
      * que a mensagem em questao foi deletada.
      */
-    func setMessageDeleted(message: Message)
+    func setMessageDeleted(id: String)
     {
-        DAOPostgres.sharedInstance.setDeletedMessage(message.id)
+        DAOPostgres.sharedInstance.setDeletedMessage(id)
     }
     
     
@@ -315,6 +341,7 @@ class DAOMessages : NSObject
                 
                 self.managedObjectContext.deleteObject(mssg)
                 self.save()
+                self.setMessageDeleted(id)
 
                 TimeBomb.sharedInstance.removeTimer(id)
 
@@ -348,9 +375,7 @@ class DAOMessages : NSObject
             let now = NSDate()
             
             TimeBomb.sharedInstance.addTimer(message.id, seenDate: now, lifeTime: Int(message.lifeTime))
-            
-            let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(message.lifeTime), target: self, selector: "receiveTimesUpNotification:", userInfo: ["message":message], repeats: false)
-            self.timeBomb.setObject(timer, forKey: message.sentDate)
+            let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(message.lifeTime), target: self, selector: "receiveTimesUpNotification:", userInfo: ["id":message.id], repeats: false)
         }
     }
     
@@ -358,8 +383,8 @@ class DAOMessages : NSObject
     func receiveTimesUpNotification(timer: NSTimer)
     {
         print("tempo de execucao finalizado para exclusao")
-        let message = timer.userInfo?.objectForKey("message") as! Message
-        self.deleteMessage(message.id)
+        let id = timer.userInfo?.objectForKey("id") as! String
+        self.deleteMessage(id)
     }
     
     /**
@@ -479,12 +504,23 @@ class DAOMessages : NSObject
         }
     }
     
-    
-    
-    
-    
-    
-    
+    func messageForId(id: String) -> Message?
+    {
+        let predicate = NSPredicate(format: "id == %@", id)
+        
+        let request = NSFetchRequest(entityName: "Message")
+        request.predicate = predicate
+        
+        do {
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Message]
+            return results.first
+        }
+        catch
+        {
+            return nil
+        }
+    }
+
     
     func conversationWithContact(contact: String?) -> [Message]
     {

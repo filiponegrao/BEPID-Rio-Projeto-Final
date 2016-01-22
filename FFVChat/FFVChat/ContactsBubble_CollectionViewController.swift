@@ -179,10 +179,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     func handleLongPress(button: UIButton)
     {
-//        let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath!)!
-//        let frame = attributes.frame
+        let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: button.tag, inSection: 0))!
+        let frame = attributes.frame
         
-        var origin = self.collectionView!.convertRect(button.frame, toView: self.collectionView!.superview)
+        var origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
         origin = CGRectMake(origin.origin.x, origin.origin.y + 80 + self.collectionView!.frame.origin.y + 40, origin.size.width, origin.size.height)
 
         self.contactManager = ContactManager_View(contact: self.contacts[(button.tag)], requester: self.home, origin: origin)

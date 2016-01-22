@@ -59,7 +59,7 @@ class TimeBomb
         
         if(contents == nil) { return }
         
-        let dict = ["id": id, "seenDate": seenDate, "lifeTime": lifeTime]
+        let dict = NSDictionary(dictionary: ["id": id, "seenDate": seenDate, "lifeTime": lifeTime])
         
         contents!.setObject(dict, forKey: id)
         
@@ -92,23 +92,74 @@ class TimeBomb
         
         if(contents == nil) { return ids }
         
+//        let itens = contents as! NSArray
+        
         for content in contents!
         {
-            let seenDate = (content as! NSDictionary).valueForKey("seenDate") as! NSDate
-            let lifeTime = (content as! NSDictionary).valueForKey("lifeTime") as! Int
-            let id = (content as! NSDictionary).valueForKey("id") as! String
-
+            let seenDate = (content.value as! NSDictionary).valueForKey("seenDate") as! NSDate
+            let lifeTime = (content.value as! NSDictionary).valueForKey("lifeTime") as! Int
+            let id = (content.value as! NSDictionary).valueForKey("id") as! String
             
             let calendar = NSCalendar.currentCalendar()
             let doneTime = calendar.dateByAddingUnit(.Second, value: lifeTime, toDate: seenDate, options: [])
             
-            if(doneTime > NSDate())
+            if(NSDate().isGreaterThanDate(doneTime!))
+            {
+                ids.append(id)
+            }
+//            print(content)
+        }
+        return ids
+    }
+    
+    func checkForOldTimers() -> [String]
+    {
+        var ids = [String]()
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as   NSArray
+        let documentsDirectory = paths[0] as! String
+        let path = documentsDirectory.stringByAppendingPathComponent("TimeBomb.plist")
+        
+        let contents = NSMutableDictionary(contentsOfFile: path)
+        
+        if(contents == nil) { return ids }
+        
+        //        let itens = contents as! NSArray
+        
+        for content in contents!
+        {
+            let seenDate = (content.value as! NSDictionary).valueForKey("seenDate") as! NSDate
+            let lifeTime = (content.value as! NSDictionary).valueForKey("lifeTime") as! Int
+            let id = (content.value as! NSDictionary).valueForKey("id") as! String
+            
+            let calendar = NSCalendar.currentCalendar()
+            let doneTime = calendar.dateByAddingUnit(.Second, value: lifeTime, toDate: seenDate, options: [])
+            
+            if(doneTime!.isGreaterThanDate(NSDate()))
             {
                 ids.append(id)
             }
         }
         return ids
     }
+    
+    func getSeenDateById(id: String) -> NSDate?
+    {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as   NSArray
+        let documentsDirectory = paths[0] as! String
+        let path = documentsDirectory.stringByAppendingPathComponent("TimeBomb.plist")
+        
+        let contents = NSMutableDictionary(contentsOfFile: path)
+        
+        if(contents == nil) { return nil }
+        
+        
+        let content = contents?.objectForKey(id)
+        
+        if(content == nil) { return nil }
+        
+        return content!.valueForKey("seenDate") as? NSDate
+    }
+    
 }
 
 

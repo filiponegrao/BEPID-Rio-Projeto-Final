@@ -373,8 +373,6 @@ class DAOPostgres : NSObject
         
         let hashtags = (string as NSString).substringWithRange(NSMakeRange(1, stringLenght-2))
         
-        print(hashtags)
-        
         let parts = hashtags.componentsSeparatedByString(",").count
         
         for i in 0...(parts-1)

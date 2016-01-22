@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
         
+        DAOMessages.sharedInstance.checkForOldMessages()
         BlackList.initBlackList()
         TheJudger.Singleton.inicializandoJudger()
         DAOPostgres.sharedInstance.addAllGifs()

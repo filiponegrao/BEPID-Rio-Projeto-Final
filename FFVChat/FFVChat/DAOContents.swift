@@ -243,7 +243,7 @@ class DAOContents : NSObject
             let results = try self.managedObjectContext.executeFetchRequest(request) as! [Gif]
             for result in results
             {
-                if(result.launchedDate > pastMonth)
+                if(result.launchedDate.isGreaterThanDate(pastMonth!))
                 {
                     newGifs.append(result)
                 }
@@ -273,7 +273,7 @@ class DAOContents : NSObject
             let results = try self.managedObjectContext.executeFetchRequest(request) as! [Gif]
             for result in results
             {
-                if(result.launchedDate < pastMonth)
+                if(pastMonth!.isGreaterThanDate(result.launchedDate))
                 {
                     newGifs.append(result)
                 }

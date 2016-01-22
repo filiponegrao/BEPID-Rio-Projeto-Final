@@ -104,7 +104,6 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         
         self.startAnimation()
         
-        
     }
     
     // MARK: - Animation Setup

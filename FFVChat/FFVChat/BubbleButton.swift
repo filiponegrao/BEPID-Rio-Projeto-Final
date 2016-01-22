@@ -76,7 +76,7 @@ class BubbleButton : UIButton
         }
         else
         {
-            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
                 self.transform = CGAffineTransformMakeScale(1.0, 1.0)
                 
                 }) { (success: Bool) -> Void in
@@ -123,7 +123,7 @@ class BubbleButton : UIButton
     {
         if(selector1 != nil && self.target1 != nil)
         {
-            self.target1!.performSelector(self.selector1!)
+            self.target1!.performSelector(self.selector1!, withObject: self)
         }
     }
     
@@ -131,7 +131,7 @@ class BubbleButton : UIButton
     {
         if(selector2 != nil && self.target2 != nil)
         {
-            self.target2!.performSelector(self.selector2!)
+            self.target2!.performSelector(self.selector2!, withObject: self)
         }
     }
     
@@ -145,7 +145,7 @@ class BubbleButton : UIButton
         self.timer?.invalidate()
         self.longActionAble = false
         
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
             self.transform = CGAffineTransformMakeScale(1.0, 1.0)
             
             }) { (success: Bool) -> Void in
