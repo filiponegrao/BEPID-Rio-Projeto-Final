@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
 {
     var window: UIWindow?
     
+    var tentativasUpload : Int = 0
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -28,6 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             clientKey: "ULiq579xkqwfJF3OKjMJeSLYX42UQ54jvEydaB8s")
         
         PFFacebookUtils.initializeFacebookWithApplicationLaunchOptions(launchOptions)
+        
+        //Background fetch
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         
         DAOMessages.sharedInstance.checkForOldMessages()
         BlackList.initBlackList()
@@ -141,9 +146,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         DAOPostgres.sharedInstance.stopObserve()
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-
+        
     }
+    
     
     func applicationWillEnterForeground(application: UIApplication)
     {
@@ -302,6 +307,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
     }
     
+    //Background fetch
+    func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void)
+    {
+        
+    }
     
+    
+    
+    //Aux functions
+    func sendImageOnKey(key: String, image: NSData, filter: ImageFilter)
+    {
+        let file = PFFile(data: image)
+        
+        let object = PFObject(className: "Images")
+        object["imageKey"] = key
+        object["image"] = file
+        object["filter"] = filter.rawValue
+        object.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            
+            if(!success && self.tentativasUpload < 100)
+            {
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasUpload) * Double(NSEC_PER_SEC)))
+                dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    self.sendImageOnKey(key, image: image, filter: filter)
+                }
+                
+            }
+            else
+            {
+                self.tentativasUpload = 0
+                print("Imagem salva com sucesso!")
+            }
+        }
+    }
 }
 

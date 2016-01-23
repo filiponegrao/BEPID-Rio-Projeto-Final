@@ -172,37 +172,37 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
             .responseJSON { response in
-                print(response)
+                
+                if(response.result.isFailure)
+                {
+                    //Tratar falha no envio, por enquanto vou excluir
+                    DAOMessages.sharedInstance.deleteMessage(id)
+                }
+                else
+                {
+                    print("Mensagem evnaida com sucesso!")
+                }
         }
     }
     
     func sendImageMessage(id: String, username: String, lifeTime: Int, contentKey: String, sentDate: NSDate)
     {
         let me = DAOUser.sharedInstance.getUsername()
-//        
-//        let params = ["imageKey": contentKey, "filter": filter.rawValue]
-//
-//        // example image data
-//        let imageData = image.mediumQualityJPEGNSData
-//        
-//        // CREATE AND SEND REQUEST ----------
-//        
-//        let urlRequest = urlRequestWithComponents(self.imageUrl_upload, parameters: params, imageData: imageData)
-//        
-//        Alamofire.upload(urlRequest.0, data: urlRequest.1)
-//            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-//                print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
-//            }
-//            .responseString { response in
-//                print("RESPONSE \(response)")
-//        }
-        
-        
+
         let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(me), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "lifeTime": lifeTime, "type": ContentType.Image.rawValue, "contentKey": contentKey]
         
         Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
             .responseJSON { response in
-                print(response)
+                
+                if(response.result.isFailure)
+                {
+                    //Tratar falha no envio, por enquanto vou excluir
+                    DAOMessages.sharedInstance.deleteMessage(id)
+                }
+                else
+                {
+                    print("Mensagem evnaida com sucesso!")
+                }
         }
     }
     
@@ -214,7 +214,16 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
             .responseJSON { response in
-                print(response)
+                
+                if(response.result.isFailure)
+                {
+                    //Tratar falha no envio, por enquanto vou excluir
+                    DAOMessages.sharedInstance.deleteMessage(id)
+                }
+                else
+                {
+                    print("Mensagem evnaida com sucesso!")
+                }
         }
     }
     
@@ -225,7 +234,19 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.messageUrl_received, parameters: parameters)
             .responseJSON { response in
-                print(response.result.value)
+                
+                if(response.result.isFailure)
+                {
+                    //Tenta de novo, parça
+//                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
+//                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+//                        self.setMessageReceived(messageID)
+//                    }
+                }
+                else
+                {
+                    print("Mensagem marcada como recebida com sucesso!")
+                }
         }
     }
     
@@ -235,7 +256,19 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.messageUrl_seen, parameters: parameters)
             .responseJSON { response in
-                print(response.result.value)
+                
+                if(response.result.isFailure)
+                {
+                    //Tenta de novo, parça
+                    //                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
+                    //                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    //                        self.setMessageReceived(messageID)
+                    //                    }
+                }
+                else
+                {
+                    print("Mensagem marcada como vista com sucesso!")
+                }
         }
     }
     
@@ -245,7 +278,19 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.messageUrl_deleted, parameters: parameters)
             .responseJSON { response in
-                print(response.result.value)
+                
+                if(response.result.isFailure)
+                {
+                    //Tenta de novo, parça
+                    //                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
+                    //                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    //                        self.setMessageReceived(messageID)
+                    //                    }
+                }
+                else
+                {
+                    print("Mensagem marcada como deletada com sucesso!")
+                }
         }
     }
     
@@ -255,7 +300,19 @@ class DAOPostgres : NSObject
         
         Alamofire.request(.POST, self.messageUrl_delete, parameters: parameters)
             .responseJSON { response in
-                print(response.result.value)
+                
+                if(response.result.isFailure)
+                {
+                    //Tenta de novo, parça
+                    //                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
+                    //                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    //                        self.setMessageReceived(messageID)
+                    //                    }
+                }
+                else
+                {
+                    print("Mensagem excluida com sucesso!")
+                }
         }
     }
     
@@ -275,6 +332,7 @@ class DAOPostgres : NSObject
     
     func stopRefreshing()
     {
+        print("Terminando de atualizar as mensagens instantaneamente")
         self.refresherChat?.invalidate()
         self.deleteOldMessages?.invalidate()
     }
@@ -300,6 +358,7 @@ class DAOPostgres : NSObject
     
     func stopObserve()
     {
+        print("Terminando de observar o banco")
         self.refresherContact?.invalidate()
         self.deleteOldMessages?.invalidate()
     }

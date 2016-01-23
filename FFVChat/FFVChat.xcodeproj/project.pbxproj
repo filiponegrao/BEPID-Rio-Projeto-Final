@@ -20,6 +20,7 @@
 		8009D72C1C10D0A300F88C01 /* GifGallery_UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */; };
 		8009D7341C11007300F88C01 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7331C11007300F88C01 /* UIImage+Gif.swift */; };
 		8009D7361C110E5500F88C01 /* CellGif_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */; };
+		800DC88A1C5322850087D92F /* PendingContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800DC8881C5322850087D92F /* PendingContents.swift */; };
 		8010FFF51C0CD46E00A4DBD6 /* BlackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */; };
 		8010FFF71C0CD5FE00A4DBD6 /* BlackList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */; };
 		801219D51C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */; };
@@ -225,6 +226,7 @@
 		8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifGallery_UIViewController.swift; sourceTree = "<group>"; };
 		8009D7331C11007300F88C01 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		8009D7351C110E5500F88C01 /* CellGif_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellGif_TableViewCell.swift; sourceTree = "<group>"; };
+		800DC8881C5322850087D92F /* PendingContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PendingContents.swift; sourceTree = "<group>"; };
 		8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackList.swift; sourceTree = "<group>"; };
 		8010FFF61C0CD5FE00A4DBD6 /* BlackList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BlackList.plist; sourceTree = "<group>"; };
 		801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellPrintscreen_TableViewCell.swift; sourceTree = "<group>"; };
@@ -827,6 +829,7 @@
 				80B8DFC51C24CAAD00668E26 /* Gif.swift */,
 				80B8DFCE1C24D56F00668E26 /* Video.swift */,
 				80B8DFC91C24D21A00668E26 /* Audio.swift */,
+				800DC8881C5322850087D92F /* PendingContents.swift */,
 				80B8DFD11C24D6FF00668E26 /* DAOContents.swift */,
 			);
 			name = Contents;
@@ -910,6 +913,11 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1043,6 +1051,7 @@
 				8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,
+				800DC88A1C5322850087D92F /* PendingContents.swift in Sources */,
 				80F6BB241BF6C2A2003DE8AE /* DAOPostgres.swift in Sources */,
 				F66B29DA1BAB6C0700BC43EE /* ReceiverProfile_ViewController.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,

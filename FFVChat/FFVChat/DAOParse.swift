@@ -18,6 +18,9 @@ class DAOParse
     //** Funcoes para contatos
     //***************************
     
+    let appdelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
+
+    
     var tentativasDownload = 0
     
     var tentativasUpload = 0
@@ -713,33 +716,8 @@ class DAOParse
     
     func sendImageOnKey(key: String, image: NSData, filter: ImageFilter)
     {
-        //Do in background
-
-        backgroundThread(background: {
-            
-            let file = PFFile(data: image)
-            
-            let object = PFObject(className: "Images")
-            object["imageKey"] = key
-            object["image"] = file
-            object["filter"] = filter.rawValue
-            
-            let error = NSErrorPointer()
-            object.save(error)
-            
-            if(error != nil)
-            {
-                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasUpload) * Double(NSEC_PER_SEC)))
-                dispatch_after(delayTime, dispatch_get_main_queue()) {
-
-                    self.sendImageOnKey(key, image: image, filter: filter)
-                }
-            }
-            
-            },
-            completion: {
-                print("imagem salva, pela thread em background")
-        })
+        //Executa thread até em background
+        self.appdelegate.sendImageOnKey(key, image: image, filter: filter)
     }
     
     
@@ -781,7 +759,7 @@ class DAOParse
     }
     
     func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
-        dispatch_async(dispatch_get_global_queue(Int(QOS_CLASS_USER_INITIATED.rawValue), 0)) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             if(background != nil){ background!(); }
             
             let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
