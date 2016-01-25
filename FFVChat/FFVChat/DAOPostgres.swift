@@ -299,6 +299,7 @@ class DAOPostgres : NSObject
                 }
                 else
                 {
+                    NSNotificationCenter.defaultCenter().postNotificationName(NotificationController.center.friendRequested.name, object: nil)
                     print("Requisicao de amizade enviada com sucesso!")
                 }
         }
