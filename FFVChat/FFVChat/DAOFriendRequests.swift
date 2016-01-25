@@ -86,6 +86,7 @@ class DAOFriendRequests : NSObject
                 }
                 else
                 {
+                    NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequest)
                     self.requests.append(fr)
                 }
             }
@@ -107,7 +108,10 @@ class DAOFriendRequests : NSObject
                     {
                         DAOParse.sendPushRequestAccepted(request.sender)
                         let index = self.requests.indexOf(request)
-                        self.requests.removeAtIndex(index!)
+                        if(index != nil)
+                        {
+                            self.requests.removeAtIndex(index!)
+                        }
                     }
                 }
 
