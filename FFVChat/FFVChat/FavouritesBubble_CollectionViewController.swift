@@ -84,6 +84,8 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
         for i in 0..<self.collectionView!.numberOfItemsInSection(0)
         {
             let cell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RandomWalk_CollectionViewCell
+            
+            //Animacoes
             cell?.profileBtn.layer.removeAllAnimations()
             cell?.startAnimation()
         }
@@ -131,6 +133,8 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
         cell.setInfo(self.favourites[indexPath.row].username, profile: UIImage(data: self.favourites[indexPath.row].profileImage!)!)
+        let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(self.favourites[indexPath.item])
+        cell.setUnreadMessages(cont)
         
         cell.loadAnimations(45)
         // Configure the cell

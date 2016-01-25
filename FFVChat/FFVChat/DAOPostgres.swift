@@ -19,9 +19,9 @@ class DAOPostgres : NSObject
 {
     var refresherChat : NSTimer!
     
-    var refresherContact : NSTimer!
+    var refresher : NSTimer!
     
-    var deleteOldMessages : NSTimer!
+    var observer : NSTimer!
     
     // URLs
     /** Envia mensagem */
@@ -54,6 +54,17 @@ class DAOPostgres : NSObject
     /** Busca todos os gifs disponiveis no banco de dados */
     let gifsUrl_getAll = "\(baseUrl)/Gifs_getAll.php"
     
+    let fr_getPendentes = "\(baseUrl)/FriendRequests_getPendentes.php"
+
+    let fr_getAceitos = "\(baseUrl)/FriendRequests_getAceitos.php"
+    
+    let fr_delete = "\(baseUrl)/FriendRequests_delete.php"
+    
+    let fr_setAceito = "\(baseUrl)/FriendRequests_setAceito.php"
+    
+    let fr_send = "\(baseUrl)/FriendRequests_send.php"
+    
+    let fr_user = "\(baseUrl)/FriendRequests_forUser.php"
     
     
     override init()
@@ -140,7 +151,10 @@ class DAOPostgres : NSObject
         }
     }
     
-    
+    /**
+     * Checa no banco de dados as mensagens que ja foram marcadas
+     * como deletadas.
+     */
     func checkForDeletedMessages()
     {
         let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
@@ -158,6 +172,136 @@ class DAOPostgres : NSObject
                 }
         }
 
+    }
+    
+    func checkForUnacceptedFriendRequests(callback: (friendRequests: [FriendRequest]) -> Void)
+    {
+        let parameters : [String:AnyObject]!  = ["target": DAOUser.sharedInstance.getUsername()]
+        var requests = [FriendRequest]()
+        
+        Alamofire.request(.POST, self.fr_getPendentes, parameters: parameters)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
+                    
+                    for result in results as! NSArray
+                    {
+                        let sender = result["sender"] as! String
+                        let target = result["target"] as! String
+                        let id = result["id"] as! String
+                        
+                        let fr = FriendRequest(id: id, sender: sender, target: target)
+                        requests.append(fr)
+                    }
+                    
+                    callback(friendRequests: requests)
+                }
+        }
+        
+    }
+    
+    
+    func checkForAcceptedFriendRequests(callback: (friendRequests: [FriendRequest]) -> Void)
+    {
+        let parameters : [String:AnyObject]!  = ["sender": DAOUser.sharedInstance.getUsername()]
+        var requests = [FriendRequest]()
+        
+        Alamofire.request(.POST, self.fr_getAceitos, parameters: parameters)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
+                    
+                    for result in results as! NSArray
+                    {
+                        let sender = result["sender"] as! String
+                        let target = result["target"] as! String
+                        let id = result["id"] as! String
+                        
+                        let fr = FriendRequest(id: id, sender: sender, target: target)
+                        requests.append(fr)
+                    }
+                    callback(friendRequests: requests)
+                }
+        }
+        
+    }
+    
+    func checkForUsernameFriendRequests(username: String, callback: (exist: Bool) -> Void)
+    {
+        let parameters : [String:AnyObject]!  = ["sender": DAOUser.sharedInstance.getUsername(), "target": username]
+        
+        Alamofire.request(.POST, self.fr_user, parameters: parameters)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
+                    
+                    if((results as! NSArray).count == 0)
+                    {
+                        callback(exist: false)
+                    }
+                    else
+                    {
+                        callback(exist: true)
+                    }
+                }
+        }
+        
+    }
+    
+    func setRequestAccepted(id: String, callback: (success: Bool) -> Void)
+    {
+        let parameters : [String:AnyObject]! = ["id": id, "updatedAt":NSDate()]
+        
+        Alamofire.request(.POST, self.fr_setAceito, parameters: parameters)
+            .responseJSON { response in
+                
+                if(response.result.isFailure)
+                {
+                    callback(success: false)
+                }
+                else
+                {
+                    print("Requisicao de amizade aceita com sucesso!")
+                    callback(success: true)
+                }
+        }
+    }
+    
+    
+    func deleteFriendRequest(id: String)
+    {
+        let parameters : [String:AnyObject]! = ["id": id]
+        
+        Alamofire.request(.POST, self.fr_delete, parameters: parameters)
+            .responseJSON { response in
+                
+                if(response.result.isFailure)
+                {
+
+                }
+                else
+                {
+                    print("Requisicao de amizade excluida com sucesso!")
+                }
+        }
+    }
+    
+    
+    func sendFriendRequest(id: String, username: String)
+    {
+        let parameters : [String:AnyObject]!  = ["id":id, "sender": DAOUser.sharedInstance.getUsername(), "target": username, "createdAt": NSDate()]
+        
+        Alamofire.request(.POST, self.fr_send, parameters: parameters)
+            .responseJSON { response in
+                
+                if(response.result.isFailure)
+                {
+                }
+                else
+                {
+                    print("Requisicao de amizade enviada com sucesso!")
+                }
+        }
     }
     
     /**
@@ -185,6 +329,7 @@ class DAOPostgres : NSObject
         }
     }
     
+    
     func sendImageMessage(id: String, username: String, lifeTime: Int, contentKey: String, sentDate: NSDate)
     {
         let me = DAOUser.sharedInstance.getUsername()
@@ -205,6 +350,7 @@ class DAOPostgres : NSObject
                 }
         }
     }
+    
     
     func sendGifMessage(id: String, username: String, lifeTime: Int, gifName: String, sentDate: NSDate)
     {
@@ -330,37 +476,51 @@ class DAOPostgres : NSObject
         return dateFormatter.dateFromString(str) as NSDate!
     }
     
-    func stopRefreshing()
-    {
-        print("Terminando de atualizar as mensagens instantaneamente")
-        self.refresherChat?.invalidate()
-        self.deleteOldMessages?.invalidate()
-    }
+    /***  REFRESHER  ***/
     
     func startRefreshing()
     {
         self.stopObserve()
-        self.deleteOldMessages?.invalidate()
-        self.refresherChat?.invalidate()
         
-        self.refresherChat = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
-        self.deleteOldMessages = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "checkForDeletedMessages", userInfo: nil, repeats: true)
+        self.refresher?.invalidate()
+        self.refresher = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "refresh", userInfo: nil, repeats: true)
     }
+    
+    func stopRefreshing()
+    {
+        print("Terminando de atualizar as mensagens instantaneamente")
+        self.refresher?.invalidate()
+    }
+    
+    func refresh()
+    {
+        self.checkForDeletedMessages()
+        self.getUnreadMessages()
+    }
+    
+    
+    
+    /*** OBSERVADOR **/
     
     func startObserve()
     {
         self.stopRefreshing()
-        self.refresherContact?.invalidate()
-        self.deleteOldMessages?.invalidate()
-        self.deleteOldMessages = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: "checkForDeletedMessages", userInfo: nil, repeats: true)
-        self.refresherContact = NSTimer.scheduledTimerWithTimeInterval(4, target: self, selector: "getUnreadMessages", userInfo: nil, repeats: true)
+        
+        self.observer?.invalidate()
+        self.observer = NSTimer.scheduledTimerWithTimeInterval(2.5, target: self, selector: "observe", userInfo: nil, repeats: true)
     }
     
     func stopObserve()
     {
         print("Terminando de observar o banco")
-        self.refresherContact?.invalidate()
-        self.deleteOldMessages?.invalidate()
+        self.observer?.invalidate()
+    }
+    
+    func observe()
+    {
+        self.checkForDeletedMessages()
+        self.getUnreadMessages()
+        DAOFriendRequests.sharedInstance.reloadInfos()
     }
     
     

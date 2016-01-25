@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 7.0">
     <entity name="Audio" representedClassName=".Audio" syncable="YES">
         <attribute name="audioKey" attributeType="String" syncable="YES"/>
         <attribute name="data" attributeType="Binary" syncable="YES"/>
@@ -35,10 +35,6 @@
         <attribute name="target" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="PendingContents" representedClassName=".PendingContents" syncable="YES">
-        <attribute name="contentKey" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
     </entity>
     <entity name="PrintscreenNotification" representedClassName=".PrintscreenNotification" syncable="YES">
         <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
@@ -78,6 +74,5 @@
         <element name="SentMidia" positionX="9" positionY="126" width="128" height="120"/>
         <element name="User" positionX="9" positionY="126" width="128" height="150"/>
         <element name="Video" positionX="18" positionY="171" width="128" height="105"/>
-        <element name="PendingContents" positionX="0" positionY="153" width="128" height="75"/>
     </elements>
 </model>

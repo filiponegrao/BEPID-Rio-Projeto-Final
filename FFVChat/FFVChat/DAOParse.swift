@@ -235,29 +235,29 @@ class DAOParse
     //** Funcoes para contatos
     //***************************
     
-    class func getRequests(callback: (requests: [FriendRequest]) -> Void) -> Void
-    {
-        var requests = [FriendRequest]()
-        let query = PFQuery(className: "FriendRequest")
-        query.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
-        query.whereKey("status", equalTo: "Pendente")
-        query.findObjectsInBackgroundWithBlock { ( objects:[AnyObject]?, error: NSError?) -> Void in
-            if let objects = objects as? [PFObject]
-            {
-                for object in objects
-                {
-                    requests.append(FriendRequest(sender: object.valueForKey("sender") as! String, target: DAOUser.sharedInstance.getUsername()))
-                    
-                    if(object == objects.last)
-                    {
-                        callback(requests: requests)
-                    }
-                }
-            }
-            callback(requests: requests)
-        }
-        callback(requests: requests)
-    }
+//    class func getRequests(callback: (requests: [FriendRequest]) -> Void) -> Void
+//    {
+//        var requests = [FriendRequest]()
+//        let query = PFQuery(className: "FriendRequest")
+//        query.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
+//        query.whereKey("status", equalTo: "Pendente")
+//        query.findObjectsInBackgroundWithBlock { ( objects:[AnyObject]?, error: NSError?) -> Void in
+//            if let objects = objects as? [PFObject]
+//            {
+//                for object in objects
+//                {
+//                    requests.append(FriendRequest(sender: object.valueForKey("sender") as! String, target: DAOUser.sharedInstance.getUsername()))
+//                    
+//                    if(object == objects.last)
+//                    {
+//                        callback(requests: requests)
+//                    }
+//                }
+//            }
+//            callback(requests: requests)
+//        }
+//        callback(requests: requests)
+//    }
     
     
     class func acceptRequestOnParse(request: FriendRequest, callback: (success: Bool, error: NSError?) -> Void) -> Void
@@ -360,48 +360,48 @@ class DAOParse
     }
     
     
-    class func sendFriendRequest(username: String)
-    {
-        let query = PFUser.query()
-        query?.whereKey("username", equalTo: username)
-        query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
-            if(object != nil)
-            {
-                let query2 = PFQuery(className: "FriendRequest")
-                query2.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
-                query2.whereKey("sender", equalTo: username)
-                query2.whereKey("status", equalTo: "Pendente")
-                query2.findObjectsInBackgroundWithBlock({ (objects2: [AnyObject]?, error2: NSError?) -> Void in
-                    
-                    if(objects2?.count > 0)
-                    {
-                        let request = FriendRequest(sender: username, target: DAOUser.sharedInstance.getUsername())
-                        self.acceptRequestOnParse(request, callback: { (success, error) -> Void in
-                            
-                            if(success)
-                            {
-                                
-                            }
-                        })
-                    }
-                    else
-                    {
-                        let request = PFObject(className: "FriendRequest")
-                        request["sender"] = DAOUser.sharedInstance.getUsername()
-                        request["target"] = username
-                        request["status"] = "Pendente"
-                        request.saveEventually({ (success : Bool, error: NSError?) -> Void in
-                            if(success == true)
-                            {
-                                print("Convite de amizade enviado para \(username)")
-                                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequested)
-                            }
-                        })
-                    }
-                })
-            }
-        })
-    }
+//    class func sendFriendRequest(username: String)
+//    {
+//        let query = PFUser.query()
+//        query?.whereKey("username", equalTo: username)
+//        query?.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+//            if(object != nil)
+//            {
+//                let query2 = PFQuery(className: "FriendRequest")
+//                query2.whereKey("target", equalTo: DAOUser.sharedInstance.getUsername())
+//                query2.whereKey("sender", equalTo: username)
+//                query2.whereKey("status", equalTo: "Pendente")
+//                query2.findObjectsInBackgroundWithBlock({ (objects2: [AnyObject]?, error2: NSError?) -> Void in
+//                    
+//                    if(objects2?.count > 0)
+//                    {
+//                        let request = FriendRequest(sender: username, target: DAOUser.sharedInstance.getUsername())
+//                        self.acceptRequestOnParse(request, callback: { (success, error) -> Void in
+//                            
+//                            if(success)
+//                            {
+//                                
+//                            }
+//                        })
+//                    }
+//                    else
+//                    {
+//                        let request = PFObject(className: "FriendRequest")
+//                        request["sender"] = DAOUser.sharedInstance.getUsername()
+//                        request["target"] = username
+//                        request["status"] = "Pendente"
+//                        request.saveEventually({ (success : Bool, error: NSError?) -> Void in
+//                            if(success == true)
+//                            {
+//                                print("Convite de amizade enviado para \(username)")
+//                                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequested)
+//                            }
+//                        })
+//                    }
+//                })
+//            }
+//        })
+//    }
     
     
     class func sendPushRequestAccepted(username: String)

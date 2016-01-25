@@ -93,6 +93,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.pageMenu = CAPSPageMenu(viewControllers: self.controllerArray, frame: CGRectMake(0, self.navigationBar.frame.size.height, self.contentSize.width, self.contentSize.height), pageMenuOptions: parameters)
         self.pageMenu.view.backgroundColor = UIColor.clearColor()
         self.pageMenu.delegate = self
+//        self.pageMenu.scrollAnimationDurationOnMenuItemTap = 0.3
         self.view.addSubview(self.pageMenu.view)
         
         
@@ -231,10 +232,10 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.searchBar.resignFirstResponder()
         self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
         self.contactsController.collectionView?.reloadData()
-        self.contactsController.reloadAnimations()
+//        self.contactsController.reloadAnimations()
         self.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
         self.favouritesController.collectionView?.reloadData()
-        self.favouritesController.reloadAnimations()
+//        self.favouritesController.reloadAnimations()
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
@@ -284,7 +285,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     {
 //        self.closeSearch()
     }
-
 
 }
 

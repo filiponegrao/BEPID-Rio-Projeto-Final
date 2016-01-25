@@ -18,14 +18,17 @@ enum requestNotification : String
 }
 
 
-class FriendRequest
+class FriendRequest : NSObject
 {
     let sender : String
     
     let target : String
     
-    init(sender : String, target: String)
+    let id : String
+    
+    init(id: String, sender : String, target: String)
     {
+        self.id = id
         self.sender = sender
         self.target = target
     }
@@ -46,7 +49,6 @@ class DAOFriendRequests : NSObject
     {
         super.init()
         
-        self.loadRequests()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadInfos", name: requestNotification.reloadRequest.rawValue, object: nil)
     }
     
@@ -71,20 +73,21 @@ class DAOFriendRequests : NSObject
     
     func loadRequests()
     {
-        DAOParse.getRequests { (requests) -> Void in
+        self.requests = [FriendRequest]()
+        DAOPostgres.sharedInstance.checkForUnacceptedFriendRequests { (friendRequests) -> Void in
             
-            if(requests.count > 0)
+            for fr in friendRequests
             {
-                self.requests = requests
-                for r in self.requests
+                if(DAOContacts.sharedInstance.isContact(fr.sender))
                 {
-                    if(DAOContacts.sharedInstance.isContact(r.sender) && !BlackList.isOnBlackList(r.sender))
-                    {
-                        self.acceptRequest(r)
-                    }
+                    DAOPostgres.sharedInstance.setRequestAccepted(fr.id, callback: { (success) -> Void in
+                        
+                    })
                 }
-                
-                NSNotificationCenter.defaultCenter().postNotificationName(requestNotification.requestsLoaded.rawValue, object: nil)
+                else
+                {
+                    self.requests.append(fr)
+                }
             }
         }
     }
@@ -92,19 +95,28 @@ class DAOFriendRequests : NSObject
     
     func acceptRequest(request: FriendRequest)
     {
-        DAOParse.acceptRequestOnParse(request) { (success, error) -> Void in
-            if(error != nil)
-            {
-                DAOParse.sendPushRequestAccepted(request.sender)
-                
-                let index = self.requests.indexOf({$0 === request})
-                if(index != nil)
-                {
-                    self.requests.removeAtIndex(index!)
-                }
-            }
+        DAOParse.getContactInfoFromParse(request.sender, callback: { (contactInfo, error) -> Void in
             
-        }
+            if(error == nil)
+            {
+                DAOContacts.sharedInstance.addContact(contactInfo["username"] as! String, facebookId: contactInfo["facebookId"] as? String, createdAt: contactInfo["createdAt"] as! NSDate, trustLevel: contactInfo["trustLevel"] as! Int, profileImage: (contactInfo["profileImage"] as! NSData))
+                
+                DAOPostgres.sharedInstance.setRequestAccepted(request.id) { (success) -> Void in
+                    
+                    if(success)
+                    {
+                        DAOParse.sendPushRequestAccepted(request.sender)
+                        let index = self.requests.indexOf(request)
+                        self.requests.removeAtIndex(index!)
+                    }
+                }
+
+            }
+            else
+            {
+                print(error)
+            }
+        })
     }
     
     /**
@@ -114,13 +126,29 @@ class DAOFriendRequests : NSObject
      */
     func friendsAccepted()
     {
-        DAOParse.finalizeRequests()
+        DAOPostgres.sharedInstance.checkForAcceptedFriendRequests { (friendRequests) -> Void in
+            
+            for fr in friendRequests
+            {
+                DAOParse.getContactInfoFromParse(fr.target, callback: { (contactInfo, error) -> Void in
+                    
+                    if(error == nil)
+                    {
+                        DAOContacts.sharedInstance.addContact(contactInfo["username"] as! String, facebookId: contactInfo["facebookId"] as? String, createdAt: contactInfo["createdAt"] as! NSDate, trustLevel: contactInfo["trustLevel"] as! Int, profileImage: (contactInfo["profileImage"] as! NSData))
+                        DAOPostgres.sharedInstance.deleteFriendRequest(fr.id)
+                    }
+                })
+            }
+        }
     }
     
     
     func sendRequest(username: String)
     {
-        DAOParse.sendFriendRequest(username)
+        var key = "\(DAOUser.sharedInstance.getUsername())\(username)\(NSDate())"
+        key = EncryptTools.encKey(key)
+        
+        DAOPostgres.sharedInstance.sendFriendRequest(key, username: username)
         DAOParse.sendPushFriendRequest(username)
     }
     
@@ -130,7 +158,10 @@ class DAOFriendRequests : NSObject
             
             if(username != nil)
             {
-                DAOParse.sendFriendRequest(username!)
+                var key = "\(DAOUser.sharedInstance.getUsername())\(username!)\(NSDate())"
+                key = EncryptTools.encKey(key)
+                
+                DAOPostgres.sharedInstance.sendFriendRequest(key, username: username!)
                 DAOParse.sendPushFriendRequest(username!)
             }
         }
@@ -139,9 +170,9 @@ class DAOFriendRequests : NSObject
     
     func wasAlreadyRequested(username: String, callback: (was: Bool) -> Void) -> Void
     {
-        DAOParse.checkUserAlreadyRequested(username) { (was) -> Void in
+        DAOPostgres.sharedInstance.checkForUsernameFriendRequests(username) { (exist) -> Void in
             
-            callback(was: was)
+            callback(was: !exist)
         }
     }
     
