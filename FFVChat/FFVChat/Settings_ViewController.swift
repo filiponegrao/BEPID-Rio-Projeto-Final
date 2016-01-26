@@ -322,6 +322,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             let deleteProfile = DeleteProfile_ViewController()
             self.navigationController?.pushViewController(deleteProfile, animated: true)
         }
+        else if(indexPath.section == 3 && indexPath.row == 0)
+        {
+            let messageSettings = MessageAlertSettings_ViewController()
+            self.navigationController?.pushViewController(messageSettings, animated: true)
+        }
         
     }
     

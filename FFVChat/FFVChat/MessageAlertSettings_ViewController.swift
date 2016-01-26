@@ -35,7 +35,10 @@ class MessageAlertSettings_ViewController: UIViewController
         self.tittle.textColor = oficialGreen
         self.view.addSubview(self.tittle)
         
-        
+        self.backButton = UIButton(frame: CGRectMake(0, 20, 45, 45))
+        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
+        self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(self.backButton)
         
 
 
@@ -52,6 +55,10 @@ class MessageAlertSettings_ViewController: UIViewController
         self.tittle.setSizeFont(22)
     }
     
-
+    
+    func back()
+    {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
 }
