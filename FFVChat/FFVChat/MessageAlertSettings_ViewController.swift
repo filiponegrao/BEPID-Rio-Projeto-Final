@@ -181,18 +181,15 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         {
             print("off")
             
-//            let alert = UIAlertView(title: "Pay attention!", message: "We recommend keeping the notifications turned on", delegate: nil, cancelButtonTitle: "Ok")
-//            alert.show()
-            
             let alertController = UIAlertController(title: "Pay attention!", message: "We recommend keeping the notifications turned on", preferredStyle: .Alert)
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { (UIAlertAction) -> Void in
+            let cancelAction = UIAlertAction(title: "Ok", style: .Cancel, handler: { (UIAlertAction) -> Void in
                 self.changeSwitchValue()
             })
             alertController.addAction(cancelAction)
             
-            let acceptAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
-            alertController.addAction(acceptAction)
+//            let acceptAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+//            alertController.addAction(acceptAction)
             
             presentViewController(alertController, animated: true, completion: nil)
 
