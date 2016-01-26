@@ -12,11 +12,13 @@ import UIKit
 
 class AppNavigationController : UINavigationController, UIViewControllerTransitioningDelegate
 {
+    var home : Home_ViewController!
+    
     init()
     {
         super.init(nibName: "AppNavigationController", bundle: nil)
 
-        let home = Home_ViewController()
+        self.home = Home_ViewController()
         
         self.viewControllers = [home]
         self.navigationBar.hidden = true

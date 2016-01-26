@@ -23,6 +23,8 @@ class DAOParse
     
     var tentativasDownload = 0
     
+    var tentativasDowndloadAudio = 0
+    
     var tentativasUpload = 0
     
     init()
@@ -658,6 +660,24 @@ class DAOParse
         push.sendPushInBackground()
     }
     
+    class func pushAudioNotification(username: String)
+    {
+        let message = "🔉 Áudio de \(DAOUser.sharedInstance.getUsername())"
+        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1, "sound": "bip.mp3"]
+        
+        let userQuery = PFUser.query()
+        userQuery?.whereKey("username", equalTo: username)
+        
+        // Find devices associated with these users
+        let pushQuery = PFInstallation.query()
+        pushQuery!.whereKey("user", matchesQuery: userQuery!)
+        
+        // Send push notification to query
+        let push = PFPush()
+        push.setQuery(pushQuery) // Set our Installation query
+        push.setData(data as [NSObject : AnyObject])
+        push.sendPushInBackground()
+    }
     
     class func pushPrintscreenNotification(username: String)
     {
@@ -723,7 +743,7 @@ class DAOParse
     
     func downloadImageForMessage(imageKey: String, id: String)
     {
-        if(self.tentativasDownload < 30)
+        if(self.tentativasDownload < 100)
         {
             let query = PFQuery(className: "Images")
             query.whereKey("imageKey", equalTo: imageKey)
@@ -745,7 +765,7 @@ class DAOParse
                 else
                 {
                     self.tentativasDownload++
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasDownload) * Double(NSEC_PER_SEC)))
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1) + self.tentativasDownload) * Double(NSEC_PER_SEC)))
                     dispatch_after(delayTime, dispatch_get_main_queue()) {
                         self.downloadImageForMessage(imageKey, id: id)
                     }
@@ -756,6 +776,50 @@ class DAOParse
         {
             self.tentativasDownload = 0
         }
+    }
+    
+    
+    
+    func downloadAudioForMessage(audioKey: String, id: String)
+    {
+        if(self.tentativasDowndloadAudio < 100)
+        {
+            let query = PFQuery(className: "Audios")
+            query.whereKey("audioKey", equalTo: audioKey)
+            query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
+                
+                if(object != nil)
+                {
+                    let filterString = object!["filter"] as! String
+                    let filter = AudioFilter(rawValue: filterString)!
+                    let file = object!["audio"] as! PFFile
+                    file.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                        
+                        self.tentativasDownload = 0
+                        let decData = EncryptTools.decImage(data!)
+                        DAOContents.sharedInstance.addAudio(audioKey, data: decData, filter: filter)
+                    })
+                }
+                else
+                {
+                    self.tentativasDownload++
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1) + self.tentativasDowndloadAudio) * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        self.downloadAudioForMessage(audioKey, id: id)
+                    }
+                }
+            }
+        }
+        else
+        {
+            self.tentativasDownload = 0
+        }
+    }
+    
+    func sendAudioOnKey(key: String, audio: NSData, filter: AudioFilter)
+    {
+        //Executa thread até em background
+        self.appdelegate.sendAudioOnKey(key, audio: audio, filter: filter)
     }
     
     func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {

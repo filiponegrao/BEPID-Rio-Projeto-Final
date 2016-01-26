@@ -16,7 +16,7 @@ let messageViewHeigth : CGFloat = 80
 
 let tableViewHeigth : CGFloat = screenHeight - navigationBarHeigth - messageViewHeigth
 
-class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MessageBarDelegate
+class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MessageBarDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate
 {
     var messageBar: MessageBar!
     
@@ -60,6 +60,10 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var gifButton : UIButton!
     
+    //Audio player and recordr
+    var audioPlayer: AVAudioPlayer?
+    var audioRecorder: AVAudioRecorder?
+    
     init(contact: Contact)
     {
         self.contact = contact
@@ -99,6 +103,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.registerClass(CellImage_TableViewCell.self, forCellReuseIdentifier: "ImageCell")
         self.tableView.registerClass(CellGif_TableViewCell.self, forCellReuseIdentifier: "CellGif")
+        self.tableView.registerClass(CellAudio_TableViewCell.self, forCellReuseIdentifier: "CellAudio")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.layer.zPosition = 0
@@ -125,6 +130,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.addSubview(messageBar)
 //        self.messageBar.frame.origin.y = self.tableView.frame.origin.y + self.tableView.frame.size.height
         
+        self.initAudioRecorder()
+        
     }
     
     //** FUNCOES DE APARICAO DA TELA E DESAPARECIMENTO DA MESMA **//
@@ -138,6 +145,9 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageEvaporated:", name: "messageEvaporated", object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAudioCell:", name: "audioLoaded", object: nil)
+
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
         
@@ -162,6 +172,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "imageLoaded", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "audioLoaded", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
         
     }
@@ -247,6 +258,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
+    func reloadAudioCell(notification: NSNotification)
+    {
+        let info : [NSObject : AnyObject] = notification.userInfo!
+        let key = info["audioKey"] as! String
+        
+        for mssg in self.messages
+        {
+            if(mssg.contentKey == key)
+            {
+                let index = self.messages.indexOf(mssg)!
+                let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? CellAudio_TableViewCell
+                cell?.enablePlay()
+            }
+        }
+    }
+    
     func addNewMessage()
     {
         if(DAOMessages.sharedInstance.lastMessage.sender == self.contact.username)
@@ -257,7 +284,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .Top)
             
             //Verifica se a mensagem é minha
-            if(mssg.sender != DAOUser.sharedInstance.getUsername() && mssg.type != ContentType.Image.rawValue)
+            if(mssg.sender != DAOUser.sharedInstance.getUsername() && (mssg.type == ContentType.Text.rawValue || mssg.type == ContentType.Gif.rawValue))
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
             }
@@ -286,6 +313,19 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         
                         self.tableView.contentOffset.y += screenWidth + 20 //+20 de margem
+                        
+                        }, completion: { (success: Bool) -> Void in
+                            
+                    })
+                }
+            }
+            else if(mssg.type == ContentType.Audio.rawValue)
+            {
+                if((self.tableView.contentSize.height + 70) > self.tableView.frame.size.height)
+                {
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        self.tableView.contentOffset.y += 70 + 20 //+20 de margem
                         
                         }, completion: { (success: Bool) -> Void in
                             
@@ -415,22 +455,25 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return clear
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    {
-        return 40
-    }
-    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
     {
         //IMAGE
-        if(self.messages[indexPath.row].text == nil && self.messages[indexPath.row].contentKey != nil)
+        if(self.messages[indexPath.row].type == ContentType.Image.rawValue || self.messages[indexPath.row].type == ContentType.Gif.rawValue)
         {
             return cellBackgroundWidth + 10
         }
             //TEXT
-        else
+        else if(self.messages[indexPath.row].type == ContentType.Text.rawValue)
         {
             return self.getPerfectCellHeigth(indexPath.row)
+        }
+        else if(self.messages[indexPath.row].type == ContentType.Audio.rawValue)
+        {
+            return 60
+        }
+        else
+        {
+            return 0
         }
     }
     
@@ -596,6 +639,46 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
             }
+            
+            return cell
+            
+        case .Audio:
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("CellAudio", forIndexPath: indexPath) as! CellAudio_TableViewCell
+            cell.backgroundColor = UIColor.clearColor()
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.index = indexPath.row
+            cell.controller = self
+            
+            cell.sentDate.text = Optimization.getStringDateFromDate(self.messages[indexPath.row].sentDate)
+
+            if(DAOContents.sharedInstance.existAudioFromKey(mssg.contentKey!))
+            {
+                cell.enablePlay()
+            }
+            else
+            {
+                DAOParse.sharedInstance.downloadAudioForMessage(mssg.contentKey!, id: mssg.id)
+                cell.setLoading()
+            }
+            
+            if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
+            {
+                cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
+                cell.backgroundLabel.alpha = 0.3
+            }
+            else
+            {
+                cell.backgroundLabel.backgroundColor = oficialDarkGray
+                cell.backgroundLabel.alpha = 0.6
+            }
+            
+            cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
+            cell.backgroundLabel.layer.shadowOffset = CGSizeMake(5, 5)
+            cell.backgroundLabel.layer.shadowRadius = 3
+            cell.backgroundLabel.layer.shadowOpacity = 1
+            cell.backgroundLabel.layer.masksToBounds = false
+            cell.backgroundLabel.layer.shadowPath = UIBezierPath(roundedRect: cell.backgroundLabel.bounds, cornerRadius: cell.backgroundLabel.layer.cornerRadius).CGPath
             
             return cell
             
@@ -817,6 +900,27 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
     
+    func sendAudio(audio: NSData, lifetime: Int, filter: AudioFilter)
+    {
+        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, audio: audio, lifeTime: lifetime, filter: filter)
+        
+        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        let index = self.messages.indexOf(message)
+        
+        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Top)
+        
+        if(self.tableView.contentSize.height > self.tableView.frame.size.height)
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.tableView.contentOffset.y += screenWidth + 20
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
+    }
+    
     
     func sendGif(gifName: String)
     {
@@ -991,5 +1095,89 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
     }
     
+    //AUDIO PLAYER AND RECORDER
+    func initAudioRecorder()
+    {
+        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let docsDir = dirPaths[0] 
+        let soundFilePath = docsDir.stringByAppendingPathComponent("sound.caf")
+        let soundFileURL = NSURL(fileURLWithPath: soundFilePath)
+        let recordSettings = [AVEncoderAudioQualityKey: AVAudioQuality.Max.rawValue,
+            AVEncoderBitRateKey: 16,
+            AVNumberOfChannelsKey: 2,
+            AVSampleRateKey: 44100.0]
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do { try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord) }
+        catch { print("audioSession error)") }
+        
+        do { self.audioRecorder = try AVAudioRecorder(URL: soundFileURL, settings: recordSettings as! [String : AnyObject])
+        
+            self.audioRecorder?.prepareToRecord()
+            self.audioRecorder?.delegate = self
+        }
+        catch
+        {
+            print("audioSession error")
+        }
+    }
     
+    func startRecord()
+    {
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do { try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord) }
+        catch { print("audioSession error)") }
+        
+        if audioRecorder?.recording == false {
+
+            audioRecorder?.record()
+        }
+    }
+    
+    func stopRecord()
+    {
+        audioRecorder?.stop()
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
+        catch { print("audioSession error)") }
+    }
+    
+    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool)
+    {
+        let audio = NSData(contentsOfURL: (audioRecorder?.url)!)
+        if(audio != nil)
+        {
+            self.sendAudio(audio!, lifetime: DAOMessages.sharedInstance.defaultTime, filter: AudioFilter.None)
+        }
+    }
+    
+    func playAudio(index: Int)
+    {
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
+        catch { print("audioSession error)") }
+        
+        if audioRecorder?.recording == false {// && self.audioPlayer?.playing == false {
+
+            let key = self.messages[index].contentKey!
+            let audio = DAOContents.sharedInstance.getAudioFromKey(key)
+            if(audio != nil)
+            {
+                do { audioPlayer = try AVAudioPlayer(data: audio!)
+                    
+                    audioPlayer?.delegate = self
+                    audioPlayer?.play()
+                    DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[index])
+                }
+                catch{ print("erro ao achar aqruivo de som")}
+            }
+        }
+    }
+
+
 }
