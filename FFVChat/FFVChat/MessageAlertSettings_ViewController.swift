@@ -92,21 +92,35 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-        return 15
+        return 60
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        let view = UIView(frame: CGRectMake(0,0,screenWidth, 10))
+        let view = UIView(frame: CGRectMake(0,0,screenWidth, 60))
         view.backgroundColor = UIColor.clearColor()
         
+        let tittle = UILabel(frame: CGRectMake(15, 30, screenWidth, 30))
+        tittle.textColor = oficialLightGray
+        tittle.alpha = 0.6
+        
+        if(section == 0)
+        {
+            tittle.text = "Private chats"
+        }
+        else if(section == 1)
+        {
+            tittle.text = "Group chats"
+        }
+        
+        view.addSubview(tittle)
         return view
 
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -131,19 +145,29 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         separatorLineView.backgroundColor = oficialMediumGray
         cell.addSubview(separatorLineView)
         
-        if(indexPath.row == 0)
+        if(indexPath.section == 0)
         {
-            cell.textLabel?.text = self.section[indexPath.row]
-            cell.contentView.addSubview(self.switchButton)
-            cell.contentView.addSubview(self.mySwitch)
+            if(indexPath.row == 0)
+            {
+                cell.textLabel?.text = self.section[indexPath.row]
+                cell.contentView.addSubview(self.switchButton)
+                cell.contentView.addSubview(self.mySwitch)
+            }
+            else if(indexPath.row == 1)
+            {
+                cell.textLabel?.text = self.section[indexPath.row]
+                let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 5, 45, 45))
+                nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+                cell.contentView.addSubview(nextButton)
+            }
+
         }
-        else if(indexPath.row == 1)
+        
+        else if(indexPath.section == 1)
         {
-            cell.textLabel?.text = self.section[indexPath.row]
-            let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 5, 45, 45))
-            nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
-            cell.contentView.addSubview(nextButton)
+            
         }
+        
         
         return cell
     }
