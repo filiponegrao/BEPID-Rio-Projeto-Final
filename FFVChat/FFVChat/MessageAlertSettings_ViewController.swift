@@ -92,17 +92,17 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
     {
-        return 60
+        return 50
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
     {
-        let view = UIView(frame: CGRectMake(0,0,screenWidth, 60))
+        let view = UIView(frame: CGRectMake(0,0,screenWidth, 50))
         view.backgroundColor = UIColor.clearColor()
         
-        let tittle = UILabel(frame: CGRectMake(15, 30, screenWidth, 30))
+        let tittle = UILabel(frame: CGRectMake(15, 20, screenWidth, 30))
         tittle.textColor = oficialLightGray
-        tittle.alpha = 0.6
+        
         
         if(section == 0)
         {
@@ -111,6 +111,7 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         else if(section == 1)
         {
             tittle.text = "Group chats"
+            tittle.alpha = 0.3
         }
         
         view.addSubview(tittle)
