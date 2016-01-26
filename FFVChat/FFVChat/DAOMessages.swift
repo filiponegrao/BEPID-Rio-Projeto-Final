@@ -181,6 +181,30 @@ class DAOMessages : NSObject
         return message
     }
     
+    func sendMessage(username: String, audio: NSData, lifeTime: Int, filter: AudioFilter) -> Message
+    {
+        let now = NSDate()
+        
+        let id = self.createMessageKey(username, date: now)
+        let key = self.createContentKey(id)
+        
+        DAOContents.sharedInstance.addAudio(key, data: audio, filter: filter)
+        
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: lifeTime, type: .Audio, contentKey: key, text: nil, status: "sent")
+        
+        self.save()
+        
+        DAOPostgres.sharedInstance.sendAudioMessage(id, username: username, lifeTime: lifeTime, contentKey: key, sentDate: now)
+        
+        DAOParse.sharedInstance.sendAudioOnKey(key, audio: EncryptTools.encImage(audio, targetUsername: username), filter: filter)
+        
+        DAOParse.pushAudioNotification(username)
+        
+        DAOSentMidia.sharedInstance.addSentMidia(message)
+        
+        return message
+    }
+    
     /**
      * Sending message function.
      * Type: Gif

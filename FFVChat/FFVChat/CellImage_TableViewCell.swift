@@ -30,16 +30,16 @@ class CellImage_TableViewCell: UITableViewCell
         
         self.frame.size.height = screenWidth/6 * 2
         
-        self.cellView = UIView(frame: CGRectMake(0, 0, self.frame.size.height , self.frame.size.height))
-        self.cellView.backgroundColor = UIColor.clearColor()
-        self.contentView.addSubview(cellView)
-        
         self.backgroundLabel = UIView(frame: CGRectMake(margemLateral, margemVertical, cellBackgroundWidth, cellBackgroundWidth))
         self.backgroundLabel.backgroundColor = UIColor.whiteColor()
         self.backgroundLabel.alpha = 0.1
         self.backgroundLabel.layer.cornerRadius = 10
         self.backgroundLabel.layer.zPosition = 0
         self.addSubview(self.backgroundLabel)
+        
+        self.cellView = UIView(frame: CGRectMake(0, 0, self.frame.size.height , self.frame.size.height))
+        self.cellView.backgroundColor = UIColor.clearColor()
+        self.addSubview(cellView)
         
         self.imageCell = UIImageView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
         self.imageCell.clipsToBounds = true

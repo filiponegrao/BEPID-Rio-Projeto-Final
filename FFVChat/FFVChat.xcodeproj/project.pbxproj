@@ -99,6 +99,7 @@
 		804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAC1BE7296A0021DF4E /* SentMidia.swift */; };
 		804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */; };
 		804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */; };
+		804E45BD1C56D9C800753493 /* CellAudio_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45BC1C56D9C800753493 /* CellAudio_TableViewCell.swift */; };
 		804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */; };
 		804FB40A1C09466B00512425 /* PrintscreenNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4081C09466B00512425 /* PrintscreenNotification.swift */; };
 		804FB40C1C09490100512425 /* DAOPrints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB40B1C09490100512425 /* DAOPrints.swift */; };
@@ -310,6 +311,7 @@
 		804B3DAC1BE7296A0021DF4E /* SentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMidia.swift; sourceTree = "<group>"; };
 		804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOSentMidia.swift; sourceTree = "<group>"; };
 		804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSentMidia_CollectionViewCell.swift; sourceTree = "<group>"; };
+		804E45BC1C56D9C800753493 /* CellAudio_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAudio_TableViewCell.swift; sourceTree = "<group>"; };
 		804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrintscreenNotification+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		804FB4081C09466B00512425 /* PrintscreenNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintscreenNotification.swift; sourceTree = "<group>"; };
 		804FB40B1C09490100512425 /* DAOPrints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPrints.swift; sourceTree = "<group>"; };
@@ -749,6 +751,7 @@
 				80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */,
 				F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */,
 				F6BD6C1F1BD2F7A000069570 /* CellImage_TableViewCell.swift */,
+				804E45BC1C56D9C800753493 /* CellAudio_TableViewCell.swift */,
 				F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */,
 				801219D41C0A207B008A3FFA /* CellPrintscreen_TableViewCell.swift */,
 				806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */,
@@ -1048,6 +1051,7 @@
 				80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */,
 				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
 				F68ABEF51C11D7F2009670A7 /* DeleteProfile_ViewController.swift in Sources */,
+				804E45BD1C56D9C800753493 /* CellAudio_TableViewCell.swift in Sources */,
 				8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
 				F66B29E51BAB6DB800BC43EE /* TakePhoto_ViewController.swift in Sources */,

@@ -306,6 +306,8 @@ class DAOContents : NSObject
             {
                 Audio.createInManagedObjectContext(self.managedObjectContext, data: data, audioKey: audioKey, filter: filter)
                 self.save()
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "audioLoaded", object: nil, userInfo: ["audioKey":audioKey]))
+
                 return true
             }
             else
@@ -346,12 +348,12 @@ class DAOContents : NSObject
     
     func getAudioFromKey(audioKey: String) -> NSData?
     {
-        let request = NSFetchRequest(entityName: "Image")
-        request.predicate = NSPredicate(format: "imageKey == %@", audioKey)
+        let request = NSFetchRequest(entityName: "Audio")
+        request.predicate = NSPredicate(format: "audioKey == %@", audioKey)
         
         do
         {
-            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Image]
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Audio]
             if(results.count != 0)
             {
                 let audio = results.first!
@@ -366,6 +368,29 @@ class DAOContents : NSObject
         catch
         {
             return nil
+        }
+    }
+    
+    func existAudioFromKey(audioKey: String) -> Bool
+    {
+        let request = NSFetchRequest(entityName: "Audio")
+        request.predicate = NSPredicate(format: "audioKey == %@", audioKey)
+        
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Audio]
+            if(results.count != 0)
+            {
+                return true
+            }
+            else
+            {
+                return false
+            }
+        }
+        catch
+        {
+            return false
         }
     }
     

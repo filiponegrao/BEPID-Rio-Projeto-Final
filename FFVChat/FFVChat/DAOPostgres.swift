@@ -131,7 +131,10 @@ class DAOPostgres : NSObject
                                 
                             case .Audio:
                                 
-                                print("recebeu audio")
+                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Audio))
+                                {
+                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                }
                                 
                             case .Gif:
                                 
@@ -348,6 +351,28 @@ class DAOPostgres : NSObject
                 else
                 {
                     print("Mensagem evnaida com sucesso!")
+                }
+        }
+    }
+    
+    
+    func sendAudioMessage(id: String, username: String, lifeTime: Int, contentKey: String, sentDate: NSDate)
+    {
+        let me = DAOUser.sharedInstance.getUsername()
+        
+        let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(me), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "lifeTime": lifeTime, "type": ContentType.Audio.rawValue, "contentKey": contentKey]
+        
+        Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
+            .responseJSON { response in
+                
+                if(response.result.isFailure)
+                {
+                    //Tratar falha no envio, por enquanto vou excluir
+                    DAOMessages.sharedInstance.deleteMessage(id)
+                }
+                else
+                {
+                    print("Mensagem enviada com sucesso!")
                 }
         }
     }

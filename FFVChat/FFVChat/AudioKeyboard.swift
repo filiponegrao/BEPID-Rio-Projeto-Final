@@ -17,7 +17,7 @@ class AudioKeyboard : UIView
     var closeButton : UIButton!
     
     var recordButton : BubbleButton!
-    
+        
     init(controller: Chat_ViewController)
     {
         self.controller = controller
@@ -52,11 +52,11 @@ class AudioKeyboard : UIView
     
     func startRecord()
     {
-        print("comecou")
+        self.controller.startRecord()
     }
     
     func stopRecord()
     {
-        print("terminou")
+        self.controller.stopRecord()
     }
 }

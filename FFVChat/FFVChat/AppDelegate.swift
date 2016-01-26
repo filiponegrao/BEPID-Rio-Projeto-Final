@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     var tentativasUpload : Int = 0
     
+    var tentativasAudio : Int = 0
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -212,7 +214,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             UIApplication.sharedApplication().applicationIconBadgeNumber += 1
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
             
-//            self.window?.rootViewController
+            if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
+            {
+                let user = notification.valueForKey("sender") as! String
+                let controller = self.window?.rootViewController as! AppNavigationController
+                if(controller.home.chatController != nil)
+                {
+                    let contact = DAOContacts.sharedInstance.getContact(user)
+                    if(contact != nil)
+                    {
+                        controller.home.chatController.contact = contact!
+                        controller.popToRootViewControllerAnimated(false)
+                        controller.pushViewController(controller.home.chatController, animated: false)
+                        self.window?.rootViewController = controller
+                    }
+                }
+                else
+                {
+                    let contact = DAOContacts.sharedInstance.getContact(user)
+                    if(contact != nil)
+                    {
+                        controller.home.chatController = Chat_ViewController(contact: contact!)
+                        controller.popToRootViewControllerAnimated(false)
+                        controller.pushViewController(controller.home.chatController, animated: false)
+                        self.window?.rootViewController = controller
+                    }
+                }
+            }
         }
         
         if(PFUser.currentUser() != nil)
@@ -238,8 +266,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             }
         }
     }
-    
-    
     
     
     // MARK: - Core Data stack
@@ -326,7 +352,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             
             if(!success && self.tentativasUpload < 100)
             {
-                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(2) + self.tentativasUpload) * Double(NSEC_PER_SEC)))
+                self.tentativasUpload++
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1) + self.tentativasUpload) * Double(NSEC_PER_SEC)))
                 dispatch_after(delayTime, dispatch_get_main_queue()) {
                     self.sendImageOnKey(key, image: image, filter: filter)
                 }
@@ -336,6 +363,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             {
                 self.tentativasUpload = 0
                 print("Imagem salva com sucesso!")
+            }
+        }
+    }
+    
+    func sendAudioOnKey(key: String, audio: NSData, filter: AudioFilter)
+    {
+        let file = PFFile(data: audio)
+        
+        let object = PFObject(className: "Audios")
+        object["audioKey"] = key
+        object["audio"] = file
+        object["filter"] = filter.rawValue
+        object.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            
+            if(!success && self.tentativasAudio < 100)
+            {
+                self.tentativasAudio++
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1) + self.tentativasAudio) * Double(NSEC_PER_SEC)))
+                dispatch_after(delayTime, dispatch_get_main_queue()) {
+                    self.sendAudioOnKey(key, audio: audio, filter: filter)
+                }
+                
+            }
+            else
+            {
+                self.tentativasAudio = 0
+                print("Audio salvo com sucesso!")
             }
         }
     }
