@@ -180,6 +180,10 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         else
         {
             print("off")
+            
+            let alert = UIAlertView(title: "Pay attention!", message: "We recommend keeping the notifications turned on", delegate: nil, cancelButtonTitle: "Ok")
+            alert.show()
+
         }
     }
     
