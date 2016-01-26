@@ -658,8 +658,8 @@
 				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
 				F66B29D41BAB6BB400BC43EE /* Settings_ViewController.swift */,
 				F6AC545E1BF9571300CF7918 /* ChangePassword_ViewController.swift */,
-				F6CFDE011C5712A300751E5A /* MessageAlertSettings_ViewController.swift */,
 				F68ABEF41C11D7F2009670A7 /* DeleteProfile_ViewController.swift */,
+				F6CFDE011C5712A300751E5A /* MessageAlertSettings_ViewController.swift */,
 				8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */,
 			);
 			name = Controller;
