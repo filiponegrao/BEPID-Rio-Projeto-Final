@@ -73,7 +73,6 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         self.switchButton.addTarget(self, action: "changeSwitchValue", forControlEvents: UIControlEvents.TouchUpInside)
         self.switchButton.backgroundColor = UIColor.clearColor()
 
-
     }
 
     override func didReceiveMemoryWarning()
@@ -121,7 +120,7 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -216,10 +215,17 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
 //            let acceptAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
 //            alertController.addAction(acceptAction)
             
+//            let viewController = UIViewController()
+//            viewController.view.backgroundColor = oficialDarkGray
+//            
+//            alertController.setValue(viewController, forKey: "contentViewController")
+            
             presentViewController(alertController, animated: true, completion: nil)
 
         }
     }
+    
+    
     
     func back()
     {
