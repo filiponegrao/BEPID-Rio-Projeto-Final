@@ -55,7 +55,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.profileBtn.clipsToBounds = true
         self.profileBtn.addClickEndActions("openChat", target: self)
         self.container.addSubview(self.profileBtn)
-        
+
         self.numberOfMessages = UILabel(frame: CGRectMake(self.frame.size.width-20,-5, self.profileBtn.frame.size.width/3, self.profileBtn.frame.size.width/3))
         self.numberOfMessages.text = "0"
         self.numberOfMessages.textAlignment = .Center
@@ -102,8 +102,6 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         
         paths = UsefulFunctions.randomWalk(withNumberOfSteps: numberOfSteps, withNumberOfPaths: numberOfPaths, xRange: xRange, yRange: yRange)
         
-        self.startAnimation()
-        
     }
     
     // MARK: - Animation Setup
@@ -111,6 +109,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     
     func startAnimation()
     {
+        if(self.duration == nil) { self.loadAnimations(45) }
         UIView.animateKeyframesWithDuration(self.duration, delay: 0.0, options: [.Repeat, .BeginFromCurrentState, .CalculationModeCubicPaced, .AllowUserInteraction], animations:
             {
                 () -> Void in
@@ -131,7 +130,6 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         animate = true
         
     }
-    
     
     func setUnreadMessages(count: Int)
     {

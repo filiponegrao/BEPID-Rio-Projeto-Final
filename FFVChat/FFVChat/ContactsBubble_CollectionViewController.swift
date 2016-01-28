@@ -159,14 +159,13 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
+        
+        cell.gestureRecognizers?.last?.removeTarget(self, action: "handleLongPress:")
         cell.profileBtn.addLongClickAction("handleLongPress:", target: self, time: 1)
-        cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: self.contacts[indexPath.row].profileImage!)!)
+        
+        cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: self.contacts[indexPath.row].thumb!)!)
         let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(self.contacts[indexPath.item])
         cell.setUnreadMessages(cont)
-
-        
-        cell.loadAnimations(45)
-        // Configure the cell
         
         return cell
     }
@@ -176,8 +175,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     {
         
     }
-    
-    
     
     
     func handleLongPress(button: UIButton)

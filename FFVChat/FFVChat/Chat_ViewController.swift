@@ -666,11 +666,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             {
                 cell.backgroundLabel.backgroundColor = UIColor.whiteColor()
                 cell.backgroundLabel.alpha = 0.3
+                cell.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
             }
             else
             {
                 cell.backgroundLabel.backgroundColor = oficialDarkGray
                 cell.backgroundLabel.alpha = 0.6
+                cell.playButton.setImage(UIImage(named: "playButtonGray"), forState: .Normal)
             }
             
             cell.backgroundLabel.layer.shadowColor = UIColor.blackColor().CGColor
@@ -724,7 +726,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     DAOMessages.sharedInstance.deleteMessageAfterTime(message)
                 }
             }
-            self.messageBar.endEditing(true)
             
         case .Text:
             
@@ -754,7 +755,8 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
 
         self.messageBar.endEditing(true)
-        
+        self.messageBar.closeGifGallery()
+        self.messageBar.closeAudioRecorder()
     }
     
     func tableViewScrollToBottom(animated: Bool)
@@ -916,7 +918,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.tableView.contentOffset.y += screenWidth + 20
                 
                 }, completion: { (success: Bool) -> Void in
-                    
             })
         }
     }
@@ -1041,9 +1042,11 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
         }))
         
-        alert.addAction(UIAlertAction(title: "Choose style", style: .Default, handler: { (action: UIAlertAction) -> Void in
-            
-        }))
+        //COMING SOON:
+        
+//        alert.addAction(UIAlertAction(title: "Choose style", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//            
+//        }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
             
@@ -1162,19 +1165,26 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
         catch { print("audioSession error)") }
         
-        if audioRecorder?.recording == false {// && self.audioPlayer?.playing == false {
-
-            let key = self.messages[index].contentKey!
-            let audio = DAOContents.sharedInstance.getAudioFromKey(key)
-            if(audio != nil)
+        if audioRecorder?.recording == false {
+            
+            if(self.audioPlayer?.playing == true)
             {
-                do { audioPlayer = try AVAudioPlayer(data: audio!)
-                    
-                    audioPlayer?.delegate = self
-                    audioPlayer?.play()
-                    DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[index])
+                self.audioPlayer?.stop()
+            }
+            else
+            {
+                let key = self.messages[index].contentKey!
+                let audio = DAOContents.sharedInstance.getAudioFromKey(key)
+                if(audio != nil)
+                {
+                    do { audioPlayer = try AVAudioPlayer(data: audio!)
+                        
+                        audioPlayer?.delegate = self
+                        audioPlayer?.play()
+                        DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[index])
+                    }
+                    catch{ print("erro ao achar aqruivo de som")}
                 }
-                catch{ print("erro ao achar aqruivo de som")}
             }
         }
     }

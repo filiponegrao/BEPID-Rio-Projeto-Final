@@ -20,5 +20,7 @@ extension Contact {
     @NSManaged var trustLevel: NSNumber!
     @NSManaged var username: String!
     @NSManaged var isFavorit: NSNumber!
+    @NSManaged var thumb: NSData!
+
 
 }
