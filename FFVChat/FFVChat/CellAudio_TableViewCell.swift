@@ -23,6 +23,8 @@ class CellAudio_TableViewCell: UITableViewCell {
     var playButton : UIButton!
     
     var index : Int!
+    
+    var slider : UISlider!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)
     {
@@ -52,10 +54,15 @@ class CellAudio_TableViewCell: UITableViewCell {
         self.cellView.addSubview(self.sentDate)
         
         self.playButton = UIButton(frame: self.indicator.frame)
-        self.playButton.setImage(UIImage(named: "send"), forState: .Normal)
+        self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
         self.playButton.hidden = true
         self.playButton.addTarget(self, action: "play", forControlEvents: .TouchUpInside)
         self.addSubview(self.playButton)
+        
+        self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y, self.backgroundLabel.frame.size.width - self.playButton.frame.size.width - margemVertical - 20, self.playButton.frame.size.height))
+        self.slider.setThumbImage(UIImage(named: "indicatorRed"), forState: .Normal)
+        self.slider.minimumTrackTintColor = oficialDarkGray
+        self.addSubview(self.slider)
     }
 
     

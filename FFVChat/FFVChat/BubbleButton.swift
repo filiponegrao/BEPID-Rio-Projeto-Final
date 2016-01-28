@@ -68,6 +68,16 @@ class BubbleButton : UIButton
         
     }
     
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
+            self.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            
+            }) { (success: Bool) -> Void in
+                
+        }
+    }
+    
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         if(self.longActionAble)

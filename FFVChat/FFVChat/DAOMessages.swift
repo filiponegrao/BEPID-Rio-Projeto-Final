@@ -363,6 +363,7 @@ class DAOMessages : NSObject
                 }
                 let index = self.conversationWithContact(contact).indexOf(mssg)
                 
+//                if(mssg.contentKey != nil) { DAOContents.sharedInstance.dele }
                 self.managedObjectContext.deleteObject(mssg)
                 self.save()
                 self.setMessageDeleted(id)
@@ -393,7 +394,7 @@ class DAOMessages : NSObject
      */
     func deleteMessageAfterTime(message: Message)
     {
-        if(message.status != "seen")
+        if(message.status != "seen" && message.sender != DAOUser.sharedInstance.getUsername())
         {
             self.setMessageSeen(message)
             let now = NSDate()
