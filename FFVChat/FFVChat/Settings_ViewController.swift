@@ -15,7 +15,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let section1 = ["Change password", "Delete Profile"]
     
-    let section2 = ["Media settings"]
+    let section2 = ["Chat"]
     
     let section3 = ["Notifications"]
     

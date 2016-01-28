@@ -50,7 +50,8 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         self.view.addSubview(self.backButton)
         
         //TABLEVIEW//
-        self.tableView = UITableView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
+//        self.tableView = UITableView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height))
+        self.tableView = UITableView(frame: CGRectMake(0, self.navBar.frame.size.height, screenWidth, screenHeight - self.navBar.frame.size.height), style: .Grouped)
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = .None
         self.tableView.delegate = self
@@ -117,7 +118,7 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         return view
 
     }
-    
+  
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
