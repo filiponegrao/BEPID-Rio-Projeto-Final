@@ -322,6 +322,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             let deleteProfile = DeleteProfile_ViewController()
             self.navigationController?.pushViewController(deleteProfile, animated: true)
         }
+        else if(indexPath.section == 2 && indexPath.row == 0)
+        {
+            let chatSettings = ChatSettings_ViewController()
+            self.navigationController?.pushViewController(chatSettings, animated: true)
+        }
         else if(indexPath.section == 3 && indexPath.row == 0)
         {
             let messageSettings = MessageAlertSettings_ViewController()
