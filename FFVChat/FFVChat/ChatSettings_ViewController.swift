@@ -50,11 +50,6 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.tittle.textColor = oficialGreen
         self.view.addSubview(self.tittle)
         
-        //BOTAO BACK NAVBAR//
-        self.backButton = UIButton(frame: CGRectMake(0, 20, 45, 45))
-        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
-        self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(self.backButton)
         
         //TABLEVIEW//
         self.tableView = UITableView(frame: CGRectMake(0, self.navBar.frame.size.height - 40, screenWidth, screenHeight - self.navBar.frame.size.height + 40), style: .Grouped)
@@ -66,6 +61,13 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
         
+        
+        //BOTAO BACK NAVBAR//
+        self.backButton = UIButton(frame: CGRectMake(0, 20, 45, 45))
+        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
+        self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(self.backButton)
+
         
         //PICKER VIEW//
         self.pickerView = UIPickerView(frame: CGRectMake(0,screenHeight - (screenHeight/2.5), screenWidth, screenHeight/3.5))
