@@ -70,12 +70,7 @@ class BubbleButton : UIButton
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
-            self.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            
-            }) { (success: Bool) -> Void in
-                
-        }
+        self.expand(nil)
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -86,14 +81,18 @@ class BubbleButton : UIButton
         }
         else
         {
-            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
-                self.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            self.expand(self.runActionEnd)
+        }
+    }
+    
+    func expand(function:(()->())?)
+    {
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
+            self.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            
+            }) { (success: Bool) -> Void in
                 
-                }) { (success: Bool) -> Void in
-                    
-                    self.runActionEnd()
-                    
-            }
+                function?()
         }
     }
     
@@ -155,16 +154,14 @@ class BubbleButton : UIButton
         self.timer?.invalidate()
         self.longActionAble = false
         
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
-            self.transform = CGAffineTransformMakeScale(1.0, 1.0)
-            
-            }) { (success: Bool) -> Void in
-                
-                if(self.selector3 != nil && self.target3 != nil)
-                {
-                    self.target3!.performSelector(self.selector3!, withObject: self)
-                }
-                
+        self.expand(self.runSelectorLong)
+    }
+    
+    func runSelectorLong()
+    {
+        if(self.selector3 != nil && self.target3 != nil)
+        {
+            self.target3!.performSelector(self.selector3!, withObject: self)
         }
     }
     

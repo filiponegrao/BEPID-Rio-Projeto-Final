@@ -100,6 +100,8 @@
 		804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */; };
 		804B3DB21BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */; };
 		804E45BD1C56D9C800753493 /* CellAudio_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45BC1C56D9C800753493 /* CellAudio_TableViewCell.swift */; };
+		804E45BF1C5AC60900753493 /* UserLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45BE1C5AC60900753493 /* UserLayoutSettings.swift */; };
+		804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45C41C5BEA2700753493 /* UIGifView.swift */; };
 		804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */; };
 		804FB40A1C09466B00512425 /* PrintscreenNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4081C09466B00512425 /* PrintscreenNotification.swift */; };
 		804FB40C1C09490100512425 /* DAOPrints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB40B1C09490100512425 /* DAOPrints.swift */; };
@@ -312,6 +314,8 @@
 		804B3DAF1BE729F80021DF4E /* DAOSentMidia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOSentMidia.swift; sourceTree = "<group>"; };
 		804B3DB11BE7BBDD0021DF4E /* CellSentMidia_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSentMidia_CollectionViewCell.swift; sourceTree = "<group>"; };
 		804E45BC1C56D9C800753493 /* CellAudio_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAudio_TableViewCell.swift; sourceTree = "<group>"; };
+		804E45BE1C5AC60900753493 /* UserLayoutSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLayoutSettings.swift; sourceTree = "<group>"; };
+		804E45C41C5BEA2700753493 /* UIGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGifView.swift; sourceTree = "<group>"; };
 		804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrintscreenNotification+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		804FB4081C09466B00512425 /* PrintscreenNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintscreenNotification.swift; sourceTree = "<group>"; };
 		804FB40B1C09490100512425 /* DAOPrints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPrints.swift; sourceTree = "<group>"; };
@@ -464,6 +468,7 @@
 				80FD13AB1C038CF100729402 /* GMColor.swift */,
 				8009D7331C11007300F88C01 /* UIImage+Gif.swift */,
 				80E126A31C125B1300DC0755 /* Optimization.swift */,
+				804E45C41C5BEA2700753493 /* UIGifView.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -602,6 +607,7 @@
 				8017D3831BD46481000CB8F0 /* TheJudger.swift */,
 				80FF18A31BE51EA800C5F35E /* Errors.swift */,
 				80FF18A11BE51D7E00C5F35E /* NotificationController.swift */,
+				804E45BE1C5AC60900753493 /* UserLayoutSettings.swift */,
 				80B8DFBE1C24729D00668E26 /* User */,
 				80B8DFBA1C24722F00668E26 /* PrintScreen */,
 				80B8DFBC1C24727200668E26 /* Contacts */,
@@ -1085,6 +1091,7 @@
 				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
 				F65A4F411C076A790092C403 /* NavigationGallery_View.swift in Sources */,
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
+				804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */,
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
 				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
@@ -1188,6 +1195,7 @@
 				80FEA2201C39EEFA00DAA984 /* MessageBar.swift in Sources */,
 				8036578C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
 				803657871BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
+				804E45BF1C5AC60900753493 /* UserLayoutSettings.swift in Sources */,
 				F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */,
 				803D610B1BF925AD004EF38F /* User.swift in Sources */,
 				8036578A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,

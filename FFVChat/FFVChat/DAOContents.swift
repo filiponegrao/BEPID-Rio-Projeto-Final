@@ -22,7 +22,7 @@ class DAOContents : NSObject
     
     override init()
     {
-        DAOPostgres.sharedInstance.addAllGifs()
+//        DAOPostgres.sharedInstance.addAllGifs()
     }
     
     class var sharedInstance : DAOContents
@@ -144,10 +144,29 @@ class DAOContents : NSObject
      *                                               *
      *************************************************/
     
-    /** Adiciona os gifs */
-    func addGif(name: String, url: String, hashtags: [String], launchedDate: NSDate) -> Bool
+     
+     /**
+      * ATENCAO: FUNCAO ACOPLADA COM PARSE
+      */
+    func downloadGif(name: String)
     {
-        let data = Optimization.stringArrayToData(hashtags)
+        let gif = self.getGifWithName(name)
+        
+        if(gif == nil)
+        {
+            DAOParse.sharedInstance.downloadGif(name)
+        }
+        else
+        {
+            
+        }
+    }
+     
+     
+    /** Adiciona os gifs */
+    func addGif(name: String, data: NSData, hashtags: [String], launchedDate: NSDate) -> Bool
+    {
+        let dataH = Optimization.stringArrayToData(hashtags)
         
         let request = NSFetchRequest(entityName: "Gif")
         request.predicate = NSPredicate(format: "name == %@", name)
@@ -157,15 +176,15 @@ class DAOContents : NSObject
             let result = try self.managedObjectContext.executeFetchRequest(request) as! [Gif]
             if(result.count == 0)
             {
-                Gif.createInManagedObjectContext(self.managedObjectContext, url: url, hashtags: data, name: name, launchedDate: launchedDate)
+                Gif.createInManagedObjectContext(self.managedObjectContext, data: data, hashtags: dataH, name: name, launchedDate: launchedDate)
                 self.save()
                 return true
             }
             else
             {
                 let existent = result.first
-                existent?.url = url
-                existent?.hashtags = data
+                existent?.data = data
+                existent?.hashtags = dataH
                 existent?.launchedDate = launchedDate
                 self.save()
                 
@@ -203,7 +222,7 @@ class DAOContents : NSObject
         }
     }
     
-    func urlFromGifName(name: String) -> String?
+    func getGifWithName(name: String) -> Gif?
     {
         let request = NSFetchRequest(entityName: "Gif")
         request.predicate = NSPredicate(format: "name == %@", name)
@@ -215,7 +234,7 @@ class DAOContents : NSObject
             {
                 let gif = result.first!
                 
-                return gif.url
+                return gif
             }
             else
             {
@@ -230,12 +249,9 @@ class DAOContents : NSObject
     
     func getNewestGifs() -> [Gif]
     {
-        DAOPostgres.sharedInstance.addAllGifs()
-
         var newGifs = [Gif]()
         let calendar = NSCalendar.currentCalendar()
         let pastMonth = calendar.dateByAddingUnit(.Month, value: -1, toDate: NSDate(), options: [])
-
 
         let request = NSFetchRequest(entityName: "Gif")
         do
@@ -260,8 +276,6 @@ class DAOContents : NSObject
     
     func getOldestGifs() -> [Gif]
     {
-        DAOPostgres.sharedInstance.addAllGifs()
-
         var newGifs = [Gif]()
         let calendar = NSCalendar.currentCalendar()
         let pastMonth = calendar.dateByAddingUnit(.Month, value: -1, toDate: NSDate(), options: [])
@@ -286,6 +300,34 @@ class DAOContents : NSObject
         {
             return newGifs
         }
+    }
+    
+    
+    func getAllGifs() -> [Gif]
+    {
+        var newGifs = [Gif]()
+        
+        let request = NSFetchRequest(entityName: "Gif")
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Gif]
+            for result in results
+            {
+                newGifs.append(result)
+            }
+            
+            return newGifs
+            
+        }
+        catch
+        {
+            return newGifs
+        }
+    }
+    
+    func getUrlFromGifName(name: String) -> String
+    {
+        return "http://www.mynechat.com/gifs/\(name).gif"
     }
     
     /*************************************************

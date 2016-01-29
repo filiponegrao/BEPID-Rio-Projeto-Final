@@ -46,7 +46,7 @@ class GifKeyboard: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         self.collectionView.showsVerticalScrollIndicator = false
         self.addSubview(self.collectionView)
         
-        self.gifs = DAOContents.sharedInstance.getNewestGifs()
+        self.gifs = DAOContents.sharedInstance.getAllGifs()
         
         self.closeButton = UIButton(frame: CGRectMake(0,0,45,45))
         self.closeButton.setImage(UIImage(named: "close"), forState: .Normal)
@@ -68,19 +68,11 @@ class GifKeyboard: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         
         cell.subviews.last?.removeFromSuperview()
         
-        let webview = UIWebView(frame: CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height))
-        webview.backgroundColor = oficialMediumGray
-        webview.clipsToBounds = true
-        webview.contentMode = .ScaleAspectFit
-        webview.userInteractionEnabled = false
-        webview.layer.cornerRadius = 8
-        webview.scalesPageToFit = true
+        let gifview = UIGifView(frame: CGRectMake(5, 5, cell.frame.size.width - 10, cell.frame.size.height - 10), gifData: self.gifs[indexPath.item].data)
+        gifview.layer.cornerRadius = 4
+        gifview.clipsToBounds = true
         
-        let request = NSURLRequest(URL: NSURL(string: self.gifs[indexPath.item].url)!)
-        
-        webview.loadRequest(request)
-        
-        cell.addSubview(webview)
+        cell.addSubview(gifview)
         
         return cell
     }

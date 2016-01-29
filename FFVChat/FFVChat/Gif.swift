@@ -11,7 +11,7 @@ import CoreData
 
 extension Gif {
     
-    @NSManaged var url: String!
+    @NSManaged var data: NSData!
     @NSManaged var hashtags: NSData!
     @NSManaged var launchedDate: NSDate!
     @NSManaged var name: String!
@@ -20,12 +20,12 @@ extension Gif {
 
 class Gif: NSManagedObject
 {
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, url: String, hashtags: NSData, name: String, launchedDate: NSDate) -> Gif
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, data: NSData, hashtags: NSData, name: String, launchedDate: NSDate) -> Gif
     {
         let gif = NSEntityDescription.insertNewObjectForEntityForName("Gif", inManagedObjectContext: moc) as! Gif
         
         gif.name = name
-        gif.url = url
+        gif.data = data
         gif.hashtags = hashtags
         gif.launchedDate = launchedDate
         
@@ -33,3 +33,5 @@ class Gif: NSManagedObject
     }
     
 }
+
+
