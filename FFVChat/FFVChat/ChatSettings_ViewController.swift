@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource
+class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate
 {
     var navBar : UIView!
     
@@ -20,12 +20,22 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     let section = ["Lifespan for messages", "Background", "Clean all conversations", "Clean all galleries"]
     
+    var pickerView : UIPickerView!
+    
+    var lifespanField : UITextField!
+    
+    var lifespanValue : NSDate!
+    
+    let minutes = Array(0...9)
+    
+    let seconds = Array(0...59)
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         self.view.backgroundColor = oficialMediumGray
+    
         
         //VIEW NAVBAR//
         self.navBar = UIView(frame: CGRectMake(0, 0, screenWidth, 70))
@@ -48,12 +58,31 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         
         //TABLEVIEW//
         self.tableView = UITableView(frame: CGRectMake(0, self.navBar.frame.size.height - 40, screenWidth, screenHeight - self.navBar.frame.size.height + 40), style: .Grouped)
+        self.tableView.layer.zPosition = -5
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.separatorStyle = .None
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(self.tableView)
+        
+        
+        //PICKER VIEW//
+        self.pickerView = UIPickerView(frame: CGRectMake(0,screenHeight - (screenHeight/2.5), screenWidth, screenHeight/3.5))
+        self.pickerView.delegate = self
+        self.pickerView.dataSource = self
+        self.pickerView.backgroundColor = oficialDarkGray
+        
+        
+        //TEXT FIELD//
+        self.lifespanField = UITextField(frame: CGRectMake(15, 25 + tittle.frame.size.height, screenWidth/3 * 1.7, 30))
+        self.lifespanField.backgroundColor = oficialSemiGray
+        self.lifespanField.tintColor = oficialLightGray
+        self.lifespanField.textColor = oficialLightGray
+        self.lifespanField.borderStyle = .RoundedRect
+        self.lifespanField.delegate = self
+        self.lifespanField.inputView = self.pickerView
+    
 
     }
 
@@ -66,6 +95,19 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLayoutSubviews()
     {
         self.tittle.setSizeFont(22)
+    }
+    
+    //TEXT FIELD
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
+        self.view.endEditing(true)
+        self.lifespanField.resignFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool
+    {
+        return true
     }
     
     //TABLEVIEW PROPERTIES//
@@ -133,10 +175,39 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             cell.addSubview(tittle)
             cell.backgroundColor = UIColor.clearColor()
             separatorLineView.backgroundColor = UIColor.clearColor()
+            
+            let description = UITextView(frame: CGRectMake(10, cell.frame.size.height - screenWidth/6, screenWidth - 20, screenWidth/6))
+            description.text = "Default time where messages will disappear (including audios and gifs)."
+            description.textColor = oficialLightGray
+            description.textAlignment = .Left
+            description.font = UIFont(name: "Helvetica", size: 13)
+            description.alpha = 0.6
+            description.backgroundColor = UIColor.clearColor()
+            description.userInteractionEnabled = false
+            cell.addSubview(description)
+            
+            cell.addSubview(self.lifespanField)
         }
         else if(indexPath.row == 1)
         {
-            cell.textLabel?.text = self.section[indexPath.row]
+            let viewCell = UIView(frame: CGRectMake(0, 0, screenWidth, 50))
+            viewCell.backgroundColor = oficialSemiGray
+            cell.addSubview(viewCell)
+            
+            let backgroundButton = MKButton(frame: CGRectMake(0, 0, screenWidth, 50))
+            backgroundButton.setTitleColor(oficialGreen, forState: .Normal)
+            backgroundButton.addTarget(self, action: "changeBackground", forControlEvents: .TouchUpInside)
+            backgroundButton.rippleLocation = .Center
+            backgroundButton.rippleLayerColor = oficialDarkGray
+            backgroundButton.ripplePercent = 200
+            viewCell.addSubview(backgroundButton)
+            
+            let backgroundLabel = UILabel(frame: CGRectMake(15,10, screenWidth - 15, 30))
+            backgroundLabel.textColor = oficialLightGray
+            backgroundLabel.text = self.section[indexPath.row]
+            backgroundButton.addSubview(backgroundLabel)
+            
+            cell.backgroundColor = UIColor.clearColor()
         }
         else if(indexPath.row == 2)
         {
@@ -153,7 +224,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             tittleButton.ripplePercent = 200
             viewCell.addSubview(tittleButton)
             
-            let tittleLabel = UILabel(frame: CGRectMake(15,10, screenWidth, 30))
+            let tittleLabel = UILabel(frame: CGRectMake(15,10, screenWidth - 15, 30))
             tittleLabel.text = self.section[indexPath.row]
             tittleLabel.textColor = oficialGreen
             tittleButton.addSubview(tittleLabel)
@@ -213,11 +284,114 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
-    //FIM TABLWVIEW PROPERTIES//
+    //FIM TABLEVIEW PROPERTIES//
+    
+    //PICKER VIEW PROPERTIES//
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+    {
+        return 2
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+        if(component == 0)
+        {
+            return minutes.count
+        }
+        else
+        {
+            return seconds.count
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
+        if(component == 0)
+        {
+            return String(minutes[row])
+        }
+        else
+        {
+            return String(seconds[row])
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
+    {
+        let view = UIView(frame: CGRectMake(0,0,pickerView.frame.size.height, 20))
+        view.backgroundColor = UIColor.clearColor()
+        
+        if component == 0
+        {
+            let number = UILabel(frame: view.frame)
+            number.text = "\(self.minutes[row]) Minutes"
+            number.textAlignment = .Center
+            number.textColor = UIColor.whiteColor()
+            view.addSubview(number)
+        }
+        else
+        {
+            let number = UILabel(frame: view.frame)
+            number.text = "\(self.seconds[row]) Seconds"
+            number.textColor = UIColor.whiteColor()
+            number.textAlignment = .Center
+            view.addSubview(number)
+        }
+        
+        return view
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        var min = ""
+        var sec = ""
+        
+        if(component == 0)
+        {
+            min = "\(self.minutes[row])"
+            self.lifespanField.text = min + sec
+        }
+        else
+        {
+            sec = "\(self.seconds[row])"
+            self.lifespanField.text = min + sec
+        }
+        
+        
+    }
+    
+    //FIM PICKER VIEW//
     
     func back()
     {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func changeBackground()
+    {
+        let alertController = UIAlertController(title: "\n\n\n\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+    
+        let margin:CGFloat = 8.0
+        let rect = CGRectMake(margin, margin, alertController.view.bounds.size.width - margin * 4.5, 140.0)
+        let customView = UIView(frame: rect)
+        
+        customView.backgroundColor = oficialGreen
+        alertController.view.addSubview(customView)
+        
+//        let somethingAction = UIAlertAction(title: "Something", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
+//        
+//        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert: UIAlertAction!) in
+            
+        })
+        
+//        alertController.addAction(somethingAction)
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion:{})
+
     }
     
     func cleanConversations()
