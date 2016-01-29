@@ -26,7 +26,9 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     var lifespanValue : NSDate!
     
-    let minutes = Array(0...9)
+    let hours = Array(1...24)
+    
+    let minutes = Array(0...59)
     
     let seconds = Array(0...59)
     
@@ -110,6 +112,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     override func resignFirstResponder() -> Bool
     {
         return true
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField)
+    {
+        
     }
     
     //TABLEVIEW PROPERTIES//
@@ -283,7 +290,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        
+        textFieldDidEndEditing(self.lifespanField)
+        self.lifespanField.resignFirstResponder()
     }
     
     //FIM TABLEVIEW PROPERTIES//
@@ -299,11 +307,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         if(component == 0)
         {
-            return minutes.count
+            return hours.count
         }
         else
         {
-            return seconds.count
+            return minutes.count
         }
     }
     
@@ -311,11 +319,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         if(component == 0)
         {
-            return String(minutes[row])
+            return String(hours[row])
         }
         else
         {
-            return String(seconds[row])
+            return String(minutes[row])
         }
     }
     
@@ -327,7 +335,16 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         if component == 0
         {
             let number = UILabel(frame: view.frame)
-            number.text = "\(self.minutes[row]) Minutes"
+            
+            if(self.hours[row] == 1)
+            {
+                number.text = "\(self.hours[row]) hour"
+            }
+            else
+            {
+                number.text = "\(self.hours[row]) hours"
+            }
+            
             number.textAlignment = .Center
             number.textColor = UIColor.whiteColor()
             view.addSubview(number)
@@ -335,7 +352,20 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         else
         {
             let number = UILabel(frame: view.frame)
-            number.text = "\(self.seconds[row]) Seconds"
+
+            if(self.minutes[row] == 0)
+            {
+                number.text = "0"
+            }
+            else if(self.minutes[row] == 1)
+            {
+                number.text = "\(self.minutes[row]) minute"
+            }
+            else
+            {
+                number.text = "\(self.minutes[row]) minutes"
+            }
+            
             number.textColor = UIColor.whiteColor()
             number.textAlignment = .Center
             view.addSubview(number)
@@ -346,18 +376,43 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
+        var hou = ""
         var min = ""
-        var sec = ""
+        
+        self.lifespanField.text = hou + min
         
         if(component == 0)
         {
-            min = "\(self.minutes[row])"
-            self.lifespanField.text = min + sec
+            if(self.hours[row] == 1)
+            {
+                hou = "\(self.hours[row]) hour"
+                self.lifespanField.text = hou + min
+            }
+            else
+            {
+                hou = "\(self.hours[row]) hours"
+                self.lifespanField.text = hou + min
+            }
+            
         }
         else
         {
-            sec = "\(self.seconds[row])"
-            self.lifespanField.text = min + sec
+            if(self.minutes[row] == 0)
+            {
+                min = ""
+                self.lifespanField.text = hou + min
+            }
+            else if(self.minutes[row] == 1)
+            {
+                min = "\(self.minutes[row]) minute"
+                self.lifespanField.text = hou + min
+            }
+            else
+            {
+                min = "\(self.minutes[row]) minutes"
+                self.lifespanField.text = hou + min
+            }
+            
         }
         
         
@@ -372,6 +427,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func changeBackground()
     {
+        self.lifespanField.resignFirstResponder()
+
         let alertController = UIAlertController(title: "\n\n\n\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
     
         let margin:CGFloat = 8.0
@@ -398,6 +455,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func cleanConversations()
     {
+        self.lifespanField.resignFirstResponder()
+
         let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
         
         
@@ -416,6 +475,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func cleanGalleries()
     {
+        self.lifespanField.resignFirstResponder()
+
         let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
         
         
