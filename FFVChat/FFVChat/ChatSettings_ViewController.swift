@@ -379,6 +379,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         var hou = ""
         var min = ""
         
+        
         self.lifespanField.text = hou + min
         
         if(component == 0)
