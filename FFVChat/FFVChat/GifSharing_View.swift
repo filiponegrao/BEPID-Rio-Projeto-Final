@@ -8,12 +8,13 @@
 
 import Foundation
 import UIKit
+import WebKit
 
 class GifSharing_View : UIView
 {
     var blackScreen : UIView!
     
-    var webView : UIWebView!
+    var webView : WKWebView!
     
     var shareButton : UIButton!
     
@@ -37,7 +38,7 @@ class GifSharing_View : UIView
     {
         self.imageOrigin = imageOrigin
         self.gifName = gifName
-        self.gifUrl = DAOContents.sharedInstance.urlFromGifName(gifName)
+        self.gifUrl = DAOContents.sharedInstance.getUrlFromGifName(gifName)
         
         super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
         
@@ -51,12 +52,10 @@ class GifSharing_View : UIView
         self.blurView.alpha = 0
         self.addSubview(self.blurView)
         
-        self.webView = UIWebView(frame: CGRectMake(10, screenHeight/5, screenWidth - 20, screenWidth - 20))
+        self.webView = WKWebView(frame: CGRectMake(10, screenHeight/5, screenWidth - 20, screenWidth - 20))
         self.webView.layer.cornerRadius = 4
         self.webView.userInteractionEnabled = false
-        self.webView.backgroundColor = UIColor.clearColor()
-        self.webView.scrollView.backgroundColor = UIColor.clearColor()
-        self.webView.scalesPageToFit = true
+        self.webView.scrollView.backgroundColor = oficialDarkGray
         self.webView.scrollView.zoomScale += 0.5
         
         if(self.gifUrl != nil)

@@ -15,10 +15,10 @@
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Gif" representedClassName=".Gif" syncable="YES">
+        <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="hashtags" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="launchedDate" attributeType="Date" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="url" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
     </entity>
     <entity name="Image" representedClassName=".Image" syncable="YES">
         <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
@@ -59,6 +59,13 @@
         <attribute name="trustLevel" attributeType="Integer 32" defaultValueString="100" syncable="YES"/>
         <attribute name="username" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="UserLayoutInfo" representedClassName=".UserLayoutInfo" syncable="YES">
+        <attribute name="chatSounds" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="currentBackground" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currentTheme" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="otherSounds" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="visualEffects" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
     <entity name="Video" representedClassName=".Video" syncable="YES">
         <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="filter" optional="YES" attributeType="String" syncable="YES"/>
@@ -75,5 +82,6 @@
         <element name="SentMidia" positionX="9" positionY="126" width="128" height="120"/>
         <element name="User" positionX="9" positionY="126" width="128" height="150"/>
         <element name="Video" positionX="18" positionY="171" width="128" height="105"/>
+        <element name="UserLayoutInfo" positionX="0" positionY="153" width="128" height="120"/>
     </elements>
 </model>

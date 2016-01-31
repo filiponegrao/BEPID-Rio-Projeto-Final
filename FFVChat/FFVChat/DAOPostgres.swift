@@ -551,8 +551,10 @@ class DAOPostgres : NSObject
     
     
     //Gifs
-    func addAllGifs()
+    func getAllGifsName(callback:(gifs: [String]) -> Void)
     {
+        var gifs = [String]()
+        
         Alamofire.request(.POST, self.gifsUrl_getAll, parameters: nil)
             .responseJSON { response in
                 
@@ -561,15 +563,11 @@ class DAOPostgres : NSObject
                     for result in results as! NSArray
                     {
                         let name = result["name"] as! String
-                        let hashtags = result["hashtags"] as! String
-                        let launcheddate = result["launcheddate"] as! String
-                        let url = result["url"] as! String
-                        
-                        let hash = self.separateStringArray(hashtags)
-                        let date = self.string2nsdateMini(launcheddate)
-                        
-                        DAOContents.sharedInstance.addGif(name, url: url, hashtags: hash, launchedDate: date)
+
+                        gifs.append(name)
                     }
+                    
+                    callback(gifs: gifs)
                 }
         }
         

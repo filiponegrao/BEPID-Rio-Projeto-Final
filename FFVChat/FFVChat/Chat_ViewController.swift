@@ -50,7 +50,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var messageSound: AVAudioPlayer!
     
-    let fundos = ["fundoTeste0","fundoTeste1","fundoTeste2","fundoTeste3","fundoTeste4"]
+    let fundos = UserLayoutSettings.sharedInstance.getBackgroundNames()
     
     var fundosIndex = 0
     
@@ -92,7 +92,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.view.addSubview(containerView)
         
         self.backgorundImage = UIImageView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
-        self.backgorundImage.image = UIImage(named: self.fundos[self.fundosIndex])
+        self.backgorundImage.image = UserLayoutSettings.sharedInstance.getDefaultBackground()
         self.backgorundImage.contentMode = .ScaleAspectFill
         self.backgorundImage.alpha = 0.4
         self.backgorundImage.clipsToBounds = true
@@ -611,10 +611,15 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             cell.sentDate.text = Optimization.getStringDateFromDate(self.messages[indexPath.row].sentDate)
             cell.backgroundColor = UIColor.clearColor()
             
-            let gifname = mssg.contentKey!
-            let url = DAOContents.sharedInstance.urlFromGifName(gifname)
-            let request = NSURLRequest(URL: NSURL(string: url!)!)
-            cell.webView.loadRequest(request)
+            let gif = DAOContents.sharedInstance.getGifWithName(self.messages[indexPath.row].contentKey!)
+            if(gif == nil)
+            {
+                
+            }
+            else
+            {
+                cell.gifView.runGif(gif!.data)
+            }
             
             if(self.messages[indexPath.row].sender == DAOUser.sharedInstance.getUsername())
             {
@@ -647,7 +652,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let cell = tableView.dequeueReusableCellWithIdentifier("CellAudio", forIndexPath: indexPath) as! CellAudio_TableViewCell
             cell.backgroundColor = UIColor.clearColor()
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.index = indexPath.row
+            cell.index = cell
             cell.controller = self
             
             cell.sentDate.text = Optimization.getStringDateFromDate(self.messages[indexPath.row].sentDate)
@@ -1063,7 +1068,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     {
         if(!isViewing)
         {
-            if(self.fundosIndex == 4)
+            if(self.fundosIndex == self.fundos.count-1)
             {
                 self.fundosIndex = 0
             }
@@ -1072,14 +1077,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.fundosIndex++
             }
             
-            let imageName = "fundoTeste\(self.fundosIndex)"
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
                 self.backgorundImage.alpha = 0
                 
                 }, completion: { (success: Bool) -> Void in
                     
-                    self.backgorundImage.image = UIImage(named: imageName)
+                    self.backgorundImage.image = UIImage(named: self.fundos[self.fundosIndex])!
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
                         
                         self.backgorundImage.alpha = 0.4

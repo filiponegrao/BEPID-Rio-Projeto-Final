@@ -16,7 +16,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
     
     var backButton : UIButton!
     
-    var gifs : [Gif]!
+    var gifs : [String]!
     
     var progress : NVActivityIndicatorView!
     
@@ -71,7 +71,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = UIColor.clearColor()
-        self.collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        self.collectionView.registerClass(CellWebGifView.self, forCellWithReuseIdentifier: "Cell")
         self.collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(self.collectionView)
         
@@ -79,21 +79,25 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         self.progress.center = CGPointMake(screenWidth/2, screenHeight/2 - 100)
         self.progress.startAnimation()
         
-        self.gifs = DAOContents.sharedInstance.getNewestGifs()
-        self.collectionView.reloadData()
+        self.collectionView.addSubview(self.progress)
+
+        self.gifs = [String]()
         
-        if(self.gifs.count == 0)
-        {
-            self.collectionView.addSubview(self.progress)
-        }
+        DAOPostgres.sharedInstance.getAllGifsName({ (gifs) -> Void in
+            
+            self.gifs = gifs
+            self.collectionView.reloadData()
+            
+            self.progress.removeFromSuperview()
+
+        })
+        
     }
     
     
     override func viewWillAppear(animated: Bool)
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reload", name: NotificationController.center.gifDownloaded.name, object: nil)
-        self.gifs = DAOContents.sharedInstance.getNewestGifs()
-        self.collectionView.reloadData()
         
     }
     
@@ -128,25 +132,10 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CellWebGifView
         cell.backgroundColor = oficialDarkGray
         cell.clipsToBounds = true
-        
-        cell.subviews.last?.removeFromSuperview()
-        
-        let webview = UIWebView(frame: CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height))
-        webview.backgroundColor = UIColor.blackColor()
-        webview.clipsToBounds = true
-        webview.contentMode = .ScaleAspectFit
-        webview.backgroundColor = UIColor.clearColor()
-        webview.userInteractionEnabled = false
-        webview.scalesPageToFit = true
-        
-        let request = NSURLRequest(URL: NSURL(string: self.gifs[indexPath.item].url)!)
-        
-        webview.loadRequest(request)
-        
-        cell.addSubview(webview)
+        cell.webView.loadRequest(NSURLRequest(URL: NSURL(string: DAOContents.sharedInstance.getUrlFromGifName(self.gifs[indexPath.item]))!))
         
         return cell
     }
@@ -159,7 +148,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
         let gif = self.gifs[indexPath.row]
         
-        let sharing = GifSharing_View(imageOrigin: origin, gifName: gif.name)
+        let sharing = GifSharing_View(imageOrigin: origin, gifName: gif)
         sharing.chatViewController = self.chatViewController
         sharing.gifGalleryController = self
         self.view.addSubview(sharing)

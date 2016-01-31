@@ -832,6 +832,43 @@ class DAOParse
             }
         }
     }
+    
+    
+    func downloadGif(name: String)
+    {
+        if(PFUser.currentUser() != nil)
+        {
+            let query = PFQuery(className: "Gifs")
+            query.whereKey("name", equalTo: name)
+            query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
+                
+                if(object != nil)
+                {
+                    let hashtags = object!["hashtags"] as! [String]
+                    let launchedDate = object!.valueForKey("createdAt") as! NSDate
+                    let gifdata = object!["gif"] as! PFFile
+                    
+                    gifdata.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                        
+                        if(data != nil)
+                        {
+                            DAOContents.sharedInstance.addGif(name, data: data!, hashtags: hashtags, launchedDate: launchedDate)
+                            
+                            NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.gifDownloaded)
+                        }
+                        
+                        }, progressBlock: { (progress: Int32) -> Void in
+                            
+                            print("\(progress) Bytes baixados do gif \(name)")
+                    })
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+    }
 }
 
 

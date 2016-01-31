@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         DAOMessages.sharedInstance.checkForOldMessages()
         BlackList.initBlackList()
         TheJudger.Singleton.inicializandoJudger()
-        DAOPostgres.sharedInstance.addAllGifs()
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         

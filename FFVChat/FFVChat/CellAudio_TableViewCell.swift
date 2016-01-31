@@ -22,7 +22,7 @@ class CellAudio_TableViewCell: UITableViewCell {
     
     var playButton : UIButton!
     
-    var index : Int!
+    weak var index : CellAudio_TableViewCell!
     
     var slider : UISlider!
 
@@ -102,6 +102,6 @@ class CellAudio_TableViewCell: UITableViewCell {
     
     func play()
     {
-        controller.playAudio(self.index)
+        controller.playAudio(self.controller.tableView.indexPathForCell(self.index)!.row)
     }
 }

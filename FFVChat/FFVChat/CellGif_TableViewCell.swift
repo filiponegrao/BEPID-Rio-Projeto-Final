@@ -14,7 +14,7 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
     
     var backgroundLabel : UIView!
     
-    var webView : UIWebView!
+    var gifView : UIGifView!
 
     var sentDate : UILabel!
     
@@ -35,17 +35,15 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
         self.cellView.backgroundColor = UIColor.clearColor()
         self.addSubview(cellView)
         
-        self.webView = UIWebView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
-        self.webView.clipsToBounds = true
-        self.webView.layer.cornerRadius = 10
+        self.gifView = UIGifView(frame: CGRectMake(margemLateral+5, margemVertical+5, cellBackgroundWidth - 10, cellBackgroundWidth - dateTextHeigth*2 - 10))
+        self.gifView.clipsToBounds = true
+        self.gifView.layer.cornerRadius = 10
 //        self.webView.contentMode = .ScaleAspectFill
-        self.webView.layer.zPosition = 5
-        self.webView.userInteractionEnabled = false
-        self.webView.scalesPageToFit = true
-        self.webView.delegate = self
-        self.cellView.addSubview(webView)
+        self.gifView.layer.zPosition = 5
+        self.gifView.userInteractionEnabled = false
+        self.cellView.addSubview(gifView)
         
-        self.bringSubviewToFront(self.webView)
+        self.bringSubviewToFront(self.gifView)
         
         let h = Editor.heightForView("09:00", font: UIFont(name: "Gill Sans", size: 10)!, width: dateTextWidth)
         self.sentDate = UILabel(frame: CGRectMake(cellBackgroundWidth - dateTextWidth + margemLateral - 5, cellBackgroundWidth - dateTextHeigth - margemVertical, dateTextWidth, h))
@@ -58,7 +56,7 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
     }
     
 
-    deinit{ self.webView.delegate = nil }
+//    deinit{ self.webView.delegate = nil }
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,12 +72,6 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
     {
         super.setSelected(selected, animated: animated)
 
-    }
-    
-    func webViewDidFinishLoad(webView: UIWebView)
-    {
-        webView.scalesPageToFit = true
-        webView.scrollView.zoomScale = 2
     }
 
 }

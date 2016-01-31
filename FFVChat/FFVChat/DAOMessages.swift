@@ -363,7 +363,14 @@ class DAOMessages : NSObject
                 }
                 let index = self.conversationWithContact(contact).indexOf(mssg)
                 
-//                if(mssg.contentKey != nil) { DAOContents.sharedInstance.dele }
+                //Deleta um possivel conteudo
+                if(mssg.contentKey != nil)
+                {
+                    DAOContents.sharedInstance.removeAudio(mssg.contentKey!)
+                    DAOContents.sharedInstance.removeImage(mssg.contentKey!)
+                    DAOContents.sharedInstance.removeVideo(mssg.contentKey!)
+                }
+                
                 self.managedObjectContext.deleteObject(mssg)
                 self.save()
                 self.setMessageDeleted(id)
