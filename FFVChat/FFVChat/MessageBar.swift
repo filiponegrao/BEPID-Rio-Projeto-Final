@@ -212,12 +212,12 @@ public class MessageBar : UIView, UITextViewDelegate
         {
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 
-                self.audioKeyboard.frame.size.height = 0
-                self.audioKeyboard.frame.origin.y = screenHeight - 40
+                self.audioKeyboard?.frame.size.height = 0
+                self.audioKeyboard?.frame.origin.y = screenHeight
                 
                 }) { (success: Bool) -> Void in
                     
-                    self.audioKeyboard.removeFromSuperview()
+                    self.audioKeyboard?.removeFromSuperview()
                     self.audioKeyboard = nil
             }
         }

@@ -32,13 +32,13 @@ class GifKeyboard: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: 95, height: 95)
+        layout.itemSize = CGSize(width: 87, height: 87)
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 10 //espaçamento entre uma celula de baixo com a de cima
         layout.scrollDirection = .Horizontal
         layout.headerReferenceSize = CGSizeMake(0, 0)
         
-        self.collectionView = UICollectionView(frame: CGRectMake(10, 10, screenWidth-20, 200) , collectionViewLayout: layout)
+        self.collectionView = UICollectionView(frame: CGRectMake(10, 40, screenWidth-20, 180) , collectionViewLayout: layout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = UIColor.clearColor()
@@ -48,7 +48,7 @@ class GifKeyboard: UIView, UICollectionViewDataSource, UICollectionViewDelegate
         
         self.gifs = DAOContents.sharedInstance.getAllGifs()
         
-        self.closeButton = UIButton(frame: CGRectMake(0,0,45,45))
+        self.closeButton = UIButton(frame: CGRectMake(0,0,40,40))
         self.closeButton.setImage(UIImage(named: "close"), forState: .Normal)
         self.addSubview(self.closeButton)
 

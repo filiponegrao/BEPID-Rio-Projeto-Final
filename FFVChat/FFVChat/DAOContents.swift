@@ -69,7 +69,7 @@ class DAOContents : NSObject
         
         do
         {
-            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Gif]
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Image]
             if(results.count != 0)
             {
                 self.managedObjectContext.deleteObject(results.first!)

@@ -15,7 +15,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let section1 = ["Change password", "Delete Profile"]
     
-    let section2 = ["Media settings"]
+    let section2 = ["Chat"]
     
     let section3 = ["Notifications"]
     
@@ -321,6 +321,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         {
             let deleteProfile = DeleteProfile_ViewController()
             self.navigationController?.pushViewController(deleteProfile, animated: true)
+        }
+        else if(indexPath.section == 2 && indexPath.row == 0)
+        {
+            let chatSettings = ChatSettings_ViewController()
+            self.navigationController?.pushViewController(chatSettings, animated: true)
         }
         else if(indexPath.section == 3 && indexPath.row == 0)
         {
