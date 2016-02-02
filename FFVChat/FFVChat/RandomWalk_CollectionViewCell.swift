@@ -128,7 +128,6 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
             completion: nil)
         
         animate = true
-        
     }
     
     func setUnreadMessages(count: Int)

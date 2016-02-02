@@ -39,6 +39,7 @@ class CellChat_TableViewCell: UITableViewCell
         self.textMessage.textAlignment = .Center
         self.textMessage.lineBreakMode = NSLineBreakMode.ByWordWrapping
         self.textMessage.numberOfLines = 0
+//        self.textMessage.userInteractionEnabled = false
         self.cellView.addSubview(self.textMessage)
         
         let h = Editor.heightForView("09:00", font: UIFont(name: "Gill Sans", size: 10)!, width: dateTextWidth)

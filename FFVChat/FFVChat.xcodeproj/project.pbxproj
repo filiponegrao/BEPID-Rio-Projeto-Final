@@ -102,6 +102,8 @@
 		804E45BD1C56D9C800753493 /* CellAudio_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45BC1C56D9C800753493 /* CellAudio_TableViewCell.swift */; };
 		804E45BF1C5AC60900753493 /* UserLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45BE1C5AC60900753493 /* UserLayoutSettings.swift */; };
 		804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45C41C5BEA2700753493 /* UIGifView.swift */; };
+		804E45C71C5FA1E100753493 /* FNChoiceBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45C61C5FA1E100753493 /* FNChoiceBar.swift */; };
+		804E45CB1C6037FA00753493 /* FilterView_Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804E45CA1C6037FA00753493 /* FilterView_Circle.swift */; };
 		804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */; };
 		804FB40A1C09466B00512425 /* PrintscreenNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4081C09466B00512425 /* PrintscreenNotification.swift */; };
 		804FB40C1C09490100512425 /* DAOPrints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB40B1C09490100512425 /* DAOPrints.swift */; };
@@ -317,6 +319,8 @@
 		804E45BC1C56D9C800753493 /* CellAudio_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellAudio_TableViewCell.swift; sourceTree = "<group>"; };
 		804E45BE1C5AC60900753493 /* UserLayoutSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLayoutSettings.swift; sourceTree = "<group>"; };
 		804E45C41C5BEA2700753493 /* UIGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGifView.swift; sourceTree = "<group>"; };
+		804E45C61C5FA1E100753493 /* FNChoiceBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FNChoiceBar.swift; sourceTree = "<group>"; };
+		804E45CA1C6037FA00753493 /* FilterView_Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView_Circle.swift; sourceTree = "<group>"; };
 		804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PrintscreenNotification+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		804FB4081C09466B00512425 /* PrintscreenNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintscreenNotification.swift; sourceTree = "<group>"; };
 		804FB40B1C09490100512425 /* DAOPrints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPrints.swift; sourceTree = "<group>"; };
@@ -487,10 +491,12 @@
 		8019CB3B1BAD16280017CD7A /* Elementos */ = {
 			isa = PBXGroup;
 			children = (
+				804E45C91C60364E00753493 /* Message Tools */,
+				804E45C81C60364600753493 /* Filters */,
 				80AB6B781C3DFCA100F2EEC4 /* BubbleButton.swift */,
+				804E45C61C5FA1E100753493 /* FNChoiceBar.swift */,
 				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
 				F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */,
-				F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */,
 				F66B29F61BAB704D00BC43EE /* Password_View.swift */,
 				F66B29F41BAB703200BC43EE /* MidiaViewer_View.swift */,
 				F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */,
@@ -508,9 +514,6 @@
 				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
 				80E126A11C1257E100DC0755 /* GifSharing_View.swift */,
 				805172B81C1756A900687770 /* SweetAlert.swift */,
-				80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */,
-				80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */,
-				80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */,
 			);
 			name = Elementos;
 			sourceTree = "<group>";
@@ -732,6 +735,25 @@
 				8036577F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift */,
 			);
 			name = NVActivtyIndicator;
+			sourceTree = "<group>";
+		};
+		804E45C81C60364600753493 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */,
+				804E45CA1C6037FA00753493 /* FilterView_Circle.swift */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		804E45C91C60364E00753493 /* Message Tools */ = {
+			isa = PBXGroup;
+			children = (
+				80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */,
+				80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */,
+				80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */,
+			);
+			name = "Message Tools";
 			sourceTree = "<group>";
 		};
 		809E75AA1BB6312700CEC425 /* Cells */ = {
@@ -1104,6 +1126,7 @@
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
 				804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */,
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
+				804E45CB1C6037FA00753493 /* FilterView_Circle.swift in Sources */,
 				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,
 				801D929B1BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift in Sources */,
 				F66B29F71BAB704D00BC43EE /* Password_View.swift in Sources */,
@@ -1151,6 +1174,7 @@
 				F66B29CE1BAB6B4E00BC43EE /* Import_ViewController.swift in Sources */,
 				803962981BC4707400AFFD24 /* BlurEffect.swift in Sources */,
 				803657901BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
+				804E45C71C5FA1E100753493 /* FNChoiceBar.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
 				803657831BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
 				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,

@@ -117,12 +117,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.view.addSubview(self.searchBar)
         
         self.view.bringSubviewToFront(self.navigationBar)
-    }
-    
-    
-    override func viewWillAppear(animated: Bool)
-    {
-        super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
@@ -131,10 +125,10 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
-
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
         
+        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
     }
+    
     
     
     func reloadCellAnimations()
@@ -151,20 +145,11 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         self.favouritesController.reloadAnimations()
         self.favouritesController.checkUnreadMessages()
+        
         self.contactsController.reloadAnimations()
         self.contactsController.checkUnreadMessages()
     }
     
-    override func viewWillDisappear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self.contactsController, name: NotificationController.center.messageReceived.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self.favouritesController, name: NotificationController.center.messageReceived.name, object: nil)
-        
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
-    }
     
     override func viewDidDisappear(animated: Bool)
     {

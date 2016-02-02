@@ -530,7 +530,7 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             //Se for hyperlink
             if((cell.textMessage.text!.lowercaseString.rangeOfString("http://")) != nil)
             {
-                cell.textMessage.textColor = oficialGreen
+                cell.textMessage.textColor = UIColor.blueColor()
             }
             else
             {
@@ -740,8 +740,16 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 var link = String()
                 if(text.rangeOfString(" ") != nil)
                 {
-                    link = text.sliceFrom("http://", to: " ")!
-                    link = "Http://" + link
+                    let address = text.sliceFrom("http://", to: " ")
+                    
+                    if(address == nil)
+                    {
+                        link = "http://" + text.sliceFrom("http://", to: "")!
+                    }
+                    else
+                    {
+                        link = "http://" + address!
+                    }
                 }
                 else
                 {

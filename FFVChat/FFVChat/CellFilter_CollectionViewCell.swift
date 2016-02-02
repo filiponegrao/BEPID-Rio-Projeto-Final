@@ -22,7 +22,7 @@ class CellFilter_CollectionViewCell: UICollectionViewCell {
         self.title.adjustsFontSizeToFitWidth = true
         self.title.textColor = oficialLightGray
         self.title.textAlignment = .Center
-        self.title.font = UIFont(name: "Gill Sans", size: 12)
+        self.title.font = UIFont(name: "Gill Sans", size: 14)
         self.title.adjustsFontSizeToFitWidth = true
         self.addSubview(self.title)
         
