@@ -32,6 +32,8 @@ class BubbleButton : UIButton
     
     var longActionAble : Bool = false
     
+    var delayOn : Bool = false
+    
     
     init(radius: CGFloat)
     {
@@ -40,6 +42,16 @@ class BubbleButton : UIButton
         self.backgroundColor = UIColor.redColor()
         
         self.layer.cornerRadius = radius/2
+        self.clipsToBounds = true
+    }
+    
+    override init(frame: CGRect)
+    {
+        super.init(frame: frame)
+        
+        self.backgroundColor = UIColor.redColor()
+        
+        self.layer.cornerRadius = frame.size.width/2
         self.clipsToBounds = true
     }
     
@@ -73,16 +85,17 @@ class BubbleButton : UIButton
         self.expand(nil)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
+    {
         
-        if(self.longActionAble)
+        if(self.delayOn)
         {
-            self.runActionLong()
+            self.delayOn = !self.delayOn
+            return
         }
-        else
-        {
-            self.expand(self.runActionEnd)
-        }
+        
+        self.timer?.invalidate()
+        self.expand(self.runActionEnd)
     }
     
     func expand(function:(()->())?)
@@ -93,6 +106,15 @@ class BubbleButton : UIButton
             }) { (success: Bool) -> Void in
                 
                 function?()
+        }
+    }
+    
+    override func setImage(image: UIImage?, forState state: UIControlState)
+    {
+        if(image != nil)
+        {
+            self.backgroundColor = UIColor.clearColor()
+            super.setImage(image, forState: state)
         }
     }
     
@@ -146,16 +168,12 @@ class BubbleButton : UIButton
     
     func turnOnLongAction()
     {
-        self.longActionAble = true
+        self.delayOn = true
+        self.timer?.invalidate()
+        self.expand(nil)
+        self.runSelectorLong()
     }
     
-    func runActionLong()
-    {
-        self.timer?.invalidate()
-        self.longActionAble = false
-        
-        self.expand(self.runSelectorLong)
-    }
     
     func runSelectorLong()
     {

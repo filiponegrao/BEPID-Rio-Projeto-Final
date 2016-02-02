@@ -132,12 +132,6 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         self.initAudioRecorder()
         
-    }
-    
-    //** FUNCOES DE APARICAO DA TELA E DESAPARECIMENTO DA MESMA **//
-    
-    override func viewWillAppear(animated: Bool)
-    {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
@@ -147,14 +141,22 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: "imageLoaded", object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAudioCell:", name: "audioLoaded", object: nil)
-
+        
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
         
+
+        
+    }
+    
+    //** FUNCOES DE APARICAO DA TELA E DESAPARECIMENTO DA MESMA **//
+    
+    override func viewWillAppear(animated: Bool)
+    {
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         self.tableView.reloadData()
-                
+        
     }
     
     override func viewDidAppear(animated: Bool)
@@ -166,14 +168,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     override func viewWillDisappear(animated: Bool)
     {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "imageLoaded", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "audioLoaded", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.messageReceived.name, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageEvaporated", object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "imageLoaded", object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "audioLoaded", object: nil)
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
         
     }
     
@@ -712,14 +714,13 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         case .Image:
             
             let cell = tableView.cellForRowAtIndexPath(indexPath) as! CellImage_TableViewCell
-            let frameOnTable = cell.imageCell.frame
             
-            let frame = self.tableView.convertRect(frameOnTable, toView: self.tableView.superview)
+            let origin = CGRectMake(0, 0, screenWidth/2, screenWidth/2)
             
             let img = DAOContents.sharedInstance.getImageInfoFromKey(message.contentKey!)
             if(img != nil && !self.messageBar.isEditing())
             {
-                self.imageZoom = ImageZoom_View(image: img!, message: message, origin: frame)
+                self.imageZoom = ImageZoom_View(image: img!, message: message, origin: origin)
                 self.imageZoom.chatController = self
                 self.imageZoom.message = self.messages[indexPath.row]
                 self.isViewing = true

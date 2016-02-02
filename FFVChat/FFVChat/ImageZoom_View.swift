@@ -132,6 +132,7 @@ class ImageZoom_View: UIView {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
             self.alpha = 1
+            self.frame = CGRectMake(0, 0, screenWidth, screenHeight)
             
             }) { (success: Bool) -> Void in
         }
@@ -145,8 +146,7 @@ class ImageZoom_View: UIView {
             
             }) { (success: Bool) -> Void in
                 self.chatController.isViewing = false
-                self.sparkTimer?.invalidate()
-                self.warningTimer?.invalidate()
+                
                 self.removeFromSuperview()
         }
     }

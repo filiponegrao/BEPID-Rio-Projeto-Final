@@ -53,7 +53,7 @@ class NavigationContact_View: UIView
 //        self.searchButton.layer.addAnimation(pulseAnimation, forKey: nil)
 
         
-        self.toolsButton = UIButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
+        self.toolsButton = BubbleButton(frame: CGRectMake(screenWidth - 64, 20, 50 , 50))
         self.toolsButton.setImage(UIImage(named: "icon_tools"), forState: .Normal)
         self.toolsButton.addTarget(self, action: "openTools", forControlEvents: .TouchUpInside)
      
