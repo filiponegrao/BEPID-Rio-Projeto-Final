@@ -164,9 +164,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     {
         let cell : MKTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MKTableViewCell
         cell.rippleLocation = .Center
+        cell.backgroundLayerColor = oficialDarkGray
     
         cell.backgroundColor = oficialSemiGray
-//        cell.selectionStyle = .Default
+        cell.selectionStyle = .None
         
         let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 4))
         separatorLineView.backgroundColor = oficialMediumGray
@@ -256,6 +257,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 
                 cell.textLabel?.text = self.section1[indexPath.row]
+                cell.textLabel?.backgroundColor = UIColor.clearColor()
                 cell.textLabel?.textColor = oficialLightGray
             }
             else if(indexPath.row == 1)
@@ -265,6 +267,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.addSubview(nextButton)
 
                 cell.textLabel?.text = self.section1[indexPath.row]
+                cell.textLabel?.backgroundColor = UIColor.clearColor()
                 cell.textLabel?.textColor = oficialLightGray
             }
         }
@@ -277,6 +280,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             
             cell.textLabel?.text = self.section2[indexPath.row]
+            cell.textLabel?.backgroundColor = UIColor.clearColor()
             cell.textLabel?.textColor = oficialLightGray
         }
         
@@ -287,6 +291,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.addSubview(nextButton)
             
             cell.textLabel?.text = self.section3[indexPath.row]
+            cell.textLabel?.backgroundColor = UIColor.clearColor()
             cell.textLabel?.textColor = oficialLightGray
         }
         
@@ -297,6 +302,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.addSubview(nextButton)
             
             cell.textLabel?.text = self.section4[indexPath.row]
+            cell.textLabel?.backgroundColor = UIColor.clearColor()
             cell.textLabel?.textColor = oficialLightGray
         }
         

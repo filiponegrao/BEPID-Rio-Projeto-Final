@@ -91,13 +91,14 @@ class Chat_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.containerView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(containerView)
         
-        self.backgorundImage = UIImageView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
+        self.backgorundImage = UIImageView(frame: CGRectMake(-20, -20, screenWidth+40, tableViewHeigth+40))
         self.backgorundImage.image = UserLayoutSettings.sharedInstance.getDefaultBackground()
         self.backgorundImage.contentMode = .ScaleAspectFill
         self.backgorundImage.alpha = 0.4
         self.backgorundImage.clipsToBounds = true
         self.containerView.addSubview(self.backgorundImage)
         
+        Optimization.addParallaxToView(self.backgorundImage)
         
         self.tableView = UITableView(frame: CGRectMake(0, 0, screenWidth, tableViewHeigth))
         self.tableView.registerClass(CellChat_TableViewCell.self, forCellReuseIdentifier: "Cell")

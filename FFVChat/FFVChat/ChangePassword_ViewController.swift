@@ -207,7 +207,10 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
-        
+        self.newPassword.endEditing(true)
+        self.newPasswordAgain.endEditing(true)
+        self.currentPassword.endEditing(true)
+
     }
 
     //FIM TABLEVIEW PROPERTIES

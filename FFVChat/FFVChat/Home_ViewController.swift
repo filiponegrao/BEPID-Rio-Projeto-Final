@@ -34,16 +34,18 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     let searchBarHeight : CGFloat = 40
     
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialDarkGray
         
-        self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.background = UIImageView(frame: CGRectMake(-10, 10, screenWidth+20, screenHeight+20))
         self.background.image = UIImage(named: "ContactBackground")
-        self.background.alpha =  0.60
+        self.background.alpha = 0.60
         self.view.addSubview(self.background)
+        Optimization.addParallaxToView(self.background)
         
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
@@ -59,6 +61,8 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.contactsController = ContactsBubble_CollectionViewController(collectionViewLayout: flowContacts, size: CGSize(width: screenWidth, height: self.contentSize.height))
         self.contactsController.home = self
         self.contactsController.title = "All Contacts"
+
+        Optimization.addInverseParallaxToView(self.contactsController.collectionView!)
         
         let tap = UITapGestureRecognizer(target: self, action: "closeSearch")
         self.contactsController.collectionView?.addGestureRecognizer(tap)
@@ -148,12 +152,14 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         self.contactsController.reloadAnimations()
         self.contactsController.checkUnreadMessages()
+        
     }
     
     
     override func viewDidDisappear(animated: Bool)
     {
         DAOPostgres.sharedInstance.stopObserve()
+        
     }
     
     
@@ -270,6 +276,9 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     {
 //        self.closeSearch()
     }
+    
+    
+    
 
 }
 

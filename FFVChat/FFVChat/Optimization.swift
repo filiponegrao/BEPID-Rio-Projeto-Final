@@ -94,6 +94,40 @@ class Optimization
             return nil
         }
     }
+    
+    class func addParallaxToView(vw: UIView)
+    {
+        let amount = 20
+        
+        let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+        horizontal.minimumRelativeValue = -amount
+        horizontal.maximumRelativeValue = amount
+        
+        let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
+        vertical.minimumRelativeValue = -amount
+        vertical.maximumRelativeValue = amount
+        
+        let group = UIMotionEffectGroup()
+        group.motionEffects = [horizontal, vertical]
+        vw.addMotionEffect(group)
+    }
+    
+    class func addInverseParallaxToView(vw: UIView)
+    {
+        let amount = 20
+        
+        let horizontal = UIInterpolatingMotionEffect(keyPath: "center.x", type: .TiltAlongHorizontalAxis)
+        horizontal.minimumRelativeValue = amount
+        horizontal.maximumRelativeValue = -amount
+        
+        let vertical = UIInterpolatingMotionEffect(keyPath: "center.y", type: .TiltAlongVerticalAxis)
+        vertical.minimumRelativeValue = amount
+        vertical.maximumRelativeValue = -amount
+        
+        let group = UIMotionEffectGroup()
+        group.motionEffects = [horizontal, vertical]
+        vw.addMotionEffect(group)
+    }
 }
 
 
