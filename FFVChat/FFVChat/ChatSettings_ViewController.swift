@@ -77,6 +77,22 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.pickerView.dataSource = self
         self.pickerView.backgroundColor = oficialDarkGray
         
+        //tool bar e botoes para pickerview//
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.BlackOpaque
+        toolBar.translucent = true
+        toolBar.backgroundColor = oficialSemiGray
+        toolBar.tintColor = oficialGreen
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelPicker")
+        
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.userInteractionEnabled = true
+        
+        
         
         //TEXT FIELD//
         self.lifespanField = UITextField(frame: CGRectMake(15, 25 + tittle.frame.size.height, screenWidth/3 * 1.7, 30))
@@ -86,6 +102,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.borderStyle = .RoundedRect
         self.lifespanField.delegate = self
         self.lifespanField.inputView = self.pickerView
+        self.lifespanField.inputAccessoryView = toolBar
     
 
     }
@@ -424,6 +441,16 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     func back()
     {
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func donePicker()
+    {
+        
+    }
+    
+    func cancelPicker()
+    {
+        
     }
     
     func changeBackground()

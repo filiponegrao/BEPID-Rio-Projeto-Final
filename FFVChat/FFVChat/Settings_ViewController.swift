@@ -163,8 +163,8 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell : MKTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MKTableViewCell
-        cell.rippleLocation = .Center
-        cell.backgroundLayerColor = oficialDarkGray
+//        cell.rippleLocation = .Center
+//        cell.backgroundLayerColor = oficialDarkGray
     
         cell.backgroundColor = oficialSemiGray
         cell.selectionStyle = .None
@@ -179,7 +179,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
             let usernameLabel : UILabel!
             let trustLabel : UILabel!
-            
+
             
             // image view que mostra a foto do usuário
             self.profilePicView = UIImageView(frame: CGRectMake(0, 0, screenWidth/2.5, screenWidth/2.5)) // onde tá a foto de perfil
@@ -249,6 +249,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             
         else if(indexPath.section == 1)
         {
+            cell.rippleLocation = .Center
+            cell.backgroundLayerColor = oficialDarkGray
+            
             if(indexPath.row == 0)
             {
                 let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
@@ -274,6 +277,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         else if(indexPath.section == 2)
         {
+            cell.rippleLocation = .Center
+            cell.backgroundLayerColor = oficialDarkGray
+            
             let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
             nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
             cell.addSubview(nextButton)
@@ -286,6 +292,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         else if(indexPath.section == 3)
         {
+            cell.rippleLocation = .Center
+            cell.backgroundLayerColor = oficialDarkGray
+            
             let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
             nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
             cell.addSubview(nextButton)
@@ -297,6 +306,9 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         else if(indexPath.section == 4)
         {
+            cell.rippleLocation = .Center
+            cell.backgroundLayerColor = oficialDarkGray
+
             let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
             nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
             cell.addSubview(nextButton)
