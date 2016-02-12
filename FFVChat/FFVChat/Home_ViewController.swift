@@ -34,16 +34,18 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     let searchBarHeight : CGFloat = 40
     
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         self.view.backgroundColor = oficialDarkGray
         
-        self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.background = UIImageView(frame: CGRectMake(-10, 10, screenWidth+20, screenHeight+20))
         self.background.image = UIImage(named: "ContactBackground")
-        self.background.alpha =  0.60
+        self.background.alpha = 0.60
         self.view.addSubview(self.background)
+        Optimization.addParallaxToView(self.background)
         
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
@@ -59,6 +61,8 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.contactsController = ContactsBubble_CollectionViewController(collectionViewLayout: flowContacts, size: CGSize(width: screenWidth, height: self.contentSize.height))
         self.contactsController.home = self
         self.contactsController.title = "All Contacts"
+
+        Optimization.addInverseParallaxToView(self.contactsController.collectionView!)
         
         let tap = UITapGestureRecognizer(target: self, action: "closeSearch")
         self.contactsController.collectionView?.addGestureRecognizer(tap)
@@ -117,12 +121,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.view.addSubview(self.searchBar)
         
         self.view.bringSubviewToFront(self.navigationBar)
-    }
-    
-    
-    override func viewWillAppear(animated: Bool)
-    {
-        super.viewWillAppear(animated)
         
         NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
@@ -131,10 +129,10 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
-
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
         
+        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
     }
+    
     
     
     func reloadCellAnimations()
@@ -151,24 +149,17 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         self.favouritesController.reloadAnimations()
         self.favouritesController.checkUnreadMessages()
+        
         self.contactsController.reloadAnimations()
         self.contactsController.checkUnreadMessages()
+        
     }
     
-    override func viewWillDisappear(animated: Bool)
-    {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.friendAdded.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self.contactsController, name: NotificationController.center.messageReceived.name, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self.favouritesController, name: NotificationController.center.messageReceived.name, object: nil)
-        
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: NotificationController.center.printScreenReceived.name, object: nil)
-    }
     
     override func viewDidDisappear(animated: Bool)
     {
         DAOPostgres.sharedInstance.stopObserve()
+        
     }
     
     
@@ -285,6 +276,9 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     {
 //        self.closeSearch()
     }
+    
+    
+    
 
 }
 

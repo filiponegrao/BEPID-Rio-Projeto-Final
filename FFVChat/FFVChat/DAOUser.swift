@@ -738,9 +738,12 @@ class DAOUser
     func changePassword(password: String)
     {
         PFUser.currentUser()?.setValue(password, forKey: "password")
+        
         PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
             if(success)
             {
+                self.user.password = password
+                self.save()
                 NSNotificationCenter.defaultCenter().postNotificationName("passwordChanged", object: nil)
             }
             else
