@@ -564,7 +564,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         self.lifespanField.resignFirstResponder()
 
-        let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Clean all conversations", message: "Are you sure? You cannot undo this action. It clears immediately all current conversations (even if the messages' lifespan has not finished yet).", preferredStyle: UIAlertControllerStyle.Alert)
         
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (UIAlertAction) -> Void in
@@ -584,7 +584,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         self.lifespanField.resignFirstResponder()
 
-        let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Clean all galleries", message: "Are you sure? You cannot undo this action. It clears all chat galleries by removing all medias you’ve sent for any contact.", preferredStyle: UIAlertControllerStyle.Alert)
         
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (UIAlertAction) -> Void in
