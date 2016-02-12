@@ -123,6 +123,9 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             case "Gif":
                 return CGSizeMake(screenWidth, FTNContentTypes.checkHeightForImageView())
             
+            case "Audio":
+                return CGSizeMake(screenWidth, FTNContentTypes.checkHeightForAudioView())
+            
         default:
             return CGSizeMake(screenWidth, 80)
         }
@@ -148,6 +151,10 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             {
                 DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
             }
+        }
+        else if(message.type == ContentType.Image.rawValue)
+        {
+            
         }
         
         return cell

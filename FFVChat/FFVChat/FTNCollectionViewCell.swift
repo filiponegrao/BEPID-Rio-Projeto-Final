@@ -118,11 +118,22 @@ class FTNCollectionViewCell: UICollectionViewCell
             
         case "Image":
             
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "imageLoaded", name: FTNChatNotifications.imageLoaded(message.id), object: nil)
+            
             let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
             self.chatimageview = FTNContentTypes.createImageViewForMessageCell(image, cellsize: self.frame.size, mine: mine)
             self.labelStatus.frame.origin.y = self.frame.size.height - 10
             self.labelDate.frame.origin.y = frame.size.height - 30
             self.addSubview(self.chatimageview!)
+            
+        case "Gif":
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "gifLoaded", name: FTNChatNotifications.gifLoaded(message.id), object: nil)
+
+            self.chatgifview = FTNContentTypes.createGifViewForMessageCell(message.contentKey!, cellsize: self.frame.size, mine: mine)
+            self.labelStatus.frame.origin.y = self.frame.size.height - 10
+            self.labelDate.frame.origin.y = frame.size.height - 30
+            self.addSubview(self.chatgifview!)
             
         default:
             print("erro")

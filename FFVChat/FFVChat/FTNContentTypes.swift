@@ -105,6 +105,7 @@ class ChatImageView : UIView
         if(image == nil)
         {
             self.addSubview(self.loading)
+            DAOContents.sharedInstance
         }
         else
         {
@@ -177,7 +178,52 @@ class ChatGifView : UIView
 
 class ChatAudioView : UIView
 {
+    var view : UIView!
     
+    var playButton : UIButton!
+    
+    var slider : UISlider!
+    
+    var loading : NVActivityIndicatorView!
+    
+    init(frame: CGRect, audiokey: String, mine: Bool) {
+        
+        super.init(frame: frame)
+        
+        self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, frame.height - margemCellView*2 - heightForStatus))
+        view.layer.cornerRadius = 3
+        
+        if(mine)
+        {
+            view.backgroundColor = mineMessagesColor
+            view.alpha = mineMessagesAlpha
+        }
+        else
+        {
+            view.backgroundColor = otherMessagesColor
+            view.alpha = otherMessagesAlpha
+        }
+        
+        self.loading = NVActivityIndicatorView(frame: CGRectMake(margemCellLateral + 10, margemCellView + 10, collectionCellHeight - 20 , collectionCellHeight - 20), type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen)
+        self.loading.startAnimation()
+        
+        self.playButton = UIButton(frame: self.loading.frame)
+        self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
+        self.playButton.hidden = true
+        self.playButton.addTarget(self, action: "play", forControlEvents: .TouchUpInside)
+        
+        self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y, self.view.frame.size.width - self.playButton.frame.size.width - margemCellView - 20, self.playButton.frame.size.height))
+        self.slider.setThumbImage(UIImage(named: "indicatorRed"), forState: .Normal)
+        self.slider.minimumTrackTintColor = oficialDarkGray
+        
+        self.addSubview(self.view)
+        self.addSubview(self.loading)
+        self.addSubview(self.playButton)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 class FTNContentTypes
@@ -196,6 +242,19 @@ class FTNContentTypes
         return imageView
     }
 
+    class func createGifViewForMessageCell(gifname: String, cellsize: CGSize, mine: Bool) -> ChatGifView
+    {
+        let gifview = ChatGifView(frame: CGRectMake(0, 0, cellsize.width, cellsize.height), mine: mine, gifname: gifname)
+        
+        return gifview
+    }
+    
+    class func createAudioViewForMessageCell(audioKey: String, cellsize: CGSize, mine: Bool) -> ChatAudioView
+    {
+        let audioview = ChatAudioView(frame: CGRectMake(0, 0, cellsize.width, cellsize.height), audiokey: audioKey, mine: mine)
+        
+        return audioview
+    }
     
     //Auxiliares
     class func checkHeightForText(text: String, font: UIFont, width: CGFloat) -> CGFloat
@@ -217,6 +276,11 @@ class FTNContentTypes
     class func checkHeightForImageView() -> CGFloat
     {
         return screenWidth - margemCellLateral*2 + heightForStatus
+    }
+    
+    class func checkHeightForAudioView() -> CGFloat
+    {
+        return collectionCellHeight + margemCellView*2 + heightForStatus
     }
     
 }

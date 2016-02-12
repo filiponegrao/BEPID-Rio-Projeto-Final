@@ -307,6 +307,15 @@ class DAOMessages : NSObject
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: sender, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: type, contentKey: contentKey, text: nil, status: messageStatus.Received.rawValue)
         
+        if(type == ContentType.Image)
+        {
+            DAOParse.sharedInstance.downloadImageForMessage(contentKey, id: id)
+        }
+        else if(type == ContentType.Gif)
+        {
+            DAOParse.sharedInstance.downloadGif(contentKey)
+        }
+        
         self.save()
         self.lastMessage = message
         
