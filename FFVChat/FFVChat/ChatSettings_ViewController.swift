@@ -128,7 +128,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.min = 0
     
         //pegar info bd
-        self.lifespanValue = 80
+        self.lifespanValue = 60
         
         let savedHour = self.lifespanValue / 60
         let savedMinutes = self.lifespanValue % 60
