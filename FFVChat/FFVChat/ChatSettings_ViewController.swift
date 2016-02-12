@@ -30,6 +30,10 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     let minutes = Array(0...59)
     
+    var hou : String!
+    
+    var min : String!
+    
     let seconds = Array(0...59)
     
     override func viewDidLoad()
@@ -82,8 +86,17 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         toolBar.barStyle = UIBarStyle.BlackOpaque
         toolBar.translucent = true
         toolBar.backgroundColor = oficialSemiGray
+        toolBar.layer.borderColor = UIColor.clearColor().CGColor
+        toolBar.layer.borderWidth = 0
+        toolBar.clipsToBounds = true
         toolBar.tintColor = oficialGreen
         toolBar.sizeToFit()
+        
+        let subView = toolBar.subviews.last
+        if((subView?.isKindOfClass(UIImageView)) != nil)
+        {
+            subView?.hidden = true
+        }
         
         let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
@@ -92,6 +105,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
+        //
         
         
         //TEXT FIELD//
@@ -393,42 +407,41 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        var hou = ""
-        var min = ""
-        
-        
-        self.lifespanField.text = hou + min
-        
+        self.hou = "x hours "
+        self.min = " x minutes"
+
         if(component == 0)
         {
+
             if(self.hours[row] == 1)
             {
-                hou = "\(self.hours[row]) hour"
-                self.lifespanField.text = hou + min
+                self.hou = "\(self.hours[row]) hour"
+                self.lifespanField.text = self.hou + self.min
             }
             else
             {
-                hou = "\(self.hours[row]) hours"
-                self.lifespanField.text = hou + min
+                self.hou = "\(self.hours[row]) hours"
+                self.lifespanField.text = self.hou + self.min
             }
             
         }
         else
         {
+            
             if(self.minutes[row] == 0)
             {
-                min = ""
-                self.lifespanField.text = hou + min
+                self.min = ""
+                self.lifespanField.text = self.hou + self.min
             }
             else if(self.minutes[row] == 1)
             {
-                min = "\(self.minutes[row]) minute"
-                self.lifespanField.text = hou + min
+                self.min = "\(self.minutes[row]) minute"
+                self.lifespanField.text = self.hou + self.min
             }
             else
             {
                 min = "\(self.minutes[row]) minutes"
-                self.lifespanField.text = hou + min
+                self.lifespanField.text = self.hou + self.min
             }
             
         }
