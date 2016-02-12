@@ -61,7 +61,7 @@
     </entity>
     <entity name="UserLayoutInfo" representedClassName=".UserLayoutInfo" syncable="YES">
         <attribute name="chatSounds" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="currentBackground" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="currentBackground" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="currentTheme" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="otherSounds" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="visualEffects" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -81,7 +81,7 @@
         <element name="PrintscreenNotification" positionX="9" positionY="135" width="128" height="105"/>
         <element name="SentMidia" positionX="9" positionY="126" width="128" height="120"/>
         <element name="User" positionX="9" positionY="126" width="128" height="150"/>
-        <element name="Video" positionX="18" positionY="171" width="128" height="105"/>
         <element name="UserLayoutInfo" positionX="0" positionY="153" width="128" height="120"/>
+        <element name="Video" positionX="18" positionY="171" width="128" height="105"/>
     </elements>
 </model>

@@ -12,7 +12,7 @@ import CoreData
 
 extension UserLayoutInfo
 {
-    @NSManaged var currentBackground: String?
+    @NSManaged var currentBackground: NSData?
     @NSManaged var currentTheme: String?
     @NSManaged var chatSounds: NSNumber?
     @NSManaged var otherSounds: NSNumber?
@@ -28,7 +28,7 @@ class UserLayoutInfo: NSManagedObject {
         
         info.chatSounds = true
         info.otherSounds = true
-        info.currentBackground = "blueSky"
+        info.currentBackground = UIImage(named: "bluSky")?.highestQualityJPEGNSData
         info.currentTheme = "Default"
         info.visualEffects = true
         
@@ -91,7 +91,7 @@ class UserLayoutSettings : NSObject
     {
         if(self.settings != nil)
         {
-            return UIImage(named: self.settings!.currentBackground!)!
+            return UIImage(data: self.settings!.currentBackground!)!
         }
         else
         {
