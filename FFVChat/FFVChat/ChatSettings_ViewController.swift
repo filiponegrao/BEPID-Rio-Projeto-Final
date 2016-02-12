@@ -26,6 +26,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     var lifespanValue : Int!
     
+    var lifespanText : String!
+    
     let hours = Array(1...24)
     
     let minutes = Array(0...59)
@@ -81,7 +83,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.pickerView.dataSource = self
         self.pickerView.backgroundColor = oficialDarkGray
         
-        //tool bar e botoes para pickerview//
+        //TOOLBAR E BOTOES PICKERVIEW//
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.BlackOpaque
         toolBar.translucent = true
@@ -124,6 +126,41 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         //valores picker view//
         self.hou = 1
         self.min = 0
+    
+        //pegar info bd
+        self.lifespanValue = 60
+        
+        let savedHour = self.lifespanValue / 60
+        let savedMinutes = self.lifespanValue % 60
+        
+        if(savedHour == 1)
+        {
+            if(savedMinutes != 0)
+            {
+                self.lifespanText = "\(savedHour) hour" + " \(savedMinutes) min"
+            }
+            else
+            {
+                self.lifespanText = "\(savedHour) hour"
+            }
+        }
+        else
+        {
+            if(savedMinutes != 0)
+            {
+                self.lifespanText = "\(savedHour) hours" + " \(savedMinutes) min"
+            }
+            else
+            {
+                self.lifespanText = "\(savedHour) hours"
+            }
+        }
+        
+        self.lifespanField.text = self.lifespanText
+        
+        self.pickerView.selectRow(savedHour - 1, inComponent: 0, animated: true)
+        self.pickerView.selectRow(savedMinutes, inComponent: 1, animated: true)
+
     }
     
 
@@ -364,6 +401,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    
+    
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
     {
         let view = UIView(frame: CGRectMake(0,0,pickerView.frame.size.height, 20))
@@ -413,6 +452,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
+        
         if(component == 0)
         {
             self.hou = self.hours[row]
@@ -421,22 +461,22 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             {
                 if(self.min == 0)
                 {
-                    self.lifespanField.text = "\(self.hou) hour"
+                    self.lifespanText = "\(self.hou) hour"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hour" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hour" + " \(self.min) min"
                 }
             }
             else
             {
                 if(self.min == 0)
                 {
-                    self.lifespanField.text = "\(self.hou) hours"
+                    self.lifespanText = "\(self.hou) hours"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hours" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hours" + " \(self.min) min"
                 }
             }
             
@@ -450,11 +490,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 if(self.hou == 1)
                 {
-                    self.lifespanField.text = "\(self.hou) hour"
+                    self.lifespanText = "\(self.hou) hour"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hours"
+                    self.lifespanText = "\(self.hou) hours"
                 }
             }
             else
@@ -463,16 +503,15 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
 
                 if(self.hou == 1)
                 {
-                    self.lifespanField.text = "\(self.hou) hour" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hour" + " \(self.min) min"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hours" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hours" + " \(self.min) min"
                 }
             }
         }
         
-        self.lifespanValue = (self.hou * 60) + self.min
     }
     
     //FIM PICKER VIEW//
@@ -484,11 +523,20 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func donePicker()
     {
+        //passar info bd
+        self.lifespanValue = (self.hou * 60) + self.min
+//        print(self.lifespanValue)
         
+        self.lifespanField.text = self.lifespanText
+        self.lifespanField.resignFirstResponder()
     }
     
     func cancelPicker()
     {
+        self.lifespanField.resignFirstResponder()
+        
+        self.pickerView.selectRow(self.lifespanValue / 60 - 1, inComponent: 0, animated: true)
+        self.pickerView.selectRow(self.lifespanValue % 60, inComponent: 1, animated: true)
         
     }
     
@@ -524,7 +572,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         self.lifespanField.resignFirstResponder()
 
-        let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Clean all conversations", message: "Are you sure? You cannot undo this action. It clears immediately all current conversations (even if the messages' lifespan has not finished yet).", preferredStyle: UIAlertControllerStyle.Alert)
         
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (UIAlertAction) -> Void in
@@ -544,7 +592,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         self.lifespanField.resignFirstResponder()
 
-        let alert = UIAlertController(title: "Are you sure?", message: "You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Clean all galleries", message: "Are you sure? You cannot undo this action. It clears all chat galleries by removing all medias you’ve sent for any contact.", preferredStyle: UIAlertControllerStyle.Alert)
         
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (UIAlertAction) -> Void in
