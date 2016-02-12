@@ -84,7 +84,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: FTNChatNotifications.imageLoaded(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAudioCell:", name: FTNChatNotifications.audioLoaded(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadGifCell:", name: FTNChatNotifications.gifLoaded(), object: nil)
         
@@ -363,7 +362,8 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
     }
     
-    func FTNChatSendMessageText(chat: FTNChatController, message: String) {
+    func FTNChatSendMessageText(chat: FTNChatController, message: String)
+    {
         self.sendMessage(message)
     }
 

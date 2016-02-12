@@ -18,7 +18,7 @@ import UIKit
     func FTNChatSendMessageAudio(chat: FTNChatController, audio: NSData)
 }
 
-class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, FTNMessageBarDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate
+class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, FTNMessageBarDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     var background : UIImageView!
     
@@ -117,6 +117,12 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         case "Text":
             return CGSizeMake(screenWidth, FTNContentTypes.checkHeigthForView(self.messages[indexPath.item].text!, font: defaultFont, width: screenWidth))
             
+        case "Image":
+            return CGSizeMake(screenWidth, FTNContentTypes.checkHeightForImageView())
+            
+            case "Gif":
+                return CGSizeMake(screenWidth, FTNContentTypes.checkHeightForImageView())
+            
         default:
             return CGSizeMake(screenWidth, 80)
         }
@@ -197,6 +203,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         if(option == 0 || option == 1)
         {
             self.imagePicker = UIImagePickerController()
+            self.imagePicker.delegate = self
             
             if(option == 0)
             {
@@ -217,7 +224,9 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
-        self.delegate?.FTNChatSendMessageImage(self, image: image)
+        self.imagePicker.dismissViewControllerAnimated(true) { () -> Void in
+            self.delegate?.FTNChatSendMessageImage(self, image: image)
+        }
     }
     
     func messageBarGifButtonClicked(messageBar: FTNMessageBar)

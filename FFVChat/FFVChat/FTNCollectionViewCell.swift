@@ -96,22 +96,33 @@ class FTNCollectionViewCell: UICollectionViewCell
 
         self.message = message
         
+        var mine : Bool
+        if(message.sender == DAOUser.sharedInstance.getUsername())
+        {
+            mine = true
+        }
+        else
+        {
+            mine = false
+        }
+        
         switch self.message.type
         {
+            
         case "Text":
-            var mine : Bool
-            if(message.sender == DAOUser.sharedInstance.getUsername())
-            {
-                mine = true
-            }
-            else
-            {
-                mine = false
-            }
+            
             self.chattextview = FTNContentTypes.createTextViewForMessageCell(message.text!, cellsize: self.frame.size, mine: mine)
             self.labelStatus.frame.origin.y = self.frame.size.height - 10
             self.labelDate.frame.origin.y = frame.size.height - 30
             self.addSubview(self.chattextview!)
+            
+        case "Image":
+            
+            let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
+            self.chatimageview = FTNContentTypes.createImageViewForMessageCell(image, cellsize: self.frame.size, mine: mine)
+            self.labelStatus.frame.origin.y = self.frame.size.height - 10
+            self.labelDate.frame.origin.y = frame.size.height - 30
+            self.addSubview(self.chatimageview!)
             
         default:
             print("erro")
@@ -131,5 +142,24 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.labelStatus.textColor = oficialRed
     }
     
+    func imageLoaded()
+    {
+        self.chatimageview?.loading?.removeFromSuperview()
+        let image = DAOContents.sharedInstance.getImageFromKey(self.message!.contentKey!)
+        self.chatimageview?.imageView.image = image
+        
+    }
+    
+    func gifLoaded()
+    {
+        self.chatgifview?.loading?.removeFromSuperview()
+        let gif = DAOContents.sharedInstance.getGifWithName(self.message!.contentKey!)
+        self.chatgifview?.gifView.runGif(gif!.data)
+    }
+    
+    func audioLoaded()
+    {
+        
+    }
     
 }

@@ -26,6 +26,24 @@ class ImageEdition
     }
     
     
+    class func blurImage(image: UIImage) -> UIImage
+    {
+        let blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        blur.frame = CGRectMake(0, 0, image.size.width, image.size.height)
+        blur.alpha = 1
+        
+        UIGraphicsBeginImageContext(image.size)
+        
+        image.drawInRect(CGRectMake(0, 0, image.size.width, image.size.height))
+        blur.drawRect(CGRectMake(0, 0, image.size.width, image.size.height))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
+    
+    
 }
 
 extension UIImage {
