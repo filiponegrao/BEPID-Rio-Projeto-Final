@@ -38,8 +38,8 @@ class AudioKeyboard : UIView
         self.recordButton.layer.cornerRadius = 40
         self.recordButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.recordButton.layer.borderWidth = 2
-        self.recordButton.addClickStartAction("startRecord", target: self)
-        self.recordButton.addClickEndActions("stopRecord", target: self)
+        self.recordButton.addTargetOnStart("startRecord", target: self)
+        self.recordButton.addTargetOnEnd("stopRecord", target: self)
         self.addSubview(self.recordButton)
 
     }
@@ -52,11 +52,11 @@ class AudioKeyboard : UIView
     
     func startRecord()
     {
-        self.controller.startRecord()
+//        self.controller.startRecord()
     }
     
     func stopRecord()
     {
-        self.controller.stopRecord()
+//        self.controller.stopRecord()
     }
 }

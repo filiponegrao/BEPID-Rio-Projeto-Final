@@ -53,7 +53,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         self.profileBtn.layer.borderColor = UIColor.grayColor().CGColor
         self.profileBtn.contentMode = .ScaleToFill
         self.profileBtn.clipsToBounds = true
-        self.profileBtn.addClickEndActions("openChat", target: self)
+        self.profileBtn.addTargetOnEnd("openChat", target: self)
         self.container.addSubview(self.profileBtn)
 
         self.numberOfMessages = UILabel(frame: CGRectMake(self.frame.size.width-20,-5, self.profileBtn.frame.size.width/3, self.profileBtn.frame.size.width/3))

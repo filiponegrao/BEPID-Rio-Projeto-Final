@@ -21,6 +21,8 @@ class DAOMessages : NSObject
     
     var lastMessage : Message!
     
+    var lastSentMessage : Message!
+    
     var inExecution: Bool = false
     
     var delayForPush : NSTimer!
@@ -131,12 +133,15 @@ class DAOMessages : NSObject
         let now = NSDate()
         let id = self.createMessageKey(username, date: now)
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: self.defaultTime, type: .Text, contentKey: nil, text: text, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: self.defaultTime, type: .Text, contentKey: nil, text: text, status: messageStatus.Ready.rawValue)
         
         self.save()
         
+        NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageReady(id), object: nil, userInfo: nil)
+        
         DAOPostgres.sharedInstance.sendTextMessage(id, username: username, lifeTime: self.defaultTime, text: text, sentDate: now)
         
+        //Push notification
         if(!self.delay)
         {
             self.delay = true
@@ -144,6 +149,8 @@ class DAOMessages : NSObject
             self.delayForPush?.invalidate()
             self.delayForPush = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "turnOffDelayForPush:", userInfo: nil, repeats: false)
         }
+        
+        self.lastSentMessage = message
         
         return message
     }
@@ -166,7 +173,7 @@ class DAOMessages : NSObject
         
         DAOContents.sharedInstance.addImage(key, data: image.mediumQualityJPEGNSData, filter: filter, preview: image.lowestQualityJPEGNSData)
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: lifeTime, type: .Image, contentKey: key, text: nil, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: lifeTime, type: .Image, contentKey: key, text: nil, status: messageStatus.Ready.rawValue)
         
         self.save()
         
@@ -190,7 +197,7 @@ class DAOMessages : NSObject
         
         DAOContents.sharedInstance.addAudio(key, data: audio, filter: filter)
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: lifeTime, type: .Audio, contentKey: key, text: nil, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: lifeTime, type: .Audio, contentKey: key, text: nil, status: messageStatus.Ready.rawValue)
         
         self.save()
         
@@ -220,7 +227,7 @@ class DAOMessages : NSObject
         
         let id = self.createMessageKey(username, date: now)
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: self.defaultTime, type: .Gif, contentKey: gifName, text: nil, status: "sent")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: self.defaultTime, type: .Gif, contentKey: gifName, text: nil, status: messageStatus.Ready.rawValue)
         
         self.save()
         
@@ -264,12 +271,12 @@ class DAOMessages : NSObject
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: sender, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: .Text, contentKey: nil, text: text, status: "received")
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: sender, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: .Text, contentKey: nil, text: text, status: messageStatus.Received.rawValue)
         
         self.save()
         self.lastMessage = message
         
-        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
+        NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.newMessage(), object: nil, userInfo: nil)
         
         return true
     }
@@ -298,12 +305,13 @@ class DAOMessages : NSObject
         }
         catch {}
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: sender, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: type, contentKey: contentKey, text: nil, status: "received")
-        
-        self.lastMessage = message
-        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.messageReceived)
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: sender, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: type, contentKey: contentKey, text: nil, status: messageStatus.Received.rawValue)
         
         self.save()
+        self.lastMessage = message
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.newMessage(), object: nil, userInfo: nil)
+        
         return true
     }
     
@@ -316,11 +324,11 @@ class DAOMessages : NSObject
      */
     func setMessageSeen(message: Message)
     {
-        if(message.status != "seen")
+        if(message.status != messageStatus.Seen.rawValue)
         {
             DAOPostgres.sharedInstance.setMessageSeen(message.id)
             
-            message.status = "seen"
+            message.status = messageStatus.Seen.rawValue
             self.save()
         }
     }
@@ -335,6 +343,63 @@ class DAOMessages : NSObject
         DAOPostgres.sharedInstance.setDeletedMessage(id)
     }
     
+    func setMessageSent(id: String)
+    {
+        let predicate = NSPredicate(format: "id == %@", id)
+        
+        let request = NSFetchRequest(entityName: "Message")
+        request.predicate = predicate
+        
+        do {
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Message]
+            let message = results.last
+            message?.status = messageStatus.Sent.rawValue
+            self.save()
+            NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageSent(id), object: nil, userInfo: nil)
+        }
+        catch
+        {
+            return
+        }
+    }
+    
+    func setMessageError(id: String)
+    {
+        let predicate = NSPredicate(format: "id == %@", id)
+        
+        let request = NSFetchRequest(entityName: "Message")
+        request.predicate = predicate
+        
+        do {
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Message]
+            let message = results.last
+            message?.status = messageStatus.ErrorSent.rawValue
+            self.save()
+            NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageSendError(id), object: nil, userInfo: nil)
+        }
+        catch
+        {
+            return
+        }
+    }
+    
+    func checkMessageStatus(id: String) -> String?
+    {
+        let predicate = NSPredicate(format: "id == %@", id)
+        
+        let request = NSFetchRequest(entityName: "Message")
+        request.predicate = predicate
+        
+        do {
+            let results = try self.managedObjectContext.executeFetchRequest(request) as! [Message]
+            let message = results.last
+            return message?.status
+        }
+        catch
+        {
+            return nil
+        }
+    }
     
     /**
      * Funcao que deleta uma mensagem.
@@ -377,7 +442,7 @@ class DAOMessages : NSObject
 
                 TimeBomb.sharedInstance.removeTimer(id)
 
-                NSNotificationCenter.defaultCenter().postNotificationName(NotificationController.center.messageEvaporated.name, object: nil, userInfo: ["contact": contact, "index": index!])
+                NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageErased(), object: nil, userInfo: ["contact": contact, "index": index!])
 
                 return true
             }
@@ -401,7 +466,7 @@ class DAOMessages : NSObject
      */
     func deleteMessageAfterTime(message: Message)
     {
-        if(message.status != "seen" && message.sender != DAOUser.sharedInstance.getUsername())
+        if(message.status != messageStatus.Seen.rawValue && message.sender != DAOUser.sharedInstance.getUsername())
         {
             self.setMessageSeen(message)
             let now = NSDate()
@@ -419,62 +484,7 @@ class DAOMessages : NSObject
         self.deleteMessage(id)
     }
     
-    /**
-     * Funcao que verifica se ha alguma exclusao em andamento,
-     * caso nao haja, inicia uma exclusao. Caso contrario,
-     * inicia um delay para que a acao seja tentada novamente.
-     * OBS: Essa funcao por alguns motivos como os timers de exlcusao
-     * de mensagens, possui um layout um tanto alternativo.
-     * Pela razão dos timers serem assincronos, uma funcao de timer
-     * pode executar essa mesma funcao junto com a thread principal
-     * passando a mesma mensagem como parametro. Nesse caso algimas
-     * verificacoes sao necessarias.
-     */
-//    func timesUpMessage(message: Message?)
-//    {
-//        print("excluindo mensagem...")
-//        if(!self.inExecution)
-//        {
-//            self.inExecution = true
-//            
-//            //Apaga um possivel timer para essa mensagem
-//            if(message == nil) { return }
-//            let timer = self.timeBomb.objectForKey(message!.sentDate) as? NSTimer
-//            timer?.invalidate()
-//            self.timeBomb.removeObjectForKey(message!.sentDate)
-//            //Fim da remocao de um possivel timer
-//            
-//            var contact : String?
-//            if (message?.sender == DAOUser.sharedInstance.getUsername())
-//            {
-//                contact = message?.target
-//            }
-//            else
-//            {
-//                contact = message?.sender
-//            }
-//            
-//            let messages = self.conversationWithContact(contact)
-//            if(message == nil) { return }
-//            let index = messages.indexOf(message!)
-//            
-//            if(message == nil) { return }
-//            DAOPostgres.sharedInstance.setDeletedMessage(message!)
-//
-//            if(self.deleteMessage(message!))
-//            {
-//                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "messageEvaporated", object: nil, userInfo: ["index":index!, "contact": contact!]))
-//            }
-//            self.inExecution = false
-//        }
-//        else
-//        {
-//            let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(0.2)) * Double(NSEC_PER_SEC)))
-//            dispatch_after(delayTime, dispatch_get_main_queue()) {
-//                self.timesUpMessage(message)
-//            }
-//        }
-//    }
+   
     
     
     /*************************************************
@@ -578,6 +588,24 @@ class DAOMessages : NSObject
         }
         return messages
     }
+    
+    func numberOfTodayMessages(messages: [Message]) -> Int
+    {
+        var i = 0
+        
+        for message in messages
+        {
+            let now = NSDate()
+            
+            if(NSCalendar.currentCalendar().compareDate(now, toDate: message.sentDate,
+            toUnitGranularity: .Day) == .OrderedSame)
+            {
+                i++
+            }
+        }
+        
+        return i
+    }
 
     func clearConversation(username: String)
     {
@@ -597,7 +625,7 @@ class DAOMessages : NSObject
         
         for message in messages
         {
-            if message.status == "received"
+            if message.status == messageStatus.Received.rawValue
             {
                 unread++
             }

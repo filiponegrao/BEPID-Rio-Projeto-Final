@@ -85,73 +85,83 @@ class DAOPostgres : NSObject
      */
     func getUnreadMessages()
     {
-        print("refreshing messages...")
-        let parameters : [String:AnyObject]!  = ["target": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
-        
-        Alamofire.request(.POST, self.messageUrl_getUnread, parameters: parameters)
-            .responseJSON { response in
-                
-                if let results = response.result.value {
+        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue, {
+            
+            print("refreshing messages...")
+            let parameters : [String:AnyObject]!  = ["target": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
+            
+            Alamofire.request(.POST, self.messageUrl_getUnread, parameters: parameters)
+                .responseJSON { response in
                     
-                    for result in results as! NSArray
-                    {
-                        let id = result["id"] as! String
-                        let typeString = result["type"] as! String
-                        let type = ContentType(rawValue: typeString)!
-                        let sender = result["sender"] as! String
-                        let key = result["contentkey"] as? String
-                        let lifeTime = (result["lifetime"] as! NSString).integerValue
-                        let date = result["sentdate"] as! String
-                        let sentDate = self.string2nsdate(date)
+                    if let results = response.result.value {
                         
-                        let decSender = EncryptTools.getUsernameFromEncrpted(sender)
-
-                        if(decSender != nil)
+                        for result in results as! NSArray
                         {
-                            switch type
+                            let id = result["id"] as! String
+                            let typeString = result["type"] as! String
+                            let type = ContentType(rawValue: typeString)!
+                            let sender = result["sender"] as! String
+                            let key = result["contentkey"] as? String
+                            let lifeTime = (result["lifetime"] as! NSString).integerValue
+                            let date = result["sentdate"] as! String
+                            let sentDate = self.string2nsdate(date)
+                            
+                            let decSender = EncryptTools.getUsernameFromEncrpted(sender)
+                            
+                            if(decSender != nil)
                             {
-                                
-                            case .Text:
-                                
-                                let text = result["text"] as! String
-                                
-                                let decText = EncryptTools.decryptText(text)
-                                
-                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, text: decText, sentDate: sentDate, lifeTime: lifeTime))
+                                switch type
                                 {
-                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                    
+                                case .Text:
+                                    
+                                    let text = result["text"] as! String
+                                    
+                                    let decText = EncryptTools.decryptText(text)
+                                    
+                                    if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, text: decText, sentDate: sentDate, lifeTime: lifeTime))
+                                    {
+                                        self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                    }
+                                    
+                                case .Image:
+                                    
+                                    if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Image))
+                                    {
+                                        self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                    }
+                                    
+                                case .Audio:
+                                    
+                                    if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Audio))
+                                    {
+                                        self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                    }
+                                    
+                                case .Gif:
+                                    
+                                    if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Gif))
+                                    {
+                                        self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                    }
+                                    
+                                default:
+                                    
+                                    print("Erro ao encontrar tipo do arquivo recebido!")
+                                    
                                 }
-                                
-                            case .Image:
-                                
-                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Image))
-                                {
-                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
-                                }
-                                
-                            case .Audio:
-                                
-                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Audio))
-                                {
-                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
-                                }
-                                
-                            case .Gif:
-                                
-                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Gif))
-                                {
-                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
-                                }
-                                
-                            default:
-                                
-                                print("Erro ao encontrar tipo do arquivo recebido!")
-                                
                             }
                         }
                     }
-                }
-        }
+            }
+
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            })
+        })
+        
     }
     
     /**
@@ -160,20 +170,28 @@ class DAOPostgres : NSObject
      */
     func checkForDeletedMessages()
     {
-        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
-        
-        Alamofire.request(.POST, self.messageUrl_getDeleted, parameters: parameters)
-            .responseJSON { response in
-                
-                if let results = response.result.value {
+        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue, {
+            
+            let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
+            
+            Alamofire.request(.POST, self.messageUrl_getDeleted, parameters: parameters)
+                .responseJSON { response in
                     
-                    for result in results as! NSArray
-                    {
-                        let id = result["id"] as! String
-                        DAOMessages.sharedInstance.deleteMessage(id)
+                    if let results = response.result.value {
+                        
+                        for result in results as! NSArray
+                        {
+                            let id = result["id"] as! String
+                            DAOMessages.sharedInstance.deleteMessage(id)
+                        }
                     }
-                }
-        }
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            })
+        })
 
     }
     
@@ -324,10 +342,12 @@ class DAOPostgres : NSObject
                 if(response.result.isFailure)
                 {
                     //Tratar falha no envio, por enquanto vou excluir
-                    DAOMessages.sharedInstance.deleteMessage(id)
+//                    DAOMessages.sharedInstance.deleteMessage(id)
+                    DAOMessages.sharedInstance.setMessageError(id)
                 }
                 else
                 {
+                    DAOMessages.sharedInstance.setMessageSent(id)
                     print("Mensagem evnaida com sucesso!")
                 }
         }
@@ -350,6 +370,7 @@ class DAOPostgres : NSObject
                 }
                 else
                 {
+                    DAOMessages.sharedInstance.setMessageSent(id)
                     print("Mensagem evnaida com sucesso!")
                 }
         }
@@ -372,6 +393,7 @@ class DAOPostgres : NSObject
                 }
                 else
                 {
+                    DAOMessages.sharedInstance.setMessageSent(id)
                     print("Mensagem enviada com sucesso!")
                 }
         }
@@ -394,6 +416,7 @@ class DAOPostgres : NSObject
                 }
                 else
                 {
+                    DAOMessages.sharedInstance.setMessageSent(id)
                     print("Mensagem evnaida com sucesso!")
                 }
         }

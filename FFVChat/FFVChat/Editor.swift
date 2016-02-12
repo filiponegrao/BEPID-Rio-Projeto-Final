@@ -78,4 +78,11 @@ class Editor
         label.sizeToFit()
         return label.frame.height
     }
+    
+    
+//    class func rectUnblur(image: UIImage) -> UIImage
+//    {
+//        
+//    }
+    
 }

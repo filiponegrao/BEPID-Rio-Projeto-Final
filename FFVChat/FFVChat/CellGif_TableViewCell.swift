@@ -18,6 +18,8 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
 
     var sentDate : UILabel!
     
+    var indicator : NVActivityIndicatorView!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,7 +54,13 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
         self.sentDate.textAlignment = .Right
         self.sentDate.textColor = UIColor.whiteColor()
         self.cellView.addSubview(self.sentDate)
-
+        
+        
+        self.indicator = NVActivityIndicatorView(frame: CGRectMake(0, 0, self.gifView.frame.size.width/1.5, self.gifView.frame.size.height/1.5), type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen)
+        self.indicator.center = self.gifView.center
+        self.indicator.startAnimation()
+        self.addSubview(self.indicator)
+        
     }
     
 
@@ -72,6 +80,16 @@ class CellGif_TableViewCell: UITableViewCell, UIWebViewDelegate
     {
         super.setSelected(selected, animated: animated)
 
+    }
+    
+    func setLoading()
+    {
+        self.indicator.hidden = false
+    }
+    
+    func setLoadingOff()
+    {
+        self.indicator.hidden = true
     }
 
 }

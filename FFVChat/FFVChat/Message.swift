@@ -9,6 +9,18 @@
 import Foundation
 import CoreData
 
+extension Message
+{
+    @NSManaged var target: String!
+    @NSManaged var sender: String!
+    @NSManaged var status: String!
+    @NSManaged var contentKey: String?
+    @NSManaged var type: String!
+    @NSManaged var lifeTime: NSNumber!
+    @NSManaged var text: String?
+    @NSManaged var sentDate: NSDate!
+    @NSManaged var id: String!
+}
 
 enum ContentType : String
 {
@@ -19,6 +31,8 @@ enum ContentType : String
     case Gif = "Gif"
     
     case Text = "Text"
+    
+    case Video = "Video"
 }
 
 class Message: NSManagedObject

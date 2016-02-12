@@ -27,6 +27,11 @@ enum ImageFilter : String
     case Rect = "Rect"
     
     case Spark = "Spark"
+    
+    case Half = "Half"
+    
+    case Noise = "Noise"
+    
 }
 
 class Image: NSManagedObject

@@ -70,9 +70,9 @@ public class MessageBar : UIView, UITextViewDelegate
         self.textView = UITextView(frame: CGRectMake(10, 5, screenWidth-20, self.textViewHeigth))
         self.textView.autocorrectionType = UITextAutocorrectionType.Yes
         self.textView.font = UIFont(name: "Helvetica", size: 16)
-        self.textView.textContainer.lineFragmentPadding = 10;
         self.textView.text = "Message..."
         self.textView.textAlignment = .Left
+        self.textView.textContainer.lineFragmentPadding = 10;
         self.textView.textColor = oficialLightGray
         self.textView.tintColor = oficialGreen
         self.textView.backgroundColor = UIColor.clearColor()

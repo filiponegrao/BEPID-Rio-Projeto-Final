@@ -102,6 +102,6 @@ class CellAudio_TableViewCell: UITableViewCell {
     
     func play()
     {
-        controller.playAudio(self.controller.tableView.indexPathForCell(self.index)!.row)
+//        controller.playAudio(self.controller.tableView.indexPathForCell(self.index)!.row)
     }
 }

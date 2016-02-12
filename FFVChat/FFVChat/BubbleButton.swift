@@ -122,17 +122,17 @@ class BubbleButton : UIButton
     {
         if(target != nil)
         {
-            self.addClickEndActions(action, target: target!)
+            self.addTargetOnEnd(action, target: target!)
         }
     }
     
-    func addClickStartAction(selector: Selector, target: AnyObject)
+    func addTargetOnStart(selector: Selector, target: AnyObject)
     {
         self.selector1 = selector
         self.target1 = target
     }
     
-    func addClickEndActions(selector: Selector, target: AnyObject)
+    func addTargetOnEnd(selector: Selector, target: AnyObject)
     {
         self.selector2 = selector
         self.target2 = target

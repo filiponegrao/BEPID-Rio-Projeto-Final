@@ -11,55 +11,39 @@ import UIKit
 
 class FilterView_Circle: UIView {
     
-    var message : Message!
-    
     var image : Image!
     
     var imageView : UIImageView!
     
     var blurFilter : UIVisualEffectView!
     
-    var backButton : UIButton!
-    
     var unblurVision : UIImageView!
     
-    weak var chatController : Chat_ViewController!
-    
-    var origin : CGRect!
-    
-    init(image: Image, message: Message, origin: CGRect)
+    init(image: Image)
     {
-        self.message = message
-        self.origin = origin
         self.image = image
         
-        super.init(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        super.init(frame: CGRectMake(0, 70, screenWidth, screenHeight - 70))
         
         self.clipsToBounds = true
         self.backgroundColor = UIColor.blackColor()
         self.layer.zPosition = 10
-        self.alpha = 0
+        self.alpha = 1
         
-        self.imageView = UIImageView(frame: CGRectMake(0, 70, screenWidth, screenHeight - 70))
+        self.imageView = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.clipsToBounds = true
         self.imageView.image = UIImage(data: self.image.data)!
         self.imageView.layer.zPosition = 0
         self.addSubview(self.imageView)
-        
-        self.backButton = UIButton(frame: CGRectMake(0, 20, 50, 50))
-        self.backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
-        self.backButton.addTarget(self, action: "fadeOut", forControlEvents: .TouchUpInside)
-        self.addSubview(self.backButton)
+    
         
         //Blur
         self.blurFilter = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
         self.blurFilter.frame = self.imageView.frame
         self.blurFilter.alpha = 1
         self.addSubview(self.blurFilter)
-        
-        let type = ImageFilter(rawValue: self.image.filter)!
-        
+                
         let img = UIImage(data: self.image.data)!
         self.unblurVision = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
         self.unblurVision.image = Editor.circleUnblur(img, x: 0, y: 0, imageFrame: self.imageView.frame)
@@ -68,43 +52,12 @@ class FilterView_Circle: UIView {
         self.unblurVision.layer.zPosition = 5
         self.addSubview(self.unblurVision)
         
-        print(type)
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func fadeIn()
-    {
-        self.frame = self.origin
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.alpha = 1
-            self.frame = CGRectMake(0, 0, screenWidth, screenHeight)
-            
-            }) { (success: Bool) -> Void in
-        }
-    }
-    
-    func fadeOut()
-    {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.alpha = 0
-            self.frame = self.origin
-            
-            }) { (success: Bool) -> Void in
-                self.chatController.isViewing = false
 
-                self.removeFromSuperview()
-        }
-    }
-    
-    
     
     //*** UNBLUR FUNCTIONS ****///
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
