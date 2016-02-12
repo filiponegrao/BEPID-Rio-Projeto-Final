@@ -116,7 +116,6 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.inputView = self.pickerView
         self.lifespanField.inputAccessoryView = toolBar
         
-        //INFERNO
 
     }
     
@@ -416,6 +415,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         if(component == 0)
         {
+            self.hou = self.hours[row]
+
             if(self.hours[row] == 1)
             {
                 if(self.min == 0)
