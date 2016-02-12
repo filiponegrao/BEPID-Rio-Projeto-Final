@@ -116,17 +116,14 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.inputView = self.pickerView
         self.lifespanField.inputAccessoryView = toolBar
 
-        self.hou = "x hours "
-        self.min = " x minutes"
     }
     
     override func viewWillAppear(animated: Bool)
     {
         //valores picker view//
-        self.hou = 1
-        self.min = 0
+        self.hou = 0
+        self.min = 1
     }
-    
     
 
     override func didReceiveMemoryWarning()
