@@ -24,15 +24,15 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     var lifespanField : UITextField!
     
-    var lifespanValue : NSDate!
+    var lifespanValue : Int!
     
     let hours = Array(1...24)
     
     let minutes = Array(0...59)
     
-    var hou : String!
+    var hou : Int!
     
-    var min : String!
+    var min : Int!
     
     let seconds = Array(0...59)
     
@@ -105,8 +105,6 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.userInteractionEnabled = true
         
-        //
-        
         
         //TEXT FIELD//
         self.lifespanField = UITextField(frame: CGRectMake(15, 25 + tittle.frame.size.height, screenWidth/3 * 1.7, 30))
@@ -120,6 +118,15 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
 
     }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        //valores picker view//
+        self.hou = 1
+        self.min = 0
+    }
+    
+    
 
     override func didReceiveMemoryWarning()
     {
@@ -407,21 +414,32 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        self.hou = "x hours "
-        self.min = " x minutes"
 
         if(component == 0)
         {
-
+            self.hou = self.hours[row]
+            
             if(self.hours[row] == 1)
             {
-                self.hou = "\(self.hours[row]) hour"
-                self.lifespanField.text = self.hou + self.min
+                if(self.min == 0)
+                {
+                    self.lifespanField.text = "\(self.hou) hour"
+                }
+                else
+                {
+                    self.lifespanField.text = "\(self.hou) hour" + " \(self.min) min"
+                }
             }
             else
             {
-                self.hou = "\(self.hours[row]) hours"
-                self.lifespanField.text = self.hou + self.min
+                if(self.min == 0)
+                {
+                    self.lifespanField.text = "\(self.hou) hours"
+                }
+                else
+                {
+                    self.lifespanField.text = "\(self.hou) hours" + " \(self.min) min"
+                }
             }
             
         }
@@ -430,23 +448,33 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             
             if(self.minutes[row] == 0)
             {
-                self.min = ""
-                self.lifespanField.text = self.hou + self.min
-            }
-            else if(self.minutes[row] == 1)
-            {
-                self.min = "\(self.minutes[row]) minute"
-                self.lifespanField.text = self.hou + self.min
+                self.min = 0
+                
+                if(self.hou == 1)
+                {
+                    self.lifespanField.text = "\(self.hou) hour"
+                }
+                else
+                {
+                    self.lifespanField.text = "\(self.hou) hours"
+                }
             }
             else
             {
-                min = "\(self.minutes[row]) minutes"
-                self.lifespanField.text = self.hou + self.min
+                self.min = self.minutes[row]
+
+                if(self.hou == 1)
+                {
+                    self.lifespanField.text = "\(self.hou) hour" + " \(self.min) min"
+                }
+                else
+                {
+                    self.lifespanField.text = "\(self.hou) hours" + " \(self.min) min"
+                }
             }
-            
         }
         
-        
+        self.lifespanValue = (self.hou * 60) + self.min
     }
     
     //FIM PICKER VIEW//
