@@ -115,7 +115,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.delegate = self
         self.lifespanField.inputView = self.pickerView
         self.lifespanField.inputAccessoryView = toolBar
-    
+        
+        //INFERNO
 
     }
     
