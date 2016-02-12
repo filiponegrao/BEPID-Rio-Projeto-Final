@@ -160,7 +160,6 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
 
     }
     
-    
 
     override func didReceiveMemoryWarning()
     {
