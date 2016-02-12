@@ -16,6 +16,8 @@ import UIKit
     func FTNChatSendMessageImage(chat: FTNChatController, image: UIImage)
     
     func FTNChatSendMessageAudio(chat: FTNChatController, audio: NSData)
+    
+    func FTNChatMessageClicked(chat: FTNChatController, message: Message, indexPath: NSIndexPath)
 }
 
 class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, FTNMessageBarDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -147,12 +149,22 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         //Verifica um possivel reenvio de mensagem
         if(message.type == ContentType.Text.rawValue)
         {
+            DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+            
             if(message.status == messageStatus.Ready.rawValue)
             {
                 DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
             }
         }
         else if(message.type == ContentType.Image.rawValue)
+        {
+            
+        }
+        else if(message.type == ContentType.Gif.rawValue)
+        {
+            
+        }
+        else if(message.type == ContentType.Audio.rawValue)
         {
             
         }
@@ -165,32 +177,44 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         self.messageBar.textView.endEditing(true)
         let message = self.messages[indexPath.item]
         
+        //Mensagem com erro
         if(message.type == ContentType.Text.rawValue)
         {
             if( DAOMessages.sharedInstance.checkMessageStatus(message.id) == messageStatus.ErrorSent.rawValue)
             {
-                let alert = UIAlertController(title: "Erro no envio", message: nil, preferredStyle: .ActionSheet)
-                alert.addAction(UIAlertAction(title: "Reenviar", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                    
-                    DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Apagar", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                    
-                    DAOMessages.sharedInstance.deleteMessage(message.id)
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Cancelar", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
-                    
-                }))
-                self.controller.presentViewController(alert, animated: true, completion: { () -> Void in
-                    
-                })
+                self.reenviarMensagem(message)
             }
+        }
+        else if(message.type == ContentType.Image.rawValue)
+        {
+            DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+            self.delegate?.FTNChatMessageClicked(self, message: message, indexPath: indexPath)
         }
     }
     
     
+    
+    func reenviarMensagem(message: Message)
+    {
+        let alert = UIAlertController(title: "Erro no envio", message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "Reenviar", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Apagar", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            DAOMessages.sharedInstance.deleteMessage(message.id)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+        }))
+        self.controller.presentViewController(alert, animated: true, completion: { () -> Void in
+            
+        })
+
+    }
     /** ################ SCROLL VIEW PROPERTIES ################# **/
     
     

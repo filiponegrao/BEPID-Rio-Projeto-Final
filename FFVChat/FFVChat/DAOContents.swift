@@ -47,8 +47,9 @@ class DAOContents : NSObject
             if(results.count == 0)
             {
                 Image.createInManagedObjectContext(self.managedObjectContext, data: data, filter: filter, imageKey: imageKey, preview: preview)
-//                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "imageLoaded", object: nil, userInfo: ["imageKey":imageKey]))
                 self.save()
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.imageLoaded(imageKey), object: nil)
                 return true
             }
             else

@@ -117,8 +117,9 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.delegate = self
         self.lifespanField.inputView = self.pickerView
         self.lifespanField.inputAccessoryView = toolBar
-    
 
+        self.hou = "x hours "
+        self.min = " x minutes"
     }
 
     override func didReceiveMemoryWarning()
@@ -407,12 +408,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        self.hou = "x hours "
-        self.min = " x minutes"
-
         if(component == 0)
         {
-
             if(self.hours[row] == 1)
             {
                 self.hou = "\(self.hours[row]) hour"
@@ -443,7 +440,6 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
                 min = "\(self.minutes[row]) minutes"
                 self.lifespanField.text = self.hou + self.min
             }
-            
         }
         
         

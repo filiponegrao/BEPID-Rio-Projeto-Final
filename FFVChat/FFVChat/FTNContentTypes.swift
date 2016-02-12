@@ -74,6 +74,8 @@ class ChatImageView : UIView
     
     var loading : NVActivityIndicatorView!
     
+    var blur : UIVisualEffectView!
+    
     init(frame: CGRect, mine: Bool, image: UIImage?)
     {
         super.init(frame: frame)
@@ -99,6 +101,10 @@ class ChatImageView : UIView
         self.loading = NVActivityIndicatorView(frame: self.imageView.frame, type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen, size: CGSizeMake(80, 80))
         self.loading.startAnimation()
         
+        self.blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        blur.frame = CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height)
+        blur.alpha = 1
+        
         self.addSubview(view)
         self.addSubview(self.imageView)
         
@@ -110,10 +116,6 @@ class ChatImageView : UIView
         else
         {
             self.imageView.image = ImageEdition.blurImage(image!)
-            
-            let blur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-            blur.frame = CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height)
-            blur.alpha = 1
             self.imageView.addSubview(blur)
         }
     }

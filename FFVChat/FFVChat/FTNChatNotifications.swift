@@ -27,6 +27,11 @@ class FTNChatNotifications
         return "messageSent_\(id)"
     }
     
+    class func messageSeen(id: String) -> String
+    {
+        return "messageSeen_\(id)"
+    }
+    
     class func messageRead(id: String) -> String
     {
         return "messageRead_\(id)"
