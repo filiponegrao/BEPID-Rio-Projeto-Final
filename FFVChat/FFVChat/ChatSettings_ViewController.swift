@@ -123,8 +123,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillAppear(animated: Bool)
     {
         //valores picker view//
-        self.hou = 0
-        self.min = 1
+        self.hou = 1
+        self.min = 0
     }
     
 

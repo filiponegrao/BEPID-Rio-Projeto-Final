@@ -85,6 +85,9 @@ class FTNCollectionViewCell: UICollectionViewCell
                 self.labelStatus.textColor = UIColor.whiteColor()
             }
         }
+        
+        self.labelDate.text = Optimization.getStringDateFromDate(message.sentDate)
+        
         NSNotificationCenter.defaultCenter().removeObserver(self)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setSent", name: FTNChatNotifications.messageSent(message.id), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "setSeen", name: FTNChatNotifications.messageSeen(message.id), object: nil)
