@@ -26,6 +26,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     var lifespanValue : Int!
     
+    var lifespanText : String!
+    
     let hours = Array(1...24)
     
     let minutes = Array(0...59)
@@ -81,7 +83,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.pickerView.dataSource = self
         self.pickerView.backgroundColor = oficialDarkGray
         
-        //tool bar e botoes para pickerview//
+        //TOOLBAR E BOTOES PICKERVIEW//
         let toolBar = UIToolbar()
         toolBar.barStyle = UIBarStyle.BlackOpaque
         toolBar.translucent = true
@@ -124,6 +126,38 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         //valores picker view//
         self.hou = 1
         self.min = 0
+    
+        //pegar info bd
+        self.lifespanValue = 60
+        
+        let savedHour = self.lifespanValue / 60
+        let savedMinutes = self.lifespanValue % 60
+        
+        if(savedHour == 1)
+        {
+            if(savedMinutes != 0)
+            {
+                self.lifespanText = "\(savedHour) hour" + " \(savedMinutes) min"
+            }
+            else
+            {
+                self.lifespanText = "\(savedHour) hour"
+            }
+        }
+        else
+        {
+            if(savedMinutes != 0)
+            {
+                self.lifespanText = "\(savedHour) hours" + " \(savedMinutes) min"
+            }
+            else
+            {
+                self.lifespanText = "\(savedHour) hours"
+            }
+        }
+        
+        self.lifespanField.text = self.lifespanText
+
     }
     
     
@@ -414,6 +448,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
+        
         if(component == 0)
         {
             self.hou = self.hours[row]
@@ -422,22 +457,22 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             {
                 if(self.min == 0)
                 {
-                    self.lifespanField.text = "\(self.hou) hour"
+                    self.lifespanText = "\(self.hou) hour"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hour" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hour" + " \(self.min) min"
                 }
             }
             else
             {
                 if(self.min == 0)
                 {
-                    self.lifespanField.text = "\(self.hou) hours"
+                    self.lifespanText = "\(self.hou) hours"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hours" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hours" + " \(self.min) min"
                 }
             }
             
@@ -451,11 +486,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 if(self.hou == 1)
                 {
-                    self.lifespanField.text = "\(self.hou) hour"
+                    self.lifespanText = "\(self.hou) hour"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hours"
+                    self.lifespanText = "\(self.hou) hours"
                 }
             }
             else
@@ -464,16 +499,15 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
 
                 if(self.hou == 1)
                 {
-                    self.lifespanField.text = "\(self.hou) hour" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hour" + " \(self.min) min"
                 }
                 else
                 {
-                    self.lifespanField.text = "\(self.hou) hours" + " \(self.min) min"
+                    self.lifespanText = "\(self.hou) hours" + " \(self.min) min"
                 }
             }
         }
         
-        self.lifespanValue = (self.hou * 60) + self.min
     }
     
     //FIM PICKER VIEW//
@@ -485,12 +519,18 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func donePicker()
     {
+        //passar info bd
+        self.lifespanValue = (self.hou * 60) + self.min
+//        print(self.lifespanValue)
         
+        self.lifespanField.text = self.lifespanText
+        self.lifespanField.resignFirstResponder()
     }
     
     func cancelPicker()
     {
-        
+        self.lifespanField.resignFirstResponder()
+//        self.pickerView.reloadAllComponents()
     }
     
     func changeBackground()
