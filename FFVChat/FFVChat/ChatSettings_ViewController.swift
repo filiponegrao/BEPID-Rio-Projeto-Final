@@ -128,7 +128,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.min = 0
     
         //pegar info bd
-        self.lifespanValue = 60
+        self.lifespanValue = 80
         
         let savedHour = self.lifespanValue / 60
         let savedMinutes = self.lifespanValue % 60
@@ -157,6 +157,9 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         self.lifespanField.text = self.lifespanText
+        
+        self.pickerView.selectRow(savedHour - 1, inComponent: 0, animated: true)
+        self.pickerView.selectRow(savedMinutes, inComponent: 1, animated: true)
 
     }
     
@@ -398,6 +401,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    
+    
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView
     {
         let view = UIView(frame: CGRectMake(0,0,pickerView.frame.size.height, 20))
@@ -529,7 +534,10 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     func cancelPicker()
     {
         self.lifespanField.resignFirstResponder()
-//        self.pickerView.reloadAllComponents()
+        
+        self.pickerView.selectRow(self.lifespanValue / 60 - 1, inComponent: 0, animated: true)
+        self.pickerView.selectRow(self.lifespanValue % 60, inComponent: 1, animated: true)
+        
     }
     
     func changeBackground()
