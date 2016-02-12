@@ -86,7 +86,8 @@ class FTNCollectionViewCell: UICollectionViewCell
             }
         }
         NSNotificationCenter.defaultCenter().removeObserver(self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeStatus", name: FTNChatNotifications.messageSent(message.id), object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setSent", name: FTNChatNotifications.messageSent(message.id), object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "setSeen", name: FTNChatNotifications.messageSeen(message.id), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageError", name: FTNChatNotifications.messageSendError(message.id), object: nil)
         
         self.chataudioview?.removeFromSuperview()
@@ -96,22 +97,44 @@ class FTNCollectionViewCell: UICollectionViewCell
 
         self.message = message
         
+        var mine : Bool
+        if(message.sender == DAOUser.sharedInstance.getUsername())
+        {
+            mine = true
+        }
+        else
+        {
+            mine = false
+        }
+        
         switch self.message.type
         {
+            
         case "Text":
-            var mine : Bool
-            if(message.sender == DAOUser.sharedInstance.getUsername())
-            {
-                mine = true
-            }
-            else
-            {
-                mine = false
-            }
+            
             self.chattextview = FTNContentTypes.createTextViewForMessageCell(message.text!, cellsize: self.frame.size, mine: mine)
             self.labelStatus.frame.origin.y = self.frame.size.height - 10
             self.labelDate.frame.origin.y = frame.size.height - 30
             self.addSubview(self.chattextview!)
+            
+        case "Image":
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "imageLoaded", name: FTNChatNotifications.imageLoaded(message.contentKey!), object: nil)
+            
+            let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
+            self.chatimageview = FTNContentTypes.createImageViewForMessageCell(image, cellsize: self.frame.size, mine: mine)
+            self.labelStatus.frame.origin.y = self.frame.size.height - 10
+            self.labelDate.frame.origin.y = frame.size.height - 30
+            self.addSubview(self.chatimageview!)
+            
+        case "Gif":
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "gifLoaded", name: FTNChatNotifications.gifLoaded(message.contentKey!), object: nil)
+
+            self.chatgifview = FTNContentTypes.createGifViewForMessageCell(message.contentKey!, cellsize: self.frame.size, mine: mine)
+            self.labelStatus.frame.origin.y = self.frame.size.height - 10
+            self.labelDate.frame.origin.y = frame.size.height - 30
+            self.addSubview(self.chatgifview!)
             
         default:
             print("erro")
@@ -119,9 +142,15 @@ class FTNCollectionViewCell: UICollectionViewCell
         }
     }
     
-    func changeStatus()
+    func setSent()
     {
         self.labelStatus.text = messageStatus.Sent.rawValue
+        self.labelStatus.textColor = oficialGreen
+    }
+    
+    func setSeen()
+    {
+        self.labelStatus.text = messageStatus.Seen.rawValue
         self.labelStatus.textColor = oficialGreen
     }
     
@@ -131,5 +160,25 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.labelStatus.textColor = oficialRed
     }
     
+    func imageLoaded()
+    {
+        self.chatimageview?.loading?.removeFromSuperview()
+        let image = DAOContents.sharedInstance.getImageFromKey(self.message!.contentKey!)
+        self.chatimageview?.imageView.image = image
+        self.chatimageview?.imageView.addSubview(self.chatimageview!.blur)
+        
+    }
+    
+    func gifLoaded()
+    {
+        self.chatgifview?.loading?.removeFromSuperview()
+        let gif = DAOContents.sharedInstance.getGifWithName(self.message!.contentKey!)
+        self.chatgifview?.gifView.runGif(gif!.data)
+    }
+    
+    func audioLoaded()
+    {
+        
+    }
     
 }

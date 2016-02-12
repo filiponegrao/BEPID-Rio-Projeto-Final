@@ -34,8 +34,9 @@ class ImageZoom_View: UIView {
     
     var origin : CGRect!
     
-    init(image: Image, message: Message, origin: CGRect)
+    init(image: Image, message: Message, origin: CGRect, controller: Chat_ViewController)
     {
+        self.chatController = controller
         self.message = message
         self.origin = origin
         self.image = image

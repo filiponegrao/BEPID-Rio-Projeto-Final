@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-let collectionCellHeight : CGFloat = 40
+let collectionCellHeight : CGFloat = 44
 
 let defaultFont = UIFont(name: "Helvetica", size: 15)!
 

@@ -307,6 +307,15 @@ class DAOMessages : NSObject
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: sender, target: DAOUser.sharedInstance.getUsername(), sentDate: sentDate, lifeTime: lifeTime, type: type, contentKey: contentKey, text: nil, status: messageStatus.Received.rawValue)
         
+        if(type == ContentType.Image)
+        {
+            DAOParse.sharedInstance.downloadImageForMessage(contentKey, id: id)
+        }
+        else if(type == ContentType.Gif)
+        {
+            DAOParse.sharedInstance.downloadGif(contentKey)
+        }
+        
         self.save()
         self.lastMessage = message
         
@@ -324,12 +333,13 @@ class DAOMessages : NSObject
      */
     func setMessageSeen(message: Message)
     {
-        if(message.status != messageStatus.Seen.rawValue)
+        if(message.status == messageStatus.Received.rawValue)
         {
             DAOPostgres.sharedInstance.setMessageSeen(message.id)
             
             message.status = messageStatus.Seen.rawValue
             self.save()
+            NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageSeen(message.id), object: nil)
         }
     }
     
@@ -466,7 +476,7 @@ class DAOMessages : NSObject
      */
     func deleteMessageAfterTime(message: Message)
     {
-        if(message.status != messageStatus.Seen.rawValue && message.sender != DAOUser.sharedInstance.getUsername())
+        if(message.status == messageStatus.Received.rawValue && message.sender != DAOUser.sharedInstance.getUsername())
         {
             self.setMessageSeen(message)
             let now = NSDate()

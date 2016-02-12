@@ -16,9 +16,11 @@ import UIKit
     func FTNChatSendMessageImage(chat: FTNChatController, image: UIImage)
     
     func FTNChatSendMessageAudio(chat: FTNChatController, audio: NSData)
+    
+    func FTNChatMessageClicked(chat: FTNChatController, message: Message, indexPath: NSIndexPath)
 }
 
-class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, FTNMessageBarDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate
+class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, FTNMessageBarDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     var background : UIImageView!
     
@@ -117,6 +119,15 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         case "Text":
             return CGSizeMake(screenWidth, FTNContentTypes.checkHeigthForView(self.messages[indexPath.item].text!, font: defaultFont, width: screenWidth))
             
+        case "Image":
+            return CGSizeMake(screenWidth, FTNContentTypes.checkHeightForImageView())
+            
+            case "Gif":
+                return CGSizeMake(screenWidth, FTNContentTypes.checkHeightForImageView())
+            
+            case "Audio":
+                return CGSizeMake(screenWidth, FTNContentTypes.checkHeightForAudioView())
+            
         default:
             return CGSizeMake(screenWidth, 80)
         }
@@ -138,10 +149,24 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         //Verifica um possivel reenvio de mensagem
         if(message.type == ContentType.Text.rawValue)
         {
+            DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+            
             if(message.status == messageStatus.Ready.rawValue)
             {
                 DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
             }
+        }
+        else if(message.type == ContentType.Image.rawValue)
+        {
+            
+        }
+        else if(message.type == ContentType.Gif.rawValue)
+        {
+            
+        }
+        else if(message.type == ContentType.Audio.rawValue)
+        {
+            
         }
         
         return cell
@@ -152,32 +177,44 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         self.messageBar.textView.endEditing(true)
         let message = self.messages[indexPath.item]
         
+        //Mensagem com erro
         if(message.type == ContentType.Text.rawValue)
         {
             if( DAOMessages.sharedInstance.checkMessageStatus(message.id) == messageStatus.ErrorSent.rawValue)
             {
-                let alert = UIAlertController(title: "Erro no envio", message: nil, preferredStyle: .ActionSheet)
-                alert.addAction(UIAlertAction(title: "Reenviar", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                    
-                    DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Apagar", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                    
-                    DAOMessages.sharedInstance.deleteMessage(message.id)
-                }))
-                
-                alert.addAction(UIAlertAction(title: "Cancelar", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
-                    
-                }))
-                self.controller.presentViewController(alert, animated: true, completion: { () -> Void in
-                    
-                })
+                self.reenviarMensagem(message)
             }
+        }
+        else if(message.type == ContentType.Image.rawValue)
+        {
+            DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+            self.delegate?.FTNChatMessageClicked(self, message: message, indexPath: indexPath)
         }
     }
     
     
+    
+    func reenviarMensagem(message: Message)
+    {
+        let alert = UIAlertController(title: "Erro no envio", message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "Reenviar", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Apagar", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            
+            DAOMessages.sharedInstance.deleteMessage(message.id)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+        }))
+        self.controller.presentViewController(alert, animated: true, completion: { () -> Void in
+            
+        })
+
+    }
     /** ################ SCROLL VIEW PROPERTIES ################# **/
     
     
@@ -197,6 +234,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         if(option == 0 || option == 1)
         {
             self.imagePicker = UIImagePickerController()
+            self.imagePicker.delegate = self
             
             if(option == 0)
             {
@@ -217,7 +255,9 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
     {
-        self.delegate?.FTNChatSendMessageImage(self, image: image)
+        self.imagePicker.dismissViewControllerAnimated(true) { () -> Void in
+            self.delegate?.FTNChatSendMessageImage(self, image: image)
+        }
     }
     
     func messageBarGifButtonClicked(messageBar: FTNMessageBar)

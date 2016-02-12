@@ -84,9 +84,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadImageCell:", name: FTNChatNotifications.imageLoaded(), object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadAudioCell:", name: FTNChatNotifications.audioLoaded(), object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadGifCell:", name: FTNChatNotifications.gifLoaded(), object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
   
@@ -359,12 +356,30 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         })
     }
     
-    func FTNChatSendMessageAudio(chat: FTNChatController, audio: NSData) {
+    func FTNChatSendMessageAudio(chat: FTNChatController, audio: NSData)
+    {
         
     }
     
-    func FTNChatSendMessageText(chat: FTNChatController, message: String) {
+    func FTNChatSendMessageText(chat: FTNChatController, message: String)
+    {
         self.sendMessage(message)
+    }
+    
+    func FTNChatMessageClicked(chat: FTNChatController, message: Message, indexPath: NSIndexPath)
+    {
+        let image = DAOContents.sharedInstance.getImageInfoFromKey(message.contentKey!)
+        if(image != nil)
+        {
+            let attributes : UICollectionViewLayoutAttributes = self.chatController.collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
+            let frame = attributes.frame
+            
+            let origin = self.chatController.collectionView.convertRect(frame, toView: self.chatController.collectionView.superview)
+            
+            self.imageZoom = ImageZoom_View(image: image!, message: message, origin: origin, controller: self)
+            self.view.addSubview(self.imageZoom)
+            self.imageZoom.fadeIn()
+        }
     }
 
 }

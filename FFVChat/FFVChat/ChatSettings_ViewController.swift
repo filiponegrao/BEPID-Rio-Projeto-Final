@@ -118,6 +118,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         
         //INFERNO
 
+        self.hou = "x hours "
+        self.min = " x minutes"
     }
     
     override func viewWillAppear(animated: Bool)
@@ -415,11 +417,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-
         if(component == 0)
         {
-            self.hou = self.hours[row]
-            
             if(self.hours[row] == 1)
             {
                 if(self.min == 0)

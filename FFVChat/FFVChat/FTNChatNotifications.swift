@@ -27,6 +27,11 @@ class FTNChatNotifications
         return "messageSent_\(id)"
     }
     
+    class func messageSeen(id: String) -> String
+    {
+        return "messageSeen_\(id)"
+    }
+    
     class func messageRead(id: String) -> String
     {
         return "messageRead_\(id)"
@@ -42,19 +47,20 @@ class FTNChatNotifications
         return "messageSendError_\(id)"
     }
     
-    class func imageLoaded() -> String
+    class func imageLoaded(id: String) -> String
     {
-        return "imageLoaded"
+        return "imageLoaded_\(id)"
     }
     
-    class func audioLoaded() -> String
+    class func audioLoaded(id: String) -> String
     {
-        return "audioLoaded"
+        return "audioLoaded_\(id)"
     }
     
-    class func gifLoaded() -> String
+    class func gifLoaded(id: String) -> String
     {
-        return "gifLoaded"
+        return "gifLoaded_\(id)"
     }
-    
 }
+
+
