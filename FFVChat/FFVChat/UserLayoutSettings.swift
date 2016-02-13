@@ -34,7 +34,7 @@ class UserLayoutInfo: NSManagedObject {
         info.currentBackground = UIImage(named: "bluSky")?.highestQualityJPEGNSData
         info.currentTheme = "Default"
         info.visualEffects = true
-        info.textLifespan = 60
+        info.textLifespan = 1
         info.currentImageFilter = ImageFilter.Circle.rawValue
         
         return info
@@ -185,8 +185,8 @@ class UserLayoutSettings : NSObject
     }
     
     /**
-     * Levado em conta como segundos
-     * por padrao, 60 segundos
+     * Levado em conta como minuto
+     * por padrao, 1 minuto
      */
     func getCurrentLifespan() -> Int
     {
@@ -201,8 +201,8 @@ class UserLayoutSettings : NSObject
     }
     
     /**
-     * Levado em conta como segundos
-     * por padrao, 60 segundos
+     * Levado em conta como minuto
+     * por padrao, 1 minuto
      */
     func setCurrentLifespan(time: Int)
     {
@@ -210,6 +210,7 @@ class UserLayoutSettings : NSObject
         {
             self.settings!.textLifespan = time
             self.save()
+            print("lifespan de mensagens definido para: \(time) minutos")
         }
     }
     

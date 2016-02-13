@@ -28,7 +28,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     var lifespanText : String!  //armazena valor do picker view enquanto está sendo alterado
     
-    let hours = Array(1...24)
+    let hours = Array(0...24)
     
     let minutes = Array(0...59)
     
@@ -123,7 +123,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillAppear(animated: Bool)
     {
         //pegar info bd
-        self.lifespanValue = 60
+        self.lifespanValue = UserLayoutSettings.sharedInstance.getCurrentLifespan()
         
         //pegando valor em minutos e salvando em horas e minutos
         let savedHour = self.lifespanValue / 60
@@ -563,6 +563,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         //atualiza text field com novo valor configurado
         self.lifespanField.text = self.lifespanText
         self.lifespanField.resignFirstResponder()
+        
+        UserLayoutSettings.sharedInstance.setCurrentLifespan(self.lifespanValue)
     }
     
     func cancelPicker()

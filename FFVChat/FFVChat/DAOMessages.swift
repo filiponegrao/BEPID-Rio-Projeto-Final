@@ -15,8 +15,6 @@ private let data = DAOMessages()
 
 class DAOMessages : NSObject
 {
-    let defaultTime = 60
-    
     var currentMessage : Message?
     
     var lastMessage : Message!
@@ -134,13 +132,15 @@ class DAOMessages : NSObject
         let now = NSDate()
         let id = self.createMessageKey(username, date: now)
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: self.defaultTime, type: .Text, contentKey: nil, text: text, status: messageStatus.Ready.rawValue)
+        let time = UserLayoutSettings.sharedInstance.getCurrentLifespan()
+        
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: time, type: .Text, contentKey: nil, text: text, status: messageStatus.Ready.rawValue)
         
         self.save()
         
         NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageReady(id), object: nil, userInfo: nil)
         
-        DAOPostgres.sharedInstance.sendTextMessage(id, username: username, lifeTime: self.defaultTime, text: text, sentDate: now)
+        DAOPostgres.sharedInstance.sendTextMessage(id, username: username, lifeTime: time, text: text, sentDate: now)
         
         //Push notification
         if(!self.delay)
@@ -228,11 +228,13 @@ class DAOMessages : NSObject
         
         let id = self.createMessageKey(username, date: now)
         
-        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: self.defaultTime, type: .Gif, contentKey: gifName, text: nil, status: messageStatus.Ready.rawValue)
+        let time = UserLayoutSettings.sharedInstance.getCurrentLifespan()
+        
+        let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: time, type: .Gif, contentKey: gifName, text: nil, status: messageStatus.Ready.rawValue)
         
         self.save()
         
-        DAOPostgres.sharedInstance.sendGifMessage(id, username: username, lifeTime: self.defaultTime, gifName: gifName, sentDate: now)
+        DAOPostgres.sharedInstance.sendGifMessage(id, username: username, lifeTime: time, gifName: gifName, sentDate: now)
         
         DAOParse.pushImageNotification(username)
         
