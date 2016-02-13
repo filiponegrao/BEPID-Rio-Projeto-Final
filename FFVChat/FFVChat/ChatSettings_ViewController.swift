@@ -115,8 +115,9 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.delegate = self
         self.lifespanField.inputView = self.pickerView
         self.lifespanField.inputAccessoryView = toolBar
+        self.lifespanField.autocorrectionType = .No
+        self.lifespanField.selected = false
         
-
     }
     
     override func viewWillAppear(animated: Bool)
@@ -193,6 +194,31 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         
     }
+    
+//    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool
+//    {
+//        //NAO ADIANTOU OU NAO ESTOU SABENDO USAR
+//        if (action == "copy:" || action == "cut:" || action == "paste:" || action == "select:" || action == "selectAll:")
+//        {
+//            return false
+//        }
+//
+//        
+//        return super.canPerformAction(action, withSender:sender)
+//    }
+//    
+//    override func targetForAction(action: Selector, withSender sender: AnyObject?) -> AnyObject?
+//    {
+//        //NAO ADIANTOU OU NAO ESTOU SABENDO USAR
+//        if (action == "copy:" || action == "cut:" || action == "paste:" || action == "select:" || action == "selectAll:")
+//        {
+//            return nil
+//        }
+//        
+//        return super.targetForAction(action, withSender: sender)
+//    }
+    
+    //FIM TEXT FIELD
     
     //TABLEVIEW PROPERTIES//
     
