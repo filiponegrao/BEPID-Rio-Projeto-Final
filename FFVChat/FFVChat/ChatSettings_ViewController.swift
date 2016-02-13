@@ -123,10 +123,6 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(animated: Bool)
     {
-        //valores picker view//
-        self.hou = 1
-        self.min = 0
-    
         //pegar info bd
         self.lifespanValue = 60
         
@@ -160,6 +156,10 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.pickerView.selectRow(savedHour - 1, inComponent: 0, animated: true)
         self.pickerView.selectRow(savedMinutes, inComponent: 1, animated: true)
+        
+        //valores picker view//
+        self.hou = savedHour
+        self.min = savedMinutes
 
     }
     
@@ -537,6 +537,9 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.pickerView.selectRow(self.lifespanValue / 60 - 1, inComponent: 0, animated: true)
         self.pickerView.selectRow(self.lifespanValue % 60, inComponent: 1, animated: true)
+        
+        self.hou = self.lifespanValue / 60
+        self.min = self.lifespanValue % 60
         
     }
     
