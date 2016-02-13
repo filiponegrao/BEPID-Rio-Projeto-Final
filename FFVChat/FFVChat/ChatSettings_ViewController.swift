@@ -22,21 +22,19 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     var pickerView : UIPickerView!
     
-    var lifespanField : UITextField!
+    var lifespanField : UITextField! //exibe lifespan pro usuário
     
-    var lifespanValue : Int!
+    var lifespanValue : Int!  //valor salvo no bd em minutos
     
-    var lifespanText : String!
+    var lifespanText : String!  //armazena valor do picker view enquanto está sendo alterado
     
     let hours = Array(1...24)
     
     let minutes = Array(0...59)
     
-    var hou : Int!
+    var hou : Int!  //lifespan em horas
     
-    var min : Int!
-    
-    let seconds = Array(0...59)
+    var min : Int!  //lifespan em minutos
     
     override func viewDidLoad()
     {
@@ -100,7 +98,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             subView?.hidden = true
         }
         
-        let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
+        let doneButton = UIBarButtonItem(title: "Save", style: UIBarButtonItemStyle.Plain, target: self, action: "donePicker")
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let cancelButton = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelPicker")
         
@@ -126,9 +124,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         //pegar info bd
         self.lifespanValue = 60
         
+        //pegando valor em minutos e salvando em horas e minutos
         let savedHour = self.lifespanValue / 60
         let savedMinutes = self.lifespanValue % 60
         
+        //pro texto ficar correto plural / singular
         if(savedHour == 1)
         {
             if(savedMinutes != 0)
@@ -152,6 +152,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
         
+        //atualiza text field
         self.lifespanField.text = self.lifespanText
         
         self.pickerView.selectRow(savedHour - 1, inComponent: 0, animated: true)
@@ -455,8 +456,10 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         
         if(component == 0)
         {
+            //pegando valor selecionado no picker view
             self.hou = self.hours[row]
 
+            //organizando texto que vai pro text field
             if(self.hours[row] == 1)
             {
                 if(self.min == 0)
@@ -486,8 +489,10 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             
             if(self.minutes[row] == 0)
             {
+                //pegando valor selecionado no picker view
                 self.min = 0
                 
+                //organizando texto que vai pro text field
                 if(self.hou == 1)
                 {
                     self.lifespanText = "\(self.hou) hour"
@@ -499,8 +504,10 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             }
             else
             {
+                //pegando valor selecionado no picker view
                 self.min = self.minutes[row]
 
+                //organizando texto que vai pro text field
                 if(self.hou == 1)
                 {
                     self.lifespanText = "\(self.hou) hour" + " \(self.min) min"
@@ -527,6 +534,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanValue = (self.hou * 60) + self.min
 //        print(self.lifespanValue)
         
+        //atualiza text field com novo valor configurado
         self.lifespanField.text = self.lifespanText
         self.lifespanField.resignFirstResponder()
     }
@@ -535,9 +543,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         self.lifespanField.resignFirstResponder()
         
+        //retoma picker view com valores originais (últimos salvos)
         self.pickerView.selectRow(self.lifespanValue / 60 - 1, inComponent: 0, animated: true)
         self.pickerView.selectRow(self.lifespanValue % 60, inComponent: 1, animated: true)
         
+        //retoma valores originais
         self.hou = self.lifespanValue / 60
         self.min = self.lifespanValue % 60
         
