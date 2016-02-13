@@ -703,6 +703,7 @@ class DAOParse
     {
         let query = PFUser.query()!
         query.whereKey("username", equalTo: username)
+        query.whereKey("updatedAt", greaterThan: DAOContacts.sharedInstance.getLastUpdateContact(username)!)
         query.getFirstObjectInBackgroundWithBlock { (object: PFObject?, error: NSError?) -> Void in
             
             if(object != nil)

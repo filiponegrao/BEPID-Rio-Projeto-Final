@@ -50,7 +50,7 @@ class ChatTextView : UIView
             view.alpha = otherMessagesAlpha
         }
         
-        textView = UITextView(frame: CGRectMake((margemCellLateral*2), margemCellText, frame.width - (margemCellLateral*2)*2, height))
+        textView = UITextView(frame: CGRectMake((margemCellLateral + margemCellLateral/2), margemCellText, frame.width - (margemCellLateral*2) - margemCellLateral, height))
         textView.backgroundColor = UIColor.clearColor()
         textView.userInteractionEnabled = false
         textView.text = text

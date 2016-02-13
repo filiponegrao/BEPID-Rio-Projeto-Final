@@ -81,10 +81,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
   
     }
@@ -95,9 +91,13 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     {
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+        
         self.chatController.messages = self.messages
         self.chatController.collectionView.reloadData()
         self.chatController.scrollToBottom()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
         
     }
     override func viewDidAppear(animated: Bool)
@@ -108,10 +108,10 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     override func viewWillDisappear(animated: Bool)
     {
         
-    }
-    override func viewDidDisappear(animated: Bool)
-    {
         DAOPostgres.sharedInstance.stopRefreshing()
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.newMessage(), object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.messageErased(), object: nil)
+
     }
     
     
@@ -235,6 +235,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     /** SEND TEXT MESSAGE */
     func sendMessage(text: String)
     {
+        print("enviando mensagem...")
         let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, text: text)
         
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)

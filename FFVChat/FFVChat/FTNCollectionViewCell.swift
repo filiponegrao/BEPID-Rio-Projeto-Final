@@ -34,7 +34,7 @@ class FTNCollectionViewCell: UICollectionViewCell
         super.init(frame: frame)
         self.backgroundColor = UIColor.clearColor()
         
-        self.labelDate = UILabel(frame: CGRectMake(frame.size.width - 32 - margemCellLateral, frame.size.height - 30, 30, 15))
+        self.labelDate = UILabel(frame: CGRectMake(frame.size.width - 35 - margemCellLateral, margemCellView+(self.frame.size.height-margemCellView*2)-20, 30, 15))
         self.labelDate.text = "00:00"
         self.labelDate.font = UIFont(name: "Gill Sans", size: 11)
         self.labelDate.alpha = 0.8
@@ -143,6 +143,8 @@ class FTNCollectionViewCell: UICollectionViewCell
             print("erro")
             
         }
+        
+        self.bringSubviewToFront(self.labelDate)
     }
     
     func setSent()

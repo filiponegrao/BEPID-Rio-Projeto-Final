@@ -206,7 +206,10 @@ class DAOContacts
                 if(image != nil)
                 {
                     contact.profileImage = image
+                    contact.thumb = UIImage(data: image!)?.lowestQualityJPEGNSData
+                    contact.lastUpdate = NSDate()
                 }
+                self.save()
                 i++
                 if((i+1) == cont)
                 {
@@ -229,6 +232,28 @@ class DAOContacts
             if(results.count > 0)
             {
                 return results.first
+            }
+        }
+        catch
+        {
+            return nil
+        }
+        
+        return nil
+    }
+    
+    func getLastUpdateContact(username: String) -> NSDate?
+    {
+        let predicate = NSPredicate(format: "username == %@", username)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        fetchRequest.predicate = predicate
+        
+        do { let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Contact]
+            
+            if(results.count > 0)
+            {
+                return results.first?.lastUpdate
             }
         }
         catch

@@ -14,9 +14,12 @@ extension UserLayoutInfo
 {
     @NSManaged var currentBackground: NSData?
     @NSManaged var currentTheme: String?
+    @NSManaged var currentImageFilter: String?
     @NSManaged var chatSounds: NSNumber?
     @NSManaged var otherSounds: NSNumber?
     @NSManaged var visualEffects: NSNumber?
+    @NSManaged var textLifespan: NSNumber?
+
 }
 
 
@@ -31,6 +34,8 @@ class UserLayoutInfo: NSManagedObject {
         info.currentBackground = UIImage(named: "bluSky")?.highestQualityJPEGNSData
         info.currentTheme = "Default"
         info.visualEffects = true
+        info.textLifespan = 60
+        info.currentImageFilter = ImageFilter.Circle.rawValue
         
         return info
     }
@@ -88,6 +93,21 @@ class UserLayoutSettings : NSObject
     }
     
     func getDefaultBackground() -> UIImage
+    {
+        
+        return UIImage(named: "blueSky")!
+    }
+    
+    func setCurrentBackground(image: UIImage)
+    {
+        if(self.settings != nil)
+        {
+            self.settings?.currentBackground = image.highestQualityJPEGNSData
+            self.save()
+        }
+    }
+    
+    func getCurrentBackground() -> UIImage
     {
         if(self.settings != nil)
         {
@@ -160,6 +180,35 @@ class UserLayoutSettings : NSObject
         if(self.settings != nil)
         {
             self.settings!.visualEffects = status
+            self.save()
+        }
+    }
+    
+    /**
+     * Levado em conta como segundos
+     * por padrao, 60 segundos
+     */
+    func getCurrentLifespan() -> Int
+    {
+        if(self.settings != nil)
+        {
+            return Int(self.settings!.textLifespan!)
+        }
+        else
+        {
+            return 60
+        }
+    }
+    
+    /**
+     * Levado em conta como segundos
+     * por padrao, 60 segundos
+     */
+    func setCurrentLifespan(time: Int)
+    {
+        if(self.settings != nil)
+        {
+            self.settings!.textLifespan = time
             self.save()
         }
     }

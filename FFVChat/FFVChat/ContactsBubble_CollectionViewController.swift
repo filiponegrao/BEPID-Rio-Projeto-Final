@@ -65,7 +65,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
         self.collectionView!.reloadData()
-        
     }
     
 

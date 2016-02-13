@@ -31,6 +31,7 @@ class FTNChatView : NSObject
         collectionView.keyboardDismissMode = .Interactive
         collectionView.registerClass(FTNCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.scrollEnabled = true
 
         return collectionView
     }

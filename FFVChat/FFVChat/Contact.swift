@@ -22,6 +22,8 @@ class Contact: NSManagedObject {
         contact.trustLevel = trustLevel
         contact.profileImage = profileImage
         contact.isFavorit = false
+        contact.lastUpdate = createdAt
+        
         if(profileImage != nil)
         {
             contact.thumb = UIImage(data: profileImage!)!.lowestQualityJPEGNSData

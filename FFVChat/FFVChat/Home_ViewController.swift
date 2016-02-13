@@ -47,23 +47,21 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.view.addSubview(self.background)
         Optimization.addParallaxToView(self.background)
         
+        
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
         self.view.addSubview(self.navigationBar)
         
-        
         self.contentSize = CGSizeMake(screenWidth, screenHeight - self.navigationBar.frame.size.height)
-        
         let flowContacts = flowLayoutSetup()
         let flowFavourites = flowLayoutSetup()
+        
         
         //Contacts
         self.contactsController = ContactsBubble_CollectionViewController(collectionViewLayout: flowContacts, size: CGSize(width: screenWidth, height: self.contentSize.height))
         self.contactsController.home = self
         self.contactsController.title = "All Contacts"
-
         Optimization.addInverseParallaxToView(self.contactsController.collectionView!)
-        
         let tap = UITapGestureRecognizer(target: self, action: "closeSearch")
         self.contactsController.collectionView?.addGestureRecognizer(tap)
         
@@ -72,10 +70,8 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.favouritesController = FavouritesBubble_CollectionViewController(collectionViewLayout: flowFavourites, size: CGSize(width: screenWidth, height: self.contentSize.height))
         self.favouritesController.home = self
         self.favouritesController.title = "Favorites"
-        
         let tap2 = UITapGestureRecognizer(target: self, action: "closeSearch")
         self.favouritesController.collectionView?.addGestureRecognizer(tap2)
-        
         self.controllerArray = [self.contactsController, self.favouritesController]
         
         
@@ -124,21 +120,21 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "mesageReceived", name: FTNChatNotifications.newMessage(), object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: NotificationController.center.messageReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: FTNChatNotifications.newMessage(), object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
         
-        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "", name: NotificationController.center.printScreenReceived.name, object: nil)
+        self.reloadCellAnimations()
     }
     
     
     
     func reloadCellAnimations()
     {
-//        self.allContacts.reloadAnimations()
-//        self.favourites.reloadAnimations()
+        self.contactsController.reloadAnimations()
+        self.favouritesController.reloadAnimations()
     }
     
     
@@ -147,10 +143,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         DAOFriendRequests.sharedInstance.friendsAccepted()
         DAOPostgres.sharedInstance.startObserve()
         
-        self.favouritesController.reloadAnimations()
         self.favouritesController.checkUnreadMessages()
-        
-        self.contactsController.reloadAnimations()
         self.contactsController.checkUnreadMessages()
         
     }
@@ -159,7 +152,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     override func viewDidDisappear(animated: Bool)
     {
         DAOPostgres.sharedInstance.stopObserve()
-        
     }
     
     

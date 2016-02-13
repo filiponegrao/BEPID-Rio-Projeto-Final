@@ -66,13 +66,23 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = UIColor.clearColor()
+        self.collectionView.scrollEnabled = true
         self.addSubview(self.collectionView)
+        
+        let gesture = UITapGestureRecognizer(target: self, action: "endEdition")
+        gesture.cancelsTouchesInView = false
+        self.collectionView.addGestureRecognizer(gesture)
         
         self.bringSubviewToFront(self.messageBar)
         
         
         self.registerChatNotificatons()
         
+    }
+    
+    func endEdition()
+    {
+        self.messageBar.textView.endEditing(true)
     }
     
     func registerChatNotificatons()
@@ -87,7 +97,11 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         {
             self.messageBar.frame.origin.y = self.frame.height - keyboardSize.height - self.messageBar.frame.size.height
             self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height - keyboardSize.height
-            self.collectionView.contentOffset.y += keyboardSize.height
+            
+            if(self.collectionView.contentSize.height > self.collectionView.frame.size.height)
+            {
+                self.collectionView.contentOffset.y += keyboardSize.height
+            }
         }
     }
     
@@ -151,7 +165,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         {
             DAOMessages.sharedInstance.deleteMessageAfterTime(message)
             
-            if(message.status == messageStatus.Ready.rawValue)
+            if(message.status == messageStatus.ErrorSent.rawValue)
             {
                 DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
             }
@@ -204,7 +218,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         
         alert.addAction(UIAlertAction(title: "Apagar", style: .Default, handler: { (action: UIAlertAction) -> Void in
             
-            DAOMessages.sharedInstance.deleteMessage(message.id)
+            DAOMessages.sharedInstance.deleteMessage(message.id, atualizaNoBanco: false)
         }))
         
         alert.addAction(UIAlertAction(title: "Cancelar", style: .Cancel, handler: { (action: UIAlertAction) -> Void in

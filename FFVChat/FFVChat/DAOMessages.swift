@@ -97,7 +97,7 @@ class DAOMessages : NSObject
         let doneMessages = TimeBomb.sharedInstance.doneTimers()
         for message in doneMessages
         {
-            self.deleteMessage(message)
+            self.deleteMessage(message, atualizaNoBanco: true)
         }
         
         let oldMessages = TimeBomb.sharedInstance.checkForOldTimers()
@@ -130,6 +130,7 @@ class DAOMessages : NSObject
     
     func sendMessage(username: String, text: String) -> Message
     {
+        print("registrando no banco...")
         let now = NSDate()
         let id = self.createMessageKey(username, date: now)
         
@@ -416,7 +417,7 @@ class DAOMessages : NSObject
      * Retorna true caso a exclusao tenha sido feita
      * com sucesso e false caso contrario.
      */
-    func deleteMessage(id: String) -> Bool
+    func deleteMessage(id: String, atualizaNoBanco: Bool) -> Bool
     {
         let predicate = NSPredicate(format: "id == %@", id)
         
@@ -448,8 +449,9 @@ class DAOMessages : NSObject
                 
                 self.managedObjectContext.deleteObject(mssg)
                 self.save()
-                self.setMessageDeleted(id)
-
+                
+                if(atualizaNoBanco) { self.setMessageDeleted(id) }
+                
                 TimeBomb.sharedInstance.removeTimer(id)
 
                 NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageErased(), object: nil, userInfo: ["contact": contact, "index": index!])
@@ -491,7 +493,7 @@ class DAOMessages : NSObject
     {
         print("tempo de execucao finalizado para exclusao")
         let id = timer.userInfo?.objectForKey("id") as! String
-        self.deleteMessage(id)
+        self.deleteMessage(id, atualizaNoBanco: true)
     }
     
    
@@ -623,7 +625,7 @@ class DAOMessages : NSObject
         
         for message in messages
         {
-            self.deleteMessage(message.id)
+            self.deleteMessage(message.id, atualizaNoBanco: true)
         }
     }
     

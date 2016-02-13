@@ -15,6 +15,7 @@ import CoreData
 extension Contact {
 
     @NSManaged var createdAt: NSDate?
+    @NSManaged var lastUpdate: NSDate?
     @NSManaged var facebookId: String?
     @NSManaged var profileImage: NSData!
     @NSManaged var trustLevel: NSNumber!

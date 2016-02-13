@@ -42,6 +42,9 @@ class DAOPostgres : NSObject
     /** Busca as mensagens nao lidas no banco */
     let messageUrl_getUnread = "\(baseUrl)/Messages_getUnread.php"
     
+    /** Busca as mensagens nao lidas ou deletadas no banco */
+    let messageUrl_getUnreadAndDeleted = "\(baseUrl)/Messages_getUnreadAndDeleted.php"
+    
     /** Busca as mensagens ja deletadas no banco */
     let messageUrl_getDeleted = "\(baseUrl)/Messages_getDeleted.php"
     
@@ -85,21 +88,125 @@ class DAOPostgres : NSObject
      */
     func getUnreadMessages()
     {
-        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue, {
-            
-            print("refreshing messages...")
-            let parameters : [String:AnyObject]!  = ["target": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
-            
-            Alamofire.request(.POST, self.messageUrl_getUnread, parameters: parameters)
-                .responseJSON { response in
+        print("refreshing messages...")
+        let parameters : [String:AnyObject]!  = ["target": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
+        
+        Alamofire.request(.POST, self.messageUrl_getUnread, parameters: parameters)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
                     
-                    if let results = response.result.value {
+                    for result in results as! NSArray
+                    {
+                        let id = result["id"] as! String
+                        let typeString = result["type"] as! String
+                        let type = ContentType(rawValue: typeString)!
+                        let sender = result["sender"] as! String
+                        let key = result["contentkey"] as? String
+                        let lifeTime = (result["lifetime"] as! NSString).integerValue
+                        let date = result["sentdate"] as! String
+                        let sentDate = self.string2nsdate(date)
                         
-                        for result in results as! NSArray
+                        let decSender = EncryptTools.getUsernameFromEncrpted(sender)
+                        
+                        if(decSender != nil)
                         {
-                            let id = result["id"] as! String
+                            switch type
+                            {
+                                
+                            case .Text:
+                                
+                                let text = result["text"] as! String
+                                
+                                let decText = EncryptTools.decryptText(text)
+                                
+                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, text: decText, sentDate: sentDate, lifeTime: lifeTime))
+                                {
+                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                }
+                                
+                            case .Image:
+                                
+                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Image))
+                                {
+                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                }
+                                
+                            case .Audio:
+                                
+                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Audio))
+                                {
+                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                }
+                                
+                            case .Gif:
+                                
+                                if(DAOMessages.sharedInstance.addReceivedMessage(id, sender: decSender!, contentKey: key!, sentDate: sentDate, lifeTime: lifeTime, type: ContentType.Gif))
+                                {
+                                    self.setMessageReceived(DAOMessages.sharedInstance.lastMessage.id)
+                                }
+                                
+                            default:
+                                
+                                print("Erro ao encontrar tipo do arquivo recebido!")
+                                
+                            }
+                        }
+                    }
+                }
+        }
+        
+    }
+    
+    
+    /**
+     * Checa no banco de dados as mensagens que ja foram marcadas
+     * como deletadas.
+     */
+    func checkForDeletedMessages()
+    {
+        let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
+        
+        Alamofire.request(.POST, self.messageUrl_getDeleted, parameters: parameters)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
+                    
+                    for result in results as! NSArray
+                    {
+                        let id = result["id"] as! String
+                        DAOMessages.sharedInstance.deleteMessage(id, atualizaNoBanco: false)
+                    }
+                }
+        }
+    }
+    
+    /**
+     * Funcao responsavel por pesquisar mensagens endereçadas
+     * ao usuario atual com o status de 'sent' (enviadas) ou 
+     * deletada.
+     * No caso de serem mensagens nao lidas, enviadas, o controlador
+     * adiciona as mesmas no armazenamento local e as marca como
+     * vistas no banco.
+     * Caso sejam mensagens ja deletadas, o controlador as deleta.
+     */
+    func getUnreadAndDeletedMessages()
+    {
+        print("refreshing unread and deleted messages...")
+        let parameters : [String:AnyObject]!  = ["target": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
+        
+        Alamofire.request(.POST, self.messageUrl_getUnreadAndDeleted, parameters: parameters)
+            .responseJSON { response in
+                
+                if let results = response.result.value
+                {
+                    for result in results as! NSArray
+                    {
+                        let id = result["id"] as! String
+                        let status = result["status"] as! String
+                        
+                        if(status == "sent")
+                        {
                             let typeString = result["type"] as! String
                             let type = ContentType(rawValue: typeString)!
                             let sender = result["sender"] as! String
@@ -154,46 +261,17 @@ class DAOPostgres : NSObject
                                 }
                             }
                         }
-                    }
-            }
-
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            })
-        })
-        
-    }
-    
-    /**
-     * Checa no banco de dados as mensagens que ja foram marcadas
-     * como deletadas.
-     */
-    func checkForDeletedMessages()
-    {
-        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue, {
-            
-            let parameters : [String:AnyObject]!  = ["sender": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername())]
-            
-            Alamofire.request(.POST, self.messageUrl_getDeleted, parameters: parameters)
-                .responseJSON { response in
-                    
-                    if let results = response.result.value {
-                        
-                        for result in results as! NSArray
+                        else if(status == "deleted")
                         {
-                            let id = result["id"] as! String
-                            DAOMessages.sharedInstance.deleteMessage(id)
+                            DAOMessages.sharedInstance.deleteMessage(id, atualizaNoBanco: false)
+                            self.deleteDeletedMessage(id)
                         }
                     }
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            })
-        })
+                }
+        }
 
     }
+
     
     func checkForUnacceptedFriendRequests(callback: (friendRequests: [FriendRequest]) -> Void)
     {
@@ -366,7 +444,6 @@ class DAOPostgres : NSObject
                 if(response.result.isFailure)
                 {
                     //Tratar falha no envio, por enquanto vou excluir
-                    DAOMessages.sharedInstance.deleteMessage(id)
                 }
                 else
                 {
@@ -389,7 +466,6 @@ class DAOPostgres : NSObject
                 if(response.result.isFailure)
                 {
                     //Tratar falha no envio, por enquanto vou excluir
-                    DAOMessages.sharedInstance.deleteMessage(id)
                 }
                 else
                 {
@@ -412,7 +488,6 @@ class DAOPostgres : NSObject
                 if(response.result.isFailure)
                 {
                     //Tratar falha no envio, por enquanto vou excluir
-                    DAOMessages.sharedInstance.deleteMessage(id)
                 }
                 else
                 {
@@ -454,11 +529,7 @@ class DAOPostgres : NSObject
                 
                 if(response.result.isFailure)
                 {
-                    //Tenta de novo, parça
-                    //                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
-                    //                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-                    //                        self.setMessageReceived(messageID)
-                    //                    }
+
                 }
                 else
                 {
@@ -543,8 +614,9 @@ class DAOPostgres : NSObject
     
     func refresh()
     {
-        self.checkForDeletedMessages()
-        self.getUnreadMessages()
+//        self.checkForDeletedMessages()
+//        self.getUnreadMessages()
+        self.getUnreadAndDeletedMessages()
     }
     
     
