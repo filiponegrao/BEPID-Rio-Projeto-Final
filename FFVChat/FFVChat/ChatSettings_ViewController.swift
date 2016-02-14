@@ -130,7 +130,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         let savedMinutes = self.lifespanValue % 60
         
         //pro texto ficar correto plural / singular
-        if(savedHour == 1)
+        if(savedHour == 0)
+        {
+            self.lifespanText = "\(savedMinutes) min"
+        }
+        else if(savedHour == 1)
         {
             if(savedMinutes != 0)
             {
@@ -156,7 +160,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         //atualiza text field
         self.lifespanField.text = self.lifespanText
         
-        self.pickerView.selectRow(savedHour - 1, inComponent: 0, animated: true)
+        self.pickerView.selectRow(savedHour, inComponent: 0, animated: true)
         self.pickerView.selectRow(savedMinutes, inComponent: 1, animated: true)
         
         //valores picker view//
@@ -439,7 +443,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         {
             let number = UILabel(frame: view.frame)
             
-            if(self.hours[row] == 1)
+            if(self.hours[row] == 0)
+            {
+                number.text = "0"
+            }
+            else if(self.hours[row] == 1)
             {
                 number.text = "\(self.hours[row]) hour"
             }
@@ -572,7 +580,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.resignFirstResponder()
         
         //retoma picker view com valores originais (últimos salvos)
-        self.pickerView.selectRow(self.lifespanValue / 60 - 1, inComponent: 0, animated: true)
+        self.pickerView.selectRow(self.lifespanValue / 60, inComponent: 0, animated: true)
         self.pickerView.selectRow(self.lifespanValue % 60, inComponent: 1, animated: true)
         
         //retoma valores originais
