@@ -160,6 +160,10 @@
 		80FEA2221C3C681F00DAA984 /* GifKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */; };
 		80FEA2241C3CAE5A00DAA984 /* CellWebGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2231C3CAE5A00DAA984 /* CellWebGifView.swift */; };
 		80FEA2261C3DC75400DAA984 /* AudioKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */; };
+		80FED0C11C70102600B024AE /* FTNCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FED0C01C70102600B024AE /* FTNCollection.swift */; };
+		80FED0C31C70109200B024AE /* FTNCollectionGifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FED0C21C70109200B024AE /* FTNCollectionGifCell.swift */; };
+		80FED0C51C70109F00B024AE /* FTNCollectionWebCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FED0C41C70109F00B024AE /* FTNCollectionWebCell.swift */; };
+		80FED0C71C7035DE00B024AE /* FTNCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FED0C61C7035DE00B024AE /* FTNCollectionViewHeader.swift */; };
 		80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF185A1BE3B15200C5F35E /* metaContact.swift */; };
 		80FF18A21BE51D7E00C5F35E /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A11BE51D7E00C5F35E /* NotificationController.swift */; };
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
@@ -387,6 +391,10 @@
 		80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifKeyboard.swift; sourceTree = "<group>"; };
 		80FEA2231C3CAE5A00DAA984 /* CellWebGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWebGifView.swift; sourceTree = "<group>"; };
 		80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioKeyboard.swift; sourceTree = "<group>"; };
+		80FED0C01C70102600B024AE /* FTNCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNCollection.swift; sourceTree = "<group>"; };
+		80FED0C21C70109200B024AE /* FTNCollectionGifCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNCollectionGifCell.swift; sourceTree = "<group>"; };
+		80FED0C41C70109F00B024AE /* FTNCollectionWebCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNCollectionWebCell.swift; sourceTree = "<group>"; };
+		80FED0C61C7035DE00B024AE /* FTNCollectionViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNCollectionViewHeader.swift; sourceTree = "<group>"; };
 		80FF185A1BE3B15200C5F35E /* metaContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = metaContact.swift; sourceTree = "<group>"; };
 		80FF18A11BE51D7E00C5F35E /* NotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		80FF18A31BE51EA800C5F35E /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -503,6 +511,10 @@
 			isa = PBXGroup;
 			children = (
 				800AE8661C6453A100B917FE /* FTNMessageBar.swift */,
+				80FED0C01C70102600B024AE /* FTNCollection.swift */,
+				80FED0C61C7035DE00B024AE /* FTNCollectionViewHeader.swift */,
+				80FED0C21C70109200B024AE /* FTNCollectionGifCell.swift */,
+				80FED0C41C70109F00B024AE /* FTNCollectionWebCell.swift */,
 			);
 			name = MessageBar;
 			sourceTree = "<group>";
@@ -1152,6 +1164,7 @@
 				F65A4F4B1C0CCDFD0092C403 /* Home_ViewController.swift in Sources */,
 				804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */,
 				8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */,
+				80FED0C71C7035DE00B024AE /* FTNCollectionViewHeader.swift in Sources */,
 				80FEA2261C3DC75400DAA984 /* AudioKeyboard.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				803657941BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
@@ -1167,6 +1180,7 @@
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
 				804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */,
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
+				80FED0C51C70109F00B024AE /* FTNCollectionWebCell.swift in Sources */,
 				804E45CB1C6037FA00753493 /* FilterView_Circle.swift in Sources */,
 				800AE85B1C64458C00B917FE /* FTNCollectionViewCell.swift in Sources */,
 				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,
@@ -1196,6 +1210,7 @@
 				F6AC54631BF95BD800CF7918 /* NavigationChangePassword_View.swift in Sources */,
 				F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */,
 				800AE85F1C64491900B917FE /* FTNContentTypes.swift in Sources */,
+				80FED0C11C70102600B024AE /* FTNCollection.swift in Sources */,
 				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
 				805172B91C1756A900687770 /* SweetAlert.swift in Sources */,
 				80FEA2221C3C681F00DAA984 /* GifKeyboard.swift in Sources */,
@@ -1266,6 +1281,7 @@
 				80AA13681BC3038C0035E8B2 /* MKTextField.swift in Sources */,
 				80E2FC821BC4C77F005F2DFB /* AddContact_ViewController.swift in Sources */,
 				F6178A581BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift in Sources */,
+				80FED0C31C70109200B024AE /* FTNCollectionGifCell.swift in Sources */,
 				803657991BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
 				8036579E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */,
 				803657861BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,

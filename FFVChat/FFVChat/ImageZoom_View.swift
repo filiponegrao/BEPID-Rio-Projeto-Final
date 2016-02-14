@@ -56,6 +56,7 @@ class ImageZoom_View: UIView {
         self.imageView = UIImageView(frame: CGRectMake(0, 70, screenWidth, screenHeight - 70))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.backgroundColor = UIColor.clearColor()
+        self.imageView.contentMode = .ScaleAspectFit
         
         
         /**
@@ -70,6 +71,7 @@ class ImageZoom_View: UIView {
         case ImageFilter.None.rawValue:
             
             self.imageView.image = UIImage(data: self.image.data)!
+            self.imageView.contentMode = .ScaleAspectFit
             self.addSubview(self.imageView)
             
         case ImageFilter.Circle.rawValue:

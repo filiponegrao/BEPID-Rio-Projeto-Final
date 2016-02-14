@@ -508,10 +508,10 @@ class DAOPostgres : NSObject
                 if(response.result.isFailure)
                 {
                     //Tenta de novo, parça
-//                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
-//                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-//                        self.setMessageReceived(messageID)
-//                    }
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        self.setMessageReceived(messageID)
+                    }
                 }
                 else
                 {
@@ -529,7 +529,11 @@ class DAOPostgres : NSObject
                 
                 if(response.result.isFailure)
                 {
-
+                    //Tenta de novo, parça
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        self.setMessageSeen(messageID)
+                    }
                 }
                 else
                 {
@@ -548,10 +552,10 @@ class DAOPostgres : NSObject
                 if(response.result.isFailure)
                 {
                     //Tenta de novo, parça
-                    //                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
-                    //                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-                    //                        self.setMessageReceived(messageID)
-                    //                    }
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(Int(1)) * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        self.setDeletedMessage(messageID)
+                    }
                 }
                 else
                 {
@@ -614,11 +618,8 @@ class DAOPostgres : NSObject
     
     func refresh()
     {
-//        self.checkForDeletedMessages()
-//        self.getUnreadMessages()
         self.getUnreadAndDeletedMessages()
     }
-    
     
     
     /*** OBSERVADOR **/
@@ -639,8 +640,6 @@ class DAOPostgres : NSObject
     
     func observe()
     {
-        self.checkForDeletedMessages()
-        self.getUnreadMessages()
         DAOFriendRequests.sharedInstance.reloadInfos()
     }
     

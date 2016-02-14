@@ -50,6 +50,30 @@ class DAOSentMidia
         }
     }
     
+    func reSendMidia(imageKey: String)
+    {
+        let fetch = NSFetchRequest(entityName: "SentMidia")
+        
+        let predicate = NSPredicate(format: "imageKey == %@", imageKey)
+        
+        fetch.predicate = predicate
+        
+        do { let results = try self.managedObjectContext.executeFetchRequest(fetch) as! [SentMidia]
+            
+            if(results.count > 0)
+            {
+                results.last?.lastSent = NSDate()
+                self.save()
+            }
+        }
+        catch {
+            
+            return
+        }
+        
+        return
+    }
+    
     func sentMidiaImageForKey(imageKey: String) -> UIImage?
     {
         let fetch = NSFetchRequest(entityName: "SentMidia")

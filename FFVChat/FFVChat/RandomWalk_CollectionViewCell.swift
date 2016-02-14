@@ -144,7 +144,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
             
             if(count > 9 && count < 99)
             {
-                size = CGSizeMake(width*2, width)
+                size = CGSizeMake(width+(width/5), width)
             }
             else if(count < 10)
             {
@@ -152,7 +152,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
             }
             else
             {
-                size = CGSizeMake(width*3, width)
+                size = CGSizeMake(width*(3/2), width)
             }
             
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
@@ -196,7 +196,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         var chat : Chat_ViewController!
         if(self.contactsController.chatController == nil)
         {
-            chat = Chat_ViewController(contact: contact!)
+            chat = Chat_ViewController(contact: contact!, homeController: self.contactsController)
             self.contactsController.chatController = chat
         }
         else

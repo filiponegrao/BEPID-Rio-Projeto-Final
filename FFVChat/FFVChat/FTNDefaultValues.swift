@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 
+//Collection values
+
 let collectionCellHeight : CGFloat = 44
 
 let defaultFont = UIFont(name: "Helvetica", size: 15)!
@@ -28,3 +30,12 @@ let heightForStatus : CGFloat = 10
 let margemCellLateral : CGFloat = 30
 
 let contentOptions = ["Camera","Photo Album"]
+
+
+//Message Bar
+
+let FTNLargura: CGFloat = UIScreen.mainScreen().bounds.width
+
+let gifcollectionBarHeight : CGFloat = FTNLargura + 44
+
+let gifcollectionBarWigth : CGFloat = FTNLargura

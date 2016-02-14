@@ -30,6 +30,9 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     //Messages
     var messages : [Message]!
     
+    //Gif Section
+    var gifGallery : FTNCollection!
+    
     //Message Bar
     var messageBar : FTNMessageBar!
     
@@ -73,8 +76,14 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         gesture.cancelsTouchesInView = false
         self.collectionView.addGestureRecognizer(gesture)
         
-        self.bringSubviewToFront(self.messageBar)
+        self.gifGallery = FTNCollection(origin: self.messageBar.frame.origin)
+        self.gifGallery.hidden = true
+        self.gifGallery.alpha = 0
+        self.gifGallery.closeButton.addTarget(self, action: "closeGifGallery", forControlEvents: .TouchUpInside)
         
+        self.addSubview(self.gifGallery)
+        
+        self.bringSubviewToFront(self.messageBar)
         
         self.registerChatNotificatons()
         
@@ -89,19 +98,20 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardChangeType:", name: UITextInputCurrentInputModeDidChangeNotification, object: nil)
     }
     
     func keyboardWillShow(notification: NSNotification)
     {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
         {
-            self.messageBar.frame.origin.y = self.frame.height - keyboardSize.height - self.messageBar.frame.size.height
-            self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height - keyboardSize.height
-            
             if(self.collectionView.contentSize.height > self.collectionView.frame.size.height)
             {
                 self.collectionView.contentOffset.y += keyboardSize.height
             }
+            
+            self.messageBar.frame.origin.y = self.frame.height - keyboardSize.height - self.messageBar.frame.size.height
+            self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height - keyboardSize.height
         }
     }
     
@@ -111,6 +121,20 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         {
             self.messageBar.frame.origin.y = self.frame.height - self.messageBar.frame.size.height
             self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height
+        }
+    }
+    
+    func keyboardChangeType(notification: NSNotification)
+    {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
+        {
+            if(self.collectionView.contentSize.height > self.collectionView.frame.size.height)
+            {
+                self.collectionView.contentOffset.y += keyboardSize.height
+            }
+            
+            self.messageBar.frame.origin.y = self.frame.height - keyboardSize.height - self.messageBar.frame.size.height
+            self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height - keyboardSize.height
         }
     }
     
@@ -276,7 +300,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func messageBarGifButtonClicked(messageBar: FTNMessageBar)
     {
-        
+        self.openGifGallery()
     }
     
     func messageBarEndRecording(messageBar: FTNMessageBar, audio: NSData)
@@ -314,6 +338,35 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
     }
 
+    /** ################ GIF FUNCTIONS ################# **/
     
+    func closeGifGallery()
+    {
+        self.messageBar.hidden = false
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.gifGallery.frame.origin.y = self.messageBar.frame.origin.y
+            self.gifGallery.alpha = 0
+            
+            }) { (success: Bool) -> Void in
+                
+                self.gifGallery.hidden = true
+        }
+    }
+    
+    func openGifGallery()
+    {
+        self.messageBar.hidden = true
+        self.gifGallery.hidden = false
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.gifGallery.alpha = 1
+            self.gifGallery.frame.origin.y = self.frame.size.height - self.gifGallery.frame.size.height
+            
+            }) { (success: Bool) -> Void in
+                
+        }
+    }
+
 }
 

@@ -29,6 +29,8 @@ class FilterView_Spark : UIView
         self.imageView = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.image = UIImage(data: self.image.data)!
+        self.imageView.contentMode = .ScaleAspectFit
+
         self.addSubview(self.imageView)
         
         self.sparkTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "alphaHandler", userInfo: nil, repeats: true)
