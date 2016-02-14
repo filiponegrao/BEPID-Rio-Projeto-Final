@@ -494,7 +494,18 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             self.hou = self.hours[row]
 
             //organizando texto que vai pro text field
-            if(self.hours[row] == 1)
+            if(self.hours[row] == 0)
+            {
+                if(self.min == 0)
+                {
+                    self.lifespanText = "0"
+                }
+                else
+                {
+                    self.lifespanText = "\(self.min) min"
+                }
+            }
+            else if(self.hours[row] == 1)
             {
                 if(self.min == 0)
                 {
@@ -524,10 +535,14 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             if(self.minutes[row] == 0)
             {
                 //pegando valor selecionado no picker view
-                self.min = 0
+                self.min = self.minutes[row]
                 
                 //organizando texto que vai pro text field
-                if(self.hou == 1)
+                if(self.hou == 0)
+                {
+                    self.lifespanText = "0"
+                }
+                else if(self.hou == 1)
                 {
                     self.lifespanText = "\(self.hou) hour"
                 }
@@ -542,7 +557,11 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
                 self.min = self.minutes[row]
 
                 //organizando texto que vai pro text field
-                if(self.hou == 1)
+                if(self.hou == 0)
+                {
+                    self.lifespanText = "\(self.min) min"
+                }
+                else if(self.hou == 1)
                 {
                     self.lifespanText = "\(self.hou) hour" + " \(self.min) min"
                 }
@@ -564,15 +583,31 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     
     func donePicker()
     {
-        //passar info bd
-        self.lifespanValue = (self.hou * 60) + self.min
-//        print(self.lifespanValue)
-        
-        //atualiza text field com novo valor configurado
-        self.lifespanField.text = self.lifespanText
-        self.lifespanField.resignFirstResponder()
-        
-        UserLayoutSettings.sharedInstance.setCurrentSecondsLifespan(self.lifespanValue*60)
+        if(self.lifespanText != "0")
+        {
+            self.lifespanValue = (self.hou * 60) + self.min
+            //        print(self.lifespanValue)
+            
+            //atualiza text field com novo valor configurado
+            self.lifespanField.text = self.lifespanText
+            self.lifespanField.resignFirstResponder()
+            
+            //passando info bd
+            UserLayoutSettings.sharedInstance.setCurrentSecondsLifespan(self.lifespanValue * 60)
+            
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Oops", message: "You must choose, at least, 1 minute!", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            let acceptAction = UIAlertAction(title: "Ok", style: .Default) { (UIAlertAction) -> Void in
+                //limpar todas as conversas//
+            }
+            
+            alert.addAction(acceptAction)
+            
+            presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     func cancelPicker()
