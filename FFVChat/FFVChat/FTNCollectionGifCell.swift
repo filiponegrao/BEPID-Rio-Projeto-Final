@@ -46,6 +46,8 @@ class FTNCollectionGifCell : UICollectionViewCell
         
         self.confirmView.transform = CGAffineTransformMakeScale(0.1, 0.1)
         self.confirmView.hidden = true
+        
+        self.gifView.addSubview(self.confirmView)
     }
 
     required init?(coder aDecoder: NSCoder)

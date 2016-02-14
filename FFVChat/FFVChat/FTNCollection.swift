@@ -19,6 +19,8 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
     
     var serverGifs : [String]!
     
+    var selectedGif: String = ""
+    
     init(origin: CGPoint)
     {        
         super.init(frame: CGRectMake(origin.x, origin.y, gifcollectionBarWigth, gifcollectionBarHeight))
@@ -75,12 +77,23 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
+        
         switch indexPath.section
         {
         case 0:
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
             cell.gifView.runGif(self.gifs[indexPath.item].data)
             cell.contentMode = .ScaleAspectFill
+            
+            if(self.gifs[indexPath.item].name == self.selectedGif)
+            {
+                cell.insertConfirm()
+            }
+            else
+            {
+                cell.removeConfirm()
+            }
+            
             return cell
             
         case 1:
@@ -88,6 +101,16 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
             cell.webView.loadRequest(NSURLRequest(URL: NSURL(string: DAOContents.sharedInstance.getUrlFromGifName(self.serverGifs[indexPath.item]))!))
             cell.webView.contentScaleFactor = 2
             cell.webView.userInteractionEnabled = false
+            
+            if(self.serverGifs[indexPath.item] == self.selectedGif)
+            {
+                cell.insertConfirm()
+            }
+            else
+            {
+                cell.removeConfirm()
+            }
+            
             return cell
             
         default:
@@ -96,6 +119,45 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
             return cell
         }
         
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        switch indexPath.section
+        {
+        case 0:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
+            self.selectedGif = self.gifs[indexPath.item].name
+            cell.insertConfirm()
+            
+            
+        case 1:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellWeb", forIndexPath: indexPath) as! FTNCollectionWebCell
+            self.selectedGif = self.serverGifs[indexPath.item]
+            cell.insertConfirm()
+            
+        default:
+            break
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        switch indexPath.section
+        {
+        case 0:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
+            self.selectedGif = self.gifs[indexPath.item].name
+            cell.removeConfirm()
+            
+            
+        case 1:
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellWeb", forIndexPath: indexPath) as! FTNCollectionWebCell
+            self.selectedGif = self.serverGifs[indexPath.item]
+            cell.removeConfirm()
+            
+        default:
+            break
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
@@ -131,7 +193,7 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
             case 0:
                 headerView.title.text = "GIFs baixados (enviados e recebidos)"
             case 1:
-                headerView.title.text = "GIFs disponiveis"
+                headerView.title.text = "MAIS GIFS"
                 
             default:
                 break

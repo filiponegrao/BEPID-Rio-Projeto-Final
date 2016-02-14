@@ -19,15 +19,17 @@ class FTNCollectionViewHeader : UICollectionReusableView
     {
         super.init(frame: frame)
         
-        self.title = UILabel(frame: CGRectMake(20,0,self.frame.size.width/2 - 20, self.frame.size.height))
+        self.title = UILabel(frame: CGRectMake(20,0,self.frame.size.width - 20, self.frame.size.height))
         self.title.text = "Section"
         self.title.textColor = oficialLightGray
+//        self.title.backgroundColor = oficialLightGray
         self.title.font = UIFont(name: "Arial Rounded MT Bold", size: 16)
+        self.title.layer.cornerRadius = 5
         self.addSubview(self.title)
         
         self.image = UIImageView(frame: CGRectMake(self.frame.size.width/2, 0, self.frame.size.width/2, self.frame.size.height))
         self.image.contentMode = .ScaleAspectFit
-        self.addSubview(self.image)
+//        self.addSubview(self.image)
         
     }
 
