@@ -47,6 +47,8 @@ class FTNCollectionWebCell : UICollectionViewCell
         
         self.confirmView.transform = CGAffineTransformMakeScale(0.1, 0.1)
         self.confirmView.hidden = true
+        
+        self.webView.addSubview(self.confirmView)
     }
     
     required init?(coder aDecoder: NSCoder)
