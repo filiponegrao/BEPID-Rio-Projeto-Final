@@ -520,7 +520,6 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         }
         else
         {
-            
             if(self.minutes[row] == 0)
             {
                 //pegando valor selecionado no picker view
