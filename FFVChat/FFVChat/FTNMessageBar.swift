@@ -54,6 +54,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     //Gif Options
     var gifButton : UIButton!
     
+    
     var delegate : FTNMessageBarDelegate?
     
     weak var controller : UIViewController!
@@ -117,8 +118,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.sendButton.setTitleColor(oficialLightGray, forState: .Disabled)
         self.sendButton.addTarget(self, action: "sendButtonClicked", forControlEvents: .TouchUpInside)
         self.addSubview(self.sendButton)
-        
-        
+                
         self.initAudioRecorder()
     }
 
@@ -190,10 +190,13 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     
     func sendButtonClicked()
     {
-        self.delegate?.messageBarSendButtonClicked(self, text: self.textView.text)
-        self.textView.text = ""
-        self.textModeOff()
-        self.reduceBar()
+        if(self.textView.text != "Message..." && self.textView.text != "")
+        {
+            self.delegate?.messageBarSendButtonClicked(self, text: self.textView.text)
+            self.textView.text = ""
+            self.textModeOff()
+            self.reduceBar()
+        }
     }
     
     func textModeOn()

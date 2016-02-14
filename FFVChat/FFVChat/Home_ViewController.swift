@@ -34,6 +34,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     let searchBarHeight : CGFloat = 40
     
+    var isSearching : Bool = false
     
     override func viewDidLoad()
     {
@@ -137,23 +138,15 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.favouritesController.reloadAnimations()
     }
     
-    
     override func viewDidAppear(animated: Bool)
     {
-        DAOFriendRequests.sharedInstance.friendsAccepted()
         DAOPostgres.sharedInstance.startObserve()
-        
-        self.favouritesController.checkUnreadMessages()
-        self.contactsController.checkUnreadMessages()
-        
     }
-    
     
     override func viewDidDisappear(animated: Bool)
     {
         DAOPostgres.sharedInstance.stopObserve()
     }
-    
     
     override func didReceiveMemoryWarning()
     {
@@ -161,12 +154,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidLayoutSubviews()
-    {
-        
-    }
-    
-
     func flowLayoutSetup() -> UICollectionViewFlowLayout
     {
         let flowLayout = UICollectionViewFlowLayout()
@@ -184,7 +171,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     func clickOnSearch()
     {
-        if(self.searchBar.isFirstResponder())
+        if(self.isSearching)
         {
             self.closeSearch()
         }
@@ -193,15 +180,15 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
             self.openSearch()
         }
     }
-    
 
     func openSearch()
     {
+        self.isSearching = true
         self.searchBar.text = nil
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
             self.searchBarView.frame.origin.y = self.navigationBar.frame.size.height
-
+            
             self.searchBar.frame.origin.y = self.navigationBar.frame.size.height
             
             }) { (success: Bool) -> Void in
@@ -212,24 +199,27 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     func closeSearch()
     {
-        self.searchBar.resignFirstResponder()
-        self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
-        self.contactsController.collectionView?.reloadData()
-//        self.contactsController.reloadAnimations()
-        self.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
-        self.favouritesController.collectionView?.reloadData()
-//        self.favouritesController.reloadAnimations()
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        if(self.isSearching)
+        {
+            self.isSearching = false
+            self.searchBar.resignFirstResponder()
+            self.contactsController.contacts = DAOContacts.sharedInstance.getAllContacts()
+            self.contactsController.collectionView?.reloadData()
+            self.favouritesController.favourites = DAOContacts.sharedInstance.getFavorites()
+            self.favouritesController.collectionView?.reloadData()
             
-            self.searchBar.frame.origin.y = self.navigationBar.frame.size.height - self.searchBarHeight
-            self.searchBarView.frame.origin.y = self.navigationBar.frame.size.height - self.searchBarHeight
-
-//            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height
-            
-            }) { (success: Bool) -> Void in
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.searchBar.frame.origin.y = self.navigationBar.frame.size.height - self.searchBarHeight
+                self.searchBarView.frame.origin.y = self.navigationBar.frame.size.height - self.searchBarHeight
+                
+                //            self.pageMenu.view.frame.origin.y = self.navigationBar.frame.size.height
+                
+                }) { (success: Bool) -> Void in
+            }
         }
     }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         self.closeSearch()

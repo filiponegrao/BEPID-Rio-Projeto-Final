@@ -644,7 +644,7 @@ class DAOParse
     class func pushImageNotification(username: String)
     {
         let message = "📷 Imagem de \(DAOUser.sharedInstance.getUsername())"
-        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1, "sound": "bip.mp3"]
+        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1, "sound": "bip.mp3", "sender" : DAOUser.sharedInstance.getUsername()]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)
@@ -663,7 +663,7 @@ class DAOParse
     class func pushAudioNotification(username: String)
     {
         let message = "🔉 Áudio de \(DAOUser.sharedInstance.getUsername())"
-        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1, "sound": "bip.mp3"]
+        let data = [ "title": message, "alert": message, "badge": 1, "do": appNotification.messageReceived.rawValue, "content-avaliable" : 1, "sound": "bip.mp3", "sender" : DAOUser.sharedInstance.getUsername()]
         
         let userQuery = PFUser.query()
         userQuery?.whereKey("username", equalTo: username)

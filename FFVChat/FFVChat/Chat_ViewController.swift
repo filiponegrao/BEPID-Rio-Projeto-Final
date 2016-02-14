@@ -42,12 +42,15 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     
     var chatController : FTNChatController!
     
+    weak var homeController : Home_ViewController!
+    
     //Audio player and recordr
     var audioPlayer: AVAudioPlayer?
     var audioRecorder: AVAudioRecorder?
     
-    init(contact: Contact)
+    init(contact: Contact, homeController : Home_ViewController)
     {
+        self.homeController = homeController
         self.contact = contact
         super.init(nibName: "Chat_ViewController", bundle: nil)
         print("alocando chat...")
@@ -99,18 +102,26 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
         
+        self.chatController.messageBar.textView.resignFirstResponder()
+
+        
     }
     override func viewDidAppear(animated: Bool)
     {
         DAOPostgres.sharedInstance.startRefreshing()
         self.redAlertScreen()
     }
+    
     override func viewWillDisappear(animated: Bool)
     {
-        
+        self.homeController.contactsController.checkUnreadMessages()
+        self.homeController.favouritesController.checkUnreadMessages()
         DAOPostgres.sharedInstance.stopRefreshing()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.messageErased(), object: nil)
+        
+        self.chatController.messageBar.textView.resignFirstResponder()
+
 
     }
     

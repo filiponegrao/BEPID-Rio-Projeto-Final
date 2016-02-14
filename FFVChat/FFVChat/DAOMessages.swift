@@ -132,7 +132,7 @@ class DAOMessages : NSObject
         let now = NSDate()
         let id = self.createMessageKey(username, date: now)
         
-        let time = UserLayoutSettings.sharedInstance.getCurrentLifespan()
+        let time = UserLayoutSettings.sharedInstance.getCurrentSecondsLifespan()
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: time, type: .Text, contentKey: nil, text: text, status: messageStatus.Ready.rawValue)
         
@@ -228,7 +228,7 @@ class DAOMessages : NSObject
         
         let id = self.createMessageKey(username, date: now)
         
-        let time = UserLayoutSettings.sharedInstance.getCurrentLifespan()
+        let time = UserLayoutSettings.sharedInstance.getCurrentSecondsLifespan()
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: time, type: .Gif, contentKey: gifName, text: nil, status: messageStatus.Ready.rawValue)
         
@@ -241,6 +241,32 @@ class DAOMessages : NSObject
         return message
     }
     
+    func reSendImageMessage(username: String, contentKey: String, lifeTime: Int, filter: ImageFilter) -> Message?
+    {
+        let now = NSDate()
+        
+        let id = self.createMessageKey(username, date: now)
+        let key = self.createContentKey(id)
+        
+        let image = DAOContents.sharedInstance.getImageFromKey(contentKey)
+        if(image != nil)
+        {
+            DAOSentMidia.sharedInstance.reSendMidia(contentKey)
+            let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: lifeTime, type: .Image, contentKey: key, text: nil, status: messageStatus.Ready.rawValue)
+            
+            self.save()
+            
+            DAOPostgres.sharedInstance.sendImageMessage(id, username: username, lifeTime: lifeTime, contentKey: key, sentDate: now)
+            
+            DAOParse.pushImageNotification(username)
+            
+            DAOSentMidia.sharedInstance.addSentMidia(message)
+            
+            return message
+        }
+        
+        return nil
+    }
     
     /**
      * Funcao que desliga o delay para mandar push

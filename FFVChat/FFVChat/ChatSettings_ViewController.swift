@@ -123,7 +123,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillAppear(animated: Bool)
     {
         //pegar info bd
-        self.lifespanValue = UserLayoutSettings.sharedInstance.getCurrentLifespan()
+        self.lifespanValue = UserLayoutSettings.sharedInstance.getCurrentMinutesLifespan()
         
         //pegando valor em minutos e salvando em horas e minutos
         let savedHour = self.lifespanValue / 60
@@ -572,7 +572,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.text = self.lifespanText
         self.lifespanField.resignFirstResponder()
         
-        UserLayoutSettings.sharedInstance.setCurrentLifespan(self.lifespanValue)
+        UserLayoutSettings.sharedInstance.setCurrentSecondsLifespan(self.lifespanValue*60)
     }
     
     func cancelPicker()

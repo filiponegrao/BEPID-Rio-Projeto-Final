@@ -303,6 +303,10 @@ class DAOContents : NSObject
         }
     }
     
+    func getUrlFromName(name: String) -> String
+    {
+        return "http://www.mynechat.com/gifs/\(name).php"
+    }
     
     func getAllGifs() -> [Gif]
     {

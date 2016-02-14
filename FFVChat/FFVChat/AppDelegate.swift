@@ -217,6 +217,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             {
                 let user = notification.valueForKey("sender") as! String
                 let controller = self.window?.rootViewController as! AppNavigationController
+                
                 if(controller.home.chatController != nil)
                 {
                     let contact = DAOContacts.sharedInstance.getContact(user)
@@ -233,7 +234,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
                     let contact = DAOContacts.sharedInstance.getContact(user)
                     if(contact != nil)
                     {
-                        controller.home.chatController = Chat_ViewController(contact: contact!)
+                        controller.home.chatController = Chat_ViewController(contact: contact!, homeController: controller.home)
                         controller.popToRootViewControllerAnimated(false)
                         controller.pushViewController(controller.home.chatController, animated: false)
                         self.window?.rootViewController = controller
