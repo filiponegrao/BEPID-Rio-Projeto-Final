@@ -236,6 +236,9 @@ class DAOMessages : NSObject
         
         DAOPostgres.sharedInstance.sendGifMessage(id, username: username, lifeTime: time, gifName: gifName, sentDate: now)
         
+        let gif = DAOContents.sharedInstance.getGifWithName(gifName)
+        if(gif == nil) { DAOParse.sharedInstance.downloadGif(gifName) }
+        
         DAOParse.pushImageNotification(username)
         
         return message
@@ -342,7 +345,8 @@ class DAOMessages : NSObject
         }
         else if(type == ContentType.Gif)
         {
-            DAOParse.sharedInstance.downloadGif(contentKey)
+            let gif = DAOContents.sharedInstance.getGifWithName(message.contentKey!)
+            if(gif == nil) { DAOParse.sharedInstance.downloadGif(contentKey) }
         }
         
         self.save()

@@ -39,3 +39,4 @@ let FTNLargura: CGFloat = UIScreen.mainScreen().bounds.width
 let gifcollectionBarHeight : CGFloat = FTNLargura + 44
 
 let gifcollectionBarWigth : CGFloat = FTNLargura
+

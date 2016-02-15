@@ -447,6 +447,7 @@ class DAOPostgres : NSObject
                 }
                 else
                 {
+                    //Jogando essa funcao para o final do carregamento da imagem
                     DAOMessages.sharedInstance.setMessageSent(id)
                     print("Mensagem evnaida com sucesso!")
                 }

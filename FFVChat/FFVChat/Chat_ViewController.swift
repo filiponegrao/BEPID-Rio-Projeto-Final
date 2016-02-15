@@ -190,7 +190,18 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
             //Verifica se a mensagem é minha
             if(mssg.sender != DAOUser.sharedInstance.getUsername() && (mssg.type == ContentType.Text.rawValue || mssg.type == ContentType.Gif.rawValue))
             {
-                DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+                if(mssg.type == ContentType.Gif.rawValue)
+                {
+                    let gif = DAOContents.sharedInstance.getGifWithName(mssg.contentKey!)
+                    if(gif != nil)
+                    {
+                        DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+                    }
+                }
+                else
+                {
+                    DAOMessages.sharedInstance.deleteMessageAfterTime(mssg)
+                }
             }
             
             self.playSound()
@@ -387,10 +398,24 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
             let frame = attributes.frame
             
             let origin = self.chatController.collectionView.convertRect(frame, toView: self.chatController.collectionView.superview)
+            DAOMessages.sharedInstance.deleteMessageAfterTime(message)
             
             self.imageZoom = ImageZoom_View(image: image!, message: message, origin: origin, controller: self)
             self.view.addSubview(self.imageZoom)
             self.imageZoom.fadeIn()
+        }
+    }
+    
+    func FTNChatSendGifName(chat: FTNChatController, gifName: String)
+    {
+        self.sendGif(gifName)
+    }
+    
+    func FTNChatMoreGifsRequeste(chat: FTNChatController) {
+        
+        let gallery = GifGallery_UIViewController(controller: self)
+        self.presentViewController(gallery, animated: true) { () -> Void in
+            
         }
     }
 

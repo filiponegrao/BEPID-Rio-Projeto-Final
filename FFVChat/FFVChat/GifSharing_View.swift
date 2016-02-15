@@ -24,9 +24,7 @@ class GifSharing_View : UIView
     
     var blurView : UIVisualEffectView!
     
-    weak var chatViewController : Chat_ViewController!
-    
-    weak var gifGalleryController : GifGallery_UIViewController!
+    weak var controller : GifGallery_UIViewController!
     
     //Gif information
     
@@ -34,8 +32,9 @@ class GifSharing_View : UIView
     
     var gifName: String!
     
-    init(imageOrigin: CGRect, gifName: String)
+    init(imageOrigin: CGRect, gifName: String, controller: GifGallery_UIViewController)
     {
+        self.controller = controller
         self.imageOrigin = imageOrigin
         self.gifName = gifName
         self.gifUrl = DAOContents.sharedInstance.getUrlFromGifName(gifName)
@@ -140,10 +139,9 @@ class GifSharing_View : UIView
             
             }) { (success: Bool) -> Void in
                 
-            
-                self.chatViewController.sendGif(self.gifName)
+                self.controller.controller.sendGif(self.gifName)
                 self.removeFromSuperview()
-                self.gifGalleryController.dismissViewControllerAnimated(true, completion: { () -> Void in
+                self.controller.dismissViewControllerAnimated(true, completion: { () -> Void in
                     
                 })
         }
