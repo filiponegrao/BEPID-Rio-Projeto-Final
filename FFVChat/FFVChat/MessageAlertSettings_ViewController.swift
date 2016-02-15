@@ -102,6 +102,7 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         
         let tittle = UILabel(frame: CGRectMake(15, 20, screenWidth, 30))
         tittle.textColor = oficialLightGray
+        tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         
         
         if(section == 0)
@@ -140,6 +141,7 @@ class MessageAlertSettings_ViewController: UIViewController, UITableViewDelegate
         
         cell.backgroundColor = oficialSemiGray
         cell.textLabel?.textColor = oficialLightGray
+        cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         cell.selectionStyle = .None
         
         let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 4))

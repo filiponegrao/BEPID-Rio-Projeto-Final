@@ -49,6 +49,7 @@ class DeleteProfile_ViewController: UIViewController, UITableViewDelegate, UITab
         self.doneButton = MKButton(frame: CGRectMake(0, screenHeight - 45, screenWidth, 45))
         self.doneButton.setTitle("Done", forState: .Normal)
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.doneButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.doneButton.backgroundColor = oficialGreen
         self.doneButton.addTarget(self, action: "deleteProfile", forControlEvents: UIControlEvents.TouchUpInside)
         self.doneButton.backgroundLayerCornerRadius = 900
@@ -139,6 +140,7 @@ class DeleteProfile_ViewController: UIViewController, UITableViewDelegate, UITab
             self.emailField.autocorrectionType = .No
             self.emailField.tintColor = oficialGreen
             self.emailField.textColor = oficialLightGray
+            self.emailField.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             self.emailField.delegate = self
             
             cell.contentView.addSubview(self.emailField)
@@ -154,6 +156,7 @@ class DeleteProfile_ViewController: UIViewController, UITableViewDelegate, UITab
             self.usernameField.autocorrectionType = .No
             self.usernameField.tintColor = oficialGreen
             self.usernameField.textColor = oficialLightGray
+            self.usernameField.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             self.usernameField.delegate = self
             
             cell.contentView.addSubview(self.usernameField)
@@ -168,6 +171,7 @@ class DeleteProfile_ViewController: UIViewController, UITableViewDelegate, UITab
             self.passwordField.secureTextEntry = true
             self.passwordField.tintColor = oficialGreen
             self.passwordField.textColor = oficialLightGray
+            self.passwordField.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             self.passwordField.delegate = self
             
             cell.contentView.addSubview(self.passwordField)

@@ -82,7 +82,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.forgotText.text = "If you have forgotten your password you can retrieve it by informing the registered email."
         self.forgotText.textColor = oficialLightGray
         self.forgotText.backgroundColor = UIColor.clearColor()
-        self.forgotText.font = UIFont(name: "SukhumvitSet-Light", size: 14)
+        self.forgotText.font = UIFont(name: "Helvetica-Light", size: 13)
         self.forgotText.textAlignment = .Left
 //        self.forgotText.editable = false
         self.forgotText.userInteractionEnabled = false
