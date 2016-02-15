@@ -13,16 +13,21 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
 {
     var closeButton : UIButton!
     
+    var moreButton : UIButton!
+    
     var collectionView: UICollectionView!
     
     var gifs : [Gif]!
     
-    var serverGifs : [String]!
-    
     var selectedGif: String = ""
     
-    init(origin: CGPoint)
-    {        
+    var confirmView : UIView!
+    
+    weak var controller : FTNChatController!
+    
+    init(origin: CGPoint, controller : FTNChatController)
+    {
+        self.controller = controller
         super.init(frame: CGRectMake(origin.x, origin.y, gifcollectionBarWigth, gifcollectionBarHeight))
         
         self.backgroundColor = oficialSemiGray
@@ -35,6 +40,8 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         layout.scrollDirection = .Vertical
         layout.headerReferenceSize = CGSizeMake(0, 0)
         
+        self.gifs = DAOContents.sharedInstance.getAllGifs()
+        
         self.collectionView = UICollectionView(frame: CGRectMake(0, 44, self.frame.size.width, self.frame.size.height - 44) , collectionViewLayout: layout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -42,25 +49,28 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         self.collectionView.registerClass(FTNCollectionWebCell.self, forCellWithReuseIdentifier: "CellWeb")
         self.collectionView.registerClass(FTNCollectionGifCell.self, forCellWithReuseIdentifier: "CellGif")
         self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+        self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Header")
+
 
         self.collectionView.showsVerticalScrollIndicator = false
         
         self.addSubview(self.collectionView)
         
-        self.closeButton = UIButton(frame: CGRectMake(0,0,self.frame.size.width,44))
+        self.closeButton = UIButton(frame: CGRectMake(0,0,self.frame.size.width/2,44))
         self.closeButton.setTitle("Cancelar", forState: .Normal)
         self.closeButton.setTitleColor(oficialGreen, forState: .Normal)
         self.closeButton.backgroundColor = oficialDarkGray
-//        self.closeButton.setImage(UIImage(named: "close"), forState: .Normal)
+        self.closeButton.titleLabel?.textAlignment = .Left
         self.addSubview(self.closeButton)
         
-        self.gifs = DAOContents.sharedInstance.getAllGifs()
-        self.serverGifs = [String]()
+        self.moreButton = UIButton(frame: CGRectMake(self.frame.size.width/2, 0, self.frame.size.width/2, 44))
+        self.moreButton.setTitle("More", forState: .Normal)
+        self.moreButton.setTitleColor(oficialGreen, forState: .Normal)
+        self.moreButton.backgroundColor = oficialDarkGray
+        self.moreButton.titleLabel?.textAlignment = .Right
+        self.addSubview(self.moreButton)
         
-        DAOPostgres.sharedInstance.getAllGifsName({ (gifs) -> Void in
-            self.serverGifs = gifs
-            self.collectionView.reloadData()
-        })
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: NotificationController.center.gifDownloaded.name, object: nil)
         
     }
     
@@ -72,110 +82,56 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
     //*** TableView Properties ***//
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int
     {
-        return 2
+        return 1
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
+        cell.gifView.runGif(self.gifs[indexPath.item].data)
         
-        switch indexPath.section
+        if(self.gifs[indexPath.item].name == self.selectedGif)
         {
-        case 0:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
-            cell.gifView.runGif(self.gifs[indexPath.item].data)
-            cell.contentMode = .ScaleAspectFill
-            
-            if(self.gifs[indexPath.item].name == self.selectedGif)
-            {
-                cell.insertConfirm()
-            }
-            else
-            {
-                cell.removeConfirm()
-            }
-            
-            return cell
-            
-        case 1:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellWeb", forIndexPath: indexPath) as! FTNCollectionWebCell
-            cell.webView.loadRequest(NSURLRequest(URL: NSURL(string: DAOContents.sharedInstance.getUrlFromGifName(self.serverGifs[indexPath.item]))!))
-            cell.webView.contentScaleFactor = 2
-            cell.webView.userInteractionEnabled = false
-            
-            if(self.serverGifs[indexPath.item] == self.selectedGif)
-            {
-                cell.insertConfirm()
-            }
-            else
-            {
-                cell.removeConfirm()
-            }
-            
-            return cell
-            
-        default:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath)
-            
-            return cell
+            cell.gifView.layer.borderColor = oficialGreen.CGColor
+            cell.gifView.layer.borderWidth = 2
         }
+        else
+        {
+            cell.gifView.layer.borderWidth = 0
+        }
+        
+        return cell
         
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
         
-        switch indexPath.section
+        if(self.selectedGif == self.gifs[indexPath.item].name)
         {
-        case 0:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
+            self.selectedGif = ""
+            self.controller.delegate?.FTNChatSendGifName(self.controller, gifName: self.gifs[indexPath.item].name)
+            self.controller.closeGifGallery()
+        }
+        else
+        {
             self.selectedGif = self.gifs[indexPath.item].name
-            cell.insertConfirm()
-            
-            
-        case 1:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellWeb", forIndexPath: indexPath) as! FTNCollectionWebCell
-            self.selectedGif = self.serverGifs[indexPath.item]
-            cell.insertConfirm()
-            
-        default:
-            break
+            self.collectionView.reloadData()
         }
     }
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        switch indexPath.section
-        {
-        case 0:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
-            self.selectedGif = self.gifs[indexPath.item].name
-            cell.removeConfirm()
-            
-            
-        case 1:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellWeb", forIndexPath: indexPath) as! FTNCollectionWebCell
-            self.selectedGif = self.serverGifs[indexPath.item]
-            cell.removeConfirm()
-            
-        default:
-            break
-        }
-    }
-    
+
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        switch section
-        {
-        case 0:
-            return self.gifs.count
-        case 1:
-            return self.serverGifs.count
-            
-        default:
-            
-            return 0
-        }
+        return self.gifs.count
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSizeMake(self.collectionView.frame.size.width, 44)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSizeMake(self.collectionView.frame.size.width, 44)
     }
     
@@ -188,18 +144,19 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
             
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
             
-            switch indexPath.section
-            {
-            case 0:
-                headerView.title.text = "GIFs baixados (enviados e recebidos)"
-            case 1:
-                headerView.title.text = "MAIS GIFS"
-                
-            default:
-                break
-            }
+            headerView.title.text = "GIFs mais acessados!"
             
             return headerView
+            
+        case UICollectionElementKindSectionFooter:
+            
+            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
+            
+            footerView.title.text = "As imagens sao de direito da figura exposta."
+            footerView.title.adjustsFontSizeToFitWidth = true
+            footerView.title.minimumScaleFactor = 0.1
+            
+            return footerView
             
         default:
             
@@ -207,5 +164,13 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         }
     }
     
+    
+   
+    
+    func refresh()
+    {
+        self.gifs = DAOContents.sharedInstance.getAllGifs()
+        self.collectionView.reloadData()
+    }
     
 }

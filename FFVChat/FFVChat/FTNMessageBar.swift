@@ -54,8 +54,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     //Gif Options
     var gifButton : UIButton!
     
-    
-    var delegate : FTNMessageBarDelegate?
+    weak var delegate : FTNMessageBarDelegate?
     
     weak var controller : UIViewController!
     

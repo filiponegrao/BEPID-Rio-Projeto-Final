@@ -55,14 +55,15 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.addSubview(self.labelStatus)
     }
 
+    deinit
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit
-    {
-        
-    }
+  
     
     /**
      * Inevitavelmente necessita de uma dependencia
@@ -82,6 +83,12 @@ class FTNCollectionViewCell: UICollectionViewCell
             }
             else
             {
+                self.labelStatus.textColor = UIColor.whiteColor()
+            }
+            
+            if(status == messageStatus.Ready.rawValue)
+            {
+                self.labelStatus.text = "🕒 Enviando..."
                 self.labelStatus.textColor = UIColor.whiteColor()
             }
         }
@@ -179,6 +186,7 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.chatgifview?.loading?.removeFromSuperview()
         let gif = DAOContents.sharedInstance.getGifWithName(self.message!.contentKey!)
         self.chatgifview?.gifView.runGif(gif!.data)
+        DAOMessages.sharedInstance.deleteMessageAfterTime(self.message)
     }
     
     func audioLoaded()

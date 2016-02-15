@@ -20,7 +20,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
     
     var progress : NVActivityIndicatorView!
     
-    weak var chatViewController : Chat_ViewController!
+    weak var controller : Chat_ViewController!
     
     deinit
     {
@@ -33,9 +33,9 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         self.progress = nil
     }
     
-    init(chatViewController : Chat_ViewController)
+    init(controller : Chat_ViewController)
     {
-        self.chatViewController = chatViewController
+        self.controller = controller
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -148,9 +148,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         let origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
         let gif = self.gifs[indexPath.row]
         
-        let sharing = GifSharing_View(imageOrigin: origin, gifName: gif)
-        sharing.chatViewController = self.chatViewController
-        sharing.gifGalleryController = self
+        let sharing = GifSharing_View(imageOrigin: origin, gifName: gif, controller: self)
         self.view.addSubview(sharing)
         
         sharing.animateOn()

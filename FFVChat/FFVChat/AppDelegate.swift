@@ -215,30 +215,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             
             if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
             {
-                let user = notification.valueForKey("sender") as! String
-                let controller = self.window?.rootViewController as! AppNavigationController
-                
-                if(controller.home.chatController != nil)
+                let user = notification.valueForKey("sender") as? String
+                if(user != nil)
                 {
-                    let contact = DAOContacts.sharedInstance.getContact(user)
-                    if(contact != nil)
+                    let controller = self.window?.rootViewController as! AppNavigationController
+                    
+                    if(controller.home.chatController != nil)
                     {
-                        controller.home.chatController.contact = contact!
-                        controller.popToRootViewControllerAnimated(false)
-                        controller.pushViewController(controller.home.chatController, animated: false)
-                        self.window?.rootViewController = controller
+                        let contact = DAOContacts.sharedInstance.getContact(user!)
+                        if(contact != nil)
+                        {
+                            controller.home.chatController.contact = contact!
+                            controller.popToRootViewControllerAnimated(false)
+                            controller.pushViewController(controller.home.chatController, animated: false)
+                            self.window?.rootViewController = controller
+                        }
                     }
-                }
-                else
-                {
-                    let contact = DAOContacts.sharedInstance.getContact(user)
-                    if(contact != nil)
+                    else
                     {
-                        controller.home.chatController = Chat_ViewController(contact: contact!, homeController: controller.home)
-                        controller.popToRootViewControllerAnimated(false)
-                        controller.pushViewController(controller.home.chatController, animated: false)
-                        self.window?.rootViewController = controller
+                        let contact = DAOContacts.sharedInstance.getContact(user!)
+                        if(contact != nil)
+                        {
+                            controller.home.chatController = Chat_ViewController(contact: contact!, homeController: controller.home)
+                            controller.popToRootViewControllerAnimated(false)
+                            controller.pushViewController(controller.home.chatController, animated: false)
+                            self.window?.rootViewController = controller
+                        }
                     }
+
                 }
             }
         }

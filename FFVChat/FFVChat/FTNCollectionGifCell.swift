@@ -25,7 +25,6 @@ class FTNCollectionGifCell : UICollectionViewCell
         self.gifView.layer.cornerRadius = 5
         self.gifView.contentMode = .ScaleAspectFill
         self.gifView.clipsToBounds = true
-        self.addSubview(self.gifView)
         
         self.confirmView = UIView(frame: self.gifView.frame)
 
@@ -48,6 +47,9 @@ class FTNCollectionGifCell : UICollectionViewCell
         self.confirmView.hidden = true
         
         self.gifView.addSubview(self.confirmView)
+        
+        self.addSubview(self.gifView)
+
     }
 
     required init?(coder aDecoder: NSCoder)

@@ -19,7 +19,7 @@ class FTNCollectionViewHeader : UICollectionReusableView
     {
         super.init(frame: frame)
         
-        self.title = UILabel(frame: CGRectMake(20,0,self.frame.size.width - 20, self.frame.size.height))
+        self.title = UILabel(frame: CGRectMake(20,0,self.frame.size.width - 40, self.frame.size.height))
         self.title.text = "Section"
         self.title.textColor = oficialLightGray
 //        self.title.backgroundColor = oficialLightGray

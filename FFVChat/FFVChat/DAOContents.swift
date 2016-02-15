@@ -19,10 +19,14 @@ class DAOContents : NSObject
 {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
+    let defaultGifs = ["dimitri","omg","carminha","tedioCat","ok"]
     
     override init()
     {
 //        DAOPostgres.sharedInstance.addAllGifs()
+        super.init()
+        
+        self.downloadDefaultGifs()
     }
     
     class var sharedInstance : DAOContents
@@ -162,7 +166,18 @@ class DAOContents : NSObject
             
         }
     }
-     
+    
+    
+    func downloadDefaultGifs()
+    {
+        for name in self.defaultGifs
+        {
+            if(self.getGifWithName(name) == nil)
+            {
+                self.downloadGif(name)
+            }
+        }
+    }
      
     /** Adiciona os gifs */
     func addGif(name: String, data: NSData, hashtags: [String], launchedDate: NSDate) -> Bool
@@ -179,6 +194,9 @@ class DAOContents : NSObject
             {
                 Gif.createInManagedObjectContext(self.managedObjectContext, data: data, hashtags: dataH, name: name, launchedDate: launchedDate)
                 self.save()
+                
+                NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.gifLoaded(name), object: nil)
+                
                 return true
             }
             else
@@ -310,6 +328,8 @@ class DAOContents : NSObject
     
     func getAllGifs() -> [Gif]
     {
+        self.downloadDefaultGifs()
+        
         var newGifs = [Gif]()
         
         let request = NSFetchRequest(entityName: "Gif")

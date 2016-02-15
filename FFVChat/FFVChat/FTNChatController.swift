@@ -18,6 +18,10 @@ import UIKit
     func FTNChatSendMessageAudio(chat: FTNChatController, audio: NSData)
     
     func FTNChatMessageClicked(chat: FTNChatController, message: Message, indexPath: NSIndexPath)
+    
+    func FTNChatSendGifName(chat: FTNChatController, gifName: String)
+    
+    func FTNChatMoreGifsRequeste(chat: FTNChatController)
 }
 
 class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, FTNMessageBarDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -41,7 +45,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     var imagePicker : UIImagePickerController!
     
-    var delegate : FTNChatControllerDelegate?
+    weak var delegate : FTNChatControllerDelegate?
     
     init(frame: CGRect, initialMessages: [Message]?, controller: UIViewController)
     {
@@ -72,14 +76,15 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         self.collectionView.scrollEnabled = true
         self.addSubview(self.collectionView)
         
-        let gesture = UITapGestureRecognizer(target: self, action: "endEdition")
+        let gesture = UITapGestureRecognizer(target: self, action: "endEditions")
         gesture.cancelsTouchesInView = false
         self.collectionView.addGestureRecognizer(gesture)
         
-        self.gifGallery = FTNCollection(origin: self.messageBar.frame.origin)
+        self.gifGallery = FTNCollection(origin: self.messageBar.frame.origin, controller: self)
         self.gifGallery.hidden = true
         self.gifGallery.alpha = 0
         self.gifGallery.closeButton.addTarget(self, action: "closeGifGallery", forControlEvents: .TouchUpInside)
+        self.gifGallery.moreButton.addTarget(self, action: "moreGifs", forControlEvents: .TouchUpInside)
         
         self.addSubview(self.gifGallery)
         
@@ -87,11 +92,6 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         
         self.registerChatNotificatons()
         
-    }
-    
-    func endEdition()
-    {
-        self.messageBar.textView.endEditing(true)
     }
     
     func registerChatNotificatons()
@@ -200,7 +200,11 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
         else if(message.type == ContentType.Gif.rawValue)
         {
-            
+            let gif = DAOContents.sharedInstance.getGifWithName(message.contentKey!)
+            if(gif != nil)
+            {
+                DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+            }
         }
         else if(message.type == ContentType.Audio.rawValue)
         {
@@ -212,7 +216,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        self.messageBar.textView.endEditing(true)
+        self.endEditions()
         let message = self.messages[indexPath.item]
         
         //Mensagem com erro
@@ -225,7 +229,6 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
         else if(message.type == ContentType.Image.rawValue)
         {
-            DAOMessages.sharedInstance.deleteMessageAfterTime(message)
             self.delegate?.FTNChatMessageClicked(self, message: message, indexPath: indexPath)
         }
     }
@@ -255,7 +258,11 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     }
     /** ################ SCROLL VIEW PROPERTIES ################# **/
     
-    
+    func endEditions()
+    {
+        self.closeGifGallery()
+        self.messageBar.textView.endEditing(true)
+    }
     
     /** ################ MESSAGE BAR PROPERTIES ################# **/
     
@@ -347,6 +354,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             
             self.gifGallery.frame.origin.y = self.messageBar.frame.origin.y
             self.gifGallery.alpha = 0
+            self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height
             
             }) { (success: Bool) -> Void in
                 
@@ -356,6 +364,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func openGifGallery()
     {
+        self.messageBar.endEditing(true)
         self.messageBar.hidden = true
         self.gifGallery.hidden = false
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -363,9 +372,24 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             self.gifGallery.alpha = 1
             self.gifGallery.frame.origin.y = self.frame.size.height - self.gifGallery.frame.size.height
             
+            self.collectionView.frame.size.height = self.frame.size.height - self.gifGallery.frame.size.height
+            
+            if(self.collectionView.contentSize.height > self.collectionView.frame.size.height)
+            {
+                self.collectionView.contentOffset.y += self.gifGallery.frame.size.height
+            }
+            
             }) { (success: Bool) -> Void in
                 
+                self.gifGallery.refresh()
+
         }
+    }
+    
+    func moreGifs()
+    {
+        self.endEditions()
+        self.delegate?.FTNChatMoreGifsRequeste(self)
     }
 
 }
