@@ -279,7 +279,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
             if(self.imageZoom.message.sender != DAOUser.sharedInstance.getUsername())
             {
                 DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.message.contentKey!, sender: self.contact.username)
-                DAOPrints.sharedInstance.sendPrintscreenNotification(self.imageZoom.image.imageKey, sender: self.imageZoom.message.target)
                 
                 DAOMessages.sharedInstance.deleteMessage(self.imageZoom.message.id, atualizaNoBanco: true)
                 self.imageZoom?.removeFromSuperview()
@@ -337,7 +336,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     func printScreenReceived()
     {
         let alert = SweetAlert().showAlert("PrintScreen!", subTitle: "Someone took a screenshot of your screen", style: AlertStyle.Warning)
-        
     }
     
 

@@ -141,6 +141,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     override func viewDidAppear(animated: Bool)
     {
         DAOPostgres.sharedInstance.startObserve()
+//        DAOContacts.sharedInstance.refreshContacts()
     }
     
     override func viewDidDisappear(animated: Bool)

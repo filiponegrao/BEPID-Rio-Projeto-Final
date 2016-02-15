@@ -122,6 +122,7 @@
 		806D16211C0E367B00650E9D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D161F1C0E367B00650E9D /* Message.swift */; };
 		806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16221C0E70C800650E9D /* Filters_ViewController.swift */; };
 		806D16251C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */; };
+		8070AD4F1C71684300DDAE5C /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070AD4E1C71684300DDAE5C /* ImageViewController.swift */; };
 		807A65C01BFFC2CE00A39984 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807A65BF1BFFC2CE00A39984 /* CryptoSwift.framework */; };
 		807A65C21BFFC61D00A39984 /* EncryptTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807A65C11BFFC61D00A39984 /* EncryptTools.swift */; };
 		809B81FD1BFCFD0B0078F350 /* messageNotification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */; };
@@ -353,6 +354,7 @@
 		806D161F1C0E367B00650E9D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		806D16221C0E70C800650E9D /* Filters_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters_ViewController.swift; sourceTree = "<group>"; };
 		806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFilter_CollectionViewCell.swift; sourceTree = "<group>"; };
+		8070AD4E1C71684300DDAE5C /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		807A65BF1BFFC2CE00A39984 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = "Pods/../build/Debug-iphoneos/CryptoSwift.framework"; sourceTree = "<group>"; };
 		807A65C11BFFC61D00A39984 /* EncryptTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptTools.swift; sourceTree = "<group>"; };
 		809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = messageNotification.mp3; sourceTree = "<group>"; };
@@ -708,6 +710,7 @@
 				80E2FC811BC4C77F005F2DFB /* AddContact_ViewController.swift */,
 				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
 				8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */,
+				8070AD4E1C71684300DDAE5C /* ImageViewController.swift */,
 				F68A459D1C5A9DF700E99D64 /* Settings sections */,
 			);
 			name = Controller;
@@ -1177,6 +1180,7 @@
 				80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */,
 				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
 				F65A4F411C076A790092C403 /* NavigationGallery_View.swift in Sources */,
+				8070AD4F1C71684300DDAE5C /* ImageViewController.swift in Sources */,
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
 				804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */,
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
