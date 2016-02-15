@@ -267,7 +267,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             section.backgroundColor = oficialMediumGray
             section.text = "    Friend Requests"
             section.textColor = oficialGreen
-            section.font = UIFont(name: "SukhumvitSet-Light", size: 20)
+            section.font = UIFont(name: "SukhumvitSet-Light", size: 18)
 
             return section
         }
@@ -277,7 +277,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             section.backgroundColor = oficialMediumGray
             section.text = "    Screenshots"
             section.textColor = oficialGreen
-            section.font = UIFont(name: "SukhumvitSet-Light", size: 20)
+            section.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             return section
         }
         

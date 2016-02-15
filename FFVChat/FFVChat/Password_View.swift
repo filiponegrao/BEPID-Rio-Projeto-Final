@@ -39,10 +39,10 @@ class Password_View: UIView
         self.blackScreen.alpha = 1
         self.addSubview(self.blackScreen)
         
-        let text = UILabel(frame: CGRectMake(10, 50,screenWidth - 20,50))
+        let text = UILabel(frame: CGRectMake(10, 50,screenWidth - 20, 65))
         text.text = "Insert your\nMyne password"
         text.numberOfLines = 2
-        text.font = UIFont(name: "Helvetica", size: 20)
+        text.font = UIFont(name: "SukhumvitSet-Text", size: 20)
         text.textColor = oficialGreen
         text.textAlignment = .Center
         self.addSubview(text)
@@ -226,6 +226,7 @@ class Password_View: UIView
         let limpar = UIButton(frame: CGRectMake(b9.frame.origin.x,b0.frame.origin.y, bWidth, bWidth))
         limpar.setTitle("Clean", forState: .Normal)
         limpar.addTarget(self, action: "clean", forControlEvents: .TouchUpInside)
+        limpar.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 20)
         self.addSubview(limpar)
             
             
