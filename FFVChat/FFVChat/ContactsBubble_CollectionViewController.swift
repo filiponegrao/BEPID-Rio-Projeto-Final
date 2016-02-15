@@ -67,7 +67,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.collectionView!.reloadData()
     }
     
-
     
     //** FUNCOES DE ATUALIZACAO DA TELA ***//
     

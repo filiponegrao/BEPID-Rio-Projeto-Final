@@ -44,7 +44,8 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
         
         self.username = UILabel(frame: CGRectMake(0,0,frame.size.width,40))
         self.username.textAlignment = NSTextAlignment.Center
-        self.username.font = UIFont( name: (username.font?.fontName)!, size: 13)
+//        self.username.font = UIFont( name: (username.font?.fontName)!, size: 13)
+        self.username.font = UIFont(name: "SukhumvitSet-Text", size: 13)
         self.username.textColor = oficialGreen
         self.addSubview(self.username)
         

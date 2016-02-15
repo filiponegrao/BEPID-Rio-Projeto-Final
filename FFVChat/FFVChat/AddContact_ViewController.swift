@@ -31,7 +31,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "doneSearch"))
         
         self.navBar = NavigationAddContact_View(requester: self)
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.navBar.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.view.addSubview(self.navBar)
         
 //        self.backButton = UIButton(frame: CGRectMake(0, 20, 50, 50))

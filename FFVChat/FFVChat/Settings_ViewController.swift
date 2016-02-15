@@ -47,7 +47,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         
         self.navBar = NavigationSettings_View(requester: self)
         self.navBar.layer.zPosition = 5
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.navBar.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.view.addSubview(self.navBar)
         
         self.tableView = UITableView(frame: CGRectMake(0,60, screenWidth, screenHeight - 60))

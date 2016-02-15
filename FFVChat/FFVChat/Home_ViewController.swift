@@ -49,6 +49,16 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         Optimization.addParallaxToView(self.background)
         
         
+        for family: String in UIFont.familyNames()
+        {
+            print("\(family)")
+            for names: String in UIFont.fontNamesForFamilyName(family)
+            {
+                print("== \(names)")
+            }
+        }
+        
+        
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
         self.view.addSubview(self.navigationBar)
@@ -82,7 +92,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
             .ViewBackgroundColor(oficialMediumGray),
             .SelectionIndicatorColor(oficialGreen),
             .BottomMenuHairlineColor(oficialLightGray),
-            .MenuItemFont(UIFont(name: "Helvetica", size: 16.0)!),
+            .MenuItemFont(UIFont(name: "SukhumvitSet-Medium", size: 16.0)!),
             .MenuHeight(40.0),
             .MenuItemWidth(screenWidth/2),
             .CenterMenuItems(true),
