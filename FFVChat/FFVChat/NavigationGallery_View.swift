@@ -31,6 +31,7 @@ class NavigationGallery_View: UIView
         self.deleteAll = UIButton(frame: CGRectMake(screenWidth/3 * 2, 25, screenWidth/3, 44))
         self.deleteAll.setTitle("Delete All", forState: .Normal)
         self.deleteAll.setTitleColor(oficialGreen, forState: .Normal)
+        self.deleteAll.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 18)
         self.deleteAll.addTarget(self, action: "deleteAllPictures", forControlEvents: .TouchUpInside)
         self.addSubview(self.deleteAll)
     }
