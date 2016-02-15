@@ -31,7 +31,7 @@ class UserLayoutInfo: NSManagedObject {
         
         info.chatSounds = true
         info.otherSounds = true
-        info.currentBackground = UIImage(named: "bluSky")?.highestQualityJPEGNSData
+        info.currentBackground = UIImage(named: "blueSky")?.highestQualityJPEGNSData
         info.currentTheme = "Default"
         info.visualEffects = true
         info.textLifespan = 1
@@ -49,7 +49,7 @@ class UserLayoutSettings : NSObject
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
-    let backgrounds = ["blueSky","redSky","redSky2","darkSky"]
+    let backgrounds = ["blueSky","redSky","redSky2","darkSky","purpleSky"]
     
     override init()
     {
@@ -111,7 +111,30 @@ class UserLayoutSettings : NSObject
     {
         if(self.settings != nil)
         {
+            if(self.settings!.currentBackground == nil)
+            {
+                return UIImage(named: "blueSky")!
+            }
             return UIImage(data: self.settings!.currentBackground!)!
+        }
+        else
+        {
+            return UIImage(named: "blueSky")!
+        }
+    }
+    
+    func getBackgroundAtIndex(index: Int) -> UIImage
+    {
+        if(self.settings != nil)
+        {
+            if(index > 0 && index < self.backgrounds.count)
+            {
+                return UIImage(named: self.backgrounds[index])!
+            }
+            else
+            {
+                return UIImage(named: "blueSky")!
+            }
         }
         else
         {

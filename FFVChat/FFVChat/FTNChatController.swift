@@ -47,6 +47,8 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     weak var delegate : FTNChatControllerDelegate?
     
+    var backgroundIndex = 0
+    
     init(frame: CGRect, initialMessages: [Message]?, controller: UIViewController)
     {
         self.controller = controller
@@ -59,7 +61,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         super.init(frame: frame)
         
         self.background = UIImageView(frame: self.bounds)
-        self.background.image = UIImage(named: "blueSky")
+        self.background.image = UserLayoutSettings.sharedInstance.getCurrentBackground()
         self.background.alpha = 0.5
         self.addSubview(self.background)
         
@@ -76,9 +78,19 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         self.collectionView.scrollEnabled = true
         self.addSubview(self.collectionView)
         
-        let gesture = UITapGestureRecognizer(target: self, action: "endEditions")
-        gesture.cancelsTouchesInView = false
-        self.collectionView.addGestureRecognizer(gesture)
+        let tap = UITapGestureRecognizer(target: self, action: "endEditions")
+        tap.cancelsTouchesInView = false
+        
+        let right = UISwipeGestureRecognizer(target: self, action: "previousBackground")
+        right.direction = .Right
+        
+        let left = UISwipeGestureRecognizer(target: self, action: "nextBackground")
+        left.direction = .Left
+        
+        self.collectionView.addGestureRecognizer(tap)
+        self.collectionView.addGestureRecognizer(right)
+        self.collectionView.addGestureRecognizer(left)
+
         
         self.gifGallery = FTNCollection(origin: self.messageBar.frame.origin, controller: self)
         self.gifGallery.hidden = true
@@ -196,7 +208,15 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
         else if(message.type == ContentType.Image.rawValue)
         {
-            
+            let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
+            if(image == nil)
+            {
+                DAOParse.sharedInstance.downloadImageForMessage(message.contentKey!, id: message.id)
+            }
+            else
+            {
+                cell.imageLoaded()
+            }
         }
         else if(message.type == ContentType.Gif.rawValue)
         {
@@ -204,6 +224,10 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             if(gif != nil)
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(message)
+            }
+            else
+            {
+                DAOParse.sharedInstance.downloadGif(message.contentKey!)
             }
         }
         else if(message.type == ContentType.Audio.rawValue)
@@ -216,7 +240,6 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        self.endEditions()
         let message = self.messages[indexPath.item]
         
         //Mensagem com erro
@@ -229,7 +252,32 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
         else if(message.type == ContentType.Image.rawValue)
         {
-            self.delegate?.FTNChatMessageClicked(self, message: message, indexPath: indexPath)
+            let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
+            if(image != nil)
+            {
+                self.delegate?.FTNChatMessageClicked(self, message: message, indexPath: indexPath)
+            }
+//            else
+//            {
+//                let alert = UIAlertController(title: "Imagem em andamento", message: nil, preferredStyle: .Alert)
+//                alert.addAction(UIAlertAction(title: "Recarregar", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                    DAOParse.sharedInstance.downloadImageForMessage(message.contentKey!, id: message.id)
+//                }))
+//                alert.addAction(UIAlertAction(title: "Cancelar e apagar", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                    
+//                }))
+//                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+//                    
+//                }))
+//                
+//                self.controller.presentViewController(alert, animated: true, completion: { () -> Void in
+//                    
+//                })
+//            }
+        }
+        else if(message.type == ContentType.Gif.rawValue)
+        {
+            
         }
     }
     
@@ -344,6 +392,50 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: self.messages.count-1, inSection: 0), atScrollPosition: .Bottom, animated: true)
         }
     }
+    
+    func nextBackground()
+    {
+        self.backgroundIndex++
+        if(self.backgroundIndex == UserLayoutSettings.sharedInstance.getBackgroundNames().count) { self.backgroundIndex = 0 }
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            
+            self.background.alpha = 0
+            
+            }) { (success: Bool) -> Void in
+                
+                self.background.image = UserLayoutSettings.sharedInstance.getBackgroundAtIndex(self.backgroundIndex)
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    
+                    self.background.alpha = 0.4
+                    
+                    }, completion: { (success: Bool) -> Void in
+                        
+                })
+                
+        }
+    }
+    
+    func previousBackground()
+    {
+        self.backgroundIndex--
+        if(self.backgroundIndex == -1) { self.backgroundIndex = UserLayoutSettings.sharedInstance.getBackgroundNames().count-1 }
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            
+            self.background.alpha = 0
+            
+            }) { (success: Bool) -> Void in
+                
+                self.background.image = UserLayoutSettings.sharedInstance.getBackgroundAtIndex(self.backgroundIndex)
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    
+                    self.background.alpha = 0.4
+                    
+                    }, completion: { (success: Bool) -> Void in
+                        
+                })
+                
+        }
+    }
 
     /** ################ GIF FUNCTIONS ################# **/
     
@@ -354,6 +446,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             
             self.gifGallery.frame.origin.y = self.messageBar.frame.origin.y
             self.gifGallery.alpha = 0
+            
             self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height
             
             }) { (success: Bool) -> Void in
@@ -367,6 +460,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         self.messageBar.endEditing(true)
         self.messageBar.hidden = true
         self.gifGallery.hidden = false
+        
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
             self.gifGallery.alpha = 1
@@ -381,8 +475,6 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             
             }) { (success: Bool) -> Void in
                 
-                self.gifGallery.refresh()
-
         }
     }
     

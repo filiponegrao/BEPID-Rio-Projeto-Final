@@ -32,8 +32,9 @@ class BubbleButton : UIButton
     
     var longActionAble : Bool = false
     
-    var delayOn : Bool = false
-    
+    var onAction : Bool = false
+
+    var checkStatus : NSTimer!
     
     init(radius: CGFloat)
     {
@@ -61,6 +62,9 @@ class BubbleButton : UIButton
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
+        self.onAction = true
+        self.checkStatus = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "checkStatusButton", userInfo: nil, repeats: false)
+        
         self.longActionAble = false
         self.runActionStart()
         
@@ -82,24 +86,30 @@ class BubbleButton : UIButton
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
+        self.timer?.invalidate()
+        self.longActionAble = false
         self.expand(nil)
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        
-        if(self.delayOn)
+        if(self.longActionAble)
         {
-            self.delayOn = !self.delayOn
-            return
+            self.longActionAble = false
+            self.expand(self.runSelectorLong)
         }
-        
-        self.timer?.invalidate()
-        self.expand(self.runActionEnd)
+        else if(self.onAction)
+        {
+            self.timer?.invalidate()
+            self.expand(self.runActionEnd)
+        }
     }
     
     func expand(function:(()->())?)
     {
+        self.onAction = false
+        self.checkStatus?.invalidate()
+        
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.3, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: { () -> Void in
             self.transform = CGAffineTransformMakeScale(1.0, 1.0)
             
@@ -168,10 +178,7 @@ class BubbleButton : UIButton
     
     func turnOnLongAction()
     {
-        self.delayOn = true
-        self.timer?.invalidate()
-        self.expand(nil)
-        self.runSelectorLong()
+        self.longActionAble = true
     }
     
     
@@ -180,6 +187,14 @@ class BubbleButton : UIButton
         if(self.selector3 != nil && self.target3 != nil)
         {
             self.target3!.performSelector(self.selector3!, withObject: self)
+        }
+    }
+    
+    func checkStatusButton()
+    {
+        if(self.onAction)
+        {
+            self.expand(nil)
         }
     }
     

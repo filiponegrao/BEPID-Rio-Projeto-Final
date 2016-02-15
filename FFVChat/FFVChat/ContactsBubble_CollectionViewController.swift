@@ -55,12 +55,11 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         // Register cell classes
         self.collectionView!.registerClass(RandomWalk_CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView!.backgroundColor = UIColor.clearColor()
-    
         
-        self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        self.longPress.minimumPressDuration = 0.5
-        self.longPress.delaysTouchesBegan = true
-        self.longPress.delegate = self
+//        self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+//        self.longPress.minimumPressDuration = 0.5
+//        self.longPress.delaysTouchesBegan = true
+//        self.longPress.delegate = self
 //        self.view.addGestureRecognizer(self.longPress)
         
         self.contacts = DAOContacts.sharedInstance.getAllContacts()
@@ -158,7 +157,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
         
-        cell.gestureRecognizers?.last?.removeTarget(self, action: "handleLongPress:")
+//        cell.gestureRecognizers?.last?.removeTarget(self, action: "handleLongPress:")
         cell.profileBtn.addLongClickAction("handleLongPress:", target: self, time: 1)
         
         cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: self.contacts[indexPath.row].thumb!)!)
