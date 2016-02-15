@@ -32,14 +32,14 @@ class CellPrintscreen_TableViewCell: UITableViewCell
         self.title = UILabel(frame: CGRectMake(self.photo.frame.origin.x + self.photo.frame.size.width + 10, 10, screenWidth - 110, 50))
         self.title.text = "testando um texto grande pra ficar escrito em duas linhas e tal"
         self.title.numberOfLines = 3
-        self.title.font = UIFont(name: "Helvetica", size: 16)
+        self.title.font = UIFont(name: "SukhumvitSet-Light", size: 16)
         self.title.textColor = oficialLightGray
         self.title.textAlignment = .Left
         self.addSubview(self.title)
         
         self.details = UILabel(frame: CGRectMake(self.title.frame.origin.x, self.title.frame.origin.y + self.title.frame.size.height, self.title.frame.size.width, 30))
         self.details.textAlignment = .Left
-        self.details.font = UIFont(name: "Helvetica", size: 10)
+        self.details.font = UIFont(name: "SukhumvitSet-Light", size: 12)
         self.details.textColor = oficialLightGray
         self.details.numberOfLines = 2
         self.addSubview(self.details)

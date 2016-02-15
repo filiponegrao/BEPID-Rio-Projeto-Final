@@ -32,6 +32,7 @@ class Notification_TableViewCell: UITableViewCell
         self.notification = UILabel(frame: CGRectMake(70, 10, screenWidth - 140, 40))
         self.notification.textColor = oficialGreen
         self.notification.numberOfLines = 3
+        self.notification.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         self.addSubview(self.notification)
         
         

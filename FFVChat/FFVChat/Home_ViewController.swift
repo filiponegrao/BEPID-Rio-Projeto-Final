@@ -49,6 +49,16 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         Optimization.addParallaxToView(self.background)
         
         
+        for family: String in UIFont.familyNames()
+        {
+            print("\(family)")
+            for names: String in UIFont.fontNamesForFamilyName(family)
+            {
+                print("== \(names)")
+            }
+        }
+        
+        
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
         self.view.addSubview(self.navigationBar)
@@ -82,7 +92,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
             .ViewBackgroundColor(oficialMediumGray),
             .SelectionIndicatorColor(oficialGreen),
             .BottomMenuHairlineColor(oficialLightGray),
-            .MenuItemFont(UIFont(name: "Helvetica", size: 16.0)!),
+            .MenuItemFont(UIFont(name: "SukhumvitSet-Medium", size: 16.0)!),
             .MenuHeight(40.0),
             .MenuItemWidth(screenWidth/2),
             .CenterMenuItems(true),
@@ -110,6 +120,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = oficialLightGray
         textFieldInsideSearchBar?.tintColor = oficialGreen
+        textFieldInsideSearchBar?.font = UIFont(name: "SukhumvitSet-Light", size: 14)
         
         self.searchBarView = UIView(frame: CGRectMake(0,0,screenWidth, self.searchBarHeight))
         self.searchBarView.frame.size.height += 2

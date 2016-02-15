@@ -28,7 +28,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationController?.navigationBar.hidden = true
         
         self.navBar = NavigationNotification_View(requester: self)
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.navBar.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
 //        self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
 
@@ -139,7 +139,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             
             let printer = self.printscreens[indexPath.row].printer
             let cont = printer.characters.count
-            var myMutableString = NSMutableAttributedString(string: "\(printer) has taken a screenshot of your picture")
+            let myMutableString = NSMutableAttributedString(string: "\(printer) has taken a screenshot of your picture")
             myMutableString.addAttribute(NSForegroundColorAttributeName, value: oficialGreen, range: NSRange(location:0,length:cont))
             
             cell.title.attributedText = myMutableString
@@ -267,7 +267,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             section.backgroundColor = oficialMediumGray
             section.text = "    Friend Requests"
             section.textColor = oficialGreen
-//            section.font = UIFont(name: "Sukhumvit Set", size: 40)
+            section.font = UIFont(name: "SukhumvitSet-Light", size: 18)
+
             return section
         }
         else if(section == 1)
@@ -276,7 +277,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             section.backgroundColor = oficialMediumGray
             section.text = "    Screenshots"
             section.textColor = oficialGreen
-            //            section.font = UIFont(name: "Sukhumvit Set", size: 40)
+            section.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             return section
         }
         

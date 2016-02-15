@@ -51,7 +51,7 @@ class Tools_ViewController: UIViewController
         self.notificationLabel.alpha = 0
 //        self.notificationLabel.backgroundColor = UIColor.whiteColor()
         self.notificationLabel.setTitleColor(oficialGreen, forState: .Normal)
-        self.notificationLabel.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 25)
+        self.notificationLabel.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 25)
         self.notificationLabel.titleLabel?.setSizeFont(25)
         self.notificationLabel.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         self.notificationLabel.addTarget(self, action: "presentNotificationsController", forControlEvents: .TouchUpInside)
@@ -68,7 +68,7 @@ class Tools_ViewController: UIViewController
         self.addLabel.alpha = 0
 //        self.addLabel.backgroundColor = UIColor.whiteColor()
         self.addLabel.setTitleColor(oficialGreen, forState: .Normal)
-        self.addLabel.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 25)
+        self.addLabel.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 25)
         self.addLabel.titleLabel?.setSizeFont(25)
         self.addLabel.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         self.addLabel.addTarget(self, action: "presentAddController", forControlEvents: .TouchUpInside)
@@ -85,7 +85,7 @@ class Tools_ViewController: UIViewController
         self.configLabel.alpha = 0
 //        self.configLabel.backgroundColor = UIColor.whiteColor()
         self.configLabel.setTitleColor(oficialGreen, forState: .Normal)
-        self.configLabel.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 25)
+        self.configLabel.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 25)
         self.configLabel.titleLabel?.setSizeFont(25)
         self.configLabel.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         self.configLabel.addTarget(self, action: "showSettings", forControlEvents: .TouchUpInside)

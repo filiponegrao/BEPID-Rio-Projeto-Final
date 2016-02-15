@@ -51,7 +51,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         //TITULO NAVBAR//
         self.tittle = UILabel(frame: CGRectMake(0, 25, screenWidth, 35))
         self.tittle.text = "Chat"
-        self.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.tittle.textAlignment = .Center
         self.tittle.textColor = oficialGreen
         self.view.addSubview(self.tittle)
@@ -111,6 +111,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.backgroundColor = oficialSemiGray
         self.lifespanField.tintColor = oficialLightGray
         self.lifespanField.textColor = oficialLightGray
+        self.lifespanField.font = UIFont(name: "SukhumvitSet-Text", size: 18)
         self.lifespanField.borderStyle = .RoundedRect
         self.lifespanField.delegate = self
         self.lifespanField.inputView = self.pickerView
@@ -286,16 +287,17 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             let tittle = UILabel(frame: CGRectMake(15, 25, screenWidth, 30))
             tittle.text = self.section[indexPath.row]
             tittle.textColor = oficialLightGray
+            tittle.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             cell.addSubview(tittle)
             cell.backgroundColor = UIColor.clearColor()
             separatorLineView.backgroundColor = UIColor.clearColor()
             
             let description = UITextView(frame: CGRectMake(10, cell.frame.size.height - screenWidth/6, screenWidth - 20, screenWidth/6))
-            description.text = "Default time where messages will disappear (including audios and gifs)."
+            description.text = "Time from which messages will disappear after they have been read (including audios and gifs)."
             description.textColor = oficialLightGray
             description.textAlignment = .Left
-            description.font = UIFont(name: "Helvetica", size: 13)
-            description.alpha = 0.6
+            description.font = UIFont(name: "Helvetica-Light", size: 13)
+            description.alpha = 0.8
             description.backgroundColor = UIColor.clearColor()
             description.userInteractionEnabled = false
             cell.addSubview(description)
@@ -319,6 +321,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             let backgroundLabel = UILabel(frame: CGRectMake(15,10, screenWidth - 15, 30))
             backgroundLabel.textColor = oficialLightGray
             backgroundLabel.text = self.section[indexPath.row]
+            backgroundLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             backgroundButton.addSubview(backgroundLabel)
             
             cell.backgroundColor = UIColor.clearColor()
@@ -341,14 +344,15 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             let tittleLabel = UILabel(frame: CGRectMake(15,10, screenWidth - 15, 30))
             tittleLabel.text = self.section[indexPath.row]
             tittleLabel.textColor = oficialGreen
+            tittleLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             tittleButton.addSubview(tittleLabel)
             
             let description = UITextView(frame: CGRectMake(10, 60, screenWidth - 20, screenWidth/5))
             description.text = "It clears immediately all current conversations (even if the messages' lifespan has not finished yet)."
             description.textColor = oficialLightGray
             description.textAlignment = .Left
-            description.font = UIFont(name: "Helvetica", size: 13)
-            description.alpha = 0.6
+            description.font = UIFont(name: "Helvetica-Light", size: 13)
+            description.alpha = 0.8
             description.backgroundColor = UIColor.clearColor()
             description.userInteractionEnabled = false
             cell.addSubview(description)
@@ -373,6 +377,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             
             let tittleLabel = UILabel(frame: CGRectMake(15,10, screenWidth, 30))
             tittleLabel.text = self.section[indexPath.row]
+            tittleLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             tittleLabel.textColor = oficialGreen
             tittleButton.addSubview(tittleLabel)
             
@@ -380,8 +385,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             description.text = "it clears all chat galleries by removing all medias you’ve sent for any contact."
             description.textColor = oficialLightGray
             description.textAlignment = .Left
-            description.font = UIFont(name: "Helvetica", size: 13)
-            description.alpha = 0.6
+            description.font = UIFont(name: "Helvetica-Light", size: 13)
+            description.alpha = 0.8
             description.backgroundColor = UIColor.clearColor()
             description.userInteractionEnabled = false
             cell.addSubview(description)

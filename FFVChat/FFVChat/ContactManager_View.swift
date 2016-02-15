@@ -65,17 +65,17 @@ class ContactManager_View: UIView
         self.trustLevelLabel.text = "\(self.trustLevel)%"
         self.trustLevelLabel.textColor = UIColor.whiteColor()
         self.trustLevelLabel.textAlignment = .Left
-        self.trustLevelLabel.font = UIFont(name: "Sukhumvit Set", size: 40)
-        self.trustLevelLabel.font.fontWithSize(40)
-        self.trustLevelLabel.setSizeFont(40)
+        self.trustLevelLabel.font = UIFont(name: "SukhumvitSet-Light", size: 45)
+        self.trustLevelLabel.font.fontWithSize(45)
+        self.trustLevelLabel.setSizeFont(45)
         self.addSubview(self.trustLevelLabel)
         
         //EXIBE USERNAME DO CONTATO
-        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height, screenWidth, screenWidth/6))
+        self.usernameLabel = UILabel(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height - 5, screenWidth, screenWidth/6))
         self.usernameLabel.text = self.contact.username
         self.usernameLabel.textColor = UIColor.whiteColor()
         self.usernameLabel.textAlignment = .Left
-        self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 20)
+        self.usernameLabel.font = UIFont(name: "SukhumvitSet-Light", size: 20)
         self.usernameLabel.font.fontWithSize(20)
         self.usernameLabel.setSizeFont(20)
         self.addSubview(self.usernameLabel)
@@ -122,12 +122,14 @@ class ContactManager_View: UIView
         self.addSubview(self.deleteButton)
         
         //BOTÃO PARA LIMPAR CONVERSA
-        self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height, screenWidth/3, screenWidth/9.5))
+        self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height - 5, screenWidth/3, screenWidth/9.5))
         self.clearChat.setTitle("Clear chat", forState: .Normal)
         self.clearChat.setTitleColor(oficialGreen, forState: .Normal)
         self.clearChat.setTitleColor(oficialLightGray, forState: .Highlighted)
         self.clearChat.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         self.clearChat.addTarget(self, action: "clearConversation", forControlEvents: .TouchUpInside)
+        self.clearChat.titleLabel?.font = UIFont(name: "SukhumvitSet-SemiBold", size: 20)
+
         
         // set the attributed title for different states
         

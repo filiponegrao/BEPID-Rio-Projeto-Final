@@ -23,6 +23,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     var imageManagerScreeen : ImageManager_View!
     
+    var text : UILabel!
     
     override func viewDidLoad()
     {
@@ -50,6 +51,13 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         self.collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(self.collectionView)
         
+        self.text = UILabel(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.text.font = UIFont(name: "SukhumvitSet-Text", size: 17)
+        self.text.text = "There is no pictures"
+        self.text.textColor = oficialLightGray
+        self.text.textAlignment = .Center
+        self.text.alpha = 0
+        self.view.addSubview(self.text)
         
         //PasswordView
         self.passwordView = Password_View(requester:self)
@@ -59,13 +67,18 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     override func viewWillAppear(animated: Bool)
     {
-    
+ 
     }
     
     override func viewDidAppear(animated: Bool)
     {
         self.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.contact)
         self.collectionView.reloadData()
+        
+        if(self.sentMidias.count == 0)
+        {
+            self.text.alpha = 1
+        }
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -86,7 +99,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CellSentMidia_CollectionViewCell
         
-        cell.backgroundColor = UIColor.redColor()
+        cell.backgroundColor = UIColor.clearColor()
         let img = UIImage(data: self.sentMidias[indexPath.item].image!)
         cell.image.image = img
         

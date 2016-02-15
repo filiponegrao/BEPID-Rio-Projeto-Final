@@ -31,7 +31,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "doneSearch"))
         
         self.navBar = NavigationAddContact_View(requester: self)
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.navBar.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.view.addSubview(self.navBar)
         
 //        self.backButton = UIButton(frame: CGRectMake(0, 20, 50, 50))
@@ -54,6 +54,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         
         let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = oficialLightGray
+        textFieldInsideSearchBar?.font = UIFont(name: "SukhumvitSet-Light", size: 14)
         
 
 //        searchSubviewsForTextFieldIn(self.searchBar)
@@ -183,6 +184,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             cell.textLabel?.text = "No results."
             cell.textLabel?.textAlignment = .Center
             cell.textLabel?.textColor = oficialLightGray
+            cell.textLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 17)
             cell.backgroundColor = UIColor.clearColor()
             
             let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 4))

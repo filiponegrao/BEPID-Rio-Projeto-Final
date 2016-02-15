@@ -11,7 +11,6 @@ import UIKit
 class CellSentMidia_CollectionViewCell: UICollectionViewCell
 {
     var image : UIImageView!
-
     
     override init(frame: CGRect)
     {

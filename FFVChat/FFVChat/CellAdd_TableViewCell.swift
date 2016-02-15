@@ -33,6 +33,7 @@ class CellAdd_TableViewCell: UITableViewCell {
         
         self.username = UILabel(frame: CGRectMake(20 + self.photo.frame.size.width, 15, screenWidth/3 * 2, 20))
         self.username.textColor = oficialGreen
+        self.username.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         self.addSubview(self.username)
         
         self.trustLevel = UILabel(frame: CGRectMake(15 + self.photo.frame.size.width, self.username.frame.size.height + 15, screenWidth/3 * 2, 20))
@@ -55,6 +56,7 @@ class CellAdd_TableViewCell: UITableViewCell {
         self.invitedLabel.textColor = oficialLightGray
         self.invitedLabel.adjustsFontSizeToFitWidth = true
         self.invitedLabel.hidden = true
+        self.invitedLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         self.addSubview(self.invitedLabel)
 
 
