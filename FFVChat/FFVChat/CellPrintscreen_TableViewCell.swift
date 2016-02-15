@@ -29,7 +29,7 @@ class CellPrintscreen_TableViewCell: UITableViewCell
         self.photo.clipsToBounds = true
         self.addSubview(self.photo)
         
-        self.title = UILabel(frame: CGRectMake(self.photo.frame.origin.x + self.photo.frame.size.width + 10, 10, screenWidth - 110, 50))
+        self.title = UILabel(frame: CGRectMake(self.photo.frame.origin.x + self.photo.frame.size.width + 10, 0, screenWidth - 110, 60))
         self.title.text = "testando um texto grande pra ficar escrito em duas linhas e tal"
         self.title.numberOfLines = 3
         self.title.font = UIFont(name: "SukhumvitSet-Light", size: 16)
@@ -39,13 +39,14 @@ class CellPrintscreen_TableViewCell: UITableViewCell
         
         self.details = UILabel(frame: CGRectMake(self.title.frame.origin.x, self.title.frame.origin.y + self.title.frame.size.height, self.title.frame.size.width, 30))
         self.details.textAlignment = .Left
-        self.details.font = UIFont(name: "SukhumvitSet-Light", size: 12)
+        self.details.font = UIFont(name: "Helvetica-Light", size: 12)
         self.details.textColor = oficialLightGray
         self.details.numberOfLines = 2
         self.addSubview(self.details)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
 
