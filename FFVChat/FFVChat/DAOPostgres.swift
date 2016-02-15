@@ -642,6 +642,7 @@ class DAOPostgres : NSObject
     func observe()
     {
         DAOFriendRequests.sharedInstance.reloadInfos()
+        DAOPostgres.sharedInstance.getUnreadAndDeletedMessages()
     }
     
     

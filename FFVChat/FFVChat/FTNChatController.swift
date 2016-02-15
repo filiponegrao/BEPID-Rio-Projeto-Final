@@ -364,6 +364,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func openGifGallery()
     {
+        self.messageBar.endEditing(true)
         self.messageBar.hidden = true
         self.gifGallery.hidden = false
         UIView.animateWithDuration(0.3, animations: { () -> Void in
