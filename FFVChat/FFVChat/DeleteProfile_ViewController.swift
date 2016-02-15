@@ -34,7 +34,7 @@ class DeleteProfile_ViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navBar = NavigationDeleteProfile_View(requester: self)
         self.navBar.layer.zPosition = 5
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.navBar.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.view.addSubview(self.navBar)
 
         self.tableView = UITableView(frame: CGRectMake(0,50, screenWidth, screenHeight/5 * 2 - 10))

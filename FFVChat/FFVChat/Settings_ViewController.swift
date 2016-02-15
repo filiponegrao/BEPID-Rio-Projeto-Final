@@ -196,17 +196,18 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             usernameLabel.text = username
             usernameLabel.textColor = UIColor.whiteColor()
             usernameLabel.textAlignment = .Center
-            usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + 10)
+            usernameLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + 15)
+            usernameLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             cell.addSubview(usernameLabel)
 
             
             // label que mostra trust level do usuário
             trustLabel = UILabel(frame: CGRectMake(0, 0, screenWidth, 40))
             trustLabel.textColor = UIColor.whiteColor()
-            trustLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
+            trustLabel.font = UIFont(name: "SukhumvitSet-Light", size: 25)
             trustLabel.setSizeFont(25)
             
-            trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 10)
+            trustLabel.center = CGPointMake(cell.center.x, cell.center.y + self.profilePicView.frame.height/4 + usernameLabel.frame.height + 18)
             trustLabel.textAlignment = .Center
             cell.addSubview(trustLabel)
             
@@ -262,6 +263,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.textLabel?.text = self.section1[indexPath.row]
                 cell.textLabel?.backgroundColor = UIColor.clearColor()
                 cell.textLabel?.textColor = oficialLightGray
+                cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             }
             else if(indexPath.row == 1)
             {
@@ -272,6 +274,8 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
                 cell.textLabel?.text = self.section1[indexPath.row]
                 cell.textLabel?.backgroundColor = UIColor.clearColor()
                 cell.textLabel?.textColor = oficialLightGray
+                cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
+
             }
         }
         
@@ -288,6 +292,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.text = self.section2[indexPath.row]
             cell.textLabel?.backgroundColor = UIColor.clearColor()
             cell.textLabel?.textColor = oficialLightGray
+            cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         }
         
         else if(indexPath.section == 3)
@@ -302,6 +307,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.text = self.section3[indexPath.row]
             cell.textLabel?.backgroundColor = UIColor.clearColor()
             cell.textLabel?.textColor = oficialLightGray
+            cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         }
         
         else if(indexPath.section == 4)
@@ -316,6 +322,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.text = self.section4[indexPath.row]
             cell.textLabel?.backgroundColor = UIColor.clearColor()
             cell.textLabel?.textColor = oficialLightGray
+            cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         }
         
         cell.contentView.addSubview(separatorLineView)

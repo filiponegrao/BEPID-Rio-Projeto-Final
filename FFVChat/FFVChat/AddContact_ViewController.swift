@@ -54,6 +54,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         
         let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = oficialLightGray
+        textFieldInsideSearchBar?.font = UIFont(name: "SukhumvitSet-Light", size: 14)
         
 
 //        searchSubviewsForTextFieldIn(self.searchBar)
@@ -183,6 +184,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             cell.textLabel?.text = "No results."
             cell.textLabel?.textAlignment = .Center
             cell.textLabel?.textColor = oficialLightGray
+            cell.textLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 17)
             cell.backgroundColor = UIColor.clearColor()
             
             let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 4))

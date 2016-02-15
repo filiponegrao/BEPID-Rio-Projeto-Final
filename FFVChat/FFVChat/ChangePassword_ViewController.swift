@@ -42,7 +42,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         
         self.navBar = NavigationChangePassword_View(requester: self)
         self.navBar.layer.zPosition = 5
-        self.navBar.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.navBar.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.view.addSubview(self.navBar)
         
         self.tableView = UITableView(frame: CGRectMake(0,50, screenWidth, screenHeight/5 * 2 - 10))
@@ -57,6 +57,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.doneButton = MKButton(frame: CGRectMake(0, screenHeight - 45, screenWidth, 45))
         self.doneButton.setTitle("Done", forState: .Normal)
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.doneButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.doneButton.backgroundColor = oficialGreen
 //        self.doneButton.highlighted = true
         self.doneButton.addTarget(self, action: "changePassword", forControlEvents: UIControlEvents.TouchUpInside)
@@ -74,13 +75,14 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
         self.forgotPassword.setTitleColor(oficialDarkGreen, forState: .Highlighted)
         self.forgotPassword.contentHorizontalAlignment = .Left
         self.forgotPassword.addTarget(self, action: "setForgotPassword", forControlEvents: .TouchUpInside)
+        self.forgotPassword.titleLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         self.view.addSubview(self.forgotPassword)
         
         self.forgotText = UITextView(frame: CGRectMake(10, self.forgotPassword.frame.origin.y + self.forgotPassword.frame.size.height - 15, screenWidth - 20, screenHeight/8))
         self.forgotText.text = "If you have forgotten your password you can retrieve it by informing the registered email."
         self.forgotText.textColor = oficialLightGray
         self.forgotText.backgroundColor = UIColor.clearColor()
-        self.forgotText.font = UIFont(name: "Helvetica", size: 15)
+        self.forgotText.font = UIFont(name: "SukhumvitSet-Light", size: 14)
         self.forgotText.textAlignment = .Left
 //        self.forgotText.editable = false
         self.forgotText.userInteractionEnabled = false
@@ -165,6 +167,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             self.currentPassword.secureTextEntry = true
             self.currentPassword.tintColor = oficialGreen
             self.currentPassword.textColor = oficialLightGray
+            self.currentPassword.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             self.currentPassword.delegate = self
        
             cell.addSubview(self.currentPassword)
@@ -179,6 +182,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             self.newPassword.secureTextEntry = true
             self.newPassword.tintColor = oficialGreen
             self.newPassword.textColor = oficialLightGray
+            self.newPassword.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             self.newPassword.delegate = self
             
             cell.addSubview(self.newPassword)
@@ -193,6 +197,7 @@ class ChangePassword_ViewController: UIViewController, UITableViewDataSource, UI
             self.newPasswordAgain.secureTextEntry = true
             self.newPasswordAgain.tintColor = oficialGreen
             self.newPasswordAgain.textColor = oficialLightGray
+            self.newPasswordAgain.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             self.newPasswordAgain.delegate = self
             
             cell.addSubview(self.newPasswordAgain)

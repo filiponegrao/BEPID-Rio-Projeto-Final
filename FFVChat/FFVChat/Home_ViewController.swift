@@ -120,6 +120,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         let textFieldInsideSearchBar = self.searchBar.valueForKey("searchField") as? UITextField
         textFieldInsideSearchBar?.textColor = oficialLightGray
         textFieldInsideSearchBar?.tintColor = oficialGreen
+        textFieldInsideSearchBar?.font = UIFont(name: "SukhumvitSet-Light", size: 14)
         
         self.searchBarView = UIView(frame: CGRectMake(0,0,screenWidth, self.searchBarHeight))
         self.searchBarView.frame.size.height += 2

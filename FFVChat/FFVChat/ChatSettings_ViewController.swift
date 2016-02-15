@@ -51,7 +51,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         //TITULO NAVBAR//
         self.tittle = UILabel(frame: CGRectMake(0, 25, screenWidth, 35))
         self.tittle.text = "Chat"
-        self.tittle.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.tittle.textAlignment = .Center
         self.tittle.textColor = oficialGreen
         self.view.addSubview(self.tittle)
