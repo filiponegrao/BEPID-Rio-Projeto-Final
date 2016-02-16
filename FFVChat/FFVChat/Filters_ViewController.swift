@@ -22,6 +22,8 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
     
     var doneButton : MKButton!
     
+    var details : UILabel!
+    
     //Dados a enviar
     
     var contact: Contact!
@@ -46,9 +48,13 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
     
     var sparkBlur : UIVisualEffectView!
     
+    var halfBlur : UIVisualEffectView!
+    
     var contador : NSTimer!
     
     var warning : NSTimer!
+    
+    var halfTimer : NSTimer!
     
     var lifespan : SelectedMidia_ViewController!
     
@@ -69,12 +75,15 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = oficialDarkGray
+        self.view.backgroundColor = oficialMediumGray
+        
+        let heightdetails : CGFloat = 44
         
         self.imageView = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight*2/3))
         self.imageView.image = image
         self.imageView.clipsToBounds = true
-        self.imageView.contentMode = .ScaleToFill
+        self.imageView.contentMode = .ScaleAspectFit
+        self.imageView.backgroundColor = oficialDarkGray
         self.view.addSubview(self.imageView)
         
         self.topBar = UIView(frame: CGRectMake(0, 0, screenWidth, 70))
@@ -99,36 +108,18 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         self.doneButton.rippleLayerColor = oficialDarkGray
         self.view.addSubview(self.doneButton)
         
-        let altura = screenHeight - self.imageView.frame.size.height - self.doneButton.frame.size.height - 10
+        self.details = UILabel(frame: CGRectMake(20, self.imageView.frame.origin.y + self.imageView.frame.size.height, self.view.frame.size.width - 40, heightdetails))
+        self.details.text = "0% Seguro (ATENÇÃO)"
+        self.details.textColor = GMColor.red500Color()
+        self.details.font = UIFont(name: "SukhumvitSet-Light", size: 16)
+//        self.view.addSubview(self.details)
+        
+        let altura = screenHeight - self.imageView.frame.size.height - self.doneButton.frame.size.height - 10// - heightdetails/2
         
         self.choiceBar = FNChoiceBar(altura: altura, opcoes: self.filtros, imagens: self.imageFilters)
         self.choiceBar.delegate = self
         self.choiceBar.frame.origin.y = self.imageView.frame.origin.y + self.imageView.frame.size.height + 10
         self.view.addSubview(self.choiceBar)
-        
-//        let margem : CGFloat = 20
-//        
-//        let layout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
-//        layout.itemSize = CGSize(width: screenWidth/3 - 5, height: screenHeight/3 - self.doneButton.frame.size.height - margem)
-//        layout.minimumInteritemSpacing = 2
-//        layout.minimumLineSpacing = 5 //espaçamento entre uma celula de baixo com a de cima
-//        layout.scrollDirection = .Horizontal
-//        layout.headerReferenceSize = CGSizeMake(0, 0)
-//        
-//        self.collectionView = UICollectionView(frame: CGRectMake(0, screenHeight*2/3 + margem, screenWidth, screenHeight/3 - self.doneButton.frame.size.height - margem), collectionViewLayout: layout)
-//        self.collectionView.backgroundColor = UIColor.clearColor()
-//        self.collectionView.registerClass(CellFilter_CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-//        self.collectionView.delegate = self
-//        self.collectionView.dataSource = self
-//        self.view.addSubview(self.collectionView)
-//        
-//        let lineHeight : CGFloat = 5
-//        
-//        self.selectionBar = UIView(frame: CGRectMake(10, self.collectionView.frame.origin.y - 2*lineHeight, screenWidth/3 - 20, lineHeight))
-//        self.selectionBar.backgroundColor = oficialGreen
-//        self.view.addSubview(self.selectionBar)
-        
     }
 
     override func didReceiveMemoryWarning()
@@ -145,17 +136,26 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         case 0:
             self.selectedFilter = ImageFilter.None
             self.removePreVisualizacaoCircle()
+            self.removePrevisualizacaoHalf()
             self.removePreVisualizacaoSpark()
             
         case 1:
             self.selectedFilter = ImageFilter.Circle
             self.removePreVisualizacaoSpark()
+            self.removePrevisualizacaoHalf()
             self.preVisualizacaoCircle()
             
         case 2:
             self.selectedFilter = ImageFilter.Spark
             self.removePreVisualizacaoCircle()
+            self.removePrevisualizacaoHalf()
             self.preVisualizacaoSpark()
+            
+        case 3:
+            self.selectedFilter = ImageFilter.Half
+            self.removePreVisualizacaoCircle()
+            self.removePreVisualizacaoSpark()
+            self.preVisualizacaoHalf()
             
         default:
             print("indicie incorreto")
@@ -168,6 +168,7 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         self.circleBlur?.removeFromSuperview()
         self.circleBlur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
         self.circleBlur.frame = self.imageView.bounds
+        self.circleBlur.alpha = 0
         self.imageView.addSubview(self.circleBlur)
         
         self.circleUnblur?.removeFromSuperview()
@@ -177,10 +178,12 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         self.circleUnblur.contentMode = .ScaleToFill
         self.circleUnblur.clipsToBounds = true
         self.circleUnblur.image = Editor.circleUnblur(self.image, x: self.circleUnblur.frame.origin.x, y: self.circleUnblur.frame.origin.y, imageFrame: self.imageView.frame)
+        self.circleUnblur.alpha = 0
         self.imageView.addSubview(self.circleUnblur)
         
         UIView.animateWithDuration(0.3) { () -> Void in
             
+            self.circleUnblur.alpha = 1
             self.circleBlur.alpha = 1
         }
     }
@@ -214,6 +217,33 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
 
     }
     
+    func removePreVisualizacaoSpark()
+    {
+        self.warning?.invalidate()
+        self.contador?.invalidate()
+        self.contador = nil
+        self.sparkBlur?.removeFromSuperview()
+    }
+    
+    func preVisualizacaoHalf()
+    {
+        self.halfBlur?.removeFromSuperview()
+        self.halfBlur = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.halfBlur.frame = CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height/2)
+        self.halfBlur.alpha = 1
+        self.imageView.addSubview(self.halfBlur)
+        
+        self.halfTimer?.invalidate()
+        self.halfTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "changePosition", userInfo: nil, repeats: true)
+
+    }
+    
+    func removePrevisualizacaoHalf()
+    {
+        self.halfTimer?.invalidate()
+        self.halfBlur?.removeFromSuperview()
+    }
+    
     func changeAlpha()
     {
         if(self.sparkBlur.alpha == 0)
@@ -226,12 +256,16 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         }
     }
     
-    func removePreVisualizacaoSpark()
+    func changePosition()
     {
-        self.warning?.invalidate()
-        self.contador?.invalidate()
-        self.contador = nil
-        self.sparkBlur?.removeFromSuperview()
+        if(self.halfBlur.frame.origin.y == 0)
+        {
+            self.halfBlur.frame.origin.y = self.imageView.frame.size.height/2
+        }
+        else
+        {
+            self.halfBlur.frame.origin.y = 0
+        }
     }
     
 

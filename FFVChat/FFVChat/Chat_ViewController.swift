@@ -120,9 +120,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.messageErased(), object: nil)
         
-        self.chatController.messageBar.textView.resignFirstResponder()
-
-
+        self.chatController.endEditions()
     }
     
     
