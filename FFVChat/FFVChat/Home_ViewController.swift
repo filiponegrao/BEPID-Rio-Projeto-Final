@@ -49,15 +49,15 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         Optimization.addParallaxToView(self.background)
         
         
-        for family: String in UIFont.familyNames()
-        {
-            print("\(family)")
-            for names: String in UIFont.fontNamesForFamilyName(family)
-            {
-                print("== \(names)")
-            }
-        }
-        
+//        for family: String in UIFont.familyNames()
+//        {
+//            print("\(family)")
+//            for names: String in UIFont.fontNamesForFamilyName(family)
+//            {
+//                print("== \(names)")
+//            }
+//        }
+//        
         
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
