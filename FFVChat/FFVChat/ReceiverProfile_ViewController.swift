@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ReceiverProfile_ViewController: UIViewController
+class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransitioningDelegate
 {
-    
-    var contactImage: UIImageView!
+    let transition = BubbleTransition()
+
+    var contactImage: UIButton!
     
     var contact : Contact!
     
@@ -100,13 +101,19 @@ class ReceiverProfile_ViewController: UIViewController
         self.view.addSubview(self.userSinceLabel)
         
         //mostra quantos prints o usuário tirou
+        
         self.screenshotsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + 10, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
-        self.screenshotsLabel.text = "Screenshots: "
         self.screenshotsLabel.textColor = UIColor.whiteColor()
         self.screenshotsLabel.textAlignment = .Left
         self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
         self.screenshotsLabel.setSizeFont(17)
-        self.screenshotsLabel.hidden = true
+        
+        let text = "Printou \(DAOPrints.sharedInstance.getNumberOfPrintScreens(self.contact.username)) conteúdos seu"
+        let mutable = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: UIFont(name: "Sukhumvit Set", size: 17)!])
+        mutable.addAttribute(NSForegroundColorAttributeName, value: oficialGreen, range: NSRange(location: 8, length: 1))
+        
+        self.screenshotsLabel.attributedText = mutable
+        
         self.view.addSubview(self.screenshotsLabel)
         
         //mostra quantas denúncias o usuário tem
@@ -120,10 +127,12 @@ class ReceiverProfile_ViewController: UIViewController
         self.view.addSubview(self.reportsLabel)
         
         //mostra a imagem do usuário
-        self.contactImage = UIImageView(frame: CGRectMake(screenWidth/7 * 2 + 10, screenHeight/5, screenWidth/2, screenWidth/2))
+        self.contactImage = UIButton(frame: CGRectMake(screenWidth/7 * 2 + 10, screenHeight/5, screenWidth/2, screenWidth/2))
         self.contactImage.layer.cornerRadius = self.contactImage.frame.size.height/2
         self.contactImage.clipsToBounds = true
-        self.contactImage.image = UIImage(data: self.contact.profileImage!)
+        self.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: .Normal)
+        self.contactImage.addTarget(self, action: "zoomImage", forControlEvents: .TouchUpInside)
+        self.contactImage.backgroundColor = oficialDarkGray
         self.view.addSubview(self.contactImage)
 
 
@@ -134,6 +143,8 @@ class ReceiverProfile_ViewController: UIViewController
     override func viewWillAppear(animated: Bool)
     {
         addCircleView()
+        
+        self.view.bringSubviewToFront(self.contactImage)
     }
     
 
@@ -159,21 +170,45 @@ class ReceiverProfile_ViewController: UIViewController
         
         circleView.center = CGPointMake(self.contactImage.center.x, self.contactImage.center.y)
         
-        DAOParse.getTrustLevel(self.contact.username) { (trustLevel) -> Void in
-            
-            if(trustLevel != nil)
-            {
-                self.trustLevel = trustLevel
-                self.trustLevelLabel.text = "\(self.trustLevel)%"
-                
-                circleView.setColor(self.trustLevel)
-                circleView.animateCircle(1.0, trustLevel: self.trustLevel)
-            }
-            
-        }
+        self.trustLevel = Int(self.contact.trustLevel)
+        self.trustLevelLabel.text = "\(self.trustLevel)%"
+        
+        circleView.setColor(self.trustLevel)
+        circleView.animateCircle(1.0, trustLevel: self.trustLevel)
+        
         
         view.addSubview(circleView)
         
+    }
+    
+    func zoomImage()
+    {
+        let zoom = ImageViewController(image: UIImage(data: self.contact.profileImage)!)
+        self.transition.duration = 0.2
+        
+        zoom.transitioningDelegate = self
+        zoom.modalInPopover = true
+        zoom.modalPresentationStyle = .Custom
+        
+        self.presentViewController(zoom, animated: true) { () -> Void in
+        
+        }
+    }
+    
+    /**####################### BUBLE TRANSITION ################### */
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .Present
+        transition.startingPoint = self.contactImage.center
+        transition.bubbleColor = self.contactImage.backgroundColor!
+        return transition
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .Dismiss
+        transition.startingPoint = self.contactImage.center
+        transition.bubbleColor = self.contactImage.backgroundColor!
+        return transition
     }
 
 

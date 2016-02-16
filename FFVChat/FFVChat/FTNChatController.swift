@@ -410,6 +410,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
                     
                     }, completion: { (success: Bool) -> Void in
                         
+                        UserLayoutSettings.sharedInstance.setCurrentBackground(UserLayoutSettings.sharedInstance.getBackgroundAtIndex(self.backgroundIndex))
                 })
                 
         }
@@ -431,7 +432,8 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
                     self.background.alpha = 0.4
                     
                     }, completion: { (success: Bool) -> Void in
-                        
+                        UserLayoutSettings.sharedInstance.setCurrentBackground(UserLayoutSettings.sharedInstance.getBackgroundAtIndex(self.backgroundIndex))
+
                 })
                 
         }

@@ -211,7 +211,7 @@ class UserLayoutSettings : NSObject
      * Levado em conta como minuto
      * por padrao, 1 minuto
      */
-    func getCurrentMinutesLifespan() -> Int
+    func getCurrentMinutesTextLifespan() -> Int
     {
         if(self.settings != nil)
         {
@@ -227,7 +227,7 @@ class UserLayoutSettings : NSObject
      * Levado em conta como segundos
      * por padrao, 60 segundos
      */
-    func getCurrentSecondsLifespan() -> Int
+    func getCurrentSecondsTextLifespan() -> Int
     {
         if(self.settings != nil)
         {
@@ -243,7 +243,7 @@ class UserLayoutSettings : NSObject
      * Levado em conta como segundos
      * por padrao
      */
-    func setCurrentSecondsLifespan(time: Int)
+    func setCurrentSecondsTextLifespan(time: Int)
     {
         if(self.settings != nil)
         {
@@ -252,6 +252,14 @@ class UserLayoutSettings : NSObject
             print("lifespan de mensagens definido para: \(time) segundos")
         }
     }
+//    
+//    func getLastLifespan() -> Int
+//    {
+//        if(self.settings != nil)
+//        {
+//            
+//        }
+//    }
     
     func getSettings() -> UserLayoutInfo?
     {
@@ -270,6 +278,27 @@ class UserLayoutSettings : NSObject
         catch
         {
             return nil
+        }
+    }
+    
+    func getCurrentImageFilter() -> ImageFilter
+    {
+        if(self.settings != nil)
+        {
+            return ImageFilter(rawValue: self.settings!.currentImageFilter!)!
+        }
+        else
+        {
+            return ImageFilter.None
+        }
+    }
+    
+    func setCurrentFilter(imageFilter: ImageFilter)
+    {
+        if(self.settings != nil)
+        {
+            self.settings!.currentImageFilter = imageFilter.rawValue
+            self.save()
         }
     }
     

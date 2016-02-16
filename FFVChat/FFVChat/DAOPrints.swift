@@ -131,6 +131,20 @@ class DAOPrints
         }
     }
     
+    func getNumberOfPrintScreens(contact: String) -> Int
+    {
+        let fetchRequest = NSFetchRequest(entityName: "PrintscreenNotification")
+        fetchRequest.predicate = NSPredicate(format: "printer == %@", contact)
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [PrintscreenNotification]
+            return results.count
+        }
+        catch
+        {
+            return 0
+        }
+    }
     
     func save()
     {

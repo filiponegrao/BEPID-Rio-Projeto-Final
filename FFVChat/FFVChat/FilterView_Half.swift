@@ -18,6 +18,8 @@ class FilterView_Half : UIView
     
     var blurFilter : UIVisualEffectView!
     
+    var timer : NSTimer!
+    
     init(image: Image)
     {
         self.image = image
@@ -36,13 +38,27 @@ class FilterView_Half : UIView
         self.imageView.layer.zPosition = 0
         self.addSubview(self.imageView)
         
-        
         //Blur
         self.blurFilter = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-        self.blurFilter.frame = self.imageView.frame
+        self.blurFilter.frame = CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height/2)
         self.blurFilter.alpha = 1
         self.addSubview(self.blurFilter)
         
+        self.timer?.invalidate()
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "changePosition", userInfo: nil, repeats: true)
+        
+    }
+    
+    func changePosition()
+    {
+        if(self.blurFilter.frame.origin.y == 0)
+        {
+            self.blurFilter.frame.origin.y = self.imageView.frame.size.height/2
+        }
+        else
+        {
+            self.blurFilter.frame.origin.y = 0
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

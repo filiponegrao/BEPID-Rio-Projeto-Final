@@ -127,7 +127,15 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.screenshotsLabel.textColor = UIColor.whiteColor()
         self.screenshotsLabel.textAlignment = .Left
         self.view.addSubview(self.screenshotsLabel)
-        
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        let time = UserLayoutSettings.sharedInstance.getCurrentMinutesTextLifespan()
+        let minutes = time / 60
+        let seconds = time % 60
+        self.pickerView.selectRow(minutes, inComponent: 0, animated: true)
+        self.pickerView.selectRow(seconds, inComponent: 1, animated: true)
     }
     
     override func didReceiveMemoryWarning()

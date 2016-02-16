@@ -124,7 +124,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillAppear(animated: Bool)
     {
         //pegar info bd
-        self.lifespanValue = UserLayoutSettings.sharedInstance.getCurrentMinutesLifespan()
+        self.lifespanValue = UserLayoutSettings.sharedInstance.getCurrentMinutesTextLifespan()
         
         //pegando valor em minutos e salvando em horas e minutos
         let savedHour = self.lifespanValue / 60
@@ -597,7 +597,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             self.lifespanField.resignFirstResponder()
             
             //passando info bd
-            UserLayoutSettings.sharedInstance.setCurrentSecondsLifespan(self.lifespanValue * 60)
+            UserLayoutSettings.sharedInstance.setCurrentSecondsTextLifespan(self.lifespanValue * 60)
             
         }
         else

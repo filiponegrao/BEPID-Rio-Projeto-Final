@@ -48,8 +48,8 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         self.collectionView.backgroundColor = UIColor.clearColor()
         self.collectionView.registerClass(FTNCollectionWebCell.self, forCellWithReuseIdentifier: "CellWeb")
         self.collectionView.registerClass(FTNCollectionGifCell.self, forCellWithReuseIdentifier: "CellGif")
-        self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
-        self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Header")
+//        self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+//        self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Header")
 
 
         self.collectionView.showsVerticalScrollIndicator = false
@@ -131,45 +131,43 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         return CGSizeMake(self.collectionView.frame.size.width, 44)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSizeMake(self.collectionView.frame.size.width, 44)
-    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        return CGSizeMake(self.collectionView.frame.size.width, 44)
+//    }
+//    
+//    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
+//    {
+//        switch kind
+//        {
+//            
+//        case UICollectionElementKindSectionHeader:
+//            
+//            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
+//            
+//            headerView.title.text = "GIFs mais acessados!"
+//            
+//            return headerView
+//            
+//        case UICollectionElementKindSectionFooter:
+//            
+//            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
+//            
+//            footerView.title.text = "As imagens sao de direito da figura exposta."
+//            footerView.title.adjustsFontSizeToFitWidth = true
+//            footerView.title.minimumScaleFactor = 0.1
+//            
+//            return footerView
+//            
+//        default:
+//            
+//            assert(false, "Unexpected element kind")
+//            
+//            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
+//
+//            return footerView
+//        }
+//    }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView
-    {
-        switch kind
-        {
-            
-        case UICollectionElementKindSectionHeader:
-            
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
-            
-            headerView.title.text = "GIFs mais acessados!"
-            
-            return headerView
-            
-        case UICollectionElementKindSectionFooter:
-            
-            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
-            
-            footerView.title.text = "As imagens sao de direito da figura exposta."
-            footerView.title.adjustsFontSizeToFitWidth = true
-            footerView.title.minimumScaleFactor = 0.1
-            
-            return footerView
-            
-        default:
-            
-            assert(false, "Unexpected element kind")
-            
-            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
-
-            return footerView
-        }
-    }
-    
-    
-   
     
     func refresh()
     {

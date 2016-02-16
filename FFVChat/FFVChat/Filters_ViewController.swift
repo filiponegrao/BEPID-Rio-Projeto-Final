@@ -121,6 +121,29 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         self.choiceBar.frame.origin.y = self.imageView.frame.origin.y + self.imageView.frame.size.height + 10
         self.view.addSubview(self.choiceBar)
     }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.selectedFilter = UserLayoutSettings.sharedInstance.getCurrentImageFilter()
+        var index : Int!
+        switch self.selectedFilter
+        {
+        case .None:
+            index = 0
+        case .Circle:
+            index = 1
+        case .Spark:
+            index = 2
+        case .Half:
+            index = 3
+            
+        default:
+            print("erro no filtro salvo")
+        }
+        
+        self.choiceBar.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: .Right, animated: true)
+        self.choiceBar.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), animated: true, scrollPosition: .Right)
+    }
 
     override func didReceiveMemoryWarning()
     {
@@ -210,7 +233,7 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         
         self.contador?.invalidate()
         self.contador = nil
-        self.contador = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "changeAlpha", userInfo: nil, repeats: true)
+        self.contador = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "changeAlpha", userInfo: nil, repeats: true)
         
         self.warning?.invalidate()
         self.warning = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "sparkWarning", userInfo: nil, repeats: false)
@@ -234,7 +257,7 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         self.imageView.addSubview(self.halfBlur)
         
         self.halfTimer?.invalidate()
-        self.halfTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "changePosition", userInfo: nil, repeats: true)
+        self.halfTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: "changePosition", userInfo: nil, repeats: true)
 
     }
     
@@ -318,6 +341,8 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
     {
         let nav = self.presentingViewController as! AppNavigationController
         let controller = nav.viewControllers.last
+        
+        UserLayoutSettings.sharedInstance.setCurrentFilter(self.selectedFilter)
         
         if controller!.isKindOfClass(Chat_ViewController)
         {

@@ -132,7 +132,7 @@ class DAOMessages : NSObject
         let now = NSDate()
         let id = self.createMessageKey(username, date: now)
         
-        let time = UserLayoutSettings.sharedInstance.getCurrentSecondsLifespan()
+        let time = UserLayoutSettings.sharedInstance.getCurrentSecondsTextLifespan()
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: time, type: .Text, contentKey: nil, text: text, status: messageStatus.Ready.rawValue)
         
@@ -228,7 +228,7 @@ class DAOMessages : NSObject
         
         let id = self.createMessageKey(username, date: now)
         
-        let time = UserLayoutSettings.sharedInstance.getCurrentSecondsLifespan()
+        let time = UserLayoutSettings.sharedInstance.getCurrentSecondsTextLifespan()
         
         let message = Message.createInManagedObjectContext(self.managedObjectContext, id: id, sender: DAOUser.sharedInstance.getUsername(), target: username, sentDate: now, lifeTime: time, type: .Gif, contentKey: gifName, text: nil, status: messageStatus.Ready.rawValue)
         
