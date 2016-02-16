@@ -56,18 +56,22 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         
         self.addSubview(self.collectionView)
         
-        self.closeButton = UIButton(frame: CGRectMake(0,0,self.frame.size.width/2,44))
+        let blackview = UIView(frame: CGRectMake(0,0,self.frame.size.width, 44))
+        blackview.backgroundColor = oficialDarkGray
+        self.addSubview(blackview)
+        
+        self.closeButton = UIButton(frame: CGRectMake(20,0,self.frame.size.width/2 - 20,44))
         self.closeButton.setTitle("Cancelar", forState: .Normal)
-        self.closeButton.setTitleColor(oficialGreen, forState: .Normal)
-        self.closeButton.backgroundColor = oficialDarkGray
-        self.closeButton.titleLabel?.textAlignment = .Left
+        self.closeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.closeButton.contentHorizontalAlignment = .Left
+        self.closeButton.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 17)
         self.addSubview(self.closeButton)
         
-        self.moreButton = UIButton(frame: CGRectMake(self.frame.size.width/2, 0, self.frame.size.width/2, 44))
+        self.moreButton = UIButton(frame: CGRectMake(self.frame.size.width/2, 0, self.frame.size.width/2 - 20, 44))
         self.moreButton.setTitle("More", forState: .Normal)
         self.moreButton.setTitleColor(oficialGreen, forState: .Normal)
-        self.moreButton.backgroundColor = oficialDarkGray
-        self.moreButton.titleLabel?.textAlignment = .Right
+        self.moreButton.contentHorizontalAlignment = .Right
+        self.moreButton.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 17)
         self.addSubview(self.moreButton)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: NotificationController.center.gifDownloaded.name, object: nil)
@@ -127,9 +131,9 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         return self.gifs.count
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSizeMake(self.collectionView.frame.size.width, 44)
-    }
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSizeMake(self.collectionView.frame.size.width, 44)
+//    }
     
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
 //        return CGSizeMake(self.collectionView.frame.size.width, 44)

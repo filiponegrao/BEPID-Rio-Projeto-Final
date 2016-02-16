@@ -71,7 +71,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = UIColor.clearColor()
-        self.collectionView.registerClass(CellWebGifView.self, forCellWithReuseIdentifier: "Cell")
+        self.collectionView.registerClass(FTNCollectionWebCell.self, forCellWithReuseIdentifier: "Cell")
         self.collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(self.collectionView)
         
@@ -132,9 +132,10 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CellWebGifView
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! FTNCollectionWebCell
         cell.backgroundColor = oficialDarkGray
         cell.clipsToBounds = true
+        cell.webView.stopLoading()
         cell.webView.loadRequest(NSURLRequest(URL: NSURL(string: DAOContents.sharedInstance.getUrlFromGifName(self.gifs[indexPath.item]))!))
         
         return cell

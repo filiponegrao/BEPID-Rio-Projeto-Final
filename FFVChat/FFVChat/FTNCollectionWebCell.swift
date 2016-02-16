@@ -24,6 +24,7 @@ class FTNCollectionWebCell : UICollectionViewCell
         self.webView.layer.cornerRadius = 5
         self.webView.contentMode = .ScaleAspectFill
         self.webView.clipsToBounds = true
+        self.webView.userInteractionEnabled = false
         self.addSubview(self.webView)
         
     }
