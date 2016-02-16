@@ -157,10 +157,7 @@
 		80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */; };
 		80F6BB241BF6C2A2003DE8AE /* DAOPostgres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */; };
 		80FD13AC1C038CF100729402 /* GMColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FD13AB1C038CF100729402 /* GMColor.swift */; };
-		80FEA2201C39EEFA00DAA984 /* MessageBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */; };
-		80FEA2221C3C681F00DAA984 /* GifKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */; };
 		80FEA2241C3CAE5A00DAA984 /* CellWebGifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2231C3CAE5A00DAA984 /* CellWebGifView.swift */; };
-		80FEA2261C3DC75400DAA984 /* AudioKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */; };
 		80FED0C11C70102600B024AE /* FTNCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FED0C01C70102600B024AE /* FTNCollection.swift */; };
 		80FED0C31C70109200B024AE /* FTNCollectionGifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FED0C21C70109200B024AE /* FTNCollectionGifCell.swift */; };
 		80FED0C51C70109F00B024AE /* FTNCollectionWebCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FED0C41C70109F00B024AE /* FTNCollectionWebCell.swift */; };
@@ -390,10 +387,7 @@
 		80E8BD7B1BC5977400B49C31 /* Notification_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification_TableViewCell.swift; sourceTree = "<group>"; };
 		80F6BB231BF6C2A2003DE8AE /* DAOPostgres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPostgres.swift; sourceTree = "<group>"; };
 		80FD13AB1C038CF100729402 /* GMColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMColor.swift; sourceTree = "<group>"; };
-		80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBar.swift; sourceTree = "<group>"; };
-		80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifKeyboard.swift; sourceTree = "<group>"; };
 		80FEA2231C3CAE5A00DAA984 /* CellWebGifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWebGifView.swift; sourceTree = "<group>"; };
-		80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioKeyboard.swift; sourceTree = "<group>"; };
 		80FED0C01C70102600B024AE /* FTNCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNCollection.swift; sourceTree = "<group>"; };
 		80FED0C21C70109200B024AE /* FTNCollectionGifCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNCollectionGifCell.swift; sourceTree = "<group>"; };
 		80FED0C41C70109F00B024AE /* FTNCollectionWebCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FTNCollectionWebCell.swift; sourceTree = "<group>"; };
@@ -805,9 +799,6 @@
 				800AE8691C64F0D600B917FE /* FTNChatView.swift */,
 				800AE86B1C64F0E100B917FE /* FTNChatController.swift */,
 				800AE8681C6453A500B917FE /* MessageBar */,
-				80FEA21F1C39EEFA00DAA984 /* MessageBar.swift */,
-				80FEA2211C3C681F00DAA984 /* GifKeyboard.swift */,
-				80FEA2251C3DC75400DAA984 /* AudioKeyboard.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -1019,6 +1010,7 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = M7KY4TXQRJ;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1180,7 +1172,6 @@
 				804FB4091C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift in Sources */,
 				8017D3841BD46481000CB8F0 /* TheJudger.swift in Sources */,
 				80FED0C71C7035DE00B024AE /* FTNCollectionViewHeader.swift in Sources */,
-				80FEA2261C3DC75400DAA984 /* AudioKeyboard.swift in Sources */,
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				803657941BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
@@ -1229,7 +1220,6 @@
 				80FED0C11C70102600B024AE /* FTNCollection.swift in Sources */,
 				803657931BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZag.swift in Sources */,
 				805172B91C1756A900687770 /* SweetAlert.swift in Sources */,
-				80FEA2221C3C681F00DAA984 /* GifKeyboard.swift in Sources */,
 				F68A459F1C5A9FBD00E99D64 /* ChatSettings_ViewController.swift in Sources */,
 				8036578D1BF94A97000907BD /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				80FF185B1BE3B15200C5F35E /* metaContact.swift in Sources */,
@@ -1308,7 +1298,6 @@
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
 				F68ABEF71C11D978009670A7 /* NavigationDeleteProfile_View.swift in Sources */,
 				803657921BF94A97000907BD /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
-				80FEA2201C39EEFA00DAA984 /* MessageBar.swift in Sources */,
 				8036578C1BF94A97000907BD /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
 				803657871BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
 				804E45BF1C5AC60900753493 /* UserLayoutSettings.swift in Sources */,

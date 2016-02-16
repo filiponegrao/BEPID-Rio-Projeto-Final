@@ -92,6 +92,8 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     
     override func viewWillAppear(animated: Bool)
     {
+        DAOPostgres.sharedInstance.startRefreshing()
+
         self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         
@@ -108,7 +110,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     }
     override func viewDidAppear(animated: Bool)
     {
-        DAOPostgres.sharedInstance.startRefreshing()
         self.redAlertScreen()
     }
     
@@ -116,7 +117,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     {
         self.homeController.contactsController.checkUnreadMessages()
         self.homeController.favouritesController.checkUnreadMessages()
-        DAOPostgres.sharedInstance.stopRefreshing()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.messageErased(), object: nil)
         
@@ -249,7 +249,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         let index = self.messages.indexOf(message)
-        
+        print("index da mensagem nova: \(index)")
         self.chatController.messages = self.messages
         self.chatController.newMessage(index!)
     }

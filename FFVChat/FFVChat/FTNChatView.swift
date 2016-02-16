@@ -14,7 +14,7 @@ class FTNChatView : NSObject
     class func flowLayoutForCollectionChat(viewFrame frame: CGRect) -> UICollectionViewFlowLayout
     {
         let collectionLayout = UICollectionViewFlowLayout()
-        collectionLayout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        collectionLayout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 20, right: 0)
         collectionLayout.itemSize = CGSize(width: frame.size.width, height: collectionCellHeight)
         collectionLayout.minimumInteritemSpacing = 0
         collectionLayout.minimumLineSpacing = 0 //espaçamento entre uma celula de baixo com a de cima

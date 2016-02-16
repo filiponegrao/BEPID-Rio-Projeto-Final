@@ -155,11 +155,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
 //        DAOContacts.sharedInstance.refreshContacts()
     }
     
-    override func viewDidDisappear(animated: Bool)
-    {
-        DAOPostgres.sharedInstance.stopObserve()
-    }
-    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

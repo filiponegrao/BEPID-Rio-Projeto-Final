@@ -161,6 +161,10 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         default:
             
             assert(false, "Unexpected element kind")
+            
+            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as! FTNCollectionViewHeader
+
+            return footerView
         }
     }
     

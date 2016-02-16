@@ -22,7 +22,7 @@ class FTNCollectionGifCell : UICollectionViewCell
         let messageColor = oficialGreen
         
         self.gifView = UIGifView(frame: CGRectMake(5, 5, frame.size.width - 10, frame.size.height - 10))
-        self.gifView.layer.cornerRadius = 5
+//        self.gifView.layer.cornerRadius = 5
         self.gifView.contentMode = .ScaleAspectFill
         self.gifView.clipsToBounds = true
         
