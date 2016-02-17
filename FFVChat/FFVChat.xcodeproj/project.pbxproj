@@ -119,6 +119,8 @@
 		804FB40A1C09466B00512425 /* PrintscreenNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB4081C09466B00512425 /* PrintscreenNotification.swift */; };
 		804FB40C1C09490100512425 /* DAOPrints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FB40B1C09490100512425 /* DAOPrints.swift */; };
 		805172B91C1756A900687770 /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805172B81C1756A900687770 /* SweetAlert.swift */; };
+		8062A8E51C7427A800331E9E /* KDEDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8E41C7427A800331E9E /* KDEDateLabel.swift */; };
+		8062A8E71C74298500331E9E /* ActiveLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8E61C74298500331E9E /* ActiveLabel.swift */; };
 		806D16211C0E367B00650E9D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D161F1C0E367B00650E9D /* Message.swift */; };
 		806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16221C0E70C800650E9D /* Filters_ViewController.swift */; };
 		806D16251C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */; };
@@ -349,6 +351,8 @@
 		804FB4081C09466B00512425 /* PrintscreenNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintscreenNotification.swift; sourceTree = "<group>"; };
 		804FB40B1C09490100512425 /* DAOPrints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAOPrints.swift; sourceTree = "<group>"; };
 		805172B81C1756A900687770 /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
+		8062A8E41C7427A800331E9E /* KDEDateLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDEDateLabel.swift; sourceTree = "<group>"; };
+		8062A8E61C74298500331E9E /* ActiveLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveLabel.swift; sourceTree = "<group>"; };
 		806D161F1C0E367B00650E9D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		806D16221C0E70C800650E9D /* Filters_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters_ViewController.swift; sourceTree = "<group>"; };
 		806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFilter_CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -489,6 +493,8 @@
 		8000B4DD1BDFFB5200CD00A6 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8062A8E61C74298500331E9E /* ActiveLabel.swift */,
+				8062A8E41C7427A800331E9E /* KDEDateLabel.swift */,
 				8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */,
 				80B8DFD51C259F1E00668E26 /* TimeBomb.swift */,
 				F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */,
@@ -1147,6 +1153,7 @@
 				80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */,
 				8000B4DC1BDFFB4800CD00A6 /* Editor.swift in Sources */,
 				F68ABEF51C11D7F2009670A7 /* DeleteProfile_ViewController.swift in Sources */,
+				8062A8E51C7427A800331E9E /* KDEDateLabel.swift in Sources */,
 				804E45BD1C56D9C800753493 /* CellAudio_TableViewCell.swift in Sources */,
 				8036579B1BF94A97000907BD /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */,
@@ -1258,6 +1265,7 @@
 				F66B29CA1BAB6AE700BC43EE /* Privacy_ViewController.swift in Sources */,
 				F66B29DE1BAB6C9B00BC43EE /* SentMidiaGallery_ViewController.swift in Sources */,
 				F66B29F11BAB6FF800BC43EE /* Notification_View.swift in Sources */,
+				8062A8E71C74298500331E9E /* ActiveLabel.swift in Sources */,
 				8036579F1BF94A97000907BD /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				804B3DAD1BE7296A0021DF4E /* SentMidia+CoreDataProperties.swift in Sources */,
 				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
