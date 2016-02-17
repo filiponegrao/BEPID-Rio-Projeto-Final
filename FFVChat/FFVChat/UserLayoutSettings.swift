@@ -245,13 +245,27 @@ class UserLayoutSettings : NSObject
      * Levado em conta como segundos
      * por padrao
      */
-    func setCurrentSecondsTextLifespan(time: Int)
+    func setCurrentSecondsTextLifespan(seconds: Int)
     {
         if(self.settings != nil)
         {
-            self.settings!.textLifespan = time
+            self.settings!.textLifespan = seconds/60
             self.save()
-            print("lifespan de mensagens definido para: \(time) segundos")
+            print("lifespan de mensagens definido para: \(seconds) segundos")
+        }
+    }
+    
+    /**
+     * Levado em conta como segundos
+     * por padrao
+     */
+    func setCurrentMinutesTextLifespan(minutes: Int)
+    {
+        if(self.settings != nil)
+        {
+            self.settings!.textLifespan = minutes
+            self.save()
+            print("lifespan de mensagens definido para: \(minutes) minutos")
         }
     }
     
