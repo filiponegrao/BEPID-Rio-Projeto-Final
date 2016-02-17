@@ -122,8 +122,8 @@ class ImageZoom_View: UIView {
             self.alpha = 0
             
             }) { (success: Bool) -> Void in
-                self.chatController.isViewing = false
                 
+                self.chatController.isViewing = false
                 self.removeFromSuperview()
         }
     }

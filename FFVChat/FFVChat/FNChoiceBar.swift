@@ -18,7 +18,7 @@ class FNChoiceBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate
 {
     var lastContentOffset : CGFloat!
     
-    public weak var delegate : FNChoiceBarDelegate?
+    weak var delegate : FNChoiceBarDelegate?
 
     var collectionView : UICollectionView!
     
@@ -84,7 +84,12 @@ class FNChoiceBar : UIView, UICollectionViewDataSource, UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        var attributes : UICollectionViewLayoutAttributes = collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
+        self.selectionAnimating(indexPath)
+    }
+    
+    func selectionAnimating(indexPath: NSIndexPath)
+    {
+        var attributes : UICollectionViewLayoutAttributes = self.collectionView.layoutAttributesForItemAtIndexPath(indexPath)!
         var rect = attributes.frame
         
         var frame = collectionView.convertRect(rect, toView: collectionView.superview)

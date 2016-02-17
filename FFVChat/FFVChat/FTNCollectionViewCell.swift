@@ -34,6 +34,8 @@ class FTNCollectionViewCell: UICollectionViewCell
         super.init(frame: frame)
         self.backgroundColor = UIColor.clearColor()
         
+        print("alocando cell")
+        
         self.labelDate = UILabel(frame: CGRectMake(frame.size.width - 35 - margemCellLateral, margemCellView+(self.frame.size.height-margemCellView*2)-20, 30, 15))
         self.labelDate.text = "00:00"
         self.labelDate.font = UIFont(name: "Gill Sans", size: 11)
@@ -57,6 +59,10 @@ class FTNCollectionViewCell: UICollectionViewCell
 
     deinit
     {
+        self.chataudioview?.removeFromSuperview()
+        self.chatimageview?.removeFromSuperview()
+        self.chatgifview?.removeFromSuperview()
+        self.chattextview?.removeFromSuperview()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -163,7 +169,7 @@ class FTNCollectionViewCell: UICollectionViewCell
     func setSeen()
     {
         self.labelStatus.text = messageStatus.Seen.rawValue
-        self.labelStatus.textColor = oficialGreen
+        self.labelStatus.textColor = UIColor.whiteColor()
     }
     
     func messageError()

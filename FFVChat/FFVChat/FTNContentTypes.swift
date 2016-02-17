@@ -124,6 +124,14 @@ class ChatImageView : UIView
     {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit
+    {
+        self.imageView.image = nil
+        self.imageView.removeFromSuperview()
+        self.loading.removeFromSuperview()
+        self.blur.removeFromSuperview()
+    }
 }
 
 class ChatGifView : UIView
@@ -175,6 +183,15 @@ class ChatGifView : UIView
     required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit
+    {
+        print("desalocando celula de gif")
+        self.gifView.image = nil
+        self.gifView.removeFromSuperview()
+        self.loading.removeFromSuperview()
+        self.view.removeFromSuperview()
     }
 }
 

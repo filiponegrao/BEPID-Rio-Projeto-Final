@@ -122,7 +122,12 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         self.view.addSubview(self.choiceBar)
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewWillAppear(animated: Bool)
+    {
+        self.setInitialStatus()
+    }
+    
+    func setInitialStatus()
     {
         self.selectedFilter = UserLayoutSettings.sharedInstance.getCurrentImageFilter()
         var index : Int!
@@ -141,10 +146,9 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
             print("erro no filtro salvo")
         }
         
-        self.choiceBar.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: .Right, animated: true)
-        self.choiceBar.collectionView.selectItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), animated: true, scrollPosition: .Right)
+        self.choiceBar.selectionAnimating(NSIndexPath(forItem: index, inSection: 0))
     }
-
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

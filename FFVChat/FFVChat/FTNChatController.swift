@@ -193,6 +193,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     {
         let message = self.messages[indexPath.item]
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! FTNCollectionViewCell
+        
         cell.configCell(message)
         cell.backgroundColor = UIColor.clearColor()
         
@@ -389,7 +390,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     {
         if(self.messages.count != 0)
         {
-            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: self.messages.count-1, inSection: 0), atScrollPosition: .Bottom, animated: true)
+            self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: self.messages.count-1, inSection: 0), atScrollPosition: .Top, animated: true)
         }
     }
     
@@ -472,7 +473,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             
             if(self.collectionView.contentSize.height > self.collectionView.frame.size.height)
             {
-                self.collectionView.contentOffset.y += self.gifGallery.frame.size.height
+                self.collectionView.contentOffset.y += (self.gifGallery.frame.size.height - self.messageBar.frame.size.height)
             }
             
             }) { (success: Bool) -> Void in

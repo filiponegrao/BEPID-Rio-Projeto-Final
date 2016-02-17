@@ -82,8 +82,8 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         self.chatController.delegate = self
         self.view.addSubview(self.chatController)
         
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
   
     }

@@ -19,6 +19,7 @@ extension UserLayoutInfo
     @NSManaged var otherSounds: NSNumber?
     @NSManaged var visualEffects: NSNumber?
     @NSManaged var textLifespan: NSNumber?
+    @NSManaged var contentLifespan: NSNumber?
 
 }
 
@@ -35,6 +36,7 @@ class UserLayoutInfo: NSManagedObject {
         info.currentTheme = "Default"
         info.visualEffects = true
         info.textLifespan = 1
+        info.contentLifespan = 1
         info.currentImageFilter = ImageFilter.Circle.rawValue
         
         return info
@@ -215,7 +217,7 @@ class UserLayoutSettings : NSObject
     {
         if(self.settings != nil)
         {
-            return Int(self.settings!.textLifespan!)/60
+            return Int(self.settings!.textLifespan!)
         }
         else
         {
@@ -231,7 +233,7 @@ class UserLayoutSettings : NSObject
     {
         if(self.settings != nil)
         {
-            return Int(self.settings!.textLifespan!)
+            return Int(self.settings!.textLifespan!)*60
         }
         else
         {
@@ -252,14 +254,34 @@ class UserLayoutSettings : NSObject
             print("lifespan de mensagens definido para: \(time) segundos")
         }
     }
-//    
-//    func getLastLifespan() -> Int
-//    {
-//        if(self.settings != nil)
-//        {
-//            
-//        }
-//    }
+    
+    /**
+     * Contados em minutos
+     */
+    func getMediaLifespan() -> Int
+    {
+        if(self.settings != nil)
+        {
+            return Int(self.settings!.contentLifespan!)
+        }
+        else
+        {
+            return 1
+        }
+    }
+    
+    /**
+     * Contados em minutos
+     */
+    func setMediaLifespan(time: Int)
+    {
+        print("Tempo de conteudo setado para \(time) minutos")
+        if(self.settings != nil)
+        {
+            self.settings!.contentLifespan = time
+            self.save()
+        }
+    }
     
     func getSettings() -> UserLayoutInfo?
     {
@@ -285,6 +307,7 @@ class UserLayoutSettings : NSObject
     {
         if(self.settings != nil)
         {
+            print(ImageFilter(rawValue: self.settings!.currentImageFilter!)!)
             return ImageFilter(rawValue: self.settings!.currentImageFilter!)!
         }
         else
@@ -295,6 +318,7 @@ class UserLayoutSettings : NSObject
     
     func setCurrentFilter(imageFilter: ImageFilter)
     {
+        print(imageFilter)
         if(self.settings != nil)
         {
             self.settings!.currentImageFilter = imageFilter.rawValue

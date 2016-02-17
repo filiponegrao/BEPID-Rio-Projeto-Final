@@ -129,9 +129,14 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.view.addSubview(self.screenshotsLabel)
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewWillAppear(animated: Bool)
     {
-        let time = UserLayoutSettings.sharedInstance.getCurrentMinutesTextLifespan()
+        self.setInitialStatus()
+    }
+    
+    func setInitialStatus()
+    {
+        let time = UserLayoutSettings.sharedInstance.getMediaLifespan()
         let minutes = time / 60
         let seconds = time % 60
         self.pickerView.selectRow(minutes, inComponent: 0, animated: true)
@@ -150,9 +155,12 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         let min = self.pickerView.selectedRowInComponent(0)
         let sec = self.pickerView.selectedRowInComponent(1)
         
+        
         if(min != 0 || sec != 0)
         {
             let time = (min * 60) + sec
+            
+            UserLayoutSettings.sharedInstance.setMediaLifespan(time)
             
             let nav = self.presentingViewController as! AppNavigationController
             let controller = nav.viewControllers.last

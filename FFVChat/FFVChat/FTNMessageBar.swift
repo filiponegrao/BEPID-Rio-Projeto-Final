@@ -164,6 +164,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         do { try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord) }
         catch { print("audioSession error)") }
         
+        self.recorder?.prepareToRecord()
         if self.recorder?.recording == false {
             
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
@@ -171,8 +172,6 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
             self.recordingModeOn()
             self.recordTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "enableAudio", userInfo: nil, repeats: false)
         }
-        
-    
     }
     
     func stopRecord()
@@ -183,8 +182,9 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         
         let audioSession = AVAudioSession.sharedInstance()
         
-        do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
+        do { try audioSession.setCategory(AVAudioSessionCategoryAmbient) }
         catch { print("audioSession error)") }
+        try! AVAudioSession.sharedInstance().setActive(false)
     }
     
     func sendButtonClicked()
@@ -371,12 +371,11 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         
         let audioSession = AVAudioSession.sharedInstance()
         
-        do { try audioSession.setCategory(AVAudioSessionCategoryPlayAndRecord) }
-        catch { print("audioSession error)") }
+//        do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
+//        catch { print("audioSession error)") }
         
         do { self.recorder = try AVAudioRecorder(URL: soundFileURL, settings: recordSettings as! [String : AnyObject])
             
-            self.recorder?.prepareToRecord()
             self.recorder?.delegate = self
         }
         catch

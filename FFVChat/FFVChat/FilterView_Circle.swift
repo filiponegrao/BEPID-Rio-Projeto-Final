@@ -11,7 +11,9 @@ import UIKit
 
 class FilterView_Circle: UIView {
     
-    var image : Image!
+    var imageInfo : Image!
+    
+    var image : UIImage!
     
     var imageView : UIImageView!
     
@@ -21,7 +23,8 @@ class FilterView_Circle: UIView {
     
     init(image: Image)
     {
-        self.image = image
+        self.imageInfo = image
+        self.image = UIImage(data: self.imageInfo.data)!
         
         super.init(frame: CGRectMake(0, 70, screenWidth, screenHeight - 70))
         
@@ -33,7 +36,7 @@ class FilterView_Circle: UIView {
         self.imageView = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         self.imageView.contentMode = .ScaleAspectFit
         self.imageView.clipsToBounds = true
-        self.imageView.image = UIImage(data: self.image.data)!
+        self.imageView.image = self.image
         self.imageView.layer.zPosition = 0
         self.addSubview(self.imageView)
     
@@ -44,9 +47,8 @@ class FilterView_Circle: UIView {
         self.blurFilter.alpha = 1
         self.addSubview(self.blurFilter)
                 
-        let img = UIImage(data: self.image.data)!
         self.unblurVision = UIImageView(frame: CGRectMake(0, 0, diametro, diametro))
-        self.unblurVision.image = Editor.circleUnblur(img, x: 0, y: 0, imageFrame: self.imageView.frame)
+        self.unblurVision.image = Editor.circleUnblur(self.image, x: 0, y: 0, imageFrame: self.imageView.frame)
         self.unblurVision.layer.cornerRadius = raio
         self.unblurVision.alpha = 0
         self.unblurVision.layer.zPosition = 5
@@ -62,43 +64,31 @@ class FilterView_Circle: UIView {
     //*** UNBLUR FUNCTIONS ****///
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if(self.image.filter == ImageFilter.Circle.rawValue)
+        if let touch = touches.first
         {
-            if let touch = touches.first
-            {
-                let img = UIImage(data: self.image.data)!
-                let x = touch.locationInView(self).x - raio
-                let y = touch.locationInView(self).y - raio
-                self.unblurVision.alpha = 1
-                self.unblurVision.image = Editor.circleUnblur(img, x: x, y: y, imageFrame: self.imageView.frame)
-                
-                self.unblurVision.frame.origin = CGPointMake(x, y)
-            }
+            let x = touch.locationInView(self).x - raio
+            let y = touch.locationInView(self).y - raio
+            self.unblurVision.alpha = 1
+            self.unblurVision.image = Editor.circleUnblur(self.image, x: x, y: y, imageFrame: self.imageView.frame)
+            
+            self.unblurVision.frame.origin = CGPointMake(x, y)
         }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if(self.image.filter == ImageFilter.Circle.rawValue)
+        if let touch = touches.first
         {
-            if let touch = touches.first
-            {
-                let img = UIImage(data: self.image.data)!
-                let x = touch.locationInView(self).x - raio
-                let y = touch.locationInView(self).y - raio
-                self.unblurVision.image = Editor.circleUnblur(img, x: x, y: y, imageFrame: self.imageView.frame)
-                self.unblurVision.frame.origin = CGPointMake(x, y)
-            }
-            
+            let x = touch.locationInView(self).x - raio
+            let y = touch.locationInView(self).y - raio
+            self.unblurVision.image = Editor.circleUnblur(self.image, x: x, y: y, imageFrame: self.imageView.frame)
+            self.unblurVision.frame.origin = CGPointMake(x, y)
         }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        if(self.image.filter == ImageFilter.Circle.rawValue)
-        {
-            self.unblurVision.alpha = 0
-        }
+        self.unblurVision.alpha = 0
     }
     
     

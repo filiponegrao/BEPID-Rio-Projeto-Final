@@ -146,7 +146,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        DAOPostgres.sharedInstance.stopObserve()
         
     }
     
@@ -154,7 +153,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func applicationWillEnterForeground(application: UIApplication)
     {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        
         
     }
     
@@ -164,9 +162,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         FBSDKAppEvents.activateApp()
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
-            DAOPostgres.sharedInstance.startObserve()
+//            DAOPostgres.sharedInstance.startObserve()
             DAOContacts.sharedInstance.refreshContacts()
-            
+            DAOPostgres.sharedInstance.getUnreadAndDeletedMessages()
             //De teste, ou seja tirar depois de arrumar direitinho:
             DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
         }
@@ -177,6 +175,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func applicationWillTerminate(application: UIApplication)
     {
+        DAOPostgres.sharedInstance.stopObserve()
+        DAOPostgres.sharedInstance.stopRefreshing()
+        
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.saveContext()
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
@@ -210,7 +211,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         if (application.applicationState == UIApplicationState.Background || application.applicationState == UIApplicationState.Inactive)
         {
-            UIApplication.sharedApplication().applicationIconBadgeNumber += 1
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 10
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
             
             if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)

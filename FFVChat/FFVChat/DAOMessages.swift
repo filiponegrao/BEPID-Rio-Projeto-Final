@@ -468,25 +468,26 @@ class DAOMessages : NSObject
                 else
                 {
                     contact = mssg.sender
+                    self.setMessageDeleted(id)
                 }
                 let index = self.conversationWithContact(contact).indexOf(mssg)
                 
                 //Deleta um possivel conteudo
-                if(mssg.contentKey != nil)
-                {
-                    DAOContents.sharedInstance.removeAudio(mssg.contentKey!)
-                    DAOContents.sharedInstance.removeImage(mssg.contentKey!)
-                    DAOContents.sharedInstance.removeVideo(mssg.contentKey!)
-                }
+                let key = mssg.contentKey
                 
                 self.managedObjectContext.deleteObject(mssg)
                 self.save()
                 
-                if(atualizaNoBanco) { self.setMessageDeleted(id) }
-                
                 TimeBomb.sharedInstance.removeTimer(id)
 
                 NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.messageErased(), object: nil, userInfo: ["contact": contact, "index": index!])
+                
+                if(key != nil)
+                {
+                    DAOContents.sharedInstance.removeAudio(key!)
+                    DAOContents.sharedInstance.removeImage(key!)
+                    DAOContents.sharedInstance.removeVideo(key!)
+                }
 
                 return true
             }
