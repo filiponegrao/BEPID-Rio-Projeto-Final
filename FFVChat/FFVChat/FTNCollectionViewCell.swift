@@ -154,8 +154,8 @@ class FTNCollectionViewCell: UICollectionViewCell
             
         case "Audio":
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "gifLoaded", name: FTNChatNotifications.audioLoaded(message.contentKey!), object: nil)
-            self.chataudioview = FTNContentTypes.createAudioViewForMessageCell(message.contentKey!, cellsize: self.frame.size, mine: mine)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "audioLoaded", name: FTNChatNotifications.audioLoaded(message.contentKey!), object: nil)
+            self.chataudioview = FTNContentTypes.createAudioViewForMessageCell(message.contentKey!, cellsize: self.frame.size, mine: mine, cell: self)
             self.labelStatus.frame.origin.y = self.frame.size.height - 10
             self.labelDate.frame.origin.y = frame.size.height - 30
             self.addSubview(self.chataudioview!)
@@ -205,7 +205,16 @@ class FTNCollectionViewCell: UICollectionViewCell
     
     func audioLoaded()
     {
-        
+        self.chataudioview?.loading?.removeFromSuperview()
+        let audio = DAOContents.sharedInstance.getAudioFromKey(self.message!.contentKey!)
+        self.chataudioview?.initPlayer(audio!)
+        self.chataudioview?.addSubview(self.chataudioview!.playButton)
+        self.chataudioview?.slider.enabled = true
+    }
+    
+    func deleteMessage()
+    {
+        DAOMessages.sharedInstance.deleteMessageAfterTime(self.message)
     }
     
 }

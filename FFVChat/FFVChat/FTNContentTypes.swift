@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 
 enum MessageType
@@ -133,9 +134,9 @@ class ChatImageView : UIView
     deinit
     {
         self.imageView.image = nil
-        self.imageView.removeFromSuperview()
-        self.loading.removeFromSuperview()
-        self.blur.removeFromSuperview()
+        self.imageView?.removeFromSuperview()
+        self.loading?.removeFromSuperview()
+        self.blur?.removeFromSuperview()
     }
 }
 
@@ -195,14 +196,16 @@ class ChatGifView : UIView
     {
         print("desalocando celula de gif")
         self.gifView.image = nil
-        self.gifView.removeFromSuperview()
-        self.loading.removeFromSuperview()
-        self.view.removeFromSuperview()
+        self.gifView?.removeFromSuperview()
+        self.loading?.removeFromSuperview()
+        self.view?.removeFromSuperview()
     }
 }
 
-class ChatAudioView : UIView
+class ChatAudioView : UIView, AVAudioPlayerDelegate
 {
+    var audioPlayer : AVAudioPlayer!
+    
     var view : UIView!
     
     var playButton : UIButton!
@@ -211,8 +214,17 @@ class ChatAudioView : UIView
     
     var loading : NVActivityIndicatorView!
     
-    init(frame: CGRect, audiokey: String, mine: Bool) {
-        
+    var timer : NSTimer!
+    
+    var seconds: CGFloat = 0
+    
+    var max : CGFloat = 0
+    
+    weak var cell : FTNCollectionViewCell!
+    
+    init(frame: CGRect, audiokey: String, mine: Bool, cell: FTNCollectionViewCell)
+    {
+        self.cell = cell
         super.init(frame: frame)
         
         self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, frame.height - margemCellView*2 - heightForStatus))
@@ -234,30 +246,105 @@ class ChatAudioView : UIView
         
         self.playButton = UIButton(frame: self.loading.frame)
         self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
-        self.playButton.addTarget(self, action: "play", forControlEvents: .TouchUpInside)
+        self.playButton.addTarget(self, action: "clickPlay", forControlEvents: .TouchUpInside)
         
         self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y, self.view.frame.size.width - self.playButton.frame.size.width - margemCellView - 20, self.playButton.frame.size.height))
         self.slider.setThumbImage(UIImage(named: "indicatorRed"), forState: .Normal)
         self.slider.minimumTrackTintColor = oficialDarkGray
+        self.slider.minimumValue = 0
+        self.slider.maximumValue = 100
+        self.slider.enabled = false
         
         self.addSubview(self.view)
+        self.addSubview(self.slider)
+        
         
         let audio = DAOContents.sharedInstance.getAudioFromKey(audiokey)
         if(audio == nil)
         {
             self.addSubview(self.loading)
-            self.playButton = nil
         }
         else
         {
             self.addSubview(self.playButton)
             self.loading = nil
+            self.slider.enabled = true
+
+            self.initPlayer(audio!)
         }
+    }
+    
+    func initPlayer(audio: NSData)
+    {
+        self.audioPlayer = try! AVAudioPlayer(data: audio)
+        self.audioPlayer.delegate = self
+    }
+    
+    func clickPlay()
+    {
+        if(self.audioPlayer != nil)
+        {
+            if(self.audioPlayer!.playing)
+            {
+                self.stopAudio()
+            }
+            else
+            {
+                self.playAudio()
+            }
+        }
+    }
+    
+    func playAudio()
+    {
+        self.timer?.invalidate()
         
+        self.cell.deleteMessage()
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
+        catch { print("audioSession error)") }
+        
+        self.audioPlayer?.play()
+        self.playButton.setImage(UIImage(named: "pauseButton"), forState: .Normal)
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTimeLabel", userInfo: nil, repeats: true)
+        
+    }
+    
+    func updateTimeLabel()
+    {
+        self.slider.value = Float((self.audioPlayer.currentTime * 100.0) / self.audioPlayer.duration)
+    }
+    
+    func stopAudio()
+    {
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do { try audioSession.setCategory(AVAudioSessionCategoryAmbient) }
+        catch { print("audioSession error)") }
+        
+        self.audioPlayer?.stop()
+        self.timer?.invalidate()
+        self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool)
+    {
+        self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
+        self.timer?.invalidate()
+        self.slider.value = 0
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit
+    {
+        print("Desalocando view de audio")
+        self.audioPlayer?.delegate = nil
     }
 }
 
@@ -284,9 +371,9 @@ class FTNContentTypes
         return gifview
     }
     
-    class func createAudioViewForMessageCell(audioKey: String, cellsize: CGSize, mine: Bool) -> ChatAudioView
+    class func createAudioViewForMessageCell(audioKey: String, cellsize: CGSize, mine: Bool, cell: FTNCollectionViewCell) -> ChatAudioView
     {
-        let audioview = ChatAudioView(frame: CGRectMake(0, 0, cellsize.width, cellsize.height), audiokey: audioKey, mine: mine)
+        let audioview = ChatAudioView(frame: CGRectMake(0, 0, cellsize.width, cellsize.height), audiokey: audioKey, mine: mine, cell: cell)
         
         return audioview
     }

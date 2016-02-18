@@ -86,9 +86,9 @@ class BubbleButton : UIButton
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-        self.timer?.invalidate()
-        self.longActionAble = false
-        self.expand(nil)
+//        self.timer?.invalidate()
+//        self.longActionAble = false
+//        self.expand(nil)
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)

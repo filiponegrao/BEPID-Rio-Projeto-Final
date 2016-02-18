@@ -373,7 +373,7 @@ class DAOContents : NSObject
             {
                 Audio.createInManagedObjectContext(self.managedObjectContext, data: data, audioKey: audioKey, filter: filter)
                 self.save()
-                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "audioLoaded", object: nil, userInfo: ["audioKey":audioKey]))
+                NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: FTNChatNotifications.audioLoaded(audioKey), object: nil, userInfo: nil))
 
                 return true
             }
