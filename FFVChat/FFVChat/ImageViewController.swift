@@ -25,13 +25,14 @@ class ImageViewController : UIViewController, UIScrollViewDelegate
     {
         self.image = image
         super.init(nibName: nil, bundle: nil)
+        self.view.backgroundColor = UIColor.clearColor()
         
         self.imageView = UIImageView(image: self.image)
         self.imageView.frame.origin = CGPointMake(0, 0)
         
         self.blackScreen = UIView(frame: self.view.bounds)
         self.blackScreen.backgroundColor = UIColor.blackColor()
-        self.blackScreen.alpha = 0.7
+        self.blackScreen.alpha = 0.5
         self.view.addSubview(self.blackScreen)
         
         self.scrollView = UIScrollView(frame: self.blackScreen.frame)

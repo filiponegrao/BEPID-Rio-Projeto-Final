@@ -89,6 +89,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.sendButton = MKButton(frame: CGRectMake(0,screenHeight - 44,screenWidth,44))
         self.sendButton.backgroundColor = oficialGreen
         self.sendButton.setTitle("Send", forState: .Normal)
+        self.sendButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.sendButton.addTarget(self, action: "sendPhoto", forControlEvents: .TouchUpInside)
         self.sendButton.setTitleColor(oficialDarkGray, forState: .Normal)
 //        self.sendButton.titleLabel!.tintColor = oficialDarkGray
@@ -107,6 +108,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.clockLabel = UILabel(frame: CGRectMake(0, 0,screenWidth/3, screenWidth/8))
         self.clockLabel.text = "Choose time:"
         self.clockLabel.textAlignment = .Center
+        self.clockLabel.font = UIFont(name: "SukhumvitSet-Light", size: 15)
         self.clockLabel.setSizeFont(15)
         self.clockLabel.textColor = oficialLightGray
         self.clockLabel.center = CGPointMake(screenWidth/2, self.pickerView.frame.origin.y - 20)
@@ -114,7 +116,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         
         self.sentDateLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + 10 + self.imageView.frame.size.height + 5, screenWidth/8 * 6, 20))
         self.sentDateLabel.text = "Sent: "
-        self.sentDateLabel.font = UIFont(name: "Sukhumvit Set", size: 15)
+        self.sentDateLabel.font = UIFont(name: "SukhumvitSet-Light", size: 15)
         self.sentDateLabel.setSizeFont(15)
         self.sentDateLabel.textColor = UIColor.whiteColor()
         self.sentDateLabel.textAlignment = .Left
@@ -122,7 +124,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         
         self.screenshotsLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + self.imageView.frame.size.height + self.sentDateLabel.frame.size.height + 10, screenWidth/8 * 6, 20))
         self.screenshotsLabel.text = "Screenshots: "
-        self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 15)
+        self.screenshotsLabel.font = UIFont(name: "SukhumvitSet-Light", size: 15)
         self.screenshotsLabel.setSizeFont(15)
         self.screenshotsLabel.textColor = UIColor.whiteColor()
         self.screenshotsLabel.textAlignment = .Left
@@ -246,17 +248,43 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         if component == 0
         {
             let number = UILabel(frame: view.frame)
-            number.text = "\(self.minutes[row]) Minutes"
             number.textAlignment = .Center
             number.textColor = UIColor.whiteColor()
+            
+            if(self.minutes[row] == 0)
+            {
+                number.text = "0"
+            }
+            else if(self.minutes[row] == 1)
+            {
+                number.text = "\(self.minutes[row]) Minute"
+            }
+            else
+            {
+                number.text = "\(self.minutes[row]) Minutes"
+            }
+
             view.addSubview(number)
         }
         else
         {
             let number = UILabel(frame: view.frame)
-            number.text = "\(self.seconds[row]) Seconds"
             number.textColor = UIColor.whiteColor()
             number.textAlignment = .Center
+            
+            if(self.seconds[row] == 0)
+            {
+                number.text = "0"
+            }
+            else if(self.seconds[row] == 1)
+            {
+                number.text = "\(self.seconds[row]) Second"
+            }
+            else
+            {
+                number.text = "\(self.seconds[row]) Seconds"
+            }
+            
             view.addSubview(number)
         }
         

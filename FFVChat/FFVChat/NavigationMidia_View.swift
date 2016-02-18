@@ -37,7 +37,7 @@ class NavigationMidia_View: UIView
         self.title = UILabel(frame: CGRectMake(0, 25, screenWidth, 44))
         self.title.text = "Lifespan"
         self.title.textAlignment = .Center
-        self.title.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.title.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.title.setSizeFont(22)
         self.title.textColor = oficialGreen
         self.addSubview(self.title)
