@@ -361,7 +361,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     
     func messageBarEndRecording(messageBar: FTNMessageBar, audio: NSData)
     {
-        
+        self.delegate?.FTNChatSendMessageAudio(self, audio: audio)
     }
     
     func messageBarStartRecording(messageBar: FTNMessageBar)

@@ -85,6 +85,8 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "openLink:", name: FTNChatNotifications.linkClicked(), object: nil)
   
     }
     
@@ -380,7 +382,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     
     func FTNChatSendMessageAudio(chat: FTNChatController, audio: NSData)
     {
-        
+        self.sendAudio(audio, lifetime: UserLayoutSettings.sharedInstance.getCurrentSecondsTextLifespan(), filter: .None)
     }
     
     func FTNChatSendMessageText(chat: FTNChatController, message: String)
@@ -416,6 +418,18 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         self.presentViewController(gallery, animated: true) { () -> Void in
             
         }
+    }
+    
+    
+    func openLink(notification: NSNotification)
+    {
+        let info : [NSObject : AnyObject] = notification.userInfo!
+        let url = info["url"] as! NSURL
+        
+        let web = Web_ViewController(url: url)
+        
+        self.navigationController?.pushViewController(web, animated: true)
+        
     }
 
 }

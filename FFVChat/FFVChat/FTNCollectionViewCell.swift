@@ -152,8 +152,16 @@ class FTNCollectionViewCell: UICollectionViewCell
             self.labelDate.frame.origin.y = frame.size.height - 30
             self.addSubview(self.chatgifview!)
             
+        case "Audio":
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "gifLoaded", name: FTNChatNotifications.audioLoaded(message.contentKey!), object: nil)
+            self.chataudioview = FTNContentTypes.createAudioViewForMessageCell(message.contentKey!, cellsize: self.frame.size, mine: mine)
+            self.labelStatus.frame.origin.y = self.frame.size.height - 10
+            self.labelDate.frame.origin.y = frame.size.height - 30
+            self.addSubview(self.chataudioview!)
+            
         default:
-            print("erro")
+            print("erro ao tentar encontrar o tipo da mensagem")
             
         }
         

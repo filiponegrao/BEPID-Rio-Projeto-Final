@@ -121,6 +121,9 @@
 		805172B91C1756A900687770 /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805172B81C1756A900687770 /* SweetAlert.swift */; };
 		8062A8E51C7427A800331E9E /* KDEDateLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8E41C7427A800331E9E /* KDEDateLabel.swift */; };
 		8062A8E71C74298500331E9E /* ActiveLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8E61C74298500331E9E /* ActiveLabel.swift */; };
+		8062A8E91C742A6E00331E9E /* Web_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8E81C742A6E00331E9E /* Web_ViewController.swift */; };
+		8062A8EB1C742BE900331E9E /* ActiveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EA1C742BE900331E9E /* ActiveType.swift */; };
+		8062A8ED1C742C0000331E9E /* RegexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EC1C742C0000331E9E /* RegexParser.swift */; };
 		806D16211C0E367B00650E9D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D161F1C0E367B00650E9D /* Message.swift */; };
 		806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16221C0E70C800650E9D /* Filters_ViewController.swift */; };
 		806D16251C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */; };
@@ -353,6 +356,9 @@
 		805172B81C1756A900687770 /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetAlert.swift; sourceTree = "<group>"; };
 		8062A8E41C7427A800331E9E /* KDEDateLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDEDateLabel.swift; sourceTree = "<group>"; };
 		8062A8E61C74298500331E9E /* ActiveLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveLabel.swift; sourceTree = "<group>"; };
+		8062A8E81C742A6E00331E9E /* Web_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web_ViewController.swift; sourceTree = "<group>"; };
+		8062A8EA1C742BE900331E9E /* ActiveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveType.swift; sourceTree = "<group>"; };
+		8062A8EC1C742C0000331E9E /* RegexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexParser.swift; sourceTree = "<group>"; };
 		806D161F1C0E367B00650E9D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		806D16221C0E70C800650E9D /* Filters_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters_ViewController.swift; sourceTree = "<group>"; };
 		806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFilter_CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -494,6 +500,8 @@
 			isa = PBXGroup;
 			children = (
 				8062A8E61C74298500331E9E /* ActiveLabel.swift */,
+				8062A8EA1C742BE900331E9E /* ActiveType.swift */,
+				8062A8EC1C742C0000331E9E /* RegexParser.swift */,
 				8062A8E41C7427A800331E9E /* KDEDateLabel.swift */,
 				8010FFF41C0CD46E00A4DBD6 /* BlackList.swift */,
 				80B8DFD51C259F1E00668E26 /* TimeBomb.swift */,
@@ -714,6 +722,7 @@
 				80E8BD751BC58B8300B49C31 /* Notifications_ViewController.swift */,
 				8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */,
 				8070AD4E1C71684300DDAE5C /* ImageViewController.swift */,
+				8062A8E81C742A6E00331E9E /* Web_ViewController.swift */,
 				F68A459D1C5A9DF700E99D64 /* Settings sections */,
 			);
 			name = Controller;
@@ -1195,6 +1204,7 @@
 				804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */,
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
 				80FED0C51C70109F00B024AE /* FTNCollectionWebCell.swift in Sources */,
+				8062A8ED1C742C0000331E9E /* RegexParser.swift in Sources */,
 				804E45CB1C6037FA00753493 /* FilterView_Circle.swift in Sources */,
 				800AE85B1C64458C00B917FE /* FTNCollectionViewCell.swift in Sources */,
 				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,
@@ -1214,6 +1224,7 @@
 				803657891BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
 				801D92541BA4928800D05CE7 /* AppDelegate.swift in Sources */,
 				80B8DFC71C24CAAD00668E26 /* Gif.swift in Sources */,
+				8062A8EB1C742BE900331E9E /* ActiveType.swift in Sources */,
 				806D16251C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift in Sources */,
 				80FD13AC1C038CF100729402 /* GMColor.swift in Sources */,
 				800AE85D1C64485900B917FE /* MessageStatus.swift in Sources */,
@@ -1259,6 +1270,7 @@
 				8036578E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
 				F6703D811BEDB132009E57E0 /* NavigationSettings_View.swift in Sources */,
 				804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */,
+				8062A8E91C742A6E00331E9E /* Web_ViewController.swift in Sources */,
 				806D16211C0E367B00650E9D /* Message.swift in Sources */,
 				80E458AA1BE853580066F1B1 /* JudgerAlert_ViewController.swift in Sources */,
 				800AE86A1C64F0D600B917FE /* FTNChatView.swift in Sources */,

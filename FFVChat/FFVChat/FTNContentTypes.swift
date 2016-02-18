@@ -25,7 +25,7 @@ enum MessageType
 
 class ChatTextView : UIView
 {
-    var textView : UITextView!
+    var textView : ActiveLabel!
     
     var view : UIView!
     
@@ -50,12 +50,16 @@ class ChatTextView : UIView
             view.alpha = otherMessagesAlpha
         }
         
-        textView = UITextView(frame: CGRectMake((margemCellLateral + margemCellLateral/2), margemCellText, frame.width - (margemCellLateral*2) - margemCellLateral, height))
+        textView = ActiveLabel(frame: CGRectMake((margemCellLateral + margemCellLateral/2), margemCellText, frame.width - (margemCellLateral*2) - margemCellLateral, height))
         textView.backgroundColor = UIColor.clearColor()
-        textView.userInteractionEnabled = false
+//        textView.userInteractionEnabled = false
         textView.text = text
         textView.textColor = UIColor.whiteColor()
         textView.font = defaultFont
+        textView.numberOfLines = 0
+        textView.handleURLTap { (url: NSURL) -> () in
+            NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.linkClicked(), object: nil, userInfo: ["url": url])
+        }
         
         self.addSubview(view)
         self.addSubview(textView)
@@ -111,12 +115,13 @@ class ChatImageView : UIView
         if(image == nil)
         {
             self.addSubview(self.loading)
-            DAOContents.sharedInstance
+            self.imageView = nil
         }
         else
         {
             self.imageView.image = ImageEdition.blurImage(image!)
             self.imageView.addSubview(blur)
+            self.loading = nil
         }
     }
 
@@ -177,6 +182,7 @@ class ChatGifView : UIView
         else
         {
             self.gifView.runGif(gif!.data)
+            self.loading = nil
         }
     }
     
@@ -223,12 +229,11 @@ class ChatAudioView : UIView
             view.alpha = otherMessagesAlpha
         }
         
-        self.loading = NVActivityIndicatorView(frame: CGRectMake(margemCellLateral + 10, margemCellView + 10, collectionCellHeight - 20 , collectionCellHeight - 20), type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen)
+        self.loading = NVActivityIndicatorView(frame: CGRectMake(margemCellLateral + 12, margemCellView + 12, collectionCellHeight - 24 , collectionCellHeight - 24), type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen)
         self.loading.startAnimation()
         
         self.playButton = UIButton(frame: self.loading.frame)
         self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
-        self.playButton.hidden = true
         self.playButton.addTarget(self, action: "play", forControlEvents: .TouchUpInside)
         
         self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y, self.view.frame.size.width - self.playButton.frame.size.width - margemCellView - 20, self.playButton.frame.size.height))
@@ -236,8 +241,19 @@ class ChatAudioView : UIView
         self.slider.minimumTrackTintColor = oficialDarkGray
         
         self.addSubview(self.view)
-        self.addSubview(self.loading)
-        self.addSubview(self.playButton)
+        
+        let audio = DAOContents.sharedInstance.getAudioFromKey(audiokey)
+        if(audio == nil)
+        {
+            self.addSubview(self.loading)
+            self.playButton = nil
+        }
+        else
+        {
+            self.addSubview(self.playButton)
+            self.loading = nil
+        }
+        
     }
 
     required init?(coder aDecoder: NSCoder) {

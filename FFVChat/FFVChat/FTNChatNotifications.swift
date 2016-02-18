@@ -61,6 +61,11 @@ class FTNChatNotifications
     {
         return "gifLoaded_\(id)"
     }
+    
+    class func linkClicked() -> String
+    {
+        return "linkClicked"
+    }
 }
 
 
