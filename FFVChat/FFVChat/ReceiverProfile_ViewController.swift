@@ -109,7 +109,9 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
         self.screenshotsLabel.setSizeFont(17)
         
         let text = "Printou \(DAOPrints.sharedInstance.getNumberOfPrintScreens(self.contact.username)) conteúdos seu"
+        
         let mutable = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: UIFont(name: "Sukhumvit Set", size: 17)!])
+        
         mutable.addAttribute(NSForegroundColorAttributeName, value: oficialGreen, range: NSRange(location: 8, length: 1))
         
         self.screenshotsLabel.attributedText = mutable

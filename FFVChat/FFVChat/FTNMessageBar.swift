@@ -44,6 +44,8 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
 
     var recordTimer : NSTimer!
     
+    var updateRecordTimer : NSTimer!
+    
     var audioOk : Bool = false
     
     //Content Section
@@ -58,6 +60,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     
     weak var controller : UIViewController!
     
+    var audioDuration : Int!
     
     init(origin: CGPoint, shareOptions: [String], controller: UIViewController)
     {
@@ -73,7 +76,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.addSubview(self.shareButton)
         
         self.audioLabel = UILabel(frame: CGRectMake(20, 0, self.frame.size.width - 100, self.frame.size.height))
-        self.audioLabel.text = "Gravando..."
+        self.audioLabel.text = "0:00 Gravando..."
         self.audioLabel.textColor = oficialGreen
         self.audioLabel.alpha = 0
         self.audioLabel.hidden = true
@@ -158,26 +161,33 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     
     func startRecord()
     {
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do { try audioSession.setCategory(AVAudioSessionCategoryRecord) }
-        catch { print("audioSession error)") }
-        try! AVAudioSession.sharedInstance().setActive(true)
-        
         if(self.recorder == nil) { self.initAudioRecorder() }
-        
-        self.recorder?.prepareToRecord()
-        if self.recorder?.recording == false {
+
+        if(!self.recorder.recording)
+        {
+            self.audioDuration = 0
             
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            self.recorder?.record()
-            self.recordingModeOn()
-            self.recordTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "enableAudio", userInfo: nil, repeats: false)
+            let audioSession = AVAudioSession.sharedInstance()
+            
+            do { try audioSession.setCategory(AVAudioSessionCategoryRecord) }
+            catch { print("audioSession error)") }
+            try! AVAudioSession.sharedInstance().setActive(true)
+            
+            self.recorder?.prepareToRecord()
+            if self.recorder?.recording == false {
+                
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+                self.recorder?.record()
+                self.recordingModeOn()
+                self.recordTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "enableAudio", userInfo: nil, repeats: false)
+                self.updateRecordTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "recordingUpdates", userInfo: nil, repeats: true)
+            }
         }
     }
     
     func stopRecord()
     {
+        self.updateRecordTimer?.invalidate()
         self.recorder?.stop()
         self.recordingModeOff()
         self.recordTimer?.invalidate()
@@ -186,7 +196,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         
         do { try audioSession.setCategory(AVAudioSessionCategoryAmbient) }
         catch { print("audioSession error)") }
-//        try! AVAudioSession.sharedInstance().setActive(false)
+        try! AVAudioSession.sharedInstance().setActive(false)
     }
     
     func sendButtonClicked()
@@ -260,6 +270,26 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
                 self.shareButton.hidden = true
                 self.gifButton.hidden = true
                 self.textView.hidden = true
+        }
+    }
+    
+    func recordingUpdates()
+    {
+        self.audioDuration = self.audioDuration + 1
+        if(self.audioDuration < 60)
+        {
+            if(self.audioDuration < 10)
+            {
+                self.audioLabel.text = "0:0\(self.audioDuration) Gravando..."
+            }
+            else
+            {
+                self.audioLabel.text = "0:\(self.audioDuration) Gravando..."
+            }
+        }
+        else
+        {
+            self.stopRecord()
         }
     }
     

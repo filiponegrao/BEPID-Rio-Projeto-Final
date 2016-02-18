@@ -233,6 +233,14 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
         else if(message.type == ContentType.Audio.rawValue)
         {
+            if let audio = DAOContents.sharedInstance.getAudioFromKey(message.contentKey!)
+            {
+                
+            }
+            else
+            {
+                DAOParse.sharedInstance.downloadAudioForMessage(message.contentKey!, id: message.id)
+            }
             
         }
         
