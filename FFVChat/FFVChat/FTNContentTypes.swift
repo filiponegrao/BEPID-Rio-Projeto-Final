@@ -245,15 +245,25 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         self.loading.startAnimation()
         
         self.playButton = UIButton(frame: self.loading.frame)
-        self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
+        self.playButton.setImage(UIImage(named: "playButton"), forState: .Normal)
         self.playButton.addTarget(self, action: "clickPlay", forControlEvents: .TouchUpInside)
         
         self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y, self.view.frame.size.width - self.playButton.frame.size.width - margemCellView - 20, self.playButton.frame.size.height))
-        self.slider.setThumbImage(UIImage(named: "indicatorRed"), forState: .Normal)
-        self.slider.minimumTrackTintColor = oficialDarkGray
+        self.slider.setThumbImage(UIImage(named: "indicator"), forState: .Normal)
         self.slider.minimumValue = 0
         self.slider.maximumValue = 100
         self.slider.enabled = false
+        
+        if(mine)
+        {
+            self.slider.maximumTrackTintColor = oficialSemiGray
+            self.slider.minimumTrackTintColor = oficialDarkGreen
+        }
+        else
+        {
+            self.slider.maximumTrackTintColor = oficialLightGray
+            self.slider.minimumTrackTintColor = oficialDarkGreen
+        }
         
         self.addSubview(self.view)
         self.addSubview(self.slider)
@@ -329,12 +339,12 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         
         self.audioPlayer?.stop()
         self.timer?.invalidate()
-        self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
+        self.playButton.setImage(UIImage(named: "playButton"), forState: .Normal)
     }
     
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool)
     {
-        self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
+        self.playButton.setImage(UIImage(named: "playButton"), forState: .Normal)
         self.timer?.invalidate()
         self.slider.value = 0
         

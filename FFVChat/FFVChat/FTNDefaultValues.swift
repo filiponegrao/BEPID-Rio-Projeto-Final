@@ -29,7 +29,7 @@ let heightForStatus : CGFloat = 10
 
 let margemCellLateral : CGFloat = 30
 
-let contentOptions = ["Camera","Photo Album"]
+let contentOptions = ["Take Photo","Camera Roll"]
 
 
 //Message Bar
