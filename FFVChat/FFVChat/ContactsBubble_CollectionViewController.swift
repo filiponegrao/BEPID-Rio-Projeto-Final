@@ -156,6 +156,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
+        cell.profileBtn.cell = cell
         
 //        cell.gestureRecognizers?.last?.removeTarget(self, action: "handleLongPress:")
         cell.profileBtn.addLongClickAction("handleLongPress:", target: self, time: 1)
@@ -168,6 +169,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     }
     
     
+    
+    
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         
@@ -176,7 +179,10 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
     
     func handleLongPress(button: UIButton)
     {
-        let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: button.tag, inSection: 0))!
+        let cell = (button as! BubbleButton).cell!
+        let item = self.collectionView?.indexPathForCell(cell)!.item
+        
+        let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: item!, inSection: 0))!
         let frame = attributes.frame
         
         var origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
@@ -227,7 +233,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
             self.audioPlayer.play()
         }
     }
-    
     
     
 }

@@ -38,6 +38,9 @@ class BubbleButton : UIButton
     
     var longPressUse : Bool = false
     
+    //TOTALMENTE FORA DE GENERALIZACAO
+    weak var cell : RandomWalk_CollectionViewCell?
+    
     init(radius: CGFloat)
     {
         super.init(frame: CGRectMake(0, 0, radius, radius))
