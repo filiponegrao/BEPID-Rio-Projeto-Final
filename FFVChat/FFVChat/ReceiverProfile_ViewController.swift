@@ -41,6 +41,10 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
     var contentView : UIView!
     
     var circleView : CircleView!
+    
+    var background : UIImageView!
+    
+    var alert : UITextView!
 
     override func viewDidLoad()
     {
@@ -49,13 +53,18 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
         self.view.backgroundColor = oficialDarkGray
         self.view.clipsToBounds = true
 
+        self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.background.image = UIImage(named: "ContactBackground")
+        self.background.alpha = 0.6
+        self.view.addSubview(self.background)
+        
         self.backButton = UIButton(frame: CGRectMake(0, 25, 45, 45))
         self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.backButton)
         
         self.contentView = UIView(frame: CGRectMake(-screenWidth/3, screenHeight/2.5, screenHeight/1.5, screenHeight/1.5))
-        self.contentView.backgroundColor = oficialMediumGray
+        self.contentView.backgroundColor = oficialDarkGray
         self.contentView.clipsToBounds = true
         self.contentView.layer.cornerRadius = self.contentView.frame.size.height/2
         self.view.addSubview(self.contentView)
@@ -66,20 +75,20 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
         print(self.userSince)
         
         //mostra o trust level do usuário
-        self.trustLevelLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6, screenWidth/2, screenWidth/6))
+        self.trustLevelLabel = UILabel(frame: CGRectMake(20, screenHeight/2.4 + screenWidth/6, screenWidth/2, screenWidth/6))
         self.trustLevelLabel.text = "\(self.trustLevel)%"
-        self.trustLevelLabel.font = UIFont(name: "Sukhumvit Set", size: 40)
+        self.trustLevelLabel.font = UIFont(name: "SukhumvitSet-Medium", size: 40)
         self.trustLevelLabel.setSizeFont(40)
         self.trustLevelLabel.textAlignment = .Left
         self.trustLevelLabel.textColor = UIColor.whiteColor()
         self.view.addSubview(self.trustLevelLabel)
         
         //mostra o nome do usuário
-        self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height, screenHeight/1.5, self.trustLevelLabel.frame.size.height/2 + 5))
+        self.usernameLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height - 5, screenHeight/1.5, self.trustLevelLabel.frame.size.height/2 + 5))
         self.usernameLabel.text = self.username
-        self.usernameLabel.font = UIFont(name: "Sukhumvit Set", size: 25)
+        self.usernameLabel.font = UIFont(name: "SukhumvitSet-Text", size: 25)
         self.usernameLabel.setSizeFont(22)
-        self.usernameLabel.textColor = UIColor.whiteColor()
+        self.usernameLabel.textColor = oficialGreen
         self.usernameLabel.textAlignment = .Left
         self.view.addSubview(self.usernameLabel)
         
@@ -92,11 +101,11 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
         
         
         //mostra desde quando é usuário do app
-        self.userSinceLabel = UILabel(frame: CGRectMake(20,screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + 15, screenWidth/3 * 2, self.usernameLabel.frame.size.height))
+        self.userSinceLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + 10, screenWidth/3 * 2, self.usernameLabel.frame.size.height))
         self.userSinceLabel.text = "User since: " + sync
         self.userSinceLabel.textColor = UIColor.whiteColor()
         self.userSinceLabel.textAlignment = .Left
-        self.userSinceLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
+        self.userSinceLabel.font = UIFont(name: "SukhumvitSet-Light", size: 17)
         self.userSinceLabel.setSizeFont(17)
         self.view.addSubview(self.userSinceLabel)
         
@@ -105,14 +114,12 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
         self.screenshotsLabel = UILabel(frame: CGRectMake(20, screenHeight/2.5 + screenWidth/6 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height + self.userSinceLabel.frame.size.height + 10, screenWidth/3 * 2, self.userSinceLabel.frame.size.height))
         self.screenshotsLabel.textColor = UIColor.whiteColor()
         self.screenshotsLabel.textAlignment = .Left
-        self.screenshotsLabel.font = UIFont(name: "Sukhumvit Set", size: 17)
+        self.screenshotsLabel.font = UIFont(name: "SukhumvitSet-Light", size: 17)
         self.screenshotsLabel.setSizeFont(17)
         
-        let text = "Printou \(DAOPrints.sharedInstance.getNumberOfPrintScreens(self.contact.username)) conteúdos seu"
-        
-        let mutable = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: UIFont(name: "Sukhumvit Set", size: 17)!])
-        
-        mutable.addAttribute(NSForegroundColorAttributeName, value: oficialGreen, range: NSRange(location: 8, length: 1))
+        let text = "Screenshots: \(DAOPrints.sharedInstance.getNumberOfPrintScreens(self.contact.username)) (of your pics)"
+        let mutable = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: UIFont(name: "SukhumvitSet-Light", size: 17)!])
+        mutable.addAttribute(NSForegroundColorAttributeName, value: oficialLightGray, range: NSRange(location: 15, length: 14))
         
         self.screenshotsLabel.attributedText = mutable
         
@@ -137,7 +144,14 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
         self.contactImage.backgroundColor = oficialDarkGray
         self.view.addSubview(self.contactImage)
 
-
+        self.alert = UITextView(frame: CGRectMake(0, 0, self.screenshotsLabel.frame.size.width, screenWidth/4))
+        self.alert.center = CGPointMake(self.screenshotsLabel.center.x - 5, self.screenshotsLabel.center.y + self.screenshotsLabel.frame.size.height + 35)
+        self.alert.text = "The #trustLevel is affected by screenshots taken into the App."
+        self.alert.textColor = oficialLightGray
+        self.alert.backgroundColor = UIColor.clearColor()
+        self.alert.font = UIFont(name: "Helvetica-Light", size: 14)
+        self.alert.textAlignment = .Left
+        self.view.addSubview(self.alert)
 
         // Do any additional setup after loading the view.
     }
@@ -186,7 +200,7 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
     func zoomImage()
     {
         let zoom = ImageViewController(image: UIImage(data: self.contact.profileImage)!)
-        self.transition.duration = 0.2
+        self.transition.duration = 0.3
         
         zoom.transitioningDelegate = self
         zoom.modalInPopover = true

@@ -18,11 +18,11 @@ class CellFilter_CollectionViewCell: UICollectionViewCell {
         
         super.init(frame: frame)
         
-        self.title = UILabel(frame: CGRectMake(5, frame.size.height - 20, frame.size.width - 10, 20))
+        self.title = UILabel(frame: CGRectMake(5, frame.size.height - 22, frame.size.width - 10, 20))
         self.title.adjustsFontSizeToFitWidth = true
         self.title.textColor = oficialLightGray
         self.title.textAlignment = .Center
-        self.title.font = UIFont(name: "Gill Sans", size: 14)
+        self.title.font = UIFont(name: "SukhumvitSet-Light", size: 14)
         self.title.adjustsFontSizeToFitWidth = true
         self.addSubview(self.title)
         

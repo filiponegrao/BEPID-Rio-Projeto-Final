@@ -100,6 +100,7 @@ class Filters_ViewController: UIViewController, FNChoiceBarDelegate
         self.doneButton.backgroundColor = oficialGreen
         self.doneButton.setTitle("Done", forState: .Normal)
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.doneButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.doneButton.setTitleColor(oficialMediumGray, forState: .Highlighted)
         self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
         self.doneButton.backgroundLayerCornerRadius = 900
