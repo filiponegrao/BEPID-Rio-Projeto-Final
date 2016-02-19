@@ -116,7 +116,6 @@ class ChatImageView : UIView
         if(image == nil)
         {
             self.addSubview(self.loading)
-            self.imageView = nil
         }
         else
         {
@@ -133,7 +132,7 @@ class ChatImageView : UIView
     
     deinit
     {
-        self.imageView.image = nil
+        self.imageView?.image = nil
         self.imageView?.removeFromSuperview()
         self.loading?.removeFromSuperview()
         self.blur?.removeFromSuperview()
