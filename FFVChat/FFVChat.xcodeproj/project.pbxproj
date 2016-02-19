@@ -173,6 +173,18 @@
 		80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A31BE51EA800C5F35E /* Errors.swift */; };
 		80FF18A71BE59BEA00C5F35E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 80FF18A51BE59BEA00C5F35E /* DataModel.xcdatamodeld */; };
 		8E1A009BFAC1DA509C471F38 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E573196666F24453C1804730 /* Pods.framework */; };
+		F61040561C76C42600E6F277 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61040521C76C42600E6F277 /* AnimationController.swift */; };
+		F61040571C76C42600E6F277 /* ImagePickerAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61040531C76C42600E6F277 /* ImagePickerAction.swift */; };
+		F61040581C76C42600E6F277 /* ImagePickerSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61040551C76C42600E6F277 /* ImagePickerSheetController.swift */; };
+		F610405F1C76C45400E6F277 /* SheetActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610405A1C76C45400E6F277 /* SheetActionCollectionViewCell.swift */; };
+		F61040601C76C45400E6F277 /* SheetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610405B1C76C45400E6F277 /* SheetCollectionViewCell.swift */; };
+		F61040611C76C45400E6F277 /* SheetCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610405C1C76C45400E6F277 /* SheetCollectionViewLayout.swift */; };
+		F61040621C76C45400E6F277 /* SheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610405D1C76C45400E6F277 /* SheetController.swift */; };
+		F61040631C76C45400E6F277 /* SheetPreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F610405E1C76C45400E6F277 /* SheetPreviewCollectionViewCell.swift */; };
+		F61040691C76C46E00E6F277 /* PreviewCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61040651C76C46E00E6F277 /* PreviewCollectionView.swift */; };
+		F610406A1C76C46E00E6F277 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61040661C76C46E00E6F277 /* PreviewCollectionViewCell.swift */; };
+		F610406B1C76C46E00E6F277 /* PreviewCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61040671C76C46E00E6F277 /* PreviewCollectionViewLayout.swift */; };
+		F610406C1C76C46E00E6F277 /* PreviewSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61040681C76C46E00E6F277 /* PreviewSupplementaryView.swift */; };
 		F6178A581BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */; };
 		F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */; };
 		F6178A5C1BF6753C0044FBA9 /* UsefulFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */; };
@@ -410,6 +422,19 @@
 		80FF18A61BE59BEA00C5F35E /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		D57DDDFFAC5708EC21EE1901 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E573196666F24453C1804730 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F61040521C76C42600E6F277 /* AnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
+		F61040531C76C42600E6F277 /* ImagePickerAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerAction.swift; sourceTree = "<group>"; };
+		F61040541C76C42600E6F277 /* ImagePickerSheetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerSheetController.h; sourceTree = "<group>"; };
+		F61040551C76C42600E6F277 /* ImagePickerSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerSheetController.swift; sourceTree = "<group>"; };
+		F610405A1C76C45400E6F277 /* SheetActionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetActionCollectionViewCell.swift; sourceTree = "<group>"; };
+		F610405B1C76C45400E6F277 /* SheetCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetCollectionViewCell.swift; sourceTree = "<group>"; };
+		F610405C1C76C45400E6F277 /* SheetCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetCollectionViewLayout.swift; sourceTree = "<group>"; };
+		F610405D1C76C45400E6F277 /* SheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetController.swift; sourceTree = "<group>"; };
+		F610405E1C76C45400E6F277 /* SheetPreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetPreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		F61040651C76C46E00E6F277 /* PreviewCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionView.swift; sourceTree = "<group>"; };
+		F61040661C76C46E00E6F277 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		F61040671C76C46E00E6F277 /* PreviewCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewLayout.swift; sourceTree = "<group>"; };
+		F61040681C76C46E00E6F277 /* PreviewSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewSupplementaryView.swift; sourceTree = "<group>"; };
 		F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsBubble_CollectionViewController.swift; sourceTree = "<group>"; };
 		F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomWalk_CollectionViewCell.swift; sourceTree = "<group>"; };
 		F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsefulFunctions.swift; sourceTree = "<group>"; };
@@ -545,6 +570,7 @@
 		8019CB3B1BAD16280017CD7A /* Elementos */ = {
 			isa = PBXGroup;
 			children = (
+				F61040511C76C3DD00E6F277 /* ImagePickerSheetController */,
 				804E45C91C60364E00753493 /* Chat */,
 				804E45C81C60364600753493 /* Filters */,
 				80AB6B781C3DFCA100F2EEC4 /* BubbleButton.swift */,
@@ -956,6 +982,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F61040511C76C3DD00E6F277 /* ImagePickerSheetController */ = {
+			isa = PBXGroup;
+			children = (
+				F61040551C76C42600E6F277 /* ImagePickerSheetController.swift */,
+				F61040591C76C44100E6F277 /* Sheet */,
+				F61040521C76C42600E6F277 /* AnimationController.swift */,
+				F61040531C76C42600E6F277 /* ImagePickerAction.swift */,
+				F61040541C76C42600E6F277 /* ImagePickerSheetController.h */,
+			);
+			name = ImagePickerSheetController;
+			sourceTree = "<group>";
+		};
+		F61040591C76C44100E6F277 /* Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				F61040641C76C45A00E6F277 /* Preview */,
+				F610405A1C76C45400E6F277 /* SheetActionCollectionViewCell.swift */,
+				F610405B1C76C45400E6F277 /* SheetCollectionViewCell.swift */,
+				F610405C1C76C45400E6F277 /* SheetCollectionViewLayout.swift */,
+				F610405D1C76C45400E6F277 /* SheetController.swift */,
+				F610405E1C76C45400E6F277 /* SheetPreviewCollectionViewCell.swift */,
+			);
+			name = Sheet;
+			sourceTree = "<group>";
+		};
+		F61040641C76C45A00E6F277 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				F61040651C76C46E00E6F277 /* PreviewCollectionView.swift */,
+				F61040661C76C46E00E6F277 /* PreviewCollectionViewCell.swift */,
+				F61040671C76C46E00E6F277 /* PreviewCollectionViewLayout.swift */,
+				F61040681C76C46E00E6F277 /* PreviewSupplementaryView.swift */,
+			);
+			name = Preview;
+			sourceTree = "<group>";
+		};
 		F66662F31C712FC1008F8EEA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,6 +1237,7 @@
 				800AE8631C6450F200B917FE /* FTNDefaultValues.swift in Sources */,
 				F66B29E21BAB6D6600BC43EE /* SelectedMidia_ViewController.swift in Sources */,
 				803962951BC44AAC00AFFD24 /* Contacts_ViewController.swift in Sources */,
+				F61040581C76C42600E6F277 /* ImagePickerSheetController.swift in Sources */,
 				803657801BF94A97000907BD /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
 				804FB40C1C09490100512425 /* DAOPrints.swift in Sources */,
 				803D610A1BF925AD004EF38F /* User+CoreDataProperties.swift in Sources */,
@@ -1194,15 +1257,18 @@
 				801CF77F1BBCECC2006BF293 /* Chat_ViewController.swift in Sources */,
 				803657941BF94A97000907BD /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
 				F66B29F31BAB702200BC43EE /* ContactManager_View.swift in Sources */,
+				F61040691C76C46E00E6F277 /* PreviewCollectionView.swift in Sources */,
 				F66B29EB1BAB6E2B00BC43EE /* NavigationChat_View.swift in Sources */,
 				801D92751BA492C200D05CE7 /* Login_ViewController.swift in Sources */,
 				800AE86C1C64F0E100B917FE /* FTNChatController.swift in Sources */,
+				F61040601C76C45400E6F277 /* SheetCollectionViewCell.swift in Sources */,
 				801FF8F11C6D07A200B022FF /* FTNChatNotifications.swift in Sources */,
 				80B8DFD01C24D56F00668E26 /* Video.swift in Sources */,
 				80E8BD7C1BC5977400B49C31 /* Notification_TableViewCell.swift in Sources */,
 				8005974E1BC1E77E00327A3D /* CellFavourites_TableViewCell.swift in Sources */,
 				F65A4F411C076A790092C403 /* NavigationGallery_View.swift in Sources */,
 				8070AD4F1C71684300DDAE5C /* ImageViewController.swift in Sources */,
+				F610406A1C76C46E00E6F277 /* PreviewCollectionViewCell.swift in Sources */,
 				80AA13631BC3038C0035E8B2 /* MKColor.swift in Sources */,
 				804E45C51C5BEA2700753493 /* UIGifView.swift in Sources */,
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
@@ -1264,11 +1330,15 @@
 				803657901BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
 				804E45C71C5FA1E100753493 /* FNChoiceBar.swift in Sources */,
 				80B4D8231BBB157500BDA48F /* AppNavigationController.swift in Sources */,
+				F610405F1C76C45400E6F277 /* SheetActionCollectionViewCell.swift in Sources */,
 				803657831BF94A97000907BD /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
 				804E45CF1C61783200753493 /* FilterView_Half.swift in Sources */,
+				F61040561C76C42600E6F277 /* AnimationController.swift in Sources */,
 				800597591BC1F8C700327A3D /* CellImportContact_TableViewCell.swift in Sources */,
 				804E45CD1C61782000753493 /* FilterView_Spark.swift in Sources */,
 				804B3DAE1BE7296A0021DF4E /* SentMidia.swift in Sources */,
+				F61040621C76C45400E6F277 /* SheetController.swift in Sources */,
+				F610406C1C76C46E00E6F277 /* PreviewSupplementaryView.swift in Sources */,
 				F66B29EF1BAB6FCE00BC43EE /* NavigationMidia_View.swift in Sources */,
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
 				8036578E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
@@ -1287,6 +1357,7 @@
 				80AA13621BC3038C0035E8B2 /* MKButton.swift in Sources */,
 				8009D7361C110E5500F88C01 /* CellGif_TableViewCell.swift in Sources */,
 				806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */,
+				F61040571C76C42600E6F277 /* ImagePickerAction.swift in Sources */,
 				8036578F1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */,
 				8000FBD81BDA7E4700C1680A /* DAOMessages.swift in Sources */,
@@ -1304,6 +1375,7 @@
 				809E75A11BB4A99600CEC425 /* ImageEdition.swift in Sources */,
 				800AE8671C6453A100B917FE /* FTNMessageBar.swift in Sources */,
 				8036579D1BF94A97000907BD /* NVActivityIndicatorAnimationSemiCircleSpin.swift in Sources */,
+				F61040631C76C45400E6F277 /* SheetPreviewCollectionViewCell.swift in Sources */,
 				80E126A41C125B1300DC0755 /* Optimization.swift in Sources */,
 				F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */,
 				80C91A561C07E81D00E5B712 /* AppStateData.swift in Sources */,
@@ -1326,7 +1398,9 @@
 				803657871BF94A97000907BD /* NVActivityIndicatorAnimationBallGridBeat.swift in Sources */,
 				804E45BF1C5AC60900753493 /* UserLayoutSettings.swift in Sources */,
 				F6EBC8671BF8426A00BD443E /* NavigationNotification_View.swift in Sources */,
+				F61040611C76C45400E6F277 /* SheetCollectionViewLayout.swift in Sources */,
 				803D610B1BF925AD004EF38F /* User.swift in Sources */,
+				F610406B1C76C46E00E6F277 /* PreviewCollectionViewLayout.swift in Sources */,
 				8036578A1BF94A97000907BD /* NVActivityIndicatorAnimationBallPulseRise.swift in Sources */,
 				80FEA2241C3CAE5A00DAA984 /* CellWebGifView.swift in Sources */,
 			);
