@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate
+class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     var navBar : UIView!
     
@@ -35,6 +35,10 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     var hou : Int!  //lifespan em horas
     
     var min : Int!  //lifespan em minutos
+    
+    var imagePickerSheet : ImagePickerSheetController!
+    
+    var imageArray : [UIImage]!
     
     override func viewDidLoad()
     {
@@ -118,6 +122,8 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         self.lifespanField.inputAccessoryView = toolBar
         self.lifespanField.autocorrectionType = .No
         self.lifespanField.selected = false
+        
+        self.imageArray = [UIImage(named: "blueSky")!, UIImage(named: "darkSky")!, UIImage(named: "redSky")!, UIImage(named: "redSky2")!]
         
     }
     
@@ -317,6 +323,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             backgroundButton.rippleLayerColor = oficialDarkGray
             backgroundButton.ripplePercent = 200
             viewCell.addSubview(backgroundButton)
+            
             
             let backgroundLabel = UILabel(frame: CGRectMake(15,10, screenWidth - 15, 30))
             backgroundLabel.textColor = oficialLightGray
@@ -632,27 +639,42 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         self.lifespanField.resignFirstResponder()
 
-        let alertController = UIAlertController(title: "\n\n\n\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-    
-        let margin:CGFloat = 8.0
-        let rect = CGRectMake(margin, margin, alertController.view.bounds.size.width - margin * 4.5, 140.0)
-        let customView = UIView(frame: rect)
-        
-        customView.backgroundColor = oficialGreen
-        alertController.view.addSubview(customView)
-        
-//        let somethingAction = UIAlertAction(title: "Something", style: UIAlertActionStyle.Default, handler: {(alert: UIAlertAction!) in
-//        
-//        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert: UIAlertAction!) in
+        let presentImagePickerController: UIImagePickerControllerSourceType -> () = { source in
+            let controller = UIImagePickerController()
+            controller.delegate = self
+            var sourceType = source
+            if (!UIImagePickerController.isSourceTypeAvailable(sourceType)) {
+                sourceType = .SavedPhotosAlbum
+                print("Fallback to camera roll as a source since the simulator doesn't support taking pictures")
+            }
+            controller.sourceType = sourceType
             
-        })
+            self.presentViewController(controller, animated: true, completion: nil)
+        }
         
-//        alertController.addAction(somethingAction)
-        alertController.addAction(cancelAction)
+        let controller = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
+        controller.addAction(ImagePickerAction(title: NSLocalizedString("Take Photo", comment: "Action Title"), secondaryTitle: NSLocalizedString("Add comment", comment: "Action Title"), handler: { _ in
+            presentImagePickerController(.Camera)
+            }, secondaryHandler: { _, numberOfPhotos in
+                print("Comment \(numberOfPhotos) photos")
+        }))
+        controller.addAction(ImagePickerAction(title: NSLocalizedString("Camera Roll", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title"), $0) as String}, handler: { _ in
+            presentImagePickerController(.PhotoLibrary)
+            }, secondaryHandler: { _, numberOfPhotos in
+                print("Send \(controller.selectedImageAssets)")
+        }))
+        controller.addAction(ImagePickerAction(title: NSLocalizedString("Cancel", comment: "Action Title"), style: .Cancel, handler: { _ in
+            print("Cancelled")
+        }))
         
-        self.presentViewController(alertController, animated: true, completion:{})
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            controller.modalPresentationStyle = .Popover
+            controller.popoverPresentationController?.sourceView = view
+            controller.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize())
+        }
+        
+        presentViewController(controller, animated: true, completion: nil)
+        
 
     }
     
