@@ -21,7 +21,7 @@ class RandomWalk_CollectionViewCell: UICollectionViewCell
     var indicator : UILabel!
     
     weak var contactsController : Home_ViewController!
-    
+        
     var index : Int!
     
     // animate variables
