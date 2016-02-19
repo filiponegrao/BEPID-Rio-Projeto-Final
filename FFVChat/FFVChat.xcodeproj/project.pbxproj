@@ -124,6 +124,7 @@
 		8062A8E91C742A6E00331E9E /* Web_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8E81C742A6E00331E9E /* Web_ViewController.swift */; };
 		8062A8EB1C742BE900331E9E /* ActiveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EA1C742BE900331E9E /* ActiveType.swift */; };
 		8062A8ED1C742C0000331E9E /* RegexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EC1C742C0000331E9E /* RegexParser.swift */; };
+		8062A8EF1C76AE5700331E9E /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EE1C76AE5700331E9E /* AudioController.swift */; };
 		806D16211C0E367B00650E9D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D161F1C0E367B00650E9D /* Message.swift */; };
 		806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16221C0E70C800650E9D /* Filters_ViewController.swift */; };
 		806D16251C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */; };
@@ -359,6 +360,7 @@
 		8062A8E81C742A6E00331E9E /* Web_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web_ViewController.swift; sourceTree = "<group>"; };
 		8062A8EA1C742BE900331E9E /* ActiveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveType.swift; sourceTree = "<group>"; };
 		8062A8EC1C742C0000331E9E /* RegexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexParser.swift; sourceTree = "<group>"; };
+		8062A8EE1C76AE5700331E9E /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		806D161F1C0E367B00650E9D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		806D16221C0E70C800650E9D /* Filters_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters_ViewController.swift; sourceTree = "<group>"; };
 		806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFilter_CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -911,6 +913,7 @@
 			children = (
 				809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */,
 				80DAE5531C07756500D431C1 /* bip.mp3 */,
+				8062A8EE1C76AE5700331E9E /* AudioController.swift */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -1025,7 +1028,6 @@
 				TargetAttributes = {
 					801D924D1BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = D56YT45BUR;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1034,6 +1036,7 @@
 					};
 					801D92621BA4928800D05CE7 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = M7KY4TXQRJ;
 						TestTargetID = 801D924D1BA4928800D05CE7;
 					};
 				};
@@ -1244,6 +1247,7 @@
 				80E126A21C1257E100DC0755 /* GifSharing_View.swift in Sources */,
 				803657851BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
 				F6178A5C1BF6753C0044FBA9 /* UsefulFunctions.swift in Sources */,
+				8062A8EF1C76AE5700331E9E /* AudioController.swift in Sources */,
 				80FF18A41BE51EA800C5F35E /* Errors.swift in Sources */,
 				804E45D11C61855000753493 /* FilterView_Noise.swift in Sources */,
 				803657811BF94A97000907BD /* NVActivityIndicatorShape.swift in Sources */,
@@ -1492,6 +1496,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1501,6 +1507,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FFVChat.app/FFVChat";
 			};
 			name = Debug;
@@ -1509,11 +1516,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FFVChatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "FFV.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FFVChat.app/FFVChat";
 			};
 			name = Release;

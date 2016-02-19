@@ -103,6 +103,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.audioButton.setImage(UIImage(named: "micButton"), forState: .Normal)
         self.audioButton.addTargetOnStart("startRecord", target: self)
         self.audioButton.addTargetOnEnd("stopRecord", target: self)
+        self.audioButton.setLongPressUseModeOn()
         self.addSubview(self.audioButton)
         
         self.gifButton = UIButton(frame: CGRectMake(self.audioButton.frame.origin.x + self.audioButton.frame.size.width, 0, 50, 50))
@@ -166,11 +167,13 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         if(!self.recorder.recording)
         {
             self.audioDuration = 0
+            self.audioLabel.text = "0:00 Gravando..."
             
             let audioSession = AVAudioSession.sharedInstance()
             
             do { try audioSession.setCategory(AVAudioSessionCategoryRecord) }
             catch { print("audioSession error)") }
+            
             try! AVAudioSession.sharedInstance().setActive(true)
             
             self.recorder?.prepareToRecord()

@@ -214,33 +214,18 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         let path = NSBundle.mainBundle().pathForResource("messageNotification.mp3", ofType:nil)!
         let url = NSURL(fileURLWithPath: path)
         
-//        do
-//        {
-//            let sound = try AVAudioPlayer(contentsOfURL: url)
-//            
-//            
-//            self.messageSound = sound
-//            sound.play()
-//        } catch {
-//            // couldn't load file :(
-//        }
         
         let audioSession = AVAudioSession.sharedInstance()
+        print(audioSession.category)
         
-        do { try audioSession.setCategory(AVAudioSessionCategoryAmbient) }
-        catch { print("audioSession error)") }
-        
-        
-        self.audioPlayer = try! AVAudioPlayer(contentsOfURL: url)
-        self.audioPlayer.prepareToPlay()
-        self.audioPlayer.play()
-//        
-//        do { let audioPlayer = try AVAudioPlayer(contentsOfURL: url)
-//            
-//            audioPlayer.play()
-//        }
-//        catch{ print("erro ao achar aqruivo de som")}
-        
+        if(audioSession.category == AVAudioSessionCategoryAmbient)
+        {
+            try! audioSession.setActive(true)
+            
+            self.audioPlayer = try! AVAudioPlayer(contentsOfURL: url)
+            self.audioPlayer.prepareToPlay()
+            self.audioPlayer.play()
+        }
     }
     
     

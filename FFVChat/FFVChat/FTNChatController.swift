@@ -117,13 +117,20 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
     {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
         {
+            self.messageBar.frame.origin.y = self.frame.height - keyboardSize.height - self.messageBar.frame.size.height
+            self.collectionView.frame.size.height = self.frame.size.height - (self.messageBar.frame.size.height + keyboardSize.height)
+            
             if(self.collectionView.contentSize.height > self.collectionView.frame.size.height)
             {
-                self.collectionView.contentOffset.y += keyboardSize.height
+                if(self.collectionView.contentSize.height > self.frame.size.height - self.messageBar.frame.size.height)
+                {
+                    self.collectionView.contentOffset.y += keyboardSize.height - self.messageBar.frame.size.height
+                }
+                else
+                {
+                    self.collectionView.contentOffset.y += self.collectionView.contentSize.height - self.collectionView.frame.size.height
+                }
             }
-            
-            self.messageBar.frame.origin.y = self.frame.height - keyboardSize.height - self.messageBar.frame.size.height
-            self.collectionView.frame.size.height = self.frame.size.height - self.messageBar.frame.size.height - keyboardSize.height
         }
     }
     
@@ -481,7 +488,15 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             
             if(self.collectionView.contentSize.height > self.collectionView.frame.size.height)
             {
-                self.collectionView.contentOffset.y += (self.gifGallery.frame.size.height - self.messageBar.frame.size.height)
+
+                if(self.collectionView.contentSize.height > self.frame.size.height - self.messageBar.frame.size.height)
+                {
+                    self.collectionView.contentOffset.y += self.gifGallery.frame.size.height - self.messageBar.frame.size.height
+                }
+                else
+                {
+                    self.collectionView.contentOffset.y += self.collectionView.contentSize.height - self.collectionView.frame.size.height
+                }
             }
             
             }) { (success: Bool) -> Void in

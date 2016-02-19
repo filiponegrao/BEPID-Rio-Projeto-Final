@@ -36,6 +36,8 @@ class BubbleButton : UIButton
 
     var checkStatus : NSTimer!
     
+    var longPressUse : Bool = false
+    
     init(radius: CGFloat)
     {
         super.init(frame: CGRectMake(0, 0, radius, radius))
@@ -60,10 +62,18 @@ class BubbleButton : UIButton
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setLongPressUseModeOn()
+    {
+        self.longPressUse = true
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         self.onAction = true
-        self.checkStatus = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "checkStatusButton", userInfo: nil, repeats: false)
+        if(!self.longPressUse)
+        {
+            self.checkStatus = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "checkStatusButton", userInfo: nil, repeats: false)
+        }
         
         self.longActionAble = false
         self.runActionStart()
@@ -89,6 +99,7 @@ class BubbleButton : UIButton
 //        self.timer?.invalidate()
 //        self.longActionAble = false
 //        self.expand(nil)
+        print("move")
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)

@@ -339,40 +339,6 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         let alert = SweetAlert().showAlert("PrintScreen!", subTitle: "Someone took a screenshot of your screen", style: AlertStyle.Warning)
     }
     
-
-    
-    func playAudio(index: Int)
-    {
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
-        catch { print("audioSession error)") }
-        
-        if audioRecorder?.recording == false {
-            
-            if(self.audioPlayer?.playing == true)
-            {
-                self.audioPlayer?.stop()
-            }
-            else
-            {
-                let key = self.messages[index].contentKey!
-                let audio = DAOContents.sharedInstance.getAudioFromKey(key)
-                if(audio != nil)
-                {
-                    do { audioPlayer = try AVAudioPlayer(data: audio!)
-                        
-                        audioPlayer?.delegate = self
-                        audioPlayer?.play()
-                        DAOMessages.sharedInstance.deleteMessageAfterTime(self.messages[index])
-                    }
-                    catch{ print("erro ao achar aqruivo de som")}
-                }
-            }
-        }
-    }
-
-    
     /** #################### CHAT DELEGATES ###################*/
     
     func FTNChatSendMessageImage(chat: FTNChatController, image: UIImage)

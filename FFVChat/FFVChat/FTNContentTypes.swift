@@ -303,14 +303,16 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         
         let audioSession = AVAudioSession.sharedInstance()
         
-        do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
-        catch { print("audioSession error)") }
-        
-        self.audioPlayer?.play()
-        self.playButton.setImage(UIImage(named: "pauseButton"), forState: .Normal)
-        
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTimeLabel", userInfo: nil, repeats: true)
-        
+        if(audioSession.category == AVAudioSessionCategoryAmbient)
+        {
+            do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
+            catch { print("audioSession error)") }
+            
+            self.audioPlayer?.play()
+            self.playButton.setImage(UIImage(named: "pauseButton"), forState: .Normal)
+            
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTimeLabel", userInfo: nil, repeats: true)
+        }
     }
     
     func updateTimeLabel()
@@ -335,6 +337,11 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         self.playButton.setImage(UIImage(named: "playButtonBlack"), forState: .Normal)
         self.timer?.invalidate()
         self.slider.value = 0
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do { try audioSession.setCategory(AVAudioSessionCategoryAmbient) }
+        catch { print("audioSession error)") }
     }
 
     required init?(coder aDecoder: NSCoder) {
