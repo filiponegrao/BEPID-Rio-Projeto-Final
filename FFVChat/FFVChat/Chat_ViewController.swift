@@ -101,7 +101,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
         self.chatController.messages = self.messages
         self.chatController.collectionView.reloadData()
-        self.chatController.scrollToBottom()
+//        self.chatController.scrollToBottom()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
@@ -119,6 +119,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     {
         self.homeController.contactsController.checkUnreadMessages()
         self.homeController.favouritesController.checkUnreadMessages()
+        
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: FTNChatNotifications.messageErased(), object: nil)
         
