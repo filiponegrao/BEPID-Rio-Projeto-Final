@@ -641,6 +641,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
 
         let presentImagePickerController: UIImagePickerControllerSourceType -> () = { source in
             let controller = UIImagePickerController()
+            
             controller.delegate = self
             var sourceType = source
             if (!UIImagePickerController.isSourceTypeAvailable(sourceType)) {

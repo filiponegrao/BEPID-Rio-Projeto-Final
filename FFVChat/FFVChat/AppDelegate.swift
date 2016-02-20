@@ -162,15 +162,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         FBSDKAppEvents.activateApp()
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
-//            DAOPostgres.sharedInstance.startObserve()
             DAOContacts.sharedInstance.refreshContacts()
             DAOPostgres.sharedInstance.getUnreadAndDeletedMessages()
-            //De teste, ou seja tirar depois de arrumar direitinho:
-            DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
         }
         
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-
     }
     
     func applicationWillTerminate(application: UIApplication)
@@ -206,13 +201,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         print("didReceiveRemoteNotification \(userInfo)")
         let notification = userInfo as NSDictionary
+        
         //Isso causava o alerta no meio da porra da aplicação
 //        PFPush.handlePush(userInfo)
         
-        
         if (application.applicationState == UIApplicationState.Background || application.applicationState == UIApplicationState.Inactive)
         {
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 10
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 1
             
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
             
@@ -247,29 +242,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
                     }
 
                 }
-            }
-        }
-        
-        if(PFUser.currentUser() != nil)
-        {
-            if(notification.valueForKey("do") as! String == appNotification.friendRequest.rawValue)
-            {
-                print("carregando friend requests ordenado por notifiacao")
-                DAOFriendRequests.sharedInstance.loadRequests()
-            }
-            else if(notification.valueForKey("do") as! String == appNotification.requestAccepted.rawValue)
-            {
-                print("Adicionando amigo ordenado por notifiacao")
-                DAOFriendRequests.sharedInstance.friendsAccepted()
-            }
-            else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
-            {
-                DAOPostgres.sharedInstance.getUnreadMessages()
-            }
-            else if(notification.valueForKey("do") as! String == appNotification.printscreen.rawValue)
-            {
-//                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.printScreenReceived)
-                DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
             }
         }
     }

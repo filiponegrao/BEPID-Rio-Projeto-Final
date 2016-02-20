@@ -84,7 +84,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didTakeScreenShot", name: UIApplicationUserDidTakeScreenshotNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived", name: NotificationController.center.printScreenReceived.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "printScreenReceived:", name: NotificationController.center.printScreenReceived.name, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "openLink:", name: FTNChatNotifications.linkClicked(), object: nil)
   
@@ -334,9 +334,12 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     }
     
     
-    func printScreenReceived()
+    func printScreenReceived(notification: NSNotification)
     {
-        let alert = SweetAlert().showAlert("PrintScreen!", subTitle: "Someone took a screenshot of your screen", style: AlertStyle.Warning)
+        let userinfo = notification.userInfo!
+        let printscreen = userinfo["printScreen"] as! PrintscreenNotification
+        
+        let alert = SweetAlert().showAlert("PrintScreen!", subTitle: "\(printscreen.printer) took a screenshot of your screen. For more details go to notifications on the main menu!!", style: AlertStyle.Warning)
     }
     
     /** #################### CHAT DELEGATES ###################*/
