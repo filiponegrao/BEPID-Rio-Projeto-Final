@@ -78,7 +78,13 @@ class DAOFriendRequests : NSObject
             
             for fr in friendRequests
             {
-                if(DAOContacts.sharedInstance.isContact(fr.sender))
+                if(friendRequests.count > 0)
+                {
+                    print("eniando notification")
+                    NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequest)
+                }
+                
+                if(DAOContacts.sharedInstance.isContact(fr.sender) && !BlackList.isOnBlackList(fr.sender))
                 {
                     DAOPostgres.sharedInstance.setRequestAccepted(fr.id, callback: { (success) -> Void in
                         
@@ -86,7 +92,6 @@ class DAOFriendRequests : NSObject
                 }
                 else
                 {
-                    NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequest)
                     self.requests.append(fr)
                 }
             }

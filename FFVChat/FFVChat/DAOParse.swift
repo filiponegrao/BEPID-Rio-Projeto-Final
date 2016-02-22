@@ -860,7 +860,7 @@ class DAOParse
                         
                         }, progressBlock: { (progress: Int32) -> Void in
                             
-                            print("\(progress) Bytes baixados do gif \(name)")
+//                            print("\(progress) Bytes baixados do gif \(name)")
                     })
                 }
                 else

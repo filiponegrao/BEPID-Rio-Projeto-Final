@@ -421,14 +421,17 @@ class DAOPostgres : NSObject
     func sendTextMessage(id: String, username: String, lifeTime: Int, text: String, sentDate: NSDate)
     {
         let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername()), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "text": EncryptTools.encryptText(text, contact: username), "lifeTime": lifeTime, "type": ContentType.Text.rawValue]
+        print(EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername()))
+        print(EncryptTools.encryptUsername(username))
+        
         
         Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
             .responseJSON { response in
                 
                 if(response.result.isFailure)
                 {
-                    //Tratar falha no envio, por enquanto vou excluir
-//                    DAOMessages.sharedInstance.deleteMessage(id)
+
+                    print(response.result.error)
                     DAOMessages.sharedInstance.setMessageError(id)
                 }
                 else

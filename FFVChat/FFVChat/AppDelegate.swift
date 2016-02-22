@@ -146,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     
@@ -175,7 +175,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.saveContext()
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     
@@ -202,13 +201,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         print("didReceiveRemoteNotification \(userInfo)")
         let notification = userInfo as NSDictionary
         
-        //Isso causava o alerta no meio da porra da aplicação
-//        PFPush.handlePush(userInfo)
+        application.applicationIconBadgeNumber = 5
         
         if (application.applicationState == UIApplicationState.Background || application.applicationState == UIApplicationState.Inactive)
         {
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 1
-            
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
             
             if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)

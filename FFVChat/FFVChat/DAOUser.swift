@@ -612,7 +612,7 @@ class DAOUser
     }
     
     
-    func getTempUser() -> User
+    func getTempUser() -> User?
     {
         let request = NSFetchRequest(entityName: "User")
         
@@ -622,7 +622,7 @@ class DAOUser
         
         let result = try! self.managedObjectContext.executeFetchRequest(request) as! [User]
     
-        return result.first!
+        return result.first
     }
     
     /** Funcao efetua o logout de um usuario!

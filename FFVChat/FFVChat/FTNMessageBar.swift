@@ -62,6 +62,8 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     
     var audioDuration : Int!
     
+    var cancel : Bool = false
+    
     init(origin: CGPoint, shareOptions: [String], controller: UIViewController)
     {
         self.controller = controller
@@ -76,7 +78,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.addSubview(self.shareButton)
         
         self.audioLabel = UILabel(frame: CGRectMake(20, 0, self.frame.size.width - 100, self.frame.size.height))
-        self.audioLabel.text = "0:00 Gravando..."
+        self.audioLabel.text = "0:00 << Cancele deslizando"
         self.audioLabel.textColor = oficialGreen
         self.audioLabel.alpha = 0
         self.audioLabel.hidden = true
@@ -103,6 +105,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.audioButton.setImage(UIImage(named: "micButton"), forState: .Normal)
         self.audioButton.addTargetOnStart("startRecord", target: self)
         self.audioButton.addTargetOnEnd("stopRecord", target: self)
+        self.audioButton.addTargetForCancel("cancelRecord", target: self)
         self.audioButton.setLongPressUseModeOn()
         self.addSubview(self.audioButton)
         
@@ -121,7 +124,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.sendButton.setTitleColor(oficialLightGray, forState: .Disabled)
         self.sendButton.addTarget(self, action: "sendButtonClicked", forControlEvents: .TouchUpInside)
         self.addSubview(self.sendButton)
-                
+        
     }
 
     deinit
@@ -166,8 +169,10 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
 
         if(!self.recorder.recording)
         {
+            self.cancel = false
+            
             self.audioDuration = 0
-            self.audioLabel.text = "0:00 Gravando..."
+            self.audioLabel.text = "0:00 << Cancele deslizando"
             
             let audioSession = AVAudioSession.sharedInstance()
             
@@ -201,6 +206,13 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         catch { print("audioSession error)") }
         try! AVAudioSession.sharedInstance().setActive(false)
     }
+    
+    func cancelRecord()
+    {
+        self.cancel = true
+        self.stopRecord()
+    }
+
     
     func sendButtonClicked()
     {
@@ -283,11 +295,11 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         {
             if(self.audioDuration < 10)
             {
-                self.audioLabel.text = "0:0\(self.audioDuration) Gravando..."
+                self.audioLabel.text = "0:0\(self.audioDuration) << Cancele deslizando"
             }
             else
             {
-                self.audioLabel.text = "0:\(self.audioDuration) Gravando..."
+                self.audioLabel.text = "0:\(self.audioDuration) << Cancele deslizando"
             }
         }
         else
@@ -434,9 +446,9 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool)
     {
-        print("Audio gravado com sucesso!")
-        if(self.audioOk)
+        if(self.audioOk && !self.cancel)
         {
+            print("Audio gravado com sucesso!")
             self.audioOk = false
             let audio = NSData(contentsOfURL: (self.recorder?.url)!)
             if(audio != nil)
