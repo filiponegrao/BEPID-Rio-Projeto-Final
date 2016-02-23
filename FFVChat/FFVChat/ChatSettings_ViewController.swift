@@ -652,7 +652,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.presentViewController(controller, animated: true, completion: nil)
         }
-        
+                
         let controller = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
         controller.addAction(ImagePickerAction(title: NSLocalizedString("Take Photo", comment: "Action Title"), secondaryTitle: NSLocalizedString("Add comment", comment: "Action Title"), handler: { _ in
             presentImagePickerController(.Camera)
