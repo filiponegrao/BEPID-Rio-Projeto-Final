@@ -201,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         print("didReceiveRemoteNotification \(userInfo)")
         let notification = userInfo as NSDictionary
         
-        application.applicationIconBadgeNumber = 5
+        application.applicationIconBadgeNumber = 1
         
         if (application.applicationState == UIApplicationState.Background || application.applicationState == UIApplicationState.Inactive)
         {

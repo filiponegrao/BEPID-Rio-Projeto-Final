@@ -14,7 +14,8 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
     var collectionView : UICollectionView!
     
     var backgrounds = UserLayoutSettings.sharedInstance.getBackgrounds()
-    var selectedBackground = UserLayoutSettings.sharedInstance.getCurrentBackground()
+    
+    var selectedBackground = UserLayoutSettings.sharedInstance.getCurrentBackgroundName()
     
     var navBar : UIView!
     
@@ -25,6 +26,8 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
     var label2 : UILabel!
     
     var photoButton : UIButton!
+    
+    var s : UIImageView!
     
     init()
     {
@@ -106,11 +109,12 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         imageView.image = self.backgrounds[indexPath.item]
         cell.addSubview(imageView)
         
-        if(memcmp(UnsafePointer(self.selectedBackground.highestQualityJPEGNSData.bytes), UnsafePointer(self.backgrounds[indexPath.item].highestQualityJPEGNSData.bytes), self.selectedBackground.highestQualityJPEGNSData.bytes.hashValue) == 0)
+        if(self.selectedBackground == UserLayoutSettings.sharedInstance.backgrounds[indexPath.item])
         {
-            let s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
+            s?.removeFromSuperview()
+            s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
             s.image = UIImage(named: "accept")
-            s.center = CGPointMake(cell.center.x, cell.frame.size.height/2)
+            s.center = CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2)
             s.contentMode = .ScaleAspectFit
             
             imageView.alpha = 0.5
@@ -137,10 +141,12 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         
         if(self.backgrounds[indexPath.item] != self.selectedBackground)
         {
-            self.selectedBackground = self.backgrounds[indexPath.item]
-            UserLayoutSettings.sharedInstance.setCurrentBackground(self.backgrounds[indexPath.item])
+            self.selectedBackground = UserLayoutSettings.sharedInstance.backgrounds[indexPath.item]
             
-            let s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
+            UserLayoutSettings.sharedInstance.setCurrentBackground(indexPath.item)
+            
+            s?.removeFromSuperview()
+            s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
             s.image = UIImage(named: "accept")
             s.center = CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2)
             s.contentMode = .ScaleAspectFit
@@ -160,7 +166,7 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
     {
         let cell = collectionView.cellForItemAtIndexPath(indexPath)
         
-        cell?.subviews.last?.removeFromSuperview()
+        s?.removeFromSuperview()
         
         cell?.subviews.last?.alpha = 1
     }
