@@ -100,6 +100,7 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         
         self.chatController.messages = self.messages
+        self.chatController.background.image = UserLayoutSettings.sharedInstance.getCurrentBackground()
         self.chatController.collectionView.reloadData()
 //        self.chatController.scrollToBottom()
         

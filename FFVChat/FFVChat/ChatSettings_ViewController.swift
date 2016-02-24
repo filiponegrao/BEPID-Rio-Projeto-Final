@@ -639,42 +639,46 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
     {
         self.lifespanField.resignFirstResponder()
 
-        let presentImagePickerController: UIImagePickerControllerSourceType -> () = { source in
-            let controller = UIImagePickerController()
-            
-            controller.delegate = self
-            var sourceType = source
-            if (!UIImagePickerController.isSourceTypeAvailable(sourceType)) {
-                sourceType = .SavedPhotosAlbum
-                print("Fallback to camera roll as a source since the simulator doesn't support taking pictures")
-            }
-            controller.sourceType = sourceType
-            
-            self.presentViewController(controller, animated: true, completion: nil)
-        }
-                
-        let controller = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
-        controller.addAction(ImagePickerAction(title: NSLocalizedString("Take Photo", comment: "Action Title"), secondaryTitle: NSLocalizedString("Add comment", comment: "Action Title"), handler: { _ in
-            presentImagePickerController(.Camera)
-            }, secondaryHandler: { _, numberOfPhotos in
-                print("Comment \(numberOfPhotos) photos")
-        }))
-        controller.addAction(ImagePickerAction(title: NSLocalizedString("Camera Roll", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title"), $0) as String}, handler: { _ in
-            presentImagePickerController(.PhotoLibrary)
-            }, secondaryHandler: { _, numberOfPhotos in
-                print("Send \(controller.selectedImageAssets)")
-        }))
-        controller.addAction(ImagePickerAction(title: NSLocalizedString("Cancel", comment: "Action Title"), style: .Cancel, handler: { _ in
-            print("Cancelled")
-        }))
+        let bg = Backgrounds_ViewController()
         
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            controller.modalPresentationStyle = .Popover
-            controller.popoverPresentationController?.sourceView = view
-            controller.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize())
-        }
+        self.navigationController?.pushViewController(bg, animated: true)
         
-        presentViewController(controller, animated: true, completion: nil)
+//        let presentImagePickerController: UIImagePickerControllerSourceType -> () = { source in
+//            let controller = UIImagePickerController()
+//            
+//            controller.delegate = self
+//            var sourceType = source
+//            if (!UIImagePickerController.isSourceTypeAvailable(sourceType)) {
+//                sourceType = .SavedPhotosAlbum
+//                print("Fallback to camera roll as a source since the simulator doesn't support taking pictures")
+//            }
+//            controller.sourceType = sourceType
+//            
+//            self.presentViewController(controller, animated: true, completion: nil)
+//        }
+//        
+//        let controller = ImagePickerSheetController(mediaType: ImagePickerMediaType.Image)
+//        controller.addAction(ImagePickerAction(title: NSLocalizedString("Take Photo", comment: "Action Title"), secondaryTitle: NSLocalizedString("Add comment", comment: "Action Title"), handler: { _ in
+//            presentImagePickerController(.Camera)
+//            }, secondaryHandler: { _, numberOfPhotos in
+//                print("Comment \(numberOfPhotos) photos")
+//        }))
+//        controller.addAction(ImagePickerAction(title: NSLocalizedString("Camera Roll", comment: "Action Title"), secondaryTitle: { NSString.localizedStringWithFormat(NSLocalizedString("ImagePickerSheet.button1.Send %lu Photo", comment: "Action Title"), $0) as String}, handler: { _ in
+//            presentImagePickerController(.PhotoLibrary)
+//            }, secondaryHandler: { _, numberOfPhotos in
+//                print("Send \(controller.selectedImageAssets)")
+//        }))
+//        controller.addAction(ImagePickerAction(title: NSLocalizedString("Cancel", comment: "Action Title"), style: .Cancel, handler: { _ in
+//            print("Cancelled")
+//        }))
+//        
+//        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+//            controller.modalPresentationStyle = .Popover
+//            controller.popoverPresentationController?.sourceView = view
+//            controller.popoverPresentationController?.sourceRect = CGRect(origin: view.center, size: CGSize())
+//        }
+//        
+//        presentViewController(controller, animated: true, completion: nil)
         
 
     }

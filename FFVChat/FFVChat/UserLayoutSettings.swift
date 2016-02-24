@@ -96,7 +96,6 @@ class UserLayoutSettings : NSObject
     
     func getDefaultBackground() -> UIImage
     {
-        
         return UIImage(named: "blueSky")!
     }
     
