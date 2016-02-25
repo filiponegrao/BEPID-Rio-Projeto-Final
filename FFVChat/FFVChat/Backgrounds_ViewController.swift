@@ -36,19 +36,12 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         self.view.backgroundColor = oficialMediumGray
         
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 5, right: 10)
         layout.itemSize = CGSize(width: (screenWidth-20)/3 - 10, height: (screenHeight-20)/3 - 10)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 10 //espaçamento entre uma celula de baixo com a de cima
         layout.headerReferenceSize = CGSizeMake(0, 0)
         
-        self.collectionView = UICollectionView(frame: CGRectMake(0, 200, screenWidth, screenHeight - 200) , collectionViewLayout: layout)
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        self.collectionView.backgroundColor = oficialDarkGray
-        self.collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.view.addSubview(self.collectionView)
         
         //VIEW NAVBAR//
         self.navBar = UIView(frame: CGRectMake(0, 0, screenWidth, 70))
@@ -69,21 +62,39 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         backButton.setImage(UIImage(named: "backButton"), forState: .Normal)
         self.navBar.addSubview(backButton)
         
-        self.label1 = UILabel(frame: CGRectMake(10, self.navBar.frame.size.height + 10, screenWidth - 20, 44))
+        self.label1 = UILabel(frame: CGRectMake(10, self.navBar.frame.size.height, screenWidth - 20, 30))
         self.label1.text = "Pick an image from your photo album"
-        self.label1.font = UIFont(name: "SukhumvitSet-Medium", size: 16)
+        self.label1.font = UIFont(name: "SukhumvitSet-Medium", size: 14)
         self.label1.textColor = oficialLightGray
         self.view.addSubview(self.label1)
         
-        self.photoButton = UIButton(frame: CGRectMake(0, self.label1.frame.origin.y + self.label1.frame.size.height + 5, screenWidth, 44))
-        //TO DO
+        let label = UILabel(frame: CGRectMake(0, self.label1.frame.origin.y + self.label1.frame.size.height, screenWidth, 44))
+        label.backgroundColor = oficialDarkGray
+        self.view.addSubview(label)
+        
+        self.photoButton = UIButton(frame: CGRectMake(20, self.label1.frame.origin.y + self.label1.frame.size.height, screenWidth - 20, 44))
+        self.photoButton.setTitle("Photo Album", forState: .Normal)
+        self.photoButton.setTitleColor(oficialLightGray, forState: .Normal)
+        self.photoButton.contentHorizontalAlignment = .Left
+        self.view.addSubview(self.photoButton)
         
         
-        self.label2 = UILabel(frame: CGRectMake(10, self.collectionView.frame.origin.y - 50, screenWidth - 20, 44))
-        self.label2.text = "Or choose one of theese"
-        self.label2.font = UIFont(name: "SukhumvitSet-Medium", size: 16)
+        self.label2 = UILabel(frame: CGRectMake(10, self.photoButton.frame.origin.y + self.photoButton.frame.size.height + 10, screenWidth - 20, 30))
+        self.label2.text = "Or choose one of theese:"
+        self.label2.font = UIFont(name: "SukhumvitSet-Medium", size: 14)
         self.label2.textColor = oficialLightGray
         self.view.addSubview(self.label2)
+        
+        self.collectionView = UICollectionView(frame: CGRectMake(0, self.label2.frame.origin.y + self.label2.frame.size.height, screenWidth, screenHeight - (self.label1.frame.size.height + self.photoButton.frame.size.height + self.label2.frame.size.height + 10)) , collectionViewLayout: layout)
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.backgroundColor = oficialDarkGray
+        self.collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        self.collectionView.showsVerticalScrollIndicator = false
+        self.collectionView.layer.borderColor = oficialLightGray.CGColor
+        //        self.collectionView.layer.borderWidth = 0.5
+        
+        self.view.addSubview(self.collectionView)
 
     }
     
