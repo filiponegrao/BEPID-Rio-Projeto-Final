@@ -95,7 +95,7 @@ class BubbleButton : UIButton
             self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(self.time!), target: self, selector: "turnOnLongAction", userInfo: nil, repeats: false)
         }
         
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(1.2, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
             
             self.transform = CGAffineTransformMakeScale(0.7, 0.7)
             
@@ -125,6 +125,7 @@ class BubbleButton : UIButton
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
+        print("cancelando")
         if(self.longActionAble)
         {
             self.longActionAble = false
@@ -183,7 +184,7 @@ class BubbleButton : UIButton
     
     func addLongClickAction(selector: Selector, target: AnyObject, time: Float)
     {
-        if(time >= 1)
+        if(time >= 0.5)
         {
             self.time = time
             self.selector3 = selector

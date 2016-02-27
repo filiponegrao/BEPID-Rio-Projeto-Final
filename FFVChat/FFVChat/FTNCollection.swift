@@ -25,6 +25,8 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
     
     weak var controller : FTNChatController!
     
+    var s : UIImageView!
+    
     init(origin: CGPoint, controller : FTNChatController)
     {
         self.controller = controller
@@ -46,10 +48,8 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.collectionView.backgroundColor = UIColor.clearColor()
-        self.collectionView.registerClass(FTNCollectionWebCell.self, forCellWithReuseIdentifier: "CellWeb")
         self.collectionView.registerClass(FTNCollectionGifCell.self, forCellWithReuseIdentifier: "CellGif")
-//        self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
-//        self.collectionView.registerClass(FTNCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Header")
+
 
 
         self.collectionView.showsVerticalScrollIndicator = false
@@ -94,23 +94,13 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
         cell.gifView.runGif(self.gifs[indexPath.item].data)
         
-        if(self.gifs[indexPath.item].name == self.selectedGif)
-        {
-            cell.gifView.layer.borderColor = oficialGreen.CGColor
-            cell.gifView.layer.borderWidth = 2
-        }
-        else
-        {
-            cell.gifView.layer.borderWidth = 0
-        }
-        
         return cell
         
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellGif", forIndexPath: indexPath) as! FTNCollectionGifCell
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! FTNCollectionGifCell
         
         if(self.selectedGif == self.gifs[indexPath.item].name)
         {
@@ -121,8 +111,25 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         else
         {
             self.selectedGif = self.gifs[indexPath.item].name
-            self.collectionView.reloadData()
+            
+//            self.s?.removeFromSuperview()
+//            self.s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
+//            self.s.image = UIImage(named: "accept")
+//            self.s.contentMode = .ScaleAspectFit
+//            self.s.center = CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2)
+//            
+//            cell.gifView.alpha = 0.5
+//            cell.addSubview(self.s)
+            cell.insertConfirm()
         }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! FTNCollectionGifCell
+        
+        cell.removeConfirm()
+        
     }
     
 

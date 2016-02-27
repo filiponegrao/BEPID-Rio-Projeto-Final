@@ -18,10 +18,8 @@ class FTNCollectionWebCell : UICollectionViewCell
     {
         super.init(frame: frame)
         
-        let messageColor = oficialGreen
-        
-        self.webView = WKWebView(frame: CGRectMake(5, 5, frame.size.width - 10, frame.size.height - 10))
-        self.webView.layer.cornerRadius = 5
+        self.webView = WKWebView(frame: CGRectMake(0, 0, frame.size.width, frame.size.height))
+//        self.webView.layer.cornerRadius = 5
         self.webView.contentMode = .ScaleAspectFill
         self.webView.clipsToBounds = true
         self.webView.userInteractionEnabled = false

@@ -159,6 +159,7 @@ class DAOFriendRequests : NSObject
         
         DAOPostgres.sharedInstance.sendFriendRequest(key, username: username)
         DAOParse.sendPushFriendRequest(username)
+        NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequested)
     }
     
     func sendRequest(facebookID facebookID : String)

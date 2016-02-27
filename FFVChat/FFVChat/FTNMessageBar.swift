@@ -78,7 +78,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.addSubview(self.shareButton)
         
         self.audioLabel = UILabel(frame: CGRectMake(20, 0, self.frame.size.width - 100, self.frame.size.height))
-        self.audioLabel.text = "0:00 << Cancele deslizando"
+        self.audioLabel.text = "0:00 << Cancel"
         self.audioLabel.textColor = oficialGreen
         self.audioLabel.alpha = 0
         self.audioLabel.hidden = true
@@ -108,6 +108,9 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.audioButton.addTargetForCancel("cancelRecord", target: self)
         self.audioButton.setLongPressUseModeOn()
         self.addSubview(self.audioButton)
+        
+        let pangesture = UIPanGestureRecognizer(target: self, action: "audioLabelCancelMovement:")
+        self.audioButton.addGestureRecognizer(pangesture)
         
         self.gifButton = UIButton(frame: CGRectMake(self.audioButton.frame.origin.x + self.audioButton.frame.size.width, 0, 50, 50))
         self.gifButton.setImage(UIImage(named: "gifButton"), forState: .Normal)
@@ -172,7 +175,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
             self.cancel = false
             
             self.audioDuration = 0
-            self.audioLabel.text = "0:00 << Cancele deslizando"
+            self.audioLabel.text = "0:00 << Cancel"
             
             let audioSession = AVAudioSession.sharedInstance()
             
@@ -213,6 +216,29 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.stopRecord()
     }
 
+    func audioLabelCancelMovement(sender: UIPanGestureRecognizer)
+    {
+        var translation = sender.translationInView(self)
+        self.audioLabel.center = CGPointMake(self.audioLabel.center.x + translation.x, self.audioLabel.center.y)
+        sender.setTranslation(CGPointZero, inView: self)
+        
+        if(self.audioLabel.center.x < 0)
+        {
+            self.cancelRecord()
+        }
+        
+        if(sender.state == UIGestureRecognizerState.Ended)
+        {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.audioLabel.frame.origin.x = 20
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+                    self.stopRecord()
+            })
+        }
+    }
     
     func sendButtonClicked()
     {
@@ -233,7 +259,6 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
             self.audioButton.alpha = 0
             self.gifButton.frame.origin.x = self.screenWidth
             self.audioButton.frame.origin.x = self.screenWidth
-            
             
             self.sendButton.alpha = 1
             self.textView.frame.size.width = self.screenWidth - 80 - 50
@@ -270,6 +295,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
     
     func recordingModeOn()
     {
+        self.audioLabel.frame.origin.x = 20
         self.audioLabel.hidden = false
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -295,11 +321,11 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         {
             if(self.audioDuration < 10)
             {
-                self.audioLabel.text = "0:0\(self.audioDuration) << Cancele deslizando"
+                self.audioLabel.text = "0:0\(self.audioDuration) << Cancel"
             }
             else
             {
-                self.audioLabel.text = "0:\(self.audioDuration) << Cancele deslizando"
+                self.audioLabel.text = "0:\(self.audioDuration) << Cancel"
             }
         }
         else
