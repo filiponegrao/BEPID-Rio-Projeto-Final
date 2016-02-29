@@ -679,6 +679,24 @@ class DAOMessages : NSObject
         return unread
     }
     
+    func allUnreadMessages() -> Int
+    {
+        let predicate = NSPredicate(format: "status == %@", messageStatus.Received.rawValue)
+        
+        let fetchRequest = NSFetchRequest(entityName: "Message")
+        fetchRequest.predicate = predicate
+        
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
+            return results.count
+        }
+        catch
+        {
+            return 0
+        }
+    }
+    
     
     func save()
     {

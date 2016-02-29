@@ -36,24 +36,30 @@ class FTNCollectionViewCell: UICollectionViewCell
         
         print("alocando cell")
         
-        self.labelDate = UILabel(frame: CGRectMake(frame.size.width - 35 - margemCellLateral, margemCellView+(self.frame.size.height-margemCellView*2)-20, 30, 15))
+        print(self.frame.size.height)
+        self.labelDate = UILabel(frame: CGRectMake(frame.size.width - 30 - margemCellLateral, self.frame.size
+            .height - (margemCellView + heightForStatus), 30, heightForStatus))
+        self.labelDate.frame.origin.y = self.frame.size.height - (margemCellView + heightForStatus)
         self.labelDate.text = "00:00"
         self.labelDate.font = UIFont(name: "Gill Sans", size: 11)
-        self.labelDate.alpha = 0.8
+        self.labelDate.alpha = 1
         self.labelDate.adjustsFontSizeToFitWidth = true
         self.labelDate.minimumScaleFactor = 0.1
         self.labelDate.textColor = UIColor.whiteColor()
-        self.labelDate.textAlignment = .Right
+        self.labelDate.textAlignment = .Center
 //        self.labelDate.layer.borderWidth = 1
         self.addSubview(self.labelDate)
         
-        self.labelStatus = UILabel(frame: CGRectMake(margemCellLateral, self.frame.size.height - 10, self.frame.size
-            .width/2, 10))
-        self.labelStatus.text = "🕒 Enviando..."
-        self.labelStatus.font = UIFont(name: "Gill Sans", size: 12)
+        let width = self.frame.size.width/5
+        
+        self.labelStatus = UILabel(frame: CGRectMake(self.labelDate.frame.origin.x - width, self.frame.size.height - (margemCellView + heightForStatus), width, heightForStatus))
+        self.labelStatus.frame.origin.y = self.frame.size.height - (margemCellView + heightForStatus)
+        self.labelStatus.text = "Enviando"
+        self.labelStatus.font = UIFont(name: "Gill Sans", size: 11)
         self.labelStatus.textColor = UIColor.whiteColor()
         self.labelStatus.alpha = 1
 //        self.labelStatus.layer.borderWidth = 1
+        self.labelStatus.textAlignment = .Center
         self.addSubview(self.labelStatus)
     }
 
@@ -87,16 +93,15 @@ class FTNCollectionViewCell: UICollectionViewCell
             {
                 self.labelStatus.textColor = oficialGreen
             }
+            else if(status == messageStatus.Received.rawValue || status == messageStatus.Ready.rawValue || status == messageStatus.Seen.rawValue)
+            {
+                self.labelStatus.textColor = UIColor.whiteColor()
+            }
             else
             {
-                self.labelStatus.textColor = UIColor.whiteColor()
+                self.labelStatus.textColor = oficialRed
             }
-            
-            if(status == messageStatus.Ready.rawValue)
-            {
-                self.labelStatus.text = "🕒 Enviando..."
-                self.labelStatus.textColor = UIColor.whiteColor()
-            }
+
         }
         
         self.labelDate.text = Optimization.getStringDateFromDate(message.sentDate)
@@ -129,8 +134,6 @@ class FTNCollectionViewCell: UICollectionViewCell
         case "Text":
             
             self.chattextview = FTNContentTypes.createTextViewForMessageCell(message.text!, cellsize: self.frame.size, mine: mine)
-            self.labelStatus.frame.origin.y = self.frame.size.height - 10
-            self.labelDate.frame.origin.y = frame.size.height - 30
             self.addSubview(self.chattextview!)
             
         case "Image":
@@ -139,8 +142,6 @@ class FTNCollectionViewCell: UICollectionViewCell
             
             let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
             self.chatimageview = FTNContentTypes.createImageViewForMessageCell(image, cellsize: self.frame.size, mine: mine)
-            self.labelStatus.frame.origin.y = self.frame.size.height - 10
-            self.labelDate.frame.origin.y = frame.size.height - 30
             self.addSubview(self.chatimageview!)
             
         case "Gif":
@@ -148,16 +149,14 @@ class FTNCollectionViewCell: UICollectionViewCell
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "gifLoaded", name: FTNChatNotifications.gifLoaded(message.contentKey!), object: nil)
 
             self.chatgifview = FTNContentTypes.createGifViewForMessageCell(message.contentKey!, cellsize: self.frame.size, mine: mine)
-            self.labelStatus.frame.origin.y = self.frame.size.height - 10
-            self.labelDate.frame.origin.y = frame.size.height - 30
+
             self.addSubview(self.chatgifview!)
             
         case "Audio":
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "audioLoaded", name: FTNChatNotifications.audioLoaded(message.contentKey!), object: nil)
             self.chataudioview = FTNContentTypes.createAudioViewForMessageCell(message.contentKey!, cellsize: self.frame.size, mine: mine, cell: self)
-            self.labelStatus.frame.origin.y = self.frame.size.height - 10
-            self.labelDate.frame.origin.y = frame.size.height - 30
+
             self.addSubview(self.chataudioview!)
             
         default:
@@ -165,7 +164,11 @@ class FTNCollectionViewCell: UICollectionViewCell
             
         }
         
+        self.labelDate.frame.origin.y = self.frame.size.height - (margemCellView + heightForStatus)
+        self.labelStatus.frame.origin.y = self.frame.size.height - (margemCellView + heightForStatus)
+
         self.bringSubviewToFront(self.labelDate)
+        self.bringSubviewToFront(self.labelStatus)
     }
     
     func setSent()
@@ -182,7 +185,7 @@ class FTNCollectionViewCell: UICollectionViewCell
     
     func messageError()
     {
-        self.labelStatus.text = "‼️" + messageStatus.ErrorSent.rawValue
+        self.labelStatus.text = messageStatus.ErrorSent.rawValue
         self.labelStatus.textColor = oficialRed
     }
     
@@ -190,9 +193,8 @@ class FTNCollectionViewCell: UICollectionViewCell
     {
         self.chatimageview?.loading?.removeFromSuperview()
         let image = DAOContents.sharedInstance.getImageFromKey(self.message!.contentKey!)
-        self.chatimageview?.imageView.image = image
-        self.chatimageview?.imageView.addSubview(self.chatimageview!.blur)
-        
+        self.chatimageview?.imageView.image = ImageEdition.blurImage(image!)
+        self.chatimageview?.imageView.hidden = false
     }
     
     func gifLoaded()
@@ -208,7 +210,7 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.chataudioview?.loading?.removeFromSuperview()
         let audio = DAOContents.sharedInstance.getAudioFromKey(self.message!.contentKey!)
         self.chataudioview?.initPlayer(audio!)
-        self.chataudioview?.addSubview(self.chataudioview!.playButton)
+        self.chataudioview?.playButton.hidden = false
         self.chataudioview?.slider.enabled = true
     }
     

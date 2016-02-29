@@ -52,6 +52,8 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         self.view.backgroundColor = UIColor.clearColor()
         super.viewDidLoad()
         
+        self.contacts = DAOContacts.sharedInstance.getAllContacts()
+
         // Register cell classes
         self.collectionView!.registerClass(RandomWalk_CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView!.backgroundColor = UIColor.clearColor()
@@ -61,9 +63,6 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
 //        self.longPress.delaysTouchesBegan = true
 //        self.longPress.delegate = self
 //        self.view.addGestureRecognizer(self.longPress)
-        
-        self.contacts = DAOContacts.sharedInstance.getAllContacts()
-        self.collectionView!.reloadData()
     }
     
     

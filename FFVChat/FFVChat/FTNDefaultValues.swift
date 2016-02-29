@@ -22,14 +22,16 @@ let mineMessagesAlpha : CGFloat = 0.3
 let otherMessagesColor = oficialDarkGray
 let otherMessagesAlpha : CGFloat = 0.6
 
-let margemCellView : CGFloat = 5
-let margemCellText : CGFloat = 10
+let margemCellView : CGFloat = 4
+let margemCellText : CGFloat = 4
 
-let heightForStatus : CGFloat = 10
+let heightForStatus : CGFloat = 14
 
 let margemCellLateral : CGFloat = 30
 
 let contentOptions = ["Take Photo","Camera Roll"]
+
+let margemCell : CGFloat = 5
 
 
 //Message Bar

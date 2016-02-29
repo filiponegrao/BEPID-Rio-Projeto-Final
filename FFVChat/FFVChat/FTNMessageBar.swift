@@ -229,13 +229,14 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         
         if(sender.state == UIGestureRecognizerState.Ended)
         {
+            self.stopRecord()
+
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
                 self.audioLabel.frame.origin.x = 20
                 
                 }, completion: { (success: Bool) -> Void in
                     
-                    self.stopRecord()
             })
         }
     }

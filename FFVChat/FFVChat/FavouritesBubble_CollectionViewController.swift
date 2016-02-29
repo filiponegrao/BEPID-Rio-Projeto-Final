@@ -51,11 +51,11 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
         self.collectionView!.registerClass(RandomWalk_CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         self.collectionView!.backgroundColor = UIColor.clearColor()
         
-        self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        self.longPress.minimumPressDuration = 0.5
-        self.longPress.delaysTouchesBegan = true
-        self.longPress.delegate = self
-        self.view.addGestureRecognizer(self.longPress)
+//        self.longPress = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+//        self.longPress.minimumPressDuration = 0.5
+//        self.longPress.delaysTouchesBegan = true
+//        self.longPress.delegate = self
+//        self.view.addGestureRecognizer(self.longPress)
         
         self.favourites = DAOContacts.sharedInstance.getFavorites()
         self.collectionView!.reloadData()
@@ -132,12 +132,14 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
         
         cell.contactsController = self.home
         cell.profileBtn.tag = indexPath.row
-        cell.setInfo(self.favourites[indexPath.row].username, profile: UIImage(data: self.favourites[indexPath.row].profileImage!)!)
+        cell.profileBtn.cell = cell
+        
+        //        cell.gestureRecognizers?.last?.removeTarget(self, action: "handleLongPress:")
+        cell.profileBtn.addLongClickAction("handleLongPress:", target: self, time: 0.7)
+        
+        cell.setInfo(self.favourites[indexPath.row].username, profile: UIImage(data: self.favourites[indexPath.row].thumb!)!)
         let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(self.favourites[indexPath.item])
         cell.setUnreadMessages(cont)
-        
-        cell.loadAnimations(45)
-        // Configure the cell
         
         return cell
     }
@@ -148,45 +150,34 @@ class FavouritesBubble_CollectionViewController: UICollectionViewController, UIG
     }
     
     
-    
-    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer)
+    func handleLongPress(button: UIButton)
     {
-        if gestureReconizer.state != UIGestureRecognizerState.Ended
-        {
-            return
-        }
+        let cell = (button as! BubbleButton).cell!
+        let item = self.collectionView?.indexPathForCell(cell)!.item
         
-        let point = gestureReconizer.locationInView(self.collectionView)
-        let indexPath = self.collectionView?.indexPathForItemAtPoint(point)
+        let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: item!, inSection: 0))!
+        let frame = attributes.frame
         
-        if ((indexPath) != nil)
-        {
-            //            let cell = self.collectionView!.cellForItemAtIndexPath(indexPath!)
-            let attributes : UICollectionViewLayoutAttributes = self.collectionView!.layoutAttributesForItemAtIndexPath(indexPath!)!
-            let frame = attributes.frame
+        var origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
+        origin = CGRectMake(origin.origin.x, origin.origin.y + 80 + self.collectionView!.frame.origin.y + 40, origin.size.width, origin.size.height)
+        
+        self.contactManager = ContactManager_View(contact: self.favourites[(button.tag)], requester: self.home, origin: origin)
+        
+        self.home.closeSearch()
+        self.home.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.home.blurView.frame = self.home.view.bounds
+        self.home.blurView.alpha = 0
+        self.home.view.addSubview(self.home.blurView)
+        
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
             
-            var origin = self.collectionView!.convertRect(frame, toView: self.collectionView!.superview)
-            origin = CGRectMake(origin.origin.x, origin.origin.y + 80 + self.collectionView!.frame.origin.y + 40, origin.size.width, origin.size.height)
+            self.home.blurView.alpha = 0.8
             
-            self.contactManager = ContactManager_View(contact: self.favourites[(indexPath?.item)!], requester: self.home, origin: origin)
-            
-            self.home.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
-            self.home.blurView.frame = self.home.view.bounds
-            self.home.blurView.alpha = 0
-            self.home.view.addSubview(self.home.blurView)
-            
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                
-                self.home.blurView.alpha = 0.8
-                
-                }) { (success: Bool) -> Void in
-                    
-            }
-
-            
-            self.home.view.addSubview(self.contactManager)
-            self.contactManager.insertView()
-        }
+            }, completion: nil)
+        
+        self.home.view.addSubview(self.contactManager)
+        self.contactManager.insertView()
+        
     }
     
     func openChat(sender: UIButton)

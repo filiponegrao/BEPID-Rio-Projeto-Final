@@ -12,9 +12,9 @@ public enum messageStatus : String
 {
     case Ready = "Enviando..."
     
-    case Sent = "Enviada!"
+    case Sent = "Enviada"
     
-    case ErrorSent = "Erro ao enviar"
+    case ErrorSent = "ERRO"
     
     case Received = "Recebida"
     

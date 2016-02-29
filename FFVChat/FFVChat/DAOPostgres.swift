@@ -374,6 +374,24 @@ class DAOPostgres : NSObject
         }
     }
     
+    func delteRequest(id: String, callback: (success: Bool) -> Void)
+    {
+        let parameters : [String:AnyObject]! = ["id": id]
+        
+        Alamofire.request(.POST, self.fr_delete, parameters: parameters)
+            .responseJSON { response in
+                
+                if(response.result.isFailure)
+                {
+                    callback(success: false)
+                }
+                else
+                {
+                    print("Requisicao de amizade excluida com sucesso!")
+                    callback(success: true)
+                }
+        }
+    }
     
     func deleteFriendRequest(id: String)
     {

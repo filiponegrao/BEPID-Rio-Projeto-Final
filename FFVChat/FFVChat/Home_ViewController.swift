@@ -132,10 +132,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         
         NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "addNewContact", name: NotificationController.center.friendAdded.name, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "mesageReceived", name: FTNChatNotifications.newMessage(), object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: FTNChatNotifications.newMessage(), object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
         
         self.reloadCellAnimations()
@@ -152,7 +148,18 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     override func viewDidAppear(animated: Bool)
     {
         DAOPostgres.sharedInstance.startObserve()
-//        DAOContacts.sharedInstance.refreshContacts()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self.contactsController, selector: "mesageReceived", name: FTNChatNotifications.newMessage(), object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self.favouritesController, selector: "mesageReceived", name: FTNChatNotifications.newMessage(), object: nil)
+        
+    }
+    
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self.contactsController, name: FTNChatNotifications.newMessage(), object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self.favouritesController, name: FTNChatNotifications.newMessage(), object: nil)
     }
     
     override func didReceiveMemoryWarning()

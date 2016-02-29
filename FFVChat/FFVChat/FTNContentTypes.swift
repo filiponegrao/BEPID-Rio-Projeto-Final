@@ -38,7 +38,7 @@ class ChatTextView : UIView
         
         let height = FTNContentTypes.checkHeightForText(text, font: defaultFont, width: frame.width - (margemCellLateral*2)*2)
         
-        view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, height + margemCellView*2))
+        view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, height + margemCellText*2))
         view.layer.cornerRadius = 3
         if(mine)
         {
@@ -51,13 +51,14 @@ class ChatTextView : UIView
             view.alpha = otherMessagesAlpha
         }
         
-        textView = ActiveLabel(frame: CGRectMake((margemCellLateral + margemCellLateral/2), margemCellText, frame.width - (margemCellLateral*2) - margemCellLateral, height))
+        textView = ActiveLabel(frame: CGRectMake((margemCellLateral + margemCellLateral/2), self.view.frame.origin.y + margemCellText, frame.width - (margemCellLateral*2) - margemCellLateral, height))
         textView.backgroundColor = UIColor.clearColor()
 //        textView.userInteractionEnabled = false
         textView.text = text
         textView.textColor = UIColor.whiteColor()
         textView.font = defaultFont
         textView.numberOfLines = 0
+//        textView.layer.borderWidth = 1
         textView.handleURLTap { (url: NSURL) -> () in
             NSNotificationCenter.defaultCenter().postNotificationName(FTNChatNotifications.linkClicked(), object: nil, userInfo: ["url": url])
         }
@@ -85,7 +86,7 @@ class ChatImageView : UIView
     {
         super.init(frame: frame)
         
-        self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, frame.height - margemCellView*2 - heightForStatus))
+        self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, frame.height - margemCellView*2))
         view.layer.cornerRadius = 3
         if(mine)
         {
@@ -112,16 +113,18 @@ class ChatImageView : UIView
         
         self.addSubview(view)
         self.addSubview(self.imageView)
+        self.imageView.addSubview(blur)
+        self.addSubview(self.loading)
         
         if(image == nil)
         {
-            self.addSubview(self.loading)
+            self.imageView.hidden = true
+            self.loading.hidden = false
         }
         else
         {
             self.imageView.image = ImageEdition.blurImage(image!)
-            self.imageView.addSubview(blur)
-            self.loading = nil
+            self.loading?.removeFromSuperview()
         }
     }
 
@@ -151,7 +154,7 @@ class ChatGifView : UIView
     {
         super.init(frame: frame)
         
-        self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, frame.height - margemCellView*2 - heightForStatus))
+        self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, frame.height - margemCellView*2))
         view.layer.cornerRadius = 3
         if(mine)
         {
@@ -173,16 +176,19 @@ class ChatGifView : UIView
         
         self.addSubview(view)
         self.addSubview(self.gifView)
+        self.addSubview(self.loading)
+
         
         let gif = DAOContents.sharedInstance.getGifWithName(gifname)
         if(gif == nil)
         {
-            self.addSubview(self.loading)
+            self.loading.hidden = false
+            self.gifView.hidden = true
         }
         else
         {
             self.gifView.runGif(gif!.data)
-            self.loading = nil
+            self.loading?.removeFromSuperview()
         }
     }
     
@@ -226,7 +232,7 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         self.cell = cell
         super.init(frame: frame)
         
-        self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, frame.height - margemCellView*2 - heightForStatus))
+        self.view = UIView(frame: CGRectMake(margemCellLateral, margemCellView, frame.width - margemCellLateral*2, self.frame.height - margemCellView*2))
         view.layer.cornerRadius = 3
         
         if(mine)
@@ -240,7 +246,7 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
             view.alpha = otherMessagesAlpha
         }
         
-        self.loading = NVActivityIndicatorView(frame: CGRectMake(margemCellLateral + 12, margemCellView + 12, collectionCellHeight - 24 , collectionCellHeight - 24), type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen)
+        self.loading = NVActivityIndicatorView(frame: CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.height, self.view.frame.size.height), type: NVActivityIndicatorType.BallClipRotate, color: oficialGreen)
         self.loading.startAnimation()
         
         self.playButton = UIButton(frame: self.loading.frame)
@@ -266,19 +272,21 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         
         self.addSubview(self.view)
         self.addSubview(self.slider)
-        
+        self.addSubview(self.loading)
+        self.addSubview(self.playButton)
+
         
         let audio = DAOContents.sharedInstance.getAudioFromKey(audiokey)
         if(audio == nil)
         {
-            self.addSubview(self.loading)
+            self.playButton.hidden = true
+            self.loading.hidden = false
         }
         else
         {
-            self.addSubview(self.playButton)
-            self.loading = nil
             self.slider.enabled = true
-
+            self.loading?.removeFromSuperview()
+            self.playButton.hidden = false
             self.initPlayer(audio!)
         }
     }
@@ -408,12 +416,12 @@ class FTNContentTypes
     {
         let th = self.checkHeightForText(text, font: font, width: width - (margemCellLateral*2)*2)
         
-        return th + margemCellText*2 + heightForStatus
+        return th + margemCellText*2 + margemCellView*2 //+ heightForStatus
     }
     
     class func checkHeightForImageView() -> CGFloat
     {
-        return screenWidth - margemCellLateral*2 + heightForStatus
+        return screenWidth*2/3
     }
     
     class func checkHeightForAudioView() -> CGFloat

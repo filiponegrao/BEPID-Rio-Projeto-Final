@@ -73,24 +73,17 @@ class DAOFriendRequests : NSObject
     
     func loadRequests()
     {
-        self.requests = [FriendRequest]()
         DAOPostgres.sharedInstance.checkForUnacceptedFriendRequests { (friendRequests) -> Void in
             
             for fr in friendRequests
             {
-                if(friendRequests.count > 0)
-                {
-                    print("eniando notification")
-                    NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequest)
-                }
-                
                 if(DAOContacts.sharedInstance.isContact(fr.sender) && !BlackList.isOnBlackList(fr.sender))
                 {
                     DAOPostgres.sharedInstance.setRequestAccepted(fr.id, callback: { (success) -> Void in
                         
                     })
                 }
-                else
+                else if(!self.requestExists(fr.id))
                 {
                     self.requests.append(fr)
                 }
@@ -98,6 +91,18 @@ class DAOFriendRequests : NSObject
         }
     }
     
+    func requestExists(id: String) -> Bool
+    {
+        for r in self.requests
+        {
+            if(r.id == id)
+            {
+                return true
+            }
+        }
+        
+        return false
+    }
     
     func acceptRequest(request: FriendRequest)
     {

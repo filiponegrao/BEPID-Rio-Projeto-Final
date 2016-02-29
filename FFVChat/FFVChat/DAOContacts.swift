@@ -133,6 +133,8 @@ class DAOContacts
         {
             return false
         }
+        
+        self.save()
     }
     
     
