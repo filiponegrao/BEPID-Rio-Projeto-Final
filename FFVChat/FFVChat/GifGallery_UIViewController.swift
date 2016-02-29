@@ -137,6 +137,7 @@ class GifGallery_UIViewController: UIViewController, UICollectionViewDataSource,
         cell.clipsToBounds = true
         cell.webView.stopLoading()
         cell.webView.loadRequest(NSURLRequest(URL: NSURL(string: DAOContents.sharedInstance.getUrlFromGifName(self.gifs[indexPath.item]))!))
+        cell.webView.contentScaleFactor = 2
         
         return cell
     }

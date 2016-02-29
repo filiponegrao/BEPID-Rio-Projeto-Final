@@ -13,6 +13,7 @@ import CoreData
 extension UserLayoutInfo
 {
     @NSManaged var currentBackground: NSData?
+    @NSManaged var currentBackgroundName: String?
     @NSManaged var currentTheme: String?
     @NSManaged var currentImageFilter: String?
     @NSManaged var chatSounds: NSNumber?
@@ -33,6 +34,7 @@ class UserLayoutInfo: NSManagedObject {
         info.chatSounds = true
         info.otherSounds = true
         info.currentBackground = UIImage(named: "blueSky")?.highestQualityJPEGNSData
+        info.currentBackgroundName = "blueSky"
         info.currentTheme = "Default"
         info.visualEffects = true
         info.textLifespan = 1
@@ -88,7 +90,8 @@ class UserLayoutSettings : NSObject
         
         for name in self.backgrounds
         {
-            bgs.append(UIImage(named: name)!)
+            let image = UIImage(data: (UIImage(named: name)?.lowestQualityJPEGNSData)!)
+            bgs.append(image!)
         }
         
         return bgs
@@ -96,14 +99,24 @@ class UserLayoutSettings : NSObject
     
     func getDefaultBackground() -> UIImage
     {
-        
         return UIImage(named: "blueSky")!
     }
     
-    func setCurrentBackground(image: UIImage)
+    func setCurrentBackground(index: Int)
     {
         if(self.settings != nil)
         {
+            self.settings?.currentBackgroundName = self.backgrounds[index]
+            self.settings?.currentBackground = self.getBackgroundAtIndex(index).highestQualityJPEGNSData
+            self.save()
+        }
+    }
+    
+    func setCurrentBackground(withCustom image: UIImage)
+    {
+        if(self.settings != nil)
+        {
+            self.settings?.currentBackgroundName = "Other"
             self.settings?.currentBackground = image.highestQualityJPEGNSData
             self.save()
         }
@@ -123,6 +136,16 @@ class UserLayoutSettings : NSObject
         {
             return UIImage(named: "blueSky")!
         }
+    }
+    
+    func getCurrentBackgroundName() -> String
+    {
+        if(self.settings != nil)
+        {
+            return self.settings!.currentBackgroundName!
+        }
+        
+        return "blueSky"
     }
     
     func getBackgroundAtIndex(index: Int) -> UIImage

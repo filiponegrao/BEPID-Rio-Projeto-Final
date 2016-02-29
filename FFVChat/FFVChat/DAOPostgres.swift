@@ -69,6 +69,13 @@ class DAOPostgres : NSObject
     
     let fr_user = "\(baseUrl)/FriendRequests_forUser.php"
     
+    /** Seçao de print screens */
+    let printscreens_get = "\(baseUrl)/PrintScreens_get.php"
+    
+    let printscreens_send = "\(baseUrl)/PrintScreens_send.php"
+    
+    let printscreens_setAceito = "\(baseUrl)/PrintScreens_setAceito.php"
+    
     
     override init()
     {
@@ -414,14 +421,17 @@ class DAOPostgres : NSObject
     func sendTextMessage(id: String, username: String, lifeTime: Int, text: String, sentDate: NSDate)
     {
         let parameters : [String:AnyObject]!  = ["id":id, "sender": EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername()), "target": EncryptTools.encryptUsername(username), "sentDate": sentDate, "text": EncryptTools.encryptText(text, contact: username), "lifeTime": lifeTime, "type": ContentType.Text.rawValue]
+        print(EncryptTools.encryptUsername(DAOUser.sharedInstance.getUsername()))
+        print(EncryptTools.encryptUsername(username))
+        
         
         Alamofire.request(.POST, self.messageUrl_send, parameters: parameters)
             .responseJSON { response in
                 
                 if(response.result.isFailure)
                 {
-                    //Tratar falha no envio, por enquanto vou excluir
-//                    DAOMessages.sharedInstance.deleteMessage(id)
+
+                    print(response.result.error)
                     DAOMessages.sharedInstance.setMessageError(id)
                 }
                 else
@@ -588,6 +598,66 @@ class DAOPostgres : NSObject
         }
     }
     
+    func checkPrintScreens()
+    {
+        let p : [String:AnyObject]! = ["sender" : DAOUser.sharedInstance.getUsername()]
+        
+        Alamofire.request(.POST, self.printscreens_get, parameters: p)
+            .responseJSON { response in
+                
+                if let results = response.result.value {
+                    
+                    for result in results as! NSArray
+                    {
+                        let printer = result["printer"] as! String
+                        let date = result["printdate"] as! String
+                        let imageKey = result["imagekey"] as! String
+                        
+                        let printdate = self.string2nsdate(date)
+                        
+                        DAOPrints.sharedInstance.addPrintscreenNotification(printer, imageKey: imageKey, printDate: printdate)
+                        self.setPrintScreenReceived(imageKey)
+                    }
+                }
+        }
+    }
+    
+    func setPrintScreenReceived(imageKey: String)
+    {
+        let p : [String: AnyObject]! = ["imageKey": imageKey]
+        
+        Alamofire.request(.POST, self.printscreens_setAceito, parameters: p)
+            .responseJSON { response in
+                
+                if(response.result.isSuccess)
+                {
+                    print("printscreen setado como visto")
+                }
+                else
+                {
+                    self.setPrintScreenReceived(imageKey)
+                }
+        }
+    }
+    
+    func sendPrintScreen(imageKey: String, sender: String, printDate: NSDate)
+    {
+        let p : [String: AnyObject]! = ["printer" : DAOUser.sharedInstance.getUsername(), "sender" : sender, "printDate" : printDate, "imageKey": imageKey]
+        
+        Alamofire.request(.POST, self.printscreens_send, parameters: p)
+            .responseJSON { response in
+                
+                if(response.result.isSuccess)
+                {
+                    print("print screen registrado com sucesso")
+                }
+                else
+                {
+                    self.sendPrintScreen(imageKey, sender: sender, printDate: printDate)
+                }
+        }
+    }
+    
     func string2nsdate(str: String) -> NSDate{
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -620,6 +690,7 @@ class DAOPostgres : NSObject
     
     func refresh()
     {
+        self.checkPrintScreens()
         self.getUnreadAndDeletedMessages()
     }
     

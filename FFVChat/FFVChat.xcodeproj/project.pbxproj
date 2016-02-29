@@ -129,6 +129,7 @@
 		806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16221C0E70C800650E9D /* Filters_ViewController.swift */; };
 		806D16251C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */; };
 		8070AD4F1C71684300DDAE5C /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8070AD4E1C71684300DDAE5C /* ImageViewController.swift */; };
+		807255AB1C7D224300B12A41 /* Backgrounds_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807255AA1C7D224300B12A41 /* Backgrounds_ViewController.swift */; };
 		807A65C01BFFC2CE00A39984 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807A65BF1BFFC2CE00A39984 /* CryptoSwift.framework */; };
 		807A65C21BFFC61D00A39984 /* EncryptTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807A65C11BFFC61D00A39984 /* EncryptTools.swift */; };
 		809B81FD1BFCFD0B0078F350 /* messageNotification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */; };
@@ -377,6 +378,7 @@
 		806D16221C0E70C800650E9D /* Filters_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters_ViewController.swift; sourceTree = "<group>"; };
 		806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFilter_CollectionViewCell.swift; sourceTree = "<group>"; };
 		8070AD4E1C71684300DDAE5C /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		807255AA1C7D224300B12A41 /* Backgrounds_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backgrounds_ViewController.swift; sourceTree = "<group>"; };
 		807A65BF1BFFC2CE00A39984 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = "Pods/../build/Debug-iphoneos/CryptoSwift.framework"; sourceTree = "<group>"; };
 		807A65C11BFFC61D00A39984 /* EncryptTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptTools.swift; sourceTree = "<group>"; };
 		809B81FC1BFCFD0B0078F350 /* messageNotification.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = messageNotification.mp3; sourceTree = "<group>"; };
@@ -1034,6 +1036,7 @@
 				F68ABEF41C11D7F2009670A7 /* DeleteProfile_ViewController.swift */,
 				F68A459E1C5A9FBD00E99D64 /* ChatSettings_ViewController.swift */,
 				F6CFDE011C5712A300751E5A /* MessageAlertSettings_ViewController.swift */,
+				807255AA1C7D224300B12A41 /* Backgrounds_ViewController.swift */,
 			);
 			name = "Settings sections";
 			sourceTree = "<group>";
@@ -1343,6 +1346,7 @@
 				F66B29F51BAB703200BC43EE /* MidiaViewer_View.swift in Sources */,
 				8036578E1BF94A97000907BD /* NVActivityIndicatorAnimationBallScaleMultiple.swift in Sources */,
 				F6703D811BEDB132009E57E0 /* NavigationSettings_View.swift in Sources */,
+				807255AB1C7D224300B12A41 /* Backgrounds_ViewController.swift in Sources */,
 				804B3DB01BE729F80021DF4E /* DAOSentMidia.swift in Sources */,
 				8062A8E91C742A6E00331E9E /* Web_ViewController.swift in Sources */,
 				806D16211C0E367B00650E9D /* Message.swift in Sources */,

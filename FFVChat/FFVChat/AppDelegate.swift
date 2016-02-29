@@ -146,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     
@@ -162,15 +162,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         FBSDKAppEvents.activateApp()
         if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
         {
-//            DAOPostgres.sharedInstance.startObserve()
             DAOContacts.sharedInstance.refreshContacts()
             DAOPostgres.sharedInstance.getUnreadAndDeletedMessages()
-            //De teste, ou seja tirar depois de arrumar direitinho:
-            DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
         }
         
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-
     }
     
     func applicationWillTerminate(application: UIApplication)
@@ -180,7 +175,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         self.saveContext()
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
     
     
@@ -206,14 +200,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         print("didReceiveRemoteNotification \(userInfo)")
         let notification = userInfo as NSDictionary
-        //Isso causava o alerta no meio da porra da aplicação
-//        PFPush.handlePush(userInfo)
         
+        application.applicationIconBadgeNumber = 1
         
         if (application.applicationState == UIApplicationState.Background || application.applicationState == UIApplicationState.Inactive)
         {
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 10
-            
             PFAnalytics.trackAppOpenedWithRemoteNotificationPayload(userInfo)
             
             if(DAOUser.sharedInstance.isLoged() == UserCondition.userLogged)
@@ -247,29 +238,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
                     }
 
                 }
-            }
-        }
-        
-        if(PFUser.currentUser() != nil)
-        {
-            if(notification.valueForKey("do") as! String == appNotification.friendRequest.rawValue)
-            {
-                print("carregando friend requests ordenado por notifiacao")
-                DAOFriendRequests.sharedInstance.loadRequests()
-            }
-            else if(notification.valueForKey("do") as! String == appNotification.requestAccepted.rawValue)
-            {
-                print("Adicionando amigo ordenado por notifiacao")
-                DAOFriendRequests.sharedInstance.friendsAccepted()
-            }
-            else if(notification.valueForKey("do") as! String == appNotification.messageReceived.rawValue)
-            {
-                DAOPostgres.sharedInstance.getUnreadMessages()
-            }
-            else if(notification.valueForKey("do") as! String == appNotification.printscreen.rawValue)
-            {
-//                NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.printScreenReceived)
-                DAOPrints.sharedInstance.getPrintscreenNotificationsFromParse()
             }
         }
     }

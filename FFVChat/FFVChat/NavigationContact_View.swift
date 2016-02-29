@@ -28,6 +28,8 @@ class NavigationContact_View: UIView
     
     var toolsViewController : Tools_ViewController!
     
+    var animando : Bool = false
+    
     init(requester: Home_ViewController)
     {
         self.vc = requester
@@ -65,7 +67,7 @@ class NavigationContact_View: UIView
         self.alert.backgroundColor = oficialRed
         self.alert.hidden = true
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: requestNotification.requestsLoaded.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: NotificationController.center.friendRequest.name, object: nil)
         
     }
     
@@ -130,12 +132,12 @@ class NavigationContact_View: UIView
     
     func alertOn()
     {
-        let r = DAOFriendRequests.sharedInstance.getRequests()
+        let count = DAOFriendRequests.sharedInstance.getRequests().count
         
-        if(r.count > 0)
+        if(!self.animando && count > 0)
         {
-//            self.toolsViewController.notificationButton.addSubview(self.alert)
-
+            self.animando = true
+            
             self.alert.hidden = false
             
             let pulseAnimation = CABasicAnimation(keyPath: "opacity")
@@ -146,11 +148,13 @@ class NavigationContact_View: UIView
             pulseAnimation.autoreverses = true
             pulseAnimation.repeatCount = FLT_MAX
             self.toolsButton.layer.addAnimation(pulseAnimation, forKey: "myAnimation")
+
         }
     }
     
     func alertOff()
     {
+        self.animando = false
         self.alert.hidden = true
 
         self.toolsButton.layer.removeAnimationForKey("myAnimation")

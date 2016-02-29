@@ -38,8 +38,15 @@ class BubbleButton : UIButton
     
     var longPressUse : Bool = false
     
+    //Cancel Click
+    var selector4 : Selector?
+    
+    var target4 : AnyObject?
+    
     //TOTALMENTE FORA DE GENERALIZACAO
     weak var cell : RandomWalk_CollectionViewCell?
+    
+    var fingerMoved : CGFloat = 0
     
     init(radius: CGFloat)
     {
@@ -72,6 +79,7 @@ class BubbleButton : UIButton
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
+        self.fingerMoved = 0
         self.onAction = true
         if(!self.longPressUse)
         {
@@ -87,7 +95,7 @@ class BubbleButton : UIButton
             self.timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(self.time!), target: self, selector: "turnOnLongAction", userInfo: nil, repeats: false)
         }
         
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(1.2, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
             
             self.transform = CGAffineTransformMakeScale(0.7, 0.7)
             
@@ -99,14 +107,25 @@ class BubbleButton : UIButton
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
-//        self.timer?.invalidate()
-//        self.longActionAble = false
-//        self.expand(nil)
-        print("move")
+        if let touch = touches.first
+        {
+            let pos = touch.locationInView(self)
+            let x = pos.x
+            
+            self.fingerMoved = self.fingerMoved + x
+            if(x < -150)
+            {
+                self.onAction = false
+                self.longActionAble = false
+                print("Desativando toque")
+                self.expand(self.runCancelClick)
+            }
+        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
+        print("cancelando")
         if(self.longActionAble)
         {
             self.longActionAble = false
@@ -165,7 +184,7 @@ class BubbleButton : UIButton
     
     func addLongClickAction(selector: Selector, target: AnyObject, time: Float)
     {
-        if(time >= 1)
+        if(time >= 0.5)
         {
             self.time = time
             self.selector3 = selector
@@ -173,6 +192,11 @@ class BubbleButton : UIButton
         }
     }
     
+    func addTargetForCancel(selector: Selector, target: AnyObject)
+    {
+        self.selector4 = selector
+        self.target4 = target
+    }
     
     func runActionStart()
     {
@@ -201,6 +225,14 @@ class BubbleButton : UIButton
         if(self.selector3 != nil && self.target3 != nil)
         {
             self.target3!.performSelector(self.selector3!, withObject: self)
+        }
+    }
+    
+    func runCancelClick()
+    {
+        if(self.selector4 != nil && self.target4 != nil)
+        {
+            self.target4!.performSelector(self.selector4!, withObject: self)
         }
     }
     
