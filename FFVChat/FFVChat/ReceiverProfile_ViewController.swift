@@ -45,6 +45,8 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
     var background : UIImageView!
     
     var alert : UITextView!
+    
+    var tittle : UILabel!
 
     override func viewDidLoad()
     {
@@ -62,6 +64,14 @@ class ReceiverProfile_ViewController: UIViewController, UIViewControllerTransiti
         self.backButton.setImage(UIImage(named: "backButton"), forState: UIControlState.Normal)
         self.backButton.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.backButton)
+        
+        //TITULO NAVBAR//
+        self.tittle = UILabel(frame: CGRectMake(0, 25, screenWidth, 45))
+        self.tittle.text = "Profile"
+        self.tittle.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
+        self.tittle.textAlignment = .Center
+        self.tittle.textColor = oficialGreen
+        self.view.addSubview(self.tittle)
         
         self.contentView = UIView(frame: CGRectMake(-screenWidth/3, screenHeight/2.5, screenHeight/1.5, screenHeight/1.5))
         self.contentView.backgroundColor = oficialDarkGray
