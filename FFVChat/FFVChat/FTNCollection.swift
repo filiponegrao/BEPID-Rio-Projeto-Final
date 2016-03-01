@@ -111,15 +111,7 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         else
         {
             self.selectedGif = self.gifs[indexPath.item].name
-            
-//            self.s?.removeFromSuperview()
-//            self.s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
-//            self.s.image = UIImage(named: "accept")
-//            self.s.contentMode = .ScaleAspectFit
-//            self.s.center = CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2)
-//            
-//            cell.gifView.alpha = 0.5
-//            cell.addSubview(self.s)
+
             cell.insertConfirm()
         }
     }

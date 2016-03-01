@@ -175,7 +175,8 @@ class ImageManager_View: UIView
     func deleteSelectedMidia()
     {
         DAOSentMidia.sharedInstance.deleteSentMidia(self.sentMidia)
+        let index = self.viewController.sentMidias.indexOf(self.sentMidia)!
         self.viewController.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.viewController.contact)
-        self.viewController.collectionView.reloadData()
+        self.viewController.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forItem: index, inSection: 0)])
     }
 }

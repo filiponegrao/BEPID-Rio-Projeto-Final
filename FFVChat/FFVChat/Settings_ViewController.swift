@@ -118,7 +118,7 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
-        return 5
+        return 4
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -139,10 +139,10 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         {
             return 1
         }
-        else if(section == 4)
-        {
-            return 1
-        }
+//        else if(section == 4)
+//        {
+//            return 1
+//        }
 
         return 0
     }
@@ -295,22 +295,22 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         }
         
-        else if(indexPath.section == 3)
-        {
-            cell.rippleLocation = .Center
-            cell.backgroundLayerColor = oficialDarkGray
-            
-            let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
-            nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
-            cell.addSubview(nextButton)
-            
-            cell.textLabel?.text = self.section3[indexPath.row]
-            cell.textLabel?.backgroundColor = UIColor.clearColor()
-            cell.textLabel?.textColor = oficialLightGray
-            cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
-        }
+//        else if(indexPath.section == 3)
+//        {
+//            cell.rippleLocation = .Center
+//            cell.backgroundLayerColor = oficialDarkGray
+//            
+//            let nextButton = UIButton(frame: CGRectMake(screenWidth - 45, 0, 45, 45))
+//            nextButton.setImage(UIImage(named: "nextButton"), forState: .Normal)
+//            cell.addSubview(nextButton)
+//            
+//            cell.textLabel?.text = self.section3[indexPath.row]
+//            cell.textLabel?.backgroundColor = UIColor.clearColor()
+//            cell.textLabel?.textColor = oficialLightGray
+//            cell.textLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
+//        }
         
-        else if(indexPath.section == 4)
+        else if(indexPath.section == 3)
         {
             cell.rippleLocation = .Center
             cell.backgroundLayerColor = oficialDarkGray
@@ -352,11 +352,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
             let chatSettings = ChatSettings_ViewController()
             self.navigationController?.pushViewController(chatSettings, animated: true)
         }
-        else if(indexPath.section == 3 && indexPath.row == 0)
-        {
-            let messageSettings = MessageAlertSettings_ViewController()
-            self.navigationController?.pushViewController(messageSettings, animated: true)
-        }
+//        else if(indexPath.section == 3 && indexPath.row == 0)
+//        {
+//            let messageSettings = MessageAlertSettings_ViewController()
+//            self.navigationController?.pushViewController(messageSettings, animated: true)
+//        }
         
     }
     

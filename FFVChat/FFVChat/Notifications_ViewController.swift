@@ -32,6 +32,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
 //        self.navBar.layer.zPosition = 5
         self.view.addSubview(self.navBar)
 
+        self.requests = DAOFriendRequests.sharedInstance.getRequests()
+        self.printscreens = DAOPrints.sharedInstance.getPrintscreenNotficiations()
         
         self.tableView = UITableView(frame: CGRectMake(0, 70, screenWidth, screenHeight))
         self.tableView.delegate = self
@@ -45,6 +47,11 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
  
     }
 
+    deinit
+    {
+        self.tableView.delegate = nil
+        self.tableView.dataSource = nil
+    }
     
     //** CONTROLLER PROPERTIES **//
     
@@ -56,14 +63,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         
         self.navigationController?.navigationBar.hidden = true
         
-    }
-    
-    override func viewDidAppear(animated: Bool)
-    {
-        self.requests = DAOFriendRequests.sharedInstance.getRequests()
-        self.printscreens = DAOPrints.sharedInstance.getPrintscreenNotficiations()
-        self.tableView.reloadData()
-
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -282,6 +281,45 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         }
         
         return nil
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    {
+        if(indexPath.section == 0)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
+//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+//    {
+//        if (editingStyle == UITableViewCellEditingStyle.Delete)
+//        {
+//            
+//
+//        }
+//    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
+    {
+        let button = UITableViewRowAction(style: .Default, title: "Delete", handler: { (action, indexPath) in
+            
+            let request = DAOFriendRequests.sharedInstance.requests[indexPath.item]
+            let index = DAOFriendRequests.sharedInstance.requests.indexOf(request)
+            DAOFriendRequests.sharedInstance.deleteRequest(request.id, callback: { (success) -> Void in
+                self.requests = DAOFriendRequests.sharedInstance.requests
+                self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Fade)
+            })
+            
+        })
+        
+        button.backgroundColor = oficialRed
+        
+        return [button]
     }
     
     //** TABLE VIEW PROPRIETS END ******//

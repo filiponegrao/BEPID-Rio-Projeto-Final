@@ -86,6 +86,7 @@ class DAOFriendRequests : NSObject
                 else if(!self.requestExists(fr.id))
                 {
                     self.requests.append(fr)
+                    NSNotificationCenter.defaultCenter().postNotification(NotificationController.center.friendRequest)
                 }
             }
         }
@@ -156,6 +157,26 @@ class DAOFriendRequests : NSObject
         }
     }
     
+    func deleteRequest(id: String, callback: (success: Bool) -> Void)
+    {
+        DAOPostgres.sharedInstance.deleteRequest(id) { (success) -> Void in
+            
+            if(success)
+            {
+                let request = self.getRequestFromId(id)
+                if(request != nil)
+                {
+                    self.requests.removeAtIndex(self.requests.indexOf(request!)!)
+                }
+                callback(success: true)
+            }
+            else
+            {
+                callback(success: false)
+            }
+        }
+    }
+    
     
     func sendRequest(username: String)
     {
@@ -189,6 +210,19 @@ class DAOFriendRequests : NSObject
             
             callback(was: !exist)
         }
+    }
+    
+    func getRequestFromId(id: String) -> FriendRequest?
+    {
+        for fr in self.requests
+        {
+            if(fr.id == id)
+            {
+                return fr
+            }
+        }
+        
+        return nil
     }
     
 }

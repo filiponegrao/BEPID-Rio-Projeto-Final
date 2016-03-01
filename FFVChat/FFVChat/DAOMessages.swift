@@ -611,10 +611,6 @@ class DAOMessages : NSObject
     
     func conversationWithContact(contact: String?) -> [Message]
     {
-        var messages = [Message]()
-        
-        if(contact == nil) { return messages }
-        
         let pred1 = NSPredicate(format: "sender == %@ OR target == %@", contact!, contact!)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [pred1])
         
@@ -625,13 +621,12 @@ class DAOMessages : NSObject
         do
         {
             let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Message]
-            messages = results
+            return results
         }
         catch
         {
-            return messages
+            return [Message]()
         }
-        return messages
     }
     
     func numberOfTodayMessages(messages: [Message]) -> Int

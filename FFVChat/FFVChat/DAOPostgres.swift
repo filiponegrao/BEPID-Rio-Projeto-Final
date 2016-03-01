@@ -374,9 +374,11 @@ class DAOPostgres : NSObject
         }
     }
     
-    func delteRequest(id: String, callback: (success: Bool) -> Void)
+    func deleteRequest(id: String, callback: (success: Bool) -> Void)
     {
         let parameters : [String:AnyObject]! = ["id": id]
+        
+        print(id)
         
         Alamofire.request(.POST, self.fr_delete, parameters: parameters)
             .responseJSON { response in

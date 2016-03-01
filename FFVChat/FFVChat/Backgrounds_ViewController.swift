@@ -164,7 +164,18 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
             
             cell.subviews.last!.alpha = 0.5
             
+            self.s.transform = CGAffineTransformMakeScale(0.01, 0.01)
+            
             cell.addSubview(s)
+            
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
+                
+                self.s.transform = CGAffineTransformMakeScale(1, 1)
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+                    
+            })
         }
         else
         {
@@ -177,7 +188,14 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
     {
         let cell = collectionView.cellForItemAtIndexPath(indexPath)
         
-        s?.removeFromSuperview()
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
+            
+            self.s.transform = CGAffineTransformMakeScale(0.01, 0.01)
+            
+            }, completion: { (success: Bool) -> Void in
+                
+                self.s?.removeFromSuperview()
+        })
         
         cell?.subviews.last?.alpha = 1
     }

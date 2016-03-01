@@ -35,6 +35,8 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         self.navBar = NavigationGallery_View(requester: self)
         self.view.addSubview(self.navBar)
 
+        self.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.contact)
+
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
@@ -63,6 +65,15 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
         self.passwordView = Password_View(requester:self)
         self.view.addSubview(self.passwordView)
         
+        if(self.sentMidias.count == 0)
+        {
+            self.text.alpha = 1
+        }
+        else
+        {
+            self.text.alpha = 0
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool)
@@ -72,13 +83,7 @@ class SentMidiaGallery_ViewController: UIViewController, UICollectionViewDataSou
     
     override func viewDidAppear(animated: Bool)
     {
-        self.sentMidias = DAOSentMidia.sharedInstance.sentMidiaFor(self.contact)
-        self.collectionView.reloadData()
         
-        if(self.sentMidias.count == 0)
-        {
-            self.text.alpha = 1
-        }
     }
     
     override func viewWillDisappear(animated: Bool)

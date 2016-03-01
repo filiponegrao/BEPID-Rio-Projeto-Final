@@ -161,6 +161,7 @@ class ContactsBubble_CollectionViewController: UICollectionViewController, UIGes
         cell.profileBtn.addLongClickAction("handleLongPress:", target: self, time: 0.7)
         
         cell.setInfo(self.contacts[indexPath.row].username, profile: UIImage(data: self.contacts[indexPath.row].thumb!)!)
+        
         let cont = DAOMessages.sharedInstance.numberOfUnreadMessages(self.contacts[indexPath.item])
         cell.setUnreadMessages(cont)
         

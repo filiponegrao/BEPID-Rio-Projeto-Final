@@ -96,21 +96,17 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     {
         DAOPostgres.sharedInstance.startRefreshing()
 
-        self.navBar.contactImage.setImage(UIImage(data: self.contact.profileImage!), forState: UIControlState.Normal)
+        self.navBar.contactImage.setImage(UIImage(data: self.contact.thumb!), forState: .Normal)
+        
         self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
         
         self.chatController.messages = self.messages
-        self.chatController.background.image = UserLayoutSettings.sharedInstance.getCurrentBackground()
         self.chatController.collectionView.reloadData()
-//        self.chatController.scrollToBottom()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
-        
-        self.chatController.messageBar.textView.resignFirstResponder()
-
-        
     }
+    
     override func viewDidAppear(animated: Bool)
     {
         self.redAlertScreen()

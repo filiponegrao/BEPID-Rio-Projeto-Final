@@ -36,7 +36,6 @@ class FTNCollectionViewCell: UICollectionViewCell
         
         print("alocando cell")
         
-        print(self.frame.size.height)
         self.labelDate = UILabel(frame: CGRectMake(frame.size.width - 30 - margemCellLateral, self.frame.size
             .height - (margemCellView + heightForStatus), 30, heightForStatus))
         self.labelDate.frame.origin.y = self.frame.size.height - (margemCellView + heightForStatus)
@@ -59,7 +58,7 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.labelStatus.textColor = UIColor.whiteColor()
         self.labelStatus.alpha = 1
 //        self.labelStatus.layer.borderWidth = 1
-        self.labelStatus.textAlignment = .Center
+        self.labelStatus.textAlignment = .Right
         self.addSubview(self.labelStatus)
     }
 

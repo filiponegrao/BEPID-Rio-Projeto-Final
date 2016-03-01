@@ -127,6 +127,8 @@ class DAOContacts
                 self.managedObjectContext.deleteObject(result)
             }
             BlackList.addOnBlackList(username)
+            self.save()
+
             return true
         }
         catch
@@ -134,7 +136,6 @@ class DAOContacts
             return false
         }
         
-        self.save()
     }
     
     
