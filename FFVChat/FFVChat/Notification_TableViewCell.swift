@@ -23,7 +23,7 @@ class Notification_TableViewCell: UITableViewCell
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.icon = UIImageView(frame: CGRectMake(10, 10, 50, 50))
+        self.icon = UIImageView(frame: CGRectMake(10, 10, self.frame.size.height - 20, self.frame.size.height - 20))
         self.icon.image = UIImage(named: "addButton")
         self.icon.clipsToBounds = true
         self.icon.layer.cornerRadius = self.icon.frame.size.width/2
@@ -36,7 +36,7 @@ class Notification_TableViewCell: UITableViewCell
         self.addSubview(self.notification)
         
         
-        self.acceptButton = UIButton(frame: CGRectMake(screenWidth/5 * 4, 5, 60, 60))
+        self.acceptButton = UIButton(frame: CGRectMake(self.frame.size.width - 50, 0, self.frame.size.height, self.frame.size.height))
         self.acceptButton.setImage(UIImage(named: "aceptInvite"), forState: .Normal)
         self.acceptButton.addTarget(self, action: "acceptRequest", forControlEvents: .TouchUpInside)
         self.addSubview(self.acceptButton)
@@ -51,7 +51,6 @@ class Notification_TableViewCell: UITableViewCell
     {
         super.awakeFromNib()
         
-        
     }
 
     override func setSelected(selected: Bool, animated: Bool)
@@ -59,7 +58,6 @@ class Notification_TableViewCell: UITableViewCell
         super.setSelected(selected, animated: animated)
 
     }
-
     
     func acceptRequest()
     {

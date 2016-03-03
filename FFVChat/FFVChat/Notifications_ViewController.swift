@@ -294,15 +294,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             return false
         }
     }
-    
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
-//    {
-//        if (editingStyle == UITableViewCellEditingStyle.Delete)
-//        {
-//            
-//
-//        }
-//    }
+
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]?
     {
