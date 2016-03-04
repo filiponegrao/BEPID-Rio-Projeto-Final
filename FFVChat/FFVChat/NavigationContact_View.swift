@@ -68,6 +68,8 @@ class NavigationContact_View: UIView
         self.alert.hidden = true
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: NotificationController.center.friendRequest.name, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "alertOn", name: NotificationController.center.printScreenReceived.name, object: nil)
+
         
     }
     
@@ -102,6 +104,7 @@ class NavigationContact_View: UIView
             self.vc.blurView.alpha = 0.8
             
             }) { (success: Bool) -> Void in
+              
                 
         }
 

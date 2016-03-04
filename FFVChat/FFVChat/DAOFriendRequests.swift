@@ -157,13 +157,13 @@ class DAOFriendRequests : NSObject
         }
     }
     
-    func deleteRequest(id: String, callback: (success: Bool) -> Void)
+    func deleteRequest(sender: String, target: String, callback: (success: Bool) -> Void)
     {
-        DAOPostgres.sharedInstance.deleteRequest(id) { (success) -> Void in
+        DAOPostgres.sharedInstance.deleteRequest(sender, target: target) { (success) -> Void in
             
             if(success)
             {
-                let request = self.getRequestFromId(id)
+                let request = self.getRequestFromSender(sender, target: target)
                 if(request != nil)
                 {
                     self.requests.removeAtIndex(self.requests.indexOf(request!)!)
@@ -217,6 +217,19 @@ class DAOFriendRequests : NSObject
         for fr in self.requests
         {
             if(fr.id == id)
+            {
+                return fr
+            }
+        }
+        
+        return nil
+    }
+    
+    func getRequestFromSender(sender: String, target: String) -> FriendRequest?
+    {
+        for fr in self.requests
+        {
+            if(fr.sender == sender && fr.target == target)
             {
                 return fr
             }

@@ -21,6 +21,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         
     var midiaViewer : MidiaViewer_View!
     
+    var loadingView : LoadScreen_View!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -57,7 +59,7 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool)
     {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: requestNotification.requestsLoaded.rawValue, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: NotificationController.center.friendRequest.name, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNotifications", name: NotificationController.center.printScreenReceived.name, object: nil)
         
@@ -301,7 +303,13 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             
             let request = DAOFriendRequests.sharedInstance.requests[indexPath.item]
             let index = DAOFriendRequests.sharedInstance.requests.indexOf(request)
-            DAOFriendRequests.sharedInstance.deleteRequest(request.id, callback: { (success) -> Void in
+            
+            self.loadingView?.removeFromSuperview()
+            self.loadingView = LoadScreen_View()
+            self.view.addSubview(self.loadingView)
+            
+            DAOFriendRequests.sharedInstance.deleteRequest(request.sender, target: request.target, callback: { (success) -> Void in
+                self.loadingView?.removeFromSuperview()
                 self.requests = DAOFriendRequests.sharedInstance.requests
                 self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: index!, inSection: 0)], withRowAnimation: .Fade)
             })
