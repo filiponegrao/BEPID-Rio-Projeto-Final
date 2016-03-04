@@ -63,7 +63,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .None
-        self.tableView.registerNib(UINib(nibName: "CellAdd_TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        self.tableView.registerClass(CellAdd_TableViewCell.self, forCellReuseIdentifier: "Cell")
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell2")
         self.tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.tableView)

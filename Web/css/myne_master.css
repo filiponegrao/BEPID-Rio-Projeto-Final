@@ -1,0 +1,191 @@
+@font-face {
+    font-family: 'SukhumvitSet';
+    src: url('../assets/fonts/SukhumvitSet/web/SukhumvitSet-Text.eot');
+    src: url('../assets/fonts/SukhumvitSet/web/SukhumvitSet-Text.eot?#iefix') format('embedded-opentype'),
+         url('../assets/fonts/SukhumvitSet/web/SukhumvitSet-Text.woff2') format('woff2'),
+         url('../assets/fonts/SukhumvitSet/web/SukhumvitSet-Text.woff') format('woff'),
+         url('../assets/fonts/SukhumvitSet/web/SukhumvitSet-Text.ttf') format('truetype'),
+         url('../assets/fonts/SukhumvitSet/web/SukhumvitSet-Text.svg#orbitronregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  /*background: #343539;*/
+  background: #444447;
+  color: #fff;
+  font-family: "SukhumvitSet", "Helvetica", sans-serif;
+}
+
+img.myne-body {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-height: 100vh;
+  opacity: 0.5;
+  z-index: -100;
+}
+
+
+/*----HEADER----*/
+
+.header {
+  font-family: SukhumvitSet;
+  font-size: 20px;
+  height: 120px;
+  padding: 30px;
+  border-bottom: 2px solid gray;
+  background: #444447;
+}
+
+.header div {
+  /*background: red;*/
+  position: relative;
+  left: 40px;
+  margin-top: 10px;
+}
+
+.items {
+  /*background: red;*/
+  padding-top: 20px;
+  position: absolute;
+  right: 15px;
+  display: inline-block;
+}
+
+.items li {
+  margin-right: 30px;
+}
+
+.items li a {
+  color: #5EBDB1;
+
+}
+
+.items li a:hover {
+  padding-bottom: 20px;
+  border-bottom: 5px solid #5EBDB1;
+  background-color: transparent;
+}
+
+.items li a:focus {
+  border-bottom: 5px solid #5EBDB1;
+  background-color: transparent;
+  padding-bottom: 20px;
+}
+
+
+/*----FOOTER----*/
+
+.myne-footer {
+  border-top: 2px solid gray;
+  background: #444447;
+  height: 40px;
+}
+
+.myne-footer div {
+  line-height: 40px;
+  font-size: 14px;
+
+}
+
+.items-footer {
+  float: right;
+  /*padding-right: 45px;*/
+}
+
+.items-footer li {
+  margin-right: 35px;
+  list-style-type: none;
+
+
+}
+
+.items-footer li a{
+  color: #A0A4A5;
+
+}
+
+.disclaimer {
+  color: #A0A4A5;
+  padding-left: 45px;
+  height: 100%;
+}
+
+.footer-links {
+  height: 100%;
+}
+
+
+/*----CONTENT---*/
+
+.content {
+  padding-top: 120px;
+}
+
+/*HOME*/
+
+.home {
+  min-height: 75vh;
+}
+
+/*FEATURES*/
+
+.features {
+  background: #343539;
+  min-height: 75vh;
+}
+
+/*TESTFLIGHT*/
+.testflight {
+  min-height: 75vh;
+}
+
+.form-text {
+  /*background: red;*/
+  text-align: center;
+  margin: 0 auto;
+  min-height: 75vh;
+  width: 100%;
+}
+
+.form-text h1{
+  margin-top: 20vh;;
+}
+
+.form-text p {
+  font-size: 20px;
+  margin-top:  10px;
+}
+
+.test-form {
+  background: blue;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 500px;
+}
+
+
+/*TEAM*/
+
+.team {
+  background: #343539;
+  min-height: 75vh;
+}
+
+
+
+
+/* COLORS:
+#2E2F32
+#37373A
+ #444447 
+#A0A4A5 
+#5EBDB1 
+#436B69 */
