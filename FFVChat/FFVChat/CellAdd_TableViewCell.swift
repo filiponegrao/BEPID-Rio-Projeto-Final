@@ -25,6 +25,11 @@ class CellAdd_TableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?)
+    {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.photo = UIImageView(frame: CGRectMake(10, 10, screenWidth/6, screenWidth/6))
         self.photo.clipsToBounds = true
@@ -47,7 +52,7 @@ class CellAdd_TableViewCell: UITableViewCell {
         
         self.invited = UIImageView(frame: CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8))
         self.invited.image = UIImage(named: "accept")
-//        self.invited.contentMode = .ScaleAspectFit
+        //        self.invited.contentMode = .ScaleAspectFit
         self.invited.hidden = true
         self.addSubview(self.invited)
         
@@ -59,9 +64,12 @@ class CellAdd_TableViewCell: UITableViewCell {
         self.invitedLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         self.addSubview(self.invitedLabel)
 
-
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setSelected(selected: Bool, animated: Bool)
     {
         super.setSelected(selected, animated: animated)

@@ -150,7 +150,9 @@ class DAOFriendRequests : NSObject
                     if(error == nil)
                     {
                         DAOContacts.sharedInstance.addContact(contactInfo["username"] as! String, facebookId: contactInfo["facebookId"] as? String, createdAt: contactInfo["createdAt"] as! NSDate, trustLevel: contactInfo["trustLevel"] as! Int, profileImage: (contactInfo["profileImage"] as! NSData))
-                        DAOPostgres.sharedInstance.deleteFriendRequest(fr.id)
+                        DAOPostgres.sharedInstance.deleteRequest(fr.sender, target: fr.target, callback: { (success) -> Void in
+                            
+                        })
                     }
                 })
             }

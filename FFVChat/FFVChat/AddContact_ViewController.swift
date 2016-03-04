@@ -196,6 +196,7 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
         else
         {
             let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! CellAdd_TableViewCell
+            
             let username = self.results[indexPath.row].username
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.username.text = username
