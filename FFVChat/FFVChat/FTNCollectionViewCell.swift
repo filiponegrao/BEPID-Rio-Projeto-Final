@@ -53,7 +53,7 @@ class FTNCollectionViewCell: UICollectionViewCell
         
         self.labelStatus = UILabel(frame: CGRectMake(self.labelDate.frame.origin.x - width, self.frame.size.height - (margemCellView + heightForStatus), width, heightForStatus))
         self.labelStatus.frame.origin.y = self.frame.size.height - (margemCellView + heightForStatus)
-        self.labelStatus.text = "Enviando"
+        self.labelStatus.text = "Sending"
         self.labelStatus.font = UIFont(name: "Gill Sans", size: 11)
         self.labelStatus.textColor = UIColor.whiteColor()
         self.labelStatus.alpha = 1
