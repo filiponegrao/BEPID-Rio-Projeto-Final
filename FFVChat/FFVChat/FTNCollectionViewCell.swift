@@ -90,7 +90,7 @@ class FTNCollectionViewCell: UICollectionViewCell
             self.labelStatus.text = status!
             if(status == messageStatus.Sent.rawValue)
             {
-                self.labelStatus.textColor = oficialGreen
+                self.labelStatus.textColor = UIColor.whiteColor()
             }
             else if(status == messageStatus.Received.rawValue || status == messageStatus.Ready.rawValue || status == messageStatus.Seen.rawValue)
             {
@@ -173,7 +173,7 @@ class FTNCollectionViewCell: UICollectionViewCell
     func setSent()
     {
         self.labelStatus.text = messageStatus.Sent.rawValue
-        self.labelStatus.textColor = oficialGreen
+        self.labelStatus.textColor = UIColor.whiteColor()
     }
     
     func setSeen()

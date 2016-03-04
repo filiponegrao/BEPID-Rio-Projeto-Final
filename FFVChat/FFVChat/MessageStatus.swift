@@ -10,15 +10,15 @@ import Foundation
 
 public enum messageStatus : String
 {
-    case Ready = "Enviando..."
+    case Ready = "Sending"
     
-    case Sent = "Enviada"
+    case Sent = "Sent"
     
-    case ErrorSent = "ERRO"
+    case ErrorSent = "ERROR"
     
-    case Received = "Recebida"
+    case Received = "Received"
     
-    case Deleted = "Excluida"
+    case Deleted = "Deleted"
     
-    case Seen = "Visualizada"
+    case Seen = "Seen"
 }
