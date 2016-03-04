@@ -203,15 +203,14 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             
             if(image != nil)
             {
-                self.midiaViewer = MidiaViewer_View(image: image!, requester: self)
-                self.view.addSubview(self.midiaViewer)
+                self.midiaViewer = MidiaViewer_View(image: image!)
+                self.navigationController?.pushViewController(self.midiaViewer, animated: true)
             }
             else
             {
                 let alert = UIAlertView(title: "Oops!", message: "This picture is no longer available", delegate: nil, cancelButtonTitle: "Ok")
                 alert.show()
             }
-            
             
         }
         
