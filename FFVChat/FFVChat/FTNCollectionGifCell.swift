@@ -34,13 +34,14 @@ class FTNCollectionGifCell : UICollectionViewCell
         
         let label = UILabel(frame: CGRectMake(0, 0, self.confirmView.frame.size.width*2/3, self.confirmView.frame.size.height*2/3))
         label.center = CGPointMake(self.confirmView.frame.size.width/2, self.confirmView.frame.size.height/2)
-        label.text = "Enviar"
+        label.text = "Send"
         label.textColor = UIColor.whiteColor()
         label.layer.cornerRadius = label.frame.size.width/2
-        label.layer.borderWidth = 2
+        label.layer.borderWidth = 1
         label.layer.borderColor = UIColor.whiteColor().CGColor
         label.textAlignment = .Center
-        label.font = UIFont(name: "Arial Rounded MT Bold", size: 16)
+        label.alpha = 0.9
+        label.font = UIFont(name: "SukhumvitSet-Medium", size: 16)
         
         self.confirmView.addSubview(whiteView)
         self.confirmView.addSubview(label)

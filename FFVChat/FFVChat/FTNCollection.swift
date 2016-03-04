@@ -61,7 +61,7 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         self.addSubview(blackview)
         
         self.closeButton = UIButton(frame: CGRectMake(20,0,self.frame.size.width/2 - 20,44))
-        self.closeButton.setTitle("Cancelar", forState: .Normal)
+        self.closeButton.setTitle("Cancel", forState: .Normal)
         self.closeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.closeButton.contentHorizontalAlignment = .Left
         self.closeButton.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 17)
