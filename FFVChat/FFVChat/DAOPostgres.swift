@@ -374,11 +374,9 @@ class DAOPostgres : NSObject
         }
     }
     
-    func deleteRequest(id: String, callback: (success: Bool) -> Void)
+    func deleteRequest(sender: String, target: String, callback: (success: Bool) -> Void)
     {
-        let parameters : [String:AnyObject]! = ["id": id]
-        
-        print(id)
+        let parameters : [String:AnyObject]! = ["sender": sender, "target": target]
         
         Alamofire.request(.POST, self.fr_delete, parameters: parameters)
             .responseJSON { response in
@@ -404,7 +402,7 @@ class DAOPostgres : NSObject
                 
                 if(response.result.isFailure)
                 {
-
+                    self.deleteFriendRequest(id)
                 }
                 else
                 {
