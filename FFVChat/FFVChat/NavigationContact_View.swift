@@ -117,6 +117,7 @@ class NavigationContact_View: UIView
         toolsNavigation.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
         toolsNavigation.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         toolsNavigation.modalInPopover = true
+        
         self.vc.presentViewController(toolsNavigation, animated: true) { () -> Void in
             (toolsNavigation.viewControllers.first as! Tools_ViewController).openTools()
 //            

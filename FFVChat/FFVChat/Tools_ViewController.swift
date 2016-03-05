@@ -28,6 +28,9 @@ class Tools_ViewController: UIViewController
     
     var closeButton : UIButton!
     
+    var numberOfMessages : UILabel!
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -45,6 +48,16 @@ class Tools_ViewController: UIViewController
         self.notificationButton.addTarget(self, action: "presentNotificationsController", forControlEvents: .TouchUpInside)
         self.notificationButton.alpha = 0
         self.view.addSubview(self.notificationButton)
+        
+        self.numberOfMessages = UILabel(frame: CGRectMake(0,0, 30, 30))
+        self.numberOfMessages.text = "0"
+        self.numberOfMessages.textAlignment = .Center
+        self.numberOfMessages.backgroundColor = oficialRed
+        self.numberOfMessages.textColor = UIColor.whiteColor()
+        self.numberOfMessages.layer.cornerRadius = self.numberOfMessages.frame.size.height/2
+        self.numberOfMessages.clipsToBounds = true
+        self.numberOfMessages.hidden = true
+        self.notificationButton.addSubview(self.numberOfMessages)
         
         self.notificationLabel = UIButton(frame: CGRectMake(60, 20, screenWidth/2, 30))
         self.notificationLabel.setTitle("Notifications", forState: .Normal)
@@ -135,18 +148,17 @@ class Tools_ViewController: UIViewController
             self.configLabel.alpha = 1
 
             
-            }, completion: nil)
-        
-//        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-//            
-//            
-//            }) { (success) -> Void in
-//                
-//        }
+            }) { (success) -> Void in
+                
+                self.setNumberOfNotifications()
+        }
+    
+
     }
     
     func closeTools()
     {
+        self.numberOfMessages.hidden = true
         self.notificationLabel.alpha = 0
         self.addLabel.alpha = 0
         self.configLabel.alpha = 0
@@ -202,5 +214,67 @@ class Tools_ViewController: UIViewController
         super.didReceiveMemoryWarning()
     }
 
+    func setNumberOfNotifications()
+    {
+        let r = DAOFriendRequests.sharedInstance.getRequests().count
+        let p = DAOPrints.sharedInstance.getNumberOfAllPrintScreens()
+        
+        let count = r + p
+        if(count > 0)
+        {
+            self.numberOfMessages.text = "\(count)"
+            self.numberOfMessages.hidden = false
+            
+            let width : CGFloat = 30
+            self.numberOfMessages.frame.size = CGSizeMake(1, 1)
+            
+            var size : CGSize!
+            
+            if(count > 9 && count < 99)
+            {
+                size = CGSizeMake(width+(width/5), width)
+            }
+            else if(count < 10)
+            {
+                size = CGSizeMake(width, width)
+            }
+            else
+            {
+                size = CGSizeMake(width*(3/2), width)
+            }
+            
+            UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                
+                self.numberOfMessages.frame.size = size
+                
+                }, completion: { (success: Bool) -> Void in
+                    
+            })
+        }
+        else
+        {
+            if(self.numberOfMessages.hidden)
+            {
+                //redundante, eu sei. Desnecessario na verdade, mas eu quero.
+                self.numberOfMessages.hidden = true
+            }
+            else
+            {
+                let originalSize = self.numberOfMessages.frame.size
+                
+                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                    
+                    self.numberOfMessages.frame.size = CGSizeMake(1, 1)
+                    
+                    }, completion: { (success: Bool) -> Void in
+                        
+                        self.numberOfMessages.hidden = true
+                        self.numberOfMessages.text = "0"
+                        self.numberOfMessages.frame.size = originalSize
+                })
+            }
+        }
+        
+    }
 
 }

@@ -111,6 +111,20 @@ class DAOPrints
         }
     }
     
+    func getNumberOfAllPrintScreens() -> Int
+    {
+        let fetchRequest = NSFetchRequest(entityName: "PrintscreenNotification")
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [PrintscreenNotification]
+            return results.count
+        }
+        catch
+        {
+            return 0
+        }
+    }
+    
     func save()
     {
         do { try self.managedObjectContext.save() }
