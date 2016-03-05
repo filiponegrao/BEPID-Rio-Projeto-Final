@@ -225,8 +225,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
                         let contact = DAOContacts.sharedInstance.getContact(user!)
                         if(contact != nil)
                         {
-                            controller.home.chatController.contact = contact!
                             controller.popToRootViewControllerAnimated(false)
+                            controller.home.chatController.reloadConversation(contact!.username)
                             controller.pushViewController(controller.home.chatController, animated: false)
                             self.window?.rootViewController = controller
                         }

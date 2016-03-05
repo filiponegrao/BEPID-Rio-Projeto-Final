@@ -48,6 +48,11 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     var audioPlayer: AVAudioPlayer?
     var audioRecorder: AVAudioRecorder?
     
+    
+    /** Variavel responsavel por impedir que duas acoes de remocao ou insercao
+     de celulas na collection view sejam feitas ao mesmo tempo. */
+    var doing : Bool = false
+    
     init(contact: Contact, homeController : Home_ViewController)
     {
         self.homeController = homeController
@@ -95,16 +100,24 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     override func viewWillAppear(animated: Bool)
     {
         DAOPostgres.sharedInstance.startRefreshing()
-
-        self.navBar.contactImage.setImage(UIImage(data: self.contact.thumb!), forState: .Normal)
         
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        
-        self.chatController.messages = self.messages
-        self.chatController.collectionView.reloadData()
+        self.reloadConversation(self.contact.username)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
+    }
+    
+    func reloadConversation(contact: String)
+    {
+        self.contact = DAOContacts.sharedInstance.getContact(contact)
+        if(self.contact != nil)
+        {
+            self.navBar.contactImage.setImage(UIImage(data: self.contact.thumb!), forState: .Normal)
+
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(contact)
+            self.chatController.messages = self.messages
+            self.chatController.collectionView.reloadData()
+        }
     }
     
     override func viewDidAppear(animated: Bool)
@@ -147,6 +160,8 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     
     func messageErased(notification: NSNotification)
     {
+        self.doing = true
+        
         let info : [NSObject : AnyObject] = notification.userInfo!
         let index = info["index"] as! Int
         let contact = info["contact"] as! String
@@ -172,12 +187,16 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
                 }
             }
         }
+        
+        self.doing = false
     }
     
     func newMessage()
     {
         if(DAOMessages.sharedInstance.lastMessage.sender == self.contact.username)
         {
+            self.doing = true
+            
             self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
             let mssg = DAOMessages.sharedInstance.lastMessage
             let index = self.messages.indexOf(mssg)!
@@ -202,6 +221,8 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
                 }
             }
             
+            self.doing = false
+            
             self.playSound()
         }
     }
@@ -219,50 +240,95 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
     /** SEND IMAGE MESSAGE */
     func sendImage(image: UIImage, lifetime: Int, filter: ImageFilter)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime, filter: filter)
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        
-        let index = self.messages.indexOf(message)
-        
-        self.chatController.messages = self.messages
-        self.chatController.newMessage(index!)
+        if(!self.doing)
+        {
+            self.doing = true
+            
+            let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, image: image, lifeTime: lifetime, filter: filter)
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            
+            let index = self.messages.indexOf(message)
+            
+            self.chatController.messages = self.messages
+            self.chatController.newMessage(index!)
+            
+            self.doing = false
+        }
+        else
+        {
+            self.sendImage(image, lifetime: lifetime, filter: filter)
+        }
     }
     
     /** SEND AUDIO MESSAGE*/
     func sendAudio(audio: NSData, lifetime: Int, filter: AudioFilter)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, audio: audio, lifeTime: lifetime, filter: filter)
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        
-        let index = self.messages.indexOf(message)
-        
-        self.chatController.messages = self.messages
-        self.chatController.newMessage(index!)
+        if(!self.doing)
+        {
+            self.doing = true
+            
+            let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, audio: audio, lifeTime: lifetime, filter: filter)
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            
+            let index = self.messages.indexOf(message)
+            
+            self.chatController.messages = self.messages
+            self.chatController.newMessage(index!)
+            
+            self.doing = false
+        }
+        else
+        {
+            self.sendAudio(audio, lifetime: lifetime, filter: filter)
+        }
     }
     
     /** SEND GIF MESSAGE */
     func sendGif(gifName: String)
     {
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, gifName: gifName)
-        
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        let index = self.messages.indexOf(message)
-        print("index da mensagem nova: \(index)")
-        self.chatController.messages = self.messages
-        self.chatController.newMessage(index!)
+        if(!self.doing)
+        {
+            self.doing = true
+            
+            let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, gifName: gifName)
+            
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            let index = self.messages.indexOf(message)
+            print("index da mensagem nova: \(index)")
+            self.chatController.messages = self.messages
+            self.chatController.newMessage(index!)
+            
+            self.doing = false
+        }
+        else
+        {
+            self.sendGif(gifName)
+        }
     }
     
     /** SEND TEXT MESSAGE */
     func sendMessage(text: String)
     {
-        print("enviando mensagem...")
-        let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, text: text)
-        
-        self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
-        let index = self.messages.indexOf(message)
-        
-        self.chatController.messages = self.messages
-        self.chatController.newMessage(index!)
+        if(!self.doing)
+        {
+            self.doing = true
+            
+            print("enviando mensagem...")
+            let message = DAOMessages.sharedInstance.sendMessage(self.contact.username, text: text)
+            
+            self.messages = DAOMessages.sharedInstance.conversationWithContact(self.contact.username)
+            let index = self.messages.indexOf(message)
+            
+            self.chatController.messages = self.messages
+            self.chatController.newMessage(index!)
+
+            
+            self.doing = false
+        }
+        else
+        {
+            self.sendMessage(text)
+        }
     }
     
     
