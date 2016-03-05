@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
+import CoreMedia
 
 
 enum MessageType
@@ -225,6 +226,8 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
     
     var max : CGFloat = 0
     
+    var time : UILabel!
+    
     weak var cell : FTNCollectionViewCell!
     
     init(frame: CGRect, audiokey: String, mine: Bool, cell: FTNCollectionViewCell)
@@ -253,11 +256,17 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         self.playButton.setImage(UIImage(named: "playButton"), forState: .Normal)
         self.playButton.addTarget(self, action: "clickPlay", forControlEvents: .TouchUpInside)
         
-        self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y, self.view.frame.size.width - self.playButton.frame.size.width - margemCellView - 20, self.playButton.frame.size.height))
+        self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y + 10, self.view.frame.size.width - self.playButton.frame.size.width - margemCellView - 20, self.playButton.frame.size.height/2 - 10))
         self.slider.setThumbImage(UIImage(named: "indicator"), forState: .Normal)
         self.slider.minimumValue = 0
         self.slider.maximumValue = 100
         self.slider.enabled = false
+        
+        self.time = UILabel(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.height, self.playButton.frame.origin.y + self.playButton.frame.size.height/2, self.slider.frame.size.width/2, self.playButton.frame.size.height/2 ))
+        self.time.text = "00:00"
+        self.time.font = UIFont(name: "Gill Sans", size: 14)
+        self.time.textColor = GMColor.lightGreenA100Color()
+        self.time.alpha = 0.8
         
         if(mine)
         {
@@ -274,6 +283,7 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         self.addSubview(self.slider)
         self.addSubview(self.loading)
         self.addSubview(self.playButton)
+        self.addSubview(self.time)
 
         
         let audio = DAOContents.sharedInstance.getAudioFromKey(audiokey)
@@ -287,7 +297,26 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
             self.slider.enabled = true
             self.loading?.removeFromSuperview()
             self.playButton.hidden = false
+            
+            do { let asset = try AVAudioPlayer(data: audio!)
+                
+                let duration = asset.duration
+                let ti = NSInteger(duration)
+
+                let minutes = (ti / 60) % 60
+                let seconds = ti % 60
+                let string = NSString(format: "%0.2d:%0.2d", minutes, seconds)
+                
+                self.time.text = string as String
+            }
+            catch
+            {
+            
+            }
+            
             self.initPlayer(audio!)
+
+            
         }
     }
     
@@ -325,7 +354,9 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
             do { try audioSession.setCategory(AVAudioSessionCategoryPlayback) }
             catch { print("audioSession error)") }
             
-            self.audioPlayer?.play()
+            let percent : Double = Double(self.slider.value/100)
+            self.audioPlayer.currentTime = self.audioPlayer.duration * percent
+            self.audioPlayer.play()
             self.playButton.setImage(UIImage(named: "pauseButton"), forState: .Normal)
             
             self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTimeLabel", userInfo: nil, repeats: true)

@@ -107,6 +107,7 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
             self.selectedGif = ""
             self.controller.delegate?.FTNChatSendGifName(self.controller, gifName: self.gifs[indexPath.item].name)
             self.controller.closeGifGallery()
+            cell.removeConfirm()
         }
         else
         {

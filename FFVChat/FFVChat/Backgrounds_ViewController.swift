@@ -148,6 +148,8 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
+        print("selecionou")
+        
         let cell = collectionView.cellForItemAtIndexPath(indexPath)!
         
         if(self.backgrounds[indexPath.item] != self.selectedBackground)
@@ -186,16 +188,11 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath)
     {
+        print("deselecionou")
+        
         let cell = collectionView.cellForItemAtIndexPath(indexPath)
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.45, initialSpringVelocity: 0.5, options: .CurveEaseOut, animations: { () -> Void in
-            
-            self.s.transform = CGAffineTransformMakeScale(0.01, 0.01)
-            
-            }, completion: { (success: Bool) -> Void in
-                
-                self.s?.removeFromSuperview()
-        })
+        self.s?.removeFromSuperview()
         
         cell?.subviews.last?.alpha = 1
     }

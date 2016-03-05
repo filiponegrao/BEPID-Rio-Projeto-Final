@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import AVFoundation
 
 class FTNCollectionViewCell: UICollectionViewCell
 {
@@ -51,7 +52,7 @@ class FTNCollectionViewCell: UICollectionViewCell
         
         let width = self.frame.size.width/5
         
-        self.labelStatus = UILabel(frame: CGRectMake(self.labelDate.frame.origin.x - width, self.frame.size.height - (margemCellView + heightForStatus), width, heightForStatus))
+        self.labelStatus = UILabel(frame: CGRectMake(self.labelDate.frame.origin.x - width - 10, self.frame.size.height - (margemCellView + heightForStatus), width, heightForStatus))
         self.labelStatus.frame.origin.y = self.frame.size.height - (margemCellView + heightForStatus)
         self.labelStatus.text = "Sending"
         self.labelStatus.font = UIFont(name: "Gill Sans", size: 11)
@@ -201,6 +202,7 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.chatgifview?.loading?.removeFromSuperview()
         let gif = DAOContents.sharedInstance.getGifWithName(self.message!.contentKey!)
         self.chatgifview?.gifView.runGif(gif!.data)
+        self.chatgifview?.gifView.hidden = false
         DAOMessages.sharedInstance.deleteMessageAfterTime(self.message)
     }
     
@@ -211,6 +213,21 @@ class FTNCollectionViewCell: UICollectionViewCell
         self.chataudioview?.initPlayer(audio!)
         self.chataudioview?.playButton.hidden = false
         self.chataudioview?.slider.enabled = true
+        do { let asset = try AVAudioPlayer(data: audio!)
+            
+            let duration = asset.duration
+            let ti = NSInteger(duration)
+            
+            let minutes = (ti / 60) % 60
+            let seconds = ti % 60
+            let string = NSString(format: "%0.2d:%0.2d", minutes, seconds)
+            
+            self.chataudioview?.time.text = string as String
+        }
+        catch
+        {
+            
+        }
     }
     
     func deleteMessage()

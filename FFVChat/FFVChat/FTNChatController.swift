@@ -216,8 +216,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
         else if(message.type == ContentType.Image.rawValue)
         {
-            let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
-            if(image == nil)
+            if let image = DAOContents.sharedInstance.getImageFromKey(message.contentKey!)
             {
                 DAOParse.sharedInstance.downloadImageForMessage(message.contentKey!, id: message.id)
             }
@@ -228,8 +227,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         }
         else if(message.type == ContentType.Gif.rawValue)
         {
-            let gif = DAOContents.sharedInstance.getGifWithName(message.contentKey!)
-            if(gif != nil)
+            if let gif = DAOContents.sharedInstance.getGifWithName(message.contentKey!)
             {
                 DAOMessages.sharedInstance.deleteMessageAfterTime(message)
             }
@@ -295,6 +293,13 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         {
             
         }
+        else if(message.type == ContentType.Audio.rawValue)
+        {
+            if(message.status == messageStatus.Ready.rawValue)
+            {
+                self.reenviarMensagem(message)
+            }
+        }
     }
     
     
@@ -304,7 +309,30 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
         let alert = UIAlertController(title: "Erro no envio", message: nil, preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: "Reenviar", style: .Default, handler: { (action: UIAlertAction) -> Void in
             
-            DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
+            switch message.type
+            {
+                
+            case ContentType.Text.rawValue:
+                
+                DAOPostgres.sharedInstance.sendTextMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), text: message.text!, sentDate: message.sentDate)
+                
+            case ContentType.Image.rawValue:
+                
+                DAOPostgres.sharedInstance.sendImageMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), contentKey: message.contentKey!, sentDate: message.sentDate)
+                
+            case ContentType.Gif.rawValue:
+                
+                DAOPostgres.sharedInstance.sendGifMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime),gifName: message.contentKey!, sentDate: message.sentDate)
+                
+            case ContentType.Audio.rawValue:
+                
+                DAOPostgres.sharedInstance.sendAudioMessage(message.id, username: message.target, lifeTime: Int(message.lifeTime), contentKey: message.contentKey!, sentDate: message.sentDate)
+                
+            default:
+                
+                print("erro ao reenviar a mensagem")
+            }
+            
         }))
         
         alert.addAction(UIAlertAction(title: "Apagar", style: .Default, handler: { (action: UIAlertAction) -> Void in
