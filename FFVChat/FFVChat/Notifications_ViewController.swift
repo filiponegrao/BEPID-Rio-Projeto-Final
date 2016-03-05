@@ -191,6 +191,8 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
             
             cell.contentView.addSubview(separatorLineView)
             
+            DAOPrints.sharedInstance.setPrintScreenSeen(self.printscreens[indexPath.row])
+            
             return cell
         }
     }

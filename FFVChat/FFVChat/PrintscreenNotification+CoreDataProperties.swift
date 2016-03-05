@@ -18,5 +18,6 @@ extension PrintscreenNotification {
     @NSManaged var image: NSData?
     @NSManaged var imageKey: String!
     @NSManaged var printDate: NSDate!
+    @NSManaged var status: String!
 
 }

@@ -10,6 +10,8 @@ import Foundation
 import CoreData
 
 
+
+
 class PrintscreenNotification: NSManagedObject {
 
     class func createInManagedObjectContext(moc: NSManagedObjectContext, printer: String, image: NSData?, imageKey: String, printDate: NSDate) -> PrintscreenNotification
@@ -20,6 +22,7 @@ class PrintscreenNotification: NSManagedObject {
         print.image = image
         print.imageKey = imageKey
         print.printDate = printDate
+        print.status = PrintScreenStatus.received.rawValue
         
         return print
     }

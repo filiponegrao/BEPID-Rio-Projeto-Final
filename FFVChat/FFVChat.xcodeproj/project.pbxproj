@@ -124,6 +124,7 @@
 		8062A8EB1C742BE900331E9E /* ActiveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EA1C742BE900331E9E /* ActiveType.swift */; };
 		8062A8ED1C742C0000331E9E /* RegexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EC1C742C0000331E9E /* RegexParser.swift */; };
 		8062A8EF1C76AE5700331E9E /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8062A8EE1C76AE5700331E9E /* AudioController.swift */; };
+		806985961C8B4308006BEEFB /* PrintScreenStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806985951C8B4308006BEEFB /* PrintScreenStatus.swift */; };
 		806D16211C0E367B00650E9D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D161F1C0E367B00650E9D /* Message.swift */; };
 		806D16231C0E70C800650E9D /* Filters_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16221C0E70C800650E9D /* Filters_ViewController.swift */; };
 		806D16251C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */; };
@@ -372,6 +373,7 @@
 		8062A8EA1C742BE900331E9E /* ActiveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveType.swift; sourceTree = "<group>"; };
 		8062A8EC1C742C0000331E9E /* RegexParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexParser.swift; sourceTree = "<group>"; };
 		8062A8EE1C76AE5700331E9E /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		806985951C8B4308006BEEFB /* PrintScreenStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintScreenStatus.swift; sourceTree = "<group>"; };
 		806D161F1C0E367B00650E9D /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		806D16221C0E70C800650E9D /* Filters_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filters_ViewController.swift; sourceTree = "<group>"; };
 		806D16241C0E7C2C00650E9D /* CellFilter_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellFilter_CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -897,6 +899,7 @@
 				804FB4071C09466B00512425 /* PrintscreenNotification+CoreDataProperties.swift */,
 				804FB4081C09466B00512425 /* PrintscreenNotification.swift */,
 				804FB40B1C09490100512425 /* DAOPrints.swift */,
+				806985951C8B4308006BEEFB /* PrintScreenStatus.swift */,
 			);
 			name = PrintScreen;
 			sourceTree = "<group>";
@@ -1319,6 +1322,7 @@
 				804FB40A1C09466B00512425 /* PrintscreenNotification.swift in Sources */,
 				803657951BF94A97000907BD /* NVActivityIndicatorAnimationBlank.swift in Sources */,
 				F6B667141C01606100B1C256 /* AppLoginImport_ViewController.swift in Sources */,
+				806985961C8B4308006BEEFB /* PrintScreenStatus.swift in Sources */,
 				8030E44E1BF96A350075E798 /* BubbleTransition.swift in Sources */,
 				F65A4F451C0CB7670092C403 /* CAPSPageMenu.swift in Sources */,
 				80AB6B791C3DFCA100F2EEC4 /* BubbleButton.swift in Sources */,

@@ -96,10 +96,10 @@ class DAOPrints
         }
     }
     
-    func getNumberOfPrintScreens(contact: String) -> Int
+    func getNumberOfPrintScreensReceived(contact: String) -> Int
     {
         let fetchRequest = NSFetchRequest(entityName: "PrintscreenNotification")
-        fetchRequest.predicate = NSPredicate(format: "printer == %@", contact)
+        fetchRequest.predicate = NSPredicate(format: "printer == %@ AND status == %@", contact, PrintScreenStatus.received.rawValue)
         do
         {
             let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [PrintscreenNotification]
@@ -111,9 +111,10 @@ class DAOPrints
         }
     }
     
-    func getNumberOfAllPrintScreens() -> Int
+    func getNumberOfPrintScreens(contact: String) -> Int
     {
         let fetchRequest = NSFetchRequest(entityName: "PrintscreenNotification")
+        fetchRequest.predicate = NSPredicate(format: "printer == %@ AND", contact)
         do
         {
             let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [PrintscreenNotification]
@@ -123,6 +124,51 @@ class DAOPrints
         {
             return 0
         }
+    }
+    
+    func getNumberOfPrintScreensSeen(contact: String) -> Int
+    {
+        let fetchRequest = NSFetchRequest(entityName: "PrintscreenNotification")
+        fetchRequest.predicate = NSPredicate(format: "printer == %@ AND status == %@", contact, PrintScreenStatus.seen.rawValue)
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [PrintscreenNotification]
+            return results.count
+        }
+        catch
+        {
+            return 0
+        }
+    }
+    
+    func getNumberOfAllPrintScreensReceived() -> Int
+    {
+        let fetchRequest = NSFetchRequest(entityName: "PrintscreenNotification")
+        fetchRequest.predicate = NSPredicate(format: "status == %@", PrintScreenStatus.received.rawValue)
+        do
+        {
+            let results = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [PrintscreenNotification]
+            return results.count
+        }
+        catch
+        {
+            return 0
+        }
+    }
+    
+    
+    func setPrintScreenSeen(printscreen: PrintscreenNotification)
+    {
+        printscreen.status = PrintScreenStatus.seen.rawValue
+        
+        self.save()
+    }
+    
+    func setPrintScreenHidden(printscreen: PrintscreenNotification)
+    {
+        printscreen.status = PrintScreenStatus.hidden.rawValue
+        
+        self.save()
     }
     
     func save()

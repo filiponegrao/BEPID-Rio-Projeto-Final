@@ -217,7 +217,7 @@ class Tools_ViewController: UIViewController
     func setNumberOfNotifications()
     {
         let r = DAOFriendRequests.sharedInstance.getRequests().count
-        let p = DAOPrints.sharedInstance.getNumberOfAllPrintScreens()
+        let p = DAOPrints.sharedInstance.getNumberOfAllPrintScreensReceived()
         
         let count = r + p
         if(count > 0)
