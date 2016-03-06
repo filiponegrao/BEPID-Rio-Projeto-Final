@@ -90,6 +90,19 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
 
     //** TABLE VIEW PROPRIETS *********//
     
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        if(indexPath.section == 0)
+        {
+            return 70
+        }
+        else
+        {
+            return 100
+        }
+
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if(section == 0)
@@ -99,6 +112,18 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         else
         {
             return self.printscreens.count
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        if(indexPath.section == 0)
+        {
+            return 70
+        }
+        else
+        {
+            return 100
         }
     }
     
@@ -224,18 +249,6 @@ class Notifications_ViewController: UIViewController, UITableViewDelegate, UITab
         //aqui que contece a treta 
         indexPath.section == 0
         
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
-    {
-        if(indexPath.section == 0)
-        {
-            return 70
-        }
-        else
-        {
-            return 100
-        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int

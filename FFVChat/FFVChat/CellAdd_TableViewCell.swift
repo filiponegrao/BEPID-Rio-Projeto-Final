@@ -31,7 +31,7 @@ class CellAdd_TableViewCell: UITableViewCell {
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.photo = UIImageView(frame: CGRectMake(10, 10, screenWidth/6, screenWidth/6))
+        self.photo = UIImageView(frame: CGRectMake(10, 10, self.frame.size.height - 20, self.frame.size.height - 20))
         self.photo.clipsToBounds = true
         self.photo.layer.cornerRadius = self.photo.frame.size.width/2
         self.addSubview(self.photo)

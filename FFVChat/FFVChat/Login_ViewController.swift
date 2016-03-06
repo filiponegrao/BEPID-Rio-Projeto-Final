@@ -44,11 +44,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     override func viewWillDisappear(animated: Bool)
     {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userNotFound", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "incompleteRegister", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "wrongPassword", object: nil)
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     override func viewDidLoad()
@@ -198,7 +194,6 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     {
         self.loadingScreen?.removeFromSuperview()
         let tutorial = Tutorial_PageViewController() //CONFERIR O QUE É MELHOR VIR PRIMEIRO!!!
-//        let privacy = Privacy_ViewController(nibName: "Privacy_ViewController", bundle: nil)
         self.presentViewController(tutorial, animated: true, completion: nil)
     }
     

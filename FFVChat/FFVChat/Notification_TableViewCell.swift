@@ -23,20 +23,21 @@ class Notification_TableViewCell: UITableViewCell
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.icon = UIImageView(frame: CGRectMake(10, 10, self.frame.size.height - 20, self.frame.size.height - 20))
+        
+        self.icon = UIImageView(frame: CGRectMake(10, 10, 50, 50))
         self.icon.image = UIImage(named: "addButton")
         self.icon.clipsToBounds = true
         self.icon.layer.cornerRadius = self.icon.frame.size.width/2
         self.addSubview(self.icon)
         
-        self.notification = UILabel(frame: CGRectMake(70, 10, screenWidth - 140, 40))
+        self.notification = UILabel(frame: CGRectMake(70, 10, screenWidth - 140, 50))
         self.notification.textColor = oficialGreen
         self.notification.numberOfLines = 3
         self.notification.font = UIFont(name: "SukhumvitSet-Light", size: 18)
         self.addSubview(self.notification)
         
         
-        self.acceptButton = UIButton(frame: CGRectMake(self.frame.size.width - 50, 0, self.frame.size.height, self.frame.size.height))
+        self.acceptButton = UIButton(frame: CGRectMake(screenWidth - 60, 10, 50, 50))
         self.acceptButton.setImage(UIImage(named: "aceptInvite"), forState: .Normal)
         self.acceptButton.addTarget(self, action: "acceptRequest", forControlEvents: .TouchUpInside)
         self.addSubview(self.acceptButton)

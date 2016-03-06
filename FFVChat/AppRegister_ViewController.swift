@@ -53,13 +53,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
     
     override func viewWillDisappear(animated: Bool)
     {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "emailInUse", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userAlreadyExist", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "userLogged", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "loginCanceled", object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
 
     }
     
