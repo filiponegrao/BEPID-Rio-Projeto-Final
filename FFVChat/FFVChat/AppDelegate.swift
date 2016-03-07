@@ -60,8 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else if(usercondition == UserCondition.userLoggedOut)
         {
-            let login = Login_ViewController(nibName: "Login_ViewController", bundle: nil)
-            self.window?.rootViewController = login
+            let tutorial = Tutorial_PageViewController()
+            self.window?.rootViewController = tutorial
         }
         else if(usercondition == UserCondition.incompleteRegister)
         {

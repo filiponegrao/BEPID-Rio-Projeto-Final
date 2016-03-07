@@ -1,5 +1,5 @@
 //
-//  TutoSecond_ViewController.swift
+//  TutoThird_ViewController.swift
 //  FFVChat
 //
 //  Created by Fernanda Carvalho on 07/03/16.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class TutoSecond_ViewController: UIViewController
+class TutoThird_ViewController: UIViewController
 {
-    var index = 1
+    var index = 2
     var iphoneShape : UIImageView!
-    
+
     override func viewDidLoad()
     {
         super.viewDidLoad()

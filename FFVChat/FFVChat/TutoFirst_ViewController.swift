@@ -2,8 +2,8 @@
 //  TutoFirst_ViewController.swift
 //  FFVChat
 //
-//  Created by Fernanda Carvalho on 17/09/15.
-//  Copyright (c) 2015 FilipoNegrao. All rights reserved.
+//  Created by Fernanda Carvalho on 07/03/16.
+//  Copyright © 2016 FilipoNegrao. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,6 @@ import UIKit
 class TutoFirst_ViewController: UIViewController
 {
     var index = 0
-    
     var iphoneShape : UIImageView!
 
     override func viewDidLoad()
@@ -23,13 +22,13 @@ class TutoFirst_ViewController: UIViewController
         self.iphoneShape = UIImageView(frame: CGRectMake(screenWidth/5, screenHeight/4, screenWidth/5 * 3, screenHeight/6 * 4))
         self.iphoneShape.image = UIImage(named: "tutorialSoon")
         self.view.addSubview(self.iphoneShape)
-        
+
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
- 
+
 }
