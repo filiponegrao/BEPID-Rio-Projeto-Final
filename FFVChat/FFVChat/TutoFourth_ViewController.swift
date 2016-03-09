@@ -17,10 +17,10 @@ class TutoFourth_ViewController: UIViewController
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = oficialDarkGray
+        self.view.backgroundColor = UIColor.clearColor()
         
         self.iphoneShape = UIImageView(frame: CGRectMake(screenWidth/5, screenHeight/4, screenWidth/5 * 3, screenHeight/6 * 4))
-        self.iphoneShape.image = UIImage(named: "tutorialSoon")
+        self.iphoneShape.image = UIImage(named: "iphone")
         self.view.addSubview(self.iphoneShape)
 
     }

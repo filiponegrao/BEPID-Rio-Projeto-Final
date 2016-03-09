@@ -25,6 +25,8 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     var tutoFifth : Login_ViewController!
     
     var pageControl : UIPageControl!
+    
+    var background : UIImageView!
 
     
 //    var privacy : Privacy_ViewController!
@@ -32,6 +34,14 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = oficialMediumGray
+        
+        //Imagem de fundo
+        self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.background.image = UIImage(named: "ContactBackground")
+        self.background.alpha = 0.6
+        self.view.addSubview(self.background)
 
         self.tutoFirst = TutoFirst_ViewController()
         self.tutoSecond = TutoSecond_ViewController()
@@ -39,10 +49,11 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.tutoFourth = TutoFourth_ViewController()
         self.tutoFifth = Login_ViewController()
         
+        
         self.pageControl = UIPageControl.appearance()
         self.pageControl.pageIndicatorTintColor = oficialLightGray
         self.pageControl.currentPageIndicatorTintColor = oficialGreen
-        self.pageControl.backgroundColor = UIColor.clearColor()
+        self.pageControl.backgroundColor = oficialDarkGray
 //        self.pageControl.hidesForSinglePage = true
         
         self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
@@ -53,7 +64,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.pageViewController.setViewControllers([self.tutoFirst], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         
         self.pageViewController.view.frame = CGRectMake(0, 0, screenWidth, screenHeight)
-        self.pageViewController.view.backgroundColor = oficialDarkGray
+        self.pageViewController.view.backgroundColor = UIColor.clearColor()
         
         self.addChildViewController(pageViewController)
         self.view.addSubview(self.pageViewController.view)
