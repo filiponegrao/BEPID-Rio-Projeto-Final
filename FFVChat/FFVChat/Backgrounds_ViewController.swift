@@ -63,25 +63,29 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         self.navBar.addSubview(backButton)
         
         self.label1 = UILabel(frame: CGRectMake(10, self.navBar.frame.size.height, screenWidth - 20, 30))
-        self.label1.text = "Pick an image from your photo album"
-        self.label1.font = UIFont(name: "SukhumvitSet-Medium", size: 14)
+        self.label1.text = "Pick an image from your photo album:"
+        self.label1.font = UIFont(name: "Helvetica-Light", size: 13)
+        self.label1.alpha = 0.8
         self.label1.textColor = oficialLightGray
         self.view.addSubview(self.label1)
         
         let label = UILabel(frame: CGRectMake(0, self.label1.frame.origin.y + self.label1.frame.size.height, screenWidth, 44))
-        label.backgroundColor = oficialDarkGray
+        label.backgroundColor = oficialSemiGray
         self.view.addSubview(label)
         
-        self.photoButton = UIButton(frame: CGRectMake(20, self.label1.frame.origin.y + self.label1.frame.size.height, screenWidth - 20, 44))
+        self.photoButton = UIButton(frame: CGRectMake(10, self.label1.frame.origin.y + self.label1.frame.size.height, screenWidth - 10, 44))
         self.photoButton.setTitle("Photo Album", forState: .Normal)
         self.photoButton.setTitleColor(oficialLightGray, forState: .Normal)
         self.photoButton.contentHorizontalAlignment = .Left
+        self.photoButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
+//        self.photoButton.backgroundColor = oficialSemiGray
         self.view.addSubview(self.photoButton)
         
         
         self.label2 = UILabel(frame: CGRectMake(10, self.photoButton.frame.origin.y + self.photoButton.frame.size.height + 10, screenWidth - 20, 30))
         self.label2.text = "Or choose one of theese:"
-        self.label2.font = UIFont(name: "SukhumvitSet-Medium", size: 14)
+        self.label2.font = UIFont(name: "Helvetica-Light", size: 13)
+        self.label2.alpha = 0.8
         self.label2.textColor = oficialLightGray
         self.view.addSubview(self.label2)
         
