@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import WebKit
 
+/**
+ * classe responsavel por lmalksnaklsnjansjoal
+ */
 class FTNCollectionWebCell : UICollectionViewCell
 {
     var webView : WKWebView!
