@@ -64,9 +64,6 @@ class Tutorial_ViewController: UIViewController
         self.view.addSubview(self.pageView.view)
         self.didMoveToParentViewController(self.pageView)
         
-        
-
-        
     }
 
     override func didReceiveMemoryWarning()

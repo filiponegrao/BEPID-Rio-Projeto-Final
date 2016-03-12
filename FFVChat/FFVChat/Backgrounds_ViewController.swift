@@ -92,7 +92,7 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         self.collectionView = UICollectionView(frame: CGRectMake(0, self.label2.frame.origin.y + self.label2.frame.size.height, screenWidth, screenHeight - (self.label1.frame.size.height + self.photoButton.frame.size.height + self.label2.frame.size.height + 10)) , collectionViewLayout: layout)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.backgroundColor = oficialDarkGray
+        self.collectionView.backgroundColor = oficialMediumGray
         self.collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.layer.borderColor = oficialLightGray.CGColor
