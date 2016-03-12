@@ -23,11 +23,9 @@ class TutoSecond_ViewController: UIViewController
         self.image = UIImageView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
         self.image.image = UIImage(named: "ImgTutorial10")
         self.image.center = self.view.center
-        self.image.backgroundColor = UIColor.redColor()
-        self.image.layer.borderWidth = 1
-                self.image.contentMode = .ScaleAspectFit
+        self.image.backgroundColor = oficialGreen
+        self.image.contentMode = .ScaleAspectFit
         self.view.addSubview(self.image)
-
     }
 
     override func didReceiveMemoryWarning()

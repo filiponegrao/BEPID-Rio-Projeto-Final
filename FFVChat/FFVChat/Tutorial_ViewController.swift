@@ -40,25 +40,31 @@ class Tutorial_ViewController: UIViewController
         
         
         //shape iphone
-        self.iphoneShape = UIImageView(frame: CGRectMake((screenWidth - screenWidth/5 * 3.5)/2, screenWidth/4.2, screenWidth/5 * 3.5, screenHeight/6 * 4.5))
+        self.iphoneShape = UIImageView(frame: CGRectMake((screenWidth - screenWidth/5 * 3.5)/2, screenWidth/4.2, screenWidth/5 * 3.5, screenWidth/3 * 4))
         self.iphoneShape.image = UIImage(named: "iphone")
         self.view.addSubview(self.iphoneShape)
         
-        //PAGE VIEW ONDE SE DÁ A MERDA
+        //barra com textos
+        self.infoView = UIView(frame: CGRectMake(0, screenHeight - screenHeight/6 - 10, screenWidth, screenHeight/6 + 10))
+        self.infoView.backgroundColor = oficialDarkGray
+        self.view.addSubview(self.infoView)
         
-        let width = screenWidth/1.77
-        let height = screenWidth/3 * 3
+        //PAGE VIEW ONDE OCORRE A TRETA
         
-        self.pageView = Tutorial_PageViewController(size: CGSize(width: width, height: height))
-        self.pageView.view.frame = CGRectMake(screenWidth/4.65, screenWidth/2.5, width, height)
+        let width = screenWidth/1.77 //largura necessária para o page view encaixar na tela do iphone
+        let height = screenWidth + screenWidth/10.2   //altura necessária para o page view encaixar na tela do iphone
+        
+        let yPageControl = -((screenWidth/10.2)/3)  //pro page control começar abaixo
+        
+        self.pageView = Tutorial_PageViewController()
+        self.pageView.view.frame = CGRectMake(screenWidth/4.65, screenWidth/2.43, width, height)
+        self.pageView.pageControl.bounds = CGRectMake(0, yPageControl, width, 100)
+        
         self.addChildViewController(self.pageView)
         self.view.addSubview(self.pageView.view)
         self.didMoveToParentViewController(self.pageView)
         
-        //view com textos
-        self.infoView = UIView(frame: CGRectMake(0, screenHeight - screenHeight/6 - 10, screenWidth, screenHeight/6 + 10))
-        self.infoView.backgroundColor = oficialDarkGray
-        self.view.addSubview(self.infoView)
+        
 
         
     }

@@ -27,13 +27,13 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     var background : UIImageView!
 
 
-    init(size: CGSize)
+    init()
     {
-        let pageSize = size
+//        let pageSize = size
         
         super.init(nibName: nil, bundle: nil)
         
-        self.view.frame.size = pageSize
+//        self.view.frame.size = pageSize
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -47,20 +47,45 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         
         self.view.backgroundColor = UIColor.clearColor()
 
+        //primeiro indice do page view
         self.tutoFirst = TutoFirst_ViewController()
         self.tutoFirst.view.frame.size = self.view.bounds.size
+        self.tutoFirst.image.frame.size = self.view.bounds.size
+        self.tutoFirst.image.contentMode = .ScaleAspectFit
+        self.tutoFirst.image.center = self.view.center
+        
+        //segundo indice do page view
         self.tutoSecond = TutoSecond_ViewController()
         self.tutoSecond.view.frame.size = self.view.bounds.size
+        self.tutoSecond.image.frame.size = self.view.bounds.size
+        self.tutoSecond.image.contentMode = .ScaleAspectFit
+        self.tutoSecond.image.center = self.view.center
+
+        //terceiro indice do page view
         self.tutoThird = TutoThird_ViewController()
-        self.tutoFourth = TutoFourth_ViewController()
-        self.tutoFifth = Login_ViewController()
+        self.tutoThird.view.frame.size = self.view.bounds.size
+        self.tutoThird.image.frame.size = self.view.bounds.size
+        self.tutoThird.image.contentMode = .ScaleAspectFit
+        self.tutoThird.image.center = self.view.center
         
+        //quarto indice do page view
+        self.tutoFourth = TutoFourth_ViewController()
+        self.tutoFourth.view.frame.size = self.view.bounds.size
+        self.tutoFourth.image.frame.size = self.view.bounds.size
+        self.tutoFourth.image.contentMode = .ScaleAspectFit
+        self.tutoFourth.image.center = self.view.center
+        
+        //quinto (tela login - provisório)
+        self.tutoFifth = Login_ViewController()
+        self.tutoFifth.view.frame.size = self.view.bounds.size
         
         self.pageControl = UIPageControl.appearance()
+        self.pageControl.frame = CGRectMake(0, 0, 200, 50)
         self.pageControl.pageIndicatorTintColor = oficialLightGray
         self.pageControl.currentPageIndicatorTintColor = oficialGreen
         self.pageControl.backgroundColor = UIColor.clearColor()
         self.pageControl.alpha = 0.8
+//        self.pageControl.layer.position.y = screenWidth * 1.5
 //        self.pageControl.hidesForSinglePage = true
         
         self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
@@ -90,6 +115,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
+        //função que retorna view controller anterior ao view controller atual
         print("passando before")
         
         if(viewController.isKindOfClass(TutoFirst_ViewController))
@@ -100,7 +126,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         {
             return viewControllerAtIndex(0)
         }
-        
         else if(viewController.isKindOfClass(TutoThird_ViewController))
         {
             return viewControllerAtIndex(1)
@@ -119,6 +144,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
 
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
+        //função que retorna view controller seguinte ao view controller atual
         print("passando after")
         
         if(viewController.isKindOfClass(TutoFirst_ViewController))
@@ -129,7 +155,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         {
             return viewControllerAtIndex(2)
         }
-            
         else if(viewController.isKindOfClass(TutoThird_ViewController))
         {
             return viewControllerAtIndex(3)

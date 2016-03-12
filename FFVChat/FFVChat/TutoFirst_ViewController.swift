@@ -22,9 +22,8 @@ class TutoFirst_ViewController: UIViewController
         
         self.image = UIImageView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
         self.image.image = UIImage(named: "ImgTutorial00")
-//        self.image.center = self.view.center
-        self.image.backgroundColor = UIColor.redColor()
-        self.image.layer.borderWidth = 1
+        self.image.center = self.view.center
+        self.image.backgroundColor = oficialGreen
         self.image.contentMode = .ScaleAspectFit
         self.view.addSubview(self.image)
         

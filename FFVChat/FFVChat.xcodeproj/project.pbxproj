@@ -735,12 +735,7 @@
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
-				F670A3641C93815D0009948A /* Tutorial_ViewController.swift */,
-				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
-				F6F1CA061C8E233D00004D4B /* TutoFirst_ViewController.swift */,
-				F6F1CA081C8E235100004D4B /* TutoSecond_ViewController.swift */,
-				F6F1CA021C8E1E1900004D4B /* TutoThird_ViewController.swift */,
-				F6F1CA041C8E1E6300004D4B /* TutoFourth_ViewController.swift */,
+				F655EF161C93D39300639799 /* Tutorial */,
 				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
 				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
 				F6B667131C01606000B1C256 /* AppLoginImport_ViewController.swift */,
@@ -1027,6 +1022,19 @@
 				F61040681C76C46E00E6F277 /* PreviewSupplementaryView.swift */,
 			);
 			name = Preview;
+			sourceTree = "<group>";
+		};
+		F655EF161C93D39300639799 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				F670A3641C93815D0009948A /* Tutorial_ViewController.swift */,
+				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
+				F6F1CA061C8E233D00004D4B /* TutoFirst_ViewController.swift */,
+				F6F1CA081C8E235100004D4B /* TutoSecond_ViewController.swift */,
+				F6F1CA021C8E1E1900004D4B /* TutoThird_ViewController.swift */,
+				F6F1CA041C8E1E6300004D4B /* TutoFourth_ViewController.swift */,
+			);
+			name = Tutorial;
 			sourceTree = "<group>";
 		};
 		F66662F31C712FC1008F8EEA /* Fonts */ = {
