@@ -222,7 +222,7 @@ class FTNChatController : UIView, UICollectionViewDelegate, UICollectionViewData
             }
             else
             {
-                cell.imageLoaded()
+                DAOParse.sharedInstance.downloadImageForMessage(message.contentKey!, id: message.id)
             }
         }
         else if(message.type == ContentType.Gif.rawValue)
