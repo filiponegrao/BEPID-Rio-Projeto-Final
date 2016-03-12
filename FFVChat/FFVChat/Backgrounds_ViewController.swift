@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate
+class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate
 {
     var collectionView : UICollectionView!
     
@@ -28,6 +28,12 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
     var photoButton : UIButton!
     
     var s : UIImageView!
+    
+    var picker = UIImagePickerController()
+    
+    var popover : UIPopoverController!
+    
+    var imageFromAlbum : UIImage!
     
     init()
     {
@@ -76,6 +82,7 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         self.photoButton = UIButton(frame: CGRectMake(10, self.label1.frame.origin.y + self.label1.frame.size.height, screenWidth - 10, 44))
         self.photoButton.setTitle("Photo Album", forState: .Normal)
         self.photoButton.setTitleColor(oficialLightGray, forState: .Normal)
+        self.photoButton.addTarget(self, action: "openGallery", forControlEvents: .TouchUpInside)
         self.photoButton.contentHorizontalAlignment = .Left
         self.photoButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Light", size: 18)
 //        self.photoButton.backgroundColor = oficialSemiGray
@@ -128,9 +135,10 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         {
             s?.removeFromSuperview()
             s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
-            s.image = UIImage(named: "accept")
+            s.image = UIImage(named: "chooseBackground")
             s.center = CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2)
             s.contentMode = .ScaleAspectFit
+            s.alpha = 0.4
             
             imageView.alpha = 0.5
             
@@ -164,9 +172,10 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
             
             s?.removeFromSuperview()
             s = UIImageView(frame: CGRectMake(0, 0, cell.frame.size.width/2, cell.frame.size.width/2))
-            s.image = UIImage(named: "accept")
+            s.image = UIImage(named: "chooseBackground")
             s.center = CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2)
             s.contentMode = .ScaleAspectFit
+            s.alpha = 0.4
             
             cell.subviews.last!.alpha = 0.5
             
@@ -201,6 +210,45 @@ class Backgrounds_ViewController : UIViewController, UICollectionViewDataSource,
         cell?.subviews.last?.alpha = 1
     }
     
+    //change background camera album
+    
+    func chooseFromAlbum()
+    {
+        
+    }
+    
+    func openGallery()
+    {
+        self.picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.picker.delegate = self
+        self.picker.allowsEditing = true
+        
+        if(UIDevice.currentDevice().userInterfaceIdiom == .Phone)
+        {
+            self.presentViewController(self.picker, animated: true, completion: nil)
+        }
+        else
+        {
+            self.popover = UIPopoverController(contentViewController: self.picker)
+            self.popover?.presentPopoverFromRect(self.photoButton.frame, inView: self.view, permittedArrowDirections: .Any, animated: true)
+        }
+
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?)
+    {
+        self.imageFromAlbum = image
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        UserLayoutSettings.sharedInstance.setCurrentBackground(withCustom: image)
+        self.s?.removeFromSuperview()
+    }
+
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController)
+    {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
     
     func back()
     {
