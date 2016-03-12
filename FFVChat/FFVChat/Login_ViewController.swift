@@ -27,6 +27,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     
     var logo : UIImageView!
     
+    var index = 4
     
     override func viewWillAppear(animated: Bool)
     {
@@ -193,8 +194,8 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
     func userLogged()
     {
         self.loadingScreen?.removeFromSuperview()
-        let tutorial = Tutorial_PageViewController() //CONFERIR O QUE É MELHOR VIR PRIMEIRO!!!
-        self.presentViewController(tutorial, animated: true, completion: nil)
+        let privacy = Privacy_ViewController()
+        self.presentViewController(privacy, animated: true, completion: nil)
     }
     
     

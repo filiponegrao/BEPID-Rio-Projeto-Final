@@ -12,28 +12,55 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
 {
     var pageViewController : UIPageViewController!
     
-    var pageIndex = 0
-    
     var tutoFirst : TutoFirst_ViewController!
     
     var tutoSecond : TutoSecond_ViewController!
     
-    var pageControl : UIPageControl!
-
+    var tutoThird : TutoThird_ViewController!
     
-//    var privacy : Privacy_ViewController!
+    var tutoFourth : TutoFourth_ViewController!
+    
+    var tutoFifth : Login_ViewController!
+    
+    var pageControl : UIPageControl!
+    
+    var background : UIImageView!
 
-    override func viewDidLoad() {
+
+    init(size: CGSize)
+    {
+        let pageSize = size
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        self.view.frame.size = pageSize
+    }
+
+    required init?(coder aDecoder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.clearColor()
 
-        self.tutoFirst = TutoFirst_ViewController(nibName: "TutoFirst_ViewController", bundle: nil)
-        self.tutoSecond = TutoSecond_ViewController(nibName: "TutoSecond_ViewController", bundle: nil)
-//        self.privacy = Privacy_ViewController(nibName: "Privacy_ViewController", bundle: nil)
+        self.tutoFirst = TutoFirst_ViewController()
+        self.tutoFirst.view.frame.size = self.view.bounds.size
+        self.tutoSecond = TutoSecond_ViewController()
+        self.tutoSecond.view.frame.size = self.view.bounds.size
+        self.tutoThird = TutoThird_ViewController()
+        self.tutoFourth = TutoFourth_ViewController()
+        self.tutoFifth = Login_ViewController()
+        
         
         self.pageControl = UIPageControl.appearance()
         self.pageControl.pageIndicatorTintColor = oficialLightGray
         self.pageControl.currentPageIndicatorTintColor = oficialGreen
         self.pageControl.backgroundColor = UIColor.clearColor()
+        self.pageControl.alpha = 0.8
 //        self.pageControl.hidesForSinglePage = true
         
         self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
@@ -43,8 +70,8 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         
         self.pageViewController.setViewControllers([self.tutoFirst], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         
-        self.pageViewController.view.frame = CGRectMake(0, 0, screenWidth, screenHeight)
-        self.pageViewController.view.backgroundColor = oficialDarkGray
+        self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        self.pageViewController.view.backgroundColor = UIColor.clearColor()
         
         self.addChildViewController(pageViewController)
         self.view.addSubview(self.pageViewController.view)
@@ -53,55 +80,69 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.pageViewController!.view.frame = pageViewRect
         self.pageViewController!.didMoveToParentViewController(self)
         
-        // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
-        let nome = viewController.nibName
+        print("passando before")
         
-        if(nome == "TutoFirst_ViewController")
+        if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
             return nil
         }
-        
-        else if(nome == "TutoSecond_ViewController")
+        else if(viewController.isKindOfClass(TutoSecond_ViewController))
         {
             return viewControllerAtIndex(0)
         }
         
-//        else if(nome == "Privacy_ViewController")
-//        {
-//            return viewControllerAtIndex(1)
-//        }
+        else if(viewController.isKindOfClass(TutoThird_ViewController))
+        {
+            return viewControllerAtIndex(1)
+        }
+        else if(viewController.isKindOfClass(TutoFourth_ViewController))
+        {
+            return viewControllerAtIndex(2)
+        }
+        else if(viewController.isKindOfClass(Login_ViewController))
+        {
+            return viewControllerAtIndex(3)
+        }
         
         return nil
     }
 
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
-        let nome = viewController.nibName
+        print("passando after")
         
-        if(nome == "TutoFirst_ViewController")
+        if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
             return viewControllerAtIndex(1)
         }
+        else if(viewController.isKindOfClass(TutoSecond_ViewController))
+        {
+            return viewControllerAtIndex(2)
+        }
             
-        else if(nome == "TutoSecond_ViewController")
+        else if(viewController.isKindOfClass(TutoThird_ViewController))
+        {
+            return viewControllerAtIndex(3)
+        }
+        else if(viewController.isKindOfClass(TutoFourth_ViewController))
+        {
+            return viewControllerAtIndex(4)
+        }
+        else if(viewController.isKindOfClass(Login_ViewController))
         {
             return nil
         }
-            
-//        else if(nome == "Privacy_ViewController")
-//        {
-//            return nil
-//        }
-  
+        
         return nil
     }
 
@@ -111,29 +152,54 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         {
             return self.tutoFirst
         }
-        else //if(index == 1)
+        else if(index == 1)
         {
             return self.tutoSecond
+        }
+        else if(index == 2)
+        {
+            return tutoThird
+        }
+        else if(index == 3)
+        {
+            return tutoFourth
+        }
+        else //if(index == 4)
+        {
+            return tutoFifth
         }
     }
 
     func indexOfViewController(viewController: UIViewController) -> Int
     {
-        let nome = viewController.nibName
         
-        if(nome == "TutoFirst_ViewController")
+        if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
             return 0
         }
-        else //(nome == "TutoSecond_ViewController")
+        else if(viewController.isKindOfClass(TutoSecond_ViewController))
         {
             return 1
         }
+            
+        else if(viewController.isKindOfClass(TutoThird_ViewController))
+        {
+            return 2
+        }
+        else if(viewController.isKindOfClass(TutoFourth_ViewController))
+        {
+            return 3
+        }
+        else //(viewController.isKindOfClass(Login_ViewController))
+        {
+            return 4
+        }
+        
     }
 
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int
     {
-        return 2
+        return 5
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int
