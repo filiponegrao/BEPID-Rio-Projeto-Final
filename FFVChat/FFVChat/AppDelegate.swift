@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         }
         else if(usercondition == UserCondition.userLoggedOut)
         {
-            let tutorial = Tutorial_PageViewController()
+            let tutorial = Tutorial_ViewController()
             self.window?.rootViewController = tutorial
         }
         else if(usercondition == UserCondition.incompleteRegister)

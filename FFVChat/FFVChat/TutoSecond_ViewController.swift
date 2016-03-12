@@ -11,17 +11,22 @@ import UIKit
 class TutoSecond_ViewController: UIViewController
 {
     var index = 1
-    var iphoneShape : UIImageView!
+    
+    var image : UIImageView!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = oficialDarkGreen
         
-        self.iphoneShape = UIImageView(frame: CGRectMake(screenWidth/5, screenHeight/4, screenWidth/5 * 3, screenHeight/6 * 4))
-        self.iphoneShape.image = UIImage(named: "iphone")
-        self.view.addSubview(self.iphoneShape)
+        self.image = UIImageView(frame: CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+        self.image.image = UIImage(named: "ImgTutorial10")
+        self.image.center = self.view.center
+        self.image.backgroundColor = UIColor.redColor()
+        self.image.layer.borderWidth = 1
+                self.image.contentMode = .ScaleAspectFit
+        self.view.addSubview(self.image)
 
     }
 

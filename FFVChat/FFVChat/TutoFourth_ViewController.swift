@@ -11,17 +11,12 @@ import UIKit
 class TutoFourth_ViewController: UIViewController
 {
     var index = 3
-    var iphoneShape : UIImageView!
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.clearColor()
-        
-        self.iphoneShape = UIImageView(frame: CGRectMake(screenWidth/5, screenHeight/4, screenWidth/5 * 3, screenHeight/6 * 4))
-        self.iphoneShape.image = UIImage(named: "iphone")
-        self.view.addSubview(self.iphoneShape)
+        self.view.backgroundColor = oficialDarkGreen
 
     }
 

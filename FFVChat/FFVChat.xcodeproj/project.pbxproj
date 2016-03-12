@@ -223,6 +223,7 @@
 		F66B29F91BAB707200BC43EE /* ImageZoom_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */; };
 		F66B29FD1BAB70A200BC43EE /* LoadScreen_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */; };
 		F6703D811BEDB132009E57E0 /* NavigationSettings_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */; };
+		F670A3651C93815D0009948A /* Tutorial_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F670A3641C93815D0009948A /* Tutorial_ViewController.swift */; };
 		F68A459F1C5A9FBD00E99D64 /* ChatSettings_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68A459E1C5A9FBD00E99D64 /* ChatSettings_ViewController.swift */; };
 		F68ABEF51C11D7F2009670A7 /* DeleteProfile_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68ABEF41C11D7F2009670A7 /* DeleteProfile_ViewController.swift */; };
 		F68ABEF71C11D978009670A7 /* NavigationDeleteProfile_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */; };
@@ -476,6 +477,7 @@
 		F66B29F81BAB707200BC43EE /* ImageZoom_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoom_View.swift; sourceTree = "<group>"; };
 		F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadScreen_View.swift; sourceTree = "<group>"; };
 		F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationSettings_View.swift; sourceTree = "<group>"; };
+		F670A3641C93815D0009948A /* Tutorial_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorial_ViewController.swift; sourceTree = "<group>"; };
 		F68A459E1C5A9FBD00E99D64 /* ChatSettings_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatSettings_ViewController.swift; sourceTree = "<group>"; };
 		F68ABEF41C11D7F2009670A7 /* DeleteProfile_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteProfile_ViewController.swift; sourceTree = "<group>"; };
 		F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationDeleteProfile_View.swift; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
+				F670A3641C93815D0009948A /* Tutorial_ViewController.swift */,
 				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
 				F6F1CA061C8E233D00004D4B /* TutoFirst_ViewController.swift */,
 				F6F1CA081C8E235100004D4B /* TutoSecond_ViewController.swift */,
@@ -1400,6 +1403,7 @@
 				80FED0C31C70109200B024AE /* FTNCollectionGifCell.swift in Sources */,
 				803657991BF94A97000907BD /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
 				8036579E1BF94A97000907BD /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */,
+				F670A3651C93815D0009948A /* Tutorial_ViewController.swift in Sources */,
 				803657861BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
 				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
 				80B8DFC31C24C83800668E26 /* Image.swift in Sources */,
