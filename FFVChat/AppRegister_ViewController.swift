@@ -140,7 +140,7 @@ class AppRegister_ViewController: UIViewController, UITextFieldDelegate, UIAlert
         self.registerButton.center = CGPointMake(screenWidth/2, screenHeight - screenWidth/8 - screenWidth/10 - 10)
         self.registerButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.registerButton.backgroundColor = oficialDarkGreen
-        self.registerButton.titleLabel?.font = UIFont(name: "Helvetica", size: 12)
+        self.registerButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 16)
         self.registerButton.setTitle("Register", forState: .Normal)
         self.registerButton.titleLabel?.setSizeFont(15)
         self.registerButton.layer.cornerRadius = 7

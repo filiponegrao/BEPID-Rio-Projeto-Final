@@ -34,7 +34,7 @@ class AppLoginImport_ViewController: UIViewController
         self.titleLabel.text = "Facebook"
         self.titleLabel.textAlignment = .Center
         self.titleLabel.textColor = oficialGreen
-        self.titleLabel.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.titleLabel.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.titleLabel.setSizeFont(22)
         self.view.addSubview(self.titleLabel)
 
@@ -42,7 +42,7 @@ class AppLoginImport_ViewController: UIViewController
         self.titleLabel2.text = "Contacts"
         self.titleLabel2.textAlignment = .Center
         self.titleLabel2.textColor = oficialGreen
-        self.titleLabel2.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.titleLabel2.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.titleLabel2.setSizeFont(22)
         self.view.addSubview(self.titleLabel2)
         
@@ -60,6 +60,7 @@ class AppLoginImport_ViewController: UIViewController
         self.textView.font = font
         self.textView.userInteractionEnabled = false
         self.textView.textColor = oficialLightGray
+        self.textView.font = UIFont(name: "Helvetica-Light", size: 15)
         self.textView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(self.textView)
         
@@ -72,6 +73,8 @@ class AppLoginImport_ViewController: UIViewController
         self.skipButton = UIButton(frame: CGRectMake(screenWidth/3, screenHeight/2 + 20 + self.facebookConnect.frame.size.height + 20, screenWidth/3, 44))
         self.skipButton.setTitle("No, thanks.", forState: .Normal)
         self.skipButton.setTitleColor(oficialLightGray, forState: .Normal)
+        self.skipButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
+
         self.skipButton.addTarget(self, action: "skip", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(self.skipButton)
 
