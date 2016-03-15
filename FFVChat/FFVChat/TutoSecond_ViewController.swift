@@ -10,7 +10,7 @@ import UIKit
 
 class TutoSecond_ViewController: UIViewController
 {
-    var index = 1
+//    var index = 1
     
     var image : UIImageView!
     

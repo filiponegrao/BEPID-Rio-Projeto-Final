@@ -10,7 +10,7 @@ import UIKit
 
 class TutoFifth_ViewController: UIViewController
 {
-    var index = 4
+//    var index = 4
     
     var image : UIImageView!
     

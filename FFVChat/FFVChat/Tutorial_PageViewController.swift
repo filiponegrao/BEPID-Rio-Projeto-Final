@@ -29,6 +29,8 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     var tutorialController : Tutorial_ViewController!
     
     var pageSize : CGSize!
+    
+    var index : Int! = 0
 
     init(size: CGSize)
     {
@@ -95,8 +97,8 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.addChildViewController(pageViewController)
         self.view.addSubview(self.pageViewController.view)
 
-//        let pageViewRect = self.view.bounds
-//        self.pageViewController!.view.frame = pageViewRect
+        let pageViewRect = self.view.bounds
+        self.pageViewController!.view.frame = pageViewRect
         self.pageViewController!.didMoveToParentViewController(self)
 
         
@@ -112,24 +114,30 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     {
         //função que retorna view controller anterior ao view controller atual
         
+        print("viewcontrollerBeforeViewController")
         if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
+            self.index = 0
             return nil
         }
         else if(viewController.isKindOfClass(TutoSecond_ViewController))
         {
+            self.index = 0
             return viewControllerAtIndex(0)
         }
         else if(viewController.isKindOfClass(TutoThird_ViewController))
         {
+            self.index = 1
             return viewControllerAtIndex(1)
         }
         else if(viewController.isKindOfClass(TutoFourth_ViewController))
         {
+            self.index = 2
             return viewControllerAtIndex(2)
         }
         else if(viewController.isKindOfClass(TutoFifth_ViewController))
         {
+            self.index = 3
             return viewControllerAtIndex(3)
         }
         
@@ -139,25 +147,31 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
         //função que retorna view controller seguinte ao view controller atual
+        print("ViewControllerAfterController")
         
         if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
+            self.index = 1
             return viewControllerAtIndex(1)
         }
         else if(viewController.isKindOfClass(TutoSecond_ViewController))
         {
+            self.index = 2
             return viewControllerAtIndex(2)
         }
         else if(viewController.isKindOfClass(TutoThird_ViewController))
         {
+            self.index = 3
             return viewControllerAtIndex(3)
         }
         else if(viewController.isKindOfClass(TutoFourth_ViewController))
         {
+            self.index = 4
             return viewControllerAtIndex(4)
         }
         else if(viewController.isKindOfClass(TutoFifth_ViewController))
         {
+            self.index = 4
             return nil
         }
         
@@ -166,30 +180,37 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
 
     func viewControllerAtIndex(index: Int) -> UIViewController?
     {
+        print("viewcontrolelrAtIndex")
         if(index == 0)
         {
+            self.index = 0
             return self.tutoFirst
         }
         else if(index == 1)
         {
+            self.index = 1
             return self.tutoSecond
         }
         else if(index == 2)
         {
+            self.index = 2
             return tutoThird
         }
         else if(index == 3)
         {
+            self.index = 3
             return tutoFourth
         }
         else //if(index == 4)
         {
+            self.index = 4
             return tutoFifth
         }
     }
 
     func indexOfViewController(viewController: UIViewController) -> Int
     {
+        print("indexofviewController")
         
         if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
@@ -216,11 +237,14 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
 
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int
     {
+        print("presentationCountForPageViewController")
         return 5
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int
     {
-        return 0
+        print("3")
+        print("index \(index)")
+       return self.index
     }
 }
