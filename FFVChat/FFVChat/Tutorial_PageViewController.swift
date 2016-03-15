@@ -20,20 +20,22 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     
     var tutoFourth : TutoFourth_ViewController!
     
-    var tutoFifth : Login_ViewController!
+    var tutoFifth : TutoFifth_ViewController!
     
     var pageControl : UIPageControl!
     
     var background : UIImageView!
+    
+    var tutorialController : Tutorial_ViewController!
+    
+    var pageSize : CGSize!
 
-
-    init()
+    init(size: CGSize)
     {
-//        let pageSize = size
+        self.pageSize = size
         
         super.init(nibName: nil, bundle: nil)
         
-//        self.view.frame.size = pageSize
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -45,39 +47,31 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.frame.size = self.pageSize
 
-        //primeiro indice do page view
-        self.tutoFirst = TutoFirst_ViewController()
-        self.tutoFirst.view.frame.size = self.view.bounds.size
-        self.tutoFirst.image.frame.size = self.view.bounds.size
-        self.tutoFirst.image.contentMode = .ScaleAspectFit
-        self.tutoFirst.image.center = self.view.center
         
+        self.view.backgroundColor = UIColor.clearColor()
+        
+        //primeiro indice do page view
+        self.tutoFirst = TutoFirst_ViewController(size: self.pageSize)
+        self.tutoFirst.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
+
         //segundo indice do page view
-        self.tutoSecond = TutoSecond_ViewController()
-        self.tutoSecond.view.frame.size = self.view.bounds.size
-        self.tutoSecond.image.frame.size = self.view.bounds.size
-        self.tutoSecond.image.contentMode = .ScaleAspectFit
-        self.tutoSecond.image.center = self.view.center
+        self.tutoSecond = TutoSecond_ViewController(size: self.pageSize)
+        self.tutoSecond.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
 
         //terceiro indice do page view
-        self.tutoThird = TutoThird_ViewController()
-        self.tutoThird.view.frame.size = self.view.bounds.size
-        self.tutoThird.image.frame.size = self.view.bounds.size
-        self.tutoThird.image.contentMode = .ScaleAspectFit
-        self.tutoThird.image.center = self.view.center
+        self.tutoThird = TutoThird_ViewController(size: self.pageSize)
+        self.tutoThird.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
         
         //quarto indice do page view
-        self.tutoFourth = TutoFourth_ViewController()
-        self.tutoFourth.view.frame.size = self.view.bounds.size
-        self.tutoFourth.image.frame.size = self.view.bounds.size
-        self.tutoFourth.image.contentMode = .ScaleAspectFit
-        self.tutoFourth.image.center = self.view.center
+        self.tutoFourth = TutoFourth_ViewController(size: self.pageSize)
+        self.tutoFourth.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
         
-        //quinto (tela login - provisório)
-        self.tutoFifth = Login_ViewController()
-        self.tutoFifth.view.frame.size = self.view.bounds.size
+        //quinto indice do page view
+        self.tutoFifth = TutoFifth_ViewController(size: self.pageSize)
+        self.tutoFifth.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
+        
         
         self.pageControl = UIPageControl.appearance()
         self.pageControl.frame = CGRectMake(0, 0, 200, 50)
@@ -95,18 +89,19 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         
         self.pageViewController.setViewControllers([self.tutoFirst], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         
-        self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        self.pageViewController.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
         self.pageViewController.view.backgroundColor = UIColor.clearColor()
         
         self.addChildViewController(pageViewController)
         self.view.addSubview(self.pageViewController.view)
 
-        let pageViewRect = self.view.bounds
-        self.pageViewController!.view.frame = pageViewRect
+//        let pageViewRect = self.view.bounds
+//        self.pageViewController!.view.frame = pageViewRect
         self.pageViewController!.didMoveToParentViewController(self)
+
         
     }
-
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -116,7 +111,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
         //função que retorna view controller anterior ao view controller atual
-        print("passando before")
         
         if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
@@ -134,7 +128,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         {
             return viewControllerAtIndex(2)
         }
-        else if(viewController.isKindOfClass(Login_ViewController))
+        else if(viewController.isKindOfClass(TutoFifth_ViewController))
         {
             return viewControllerAtIndex(3)
         }
@@ -145,7 +139,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
         //função que retorna view controller seguinte ao view controller atual
-        print("passando after")
         
         if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
@@ -163,7 +156,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         {
             return viewControllerAtIndex(4)
         }
-        else if(viewController.isKindOfClass(Login_ViewController))
+        else if(viewController.isKindOfClass(TutoFifth_ViewController))
         {
             return nil
         }
@@ -206,7 +199,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         {
             return 1
         }
-            
         else if(viewController.isKindOfClass(TutoThird_ViewController))
         {
             return 2
@@ -215,7 +207,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         {
             return 3
         }
-        else //(viewController.isKindOfClass(Login_ViewController))
+        else //if(viewController.isKindOfClass(TutoFifth_ViewController))
         {
             return 4
         }
