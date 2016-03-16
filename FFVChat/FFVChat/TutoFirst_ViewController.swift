@@ -8,21 +8,22 @@
 
 import UIKit
 
-class TutoFirst_ViewController: TutoModel
+class TutoFirst_ViewController: UIViewController
 {
     var index = 0
     
     var image : UIImageView!
     
-    var pageSize : CGSize!
+    var frame : CGRect
     
-    init(size: CGSize)
+    init(frame: CGRect)
     {
-        self.pageSize = size
+        self.frame = frame
         
         super.init(nibName: nil, bundle: nil)
         
-        self.tag = 0
+        self.view.frame = frame
+
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -35,16 +36,19 @@ class TutoFirst_ViewController: TutoModel
     {
         super.viewDidLoad()
         
+        self.view.frame = frame
+        
         self.view.backgroundColor = UIColor.clearColor()
         
-        self.view.frame.size = self.pageSize
-//        self.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
-        
-        self.image = UIImageView(frame: CGRectMake(0, 0, self.pageSize.width, self.pageSize.height))
+        self.image = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         self.image.image = UIImage(named: "ImgTutorial00")
         self.image.contentMode = .ScaleAspectFit
         self.view.addSubview(self.image)
         
+        //LOG VALORES LARGURA E ALTURA
+        print("Classe: TutoFirst_ViewController (DidLoad)")
+        print("Frame TutoFirst_ViewController: \(self.view.frame)")
+        print("--------")
     }
 
     override func didReceiveMemoryWarning()

@@ -8,21 +8,21 @@
 
 import UIKit
 
-class TutoThird_ViewController: TutoModel
+class TutoThird_ViewController: UIViewController
 {
     var index = 2
-
+    
     var image : UIImageView!
     
-    var pageSize : CGSize!
+    var frame : CGRect!
     
-    init(size: CGSize)
+    init(frame: CGRect)
     {
-        self.pageSize = size
+        self.frame = frame
         
         super.init(nibName: nil, bundle: nil)
         
-        self.tag = 2
+        self.view.frame = frame
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -36,16 +36,15 @@ class TutoThird_ViewController: TutoModel
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.clearColor()
-        
-        self.view.frame.size = self.pageSize
-//        self.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
-        
-        self.image = UIImageView(frame: CGRectMake(0, 0, self.pageSize.width, self.pageSize.height))
+        self.view.frame = frame
+
+        self.image = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         self.image.image = UIImage(named: "ImgTutorial20")
         self.image.contentMode = .ScaleAspectFit
         self.view.addSubview(self.image)
+        
     }
-
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
