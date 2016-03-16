@@ -196,6 +196,8 @@
 		F65A4F431C077AAF0092C403 /* ImageManager_View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F421C077AAF0092C403 /* ImageManager_View.swift */; };
 		F65A4F451C0CB7670092C403 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */; };
 		F65A4F4B1C0CCDFD0092C403 /* Home_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F4A1C0CCDFD0092C403 /* Home_ViewController.swift */; };
+		F663EAB01C98A2AE0039940E /* TutoFifth_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F663EAAF1C98A2AE0039940E /* TutoFifth_ViewController.swift */; };
+		F663EAB21C99D4550039940E /* TutoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F663EAB11C99D4550039940E /* TutoModel.swift */; };
 		F66662F51C713025008F8EEA /* SukhumvitSet.ttc in Resources */ = {isa = PBXBuildFile; fileRef = F66662F41C713025008F8EEA /* SukhumvitSet.ttc */; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
@@ -450,6 +452,8 @@
 		F65A4F421C077AAF0092C403 /* ImageManager_View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager_View.swift; sourceTree = "<group>"; };
 		F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
 		F65A4F4A1C0CCDFD0092C403 /* Home_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home_ViewController.swift; sourceTree = "<group>"; };
+		F663EAAF1C98A2AE0039940E /* TutoFifth_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFifth_ViewController.swift; sourceTree = "<group>"; };
+		F663EAB11C99D4550039940E /* TutoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoModel.swift; sourceTree = "<group>"; };
 		F66662F41C713025008F8EEA /* SukhumvitSet.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = SukhumvitSet.ttc; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
@@ -735,12 +739,7 @@
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
-				F670A3641C93815D0009948A /* Tutorial_ViewController.swift */,
-				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
-				F6F1CA061C8E233D00004D4B /* TutoFirst_ViewController.swift */,
-				F6F1CA081C8E235100004D4B /* TutoSecond_ViewController.swift */,
-				F6F1CA021C8E1E1900004D4B /* TutoThird_ViewController.swift */,
-				F6F1CA041C8E1E6300004D4B /* TutoFourth_ViewController.swift */,
+				F655EF161C93D39300639799 /* Tutorial */,
 				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
 				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
 				F6B667131C01606000B1C256 /* AppLoginImport_ViewController.swift */,
@@ -1029,6 +1028,21 @@
 			name = Preview;
 			sourceTree = "<group>";
 		};
+		F655EF161C93D39300639799 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				F663EAB11C99D4550039940E /* TutoModel.swift */,
+				F670A3641C93815D0009948A /* Tutorial_ViewController.swift */,
+				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
+				F6F1CA061C8E233D00004D4B /* TutoFirst_ViewController.swift */,
+				F6F1CA081C8E235100004D4B /* TutoSecond_ViewController.swift */,
+				F6F1CA021C8E1E1900004D4B /* TutoThird_ViewController.swift */,
+				F6F1CA041C8E1E6300004D4B /* TutoFourth_ViewController.swift */,
+				F663EAAF1C98A2AE0039940E /* TutoFifth_ViewController.swift */,
+			);
+			name = Tutorial;
+			sourceTree = "<group>";
+		};
 		F66662F31C712FC1008F8EEA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1301,6 +1315,7 @@
 				F66B29D61BAB6BB400BC43EE /* Settings_ViewController.swift in Sources */,
 				F6F1CA051C8E1E6300004D4B /* TutoFourth_ViewController.swift in Sources */,
 				80B8DFD21C24D6FF00668E26 /* DAOContents.swift in Sources */,
+				F663EAB01C98A2AE0039940E /* TutoFifth_ViewController.swift in Sources */,
 				F648CED81BEEF2880094F3B6 /* CircleView.swift in Sources */,
 				801CB5C81BC2205E00F51E06 /* LoadingInfo_ViewController.swift in Sources */,
 				803657891BF94A97000907BD /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
@@ -1406,6 +1421,7 @@
 				F670A3651C93815D0009948A /* Tutorial_ViewController.swift in Sources */,
 				803657861BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
 				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
+				F663EAB21C99D4550039940E /* TutoModel.swift in Sources */,
 				80B8DFC31C24C83800668E26 /* Image.swift in Sources */,
 				F6BD49AD1C0CE70300DEA86B /* FavouritesBubble_CollectionViewController.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,

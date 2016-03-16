@@ -47,11 +47,12 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         //title view
         self.titleView.textColor = oficialGreen
-        self.titleView.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.titleView.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.titleView.setSizeFont(22)
         
         //text view
         self.textView.textColor = oficialLightGray
+        self.textView.font = UIFont(name: "Helvetica-Light", size: 13)
 
         //all contacts button
         self.allContactsButton = UIButton(frame: CGRectMake(screenWidth/2, self.tableView.frame.origin.y
@@ -59,6 +60,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.allContactsButton.setImage(UIImage(named: "checkOff"), forState: .Normal)
         self.allContactsButton.setTitle("All contacts", forState: .Normal)
         self.allContactsButton.setTitleColor(oficialGreen, forState: .Normal)
+        self.allContactsButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.allContactsButton.addTarget(self, action: "selectAllContacts", forControlEvents: .TouchUpInside)
         self.allContactsButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 20)
         self.allContactsButton.transform = CGAffineTransformMakeScale(-1.0, 1.0)
@@ -83,6 +85,7 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.doneButton.backgroundColor = oficialGreen
         self.doneButton.setTitle("Done", forState: .Normal)
         self.doneButton.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.doneButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.doneButton.addTarget(self, action: "done", forControlEvents: .TouchUpInside)
         self.doneButton.backgroundLayerCornerRadius = 900
         self.doneButton.rippleLocation = .Center
@@ -142,6 +145,8 @@ class Import_ViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.username.text = "Carregando..."
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         cell.backgroundColor = oficialSemiGray
+        cell.name.font = UIFont(name: "SukhumvitSet-Medium", size: 17)
+        cell.username.font = UIFont(name: "SukhumvitSet-Light", size: 13)
         
         let separatorLineView = UIView(frame: CGRectMake(10, cell.frame.size.height - 1 , screenWidth - 20, 1))
         separatorLineView.backgroundColor = oficialLightGray

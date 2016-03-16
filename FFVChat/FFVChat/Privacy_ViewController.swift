@@ -32,16 +32,19 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
         self.termsText.backgroundColor = oficialSemiGray
         self.termsText.textColor = oficialLightGray
         self.termsText.delegate = self
+        self.termsText.font = UIFont(name: "Helvetica-Light", size: 13)
+
 //        self.termsText.contentInset = UIEdgeInsetsMake(-1,-1, 0, 0)
 //        self.termsText.scrollRangeToVisible(NSMakeRange(0, 0))
 //        self.termsText.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: false)
         
         self.topLabel.textColor = oficialGreen
-        self.topLabel.font = UIFont(name: "Sukhumvit Set", size: 22)
+        self.topLabel.font = UIFont(name: "SukhumvitSet-Medium", size: 22)
         self.topLabel.setSizeFont(22)
 
         self.disagreeButton = MKButton(frame: CGRectMake(0,screenHeight - 44, screenWidth/2 - 2, 44))
         self.disagreeButton.backgroundColor = oficialLightGray
+        self.disagreeButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.disagreeButton.setTitle("Disagree", forState: .Normal)
         self.disagreeButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.disagreeButton.addTarget(self, action: "userDisagreed", forControlEvents: UIControlEvents.TouchUpInside)
@@ -54,6 +57,7 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
         
         self.agreeButton = MKButton(frame: CGRectMake(screenWidth/2 + 2, screenHeight - 44, screenWidth/2 - 2.5, 44))
         self.agreeButton.backgroundColor = oficialLightGray
+        self.agreeButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 18)
         self.agreeButton.setTitle("Agree", forState: .Normal)
         self.agreeButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.agreeButton.addTarget(self, action: "userAgreed", forControlEvents: UIControlEvents.TouchUpInside)

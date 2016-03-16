@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SukhumvitSet.ttc">
+            <string>SukhumvitSet-Text</string>
+            <string>SukhumvitSet-Text</string>
+            <string>SukhumvitSet-Text</string>
+            <string>SukhumvitSet-Text</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppRegister_ViewController" customModule="FFVChat" customModuleProvider="target">
             <connections>
@@ -26,27 +34,24 @@
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8T6-Fq-yne" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
                             <rect key="frame" x="178" y="361" width="244" height="30"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="244" id="Yw5-3W-ccL"/>
                                 <constraint firstAttribute="height" constant="30" id="q7V-vi-KPy"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="SukhumvitSet-Text" family="Sukhumvit Set" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" secureTextEntry="YES"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wj2-0A-h8C" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
                             <rect key="frame" x="178" y="285" width="244" height="30"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="244" id="CbP-cm-azc"/>
                                 <constraint firstAttribute="height" constant="30" id="lyy-2E-7XJ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="SukhumvitSet-Text" family="Sukhumvit Set" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" keyboardAppearance="alert"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3jp-eJ-Wbd">
                             <rect key="frame" x="6" y="23" width="50" height="50"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="FjG-P3-t1z"/>
                                 <constraint firstAttribute="height" constant="50" id="LB4-s5-GQI"/>
@@ -60,27 +65,24 @@
                         </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cPV-Yj-w7Z" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
                             <rect key="frame" x="178" y="399" width="244" height="30"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="140-Mb-du7"/>
                                 <constraint firstAttribute="width" constant="244" id="BZV-I8-qIT"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="SukhumvitSet-Text" family="Sukhumvit Set" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" secureTextEntry="YES"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L1L-hY-RNY" customClass="MKTextField" customModule="FFVChat" customModuleProvider="target">
                             <rect key="frame" x="178" y="323" width="244" height="30"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="244" id="Ak3-CQ-nog"/>
                                 <constraint firstAttribute="height" constant="30" id="oNp-hn-2pJ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" name="SukhumvitSet-Text" family="Sukhumvit Set" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Your password should contain 6 characters and will be used within the application." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44S-gN-lHD">
                             <rect key="frame" x="178" y="545" width="244" height="42"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="244" id="A2e-BY-ga7"/>
                                 <constraint firstAttribute="height" constant="42" id="Ee0-7V-9cY"/>
@@ -90,7 +92,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Wj2-0A-h8C" firstAttribute="centerX" secondItem="1Dj-cY-Hap" secondAttribute="centerX" id="0Q6-0a-OZ8"/>
@@ -111,7 +112,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="1Dj-cY-Hap" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4dI-SQ-1SK"/>
