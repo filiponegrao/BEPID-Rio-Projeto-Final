@@ -8,9 +8,9 @@
 
 import UIKit
 
-class TutoThird_ViewController: UIViewController
+class TutoThird_ViewController: TutoModel
 {
-//    var index = 2
+    var index = 2
 
     var image : UIImageView!
     
@@ -22,6 +22,7 @@ class TutoThird_ViewController: UIViewController
         
         super.init(nibName: nil, bundle: nil)
         
+        self.tag = 2
     }
     
     required init?(coder aDecoder: NSCoder)

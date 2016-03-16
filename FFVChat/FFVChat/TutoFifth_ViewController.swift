@@ -8,9 +8,9 @@
 
 import UIKit
 
-class TutoFifth_ViewController: UIViewController
+class TutoFifth_ViewController: TutoModel
 {
-//    var index = 4
+    var index = 4
     
     var image : UIImageView!
     
@@ -18,10 +18,13 @@ class TutoFifth_ViewController: UIViewController
 
     init(size: CGSize)
     {
+        
         self.pageSize = size
         
         super.init(nibName: nil, bundle: nil)
         
+        self.tag = 4
+
     }
     
     required init?(coder aDecoder: NSCoder)
