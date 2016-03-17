@@ -27,17 +27,18 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     var background : UIImageView!
     
 //    weak var tutorialController : Tutorial_ViewController!
-    
-    var pageSize : CGSize!
-    
+        
     var index : Int! = 0
+    
+    var frame : CGRect!
 
-    init(size: CGSize)
+    init(frame: CGRect)
     {
-        self.pageSize = size
+        self.frame = frame
         
         super.init(nibName: nil, bundle: nil)
         
+        self.view.frame = frame
     }
 
     required init?(coder aDecoder: NSCoder)
@@ -49,30 +50,35 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     {
         super.viewDidLoad()
         
-        self.view.frame.size = self.pageSize
-        
         self.view.backgroundColor = UIColor.clearColor()
+//        self.view.layer.borderWidth = 2
+        self.view.frame = frame
+        
+        self.tutoFirst = TutoFirst_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        
+        self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
+        self.pageViewController.setViewControllers([self.tutoFirst], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
+        self.pageViewController.view.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
+        self.pageViewController.view.backgroundColor = UIColor.clearColor()
+        self.pageViewController.dataSource = self
+        self.pageViewController.delegate = self
         
         //primeiro indice do page view
-        self.tutoFirst = TutoFirst_ViewController(size: self.pageSize)
-        self.tutoFirst.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
-
-        //segundo indice do page view
-        self.tutoSecond = TutoSecond_ViewController(size: self.pageSize)
-        self.tutoSecond.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
-
-        //terceiro indice do page view
-        self.tutoThird = TutoThird_ViewController(size: self.pageSize)
-        self.tutoThird.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
+        self.tutoFirst.view.frame.size = self.frame.size
         
+        //segundo indice do page view
+        self.tutoSecond = TutoSecond_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        self.tutoSecond.view.frame.size = self.frame.size
+        
+        //terceiro indice do page view
+        self.tutoThird = TutoThird_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        self.tutoThird.view.frame.size = self.frame.size
+
         //quarto indice do page view
-        self.tutoFourth = TutoFourth_ViewController(size: self.pageSize)
-        self.tutoFourth.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
+        self.tutoFourth = TutoFourth_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         
         //quinto indice do page view
-        self.tutoFifth = TutoFifth_ViewController(size: self.pageSize)
-        self.tutoFifth.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
-        
+        self.tutoFifth = TutoFifth_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
         
         self.pageControl = UIPageControl.appearance()
         self.pageControl.frame = CGRectMake(0, 0, 200, 50)
@@ -80,22 +86,17 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.pageControl.currentPageIndicatorTintColor = oficialGreen
         self.pageControl.backgroundColor = UIColor.clearColor()
         self.pageControl.alpha = 0.8
-//        self.pageControl.layer.position.y = screenWidth * 1.5
-//        self.pageControl.hidesForSinglePage = true
         
-        self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)
-        self.pageViewController.setViewControllers([self.tutoFirst], direction: UIPageViewControllerNavigationDirection.Forward, animated: true, completion: nil)
         
-        self.pageViewController.view.frame = CGRectMake(0, 0, self.pageSize.width, self.pageSize.height)
-        self.pageViewController.view.backgroundColor = UIColor.clearColor()
-        self.pageViewController.dataSource = self
-        self.pageViewController.delegate = self
         
-        self.view.addSubview(self.pageViewController.view)
+        print("--------")
+        print("Classe: Tutorial_PageViewController (DidLoad)")
+        print("Frame componente PageViewController: \(self.pageViewController.view.frame)")
+        print("--------")
+        
         self.addChildViewController(pageViewController)
-
-//        let pageViewRect = self.view.bounds
-//        self.pageViewController!.view.frame = pageViewRect
+        self.view.addSubview(self.pageViewController.view)
+        
         self.pageViewController!.didMoveToParentViewController(self)
 
     }
@@ -110,8 +111,14 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     {
         
         print("Todos os controllers: \(pageViewController.viewControllers)")
-        
         print("Os anteriores : \(previousViewControllers)")
+        
+        //LOG VALORES LARGURA E ALTURA
+        print("--------")
+        print("Classe: Tutorial_PageViewController (DidFinishAnimating)")
+        print("Frame Tutorial_PageViewController: \(self.view.frame)")
+        print("Frame TutoFirst_ViewController: \(self.tutoFirst.view.frame)")
+        print("--------")
     }
     
     
@@ -121,6 +128,13 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         //função que retorna view controller anterior ao view controller atual
         
         print("before")
+        
+        //LOG VALORES LARGURA E ALTURA
+        print("--------")
+        print("Classe: Tutorial_PageViewController (Before)")
+        print("Frame Tutorial_PageViewController: \(self.view.frame)")
+        print("Frame TutoFirst_ViewController: \(self.tutoFirst.view.frame)")
+        print("--------")
         
         let index = self.indexOfViewController(viewController)
         
@@ -137,8 +151,18 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
         //função que retorna view controller seguinte ao view controller atual
-        print("after")
         
+        print("after")
+//        print("Todos os controllers: \(pageViewController.viewControllers)")
+        
+        //LOG VALORES LARGURA E ALTURA
+        //LOG VALORES LARGURA E ALTURA
+        print("--------")
+        print("Classe: Tutorial_PageViewController (After)")
+        print("Frame Tutorial_PageViewController: \(self.view.frame)")
+        print("Frame TutoFirst_ViewController: \(self.tutoFirst.view.frame)")
+        print("--------")
+
         let index = self.indexOfViewController(viewController)
         
         if(index == 4)
@@ -153,7 +177,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     
     func viewControllerAtIndex(index: Int) -> UIViewController?
     {
-        print("viewControlelrAtIndex")
         if(index == 0)
         {
             return self.tutoFirst
@@ -178,7 +201,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
 
     func indexOfViewController(viewController: UIViewController) -> Int
     {
-        print("indexOfViewController")
         
         if(viewController.isKindOfClass(TutoFirst_ViewController))
         {
@@ -205,8 +227,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
 
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int
     {
-        print("presentationCountForPageViewController")
-//        return (pageViewController.viewControllers?.count)! **só retorna 1
         return 5
     }
     
