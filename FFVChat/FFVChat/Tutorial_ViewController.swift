@@ -43,7 +43,7 @@ class Tutorial_ViewController: UIViewController
         
         //shape iphone
         self.iphoneShape = UIImageView(frame: CGRectMake((screenWidth - screenWidth/5 * 3.5)/2, screenWidth/4.8, screenWidth/5 * 3.5, screenWidth/3 * 4.1))
-        self.iphoneShape.image = UIImage(named: "iphone2")
+        self.iphoneShape.image = UIImage(named: "iphone")
         self.view.addSubview(self.iphoneShape)
         
         //barra com textos
@@ -64,21 +64,22 @@ class Tutorial_ViewController: UIViewController
         
         //PAGE VIEW ONDE OCORRE A TRETA
         
-        let width = screenWidth/1.76 //largura necessária para o page view encaixar na tela do iphone
-        let height = screenWidth + screenWidth/4.37   //altura necessária para o page view encaixar na tela do iphone
+        let width : CGFloat = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone
+        let height : CGFloat = CGFloat(Int(screenWidth + screenWidth/4.3))   //altura necessária para o page view encaixar na tela do iphone
         
-        //LOG VALORES LARGURA E ALTURA
-        print("Classe: Tutorial_ViewController")
-        print("Largura Tutorial_PageViewController: \(width)")
-        print("Altura Tutorial_PageViewController: \(height)")
-        print("--------")
+        
+//        //LOG VALORES LARGURA E ALTURA
+//        print("Classe: Tutorial_ViewController")
+//        print("Largura Tutorial_PageViewController: \(width)")
+//        print("Altura Tutorial_PageViewController: \(height)")
+//        print("--------")
 
         
         let yPageControl = -((screenWidth/10.2)/3)  //pro page control começar abaixo
         
         self.pageView = Tutorial_PageViewController(frame: CGRectMake(screenWidth/4.64, screenWidth/3.59, width, height))
         
-        self.pageView.pageControl.bounds = CGRectMake(0, yPageControl, width, 100)
+        self.pageView.pageControl.bounds = CGRectMake(0, yPageControl, 180, 100)
         
         self.addChildViewController(self.pageView)
         self.view.addSubview(self.pageView.view)

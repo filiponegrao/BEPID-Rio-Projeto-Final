@@ -197,7 +197,6 @@
 		F65A4F451C0CB7670092C403 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */; };
 		F65A4F4B1C0CCDFD0092C403 /* Home_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A4F4A1C0CCDFD0092C403 /* Home_ViewController.swift */; };
 		F663EAB01C98A2AE0039940E /* TutoFifth_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F663EAAF1C98A2AE0039940E /* TutoFifth_ViewController.swift */; };
-		F663EAB21C99D4550039940E /* TutoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F663EAB11C99D4550039940E /* TutoModel.swift */; };
 		F66662F51C713025008F8EEA /* SukhumvitSet.ttc in Resources */ = {isa = PBXBuildFile; fileRef = F66662F41C713025008F8EEA /* SukhumvitSet.ttc */; };
 		F66B29BC1BAB67CD00BC43EE /* AppRegister_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */; };
 		F66B29BD1BAB67CD00BC43EE /* AppRegister_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */; };
@@ -453,7 +452,6 @@
 		F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
 		F65A4F4A1C0CCDFD0092C403 /* Home_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home_ViewController.swift; sourceTree = "<group>"; };
 		F663EAAF1C98A2AE0039940E /* TutoFifth_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoFifth_ViewController.swift; sourceTree = "<group>"; };
-		F663EAB11C99D4550039940E /* TutoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutoModel.swift; sourceTree = "<group>"; };
 		F66662F41C713025008F8EEA /* SukhumvitSet.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = SukhumvitSet.ttc; sourceTree = "<group>"; };
 		F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppRegister_ViewController.swift; path = ../AppRegister_ViewController.swift; sourceTree = "<group>"; };
 		F66B29BB1BAB67CD00BC43EE /* AppRegister_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AppRegister_ViewController.xib; path = ../AppRegister_ViewController.xib; sourceTree = "<group>"; };
@@ -1031,7 +1029,6 @@
 		F655EF161C93D39300639799 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				F663EAB11C99D4550039940E /* TutoModel.swift */,
 				F670A3641C93815D0009948A /* Tutorial_ViewController.swift */,
 				F68F2E451BB8DB900092A981 /* Tutorial_PageViewController.swift */,
 				F6F1CA061C8E233D00004D4B /* TutoFirst_ViewController.swift */,
@@ -1421,7 +1418,6 @@
 				F670A3651C93815D0009948A /* Tutorial_ViewController.swift in Sources */,
 				803657861BF94A97000907BD /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
 				80326F451BC5C3C5000CDD6A /* DAOFriendRequests.swift in Sources */,
-				F663EAB21C99D4550039940E /* TutoModel.swift in Sources */,
 				80B8DFC31C24C83800668E26 /* Image.swift in Sources */,
 				F6BD49AD1C0CE70300DEA86B /* FavouritesBubble_CollectionViewController.swift in Sources */,
 				801D929E1BA5177400D05CE7 /* DAOUser.swift in Sources */,
