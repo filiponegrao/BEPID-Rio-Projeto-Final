@@ -66,11 +66,14 @@ class Tutorial_ViewController: UIViewController
         
         let width = screenWidth/1.76 //largura necessária para o page view encaixar na tela do iphone
         let height = screenWidth + screenWidth/4.37   //altura necessária para o page view encaixar na tela do iphone
-        
+        let pos = CGPointMake(screenWidth/4.64, screenWidth/3.59)
         let yPageControl = -((screenWidth/10.2)/3)  //pro page control começar abaixo
         
-        self.pageView = Tutorial_PageViewController(size: CGSize(width: width, height: height))
-        self.pageView.view.frame = CGRectMake(screenWidth/4.64, screenWidth/3.59, width, height)
+        let frame = CGRectMake(pos.x, pos.y, width, height)
+        
+        
+        
+        self.pageView = TutorialContents_ViewController(frame: frame, controllers: <#T##[UIViewController]#>)
         self.pageView.pageControl.bounds = CGRectMake(0, yPageControl, width, 100)
         
         self.addChildViewController(self.pageView)
