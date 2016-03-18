@@ -45,7 +45,12 @@ class TutoSecond_ViewController: UIViewController
         self.view.addSubview(self.image)
 
     }
-
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        self.view.frame = self.frame
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

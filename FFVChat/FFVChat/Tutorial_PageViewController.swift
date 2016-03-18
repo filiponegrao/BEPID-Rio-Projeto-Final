@@ -87,13 +87,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.pageControl.backgroundColor = UIColor.clearColor()
         self.pageControl.alpha = 0.8
         
-        
-        
-        print("--------")
-        print("Classe: Tutorial_PageViewController (DidLoad)")
-        print("Frame componente PageViewController: \(self.pageViewController.view.frame)")
-        print("--------")
-        
         self.addChildViewController(pageViewController)
         self.view.addSubview(self.pageViewController.view)
         
@@ -110,15 +103,9 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
     {
         
-        print("Todos os controllers: \(pageViewController.viewControllers)")
-        print("Os anteriores : \(previousViewControllers)")
+//        print("Todos os controllers: \(pageViewController.viewControllers)")
+//        print("Os anteriores : \(previousViewControllers)")
         
-        //LOG VALORES LARGURA E ALTURA
-        print("--------")
-        print("Classe: Tutorial_PageViewController (DidFinishAnimating)")
-        print("Frame Tutorial_PageViewController: \(self.view.frame)")
-        print("Frame TutoFirst_ViewController: \(self.tutoFirst.view.frame)")
-        print("--------")
     }
     
     
@@ -128,13 +115,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         //função que retorna view controller anterior ao view controller atual
         
         print("before")
-        
-        //LOG VALORES LARGURA E ALTURA
-        print("--------")
-        print("Classe: Tutorial_PageViewController (Before)")
-        print("Frame Tutorial_PageViewController: \(self.view.frame)")
-        print("Frame TutoFirst_ViewController: \(self.tutoFirst.view.frame)")
-        print("--------")
         
         let index = self.indexOfViewController(viewController)
         
@@ -153,16 +133,10 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         //função que retorna view controller seguinte ao view controller atual
         
         print("after")
+        
 //        print("Todos os controllers: \(pageViewController.viewControllers)")
         
-        //LOG VALORES LARGURA E ALTURA
-        //LOG VALORES LARGURA E ALTURA
-        print("--------")
-        print("Classe: Tutorial_PageViewController (After)")
-        print("Frame Tutorial_PageViewController: \(self.view.frame)")
-        print("Frame TutoFirst_ViewController: \(self.tutoFirst.view.frame)")
-        print("--------")
-
+        
         let index = self.indexOfViewController(viewController)
         
         if(index == 4)

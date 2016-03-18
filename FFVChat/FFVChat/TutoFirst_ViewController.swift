@@ -36,7 +36,7 @@ class TutoFirst_ViewController: UIViewController
     {
         super.viewDidLoad()
         
-        self.view.frame = frame
+        self.view.frame = self.frame
         
         self.view.backgroundColor = UIColor.clearColor()
         
@@ -44,13 +44,14 @@ class TutoFirst_ViewController: UIViewController
         self.image.image = UIImage(named: "ImgTutorial00")
         self.image.contentMode = .ScaleAspectFit
         self.view.addSubview(self.image)
-        
-        //LOG VALORES LARGURA E ALTURA
-        print("Classe: TutoFirst_ViewController (DidLoad)")
-        print("Frame TutoFirst_ViewController: \(self.view.frame)")
-        print("--------")
+
     }
 
+    override func viewWillAppear(animated: Bool)
+    {
+        self.view.frame = self.frame
+    }
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()

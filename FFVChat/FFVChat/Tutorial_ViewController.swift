@@ -43,7 +43,7 @@ class Tutorial_ViewController: UIViewController
         
         //shape iphone
         self.iphoneShape = UIImageView(frame: CGRectMake((screenWidth - screenWidth/5 * 3.5)/2, screenWidth/4.8, screenWidth/5 * 3.5, screenWidth/3 * 4.1))
-        self.iphoneShape.image = UIImage(named: "iphone2")
+        self.iphoneShape.image = UIImage(named: "iphone")
         self.view.addSubview(self.iphoneShape)
         
         //barra com textos
