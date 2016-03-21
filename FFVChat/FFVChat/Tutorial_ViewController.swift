@@ -100,6 +100,7 @@ class Tutorial_ViewController: UIViewController
     
     func setFrameByCurrentDevice()
     {
+        //pegando current device como string
         let modelName = UIDevice.currentDevice().modelName
         print(modelName)
         
