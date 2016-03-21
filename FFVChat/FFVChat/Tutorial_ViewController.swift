@@ -29,6 +29,8 @@ class Tutorial_ViewController: UIViewController
     var xPageController : CGFloat!
     
     var yPageController : CGFloat!
+    
+    var screenDescription : UITextView!
 
     override func viewDidLoad()
     {
@@ -55,9 +57,17 @@ class Tutorial_ViewController: UIViewController
         self.view.addSubview(self.iphoneShape)
         
         //barra com textos
-        self.infoView = UIView(frame: CGRectMake(0, screenHeight - screenHeight/6 - 10, screenWidth, screenHeight/6 + 10))
+        self.infoView = UIView(frame: CGRectMake(0, screenHeight - screenHeight/6 - 15, screenWidth, screenHeight/6 + 15))
         self.infoView.backgroundColor = oficialDarkGray
         self.view.addSubview(self.infoView)
+        
+        //textos com descricoes
+        self.screenDescription = UITextView(frame: CGRectMake(screenWidth/8, 0, screenWidth/8 * 6, self.infoView.frame.size.height/2))
+        self.screenDescription.text = "First things first: see what friends are using Myne and add them automatically."
+        self.screenDescription.textColor = oficialLightGray
+        self.screenDescription.textAlignment = .Center
+        self.screenDescription.hidden = true
+        self.infoView.addSubview(self.screenDescription)
         
         //botão que leva ao login ***PROVISÓRIO***
         self.loginButton = UIButton(frame: CGRectMake(screenWidth/3, screenHeight - self.infoView.frame.size.height/2, screenWidth/3, 40))
@@ -67,23 +77,25 @@ class Tutorial_ViewController: UIViewController
         self.loginButton.layer.cornerRadius = 4
         self.loginButton.backgroundColor = oficialGreen
         self.loginButton.addTarget(self, action: "login", forControlEvents: .TouchUpInside)
-        self.loginButton.hidden = false
+        self.loginButton.hidden = true
         self.view.addSubview(self.loginButton)
         
         //PAGE VIEW ONDE OCORRE A TRETA
         
         //função que atualiza frame de acordo com dispositivo
+        let yPageControl : CGFloat = -((screenWidth/10.2)/3)  //pro page control começar abaixo
+        let heightPageControl = CGFloat(100)
+        
         self.setFrameByCurrentDevice()
         
-        self.pageView = Tutorial_PageViewController(frame: CGRectMake(self.xPageController, self.yPageController, self.width, self.height))
+        self.pageView = Tutorial_PageViewController(frame: CGRectMake(self.xPageController, self.yPageController, self.width, self.height), controller: self)
         
-        let yPageControl : CGFloat = -((screenWidth/10.2)/3)  //pro page control começar abaixo
-        self.pageView.pageControl.bounds = CGRectMake(0, yPageControl, 180, 100)
+        
+        self.pageView.pageControl.bounds = CGRectMake(0, yPageControl, 180, heightPageControl)
         
         self.addChildViewController(self.pageView)
         self.view.addSubview(self.pageView.view)
         self.didMoveToParentViewController(self.pageView)
-        
     }
 
     override func didReceiveMemoryWarning()
@@ -113,8 +125,6 @@ class Tutorial_ViewController: UIViewController
             self.xPageController = CGFloat(Int(screenWidth/4.61))
             self.yPageController = CGFloat(Int(screenWidth/3.59))
             
-            break
-        
         case "iPhone 6" :
             //OK
             self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6
@@ -122,15 +132,12 @@ class Tutorial_ViewController: UIViewController
             self.xPageController = CGFloat(Int(screenWidth/4.64))
             self.yPageController = CGFloat(Int(screenWidth/3.42))
             
-            break
-            
         case "iPhone 6 Plus" :
             //OK
             self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6 Plus
             self.height = CGFloat(Int(screenWidth + screenWidth/5.59))   //altura necessária para o page view encaixar na tela do iphone 6 Plus
             self.xPageController = CGFloat(Int(screenWidth/4.64))
             self.yPageController = CGFloat(Int(screenWidth/3.28))
-            break
             
         case "iPhone 6s" :
             //OK
@@ -139,25 +146,20 @@ class Tutorial_ViewController: UIViewController
             self.xPageController = CGFloat(Int(screenWidth/4.59))
             self.yPageController = CGFloat(Int(screenWidth/3.402))
             
-            break
-            
         case "iPhone 6s Plus" :
-            //a definir
+            //OK
             self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6s Plus
             self.height = CGFloat(Int(screenWidth + screenWidth/5.32))   //altura necessária para o page view encaixar na tela do iphone 6s Plus
             self.xPageController = CGFloat(Int(screenWidth/4.61))
             self.yPageController = CGFloat(Int(screenWidth/3.36))
             
-            break
-            
         case "Simulator" :
             //temporario como teste para outros devices
-            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone
-            self.height = CGFloat(Int(screenWidth + screenWidth/5.32))   //altura necessária para o page view encaixar na tela do iphone
-            self.xPageController = CGFloat(Int(screenWidth/4.61))
-            self.yPageController = CGFloat(Int(screenWidth/3.36))
-            
-            break
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6 Plus
+            self.height = CGFloat(Int(screenWidth + screenWidth/5.59))   //altura necessária para o page view encaixar na tela do iphone 6 Plus
+            self.xPageController = CGFloat(Int(screenWidth/4.64))
+            self.yPageController = CGFloat(Int(screenWidth/3.28))
+
             
         default :
             //definindo 5/5c/5s como padrão por enquanto
@@ -174,6 +176,21 @@ class Tutorial_ViewController: UIViewController
         //        print("Largura Tutorial_PageViewController: \(width)")
         //        print("Altura Tutorial_PageViewController: \(height)")
         //        print("--------")
+    }
+    
+    
+    func updateDescriptions(index: Int)
+    {
+        if(index == 0)
+        {
+//            self.loginButton.hidden = false
+            self.screenDescription.hidden = false
+        }
+        else if(index == 1)
+        {
+            self.screenDescription.hidden = true
+//            self.loginButton.hidden = true
+        }
     }
     
 }

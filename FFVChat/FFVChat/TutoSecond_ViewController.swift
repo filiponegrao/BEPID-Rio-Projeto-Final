@@ -16,9 +16,12 @@ class TutoSecond_ViewController: UIViewController
     
     var frame : CGRect!
     
-    init(frame: CGRect)
+    weak var tutorialPageController : Tutorial_PageViewController!
+    
+    init(frame: CGRect, controller: Tutorial_PageViewController)
     {
         self.frame = frame
+        self.tutorialPageController = controller
         
         super.init(nibName: nil, bundle: nil)
         
@@ -49,6 +52,11 @@ class TutoSecond_ViewController: UIViewController
     override func viewWillAppear(animated: Bool)
     {
         self.view.frame = self.frame
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.tutorialPageController.tutorialController.updateDescriptions(self.index)
     }
     
     override func didReceiveMemoryWarning()
