@@ -21,6 +21,14 @@ class Tutorial_ViewController: UIViewController
     var pageView : Tutorial_PageViewController!
     
     var loginButton : UIButton!
+    
+    var width : CGFloat!
+    
+    var height: CGFloat!
+    
+    var xPageController : CGFloat!
+    
+    var yPageController : CGFloat!
 
     override func viewDidLoad()
     {
@@ -64,21 +72,12 @@ class Tutorial_ViewController: UIViewController
         
         //PAGE VIEW ONDE OCORRE A TRETA
         
-        let width : CGFloat = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone
-        let height : CGFloat = CGFloat(Int(screenWidth + screenWidth/4.3))   //altura necessária para o page view encaixar na tela do iphone
+        //função que atualiza frame de acordo com dispositivo
+        self.setFrameByCurrentDevice()
         
+        self.pageView = Tutorial_PageViewController(frame: CGRectMake(self.xPageController, self.yPageController, self.width, self.height))
         
-//        //LOG VALORES LARGURA E ALTURA
-//        print("Classe: Tutorial_ViewController")
-//        print("Largura Tutorial_PageViewController: \(width)")
-//        print("Altura Tutorial_PageViewController: \(height)")
-//        print("--------")
-
-        
-        let yPageControl = -((screenWidth/10.2)/3)  //pro page control começar abaixo
-        
-        self.pageView = Tutorial_PageViewController(frame: CGRectMake(screenWidth/4.64, screenWidth/3.59, width, height))
-        
+        let yPageControl : CGFloat = -((screenWidth/10.2)/3)  //pro page control começar abaixo
         self.pageView.pageControl.bounds = CGRectMake(0, yPageControl, 180, 100)
         
         self.addChildViewController(self.pageView)
@@ -97,6 +96,82 @@ class Tutorial_ViewController: UIViewController
     {
         let login = Login_ViewController()
         self.presentViewController(login, animated: true, completion: nil)
+    }
+    
+    func setFrameByCurrentDevice()
+    {
+        let modelName = UIDevice.currentDevice().modelName
+        print(modelName)
+        
+        switch modelName {
+            
+        case "iPhone 5", "iPhone 5c", "iPhone 5s" :
+            //OK
+            self.width = CGFloat(Int(screenWidth/1.75))  //largura necessária para o page view encaixar na tela do iphone 5
+            self.height = CGFloat(Int(screenWidth + screenWidth/4.3))   //altura necessária para o page view encaixar na tela do iphone 5c
+            self.xPageController = CGFloat(Int(screenWidth/4.61))
+            self.yPageController = CGFloat(Int(screenWidth/3.59))
+            
+            break
+        
+        case "iPhone 6" :
+            //OK
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6
+            self.height = CGFloat(Int(screenWidth + screenWidth/4.95))   //altura necessária para o page view encaixar na tela do iphone 6
+            self.xPageController = CGFloat(Int(screenWidth/4.64))
+            self.yPageController = CGFloat(Int(screenWidth/3.42))
+            
+            break
+            
+        case "iPhone 6 Plus" :
+            //OK
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6 Plus
+            self.height = CGFloat(Int(screenWidth + screenWidth/5.59))   //altura necessária para o page view encaixar na tela do iphone 6 Plus
+            self.xPageController = CGFloat(Int(screenWidth/4.64))
+            self.yPageController = CGFloat(Int(screenWidth/3.28))
+            break
+            
+        case "iPhone 6s" :
+            //a definir
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6
+            self.height = CGFloat(Int(screenWidth + screenWidth/4.95))   //altura necessária para o page view encaixar na tela do iphone 6
+            self.xPageController = CGFloat(Int(screenWidth/4.64))
+            self.yPageController = CGFloat(Int(screenWidth/3.42))
+            
+            break
+            
+        case "iPhone 6s Plus" :
+            //a definir
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6
+            self.height = CGFloat(Int(screenWidth + screenWidth/4.95))   //altura necessária para o page view encaixar na tela do iphone 6
+            self.xPageController = CGFloat(Int(screenWidth/4.64))
+            self.yPageController = CGFloat(Int(screenWidth/3.42))
+            
+            break
+            
+        case "Simulator" :
+            //temporario como teste para outros devices
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone
+            self.height = CGFloat(Int(screenWidth + screenWidth/5.59))   //altura necessária para o page view encaixar na tela do iphone
+            self.xPageController = CGFloat(Int(screenWidth/4.64))
+            self.yPageController = CGFloat(Int(screenWidth/3.28))
+            
+            break
+            
+        default :
+            //definindo 5/5c/5s como padrão por enquanto
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 5c
+            self.height = CGFloat(Int(screenWidth + screenWidth/4.3))   //altura necessária para o page view encaixar na tela do iphone 5c
+            self.xPageController = CGFloat(Int(screenWidth/4.64))
+            self.yPageController = CGFloat(Int(screenWidth/3.59))
+        }
+        
+        
+        //        //LOG VALORES LARGURA E ALTURA
+        //        print("Classe: Tutorial_ViewController")
+        //        print("Largura Tutorial_PageViewController: \(width)")
+        //        print("Altura Tutorial_PageViewController: \(height)")
+        //        print("--------")
     }
     
 }

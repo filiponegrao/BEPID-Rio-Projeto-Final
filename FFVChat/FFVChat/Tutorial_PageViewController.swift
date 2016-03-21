@@ -113,9 +113,7 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     {
         //função que retorna view controller anterior ao view controller atual
-        
-        print("before")
-        
+                
         let index = self.indexOfViewController(viewController)
         
         if(index == 0)
@@ -131,8 +129,6 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     {
         //função que retorna view controller seguinte ao view controller atual
-        
-        print("after")
         
 //        print("Todos os controllers: \(pageViewController.viewControllers)")
         

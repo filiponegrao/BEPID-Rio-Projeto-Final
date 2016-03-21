@@ -39,7 +39,7 @@ class TutoFifth_ViewController: UIViewController
         self.view.backgroundColor = UIColor.clearColor()
         
         self.image = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
-        self.image.image = UIImage(named: "ImgTutorial31")
+        self.image.image = UIImage(named: "ImgTutorial40")
         self.image.contentMode = .ScaleAspectFit
         self.view.addSubview(self.image)
         
