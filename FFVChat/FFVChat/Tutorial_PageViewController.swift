@@ -66,14 +66,14 @@ class Tutorial_PageViewController: UIViewController, UIPageViewControllerDataSou
         self.tutoSecond.view.frame.size = self.frame.size
         
         //terceiro indice do page view
-        self.tutoThird = TutoThird_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        self.tutoThird = TutoThird_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height), controller: self)
         self.tutoThird.view.frame.size = self.frame.size
         
         //quarto indice do page view
-        self.tutoFourth = TutoFourth_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        self.tutoFourth = TutoFourth_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height), controller: self)
         
         //quinto indice do page view
-        self.tutoFifth = TutoFifth_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
+        self.tutoFifth = TutoFifth_ViewController(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height), controller: self)
 
         
         self.pageViewController = UIPageViewController(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options: nil)

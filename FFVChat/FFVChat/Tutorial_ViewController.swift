@@ -31,12 +31,28 @@ class Tutorial_ViewController: UIViewController
     var yPageController : CGFloat!
     
     var screenDescription : UITextView!
+    
+    var descriptionLabel : UILabel!
+    
+    var attributes : NSMutableDictionary!
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         self.view.backgroundColor = oficialMediumGray
+        
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = -5
+        
+        let alignment = NSMutableParagraphStyle()
+        alignment.alignment = NSTextAlignment.Center
+        
+        self.attributes = NSMutableDictionary()
+        self.attributes.setValue(oficialLightGray, forKey: NSForegroundColorAttributeName)
+        self.attributes.setValue(style, forKey: NSParagraphStyleAttributeName)
+        self.attributes.setValue(UIFont(name: "SukhumvitSet-Text", size: 15)!, forKey: NSFontAttributeName)
+//        self.attributes.setValue(alignment, forKey: NSParagraphStyleAttributeName)
         
         //Imagem de fundo
         self.background = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
@@ -62,15 +78,31 @@ class Tutorial_ViewController: UIViewController
         self.view.addSubview(self.infoView)
         
         //textos com descricoes
-        self.screenDescription = UITextView(frame: CGRectMake(screenWidth/8, 0, screenWidth/8 * 6, self.infoView.frame.size.height/2))
-        self.screenDescription.text = "First things first: see what friends are using Myne and add them automatically."
-        self.screenDescription.textColor = oficialLightGray
-        self.screenDescription.textAlignment = .Center
+        self.screenDescription = UITextView(frame: CGRectMake(screenWidth/12, self.infoView.frame.size.height/6, screenWidth/12 * 10, self.infoView.frame.size.height/2))
+        self.screenDescription.backgroundColor = UIColor.clearColor()
+        self.screenDescription.userInteractionEnabled = false
+
+        self.screenDescription.attributedText = NSAttributedString(string: "First things first: see what friends are using Myne and add them automatically.", attributes: self.attributes as! [String : AnyObject])
+    
+        self.screenDescription.textContainer.lineFragmentPadding = 0
         self.screenDescription.hidden = true
+        self.screenDescription.textAlignment = NSTextAlignment.Center
+
         self.infoView.addSubview(self.screenDescription)
         
+        //texto facebook
+        self.descriptionLabel = UILabel(frame: CGRectMake(screenWidth/12, self.infoView.frame.size.height/6 + self.screenDescription.frame.size.height, screenWidth/12 * 10, self.infoView.frame.size.height/4))
+        self.descriptionLabel.backgroundColor = UIColor.clearColor()
+        self.descriptionLabel.userInteractionEnabled = false
+        self.descriptionLabel.text = "Don't worry: we will NEVER share on Facebook."
+        self.descriptionLabel.textColor = oficialLightGray
+        self.descriptionLabel.font = UIFont(name: "SukhumvitSet-Text", size: 12)
+        self.descriptionLabel.textAlignment = .Center
+        self.infoView.addSubview(self.descriptionLabel)
+        
         //botão que leva ao login ***PROVISÓRIO***
-        self.loginButton = UIButton(frame: CGRectMake(screenWidth/3, screenHeight - self.infoView.frame.size.height/2, screenWidth/3, 40))
+//        self.loginButton = UIButton(frame: CGRectMake(screenWidth/3, screenHeight - self.infoView.frame.size.height/2, screenWidth/3, 40))
+        self.loginButton = UIButton(frame: CGRectMake(screenWidth/5 * 2, 30, screenWidth/5, screenHeight/18))
         self.loginButton.setTitle("Login", forState: .Normal)
         self.loginButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.loginButton.clipsToBounds = true
@@ -155,11 +187,10 @@ class Tutorial_ViewController: UIViewController
             
         case "Simulator" :
             //temporario como teste para outros devices
-            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6 Plus
-            self.height = CGFloat(Int(screenWidth + screenWidth/5.59))   //altura necessária para o page view encaixar na tela do iphone 6 Plus
-            self.xPageController = CGFloat(Int(screenWidth/4.64))
-            self.yPageController = CGFloat(Int(screenWidth/3.28))
-
+            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6s Plus
+            self.height = CGFloat(Int(screenWidth + screenWidth/5.32))   //altura necessária para o page view encaixar na tela do iphone 6s Plus
+            self.xPageController = CGFloat(Int(screenWidth/4.61))
+            self.yPageController = CGFloat(Int(screenWidth/3.36))
             
         default :
             //definindo 5/5c/5s como padrão por enquanto
@@ -183,13 +214,45 @@ class Tutorial_ViewController: UIViewController
     {
         if(index == 0)
         {
-//            self.loginButton.hidden = false
+            self.screenDescription.attributedText = NSAttributedString(string: "First things first: see what friends are using Myne and add them automatically.", attributes: self.attributes as! [String : AnyObject])
+            self.screenDescription.textAlignment = NSTextAlignment.Center
             self.screenDescription.hidden = false
+            self.descriptionLabel.text = "Don't worry: we will NEVER share on Facebook."
+            self.logo.hidden = false
+            self.loginButton.hidden = true
         }
         else if(index == 1)
         {
-            self.screenDescription.hidden = true
-//            self.loginButton.hidden = true
+//            self.screenDescription.hidden = true
+            self.screenDescription.attributedText = NSAttributedString(string: "Press your contact's pictures for a full second to quickly access their profiles.", attributes: self.attributes as! [String : AnyObject])
+            self.screenDescription.textAlignment = NSTextAlignment.Center
+            self.descriptionLabel.text = "Tip: you can favorite friends to access them faster."
+            self.logo.hidden = false
+            self.loginButton.hidden = true
+        }
+        else if(index == 2)
+        {
+            self.screenDescription.attributedText = NSAttributedString(string: "Sent images appear blurred: press and move your finger to see the content.", attributes: self.attributes as! [String : AnyObject])
+            self.screenDescription.textAlignment = NSTextAlignment.Center
+            self.descriptionLabel.text = "Tip: Taking them can affect your trust level!"
+            self.logo.hidden = false
+            self.loginButton.hidden = true
+        }
+        else if(index == 3)
+        {
+            self.screenDescription.attributedText = NSAttributedString(string: "Choose one of these masks to make your images even more confidential.", attributes: self.attributes as! [String : AnyObject])
+            self.screenDescription.textAlignment = NSTextAlignment.Center
+            self.descriptionLabel.text = "Spark filter may be unsafe to users who are sensitive to strobiling lights."
+            self.logo.hidden = false
+            self.loginButton.hidden = true
+        }
+        else if(index == 4)
+        {
+            self.screenDescription.attributedText = NSAttributedString(string: "And define the lifespan - you can, however, resend the content to that user.", attributes: self.attributes as! [String : AnyObject])
+            self.screenDescription.textAlignment = NSTextAlignment.Center
+            self.descriptionLabel.text = "Tip: only you will know how long it will be available."
+            self.logo.hidden = true
+            self.loginButton.hidden = false
         }
     }
     
