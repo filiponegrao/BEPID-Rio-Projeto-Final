@@ -200,13 +200,6 @@ class Tutorial_ViewController: UIViewController
             self.yPageController = CGFloat(Int(screenWidth/3.59))
 
         }
-        
-        
-        //        //LOG VALORES LARGURA E ALTURA
-        //        print("Classe: Tutorial_ViewController")
-        //        print("Largura Tutorial_PageViewController: \(width)")
-        //        print("Altura Tutorial_PageViewController: \(height)")
-        //        print("--------")
     }
     
     
