@@ -62,7 +62,7 @@ class Tutorial_ViewController: UIViewController
         
         //logo myne
         self.logo = UIImageView(frame: CGRectMake(screenWidth/5 * 2, 30, screenWidth/5, screenHeight/18))
-        self.logo.image = UIImage(named: "logo")
+        self.logo.image = UIImage(named: "logo2")
         self.logo.contentMode = .ScaleAspectFit
         self.view.addSubview(self.logo)
         
@@ -85,30 +85,30 @@ class Tutorial_ViewController: UIViewController
         self.screenDescription.attributedText = NSAttributedString(string: "First things first: see what friends are using Myne and add them automatically.", attributes: self.attributes as! [String : AnyObject])
     
         self.screenDescription.textContainer.lineFragmentPadding = 0
-        self.screenDescription.hidden = true
+        self.screenDescription.alpha = 0
         self.screenDescription.textAlignment = NSTextAlignment.Center
 
         self.infoView.addSubview(self.screenDescription)
         
         //texto facebook
-        self.descriptionLabel = UILabel(frame: CGRectMake(screenWidth/12, self.infoView.frame.size.height/6 + self.screenDescription.frame.size.height, screenWidth/12 * 10, self.infoView.frame.size.height/4))
+        self.descriptionLabel = UILabel(frame: CGRectMake(screenWidth/14, self.infoView.frame.size.height/6 + self.screenDescription.frame.size.height, screenWidth/14 * 12, self.infoView.frame.size.height/4))
         self.descriptionLabel.backgroundColor = UIColor.clearColor()
         self.descriptionLabel.userInteractionEnabled = false
         self.descriptionLabel.text = "Don't worry: we will NEVER share on Facebook."
         self.descriptionLabel.textColor = oficialLightGray
         self.descriptionLabel.font = UIFont(name: "SukhumvitSet-Text", size: 12)
         self.descriptionLabel.textAlignment = .Center
+        self.descriptionLabel.alpha = 0
         self.infoView.addSubview(self.descriptionLabel)
         
         //botão que leva ao login ***PROVISÓRIO***
-//        self.loginButton = UIButton(frame: CGRectMake(screenWidth/3, screenHeight - self.infoView.frame.size.height/2, screenWidth/3, 40))
-        self.loginButton = UIButton(frame: CGRectMake(screenWidth/5 * 2, 30, screenWidth/5, screenHeight/18))
-        self.loginButton.setTitle("Login", forState: .Normal)
-        self.loginButton.setTitleColor(oficialDarkGray, forState: .Normal)
+        self.loginButton = UIButton(frame: CGRectMake(screenWidth - screenWidth/6, 25, 45, 45))
+//        self.loginButton.setTitle("Login", forState: .Normal)
+//        self.loginButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.loginButton.clipsToBounds = true
         self.loginButton.layer.cornerRadius = 4
-        self.loginButton.backgroundColor = oficialGreen
         self.loginButton.addTarget(self, action: "login", forControlEvents: .TouchUpInside)
+        self.loginButton.setImage(UIImage(named: "goButton"), forState: .Normal)
         self.loginButton.hidden = true
         self.view.addSubview(self.loginButton)
         
@@ -187,10 +187,10 @@ class Tutorial_ViewController: UIViewController
             
         case "Simulator" :
             //temporario como teste para outros devices
-            self.width = CGFloat(Int(screenWidth/1.76))  //largura necessária para o page view encaixar na tela do iphone 6s Plus
-            self.height = CGFloat(Int(screenWidth + screenWidth/5.32))   //altura necessária para o page view encaixar na tela do iphone 6s Plus
+            self.width = CGFloat(Int(screenWidth/1.75))  //largura necessária para o page view encaixar na tela do iphone 5
+            self.height = CGFloat(Int(screenWidth + screenWidth/4.3))   //altura necessária para o page view encaixar na tela do iphone 5c
             self.xPageController = CGFloat(Int(screenWidth/4.61))
-            self.yPageController = CGFloat(Int(screenWidth/3.36))
+            self.yPageController = CGFloat(Int(screenWidth/3.59))
             
         default :
             //definindo 5/5c/5s como padrão por enquanto
@@ -214,45 +214,104 @@ class Tutorial_ViewController: UIViewController
     {
         if(index == 0)
         {
-            self.screenDescription.attributedText = NSAttributedString(string: "First things first: see what friends are using Myne and add them automatically.", attributes: self.attributes as! [String : AnyObject])
-            self.screenDescription.textAlignment = NSTextAlignment.Center
-            self.screenDescription.hidden = false
-            self.descriptionLabel.text = "Don't worry: we will NEVER share on Facebook."
-            self.logo.hidden = false
+            
             self.loginButton.hidden = true
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.screenDescription.alpha = 0
+                self.descriptionLabel.alpha = 0
+
+                }, completion: { (sucess: Bool) -> Void in
+                    
+                    self.screenDescription.attributedText = NSAttributedString(string: "First things first: see what friends are using Myne and add them automatically.", attributes: self.attributes as! [String : AnyObject])
+                    self.screenDescription.textAlignment = NSTextAlignment.Center
+                    self.descriptionLabel.text = "Don't worry: we will NEVER share stuff on Facebook."
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.screenDescription.alpha = 1.0
+                        self.descriptionLabel.alpha = 1.0
+                    })
+            })
         }
         else if(index == 1)
         {
-//            self.screenDescription.hidden = true
-            self.screenDescription.attributedText = NSAttributedString(string: "Press your contact's pictures for a full second to quickly access their profiles.", attributes: self.attributes as! [String : AnyObject])
-            self.screenDescription.textAlignment = NSTextAlignment.Center
-            self.descriptionLabel.text = "Tip: you can favorite friends to access them faster."
-            self.logo.hidden = false
             self.loginButton.hidden = true
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.screenDescription.alpha = 0
+                self.descriptionLabel.alpha = 0
+                
+                }, completion: { (sucess: Bool) -> Void in
+                    
+                    self.screenDescription.attributedText = NSAttributedString(string: "Press your contact's pictures for a full second to quickly access their profiles.", attributes: self.attributes as! [String : AnyObject])
+                    self.screenDescription.textAlignment = NSTextAlignment.Center
+                    self.descriptionLabel.text = "Tip: you can favorite friends to access them faster."
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.screenDescription.alpha = 1.0
+                        self.descriptionLabel.alpha = 1.0
+                    })
+            })
         }
         else if(index == 2)
         {
-            self.screenDescription.attributedText = NSAttributedString(string: "Sent images appear blurred: press and move your finger to see the content.", attributes: self.attributes as! [String : AnyObject])
-            self.screenDescription.textAlignment = NSTextAlignment.Center
-            self.descriptionLabel.text = "Tip: Taking them can affect your trust level!"
-            self.logo.hidden = false
             self.loginButton.hidden = true
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.screenDescription.alpha = 0
+                self.descriptionLabel.alpha = 0
+                
+                }, completion: { (sucess: Bool) -> Void in
+                    
+                    self.screenDescription.attributedText = NSAttributedString(string: "Sent images appear blurred: press and move your finger to see the content.", attributes: self.attributes as! [String : AnyObject])
+                    self.screenDescription.textAlignment = NSTextAlignment.Center
+                    self.descriptionLabel.text = "Tip: taking screenshots can affect your trust level!"
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.screenDescription.alpha = 1.0
+                        self.descriptionLabel.alpha = 1.0
+                    })
+            })
         }
         else if(index == 3)
         {
-            self.screenDescription.attributedText = NSAttributedString(string: "Choose one of these masks to make your images even more confidential.", attributes: self.attributes as! [String : AnyObject])
-            self.screenDescription.textAlignment = NSTextAlignment.Center
-            self.descriptionLabel.text = "Spark filter may be unsafe to users who are sensitive to strobiling lights."
-            self.logo.hidden = false
             self.loginButton.hidden = true
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.screenDescription.alpha = 0
+                self.descriptionLabel.alpha = 0
+                
+                }, completion: { (sucess: Bool) -> Void in
+                    
+                    self.screenDescription.attributedText = NSAttributedString(string: "Choose one of these masks and make your images even more confidential.", attributes: self.attributes as! [String : AnyObject])
+                    self.screenDescription.textAlignment = NSTextAlignment.Center
+                    self.descriptionLabel.text = "Warning: use Spark filter with caution."
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.screenDescription.alpha = 1.0
+                        self.descriptionLabel.alpha = 1.0
+                    })
+            })
         }
         else if(index == 4)
         {
-            self.screenDescription.attributedText = NSAttributedString(string: "And define the lifespan - you can, however, resend the content to that user.", attributes: self.attributes as! [String : AnyObject])
-            self.screenDescription.textAlignment = NSTextAlignment.Center
-            self.descriptionLabel.text = "Tip: only you will know how long it will be available."
-            self.logo.hidden = true
             self.loginButton.hidden = false
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.screenDescription.alpha = 0
+                self.descriptionLabel.alpha = 0
+                
+                }, completion: { (sucess: Bool) -> Void in
+                    
+                    self.screenDescription.attributedText = NSAttributedString(string: "And define the lifespan - you can, however, resend the content to that user.", attributes: self.attributes as! [String : AnyObject])
+                    self.screenDescription.textAlignment = NSTextAlignment.Center
+                    self.descriptionLabel.text = "Tip: only you know for how long it will be available."
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.screenDescription.alpha = 1.0
+                        self.descriptionLabel.alpha = 1.0
+                    })
+            })
         }
     }
     
