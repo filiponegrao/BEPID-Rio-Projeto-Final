@@ -62,7 +62,7 @@ class Login_ViewController: UIViewController, UITextFieldDelegate
         
         self.logo = UIImageView(frame: CGRectMake(0,0, screenWidth/2, screenWidth/4))
         self.logo.center = CGPointMake(screenWidth/2, screenHeight/5)
-        self.logo.image = UIImage(named: "logo")
+        self.logo.image = UIImage(named: "logo2")
         self.view.addSubview(self.logo)
         
         self.emailField = MKTextField(frame: CGRectMake(0, 0, screenWidth*0.7, 40))

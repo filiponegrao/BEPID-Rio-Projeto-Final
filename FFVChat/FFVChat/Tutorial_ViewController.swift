@@ -109,7 +109,7 @@ class Tutorial_ViewController: UIViewController
         self.loginButton.layer.cornerRadius = 4
         self.loginButton.addTarget(self, action: "login", forControlEvents: .TouchUpInside)
         self.loginButton.setImage(UIImage(named: "goButton"), forState: .Normal)
-        self.loginButton.hidden = true
+        self.loginButton.alpha = 0
         self.view.addSubview(self.loginButton)
         
         //PAGE VIEW ONDE OCORRE A TRETA
@@ -199,6 +199,7 @@ class Tutorial_ViewController: UIViewController
             self.xPageController = CGFloat(Int(screenWidth/4.61))
             self.yPageController = CGFloat(Int(screenWidth/3.59))
 
+
         }
     }
     
@@ -208,11 +209,10 @@ class Tutorial_ViewController: UIViewController
         if(index == 0)
         {
             
-            self.loginButton.hidden = true
-            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.screenDescription.alpha = 0
                 self.descriptionLabel.alpha = 0
+                self.loginButton.alpha = 0
 
                 }, completion: { (sucess: Bool) -> Void in
                     
@@ -233,6 +233,7 @@ class Tutorial_ViewController: UIViewController
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.screenDescription.alpha = 0
                 self.descriptionLabel.alpha = 0
+                self.loginButton.alpha = 0
                 
                 }, completion: { (sucess: Bool) -> Void in
                     
@@ -253,6 +254,7 @@ class Tutorial_ViewController: UIViewController
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.screenDescription.alpha = 0
                 self.descriptionLabel.alpha = 0
+                self.loginButton.alpha = 0
                 
                 }, completion: { (sucess: Bool) -> Void in
                     
@@ -273,6 +275,7 @@ class Tutorial_ViewController: UIViewController
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.screenDescription.alpha = 0
                 self.descriptionLabel.alpha = 0
+                self.loginButton.alpha = 0
                 
                 }, completion: { (sucess: Bool) -> Void in
                     
@@ -293,6 +296,7 @@ class Tutorial_ViewController: UIViewController
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.screenDescription.alpha = 0
                 self.descriptionLabel.alpha = 0
+                self.loginButton.alpha = 1
                 
                 }, completion: { (sucess: Bool) -> Void in
                     
