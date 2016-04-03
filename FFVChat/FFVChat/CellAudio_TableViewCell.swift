@@ -61,7 +61,9 @@ class CellAudio_TableViewCell: UITableViewCell {
         
         self.slider = UISlider(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.width, self.playButton.frame.origin.y, self.backgroundLabel.frame.size.width - self.playButton.frame.size.width - margemVertical - 20, self.playButton.frame.size.height))
         self.slider.setThumbImage(UIImage(named: "indicatorRed"), forState: .Normal)
-        self.slider.minimumTrackTintColor = oficialDarkGray
+//        self.slider.minimumTrackTintColor = UIColor.whiteColor()
+        self.slider.minimumValue = 0
+        self.slider.value = 0
         self.addSubview(self.slider)
     }
 

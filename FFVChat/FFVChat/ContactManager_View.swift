@@ -122,13 +122,16 @@ class ContactManager_View: UIView
         self.addSubview(self.deleteButton)
         
         //BOTÃO PARA LIMPAR CONVERSA
-        self.clearChat = UIButton(frame: CGRectMake(screenWidth/9, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height - 5, screenWidth/3, screenWidth/9.5))
+        self.clearChat = UIButton(frame: CGRectMake(screenWidth/9 - 3, screenHeight/6 * 2.5 + self.trustLevelLabel.frame.size.height + self.usernameLabel.frame.size.height - 5, screenWidth/3, screenWidth/9.5))
         self.clearChat.setTitle("Clear chat", forState: .Normal)
         self.clearChat.setTitleColor(oficialGreen, forState: .Normal)
         self.clearChat.setTitleColor(oficialLightGray, forState: .Highlighted)
-        self.clearChat.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        self.clearChat.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
         self.clearChat.addTarget(self, action: "clearConversation", forControlEvents: .TouchUpInside)
-        self.clearChat.titleLabel?.font = UIFont(name: "SukhumvitSet-SemiBold", size: 20)
+        self.clearChat.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 18)
+        self.clearChat.backgroundColor = oficialDarkGray
+        self.clearChat.clipsToBounds = true
+        self.clearChat.layer.cornerRadius = 18
 
         
         // set the attributed title for different states
@@ -303,8 +306,22 @@ class ContactManager_View: UIView
     //LIMPA UMA CONVERSA
     func clearConversation()
     {
-        DAOMessages.sharedInstance.clearConversation(self.contact.username)
+        let alert = UIAlertController(title: "Are you sure?", message: "Do you want to clear chat? You cannot undo this action.", preferredStyle: UIAlertControllerStyle.Alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) -> Void in
+            
+            DAOMessages.sharedInstance.clearConversation(self.contact.username)
+
+        }))
+
         
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action: UIAlertAction) -> Void in
+            
+            
+        }))
+        
+        self.homeController.presentViewController(alert, animated: true, completion: nil)
+
     }
 }
 

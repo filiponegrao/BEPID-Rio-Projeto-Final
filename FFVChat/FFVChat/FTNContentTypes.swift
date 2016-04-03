@@ -260,6 +260,7 @@ class ChatAudioView : UIView, AVAudioPlayerDelegate
         self.slider.setThumbImage(UIImage(named: "indicator"), forState: .Normal)
         self.slider.minimumValue = 0
         self.slider.maximumValue = 100
+        self.slider.value = 0
         self.slider.enabled = false
         
         self.time = UILabel(frame: CGRectMake(self.playButton.frame.origin.x + self.playButton.frame.size.height, self.playButton.frame.origin.y + self.playButton.frame.size.height/2, self.slider.frame.size.width/2, self.playButton.frame.size.height/2 ))

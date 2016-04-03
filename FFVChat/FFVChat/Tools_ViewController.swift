@@ -49,7 +49,7 @@ class Tools_ViewController: UIViewController
         self.notificationButton.alpha = 0
         self.view.addSubview(self.notificationButton)
         
-        self.numberOfMessages = UILabel(frame: CGRectMake(0,0, 30, 30))
+        self.numberOfMessages = UILabel(frame: CGRectMake(5,5, 30, 30))
         self.numberOfMessages.text = "0"
         self.numberOfMessages.textAlignment = .Center
         self.numberOfMessages.backgroundColor = oficialRed
