@@ -166,7 +166,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.closeButton.addTarget(self, action: "close", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview((self.closeButton))
         
-        self.clickImage = UIImageView(frame: CGRectMake(screenWidth/4, screenHeight/7, screenWidth/2, screenWidth/2))
+        self.clickImage = UIImageView(frame: CGRectMake(screenWidth/3, screenHeight/6, screenWidth/3, screenWidth/3))
         self.clickImage.image = UIImage(named: "clickImg")
         self.clickImage.alpha = 0
         self.view.addSubview(self.clickImage)
@@ -174,20 +174,21 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         self.chatLabel = UILabel(frame: CGRectMake(screenWidth/6, self.clickImage.frame.origin.y + self.clickImage.frame.size.height - 20, screenWidth/6 * 4, screenHeight/7))
         self.chatLabel.text = "Click to open chat"
         self.chatLabel.textColor = UIColor.whiteColor()
-        self.chatLabel.font = UIFont(name: "SukhumvitSet-Text", size: 22)
+        self.chatLabel.font = UIFont(name: "SukhumvitSet-Text", size: 20)
         self.chatLabel.textAlignment = .Center
         self.chatLabel.alpha = 0
         self.view.addSubview(self.chatLabel)
         
-        self.pressImage = UIImageView(frame: CGRectMake(screenWidth/4, self.chatLabel.frame.origin.y + self.chatLabel.frame.size.height, screenWidth/2, screenWidth/2))
+        self.pressImage = UIImageView(frame: CGRectMake(screenWidth/3, self.chatLabel.frame.origin.y + self.chatLabel.frame.size.height + screenHeight/10, screenWidth/3, screenWidth/3))
         self.pressImage.image = UIImage(named: "pressImg")
         self.pressImage.alpha = 0
         self.view.addSubview(self.pressImage)
         
-        self.managerLabel = UILabel(frame: CGRectMake(screenWidth/6, self.pressImage.frame.origin.y + self.pressImage.frame.size.height - 20, screenWidth/6 * 4, screenHeight/7))
-        self.managerLabel.text = "Press to manager"
+        self.managerLabel = UILabel(frame: CGRectMake(screenWidth/8, self.pressImage.frame.origin.y + self.pressImage.frame.size.height - 20, screenWidth/8 * 6, screenHeight/7))
+        self.managerLabel.text = "Press to manage contact"
         self.managerLabel.textColor = UIColor.whiteColor()
-        self.managerLabel.font = UIFont(name: "SukhumvitSet-Text", size: 22)
+        self.managerLabel.backgroundColor = UIColor.clearColor()
+        self.managerLabel.font = UIFont(name: "SukhumvitSet-Text", size: 20)
         self.managerLabel.textAlignment = .Center
         self.managerLabel.alpha = 0
         self.view.addSubview(self.managerLabel)
@@ -225,7 +226,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
                     
                     NSUserDefaults.standardUserDefaults().setBool(true, forKey: "launchedBefore")
                 }
-        
+    
     }
     
     
@@ -374,6 +375,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
             self.managerLabel.alpha = 0
             self.clickImage.alpha = 0
             self.pressImage.alpha = 0
+            self.blackScreen.alpha = 0
             
             }) { (true) in
                 

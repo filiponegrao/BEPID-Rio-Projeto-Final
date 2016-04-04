@@ -89,6 +89,11 @@ class Privacy_ViewController: UIViewController, UITextViewDelegate, UIScrollView
 
     }
     
+    override func viewWillAppear(animated: Bool)
+    {
+        self.termsText.contentOffset.y = 0
+    }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView)
     {
         let bottomEdge = self.termsText.contentOffset.y + self.termsText.frame.size.height
