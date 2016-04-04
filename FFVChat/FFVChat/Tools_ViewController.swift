@@ -49,7 +49,7 @@ class Tools_ViewController: UIViewController
         self.notificationButton.alpha = 0
         self.view.addSubview(self.notificationButton)
         
-        self.numberOfMessages = UILabel(frame: CGRectMake(5,5, 30, 30))
+        self.numberOfMessages = UILabel(frame: CGRectMake(6, 6, 27, 27))
         self.numberOfMessages.text = "0"
         self.numberOfMessages.textAlignment = .Center
         self.numberOfMessages.backgroundColor = oficialRed
@@ -225,7 +225,7 @@ class Tools_ViewController: UIViewController
             self.numberOfMessages.text = "\(count)"
             self.numberOfMessages.hidden = false
             
-            let width : CGFloat = 30
+            let width : CGFloat = self.numberOfMessages.frame.size.height
             self.numberOfMessages.frame.size = CGSizeMake(1, 1)
             
             var size : CGSize!

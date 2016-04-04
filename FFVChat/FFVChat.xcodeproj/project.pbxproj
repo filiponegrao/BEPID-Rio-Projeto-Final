@@ -734,10 +734,10 @@
 			children = (
 				80E458AB1BE8535F0066F1B1 /* Judger Workers */,
 				809E75AB1BB6313D00CEC425 /* Cells */,
+				F655EF161C93D39300639799 /* Tutorial */,
 				801D92731BA492C200D05CE7 /* Login_ViewController.swift */,
 				F66B29BA1BAB67CD00BC43EE /* AppRegister_ViewController.swift */,
 				801D92991BA4FC8800D05CE7 /* FacebookRegister_ViewController.swift */,
-				F655EF161C93D39300639799 /* Tutorial */,
 				F66B29C81BAB6AE700BC43EE /* Privacy_ViewController.swift */,
 				F66B29CC1BAB6B4E00BC43EE /* Import_ViewController.swift */,
 				F6B667131C01606000B1C256 /* AppLoginImport_ViewController.swift */,
