@@ -199,9 +199,16 @@ class AddContact_ViewController: UIViewController, UITableViewDelegate, UITableV
             
             let username = self.results[indexPath.row].username
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            cell.username.text = username
-//            cell.photo.center.y = cell.frame.origin.y + cell.frame.size.height/2
             
+            cell.photo.frame = CGRectMake(10, 10, cell.frame.size.height - 20, cell.frame.size.height - 20)
+            cell.photo.layer.cornerRadius = cell.photo.frame.size.height/2
+            cell.username.text = username
+            cell.username.frame = CGRectMake(20 + cell.photo.frame.size.width, 15, screenWidth/3 * 2, 20)
+            cell.invitedLabel.frame = CGRectMake(cell.username.frame.origin.x, cell.username.frame.origin.y + cell.username.frame.size.height, screenWidth/3 * 2, 20)
+            
+            cell.addButton.frame = CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8)
+            cell.invited.frame = CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8)
+                 
             let separatorLineView = UIView(frame: CGRectMake(0, 0, screenWidth, 3))
             separatorLineView.backgroundColor = oficialMediumGray
             

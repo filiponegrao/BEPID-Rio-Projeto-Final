@@ -118,20 +118,20 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
         let barView = UIView(frame: CGRectMake(0, 0, screenWidth, 40))
         barView.backgroundColor = oficialGreen
         
-        self.cancelButton = UIButton(frame: CGRectMake(10, 0, screenWidth/2 - 10, 40))
+        self.cancelButton = UIButton(frame: CGRectMake(15, 0, screenWidth/2 - 10, 40))
         self.cancelButton.setTitle("Cancel", forState: .Normal)
         self.cancelButton.addTarget(self, action: "cancelPicker", forControlEvents: .TouchUpInside)
         self.cancelButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.cancelButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         self.cancelButton.titleLabel?.textAlignment = .Left
-        self.cancelButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 17)
+        self.cancelButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 17)
         
-        self.saveButton = UIButton(frame: CGRectMake(screenWidth/2, 0, screenWidth/2 - 10, 40))
+        self.saveButton = UIButton(frame: CGRectMake(screenWidth/2, 0, screenWidth/2 - 15, 40))
         self.saveButton.setTitle("Save", forState: .Normal)
         self.saveButton.addTarget(self, action: "donePicker", forControlEvents: .TouchUpInside)
         self.saveButton.setTitleColor(oficialDarkGray, forState: .Normal)
         self.saveButton.contentHorizontalAlignment = .Right
-        self.saveButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 17)
+        self.saveButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Medium", size: 17)
         
         barView.addSubview(self.cancelButton)
         barView.addSubview(self.saveButton)
@@ -343,7 +343,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             cell.addSubview(viewCell)
             
             let backgroundButton = MKButton(frame: CGRectMake(0, 0, screenWidth, 50))
-            backgroundButton.setTitleColor(oficialGreen, forState: .Normal)
+            backgroundButton.setTitleColor(oficialLightGray, forState: .Normal)
             backgroundButton.addTarget(self, action: "changeBackground", forControlEvents: .TouchUpInside)
             backgroundButton.rippleLocation = .Center
             backgroundButton.rippleLayerColor = oficialDarkGray
@@ -366,7 +366,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             cell.addSubview(viewCell)
             
             let tittleButton = MKButton(frame: CGRectMake(0, 0, screenWidth, 50))
-            tittleButton.setTitleColor(oficialGreen, forState: .Normal)
+//            tittleButton.setTitleColor(oficialLightGray, forState: .Normal)
             tittleButton.addTarget(self, action: "cleanConversations", forControlEvents: .TouchUpInside)
             tittleButton.contentHorizontalAlignment = .Left
             tittleButton.rippleLocation = .Center
@@ -376,7 +376,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             
             let tittleLabel = UILabel(frame: CGRectMake(15,10, screenWidth - 15, 30))
             tittleLabel.text = self.section[indexPath.row]
-            tittleLabel.textColor = oficialGreen
+            tittleLabel.textColor = oficialLightGray
             tittleLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
             tittleButton.addSubview(tittleLabel)
             
@@ -400,7 +400,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             cell.addSubview(viewCell)
             
             let tittleButton = MKButton(frame: CGRectMake(0, 0, screenWidth, 50))
-            tittleButton.setTitleColor(oficialGreen, forState: .Normal)
+//            tittleButton.setTitleColor(oficialLightGray, forState: .Normal)
             tittleButton.addTarget(self, action: "cleanGalleries", forControlEvents: .TouchUpInside)
             tittleButton.contentHorizontalAlignment = .Left
             tittleButton.rippleLocation = .Center
@@ -411,7 +411,7 @@ class ChatSettings_ViewController: UIViewController, UITableViewDelegate, UITabl
             let tittleLabel = UILabel(frame: CGRectMake(15,10, screenWidth, 30))
             tittleLabel.text = self.section[indexPath.row]
             tittleLabel.font = UIFont(name: "SukhumvitSet-Light", size: 18)
-            tittleLabel.textColor = oficialGreen
+            tittleLabel.textColor = oficialLightGray
             tittleButton.addSubview(tittleLabel)
             
             let description = UITextView(frame: CGRectMake(10, 60, screenWidth - 20, screenWidth/5))
