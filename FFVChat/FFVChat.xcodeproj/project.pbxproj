@@ -189,6 +189,7 @@
 		F6178A581BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */; };
 		F6178A5A1BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */; };
 		F6178A5C1BF6753C0044FBA9 /* UsefulFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */; };
+		F61C94841CD2C317004F88F7 /* TesteColorAlert_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61C94831CD2C317004F88F7 /* TesteColorAlert_ViewController.swift */; };
 		F62A687D1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */; };
 		F648CED81BEEF2880094F3B6 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F648CED71BEEF2880094F3B6 /* CircleView.swift */; };
 		F65A0EAA1BC596FB00888CD3 /* CellChat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */; };
@@ -444,6 +445,7 @@
 		F6178A571BF673E40044FBA9 /* ContactsBubble_CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsBubble_CollectionViewController.swift; sourceTree = "<group>"; };
 		F6178A591BF674680044FBA9 /* RandomWalk_CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomWalk_CollectionViewCell.swift; sourceTree = "<group>"; };
 		F6178A5B1BF6753C0044FBA9 /* UsefulFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsefulFunctions.swift; sourceTree = "<group>"; };
+		F61C94831CD2C317004F88F7 /* TesteColorAlert_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TesteColorAlert_ViewController.swift; sourceTree = "<group>"; };
 		F62A687B1BBB2A7B007D3DBB /* TutoSecond_ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutoSecond_ViewController.xib; sourceTree = "<group>"; };
 		F648CED71BEEF2880094F3B6 /* CircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		F65A0EA91BC596FB00888CD3 /* CellChat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellChat_TableViewCell.swift; sourceTree = "<group>"; };
@@ -585,23 +587,15 @@
 				804E45C81C60364600753493 /* Filters */,
 				80AB6B781C3DFCA100F2EEC4 /* BubbleButton.swift */,
 				804E45C61C5FA1E100753493 /* FNChoiceBar.swift */,
-				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
-				F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */,
+				F61C94821CD2BDB5004F88F7 /* Navigations */,
 				F66B29F61BAB704D00BC43EE /* Password_View.swift */,
 				F66B29F41BAB703200BC43EE /* MidiaViewer_View.swift */,
-				F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */,
 				F66B29F01BAB6FF800BC43EE /* Notification_View.swift */,
 				F66B29F21BAB702200BC43EE /* ContactManager_View.swift */,
 				F66B29FC1BAB70A200BC43EE /* LoadScreen_View.swift */,
 				F648CED71BEEF2880094F3B6 /* CircleView.swift */,
-				F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */,
-				F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */,
-				F6EBC8681BF8526F00BD443E /* NavigationAddContact_View.swift */,
-				F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */,
-				F65A4F401C076A790092C403 /* NavigationGallery_View.swift */,
 				F65A4F421C077AAF0092C403 /* ImageManager_View.swift */,
 				F65A4F441C0CB7660092C403 /* CAPSPageMenu.swift */,
-				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
 				80E126A11C1257E100DC0755 /* GifSharing_View.swift */,
 				805172B81C1756A900687770 /* SweetAlert.swift */,
 			);
@@ -759,6 +753,7 @@
 				8009D72B1C10D0A300F88C01 /* GifGallery_UIViewController.swift */,
 				8070AD4E1C71684300DDAE5C /* ImageViewController.swift */,
 				8062A8E81C742A6E00331E9E /* Web_ViewController.swift */,
+				F61C94831CD2C317004F88F7 /* TesteColorAlert_ViewController.swift */,
 				F68A459D1C5A9DF700E99D64 /* Settings sections */,
 			);
 			name = Controller;
@@ -1024,6 +1019,22 @@
 				F61040681C76C46E00E6F277 /* PreviewSupplementaryView.swift */,
 			);
 			name = Preview;
+			sourceTree = "<group>";
+		};
+		F61C94821CD2BDB5004F88F7 /* Navigations */ = {
+			isa = PBXGroup;
+			children = (
+				F66B29EC1BAB6FAF00BC43EE /* NavigationContact_View.swift */,
+				F66B29EA1BAB6E2B00BC43EE /* NavigationChat_View.swift */,
+				F66B29EE1BAB6FCE00BC43EE /* NavigationMidia_View.swift */,
+				F6703D801BEDB132009E57E0 /* NavigationSettings_View.swift */,
+				F6EBC8661BF8426A00BD443E /* NavigationNotification_View.swift */,
+				F6EBC8681BF8526F00BD443E /* NavigationAddContact_View.swift */,
+				F6AC54621BF95BD800CF7918 /* NavigationChangePassword_View.swift */,
+				F65A4F401C076A790092C403 /* NavigationGallery_View.swift */,
+				F68ABEF61C11D978009670A7 /* NavigationDeleteProfile_View.swift */,
+			);
+			name = Navigations;
 			sourceTree = "<group>";
 		};
 		F655EF161C93D39300639799 /* Tutorial */ = {
@@ -1298,6 +1309,7 @@
 				803657911BF94A97000907BD /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
 				80FED0C51C70109F00B024AE /* FTNCollectionWebCell.swift in Sources */,
 				8062A8ED1C742C0000331E9E /* RegexParser.swift in Sources */,
+				F61C94841CD2C317004F88F7 /* TesteColorAlert_ViewController.swift in Sources */,
 				804E45CB1C6037FA00753493 /* FilterView_Circle.swift in Sources */,
 				800AE85B1C64458C00B917FE /* FTNCollectionViewCell.swift in Sources */,
 				8036579C1BF94A97000907BD /* NVActivityIndicatorAnimationPacman.swift in Sources */,

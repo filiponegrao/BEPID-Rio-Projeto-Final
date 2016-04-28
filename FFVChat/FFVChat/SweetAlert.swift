@@ -53,9 +53,10 @@ public class SweetAlert: UIViewController
     
     var userAction:((isOtherButton: Bool) -> Void)? = nil
     
-    let kFont = "Helvetica"
+    let kFont = "SukhumvitSet-Medium"
     
-    init() {
+    init()
+    {
         super.init(nibName: nil, bundle: nil)
         self.view.frame = UIScreen.mainScreen().bounds
         self.view.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth]
@@ -72,7 +73,7 @@ public class SweetAlert: UIViewController
     
     private func setupContentView() {
         contentView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
-        contentView.layer.cornerRadius = 5.0
+        contentView.layer.cornerRadius = 18.0
         contentView.layer.masksToBounds = true
         contentView.layer.borderWidth = 0.5
         contentView.addSubview(titleLabel)
@@ -149,7 +150,7 @@ public class SweetAlert: UIViewController
         }
         y += kHeightMargin
         var buttonX = (kContentWidth - totalWidth ) / 2.0
-        for var i = 0; i <  buttons.count; i++ {
+        for var i = 0; i <  buttons.count; i += 1 {
             
             buttons[i].frame = CGRect(x: buttonX, y: y, width: buttonRect[i].size.width + 20.0, height: buttonRect[i].size.height + 10.0)
             buttonX = buttons[i].frame.origin.x + kWidthMargin + buttonRect[i].size.width + 20.0
@@ -236,7 +237,7 @@ public class SweetAlert: UIViewController
     }
     
     public func showAlert(title: String, subTitle: String?, style: AlertStyle,buttonTitle: String, action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlert {
-        self.showAlert(title, subTitle: subTitle, style: style, buttonTitle: buttonTitle,buttonColor: UIColor.colorFromRGB(0xAEDEF4))
+        self.showAlert(title, subTitle: subTitle, style: style, buttonTitle: buttonTitle,buttonColor: UIColor.colorFromRGB(0x5EBDB1))
         userAction = action
         return self
     }
@@ -251,7 +252,7 @@ public class SweetAlert: UIViewController
     public func showAlert(title: String, subTitle: String?, style: AlertStyle,buttonTitle: String,buttonColor: UIColor,otherButtonTitle:
         String?, action: ((isOtherButton: Bool) -> Void)? = nil) -> SweetAlert {
             self.showAlert(title, subTitle: subTitle, style: style, buttonTitle: buttonTitle,buttonColor: buttonColor,otherButtonTitle:
-                otherButtonTitle,otherButtonColor: UIColor.redColor())
+                otherButtonTitle,otherButtonColor: UIColor.colorFromRGB(0xc70040))
             userAction = action
             return self
     }
@@ -293,6 +294,7 @@ public class SweetAlert: UIViewController
             if buttonTitle.isEmpty == false {
                 let button: UIButton = UIButton(type: UIButtonType.Custom)
                 button.setTitle(buttonTitle, forState: UIControlState.Normal)
+                button.setTitleColor(oficialDarkGray, forState: .Normal)
                 button.backgroundColor = buttonColor
                 button.userInteractionEnabled = true
                 button.tag = 0
@@ -419,7 +421,7 @@ class CancelAnimatedView: AnimatableView {
         
         crossPathLayer.path = crossPath
         crossPathLayer.fillColor = UIColor.clearColor().CGColor;
-        crossPathLayer.strokeColor = UIColor.colorFromRGB(0xF27474).CGColor;
+        crossPathLayer.strokeColor = UIColor.colorFromRGB(0x5EBDB1).CGColor;
         crossPathLayer.lineCap = kCALineCapRound
         crossPathLayer.lineWidth = 4;
         crossPathLayer.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
@@ -507,7 +509,7 @@ class InfoAnimatedView: AnimatableView {
     func setupLayers() {
         circleLayer.path = outlineCircle
         circleLayer.fillColor = UIColor.clearColor().CGColor;
-        circleLayer.strokeColor = UIColor.colorFromRGB(0xF8D486).CGColor;
+        circleLayer.strokeColor = UIColor.colorFromRGB(0x5EBDB1).CGColor;
         circleLayer.lineCap = kCALineCapRound
         circleLayer.lineWidth = 4;
         circleLayer.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
@@ -522,8 +524,8 @@ class InfoAnimatedView: AnimatableView {
         colorAnimation.repeatCount = HUGE
         colorAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         colorAnimation.autoreverses = true
-        colorAnimation.fromValue = UIColor.colorFromRGB(0xF7D58B).CGColor
-        colorAnimation.toValue = UIColor.colorFromRGB(0xF2A665).CGColor
+        colorAnimation.fromValue = UIColor.colorFromRGB(0x5EBDB1).CGColor
+        colorAnimation.toValue = UIColor.colorFromRGB(0x5EBDB1).CGColor
         circleLayer.addAnimation(colorAnimation, forKey: "strokeColor")
     }
 }
@@ -575,7 +577,7 @@ class SuccessAnimatedView: AnimatableView {
             0);
         outlineLayer.path = outlineCircle
         outlineLayer.fillColor = UIColor.clearColor().CGColor;
-        outlineLayer.strokeColor = UIColor(red: 150.0/255.0, green: 216.0/255.0, blue: 115.0/255.0, alpha: 1.0).CGColor;
+        outlineLayer.strokeColor = UIColor.colorFromRGB(0x436b69).CGColor
         outlineLayer.lineCap = kCALineCapRound
         outlineLayer.lineWidth = 4;
         outlineLayer.opacity = 0.1
@@ -585,7 +587,7 @@ class SuccessAnimatedView: AnimatableView {
             0);
         circleLayer.path = path
         circleLayer.fillColor = UIColor.clearColor().CGColor;
-        circleLayer.strokeColor = UIColor(red: 150.0/255.0, green: 216.0/255.0, blue: 115.0/255.0, alpha: 1.0).CGColor;
+        circleLayer.strokeColor = UIColor.colorFromRGB(0x436b69).CGColor
         circleLayer.lineCap = kCALineCapRound
         circleLayer.lineWidth = 4;
         circleLayer.actions = [

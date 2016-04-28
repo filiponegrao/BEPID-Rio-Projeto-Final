@@ -14,7 +14,7 @@ class JudgerAlert_ViewController: UIViewController
     
     var imageView : UIImageView!
     
-    var frase : UILabel!
+//    var frase : UILabel!
     
     override func viewDidLoad()
     {
