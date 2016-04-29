@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         //Status bar color
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
-        self.hibernateImage.image = UIImage(named: "printAlert")
+        self.hibernateImage.image = UIImage(named: "appBackground")
         
         // Register for Push Notitications *******************************
         
