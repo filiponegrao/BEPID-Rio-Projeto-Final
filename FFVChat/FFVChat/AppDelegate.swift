@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     var tentativasAudio : Int = 0
     
+    let hibernateImage = UIImageView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
@@ -89,6 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         //Status bar color
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
+        self.hibernateImage.image = UIImage(named: "printAlert")
         
         // Register for Push Notitications *******************************
         
@@ -141,6 +144,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+  
+        UIView.animateWithDuration(0.6, animations: { 
+            
+            self.window?.addSubview(self.hibernateImage)
+            
+            }) { (true) in
+                
+                UIView.animateWithDuration(0.6, delay: 0.3, options: .CurveEaseIn, animations: {
+                    self.hibernateImage.alpha = 1.0
+                }) { (true) in
+                    
+                }
+        }
+     
 
     }
     
@@ -166,6 +183,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         {
             DAOContacts.sharedInstance.refreshContacts()
             DAOPostgres.sharedInstance.getUnreadAndDeletedMessages()
+        }
+        
+        
+        UIView.animateWithDuration(0.6, animations: {
+            
+            self.hibernateImage.alpha = 0
+            
+        }) { (true) in
+            
+            UIView.animateWithDuration(0.6, delay: 0.3, options: .CurveEaseOut, animations: {
+               
+                if(self.hibernateImage.image != nil)
+                {
+                    self.hibernateImage.removeFromSuperview()
+                }
+                
+            }) { (true) in
+                
+            }
         }
         
     }
@@ -317,7 +353,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         
     }
-    
     
     
     //Aux functions
