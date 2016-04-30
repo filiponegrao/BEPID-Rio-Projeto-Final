@@ -103,6 +103,8 @@ class Chat_ViewController: UIViewController, AVAudioPlayerDelegate, FTNChatContr
         
         self.reloadConversation(self.contact.username)
         
+        self.chatController.background.image = UserLayoutSettings.sharedInstance.getCurrentBackground()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "newMessage", name: FTNChatNotifications.newMessage(), object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "messageErased:", name: FTNChatNotifications.messageErased(), object: nil)
     }

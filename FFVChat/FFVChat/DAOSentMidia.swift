@@ -175,6 +175,25 @@ class DAOSentMidia
         }
     }
     
+    func deleteAllSentMidia()
+    {
+        do {
+            
+            let results = try self.managedObjectContext.executeFetchRequest(NSFetchRequest(entityName: "SentMidia")) as! [SentMidia]
+            
+            for midia in results
+            {
+                self.managedObjectContext.deleteObject(midia)
+                self.save()
+            }
+        
+        } catch {
+            
+            
+        }
+    }
+    
+    
     func save()
     {
         do { try self.managedObjectContext.save() }

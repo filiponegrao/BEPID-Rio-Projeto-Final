@@ -657,6 +657,21 @@ class DAOMessages : NSObject
         }
     }
     
+    func clearAllConversations()
+    {
+        let contacts = DAOContacts.sharedInstance.getAllContacts()
+        
+        for contact in contacts
+        {
+            let messages = self.conversationWithContact(contact.username)
+            
+            for message in messages
+            {
+                self.deleteMessage(message.id, atualizaNoBanco: true)
+            }
+        }
+    }
+    
     func numberOfUnreadMessages(contact: Contact) -> Int
     {
         var unread = 0

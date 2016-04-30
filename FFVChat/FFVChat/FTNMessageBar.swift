@@ -127,7 +127,7 @@ class FTNMessageBar : UIView, UITextViewDelegate, AVAudioRecorderDelegate
         self.sendButton.setTitleColor(oficialLightGray, forState: .Disabled)
         self.sendButton.addTarget(self, action: "sendButtonClicked", forControlEvents: .TouchUpInside)
         self.addSubview(self.sendButton)
-        
+                
     }
 
     deinit
