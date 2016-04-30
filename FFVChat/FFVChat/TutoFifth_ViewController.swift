@@ -16,9 +16,12 @@ class TutoFifth_ViewController: UIViewController
     
     var frame : CGRect!
     
-    init(frame: CGRect)
+    weak var tutorialPageController : Tutorial_PageViewController!
+    
+    init(frame: CGRect, controller: Tutorial_PageViewController)
     {
         self.frame = frame
+        self.tutorialPageController = controller
         
         super.init(nibName: nil, bundle: nil)
         
@@ -39,10 +42,15 @@ class TutoFifth_ViewController: UIViewController
         self.view.backgroundColor = UIColor.clearColor()
         
         self.image = UIImageView(frame: CGRectMake(0, 0, self.frame.size.width, self.frame.size.height))
-        self.image.image = UIImage(named: "ImgTutorial31")
+        self.image.image = UIImage(named: "ImgTutorial40")
         self.image.contentMode = .ScaleAspectFit
         self.view.addSubview(self.image)
         
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        self.tutorialPageController.tutorialController.updateDescriptions(self.index)
     }
     
     override func didReceiveMemoryWarning()

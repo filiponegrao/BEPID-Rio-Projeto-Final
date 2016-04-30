@@ -53,7 +53,7 @@ class UserLayoutSettings : NSObject
     
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
 
-    let backgrounds = ["blueSky","redSky","redSky2","darkSky","purpleSky"]
+    let backgrounds = ["blueSky","redSky","redSky2","darkSky"]
     
     override init()
     {

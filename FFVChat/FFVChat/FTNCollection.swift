@@ -64,14 +64,14 @@ class FTNCollection : UIView, UICollectionViewDataSource, UICollectionViewDelega
         self.closeButton.setTitle("Cancel", forState: .Normal)
         self.closeButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.closeButton.contentHorizontalAlignment = .Left
-        self.closeButton.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 17)
+        self.closeButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 17)
         self.addSubview(self.closeButton)
         
         self.moreButton = UIButton(frame: CGRectMake(self.frame.size.width/2, 0, self.frame.size.width/2 - 20, 44))
         self.moreButton.setTitle("More", forState: .Normal)
         self.moreButton.setTitleColor(oficialGreen, forState: .Normal)
         self.moreButton.contentHorizontalAlignment = .Right
-        self.moreButton.titleLabel?.font = UIFont(name: "Sukhumvit Set", size: 17)
+        self.moreButton.titleLabel?.font = UIFont(name: "SukhumvitSet-Text", size: 17)
         self.addSubview(self.moreButton)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refresh", name: NotificationController.center.gifDownloaded.name, object: nil)

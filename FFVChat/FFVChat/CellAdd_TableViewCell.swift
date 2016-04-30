@@ -8,7 +8,8 @@
 
 import UIKit
 
-class CellAdd_TableViewCell: UITableViewCell {
+class CellAdd_TableViewCell: UITableViewCell
+{
 
     var photo: UIImageView!
     
@@ -16,7 +17,7 @@ class CellAdd_TableViewCell: UITableViewCell {
     
     var trustLevel: UILabel!
     
-    var addButton: MKButton!
+    var addButton: UIButton!
     
     var invited : UIImageView!
     
@@ -45,15 +46,19 @@ class CellAdd_TableViewCell: UITableViewCell {
         self.trustLevel.textColor = oficialLightGray
         self.addSubview(self.trustLevel)
         
-        self.addButton = MKButton(frame: CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8))
+        self.addButton = UIButton(frame: CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8))
         self.addButton.setImage(UIImage(named: "addContactButton"), forState: .Normal)
         self.addButton.addTarget(self, action: "addContact", forControlEvents: .TouchUpInside)
+//        self.addButton.clipsToBounds = true
+//        self.addButton.layer.cornerRadius = self.addButton.frame.size.height/2
         self.addSubview(self.addButton)
         
         self.invited = UIImageView(frame: CGRectMake(screenWidth - screenWidth/8 - 10, 15, screenWidth/8, screenWidth/8))
         self.invited.image = UIImage(named: "accept")
         //        self.invited.contentMode = .ScaleAspectFit
         self.invited.hidden = true
+//        self.invited.clipsToBounds = true
+//        self.invited.layer.cornerRadius = self.invited.frame.size.height/2
         self.addSubview(self.invited)
         
         self.invitedLabel = UILabel(frame: CGRectMake(self.username.frame.origin.x, self.username.frame.origin.y + self.username.frame.size.height, screenWidth/3 * 2, 20))
@@ -80,8 +85,8 @@ class CellAdd_TableViewCell: UITableViewCell {
     func addContact()
     {
         let username = self.username.text!
-        self.addButton.hidden = true
         
+        self.addButton.hidden = true
         self.invited.hidden = false
         self.invitedLabel.hidden = false
     

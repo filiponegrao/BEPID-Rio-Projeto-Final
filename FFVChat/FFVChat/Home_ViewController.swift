@@ -26,8 +26,6 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     
     var background : UIImageView!
     
-    var blurView : UIVisualEffectView!
-    
     var searchBar : UISearchBar!
     
     var searchBarView : UIView!
@@ -35,6 +33,20 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     let searchBarHeight : CGFloat = 40
     
     var isSearching : Bool = false
+    
+    var blackScreen : UIView!
+    
+    var blurView : UIVisualEffectView!
+    
+    var closeButton : UIButton!
+    
+    var chatLabel : UILabel!
+    
+    var managerLabel : UILabel!
+    
+    var clickImage : UIImageView!
+    
+    var pressImage : UIImageView!
     
     override func viewDidLoad()
     {
@@ -58,6 +70,7 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
 //            }
 //        }
 //        
+        
         
         //Nav Bar
         self.navigationBar = NavigationContact_View(requester: self)
@@ -135,6 +148,85 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadCellAnimations", name:UIApplicationWillEnterForegroundNotification, object: nil)
         
         self.reloadCellAnimations()
+        
+        //para primeiro uso
+        self.blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light)) as UIVisualEffectView
+        self.blurView.frame = self.view.bounds
+        self.blurView.alpha = 0
+        self.view.addSubview(self.blurView)
+        
+        self.blackScreen = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
+        self.blackScreen.backgroundColor = UIColor.blackColor()
+        self.blackScreen.alpha = 0
+        self.view.addSubview(self.blackScreen)
+        
+        self.closeButton = UIButton(frame: CGRectMake(0, 25, 44, 44))
+        self.closeButton.setImage(UIImage(named: "close"), forState: .Normal)
+        self.closeButton.alpha = 0
+        self.closeButton.addTarget(self, action: "close", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview((self.closeButton))
+        
+        self.clickImage = UIImageView(frame: CGRectMake(screenWidth/3, screenHeight/6, screenWidth/3, screenWidth/3))
+        self.clickImage.image = UIImage(named: "clickImg")
+        self.clickImage.alpha = 0
+        self.view.addSubview(self.clickImage)
+        
+        self.chatLabel = UILabel(frame: CGRectMake(screenWidth/6, self.clickImage.frame.origin.y + self.clickImage.frame.size.height - 20, screenWidth/6 * 4, screenHeight/7))
+        self.chatLabel.text = "Click to open chat"
+        self.chatLabel.textColor = UIColor.whiteColor()
+        self.chatLabel.font = UIFont(name: "SukhumvitSet-Text", size: 20)
+        self.chatLabel.textAlignment = .Center
+        self.chatLabel.alpha = 0
+        self.view.addSubview(self.chatLabel)
+        
+        self.pressImage = UIImageView(frame: CGRectMake(screenWidth/3, self.chatLabel.frame.origin.y + self.chatLabel.frame.size.height + screenHeight/10, screenWidth/3, screenWidth/3))
+        self.pressImage.image = UIImage(named: "pressImg")
+        self.pressImage.alpha = 0
+        self.view.addSubview(self.pressImage)
+        
+        self.managerLabel = UILabel(frame: CGRectMake(screenWidth/8, self.pressImage.frame.origin.y + self.pressImage.frame.size.height - 20, screenWidth/8 * 6, screenHeight/7))
+        self.managerLabel.text = "Press to manage contact"
+        self.managerLabel.textColor = UIColor.whiteColor()
+        self.managerLabel.backgroundColor = UIColor.clearColor()
+        self.managerLabel.font = UIFont(name: "SukhumvitSet-Text", size: 20)
+        self.managerLabel.textAlignment = .Center
+        self.managerLabel.alpha = 0
+        self.view.addSubview(self.managerLabel)
+        
+        //se é o primeiro uso
+                let launchedBefore = NSUserDefaults.standardUserDefaults().boolForKey("launchedBefore")
+        
+                if launchedBefore
+                {
+                    print("Not first launch.")
+                }
+                else
+                {
+                    print("First launch, setting NSUserDefault.")
+        
+                    UIView.animateWithDuration(0.6, delay: 0.3, options: UIViewAnimationOptions.BeginFromCurrentState, animations: {
+                        
+                        self.blurView.alpha = 0.8
+                        self.blackScreen.alpha = 0.8
+                        self.closeButton.alpha = 1
+                        
+                        }, completion: { (true) in
+                            
+                            UIView.animateWithDuration(0.5, delay: 0, options: .CurveEaseInOut, animations: {
+                                
+                                self.chatLabel.alpha = 1
+                                self.managerLabel.alpha = 1
+                                self.clickImage.alpha = 1
+                                self.pressImage.alpha = 1
+                                
+                                }, completion: nil)
+                            
+                    })
+
+                    
+                    NSUserDefaults.standardUserDefaults().setBool(true, forKey: "launchedBefore")
+                }
+    
     }
     
     
@@ -274,7 +366,30 @@ class Home_ViewController: UIViewController, UISearchBarDelegate, UISearchDispla
     }
     
     
-    
+    func close()
+    {
+        UIView.animateWithDuration(0.6, delay: 0.3, options: .CurveEaseOut, animations: { 
+            
+            self.closeButton.alpha = 0
+            self.chatLabel.alpha = 0
+            self.managerLabel.alpha = 0
+            self.clickImage.alpha = 0
+            self.pressImage.alpha = 0
+            self.blackScreen.alpha = 0
+            
+            }) { (true) in
+                
+                self.closeButton.removeFromSuperview()
+                self.chatLabel.removeFromSuperview()
+                self.managerLabel.removeFromSuperview()
+                self.clickImage.removeFromSuperview()
+                self.pressImage.removeFromSuperview()
+                self.blackScreen.removeFromSuperview()
+                self.blurView.removeFromSuperview()
+
+        }
+        
+    }
 
 }
 

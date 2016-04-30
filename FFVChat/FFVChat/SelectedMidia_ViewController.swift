@@ -120,6 +120,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.sentDateLabel.setSizeFont(15)
         self.sentDateLabel.textColor = UIColor.whiteColor()
         self.sentDateLabel.textAlignment = .Left
+        self.sentDateLabel.hidden = true
         self.view.addSubview(self.sentDateLabel)
         
         self.screenshotsLabel = UILabel(frame: CGRectMake(screenWidth/8, self.navigationBar.frame.size.height + self.imageView.frame.size.height + self.sentDateLabel.frame.size.height + 10, screenWidth/8 * 6, 20))
@@ -128,6 +129,7 @@ class SelectedMidia_ViewController: UIViewController, UIPickerViewDataSource, UI
         self.screenshotsLabel.setSizeFont(15)
         self.screenshotsLabel.textColor = UIColor.whiteColor()
         self.screenshotsLabel.textAlignment = .Left
+        self.screenshotsLabel.hidden = true
         self.view.addSubview(self.screenshotsLabel)
     }
     

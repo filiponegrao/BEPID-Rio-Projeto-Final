@@ -354,8 +354,11 @@ class Settings_ViewController: UIViewController, UITableViewDelegate, UITableVie
         }
 //        else if(indexPath.section == 3 && indexPath.row == 0)
 //        {
-//            let messageSettings = MessageAlertSettings_ViewController()
-//            self.navigationController?.pushViewController(messageSettings, animated: true)
+//            let url = NSURL (string: "http://www.mynechat.com")
+////            let requestObj = NSURLRequest(URL: url!)
+//            
+//            let web = Web_ViewController(url: url!)
+//            self.navigationController?.pushViewController(web, animated: true)
 //        }
         
     }
